@@ -4,10 +4,12 @@ struct FlashcardView: View {
     @Binding var word: Word
     var onSwipe: (LearningState) -> Void
     var nextWord: Word?
-    @State private var isCheckmarkActive = false
+    @State private var isLearned = false
     @State private var offset: CGSize = .zero
     @State private var isTransitioning = false
     @State private var currentCardOpacity: Double = 1.0
+    @State private var isSkipPressed = false
+    @State private var isLearnedPressed = false
     
     private let spring = Animation.interpolatingSpring(
         stiffness: 100,
@@ -60,22 +62,51 @@ struct FlashcardView: View {
             }
             
             // Learned indicator below the cards
-            HStack(spacing: 4) {
-                Image(systemName: "checkmark.circle")
-                    .foregroundColor(isCheckmarkActive ? .black : .gray.opacity(0.7))
-                Text("Learned")
-                    .font(.subheadline)
-                    .foregroundColor(.gray)
+            HStack {
+                Button(action: {
+                    handleLearned()  // Using the same handler for now
+                }) {
+                    Text("Skip")
+                        .font(.system(size: 20))
+                        .foregroundColor(.black)
+                        .padding(.horizontal, 0)
+                        .padding(.vertical, 6)
+                }
+                .padding(.leading, 20)
+                .scaleEffect(isSkipPressed ? 0.95 : 1.0)
+                .simultaneousGesture(
+                    DragGesture(minimumDistance: 0)
+                        .onChanged { _ in isSkipPressed = true }
+                        .onEnded { _ in isSkipPressed = false }
+                )
+                .buttonStyle(.plain)
+                
+                Spacer()
+                
+                Button(action: {
+                    handleLearned()
+                }) {
+                    Text("Learned It")
+                        .font(.system(size: 20))
+                        .foregroundColor(.black)
+                        .padding(.horizontal, 0)
+                        .padding(.vertical, 6)
+                }
+                .padding(.trailing, 20)
+                .scaleEffect(isLearnedPressed ? 0.95 : 1.0)
+                .simultaneousGesture(
+                    DragGesture(minimumDistance: 0)
+                        .onChanged { _ in isLearnedPressed = true }
+                        .onEnded { _ in isLearnedPressed = false }
+                )
+                .buttonStyle(.plain)
             }
             .padding(.top, 10)
-            .onTapGesture {
-                handleLearned()
-            }
         }
     }
     
     private func handleLearned() {
-        isCheckmarkActive = true
+        isLearned = true
         
         // Start showing next card immediately with slower fade-in
         withAnimation(.easeIn(duration: 0.15)) {
@@ -92,7 +123,7 @@ struct FlashcardView: View {
             offset = .zero
             currentCardOpacity = 1.0
             isTransitioning = false
-            isCheckmarkActive = false
+            isLearned = false
         }
     }
 }
@@ -249,48 +280,55 @@ struct FlashcardSessionView: View {
     }
     
     var body: some View {
-        VStack {
-            if !isCompleting {
-                FlashcardView(
-                    word: Binding(
-                        get: { 
-                            print("Getting word at index \(currentIndex): \(words[currentIndex].text)")
-                            return words[currentIndex] 
-                        },
-                        set: { _ in }
-                    ),
-                    onSwipe: { newState in
-                        print("Swipe detected with state: \(newState)")
-                        handleSwipe(newState)
-                    },
-                    nextWord: currentIndex + 1 < words.count ? words[currentIndex + 1] : nil
-                )
-                .onAppear {
-                    print("Rendering flashcard for word: \(words[currentIndex].text)")
-                }
-                .onChange(of: currentIndex) { newIndex in
-                    print("Current index changed to: \(newIndex)")
-                }
-                .onChange(of: words.count) { newCount in
-                    print("Words array count changed to: \(newCount)")
-                }
-                .id(viewKey)
-            } else {
-                Text("Next")
-                    .font(.system(size: 40))
-                    .foregroundColor(.black)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .onTapGesture {
-                        dismiss()
+        ZStack {
+            VStack {
+                if !isCompleting {
+                    if !words.isEmpty && currentIndex < words.count {
+                        FlashcardView(
+                            word: Binding(
+                                get: { 
+                                    print("Getting word at index \(currentIndex): \(words[currentIndex].text)")
+                                    return words[currentIndex] 
+                                },
+                                set: { _ in }
+                            ),
+                            onSwipe: { newState in
+                                print("Swipe detected with state: \(newState)")
+                                handleSwipe(newState)
+                            },
+                            nextWord: currentIndex + 1 < words.count ? words[currentIndex + 1] : nil
+                        )
+                        .onAppear {
+                            print("Rendering flashcard for word: \(words[currentIndex].text)")
+                        }
+                        .onChange(of: currentIndex) { newIndex in
+                            print("Current index changed to: \(newIndex)")
+                        }
+                        .onChange(of: words.count) { newCount in
+                            print("Words array count changed to: \(newCount)")
+                        }
+                        .id(viewKey)
                     }
+                }
             }
             
-            if !isCompleting {
-                ProgressView(value: Double(learnedWords), total: Double(initialWords.count))
-                    .progressViewStyle(.linear)
-                    .tint(.black)
-                    .padding(.horizontal)
-                    .padding(.bottom)
+            VStack {
+                Spacer()
+                if !isCompleting {
+                    ProgressView(value: Double(learnedWords), total: Double(initialWords.count))
+                        .progressViewStyle(.linear)
+                        .tint(.black)
+                        .padding(.horizontal)
+                        .padding(.bottom, 20)
+                } else {
+                    Text("Next")
+                        .font(.system(size: 40))
+                        .foregroundColor(.black)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .onTapGesture {
+                            dismiss()
+                        }
+                }
             }
         }
         .navigationBarBackButtonHidden(true)
@@ -329,7 +367,16 @@ struct FlashcardSessionView: View {
             // Check if we've learned all words
             if learnedWords == initialWords.count {
                 print("All words learned, completing session")
-                isCompleting = true
+                // Animate progress bar to completion before showing completion screen
+                withAnimation(.easeInOut(duration: 0.5)) {
+                    learnedWords = initialWords.count
+                }
+                // Delay the completion screen to allow progress bar animation to finish
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    withAnimation {
+                        isCompleting = true
+                    }
+                }
                 return
             }
             
