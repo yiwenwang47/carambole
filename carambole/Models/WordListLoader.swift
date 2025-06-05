@@ -5,12 +5,14 @@ struct WordListData: Codable {
 }
 
 struct WordListDataItem: Codable {
+    let id: String
     let name: String
     let description: String
     let words: [WordData]
 }
 
 struct WordData: Codable {
+    let id: String
     let text: String
     let definition: String
     let exampleSentence: String
@@ -32,10 +34,13 @@ class WordListLoader {
             return wordListData.wordLists.map { item in
                 print("Processing word list: \(item.name) with \(item.words.count) words")
                 return WordList(
+                    id: item.id,
                     name: item.name,
                     description: item.description,
                     words: item.words.map { wordData in
-                        Word(
+                        print("Loading word from JSON - ID: \(wordData.id), Text: \(wordData.text)")
+                        return Word(
+                            id: wordData.id,
                             text: wordData.text,
                             definition: wordData.definition,
                             exampleSentence: wordData.exampleSentence
@@ -62,13 +67,24 @@ class WordListLoader {
             let wordLists = loadWordLists()
             print("Loaded \(wordLists.count) word lists from JSON")
             
+            let group = DispatchGroup()
+            
             for wordList in wordLists {
+                group.enter()
                 print("Creating word list: \(wordList.name) with \(wordList.words.count) words")
-                let listID = DataManager.shared.createWordList(name: wordList.name, description: wordList.description)
-                for word in wordList.words {
-                    print("Adding word: \(word.text) to list: \(wordList.name)")
-                    DataManager.shared.addWordToList(word: word, listID: listID)
+                DataManager.shared.createWordList(id: wordList.id, name: wordList.name, description: wordList.description) { listID in
+                    if !listID.isEmpty {
+                        for word in wordList.words {
+                            print("Adding word: \(word.text) to list: \(wordList.name)")
+                            DataManager.shared.addWordToList(word: word, listID: listID)
+                        }
+                    }
+                    group.leave()
                 }
+            }
+            
+            group.notify(queue: .main) {
+                print("Finished loading all word lists into database")
             }
         }
     }

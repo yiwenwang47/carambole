@@ -112,8 +112,8 @@ class DataManager {
         }
     }
     
-    func createWordList(name: String, description: String? = nil) -> String {
-        let listID = UUID().uuidString
+    func createWordList(id: String? = nil, name: String, description: String? = nil, completion: @escaping (String) -> Void) {
+        let listID = id ?? UUID().uuidString
         dbQueue.async {
             print("Creating word list: \(name)")
             let insertQuery = "INSERT INTO word_lists (id, name, description) VALUES (?, ?, ?);"
@@ -130,13 +130,14 @@ class DataManager {
                 
                 if sqlite3_step(statement) == SQLITE_DONE {
                     print("Successfully created word list with ID: \(listID)")
+                    completion(listID)
                 } else {
                     print("Error creating word list: \(String(cString: sqlite3_errmsg(self.db)))")
+                    completion("")
                 }
             }
             sqlite3_finalize(statement)
         }
-        return listID
     }
     
     func addWordToList(word: Word, listID: String) {
@@ -261,7 +262,7 @@ class DataManager {
                 let exampleSentence = sqlite3_column_text(statement, 3) != nil ?
                     String(cString: sqlite3_column_text(statement, 3)) : nil
                 
-                print("Found word: \(text) (ID: \(id))")
+                print("Fetched word from database - ID: \(id), Text: \(text)")
                 
                 let word = Word(
                     id: id,

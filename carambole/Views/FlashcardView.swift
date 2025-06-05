@@ -25,12 +25,18 @@ struct FlashcardView: View {
                         if let nextWord = nextWord {
                             CardView(word: nextWord)
                                 .opacity(isTransitioning ? 1.0 : 0.0)
+                                .onAppear {
+                                    print("Displaying next word - ID: \(nextWord.id), Text: \(nextWord.text)")
+                                }
                         }
                         
                         CardView(word: word)
                             .offset(offset)
                             .rotationEffect(.degrees(Double(offset.width / 20)))
                             .opacity(currentCardOpacity)
+                            .onAppear {
+                                print("Displaying current word - ID: \(word.id), Text: \(word.text)")
+                            }
                             .highPriorityGesture(
                                 DragGesture()
                                     .onChanged { value in
