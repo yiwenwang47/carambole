@@ -43,13 +43,14 @@ struct RootView: View {
                         goBack()
                     }
                 }
-                .font(.system(size: 17, weight: .regular))
+                .font(.system(size: 16, weight: .regular))
                 .foregroundColor(.black)
                 .padding(.leading, 40)
+                .padding(.top, 40)
             }
             
             // Animated content region
-            ZStack {
+            ZStack {              
                 if case .home = screen {
                     HomeContent { title in
                         isNavigatingForward = true
