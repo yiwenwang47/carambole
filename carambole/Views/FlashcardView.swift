@@ -284,13 +284,14 @@ struct CircularProgressView: View {
         ZStack {
             // Background circle (faint stroke)
             Circle()
-                .stroke(Color.black.opacity(0.3), lineWidth: 3)
+                // .stroke(Color.black.opacity(0.3), lineWidth: 5)
+                .fill(Color(red: 255/255, green: 184/255, blue: 121/255))
                 .frame(width: size, height: size)
 
             // Foreground trimmed circle showing progress
             Circle()
                 .trim(from: 0, to: min(max(progress, 0), 1))
-                .stroke(Color.black, style: StrokeStyle(lineWidth: 3, lineCap: .round))
+                .stroke(Color.black, style: StrokeStyle(lineWidth: 5, lineCap: .round))
                 .rotationEffect(.degrees(-90)) // Start at top
                 .frame(width: size, height: size)
                 .animation(.easeInOut(duration: 0.3), value: progress)

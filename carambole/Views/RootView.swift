@@ -54,7 +54,7 @@ struct RootView: View {
                 if case .home = screen {
                     HomeContent { title in
                         isNavigatingForward = true
-                        withAnimation(.easeInOut) { 
+                        withAnimation(.spring(response: 0.5, dampingFraction: 0.8)) { 
                             screen = .book(title)
                         }
                     }
@@ -62,12 +62,13 @@ struct RootView: View {
                         insertion: isNavigatingForward ? .move(edge: .trailing) : .move(edge: .leading),
                         removal: isNavigatingForward ? .move(edge: .leading) : .move(edge: .trailing)
                     ))
+                    .drawingGroup()
                 }
                 
                 if case .book(let title) = screen {
                     BookContent(book: books.first(where: { $0.name == title })!) { action in
                         isNavigatingForward = true
-                        withAnimation(.easeInOut) {
+                        withAnimation(.spring(response: 0.5, dampingFraction: 0.8)) {
                             switch action {
                             case .learn(let book):
                                 screen = .learn(book)
@@ -80,12 +81,13 @@ struct RootView: View {
                         insertion: isNavigatingForward ? .move(edge: .trailing) : .move(edge: .leading),
                         removal: isNavigatingForward ? .move(edge: .leading) : .move(edge: .trailing)
                     ))
+                    .drawingGroup()
                 }
                 
                 if case .learn(let book) = screen {
                     BookDetailContent(book: book) { wordList in
                         isNavigatingForward = true
-                        withAnimation(.easeInOut) {
+                        withAnimation(.spring(response: 0.5, dampingFraction: 0.8)) {
                             screen = .wordList(wordList)
                         }
                     }
@@ -93,6 +95,7 @@ struct RootView: View {
                         insertion: isNavigatingForward ? .move(edge: .trailing) : .move(edge: .leading),
                         removal: isNavigatingForward ? .move(edge: .leading) : .move(edge: .trailing)
                     ))
+                    .drawingGroup()
                 }
                 
                 if case .review = screen {
