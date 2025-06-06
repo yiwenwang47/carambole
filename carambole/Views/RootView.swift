@@ -53,7 +53,7 @@ struct RootView: View {
                 }
                 .font(.system(size: 16, weight: .regular))
                 .foregroundColor(.black)
-                .padding(.leading, 40)
+                .padding(.leading, 42)
                 .padding(.top, 40)
                 .scaleEffect(isBackPressed ? 0.95 : 1.0)
                 .simultaneousGesture(
@@ -74,7 +74,7 @@ struct RootView: View {
                         }
                         .font(.system(size: 16, weight: .regular))
                         .foregroundColor(.black)
-                        .padding(.leading, 40)
+                        .padding(.leading, 42)
                         .padding(.top, 40)
                         .buttonStyle(.plain)
                         
@@ -134,7 +134,7 @@ struct RootView: View {
                         ))
                 }
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             .background(Color.white)
         }
         .onAppear {
@@ -187,7 +187,9 @@ struct RootView: View {
     }
 }
 
-// MARK: - Content Views
+// This is to align all buttons
+private let topPadding: CGFloat = 80
+
 private struct HomeContent: View {
     let onBookSelected: (String) -> Void
     
@@ -207,8 +209,9 @@ private struct HomeContent: View {
             .foregroundColor(.black)
             .buttonStyle(ScaleButtonStyle())
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .padding(.leading, 40)
+        .padding(.top, topPadding)
     }
 }
 
@@ -230,7 +233,7 @@ private struct BookContent: View {
                 Text("Learn")
                     .font(.system(size: 60))
                     .foregroundColor(.black)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .frame(maxWidth: .infinity, alignment: .topLeading)
             }
             .buttonStyle(ScaleButtonStyle())
             
@@ -241,12 +244,13 @@ private struct BookContent: View {
                 Text("Review")
                     .font(.system(size: 60))
                     .foregroundColor(.black)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .frame(maxWidth: .infinity, alignment: .topLeading)
             }
             .buttonStyle(ScaleButtonStyle())
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .padding(.leading, 40)
+        .padding(.top, topPadding)
     }
 }
 
@@ -263,12 +267,13 @@ private struct BookDetailContent: View {
                     Text(list.name)
                         .font(.system(size: 30))
                         .foregroundColor(.black)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .frame(maxWidth: .infinity, alignment: .topLeading)
                 }
                 .buttonStyle(ScaleButtonStyle())
             }
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .padding(.leading, 40)
+        .padding(.top, topPadding)
     }
 } 
