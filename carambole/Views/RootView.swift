@@ -30,6 +30,7 @@ struct RootView: View {
     @State private var books: [Book] = []
     @State private var isLoading = true
     @State private var isNavigatingForward = true
+    @State private var isBackPressed = false
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -47,6 +48,13 @@ struct RootView: View {
                 .foregroundColor(.black)
                 .padding(.leading, 40)
                 .padding(.top, 40)
+                .scaleEffect(isBackPressed ? 0.95 : 1.0)
+                .simultaneousGesture(
+                    DragGesture(minimumDistance: 0)
+                        .onChanged { _ in isBackPressed = true }
+                        .onEnded { _ in isBackPressed = false }
+                )
+                .buttonStyle(.plain)
             }
             
             // Animated content region
@@ -178,12 +186,14 @@ private struct HomeContent: View {
             }
             .font(.system(size: 60))
             .foregroundColor(.black)
+            .buttonStyle(ScaleButtonStyle())
             
             Button("Book 2") {
                 onBookSelected("Book 2")
             }
             .font(.system(size: 60))
             .foregroundColor(.black)
+            .buttonStyle(ScaleButtonStyle())
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
         .padding(.leading, 40)

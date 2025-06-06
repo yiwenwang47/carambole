@@ -16,54 +16,47 @@ struct ContentView: View {
         Group {
             if isLoading {
                 ProgressView("Loading books...")
-                    .transition(.asymmetric(
-                        insertion: .move(edge: .trailing),
-                        removal: .move(edge: .leading)
-                    ))
             } else if books.isEmpty {
                 Text("No books available")
                     .font(.headline)
-                    .transition(.asymmetric(
-                        insertion: .move(edge: .trailing),
-                        removal: .move(edge: .leading)
-                    ))
             } else {
-                if selectedBook == "Book 1" {
-                    VStack(alignment: .leading, spacing: 25) {
-                        NavigationLink(destination: BookDetailView(book: books[0])) {
-                            Text("Learn")
-                                .font(.system(size: 60))
-                                .foregroundColor(.black)
-                        }
-                        
-                        NavigationLink(destination: Text("Review Coming Soon")) {
-                            Text("Review")
-                                .font(.system(size: 60))
-                                .foregroundColor(.black)
-                        }
+                VStack(alignment: .leading, spacing: 25) {
+                    Button {
+                        print("Learn button tapped")
+                    } label: {
+                        Text("Learn")
+                            .font(.system(size: 60))
+                            .foregroundColor(.black)
+                            .frame(maxWidth: .infinity, alignment: .leading)
                     }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-                    .padding(.leading, 40)
-                    .background(Color.white)
-                    .transition(.asymmetric(
-                        insertion: .move(edge: .trailing),
-                        removal: .move(edge: .leading)
-                    ))
-                } else {
-                    BookDetailView(book: books[1])
+                    .buttonStyle(ScaleButtonStyle())
+                    
+                    Button {
+                        print("Review button tapped")
+                    } label: {
+                        Text("Review")
+                            .font(.system(size: 60))
+                            .foregroundColor(.black)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                    .buttonStyle(ScaleButtonStyle())
                 }
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+                .padding(.leading, 40)
+                .background(Color.white)
             }
         }
         .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
-                Button(action: {
+                Button {
                     presentationMode.wrappedValue.dismiss()
-                }) {
+                } label: {
                     Text("BACK")
                         .font(.system(size: 17, weight: .regular))
                         .foregroundColor(.black)
                 }
+                .buttonStyle(ScaleButtonStyle())
             }
         }
         .onAppear {
@@ -108,33 +101,31 @@ struct BookDetailView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 24) {
             ForEach(book.wordLists) { list in
-                NavigationLink {
-                    FlashcardSessionView(words: list.words)
+                Button {
+                    print("Word list tapped: \(list.name)")
                 } label: {
                     Text(list.name)
                         .font(.system(size: 30))
                         .foregroundColor(.black)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
+                .buttonStyle(ScaleButtonStyle())
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
         .padding(.leading, 40)
         .background(Color.white)
-        .transition(.asymmetric(
-            insertion: .move(edge: .trailing),
-            removal: .move(edge: .leading)
-        ))
         .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
-                Button(action: {
+                Button {
                     presentationMode.wrappedValue.dismiss()
-                }) {
+                } label: {
                     Text("BACK")
                         .font(.system(size: 17, weight: .regular))
                         .foregroundColor(.black)
                 }
+                .buttonStyle(ScaleButtonStyle())
             }
         }
     }
