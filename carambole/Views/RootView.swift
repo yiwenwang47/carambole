@@ -254,6 +254,7 @@ private struct BookDetailContent: View {
                         .foregroundColor(.black)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
+                .buttonStyle(ScaleButtonStyle())
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
