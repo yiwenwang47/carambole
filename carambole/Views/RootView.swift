@@ -1,4 +1,11 @@
 import SwiftUI
+import Foundation
+
+struct Book: Identifiable {
+    let id = UUID()
+    let name: String
+    let wordLists: [WordList]
+}
 
 struct RootView: View {
     enum Screen: Equatable { 
@@ -58,8 +65,9 @@ struct RootView: View {
             }
             
             // Animated content region
-            ZStack {              
-                if case .home = screen {
+            Group {
+                switch screen {
+                case .home:
                     HomeContent { title in
                         isNavigatingForward = true
                         withAnimation(.spring(response: 0.5, dampingFraction: 0.8)) { 
@@ -70,10 +78,8 @@ struct RootView: View {
                         insertion: isNavigatingForward ? .move(edge: .trailing) : .move(edge: .leading),
                         removal: isNavigatingForward ? .move(edge: .leading) : .move(edge: .trailing)
                     ))
-                    .drawingGroup()
-                }
-                
-                if case .book(let title) = screen {
+                    
+                case .book(let title):
                     BookContent(book: books.first(where: { $0.name == title })!) { action in
                         isNavigatingForward = true
                         withAnimation(.spring(response: 0.5, dampingFraction: 0.8)) {
@@ -89,10 +95,8 @@ struct RootView: View {
                         insertion: isNavigatingForward ? .move(edge: .trailing) : .move(edge: .leading),
                         removal: isNavigatingForward ? .move(edge: .leading) : .move(edge: .trailing)
                     ))
-                    .drawingGroup()
-                }
-                
-                if case .learn(let book) = screen {
+                    
+                case .learn(let book):
                     BookDetailContent(book: book) { wordList in
                         isNavigatingForward = true
                         withAnimation(.spring(response: 0.5, dampingFraction: 0.8)) {
@@ -103,18 +107,15 @@ struct RootView: View {
                         insertion: isNavigatingForward ? .move(edge: .trailing) : .move(edge: .leading),
                         removal: isNavigatingForward ? .move(edge: .leading) : .move(edge: .trailing)
                     ))
-                    .drawingGroup()
-                }
-                
-                if case .review = screen {
+                    
+                case .review:
                     Text("Review Coming Soon")
                         .transition(.asymmetric(
                             insertion: isNavigatingForward ? .move(edge: .trailing) : .move(edge: .leading),
                             removal: isNavigatingForward ? .move(edge: .leading) : .move(edge: .trailing)
                         ))
-                }
-                
-                if case .wordList(let wordList) = screen {
+                    
+                case .wordList(let wordList):
                     FlashcardSessionView(words: wordList.words)
                         .transition(.asymmetric(
                             insertion: isNavigatingForward ? .move(edge: .trailing) : .move(edge: .leading),
@@ -211,17 +212,27 @@ private struct BookContent: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 25) {
-            Button("Learn") {
+            Button {
+                print("Learn button tapped")
                 onAction(.learn(book))
+            } label: {
+                Text("Learn")
+                    .font(.system(size: 60))
+                    .foregroundColor(.black)
+                    .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .font(.system(size: 60))
-            .foregroundColor(.black)
+            .buttonStyle(ScaleButtonStyle())
             
-            Button("Review") {
+            Button {
+                print("Review button tapped")
                 onAction(.review)
+            } label: {
+                Text("Review")
+                    .font(.system(size: 60))
+                    .foregroundColor(.black)
+                    .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .font(.system(size: 60))
-            .foregroundColor(.black)
+            .buttonStyle(ScaleButtonStyle())
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
         .padding(.leading, 40)
