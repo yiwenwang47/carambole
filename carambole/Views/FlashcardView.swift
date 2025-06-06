@@ -320,46 +320,79 @@ struct SessionCompletionView: View {
     let skippedWords: [Word]
     let allWords: [Word]
     let onDismiss: () -> Void
-    
-    var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            VStack(alignment: .leading, spacing: 10) {
-                Text("Skipped")
-                    .font(.headline)
-                    .bold()
-                
-                if !skippedWords.isEmpty {
-                    ForEach(skippedWords) { word in
-                        Text(word.text)
-                            .font(.body)
-                    }
-                }
-            }
-            
 
-            let learnedWords = allWords.filter { word in !skippedWords.contains(where: { $0.id == word.id }) }
-            VStack(alignment: .leading, spacing: 10) {
-                Text("Learned")
-                    .font(.headline)
-                    .bold()
-                
-                if !learnedWords.isEmpty {
-                    ForEach(learnedWords) { word in
-                        Text(word.text)
-                            .font(.body)
+    var body: some View {
+        VStack {
+            Spacer().frame(height: 48)
+
+            VStack(alignment: .leading, spacing: 16) {
+                VStack(alignment: .leading, spacing: 10) {
+                    // 1) Your header text, bolded:
+                    Text("Skipped")
+                        .font(.system(size: 32))
+                        .bold()
+                        // 2) Overlay a Rectangle _just_ under the baseline:
+                        .overlay(
+                            Rectangle()
+                                .frame(height: 2)          // thickness you want
+                                .offset(y: 6)            // tweak until it sits right under the letters
+                                .foregroundColor(.primary) // same color as text
+                            ,
+                            alignment: .bottomLeading
+                        )
+                        .padding(.bottom, 16)
+
+                    if !skippedWords.isEmpty {
+                        ForEach(skippedWords) { word in
+                            Text(word.text)
+                                .font(.system(size: 20))
+                        }
                     }
                 }
+
+                let learnedWords = allWords.filter { word in
+                    !skippedWords.contains(where: { $0.id == word.id })
+                }
+
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("Learned")
+                        .font(.system(size: 32))
+                        .bold()
+                        .overlay(
+                            Rectangle()
+                                .frame(height: 2)
+                                .offset(y: 6)
+                                .foregroundColor(.primary)
+                            ,
+                            alignment: .bottomLeading
+                        )
+                        .padding(.top, 16)
+                        .padding(.bottom, 16)
+
+                    if !learnedWords.isEmpty {
+                        ForEach(learnedWords) { word in
+                            Text(word.text)
+                                .font(.system(size: 20))
+                        }
+                    }
+                }
+
+                Button("Done") {
+                    onDismiss()
+                }
+                .font(.system(size: 32))
+                .bold()
+                .buttonStyle(ScaleButtonStyle())
+                .padding(.top, 20)
             }
-            
-            Button("Done") {
-                onDismiss()
-            }
-            .buttonStyle(ScaleButtonStyle())
-            .padding()
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.horizontal, 40)
+
+            Spacer()
         }
-        .padding()
     }
 }
+
 
 struct FlashcardSessionView: View {
     let initialWords: [Word]
@@ -443,7 +476,6 @@ struct FlashcardSessionView: View {
                             dismiss()
                         }
                     )
-                    .padding(.top, 100)
                 }
                 Spacer()
             }
