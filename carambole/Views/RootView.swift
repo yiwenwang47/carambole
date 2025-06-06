@@ -68,10 +68,21 @@ struct RootView: View {
             Group {
                 switch screen {
                 case .home:
-                    HomeContent { title in
-                        isNavigatingForward = true
-                        withAnimation(.spring(response: 0.5, dampingFraction: 0.8)) { 
-                            screen = .book(title)
+                    VStack(alignment: .leading, spacing: 0) {
+                        Button("SEARCH") {
+                            // Add search action here
+                        }
+                        .font(.system(size: 16, weight: .regular))
+                        .foregroundColor(.black)
+                        .padding(.leading, 40)
+                        .padding(.top, 40)
+                        .buttonStyle(.plain)
+                        
+                        HomeContent { title in
+                            isNavigatingForward = true
+                            withAnimation(.spring(response: 0.5, dampingFraction: 0.8)) { 
+                                screen = .book(title)
+                            }
                         }
                     }
                     .transition(.asymmetric(
