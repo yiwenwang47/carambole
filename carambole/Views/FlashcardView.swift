@@ -71,6 +71,7 @@ struct FlashcardView: View {
                             )
                     }
                 }
+                .padding(.top, -40)  // Add negative top padding to move cards up
                 
                 // Buttons with absolute positioning
                 VStack {
