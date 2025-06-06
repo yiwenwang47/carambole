@@ -14,7 +14,9 @@ struct WordListSessionView: View {
                 FlashcardView(word: Binding(
                     get: { currentWord },
                     set: { _ in }
-                ), onSwipe: vm.handleSwipe)
+                ), onSwipe: vm.handleSwipe, onSkip: {
+                    vm.handleSwipe(.learned)
+                })
                 .animation(.spring(), value: vm.currentWord)
             } else {
                 Text("All words mastered for this list!")

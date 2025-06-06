@@ -3,6 +3,7 @@ import SwiftUI
 struct FlashcardView: View {
     @Binding var word: Word
     var onSwipe: (LearningState) -> Void
+    var onSkip: () -> Void
     var nextWord: Word?
     @State private var isLearned = false
     @State private var offset: CGSize = .zero
@@ -76,7 +77,22 @@ struct FlashcardView: View {
                     Spacer()
                     HStack {
                         Button(action: {
-                            handleLearned()  // Using the same handler for now
+                            // Start showing next card immediately with slower fade-in
+                            withAnimation(.easeIn(duration: 0.15)) {
+                                isTransitioning = true
+                            }
+                            
+                            // Slide the card to the right and fade out
+                            withAnimation(.easeOut(duration: 0.6)) {
+                                currentCardOpacity = 0.0
+                                offset = CGSize(width: 500, height: 0)
+                            } completion: {
+                                onSkip()
+                                // Reset the state
+                                offset = .zero
+                                currentCardOpacity = 1.0
+                                isTransitioning = false
+                            }
                         }) {
                             Text("Skip")
                                 .font(.system(size: 20))
@@ -300,6 +316,51 @@ struct CircularProgressView: View {
     }
 }
 
+struct SessionCompletionView: View {
+    let skippedWords: [Word]
+    let allWords: [Word]
+    let onDismiss: () -> Void
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 20) {
+            VStack(alignment: .leading, spacing: 10) {
+                Text("Skipped")
+                    .font(.headline)
+                    .bold()
+                
+                if !skippedWords.isEmpty {
+                    ForEach(skippedWords) { word in
+                        Text(word.text)
+                            .font(.body)
+                    }
+                }
+            }
+            
+
+            let learnedWords = allWords.filter { word in !skippedWords.contains(where: { $0.id == word.id }) }
+            VStack(alignment: .leading, spacing: 10) {
+                Text("Learned")
+                    .font(.headline)
+                    .bold()
+                
+                if !learnedWords.isEmpty {
+                    ForEach(learnedWords) { word in
+                        Text(word.text)
+                            .font(.body)
+                    }
+                }
+            }
+            
+            Button("Done") {
+                onDismiss()
+            }
+            .buttonStyle(ScaleButtonStyle())
+            .padding()
+        }
+        .padding()
+    }
+}
+
 struct FlashcardSessionView: View {
     let initialWords: [Word]
     @State private var words: [Word]
@@ -308,6 +369,7 @@ struct FlashcardSessionView: View {
     @State private var isCompleting = false
     @State private var isTransitioning = false
     @State private var viewKey = UUID()
+    @State private var skippedWords: [Word] = []
     @Environment(\.dismiss) private var dismiss
     @Environment(\.presentationMode) var presentationMode
     
@@ -336,6 +398,10 @@ struct FlashcardSessionView: View {
                             onSwipe: { newState in
                                 print("Swipe detected with state: \(newState)")
                                 handleSwipe(newState)
+                            },
+                            onSkip: {
+                                skippedWords.append(words[currentIndex])
+                                handleSwipe(.learned)
                             },
                             nextWord: currentIndex + 1 < words.count ? words[currentIndex + 1] : nil
                         )
@@ -369,16 +435,17 @@ struct FlashcardSessionView: View {
                             }
                     }
                 }
-                Spacer()
                 if isCompleting {
-                    Text("Next")
-                        .font(.system(size: 40))
-                        .foregroundColor(.black)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .onTapGesture {
+                    SessionCompletionView(
+                        skippedWords: skippedWords,
+                        allWords: initialWords,
+                        onDismiss: {
                             dismiss()
                         }
+                    )
+                    .padding(.top, 100)
                 }
+                Spacer()
             }
         }
         .navigationBarBackButtonHidden(true)
@@ -404,76 +471,50 @@ struct FlashcardSessionView: View {
     private func handleSwipe(_ newState: LearningState) {
         let currentWord = words[currentIndex]
         print("Handling swipe for word: \(currentWord.text) with state: \(newState)")
-        print("Current state - Index: \(currentIndex), Words count: \(words.count)")
         
         if newState == .learned {
-            print("Before increment - learnedWords: \(learnedWords), total: \(initialWords.count)")
-            withAnimation(.easeInOut(duration: 0.3)) {
-                learnedWords += 1
-            }
-            print("After increment - learnedWords: \(learnedWords), total: \(initialWords.count)")
-            print("Progress should be: \(Double(learnedWords) / Double(initialWords.count))")
-            
+            learnedWords += 1
             // Remove the current word from the deck
             words.remove(at: currentIndex)
-            print("Removed word at index \(currentIndex). New words count: \(words.count)")
-            
-            // Check if we've learned all words
-            if learnedWords == initialWords.count {
-                print("All words learned, completing session")
-                // Animate progress bar to completion before showing completion screen
-                withAnimation(.easeInOut(duration: 0.5)) {
-                    learnedWords = initialWords.count
-                }
-                // Delay the completion screen to allow progress bar animation to finish
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    withAnimation {
-                        isCompleting = true
-                    }
-                }
-                return
-            }
-            
-            // If we removed the last word, go back one index
-            if currentIndex >= words.count {
-                currentIndex = max(0, words.count - 1)
-                print("Adjusted current index to: \(currentIndex)")
-            }
         } else {
-            // For learning state (left swipe)
-            let currentWord = words.remove(at: currentIndex)
-            print("Removed current word: \(currentWord.text)")
+            // For learning state, reinsert the word at a random position after the next word
+            words.remove(at: currentIndex)
             
-            if words.isEmpty {
-                // If no more words, just reinsert the current word
-                words.append(currentWord)
-                currentIndex = 0
-                print("No more words, reinserted at index 0")
-            } else {
-                // Store the next card's index before modifying the deck
-                let nextCardIndex = currentIndex
-                
-                // Randomly insert the current word into the remaining deck
-                // Exclude the current position to avoid inserting before the next card
-                let randomIndex = Int.random(in: (currentIndex + 1)...words.count)
+            // Calculate the range for random insertion
+            let startIndex = currentIndex + 1
+            let endIndex = words.count
+            
+            if startIndex < endIndex {
+                // If there are words after the current position, insert randomly in that range
+                let randomIndex = Int.random(in: startIndex..<endIndex)
                 words.insert(currentWord, at: randomIndex)
-                print("Reinserted word at random index: \(randomIndex)")
-                
-                // Keep showing the previous next card
-                currentIndex = nextCardIndex
-                print("Keeping previous next card at index: \(currentIndex)")
+            } else {
+                // If this was the last word, append it
+                words.append(currentWord)
             }
         }
         
-        // Force view update by creating a new array and updating the view key
+        // Check if we've processed all words
+        if words.isEmpty {
+            print("All words processed, completing session")
+            withAnimation {
+                isCompleting = true
+            }
+            return
+        }
+        
+        // If we removed the last word, go back one index
+        if currentIndex >= words.count {
+            currentIndex = max(0, words.count - 1)
+        }
+        
+        // Force view update
         DispatchQueue.main.async {
-            print("Updating view state - Current index: \(currentIndex), Words count: \(words.count)")
             let newWords = Array(words)
             words = newWords
             viewKey = UUID()
-            print("View state updated - New index: \(currentIndex), New words count: \(newWords.count)")
         }
         
-        print("Remaining words in deck: \(words.count)")
+        print("Current state - Learned: \(learnedWords), Remaining: \(words.count)")
     }
 }
