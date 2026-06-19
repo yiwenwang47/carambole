@@ -13,6 +13,8 @@ struct caramboleApp: App {
         #if DEBUG
         DrillEngine._selfTest()
         SRSScheduler._selfTest()
+        StudyScheduler._selfTest()
+        StudySettingsStore._selfTest()
         #endif
     }
 

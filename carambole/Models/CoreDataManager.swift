@@ -90,7 +90,8 @@ class DataManager {
                 learning_state TEXT,
                 last_review_date REAL,
                 next_review_date REAL,
-                interval_days INTEGER
+                interval_days INTEGER,
+                first_seen_date REAL
             );
             """
         ]
@@ -275,14 +276,23 @@ class DataManager {
 
     // MARK: - Review Status (spaced repetition)
 
-    /// Insert or replace the persisted SRS state for one exercise. Dates are
-    /// stored as REAL (`timeIntervalSince1970`); nil dates bind NULL.
+    /// Upsert the persisted SRS state for one exercise. Dates are stored as REAL
+    /// (`timeIntervalSince1970`); nil dates bind NULL. `first_seen_date` is stamped
+    /// once on first write (the introduction time) and PRESERVED on later writes
+    /// via COALESCE — a true UPSERT, not INSERT OR REPLACE (which would delete the
+    /// row and lose the original `first_seen_date`).
     func upsertReviewStatus(_ status: ReviewStatus) {
         dbQueue.async {
             let query = """
-                INSERT OR REPLACE INTO review_status
-                    (exercise_id, learning_state, last_review_date, next_review_date, interval_days)
-                VALUES (?, ?, ?, ?, ?);
+                INSERT INTO review_status
+                    (exercise_id, learning_state, last_review_date, next_review_date, interval_days, first_seen_date)
+                VALUES (?, ?, ?, ?, ?, ?)
+                ON CONFLICT(exercise_id) DO UPDATE SET
+                    learning_state   = excluded.learning_state,
+                    last_review_date = excluded.last_review_date,
+                    next_review_date = excluded.next_review_date,
+                    interval_days    = excluded.interval_days,
+                    first_seen_date  = COALESCE(review_status.first_seen_date, excluded.first_seen_date);
             """
             var statement: OpaquePointer?
             if sqlite3_prepare_v2(self.db, query, -1, &statement, nil) == SQLITE_OK {
@@ -299,6 +309,9 @@ class DataManager {
                     sqlite3_bind_null(statement, 4)
                 }
                 sqlite3_bind_int(statement, 5, Int32(status.intervalDays))
+                // First grade stamps the introduction time; COALESCE keeps it stable later.
+                let firstSeen = status.lastReviewDate?.timeIntervalSince1970 ?? Date().timeIntervalSince1970
+                sqlite3_bind_double(statement, 6, firstSeen)
 
                 if sqlite3_step(statement) != SQLITE_DONE {
                     print("Error upserting review status: \(String(cString: sqlite3_errmsg(self.db)))")
@@ -366,6 +379,85 @@ class DataManager {
                 }
             } else {
                 print("Error preparing due exercises fetch: \(String(cString: sqlite3_errmsg(self.db)))")
+            }
+            sqlite3_finalize(statement)
+        }
+        return ids
+    }
+
+    /// All exercise IDs that have ever been graded (i.e. have a `review_status`
+    /// row). Used to distinguish seen exercises from brand-new ones.
+    func fetchSeenExerciseIDs() -> Set<String> {
+        var ids: Set<String> = []
+        dbQueue.sync {
+            let query = "SELECT exercise_id FROM review_status;"
+            var statement: OpaquePointer?
+            if sqlite3_prepare_v2(self.db, query, -1, &statement, nil) == SQLITE_OK {
+                while sqlite3_step(statement) == SQLITE_ROW {
+                    if sqlite3_column_text(statement, 0) != nil {
+                        ids.insert(String(cString: sqlite3_column_text(statement, 0)))
+                    }
+                }
+            } else {
+                print("Error preparing seen exercises fetch: \(String(cString: sqlite3_errmsg(self.db)))")
+            }
+            sqlite3_finalize(statement)
+        }
+        return ids
+    }
+
+    /// Number of exercises first introduced on the calendar day containing `day`,
+    /// over the half-open interval `[startOfDay, startOfNextDay)`. Drives the
+    /// `newPerDay` hard cap.
+    func countNewIntroduced(on day: Date) -> Int {
+        var count = 0
+        let calendar = Calendar.current
+        let startOfDay = calendar.startOfDay(for: day)
+        let startOfNextDay = calendar.date(byAdding: .day, value: 1, to: startOfDay) ?? startOfDay
+        dbQueue.sync {
+            let query = """
+                SELECT COUNT(*) FROM review_status
+                WHERE first_seen_date >= ? AND first_seen_date < ?;
+            """
+            var statement: OpaquePointer?
+            if sqlite3_prepare_v2(self.db, query, -1, &statement, nil) == SQLITE_OK {
+                sqlite3_bind_double(statement, 1, startOfDay.timeIntervalSince1970)
+                sqlite3_bind_double(statement, 2, startOfNextDay.timeIntervalSince1970)
+                if sqlite3_step(statement) == SQLITE_ROW {
+                    count = Int(sqlite3_column_int(statement, 0))
+                }
+            } else {
+                print("Error preparing new-introduced count: \(String(cString: sqlite3_errmsg(self.db)))")
+            }
+            sqlite3_finalize(statement)
+        }
+        return count
+    }
+
+    /// Not-yet-due review items, soonest-due first (then lowest interval), capped
+    /// at `limit`. Used to top up the daily review queue toward the soft target.
+    /// Returns an empty array immediately when `limit <= 0`.
+    func fetchOverflowExerciseIDs(asOf now: Date, limit: Int) -> [String] {
+        guard limit > 0 else { return [] }
+        var ids: [String] = []
+        dbQueue.sync {
+            let query = """
+                SELECT exercise_id FROM review_status
+                WHERE next_review_date IS NOT NULL AND next_review_date > ?
+                ORDER BY next_review_date ASC, interval_days ASC
+                LIMIT ?;
+            """
+            var statement: OpaquePointer?
+            if sqlite3_prepare_v2(self.db, query, -1, &statement, nil) == SQLITE_OK {
+                sqlite3_bind_double(statement, 1, now.timeIntervalSince1970)
+                sqlite3_bind_int(statement, 2, Int32(limit))
+                while sqlite3_step(statement) == SQLITE_ROW {
+                    if sqlite3_column_text(statement, 0) != nil {
+                        ids.append(String(cString: sqlite3_column_text(statement, 0)))
+                    }
+                }
+            } else {
+                print("Error preparing overflow exercises fetch: \(String(cString: sqlite3_errmsg(self.db)))")
             }
             sqlite3_finalize(statement)
         }
