@@ -67,6 +67,7 @@ struct DrillSessionView: View {
                     progress: progress,
                     onResult: { correct in
                         if correct { correctCount += 1 }
+                        grade(exercises[currentIndex], wasCorrect: correct)
                     },
                     onNext: advance
                 )
@@ -117,6 +118,16 @@ struct DrillSessionView: View {
         .padding(.horizontal, Spacing.screenH)
         .padding(.bottom, Spacing.xl)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+    }
+
+    // MARK: - Spaced-repetition grading
+
+    /// Persist the SRS outcome for one answered exercise: fetch-or-fresh → grade → upsert.
+    private func grade(_ exercise: Exercise, wasCorrect: Bool) {
+        let prev = DataManager.shared.fetchReviewStatus(exerciseID: exercise.id)
+            ?? SRSScheduler.fresh(exercise.id)
+        let next = SRSScheduler.grade(prev, pass: wasCorrect, now: Date())
+        DataManager.shared.upsertReviewStatus(next)
     }
 
     // MARK: - Advance

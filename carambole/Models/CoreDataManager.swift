@@ -273,6 +273,105 @@ class DataManager {
         return count
     }
 
+    // MARK: - Review Status (spaced repetition)
+
+    /// Insert or replace the persisted SRS state for one exercise. Dates are
+    /// stored as REAL (`timeIntervalSince1970`); nil dates bind NULL.
+    func upsertReviewStatus(_ status: ReviewStatus) {
+        dbQueue.async {
+            let query = """
+                INSERT OR REPLACE INTO review_status
+                    (exercise_id, learning_state, last_review_date, next_review_date, interval_days)
+                VALUES (?, ?, ?, ?, ?);
+            """
+            var statement: OpaquePointer?
+            if sqlite3_prepare_v2(self.db, query, -1, &statement, nil) == SQLITE_OK {
+                sqlite3_bind_text(statement, 1, (status.exerciseID as NSString).utf8String, -1, SQLITE_TRANSIENT)
+                sqlite3_bind_text(statement, 2, (status.learningState.rawValue as NSString).utf8String, -1, SQLITE_TRANSIENT)
+                if let last = status.lastReviewDate {
+                    sqlite3_bind_double(statement, 3, last.timeIntervalSince1970)
+                } else {
+                    sqlite3_bind_null(statement, 3)
+                }
+                if let next = status.nextReviewDate {
+                    sqlite3_bind_double(statement, 4, next.timeIntervalSince1970)
+                } else {
+                    sqlite3_bind_null(statement, 4)
+                }
+                sqlite3_bind_int(statement, 5, Int32(status.intervalDays))
+
+                if sqlite3_step(statement) != SQLITE_DONE {
+                    print("Error upserting review status: \(String(cString: sqlite3_errmsg(self.db)))")
+                }
+            } else {
+                print("Error preparing review status upsert: \(String(cString: sqlite3_errmsg(self.db)))")
+            }
+            sqlite3_finalize(statement)
+        }
+    }
+
+    /// Fetch the persisted SRS state for one exercise, or nil if never reviewed.
+    func fetchReviewStatus(exerciseID: String) -> ReviewStatus? {
+        var result: ReviewStatus?
+        dbQueue.sync {
+            let query = """
+                SELECT learning_state, last_review_date, next_review_date, interval_days
+                FROM review_status
+                WHERE exercise_id = ?;
+            """
+            var statement: OpaquePointer?
+            if sqlite3_prepare_v2(self.db, query, -1, &statement, nil) == SQLITE_OK {
+                sqlite3_bind_text(statement, 1, (exerciseID as NSString).utf8String, -1, SQLITE_TRANSIENT)
+                if sqlite3_step(statement) == SQLITE_ROW {
+                    let stateRaw = sqlite3_column_text(statement, 0) != nil ?
+                        String(cString: sqlite3_column_text(statement, 0)) : ""
+                    let learningState = LearningState(rawValue: stateRaw) ?? .new
+                    let lastReviewDate = sqlite3_column_type(statement, 1) != SQLITE_NULL ?
+                        Date(timeIntervalSince1970: sqlite3_column_double(statement, 1)) : nil
+                    let nextReviewDate = sqlite3_column_type(statement, 2) != SQLITE_NULL ?
+                        Date(timeIntervalSince1970: sqlite3_column_double(statement, 2)) : nil
+                    let intervalDays = Int(sqlite3_column_int(statement, 3))
+
+                    var status = ReviewStatus(exerciseID: exerciseID,
+                                              learningState: learningState,
+                                              intervalDays: intervalDays)
+                    status.lastReviewDate = lastReviewDate
+                    status.nextReviewDate = nextReviewDate
+                    result = status
+                }
+            } else {
+                print("Error preparing review status fetch: \(String(cString: sqlite3_errmsg(self.db)))")
+            }
+            sqlite3_finalize(statement)
+        }
+        return result
+    }
+
+    /// Exercise IDs whose next review is due on or before `date`. Used by the
+    /// Daily Review queue.
+    func fetchDueExerciseIDs(asOf date: Date) -> [String] {
+        var ids: [String] = []
+        dbQueue.sync {
+            let query = """
+                SELECT exercise_id FROM review_status
+                WHERE next_review_date IS NOT NULL AND next_review_date <= ?;
+            """
+            var statement: OpaquePointer?
+            if sqlite3_prepare_v2(self.db, query, -1, &statement, nil) == SQLITE_OK {
+                sqlite3_bind_double(statement, 1, date.timeIntervalSince1970)
+                while sqlite3_step(statement) == SQLITE_ROW {
+                    if sqlite3_column_text(statement, 0) != nil {
+                        ids.append(String(cString: sqlite3_column_text(statement, 0)))
+                    }
+                }
+            } else {
+                print("Error preparing due exercises fetch: \(String(cString: sqlite3_errmsg(self.db)))")
+            }
+            sqlite3_finalize(statement)
+        }
+        return ids
+    }
+
     private func fetchExercises(forTopicID topicID: String) -> [Exercise] {
         var exercises: [Exercise] = []
         let query = """

@@ -12,6 +12,7 @@ struct caramboleApp: App {
     init() {
         #if DEBUG
         DrillEngine._selfTest()
+        SRSScheduler._selfTest()
         #endif
     }
 
