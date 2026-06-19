@@ -96,6 +96,37 @@ class DataManager {
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 FOREIGN KEY (word_id) REFERENCES words(id)
             );
+            """,
+            """
+            CREATE TABLE IF NOT EXISTS topics (
+                id TEXT PRIMARY KEY,
+                title TEXT NOT NULL,
+                sort_order INTEGER,
+                prerequisite_id TEXT,
+                rule_note TEXT
+            );
+            """,
+            """
+            CREATE TABLE IF NOT EXISTS exercises (
+                id TEXT PRIMARY KEY,
+                topic_id TEXT NOT NULL,
+                type TEXT,
+                prompt TEXT,
+                cue TEXT,
+                answer_tokens TEXT,
+                token_bank TEXT,
+                input_mode TEXT,
+                explanation TEXT
+            );
+            """,
+            """
+            CREATE TABLE IF NOT EXISTS review_status (
+                exercise_id TEXT PRIMARY KEY,
+                learning_state TEXT,
+                last_review_date REAL,
+                next_review_date REAL,
+                interval_days INTEGER
+            );
             """
         ]
         
@@ -317,7 +348,229 @@ class DataManager {
         sqlite3_finalize(statement)
         return questions
     }
-    
+
+    // MARK: - Grammar Topics & Exercises
+
+    func upsertTopic(_ topic: GrammarTopic) {
+        dbQueue.async {
+            print("Upserting topic: \(topic.title) (ID: \(topic.id))")
+
+            // Start transaction
+            if sqlite3_exec(self.db, "BEGIN TRANSACTION;", nil, nil, nil) != SQLITE_OK {
+                print("Error starting transaction")
+                return
+            }
+
+            // Upsert topic row
+            let upsertTopicQuery = """
+                INSERT OR REPLACE INTO topics (id, title, sort_order, prerequisite_id, rule_note)
+                VALUES (?, ?, ?, ?, ?);
+            """
+            var statement: OpaquePointer?
+
+            if sqlite3_prepare_v2(self.db, upsertTopicQuery, -1, &statement, nil) == SQLITE_OK {
+                sqlite3_bind_text(statement, 1, (topic.id as NSString).utf8String, -1, nil)
+                sqlite3_bind_text(statement, 2, (topic.title as NSString).utf8String, -1, nil)
+                sqlite3_bind_int(statement, 3, Int32(topic.sortOrder))
+                if let prerequisiteID = topic.prerequisiteID {
+                    sqlite3_bind_text(statement, 4, (prerequisiteID as NSString).utf8String, -1, nil)
+                } else {
+                    sqlite3_bind_null(statement, 4)
+                }
+                sqlite3_bind_text(statement, 5, (topic.ruleNote as NSString).utf8String, -1, nil)
+
+                if sqlite3_step(statement) == SQLITE_DONE {
+                    print("Successfully upserted topic with ID: \(topic.id)")
+                } else {
+                    print("Error upserting topic: \(String(cString: sqlite3_errmsg(self.db)))")
+                    sqlite3_exec(self.db, "ROLLBACK;", nil, nil, nil)
+                    sqlite3_finalize(statement)
+                    return
+                }
+            } else {
+                print("Error preparing topic upsert: \(String(cString: sqlite3_errmsg(self.db)))")
+                sqlite3_exec(self.db, "ROLLBACK;", nil, nil, nil)
+                sqlite3_finalize(statement)
+                return
+            }
+            sqlite3_finalize(statement)
+
+            // Upsert each exercise row
+            let upsertExerciseQuery = """
+                INSERT OR REPLACE INTO exercises (id, topic_id, type, prompt, cue, answer_tokens, token_bank, input_mode, explanation)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
+            """
+            for exercise in topic.exercises {
+                var exerciseStatement: OpaquePointer?
+                if sqlite3_prepare_v2(self.db, upsertExerciseQuery, -1, &exerciseStatement, nil) == SQLITE_OK {
+                    let answerTokensJSON = (try? JSONEncoder().encode(exercise.answerTokens))
+                        .flatMap { String(data: $0, encoding: .utf8) } ?? "[]"
+                    let tokenBankJSON = (try? JSONEncoder().encode(exercise.tokenBank))
+                        .flatMap { String(data: $0, encoding: .utf8) } ?? "[]"
+
+                    sqlite3_bind_text(exerciseStatement, 1, (exercise.id as NSString).utf8String, -1, nil)
+                    sqlite3_bind_text(exerciseStatement, 2, (exercise.topicID as NSString).utf8String, -1, nil)
+                    sqlite3_bind_text(exerciseStatement, 3, (exercise.type.rawValue as NSString).utf8String, -1, nil)
+                    sqlite3_bind_text(exerciseStatement, 4, (exercise.prompt as NSString).utf8String, -1, nil)
+                    if let cue = exercise.cue {
+                        sqlite3_bind_text(exerciseStatement, 5, (cue as NSString).utf8String, -1, nil)
+                    } else {
+                        sqlite3_bind_null(exerciseStatement, 5)
+                    }
+                    sqlite3_bind_text(exerciseStatement, 6, (answerTokensJSON as NSString).utf8String, -1, nil)
+                    sqlite3_bind_text(exerciseStatement, 7, (tokenBankJSON as NSString).utf8String, -1, nil)
+                    sqlite3_bind_text(exerciseStatement, 8, (exercise.inputMode.rawValue as NSString).utf8String, -1, nil)
+                    sqlite3_bind_text(exerciseStatement, 9, (exercise.explanation as NSString).utf8String, -1, nil)
+
+                    if sqlite3_step(exerciseStatement) == SQLITE_DONE {
+                        print("Successfully upserted exercise with ID: \(exercise.id)")
+                    } else {
+                        print("Error upserting exercise: \(String(cString: sqlite3_errmsg(self.db)))")
+                        sqlite3_exec(self.db, "ROLLBACK;", nil, nil, nil)
+                        sqlite3_finalize(exerciseStatement)
+                        return
+                    }
+                } else {
+                    print("Error preparing exercise upsert: \(String(cString: sqlite3_errmsg(self.db)))")
+                    sqlite3_exec(self.db, "ROLLBACK;", nil, nil, nil)
+                    sqlite3_finalize(exerciseStatement)
+                    return
+                }
+                sqlite3_finalize(exerciseStatement)
+            }
+
+            // Commit transaction
+            if sqlite3_exec(self.db, "COMMIT;", nil, nil, nil) != SQLITE_OK {
+                print("Error committing transaction")
+                sqlite3_exec(self.db, "ROLLBACK;", nil, nil, nil)
+            }
+        }
+    }
+
+    func fetchAllTopics(completion: @escaping ([GrammarTopic]) -> Void) {
+        print("Fetching all topics...")
+        dbQueue.async {
+            var topics: [GrammarTopic] = []
+            let query = "SELECT id, title, sort_order, prerequisite_id, rule_note FROM topics ORDER BY sort_order;"
+            var statement: OpaquePointer?
+
+            if sqlite3_prepare_v2(self.db, query, -1, &statement, nil) == SQLITE_OK {
+                while sqlite3_step(statement) == SQLITE_ROW {
+                    let id = String(cString: sqlite3_column_text(statement, 0))
+                    let title = String(cString: sqlite3_column_text(statement, 1))
+                    let sortOrder = Int(sqlite3_column_int(statement, 2))
+                    let prerequisiteID = sqlite3_column_text(statement, 3) != nil ?
+                        String(cString: sqlite3_column_text(statement, 3)) : nil
+                    let ruleNote = sqlite3_column_text(statement, 4) != nil ?
+                        String(cString: sqlite3_column_text(statement, 4)) : ""
+
+                    print("Found topic: \(title) (ID: \(id))")
+
+                    let exercises = self.fetchExercises(forTopicID: id)
+                    print("Found \(exercises.count) exercises for topic \(title)")
+
+                    let topic = GrammarTopic(
+                        id: id,
+                        title: title,
+                        sortOrder: sortOrder,
+                        prerequisiteID: prerequisiteID,
+                        ruleNote: ruleNote,
+                        exercises: exercises
+                    )
+                    topics.append(topic)
+                }
+            } else {
+                print("Error preparing fetch statement: \(String(cString: sqlite3_errmsg(self.db)))")
+            }
+            sqlite3_finalize(statement)
+            completion(topics)
+        }
+    }
+
+    func topicCount() -> Int {
+        var count = 0
+        dbQueue.sync {
+            let query = "SELECT COUNT(*) FROM topics;"
+            var statement: OpaquePointer?
+            if sqlite3_prepare_v2(self.db, query, -1, &statement, nil) == SQLITE_OK {
+                if sqlite3_step(statement) == SQLITE_ROW {
+                    count = Int(sqlite3_column_int(statement, 0))
+                }
+            } else {
+                print("Error preparing topic count statement: \(String(cString: sqlite3_errmsg(self.db)))")
+            }
+            sqlite3_finalize(statement)
+        }
+        return count
+    }
+
+    private func fetchExercises(forTopicID topicID: String) -> [Exercise] {
+        var exercises: [Exercise] = []
+        let query = """
+            SELECT id, topic_id, type, prompt, cue, answer_tokens, token_bank, input_mode, explanation
+            FROM exercises
+            WHERE topic_id = ?;
+        """
+        var statement: OpaquePointer?
+
+        if sqlite3_prepare_v2(self.db, query, -1, &statement, nil) == SQLITE_OK {
+            sqlite3_bind_text(statement, 1, (topicID as NSString).utf8String, -1, nil)
+
+            while sqlite3_step(statement) == SQLITE_ROW {
+                let id = String(cString: sqlite3_column_text(statement, 0))
+                let exerciseTopicID = String(cString: sqlite3_column_text(statement, 1))
+                let typeRaw = sqlite3_column_text(statement, 2) != nil ?
+                    String(cString: sqlite3_column_text(statement, 2)) : ""
+                let prompt = sqlite3_column_text(statement, 3) != nil ?
+                    String(cString: sqlite3_column_text(statement, 3)) : ""
+                let cue = sqlite3_column_text(statement, 4) != nil ?
+                    String(cString: sqlite3_column_text(statement, 4)) : nil
+                let answerTokensJSON = sqlite3_column_text(statement, 5) != nil ?
+                    String(cString: sqlite3_column_text(statement, 5)) : "[]"
+                let tokenBankJSON = sqlite3_column_text(statement, 6) != nil ?
+                    String(cString: sqlite3_column_text(statement, 6)) : "[]"
+                let inputModeRaw = sqlite3_column_text(statement, 7) != nil ?
+                    String(cString: sqlite3_column_text(statement, 7)) : ""
+                let explanation = sqlite3_column_text(statement, 8) != nil ?
+                    String(cString: sqlite3_column_text(statement, 8)) : ""
+
+                // Decode JSON arrays
+                var answerTokens: [String] = []
+                if let data = answerTokensJSON.data(using: .utf8),
+                   let parsed = try? JSONDecoder().decode([String].self, from: data) {
+                    answerTokens = parsed
+                }
+                var tokenBank: [String] = []
+                if let data = tokenBankJSON.data(using: .utf8),
+                   let parsed = try? JSONDecoder().decode([String].self, from: data) {
+                    tokenBank = parsed
+                }
+
+                // Decode enums from rawValue, skipping unrecognized rows
+                guard let type = ExerciseType(rawValue: typeRaw),
+                      let inputMode = InputMode(rawValue: inputModeRaw) else {
+                    print("Skipping exercise \(id) with unknown type/inputMode")
+                    continue
+                }
+
+                let exercise = Exercise(
+                    id: id,
+                    topicID: exerciseTopicID,
+                    type: type,
+                    prompt: prompt,
+                    cue: cue,
+                    answerTokens: answerTokens,
+                    tokenBank: tokenBank,
+                    inputMode: inputMode,
+                    explanation: explanation
+                )
+                exercises.append(exercise)
+            }
+        }
+        sqlite3_finalize(statement)
+        return exercises
+    }
+
     deinit {
         if let db = self.db {
             sqlite3_close(db)
