@@ -83,7 +83,9 @@ Branch: `french-grammar-pivot`. Status legend: ☐ todo · ◐ in progress · �
   errors / 21 exercises). Chain verified: only topic 01 unlocked.
 
 ### P4 — SRS / Daily Review
-- ☐ T8 `SRSScheduler` + persisted `review_status`
+- ☑ T8 `SRSScheduler` (ladder [1,3,7,16,35]) + persisted `review_status`, graded
+  per answer. NOTE deviation: unlock stays "finished once"; SRS drives retention
+  only (not unlock gating) — keeps progression fast (decision-aligned).
 - ☐ T9 Daily Review queue (`ReviewQueueView`)
 
 ### P5 — Content scale (ongoing, no code)
