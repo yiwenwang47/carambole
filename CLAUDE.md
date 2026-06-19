@@ -14,6 +14,10 @@ multiple choice), an unlockable topic tree, and spaced-repetition review.
    resurfaces due drills across finished topics.
 4. **Modular content** — one topic = one JSON in `Resources/Topics/`. Add grammar
    = author JSON + manifest line, zero Swift changes.
+5. **Ease-in English** — learner knows words but struggles with full sentences.
+   Every exercise carries an always-visible subtle English `translation` + a
+   tap-to-reveal English `hint`; each topic opens with a short English intro card
+   (the `ruleNote`). Light touch — present, not cluttering. (Task T-EN.)
 
 Full design: `docs/plans/2026-06-18-french-grammar-pivot-design.md`
 Implementation plan: `docs/plans/2026-06-18-french-grammar-pivot.md`
@@ -63,7 +67,12 @@ Branch: `french-grammar-pivot`. Status legend: ☐ todo · ◐ in progress · �
 
 ### P2 — Drill core
 - ☑ T4 `DrillEngine` (exact-token check)
-- ☐ T5 `DrillView` + token/choice input + `DrillSessionView` (consumes T-DS)
+- ☑ T5 `DrillView` + token/choice input + `DrillSessionView` (consumes T-DS).
+  Visually validated.
+
+### Ease-in English (before T7 content)
+- ☐ T-EN `Exercise.translation`/`hint` + schema/content + DrillView surfacing +
+  topic intro card. English for a beginner — see decision #5.
 
 ### P3 — Topic map + unlock
 - ☐ T6 `TopicMapView` nav; remove vocabulary flow
