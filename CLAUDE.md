@@ -13,14 +13,14 @@
 > `content-pipeline` fast-forward-merged into `main` and deleted; stray
 > `verbecc.log` gitignored. Not pushed.
 >
-> **STEP 2 — build the app-side scheduler. ✅ DONE (2026-06-19).** On branch
-> `scheduler` (5 commits, off main): (a) Settings + daily home ("X new · Y due",
-> `newPerDay` 20/hard-cap 5–40 + soft review target 200/exceedable), (b) new intake
-> decoupled from topic completion (`StudyScheduler.newQueue` across the course),
-> (c) overflow review top-up. Ladder `[1,3,7,16,35]` unchanged. Build-green +
-> screenshot-validated; spec + code-quality + whole-branch reviews passed. **NOT
-> merged to main / not pushed — awaiting user decision.** Plan +
-> details: `docs/plans/2026-06-19-scheduler-implementation.md`, progress §P6.
+> **STEP 2 — build the app-side scheduler. ✅ DONE + MERGED (2026-06-19).**
+> Fast-forward-merged into `main` (not pushed); branch deleted. (a) Settings +
+> daily home ("X new · Y due", `newPerDay` 20/hard-cap 5–40 + soft review target
+> 200/exceedable), (b) new intake decoupled from topic completion
+> (`StudyScheduler.newQueue` across the course), (c) overflow review top-up. Ladder
+> `[1,3,7,16,35]` unchanged. Build-green + screenshot-validated; spec +
+> code-quality + whole-branch reviews passed. Plan + details:
+> `docs/plans/2026-06-19-scheduler-implementation.md`, progress §P6.
 >
 > **STEP 3 (optional, ask first)** — run the pipeline at scale (5 agents × 100 →
 > ~500) via `tools/content_pipeline/` (`prepare_all.py` → agents on
@@ -151,7 +151,7 @@ Review surfaces SRS-due items. Adding a topic = JSON + manifest line.
   sheet), Apprendre = cross-course new intake (decoupled from topic completion),
   Réviser = due + overflow top-up. Topic ToC + topic-tap drilling preserved.
   Build-green + screenshot-validated; spec + code-quality + whole-branch reviews
-  passed. NOT merged to main / not pushed (awaiting user decision).
+  passed. Fast-forward-merged into `main` (not pushed); `scheduler` branch deleted.
 
 ## Authoring a new grammar module
 
