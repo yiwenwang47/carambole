@@ -86,7 +86,13 @@ Branch: `french-grammar-pivot`. Status legend: ☐ todo · ◐ in progress · �
 - ☑ T8 `SRSScheduler` (ladder [1,3,7,16,35]) + persisted `review_status`, graded
   per answer. NOTE deviation: unlock stays "finished once"; SRS drives retention
   only (not unlock gating) — keeps progression fast (decision-aligned).
-- ☐ T9 Daily Review queue (`ReviewQueueView`)
+- ☑ T9 Daily Review queue (`ReviewQueueView`) — reuses `DrillSessionView` (SRS
+  re-grades on review), real `dueCount` on the map, editorial empty state.
+  Visually validated.
+
+**PIVOT COMPLETE** (T1–T9 + T-DS + T-EN). App: topic map → English intro →
+tap-build/MC drills with translation + Indice → completion unlocks next; Daily
+Review surfaces SRS-due items. Adding a topic = JSON + manifest line.
 
 ### P5 — Content scale (ongoing, no code)
 - Author topic JSON modules one at a time.
