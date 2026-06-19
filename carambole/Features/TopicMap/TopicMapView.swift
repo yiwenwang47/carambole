@@ -21,13 +21,10 @@ struct TopicMapView: View {
 
     /// The topic currently presented as a drill session (nil = none).
     @State private var presentedDrill: DrillPresentation?
-    /// Routes to the daily-review placeholder.
+    /// Routes to the daily-review queue.
     @State private var showingReview = false
     /// Drives the staggered reveal once the view appears.
     @State private var revealed = false
-
-    /// Daily-review due count. Hardcoded for now; the real queue is a later task.
-    private let dueCount = 0
 
     var body: some View {
         ZStack {
@@ -48,6 +45,7 @@ struct TopicMapView: View {
         }
         .onAppear {
             viewModel.loadSeedingIfNeeded()
+            viewModel.refreshDue()
             withAnimation(.easeOut(duration: 0.45)) {
                 revealed = true
             }
@@ -58,8 +56,12 @@ struct TopicMapView: View {
                 presentedDrill = nil
             }
         }
-        .fullScreenCover(isPresented: $showingReview) {
-            DailyReviewPlaceholderView { showingReview = false }
+        .fullScreenCover(isPresented: $showingReview, onDismiss: {
+            viewModel.refreshDue()
+        }) {
+            ReviewQueueView(due: viewModel.dueExercises()) {
+                showingReview = false
+            }
         }
     }
 
@@ -91,9 +93,9 @@ struct TopicMapView: View {
                         .uppercaseLabel()
                 }
                 Spacer()
-                Text("\(dueCount) due")
+                Text("\(viewModel.dueCount) due")
                     .font(.appLabel)
-                    .foregroundColor(dueCount > 0 ? AppColor.saffronDeep : AppColor.graphite)
+                    .foregroundColor(viewModel.dueCount > 0 ? AppColor.saffronDeep : AppColor.graphite)
                 Image(systemName: "chevron.right")
                     .font(.system(size: 13, weight: .semibold))
                     .foregroundColor(AppColor.graphite)
@@ -187,41 +189,6 @@ private struct TopicRow: View {
             Image(systemName: "lock")
                 .font(.system(size: 14, weight: .regular))
                 .foregroundColor(AppColor.graphite)
-        }
-    }
-}
-
-// MARK: - Daily review placeholder
-
-/// Minimal placeholder for the daily review queue (real queue is a later task).
-struct DailyReviewPlaceholderView: View {
-    var onClose: () -> Void = {}
-
-    var body: some View {
-        ZStack {
-            AppColor.paper.ignoresSafeArea()
-
-            VStack(alignment: .leading, spacing: Spacing.lg) {
-                Spacer(minLength: Spacing.xl)
-
-                SectionLabel("Révision")
-
-                Text("Révision")
-                    .font(.appDisplay)
-                    .foregroundColor(AppColor.ink)
-
-                Text("Bientôt disponible")
-                    .font(.appExplain)
-                    .foregroundColor(AppColor.graphite)
-
-                Spacer()
-
-                Button("Retour") { onClose() }
-                    .buttonStyle(PrimaryButtonStyle())
-            }
-            .padding(.horizontal, Spacing.screenH)
-            .padding(.bottom, Spacing.xl)
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         }
     }
 }

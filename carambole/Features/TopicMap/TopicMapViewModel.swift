@@ -20,6 +20,10 @@ enum TopicState {
 final class TopicMapViewModel: ObservableObject {
     @Published var topics: [GrammarTopic] = []
 
+    /// Number of exercises currently due for spaced-repetition review. Drives
+    /// the "Révision" row's count on the topic map.
+    @Published var dueCount: Int = 0
+
     /// UserDefaults key holding the set of completed topic ids.
     private let completedKey = "completedTopicIDs"
 
@@ -48,6 +52,28 @@ final class TopicMapViewModel: ObservableObject {
         DataManager.shared.fetchAllTopics { [weak self] topics in
             DispatchQueue.main.async {
                 self?.topics = topics.sorted { $0.sortOrder < $1.sortOrder }
+                self?.refreshDue()
+            }
+        }
+    }
+
+    // MARK: - Daily review (spaced repetition)
+
+    /// All exercises across every loaded topic whose SRS schedule is due as of now.
+    func dueExercises() -> [Exercise] {
+        let due = Set(DataManager.shared.fetchDueExerciseIDs(asOf: Date()))
+        return topics.flatMap(\.exercises).filter { due.contains($0.id) }
+    }
+
+    /// Recomputes the due count from the SRS schedule and publishes it on the
+    /// main thread. Safe to call from the view on appear / after a review ends.
+    func refreshDue() {
+        let count = dueExercises().count
+        if Thread.isMainThread {
+            dueCount = count
+        } else {
+            DispatchQueue.main.async { [weak self] in
+                self?.dueCount = count
             }
         }
     }
