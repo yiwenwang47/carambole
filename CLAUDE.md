@@ -22,6 +22,19 @@ multiple choice), an unlockable topic tree, and spaced-repetition review.
 Full design: `docs/plans/2026-06-18-french-grammar-pivot-design.md`
 Implementation plan: `docs/plans/2026-06-18-french-grammar-pivot.md`
 Design system ("Le Cahier"): `docs/plans/2026-06-18-design-system.md`
+Schedule / SRS design (next phase): `docs/plans/2026-06-19-schedule-design.md`
+
+## Content pipeline (dev tooling)
+
+`tools/content_pipeline/` — generates grammar-correct conjugation exercises at
+volume. Deterministic seeds (verbecc, 3360 available) + LLM sub-agents writing
+prose, gated by a seed-fidelity contract so a hallucinated form can't ship. TDD,
+57 tests. Run: `cd tools && python3 -m pytest content_pipeline -q`. Workflow:
+`prepare_all.py` → dispatch N agents on `agent_template.md` → `finalize_all.py` →
+curate `out/staging/` into `carambole/Resources/Topics/`. See its `README.md`.
+
+**Pending (app-side, not built):** scheduler/home for `newPerDay`(20)+review-target
++overflow review — see schedule-design doc "Still to build".
 
 ## Architecture
 
