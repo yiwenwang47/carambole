@@ -1,16 +1,18 @@
 import Foundation
 
 struct ReviewStatus: Codable {
-    let wordID: String
+    let exerciseID: String
     var learningState: LearningState
     var lastReviewDate: Date?
     var nextReviewDate: Date?
-    
-    init(wordID: String, learningState: LearningState = .new) {
-        self.wordID = wordID
+    var intervalDays: Int
+
+    init(exerciseID: String, learningState: LearningState = .new, intervalDays: Int = 0) {
+        self.exerciseID = exerciseID
         self.learningState = learningState
         self.lastReviewDate = nil
         self.nextReviewDate = nil
+        self.intervalDays = intervalDays
     }
     
     mutating func updateReviewDates() {
