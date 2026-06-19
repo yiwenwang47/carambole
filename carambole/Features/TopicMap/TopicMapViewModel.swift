@@ -33,10 +33,9 @@ final class TopicMapViewModel: ObservableObject {
 
     // MARK: - Loading
 
-    /// Seeds topics if the database is empty, then loads them. Seeding runs off
-    /// the main thread; because `seedIfNeeded()` enqueues its writes on the
-    /// database's serial queue before returning, the subsequent fetch is
-    /// guaranteed to observe the seeded rows.
+    /// The single seed-then-load entry point: seeds topics if the database is
+    /// empty, then fetches them. Both run off the main thread on the database's
+    /// serial queue, in order, so this fetch observes the rows seeded just above.
     func loadSeedingIfNeeded() {
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             TopicLoader.seedIfNeeded()

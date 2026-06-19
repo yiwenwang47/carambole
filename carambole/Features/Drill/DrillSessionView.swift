@@ -138,7 +138,7 @@ struct DrillSessionView: View {
             SectionLabel(title)
 
             Text("Terminé")
-                .font(.system(size: 44, weight: .semibold, design: .serif))
+                .font(.appDisplay)
                 .foregroundColor(AppColor.ink)
 
             HStack(alignment: .firstTextBaseline, spacing: Spacing.sm) {

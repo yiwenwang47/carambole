@@ -57,6 +57,11 @@ enum AppColor {
 // MARK: - Typography
 
 extension Font {
+    /// Large display heading. Serif — the signature. ≈44, semibold.
+    static var appDisplay: Font {
+        .system(size: 44, weight: .semibold, design: .serif)
+    }
+
     /// Display / drill prompt. Serif — the signature. ≈32, semibold.
     static var appPrompt: Font {
         .system(size: 32, weight: .semibold, design: .serif)

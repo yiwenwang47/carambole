@@ -158,7 +158,7 @@ private struct TopicRow: View {
         HStack(alignment: .center, spacing: Spacing.md) {
             Text(String(format: "%02d", number))
                 .font(.system(size: 15, weight: .regular, design: .monospaced))
-                .foregroundColor(isLocked ? AppColor.graphite : AppColor.graphite)
+                .foregroundColor(isLocked ? AppColor.hairline : AppColor.graphite)
 
             Text(title)
                 .font(.appTitle)
@@ -207,7 +207,7 @@ struct DailyReviewPlaceholderView: View {
                 SectionLabel("Révision")
 
                 Text("Révision")
-                    .font(.system(size: 44, weight: .semibold, design: .serif))
+                    .font(.appDisplay)
                     .foregroundColor(AppColor.ink)
 
                 Text("Bientôt disponible")
