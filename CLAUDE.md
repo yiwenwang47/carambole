@@ -52,7 +52,7 @@ Branch: `french-grammar-pivot`. Status legend: ☐ todo · ◐ in progress · �
 ### P1 — Data spine
 - ☑ T1 `GrammarTopic` + `Exercise` models; rekey `ReviewStatus`
 - ☑ T2 SQLite tables + `DataManager` methods (topics/exercises/review_status)
-- ☐ T3 `TopicLoader` + first module (`03_passe_compose_etre.json`)
+- ☑ T3 `TopicLoader` + first module (`03_passe_compose_etre.json`)
 
 ### Design foundation (before any UI task)
 - ☐ T-DS `DesignSystem.swift` — palette, serif typography, `PrimaryButtonStyle`,
@@ -75,11 +75,23 @@ Branch: `french-grammar-pivot`. Status legend: ☐ todo · ◐ in progress · �
 
 ## Authoring a new grammar module
 
-1. Add `Resources/Topics/NN_slug.json` — one `GrammarTopic` + 5–6 `Exercise`s,
-   mixed `buildFromTokens` / `multipleChoice`.
-2. Add a `manifest.json` entry `{id, file, prerequisiteID}`; set `sortOrder` +
-   `prerequisiteID` to place it in the unlock chain.
+1. Add `carambole/Resources/Topics/NN_slug.json` — one `GrammarTopic` + 5–6
+   `Exercise`s, mixed `buildFromTokens` / `multipleChoice`. JSON keys must match
+   the Codable property names exactly (`sortOrder`, `prerequisiteID`, `topicID`,
+   `answerTokens`, `tokenBank`, `inputMode`). Set `sortOrder` + `prerequisiteID`
+   to place it in the unlock chain.
+2. Add the filename to `carambole/Resources/Topics/manifest.json` →
+   `{ "topicFiles": [ ... ] }`.
 3. No Swift changes. `TopicLoader.seedIfNeeded()` picks it up.
+
+**Gotchas (verified in T3):**
+- Xcode 16 `PBXFileSystemSynchronizedRootGroup` **flattens** `Resources/Topics/*`
+  to the bundle ROOT at build time (no `Topics/` subdir in the `.app`).
+  `TopicLoader.bundleURL` tries the subdirectory then falls back to root — works
+  either way; filenames must stay unique.
+- `seedIfNeeded()` only seeds when `topicCount() == 0`. To re-seed after editing
+  content during dev: `xcrun simctl uninstall booted wen.carambole` then reinstall
+  (clears the SQLite DB). Bundle id = `wen.carambole`.
 
 ## Execution
 
