@@ -87,7 +87,7 @@ struct DrillView: View {
             // Always-on, subtle English translation — one quiet line.
             if let translation = exercise.translation, !translation.isEmpty {
                 Text("“\(translation)”")
-                    .font(.system(size: 15, design: .serif).italic())
+                    .font(.appExplain)
                     .foregroundColor(AppColor.graphite)
                     .fixedSize(horizontal: false, vertical: true)
                     .padding(.leading, Spacing.sm)
@@ -113,8 +113,11 @@ struct DrillView: View {
             } label: {
                 HStack(spacing: 6) {
                     Image(systemName: "lightbulb")
+                        .font(.system(size: 13, weight: .semibold))
                     Text("Indice")
-                        .uppercaseLabel()
+                        .font(.appLabel)
+                        .textCase(.uppercase)
+                        .tracking(2)
                     Image(systemName: "chevron.down")
                         .font(.system(size: 11, weight: .semibold))
                         .rotationEffect(.degrees(showHint ? 180 : 0))
