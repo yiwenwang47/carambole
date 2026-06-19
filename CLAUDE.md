@@ -22,8 +22,9 @@
 > code-quality + whole-branch reviews passed. Plan + details:
 > `docs/plans/2026-06-19-scheduler-implementation.md`, progress §P6.
 >
-> **STEP 3 — sentence-composition track. ✅ BUILT (2026-06-19, branch
-> `sentence-composition`, not yet merged).** Replaced the 4 verb-conjugation
+> **STEP 3 — sentence-composition track. ✅ DONE + MERGED (2026-06-19).**
+> Fast-forward-merged into `main` (not pushed); `sentence-composition` branch
+> deleted. Replaced the 4 verb-conjugation
 > topics with a 4-topic **"Composer des phrases"** track (01 S-V-O · 02
 > adjectives · 03 prepositions · 04 negation+questions), shared daily-life vocab,
 > controlled distractors, English ease-in per drill; grammar-audited; `type` maps
@@ -33,8 +34,7 @@
 > scheduler refresh fix (topic-session dismiss now recomputes daily counts).
 > Full end-to-end verified on sim (home, intro card, build/MC drills,
 > correct/wrong, review, completion→unlock, count refresh). Design:
-> `docs/plans/2026-06-19-sentence-composition-track-design.md`. NEXT: merge to
-> main (prior steps ff-merged, not pushed).
+> `docs/plans/2026-06-19-sentence-composition-track-design.md`.
 >
 > **STEP 4 (optional, ask first)** — run the pipeline at scale (5 agents × 100 →
 > ~500) via `tools/content_pipeline/` (`prepare_all.py` → agents on
@@ -183,7 +183,8 @@ Review surfaces SRS-due items. Adding a topic = JSON + manifest line.
   holds submitted tokens + result). `DrillView`/`DrillSessionView`.
 - ☑ C4 Scheduler fix: topic-session `fullScreenCover` now refreshes daily counts
   on dismiss (was the only cover missing it → stale "X new"). `TopicMapView`.
-- Verified end-to-end on sim; lint + build green. NOT yet merged to `main`.
+- Verified end-to-end on sim; lint + build green. Fast-forward-merged into
+  `main` (not pushed); `sentence-composition` branch deleted.
 
 ## Authoring a new grammar module
 
