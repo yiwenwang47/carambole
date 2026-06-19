@@ -25,6 +25,11 @@ struct DrillView: View {
     var progress: Double = 0
     /// Called once when the answer is checked, with the result + submitted tokens.
     var onResult: (Bool, [String]) -> Void = { _, _ in }
+    /// Called instead of `onResult` when the user marked this drill "too easy"
+    /// before answering (the answer-once gate). The parent suspends the exercise
+    /// on a correct answer, or cleans its records on a wrong one. Same payload as
+    /// `onResult`: (correct, submitted tokens).
+    var onTooEasy: (Bool, [String]) -> Void = { _, _ in }
     /// Called when the user taps "Next" to advance to the following exercise.
     var onNext: () -> Void = {}
     /// Whether a previous exercise exists to return to.
@@ -47,6 +52,11 @@ struct DrillView: View {
     /// Whether the tap-to-reveal English hint is shown. Reset per-exercise
     /// automatically because DrillSessionView re-creates DrillView via `.id`.
     @State private var showHint = false
+    /// Set when the user taps "Trop facile": the drill enters the answer-once gate.
+    /// They must still answer correctly to remove it; a miss keeps it in the stack.
+    @State private var pendingTooEasy = false
+    /// True once a too-easy gate is passed, so the green footer reads "Retiré".
+    @State private var didRemove = false
 
     private var hasAnswer: Bool { !answer.isEmpty }
 
@@ -99,11 +109,17 @@ struct DrillView: View {
             // Pinned footer: the primary action stays reachable no matter how
             // tall the prompt / result banner grows (a tall "wrong" banner used
             // to push it under the home indicator with no way to scroll to it).
-            actionButton
-                .padding(.horizontal, Spacing.screenH)
-                .padding(.top, Spacing.sm)
-                .padding(.bottom, Spacing.md)
-                .background(AppColor.paper)
+            VStack(spacing: Spacing.sm) {
+                // "Too easy" affordance — only before checking, never in review.
+                if !checked && reviewData == nil {
+                    tooEasyControl
+                }
+                actionButton
+            }
+            .padding(.horizontal, Spacing.screenH)
+            .padding(.top, Spacing.sm)
+            .padding(.bottom, Spacing.md)
+            .background(AppColor.paper)
         }
         .background(AppColor.paper.ignoresSafeArea())
     }
@@ -281,6 +297,58 @@ struct DrillView: View {
         )
     }
 
+    // MARK: - "Too easy" gate control
+
+    /// Sits just above the footer button before checking. Tapping "Trop facile"
+    /// arms the answer-once gate; while armed it shows a reminder + an Annuler
+    /// escape. The actual remove/clean happens in `check()` on the next answer.
+    @ViewBuilder
+    private var tooEasyControl: some View {
+        if pendingTooEasy {
+            HStack(spacing: Spacing.sm) {
+                Image(systemName: "checkmark.seal")
+                    .font(.system(size: 13, weight: .semibold))
+                Text("Réponds correctement pour le retirer")
+                    .font(.appLabel)
+                Spacer()
+                Button("Annuler") {
+                    withAnimation(.spring(response: 0.3, dampingFraction: 0.85)) {
+                        pendingTooEasy = false
+                    }
+                }
+                .font(.appLabel)
+                .buttonStyle(.plain)
+            }
+            .foregroundColor(AppColor.saffronDeep)
+            .padding(.horizontal, Spacing.md)
+            .padding(.vertical, Spacing.sm)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(
+                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                    .fill(AppColor.saffron.opacity(0.16))
+            )
+            .transition(.opacity)
+        } else {
+            Button {
+                withAnimation(.spring(response: 0.3, dampingFraction: 0.85)) {
+                    pendingTooEasy = true
+                }
+            } label: {
+                HStack(spacing: 6) {
+                    Image(systemName: "checkmark.seal")
+                        .font(.system(size: 12, weight: .semibold))
+                    Text("Trop facile — retirer")
+                        .font(.appLabel)
+                        .textCase(.uppercase)
+                        .tracking(1.5)
+                }
+                .foregroundColor(AppColor.graphite)
+                .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+        }
+    }
+
     // MARK: - Action button (Check → Next)
 
     @ViewBuilder
@@ -309,8 +377,8 @@ struct DrillView: View {
     /// swaps from "Vérifier" to this confirmation.
     private var correctConfirmation: some View {
         HStack(spacing: Spacing.sm) {
-            Image(systemName: "checkmark.circle.fill")
-            Text("Correct")
+            Image(systemName: didRemove ? "checkmark.seal.fill" : "checkmark.circle.fill")
+            Text(didRemove ? "Retiré" : "Correct")
                 .font(.appLabel)
                 .fontWeight(.semibold)
                 .tracking(1)
@@ -335,7 +403,15 @@ struct DrillView: View {
             isCorrect = correct
             checked = true
         }
-        onResult(correct, answer)
+        if pendingTooEasy {
+            // Gate: correct removes the drill for good; wrong cleans its records
+            // and leaves it in the stack (re-markable next time). Either way the
+            // parent owns the persistence — see DrillSessionView.onTooEasy.
+            didRemove = correct
+            onTooEasy(correct, answer)
+        } else {
+            onResult(correct, answer)
+        }
 
         // Correct → linger on the green confirmation briefly, then auto-advance.
         // Wrong → stay put; the learner reads the answer and taps Suivant.

@@ -89,6 +89,11 @@ struct DrillSessionView: View {
                         submittedAnswers[currentIndex] = tokens
                         grade(exercises[currentIndex], wasCorrect: correct)
                     },
+                    onTooEasy: { correct, tokens in
+                        results[currentIndex] = correct
+                        submittedAnswers[currentIndex] = tokens
+                        tooEasy(exercises[currentIndex], answeredCorrectly: correct)
+                    },
                     onNext: advance,
                     canGoBack: currentIndex > 0,
                     onBack: goBack,
@@ -153,6 +158,18 @@ struct DrillSessionView: View {
             ?? SRSScheduler.fresh(exercise.id)
         let next = SRSScheduler.grade(prev, pass: wasCorrect, now: Date())
         DataManager.shared.upsertReviewStatus(next)
+    }
+
+    /// Resolve a "too easy" gate. Correct → grade (writes the row) then suspend it
+    /// so it never returns to the new/review stack. Wrong → clean its records so it
+    /// drops back to fresh/unseen and can be marked too-easy again next time.
+    private func tooEasy(_ exercise: Exercise, answeredCorrectly: Bool) {
+        if answeredCorrectly {
+            grade(exercise, wasCorrect: true)
+            DataManager.shared.setSuspended(exerciseID: exercise.id)
+        } else {
+            DataManager.shared.clearReviewStatus(exerciseID: exercise.id)
+        }
     }
 
     // MARK: - Advance

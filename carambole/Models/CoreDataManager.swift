@@ -91,11 +91,12 @@ class DataManager {
                 last_review_date REAL,
                 next_review_date REAL,
                 interval_days INTEGER,
-                first_seen_date REAL
+                first_seen_date REAL,
+                suspended INTEGER DEFAULT 0
             );
             """
         ]
-        
+
         for createTable in createTables {
             var statement: OpaquePointer?
             if sqlite3_prepare_v2(self.db, createTable, -1, &statement, nil) == SQLITE_OK {
@@ -107,6 +108,16 @@ class DataManager {
             }
             sqlite3_finalize(statement)
         }
+
+        // Lightweight column migration for DBs created before `suspended` existed.
+        // `review_status` is accumulated user data and is never reseeded, so a bare
+        // CREATE TABLE IF NOT EXISTS won't add the column to an upgraded install.
+        // ALTER TABLE ... ADD COLUMN is idempotent enough here: on a DB that already
+        // has the column it fails with "duplicate column name", which we ignore.
+        // (No PRAGMA user_version scheme yet — see CLAUDE.md "Known tech debt".)
+        sqlite3_exec(self.db,
+                     "ALTER TABLE review_status ADD COLUMN suspended INTEGER DEFAULT 0;",
+                     nil, nil, nil)
     }
 
     // MARK: - Grammar Topics & Exercises
@@ -371,7 +382,8 @@ class DataManager {
         dbQueue.sync {
             let query = """
                 SELECT exercise_id FROM review_status
-                WHERE next_review_date IS NOT NULL AND next_review_date <= ?;
+                WHERE next_review_date IS NOT NULL AND next_review_date <= ?
+                  AND (suspended IS NULL OR suspended = 0);
             """
             var statement: OpaquePointer?
             if sqlite3_prepare_v2(self.db, query, -1, &statement, nil) == SQLITE_OK {
@@ -463,6 +475,7 @@ class DataManager {
             let query = """
                 SELECT exercise_id FROM review_status
                 WHERE next_review_date IS NOT NULL AND next_review_date > ?
+                  AND (suspended IS NULL OR suspended = 0)
                 ORDER BY next_review_date ASC, interval_days ASC
                 LIMIT ?;
             """
@@ -481,6 +494,46 @@ class DataManager {
             sqlite3_finalize(statement)
         }
         return ids
+    }
+
+    /// Mark an exercise "too easy": suspend it so it never surfaces in the daily
+    /// review (`fetchDueExerciseIDs`) or overflow (`fetchOverflowExerciseIDs`)
+    /// queues again. The row is kept (so the id still counts as "seen" and is not
+    /// re-introduced as new); only the `suspended` flag flips. A no-op if no row
+    /// exists yet — callers suspend only AFTER a correct grade has written one.
+    func setSuspended(exerciseID: String) {
+        dbQueue.async {
+            let query = "UPDATE review_status SET suspended = 1 WHERE exercise_id = ?;"
+            var statement: OpaquePointer?
+            if sqlite3_prepare_v2(self.db, query, -1, &statement, nil) == SQLITE_OK {
+                sqlite3_bind_text(statement, 1, (exerciseID as NSString).utf8String, -1, SQLITE_TRANSIENT)
+                if sqlite3_step(statement) != SQLITE_DONE {
+                    print("Error suspending exercise: \(String(cString: sqlite3_errmsg(self.db)))")
+                }
+            } else {
+                print("Error preparing suspend update: \(String(cString: sqlite3_errmsg(self.db)))")
+            }
+            sqlite3_finalize(statement)
+        }
+    }
+
+    /// Delete an exercise's SRS row entirely — "clean records". Used when a
+    /// too-easy attempt is failed: the exercise drops back to fresh/unseen, so it
+    /// re-enters the new queue and can be marked too-easy again next time.
+    func clearReviewStatus(exerciseID: String) {
+        dbQueue.async {
+            let query = "DELETE FROM review_status WHERE exercise_id = ?;"
+            var statement: OpaquePointer?
+            if sqlite3_prepare_v2(self.db, query, -1, &statement, nil) == SQLITE_OK {
+                sqlite3_bind_text(statement, 1, (exerciseID as NSString).utf8String, -1, SQLITE_TRANSIENT)
+                if sqlite3_step(statement) != SQLITE_DONE {
+                    print("Error clearing review status: \(String(cString: sqlite3_errmsg(self.db)))")
+                }
+            } else {
+                print("Error preparing review-status delete: \(String(cString: sqlite3_errmsg(self.db)))")
+            }
+            sqlite3_finalize(statement)
+        }
     }
 
     private func fetchExercises(forTopicID topicID: String) -> [Exercise] {
