@@ -21,8 +21,18 @@ final class TopicMapViewModel: ObservableObject {
     @Published var topics: [GrammarTopic] = []
 
     /// Number of exercises currently due for spaced-repetition review. Drives
-    /// the "Révision" row's count on the topic map.
+    /// the "Y due" count on the home. Semantics = ACTUAL due (never the target).
     @Published var dueCount: Int = 0
+
+    /// How many NEW cards remain available to introduce today: the day's
+    /// remaining `newPerDay` budget, further capped by the count of unseen
+    /// exercises left in the course. Drives the "X new" count on the home.
+    @Published var newAvailableToday: Int = 0
+
+    /// The SHARED study-settings store — single source of truth for pacing.
+    /// The view passes this same instance into `SettingsView`, so an edit there
+    /// is observed here (and by `remainingNewBudget` / `reviewSessionExercises`).
+    let settingsStore: StudySettingsStore
 
     /// UserDefaults key holding the set of completed topic ids.
     private let completedKey = "completedTopicIDs"
@@ -30,7 +40,8 @@ final class TopicMapViewModel: ObservableObject {
     /// In-memory mirror of the persisted completed-topic set.
     private var completedIDs: Set<String>
 
-    init() {
+    init(settingsStore: StudySettingsStore = StudySettingsStore()) {
+        self.settingsStore = settingsStore
         let stored = UserDefaults.standard.array(forKey: completedKey) as? [String] ?? []
         self.completedIDs = Set(stored)
     }
@@ -52,29 +63,83 @@ final class TopicMapViewModel: ObservableObject {
         DataManager.shared.fetchAllTopics { [weak self] topics in
             DispatchQueue.main.async {
                 self?.topics = topics.sorted { $0.sortOrder < $1.sortOrder }
-                self?.refreshDue()
+                self?.refresh()
             }
         }
     }
 
-    // MARK: - Daily review (spaced repetition)
+    // MARK: - Daily session (new + review)
 
     /// All exercises across every loaded topic whose SRS schedule is due as of now.
+    /// Semantics = ACTUAL due — drives the home's "Y due" count.
     func dueExercises() -> [Exercise] {
         let due = Set(DataManager.shared.fetchDueExerciseIDs(asOf: Date()))
         return topics.flatMap(\.exercises).filter { due.contains($0.id) }
     }
 
-    /// Recomputes the due count from the SRS schedule and publishes it on the
-    /// main thread. Safe to call from the view on appear / after a review ends.
-    func refreshDue() {
-        let count = dueExercises().count
-        if Thread.isMainThread {
-            dueCount = count
-        } else {
-            DispatchQueue.main.async { [weak self] in
-                self?.dueCount = count
+    /// The day's remaining `newPerDay` headroom: the hard cap minus the number of
+    /// new cards already introduced today. Never negative.
+    private var remainingNewBudget: Int {
+        max(0, settingsStore.settings.newPerDay - DataManager.shared.countNewIntroduced(on: Date()))
+    }
+
+    /// The new exercises to introduce in today's "Apprendre" session: course
+    /// order, minus anything already seen, capped at today's remaining budget.
+    /// Read a fresh value at present-time (do NOT cache).
+    func todaysNewExercises() -> [Exercise] {
+        StudyScheduler.newQueue(
+            topics: topics,
+            seen: DataManager.shared.fetchSeenExerciseIDs(),
+            remainingBudget: remainingNewBudget
+        )
+    }
+
+    /// Not-yet-due overflow exercises (soonest-due / lowest-familiarity first),
+    /// mapped back to loaded `Exercise`s while PRESERVING the SQL order — built
+    /// via an id→Exercise dictionary so a Set lookup can't drop ordering. Capped
+    /// so the review queue grows toward (never truncates below) the target.
+    private func overflowExercises() -> [Exercise] {
+        let target = settingsStore.settings.reviewTarget
+        let limit = max(0, target - dueExercises().count)
+        let ids = DataManager.shared.fetchOverflowExerciseIDs(asOf: Date(), limit: limit)
+        let byID = Dictionary(
+            topics.flatMap(\.exercises).map { ($0.id, $0) },
+            uniquingKeysWith: { first, _ in first }
+        )
+        return ids.compactMap { byID[$0] }
+    }
+
+    /// The exercises for today's "Réviser" session: every due item (never
+    /// truncated) topped up with overflow toward the soft target.
+    /// Read a fresh value at present-time (do NOT cache).
+    func reviewSessionExercises() -> [Exercise] {
+        StudyScheduler.reviewQueue(
+            due: dueExercises(),
+            overflow: overflowExercises(),
+            target: settingsStore.settings.reviewTarget
+        )
+    }
+
+    /// Recomputes BOTH the due count and the available-new count from the SRS
+    /// schedule + settings, publishing on the main thread. Safe to call from the
+    /// view on appear / after a session or settings sheet dismisses.
+    func refresh() {
+        let work = { [weak self] in
+            guard let self else { return }
+            let due = self.dueExercises().count
+            // `todaysNewExercises().count` already applies BOTH the budget cap
+            // and the unseen filter, so it is exactly `newAvailableToday`.
+            let new = self.todaysNewExercises().count
+            DispatchQueue.main.async {
+                self.dueCount = due
+                self.newAvailableToday = new
             }
+        }
+        // DB reads use `dbQueue.sync` internally; keep them off the main thread.
+        if Thread.isMainThread {
+            DispatchQueue.global(qos: .userInitiated).async(execute: work)
+        } else {
+            work()
         }
     }
 

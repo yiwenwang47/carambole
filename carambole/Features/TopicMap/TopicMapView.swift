@@ -16,13 +16,25 @@ private struct DrillPresentation: Identifiable {
     var id: String { topic.id }
 }
 
+/// Identifiable snapshot of a daily session's exercises, captured at present-time
+/// so the cover renders a FRESH list (not a stale published value). A new `id`
+/// each time forces SwiftUI to rebuild the cover even for back-to-back sessions.
+private struct ExerciseSession: Identifiable {
+    let id = UUID()
+    let exercises: [Exercise]
+}
+
 struct TopicMapView: View {
     @StateObject private var viewModel = TopicMapViewModel()
 
     /// The topic currently presented as a drill session (nil = none).
     @State private var presentedDrill: DrillPresentation?
-    /// Routes to the daily-review queue.
-    @State private var showingReview = false
+    /// Today's NEW session ("Apprendre") — exercises captured fresh at present-time.
+    @State private var newSession: ExerciseSession?
+    /// Today's review session ("Réviser") — exercises captured fresh at present-time.
+    @State private var reviewSession: ExerciseSession?
+    /// Routes to the "Réglages" settings sheet.
+    @State private var showingSettings = false
     /// Drives the staggered reveal once the view appears.
     @State private var revealed = false
 
@@ -33,7 +45,7 @@ struct TopicMapView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: Spacing.lg) {
                     header
-                    reviewRow
+                    todayPanel
                     divider
                     topicList
                 }
@@ -45,7 +57,7 @@ struct TopicMapView: View {
         }
         .onAppear {
             viewModel.loadSeedingIfNeeded()
-            viewModel.refreshDue()
+            viewModel.refresh()
             withAnimation(.easeOut(duration: 0.45)) {
                 revealed = true
             }
@@ -56,53 +68,96 @@ struct TopicMapView: View {
                 presentedDrill = nil
             }
         }
-        .fullScreenCover(isPresented: $showingReview, onDismiss: {
-            viewModel.refreshDue()
-        }) {
-            ReviewQueueView(due: viewModel.dueExercises()) {
-                showingReview = false
+        .fullScreenCover(item: $newSession, onDismiss: {
+            viewModel.refresh()
+        }) { session in
+            DrillSessionView(title: "Nouveau", exercises: session.exercises) {
+                newSession = nil
             }
+        }
+        .fullScreenCover(item: $reviewSession, onDismiss: {
+            viewModel.refresh()
+        }) { session in
+            ReviewQueueView(due: session.exercises) {
+                reviewSession = nil
+            }
+        }
+        .sheet(isPresented: $showingSettings, onDismiss: {
+            viewModel.refresh()
+        }) {
+            SettingsView(store: viewModel.settingsStore)
         }
     }
 
     // MARK: - Header
 
     private var header: some View {
-        VStack(alignment: .leading, spacing: Spacing.sm) {
-            SectionLabel("Grammaire")
-            Text("Table des matières")
-                .font(.appTitle)
-                .foregroundColor(AppColor.ink)
-                .fixedSize(horizontal: false, vertical: true)
+        HStack(alignment: .firstTextBaseline) {
+            VStack(alignment: .leading, spacing: Spacing.sm) {
+                SectionLabel("Grammaire")
+                Text("Table des matières")
+                    .font(.appTitle)
+                    .foregroundColor(AppColor.ink)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            Spacer()
+            Button {
+                showingSettings = true
+            } label: {
+                Image(systemName: "gearshape")
+                    .font(.system(size: 18, weight: .regular))
+                    .foregroundColor(AppColor.graphite)
+                    .contentShape(Rectangle())
+            }
+            .buttonStyle(ScaleButtonStyle())
+            .accessibilityLabel("Réglages")
         }
         .padding(.bottom, Spacing.sm)
     }
 
-    // MARK: - Révision row (quiet, not a loud button)
+    // MARK: - "Aujourd'hui" panel (the daily-driven home)
 
-    private var reviewRow: some View {
-        Button {
-            showingReview = true
-        } label: {
-            HStack(alignment: .center, spacing: Spacing.md) {
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("Révision")
-                        .font(.system(size: 18, weight: .regular, design: .serif))
-                        .foregroundColor(AppColor.ink)
-                    Text("Daily review")
-                        .uppercaseLabel()
-                }
+    /// Surfaces "X new · Y due" and folds the review action in alongside a
+    /// "learn new" action. KEPT above the topic table of contents.
+    private var todayPanel: some View {
+        VStack(alignment: .leading, spacing: Spacing.md) {
+            SectionLabel("Aujourd'hui")
+
+            // X new · Y due — the two counts, prominent and editorial.
+            HStack(alignment: .firstTextBaseline, spacing: Spacing.sm) {
+                count(viewModel.newAvailableToday, label: "new")
+                Text("·")
+                    .font(.appPrompt)
+                    .foregroundColor(AppColor.hairline)
+                count(viewModel.dueCount, label: "due")
                 Spacer()
-                Text("\(viewModel.dueCount) due")
-                    .font(.appLabel)
-                    .foregroundColor(viewModel.dueCount > 0 ? AppColor.saffronDeep : AppColor.graphite)
-                Image(systemName: "chevron.right")
-                    .font(.system(size: 13, weight: .semibold))
-                    .foregroundColor(AppColor.graphite)
             }
-            .contentShape(Rectangle())
+
+            HStack(spacing: Spacing.md) {
+                Button("Apprendre") {
+                    newSession = ExerciseSession(exercises: viewModel.todaysNewExercises())
+                }
+                .buttonStyle(PrimaryButtonStyle())
+                .disabled(viewModel.newAvailableToday == 0)
+                .opacity(viewModel.newAvailableToday == 0 ? 0.4 : 1)
+
+                Button("Réviser") {
+                    reviewSession = ExerciseSession(exercises: viewModel.reviewSessionExercises())
+                }
+                .buttonStyle(PrimaryButtonStyle())
+            }
         }
-        .buttonStyle(ScaleButtonStyle())
+    }
+
+    /// One count column: big serif number + small uppercase English label.
+    private func count(_ value: Int, label: String) -> some View {
+        HStack(alignment: .firstTextBaseline, spacing: 4) {
+            Text("\(value)")
+                .font(.appPrompt)
+                .foregroundColor(value > 0 ? AppColor.saffronDeep : AppColor.graphite)
+            Text(label)
+                .uppercaseLabel()
+        }
     }
 
     // MARK: - Topic list
