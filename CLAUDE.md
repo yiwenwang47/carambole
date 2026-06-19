@@ -13,17 +13,14 @@
 > `content-pipeline` fast-forward-merged into `main` and deleted; stray
 > `verbecc.log` gitignored. Not pushed.
 >
-> **STEP 2 — build the app-side scheduler. ◐ IN PROGRESS.** Spec:
-> `docs/plans/2026-06-19-schedule-design.md` → "Still to build". Plan:
-> `docs/plans/2026-06-19-scheduler-implementation.md`. Branch `scheduler` off main, then:
-> - (a) Settings + daily-driven home: `newPerDay` (default **20**, tunable 5–40,
->   HARD cap) + a review *target* (~200, exceedable). Home shows "X new · Y due".
-> - (b) Decouple "introduce N new/day" from finishing a whole topic (pull the next
->   N unseen exercises across the course).
-> - (c) Overflow review: when the SRS due-stack empties before the target, top up
->   with not-yet-due cards (soonest-due / lowest-familiarity first); they grade
->   normally. "Weak accumulation still counts."
-> - Ladder stays `[1,3,7,16,35]` (already in `SRSScheduler`) — do NOT extend it.
+> **STEP 2 — build the app-side scheduler. ✅ DONE (2026-06-19).** On branch
+> `scheduler` (5 commits, off main): (a) Settings + daily home ("X new · Y due",
+> `newPerDay` 20/hard-cap 5–40 + soft review target 200/exceedable), (b) new intake
+> decoupled from topic completion (`StudyScheduler.newQueue` across the course),
+> (c) overflow review top-up. Ladder `[1,3,7,16,35]` unchanged. Build-green +
+> screenshot-validated; spec + code-quality + whole-branch reviews passed. **NOT
+> merged to main / not pushed — awaiting user decision.** Plan +
+> details: `docs/plans/2026-06-19-scheduler-implementation.md`, progress §P6.
 >
 > **STEP 3 (optional, ask first)** — run the pipeline at scale (5 agents × 100 →
 > ~500) via `tools/content_pipeline/` (`prepare_all.py` → agents on
@@ -65,8 +62,11 @@ prose, gated by a seed-fidelity contract so a hallucinated form can't ship. TDD,
 `prepare_all.py` → dispatch N agents on `agent_template.md` → `finalize_all.py` →
 curate `out/staging/` into `carambole/Resources/Topics/`. See its `README.md`.
 
-**Pending (app-side, not built):** scheduler/home for `newPerDay`(20)+review-target
-+overflow review — see schedule-design doc "Still to build".
+**App-side scheduler — BUILT** (branch `scheduler`, 2026-06-19): daily-driven home
+("X new · Y due"), `newPerDay`(20, hard cap 5–40) + soft review target(200,
+exceedable), new-intake decoupled from topic completion (`StudyScheduler.newQueue`
+across the course), and overflow review (`reviewQueue` tops up past the due-stack).
+See `docs/plans/2026-06-19-scheduler-implementation.md`.
 
 ## Architecture
 
@@ -142,6 +142,17 @@ Review surfaces SRS-due items. Adding a topic = JSON + manifest line.
 ### P5 — Content scale (ongoing, no code)
 - Author topic JSON modules one at a time.
 
+### P6 — App-side scheduler (branch `scheduler`, 2026-06-19)
+- ☑ S1 `StudySettings`/`StudySettingsStore` (newPerDay 5–40 hard cap, reviewTarget
+  soft) + `StudyScheduler` (`courseOrdered`/`newQueue`/`reviewQueue`, self-tested)
+  + `DataManager` `first_seen_date` UPSERT, `fetchSeenExerciseIDs`,
+  `countNewIntroduced(on:)`, `fetchOverflowExerciseIDs(asOf:limit:)`.
+- ☑ S2 Daily-driven home ("Aujourd'hui · X new · Y due"), `SettingsView` (gear →
+  sheet), Apprendre = cross-course new intake (decoupled from topic completion),
+  Réviser = due + overflow top-up. Topic ToC + topic-tap drilling preserved.
+  Build-green + screenshot-validated; spec + code-quality + whole-branch reviews
+  passed. NOT merged to main / not pushed (awaiting user decision).
+
 ## Authoring a new grammar module
 
 1. Add `carambole/Resources/Topics/NN_slug.json` — one `GrammarTopic` + 5–6
@@ -164,11 +175,21 @@ Review surfaces SRS-due items. Adding a topic = JSON + manifest line.
 
 ## Known tech debt
 - **No SQLite schema migration.** Tables use `CREATE TABLE IF NOT EXISTS`; new
-  columns (e.g. T-EN's `translation`/`hint`) only exist on a fresh DB. There is no
-  `ALTER TABLE`/`PRAGMA user_version` versioning, so an in-place schema change can
-  break installs that already have the old `exercises` table populated. Masked in
-  dev by uninstall-to-reseed + `TopicLoader` short-circuit. **Add a `user_version`
-  migration strategy before shipping to real users.**
+  columns only exist on a fresh DB. There is no `ALTER TABLE`/`PRAGMA user_version`
+  versioning, so an in-place schema change can break installs that already have the
+  old table populated. Masked in dev by uninstall-to-reseed + `TopicLoader`
+  short-circuit. Affected columns so far:
+  - `exercises.translation` / `exercises.hint` (T-EN). Lower risk: `exercises` is
+    re-seeded whenever `topics` is empty.
+  - `review_status.first_seen_date` (scheduler). **Higher risk:** `review_status`
+    is accumulated *user* data and is NEVER reseeded. On an upgraded DB missing the
+    column, `upsertReviewStatus` (which now always references `first_seen_date`)
+    fails to prepare → SRS grading silently stops persisting. The new READ queries
+    (`countNewIntroduced`, `fetchOverflowExerciseIDs`) degrade safely to 0/empty.
+
+  **Before shipping to real users**, add a `user_version` migration that runs
+  `ALTER TABLE review_status ADD COLUMN first_seen_date REAL` (and any future
+  column adds) on existing DBs.
 
 ## Execution
 
