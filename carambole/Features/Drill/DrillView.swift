@@ -24,6 +24,9 @@ struct DrillView: View {
     @State private var answer: [String] = []
     @State private var checked = false
     @State private var isCorrect = false
+    /// Whether the tap-to-reveal English hint is shown. Reset per-exercise
+    /// automatically because DrillSessionView re-creates DrillView via `.id`.
+    @State private var showHint = false
 
     private var hasAnswer: Bool { !answer.isEmpty }
 
@@ -79,6 +82,54 @@ struct DrillView: View {
                 Text(cue)
                     .uppercaseLabel()
                     .padding(.leading, Spacing.sm)
+            }
+
+            // Always-on, subtle English translation — one quiet line.
+            if let translation = exercise.translation, !translation.isEmpty {
+                Text("“\(translation)”")
+                    .font(.system(size: 15, design: .serif).italic())
+                    .foregroundColor(AppColor.graphite)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding(.leading, Spacing.sm)
+            }
+
+            // Tap-to-reveal English grammar hint, only when one exists.
+            if let hint = exercise.hint, !hint.isEmpty {
+                hintControl(hint)
+                    .padding(.leading, Spacing.sm)
+            }
+        }
+    }
+
+    // MARK: - Hint (tap-to-reveal)
+
+    @ViewBuilder
+    private func hintControl(_ hint: String) -> some View {
+        VStack(alignment: .leading, spacing: Spacing.sm) {
+            Button {
+                withAnimation(.spring(response: 0.35, dampingFraction: 0.85)) {
+                    showHint.toggle()
+                }
+            } label: {
+                HStack(spacing: 6) {
+                    Image(systemName: "lightbulb")
+                    Text("Indice")
+                        .uppercaseLabel()
+                    Image(systemName: "chevron.down")
+                        .font(.system(size: 11, weight: .semibold))
+                        .rotationEffect(.degrees(showHint ? 180 : 0))
+                }
+                .foregroundColor(showHint ? AppColor.saffronDeep : AppColor.graphite)
+                .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+
+            if showHint {
+                Text(hint)
+                    .font(.appExplain)
+                    .foregroundColor(AppColor.graphite)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .transition(.opacity.combined(with: .move(edge: .top)))
             }
         }
     }

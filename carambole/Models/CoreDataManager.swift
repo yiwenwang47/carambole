@@ -118,7 +118,9 @@ class DataManager {
                 answer_tokens TEXT,
                 token_bank TEXT,
                 input_mode TEXT,
-                explanation TEXT
+                explanation TEXT,
+                translation TEXT,
+                hint TEXT
             );
             """,
             """
@@ -399,8 +401,8 @@ class DataManager {
 
             // Upsert each exercise row
             let upsertExerciseQuery = """
-                INSERT OR REPLACE INTO exercises (id, topic_id, type, prompt, cue, answer_tokens, token_bank, input_mode, explanation)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
+                INSERT OR REPLACE INTO exercises (id, topic_id, type, prompt, cue, answer_tokens, token_bank, input_mode, explanation, translation, hint)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
             """
             for exercise in topic.exercises {
                 var exerciseStatement: OpaquePointer?
@@ -423,6 +425,16 @@ class DataManager {
                     sqlite3_bind_text(exerciseStatement, 7, (tokenBankJSON as NSString).utf8String, -1, SQLITE_TRANSIENT)
                     sqlite3_bind_text(exerciseStatement, 8, (exercise.inputMode.rawValue as NSString).utf8String, -1, SQLITE_TRANSIENT)
                     sqlite3_bind_text(exerciseStatement, 9, (exercise.explanation as NSString).utf8String, -1, SQLITE_TRANSIENT)
+                    if let translation = exercise.translation {
+                        sqlite3_bind_text(exerciseStatement, 10, (translation as NSString).utf8String, -1, SQLITE_TRANSIENT)
+                    } else {
+                        sqlite3_bind_null(exerciseStatement, 10)
+                    }
+                    if let hint = exercise.hint {
+                        sqlite3_bind_text(exerciseStatement, 11, (hint as NSString).utf8String, -1, SQLITE_TRANSIENT)
+                    } else {
+                        sqlite3_bind_null(exerciseStatement, 11)
+                    }
 
                     if sqlite3_step(exerciseStatement) == SQLITE_DONE {
                         print("Successfully upserted exercise with ID: \(exercise.id)")
@@ -509,7 +521,7 @@ class DataManager {
     private func fetchExercises(forTopicID topicID: String) -> [Exercise] {
         var exercises: [Exercise] = []
         let query = """
-            SELECT id, topic_id, type, prompt, cue, answer_tokens, token_bank, input_mode, explanation
+            SELECT id, topic_id, type, prompt, cue, answer_tokens, token_bank, input_mode, explanation, translation, hint
             FROM exercises
             WHERE topic_id = ?;
         """
@@ -535,6 +547,10 @@ class DataManager {
                     String(cString: sqlite3_column_text(statement, 7)) : ""
                 let explanation = sqlite3_column_text(statement, 8) != nil ?
                     String(cString: sqlite3_column_text(statement, 8)) : ""
+                let translation = sqlite3_column_text(statement, 9) != nil ?
+                    String(cString: sqlite3_column_text(statement, 9)) : nil
+                let hint = sqlite3_column_text(statement, 10) != nil ?
+                    String(cString: sqlite3_column_text(statement, 10)) : nil
 
                 // Decode JSON arrays
                 var answerTokens: [String] = []
@@ -564,7 +580,9 @@ class DataManager {
                     answerTokens: answerTokens,
                     tokenBank: tokenBank,
                     inputMode: inputMode,
-                    explanation: explanation
+                    explanation: explanation,
+                    translation: translation,
+                    hint: hint
                 )
                 exercises.append(exercise)
             }
