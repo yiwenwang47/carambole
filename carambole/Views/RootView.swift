@@ -163,6 +163,8 @@ struct RootView: View {
         DispatchQueue.global(qos: .userInitiated).async {
             print("RootView: Loading word lists into database...")
             WordListLoader.loadWordListsIntoDatabase()
+            print("RootView: Seeding grammar topics into database...")
+            TopicLoader.seedIfNeeded()
             print("RootView: Fetching all word lists...")
             DataManager.shared.fetchAllWordLists { lists in
                 print("RootView: Received \(lists.count) word lists")
