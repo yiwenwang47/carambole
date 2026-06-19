@@ -9,6 +9,12 @@ import SwiftUI
 
 @main
 struct caramboleApp: App {
+    init() {
+        #if DEBUG
+        DrillEngine._selfTest()
+        #endif
+    }
+
     var body: some Scene {
         WindowGroup {
             RootView()
