@@ -55,8 +55,11 @@ Branch: `french-grammar-pivot`. Status legend: ☐ todo · ◐ in progress · �
 - ☑ T3 `TopicLoader` + first module (`03_passe_compose_etre.json`)
 
 ### Design foundation (before any UI task)
-- ☐ T-DS `DesignSystem.swift` — palette, serif typography, `PrimaryButtonStyle`,
-  recolored progress ("Le Cahier" direction). Blocks T5.
+- ☑ T-DS `DesignSystem.swift` — palette, serif typography, `PrimaryButtonStyle`,
+  `ProgressRing`, `DesignGalleryView` ("Le Cahier"). Visually validated. API:
+  `AppColor.{paper,ink,graphite,saffron,saffronDeep,success,error,hairline}`,
+  `Font.{appPrompt,appTitle,appToken,appLabel,appExplain}`, `Spacing`,
+  `PrimaryButtonStyle`, `SectionLabel`/`.uppercaseLabel()`, `ProgressRing(progress:)`.
 
 ### P2 — Drill core
 - ☑ T4 `DrillEngine` (exact-token check)
