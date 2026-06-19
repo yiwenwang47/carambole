@@ -19,8 +19,26 @@ struct DrillSessionView: View {
     var onFinish: () -> Void = {}
 
     @State private var currentIndex = 0
-    @State private var correctCount = 0
+    /// The live frontier — the furthest exercise reached. Indices below this are
+    /// answered and shown read-only when revisited.
+    @State private var maxIndex = 0
+    /// Latest correctness per answered exercise index. Keyed so revisiting a
+    /// drill (via the back chevron) overwrites rather than double-counts.
+    @State private var results: [Int: Bool] = [:]
+    /// The tokens the user submitted per exercise index, for read-only revisits.
+    @State private var submittedAnswers: [Int: [String]] = [:]
     @State private var finished = false
+
+    private var correctCount: Int { results.values.filter { $0 }.count }
+
+    /// Review payload for the current index when it sits behind the frontier.
+    private var currentReview: DrillView.ReviewData? {
+        guard currentIndex < maxIndex else { return nil }
+        return DrillView.ReviewData(
+            answer: submittedAnswers[currentIndex] ?? [],
+            correct: results[currentIndex] ?? false
+        )
+    }
     /// Whether the one-time English intro card is showing.
     @State private var showingIntro = true
 
@@ -48,7 +66,8 @@ struct DrillSessionView: View {
 
     private var progress: Double {
         guard !exercises.isEmpty else { return 0 }
-        return Double(currentIndex) / Double(exercises.count)
+        // Track the frontier so the ring holds steady while reviewing earlier drills.
+        return Double(maxIndex) / Double(exercises.count)
     }
 
     var body: some View {
@@ -65,11 +84,17 @@ struct DrillSessionView: View {
                 DrillView(
                     exercise: exercises[currentIndex],
                     progress: progress,
-                    onResult: { correct in
-                        if correct { correctCount += 1 }
+                    onResult: { correct, tokens in
+                        results[currentIndex] = correct
+                        submittedAnswers[currentIndex] = tokens
                         grade(exercises[currentIndex], wasCorrect: correct)
                     },
-                    onNext: advance
+                    onNext: advance,
+                    canGoBack: currentIndex > 0,
+                    onBack: goBack,
+                    canGoForward: currentIndex < maxIndex,
+                    onForward: goForward,
+                    reviewData: currentReview
                 )
                 .id(currentIndex) // fresh DrillView state per exercise
                 .transition(.asymmetric(
@@ -133,6 +158,25 @@ struct DrillSessionView: View {
     // MARK: - Advance
 
     private func advance() {
+        // Push the frontier forward when leaving the live drill.
+        if currentIndex == maxIndex { maxIndex = currentIndex + 1 }
+        if currentIndex + 1 < exercises.count {
+            currentIndex += 1
+        } else {
+            finished = true
+        }
+    }
+
+    /// Return to the previous drill to review it read-only.
+    private func goBack() {
+        if currentIndex > 0 {
+            currentIndex -= 1
+        }
+    }
+
+    /// Move forward out of review. Stops at the live frontier; if the frontier is
+    /// past the last drill, the session is complete.
+    private func goForward() {
         if currentIndex + 1 < exercises.count {
             currentIndex += 1
         } else {

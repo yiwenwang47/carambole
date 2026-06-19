@@ -12,14 +12,34 @@ import SwiftUI
 import UIKit
 
 struct DrillView: View {
+    /// A previously-answered drill being revisited: the tokens the user
+    /// submitted and whether they were correct. Renders read-only.
+    struct ReviewData: Equatable {
+        let answer: [String]
+        let correct: Bool
+    }
+
     /// The exercise to drill.
     let exercise: Exercise
     /// Session progress (0...1) for the corner progress ring.
     var progress: Double = 0
-    /// Called once when the answer is checked, with the correctness result.
-    var onResult: (Bool) -> Void = { _ in }
+    /// Called once when the answer is checked, with the result + submitted tokens.
+    var onResult: (Bool, [String]) -> Void = { _, _ in }
     /// Called when the user taps "Next" to advance to the following exercise.
     var onNext: () -> Void = {}
+    /// Whether a previous exercise exists to return to.
+    var canGoBack: Bool = false
+    /// Called when the user taps the back chevron to revisit the previous drill.
+    var onBack: () -> Void = {}
+    /// Whether a later exercise exists to move forward to.
+    var canGoForward: Bool = false
+    /// Called to move forward (out of review, back toward the live drill).
+    var onForward: () -> Void = {}
+    /// Non-nil when revisiting an already-answered drill: show it read-only.
+    var reviewData: ReviewData? = nil
+
+    /// How long the green "Correct" confirmation shows before auto-advancing.
+    private let correctAdvanceDelay: TimeInterval = 1.0
 
     @State private var answer: [String] = []
     @State private var checked = false
@@ -31,39 +51,93 @@ struct DrillView: View {
     private var hasAnswer: Bool { !answer.isEmpty }
 
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: Spacing.xl) {
-                header
+        VStack(spacing: 0) {
+            ScrollViewReader { proxy in
+                ScrollView {
+                    VStack(alignment: .leading, spacing: Spacing.xl) {
+                        header
 
-                promptBlock
+                        promptBlock
 
-                inputBlock
+                        if let review = reviewData {
+                            // Read-only revisit: show what was submitted + result.
+                            submittedAnswerBlock(review.answer)
+                            banner(correct: review.correct)
+                                .id(Self.bannerID)
+                        } else {
+                            inputBlock
 
-                if checked {
-                    resultBanner
-                        .transition(.move(edge: .bottom).combined(with: .opacity))
+                            // The full banner only appears on a wrong answer (the
+                            // teaching moment). A correct answer flashes the footer
+                            // green and auto-advances — no banner, no scroll needed.
+                            if checked && !isCorrect {
+                                banner(correct: false)
+                                    .id(Self.bannerID)
+                                    .transition(.move(edge: .bottom).combined(with: .opacity))
+                            }
+                        }
+                    }
+                    .padding(.horizontal, Spacing.screenH)
+                    .padding(.top, Spacing.xl)
+                    .padding(.bottom, Spacing.lg)
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 }
-
-                Spacer(minLength: Spacing.lg)
-
-                actionButton
+                // A tall input (e.g. a 4-option choice) can push the wrong-answer
+                // banner below the fold; scroll it into view so it never hides
+                // behind the pinned footer. Deferred a runloop so the banner is
+                // laid out before we scroll to it.
+                .onChange(of: checked) { _, isChecked in
+                    guard isChecked, !isCorrect else { return }
+                    DispatchQueue.main.async {
+                        withAnimation(.spring(response: 0.4, dampingFraction: 0.85)) {
+                            proxy.scrollTo(Self.bannerID, anchor: .bottom)
+                        }
+                    }
+                }
             }
-            .padding(.horizontal, Spacing.screenH)
-            .padding(.top, Spacing.xl)
-            .padding(.bottom, Spacing.xl)
-            .frame(maxWidth: .infinity, alignment: .leading)
+
+            // Pinned footer: the primary action stays reachable no matter how
+            // tall the prompt / result banner grows (a tall "wrong" banner used
+            // to push it under the home indicator with no way to scroll to it).
+            actionButton
+                .padding(.horizontal, Spacing.screenH)
+                .padding(.top, Spacing.sm)
+                .padding(.bottom, Spacing.md)
+                .background(AppColor.paper)
         }
         .background(AppColor.paper.ignoresSafeArea())
     }
 
+    private static let bannerID = "result-banner"
+
     // MARK: - Header (label + progress ring)
 
     private var header: some View {
-        HStack(alignment: .top) {
-            SectionLabel("Exercice")
+        HStack(alignment: .center) {
+            if canGoBack {
+                navChevron("chevron.left", label: "Exercice précédent", action: onBack)
+                    .padding(.trailing, Spacing.sm)
+            }
+            SectionLabel(reviewData != nil ? "Révision" : "Exercice")
             Spacer()
+            if canGoForward {
+                navChevron("chevron.right", label: "Exercice suivant", action: onForward)
+                    .padding(.trailing, Spacing.sm)
+            }
             ProgressRing(progress: progress, size: 36, lineWidth: 4)
         }
+    }
+
+    private func navChevron(_ systemName: String, label: String,
+                            action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Image(systemName: systemName)
+                .font(.system(size: 15, weight: .semibold))
+                .foregroundColor(AppColor.graphite)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(label)
     }
 
     // MARK: - Prompt, framed by corner brackets
@@ -149,20 +223,37 @@ struct DrillView: View {
         }
     }
 
+    // MARK: - Submitted answer (review mode)
+
+    /// The tokens the user submitted, shown read-only when revisiting a drill.
+    private func submittedAnswerBlock(_ tokens: [String]) -> some View {
+        VStack(alignment: .leading, spacing: Spacing.sm) {
+            Text("Votre réponse")
+                .uppercaseLabel()
+            Text(tokens.isEmpty ? "—" : tokens.joined(separator: " "))
+                .font(.appToken)
+                .foregroundColor(AppColor.ink)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
     // MARK: - Result banner
 
-    private var resultBanner: some View {
-        let tint = isCorrect ? AppColor.success : AppColor.error
+    /// Result banner for a given correctness. The correct answer ("Réponse") is
+    /// only revealed on a miss; the rule explanation always shows.
+    private func banner(correct: Bool) -> some View {
+        let tint = correct ? AppColor.success : AppColor.error
         return VStack(alignment: .leading, spacing: Spacing.md) {
             HStack(spacing: Spacing.sm) {
-                Image(systemName: isCorrect ? "checkmark.circle.fill" : "xmark.circle.fill")
+                Image(systemName: correct ? "checkmark.circle.fill" : "xmark.circle.fill")
                     .foregroundColor(tint)
-                Text(isCorrect ? "Correct" : "Pas tout à fait")
+                Text(correct ? "Correct" : "Pas tout à fait")
                     .font(.appTitle)
                     .foregroundColor(tint)
             }
 
-            if !isCorrect {
+            if !correct {
                 VStack(alignment: .leading, spacing: 2) {
                     Text("Réponse")
                         .uppercaseLabel()
@@ -194,15 +285,45 @@ struct DrillView: View {
 
     @ViewBuilder
     private var actionButton: some View {
-        if checked {
-            Button("Suivant") { onNext() }
+        if reviewData != nil {
+            // Read-only revisit: the only action is to move forward again.
+            Button("Suivant") { onForward() }
                 .buttonStyle(PrimaryButtonStyle())
+        } else if checked {
+            if isCorrect {
+                // Non-interactive green confirmation; auto-advances after a beat.
+                correctConfirmation
+            } else {
+                Button("Suivant") { onNext() }
+                    .buttonStyle(PrimaryButtonStyle())
+            }
         } else {
             Button("Vérifier") { check() }
                 .buttonStyle(PrimaryButtonStyle())
                 .disabled(!hasAnswer)
                 .opacity(hasAnswer ? 1.0 : 0.5)
         }
+    }
+
+    /// Mirrors PrimaryButtonStyle's footprint so the footer doesn't jump when it
+    /// swaps from "Vérifier" to this confirmation.
+    private var correctConfirmation: some View {
+        HStack(spacing: Spacing.sm) {
+            Image(systemName: "checkmark.circle.fill")
+            Text("Correct")
+                .font(.appLabel)
+                .fontWeight(.semibold)
+                .tracking(1)
+                .textCase(.uppercase)
+        }
+        .foregroundColor(AppColor.success)
+        .padding(.vertical, Spacing.md)
+        .padding(.horizontal, Spacing.lg)
+        .frame(maxWidth: .infinity)
+        .background(
+            RoundedRectangle(cornerRadius: 14, style: .continuous)
+                .fill(AppColor.success.opacity(0.14))
+        )
     }
 
     // MARK: - Logic
@@ -214,7 +335,15 @@ struct DrillView: View {
             isCorrect = correct
             checked = true
         }
-        onResult(correct)
+        onResult(correct, answer)
+
+        // Correct → linger on the green confirmation briefly, then auto-advance.
+        // Wrong → stay put; the learner reads the answer and taps Suivant.
+        if correct {
+            DispatchQueue.main.asyncAfter(deadline: .now() + correctAdvanceDelay) {
+                onNext()
+            }
+        }
     }
 }
 
@@ -273,5 +402,5 @@ private struct CornerBracket: Shape {
 // MARK: - Preview
 
 #Preview {
-    DrillView(exercise: .sample, progress: 0.4, onResult: { _ in }, onNext: {})
+    DrillView(exercise: .sample, progress: 0.4, onResult: { _, _ in }, onNext: {})
 }
