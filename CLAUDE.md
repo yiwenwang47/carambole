@@ -59,7 +59,7 @@ Branch: `french-grammar-pivot`. Status legend: ☐ todo · ◐ in progress · �
   recolored progress ("Le Cahier" direction). Blocks T5.
 
 ### P2 — Drill core
-- ☐ T4 `DrillEngine` (exact-token check)
+- ☑ T4 `DrillEngine` (exact-token check)
 - ☐ T5 `DrillView` + token/choice input + `DrillSessionView` (consumes T-DS)
 
 ### P3 — Topic map + unlock
