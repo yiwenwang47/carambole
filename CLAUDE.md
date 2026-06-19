@@ -2,12 +2,37 @@
 
 > ## ▶ ACTIVE TASK — START HERE (next session, continue without re-asking)
 >
-> The French-grammar pivot + the content pipeline are DONE. Two things remain;
-> do them in order, using the same discipline as before (branch off `main`;
-> subagent-driven implement → spec review → code-quality review per task; build
-> gate `xcodebuild build ... -scheme carambole -destination 'platform=iOS
-> Simulator,name=iPhone 16' CODE_SIGNING_ALLOWED=NO` = EXIT 0; screenshot UI
-> changes; commit per task; update this block as you go).
+> The French-grammar pivot is DONE and has since been RESTRUCTURED (see ▶ LATEST).
+> Use the same discipline (branch off `main`; subagent-driven implement → spec
+> review → code-quality review per task; build gate `xcodebuild build ... -scheme
+> carambole -destination 'platform=iOS Simulator,name=iPhone 16'
+> CODE_SIGNING_ALLOWED=NO` = EXIT 0; screenshot UI changes; commit per task; update
+> this block as you go).
+>
+> **▶ LATEST (2026-06-19) — Book/Module/Element restructure. ✅ DONE, on branch
+> `book-modules` (NOT merged, NOT pushed).** Superseded the flat topic course
+> (incl. the STEP 3 sentence-composition track) with a **Book → Module (×25) →
+> Element (×20) → Example (×5+)** hierarchy and **element-level SRS** — you master a
+> rule via SHUFFLED example sentences, not a memorized token order. Module unlock =
+> all elements mastered (`distinct_correct ≥ 3`, or suspended). Apprendre/Réviser
+> live INSIDE the book; `newPerDay` now counts ELEMENTS (default 10, range 3–20).
+> Content is in-memory from bundle JSON (`ContentLoader`); only `review_status`
+> persists (rekeyed `exercise_id`→`element_id`, + `distinct_correct` /
+> `mastered_example_ids`). Seeded **Module 1 "Noms, articles et genre"** (20
+> elements × 5 = 100 sentences, A1 articles/gender/number; grammar-audited CLEAN).
+> Build-green; book home + element drill screenshot-validated; startup self-tests
+> pass. Design + as-built deviations:
+> `docs/plans/2026-06-19-book-modules-elements-design.md`.
+> **NEXT:** (a) author modules 2–25 (one JSON each, same DTO contract — see
+> `ContentLoader`; grammar-audit every file); (b) update `tools/lint_topics.py` to
+> the new module/element/example schema (currently targets the OLD topic schema —
+> STALE); (c) optionally expose `masteryThreshold` in Settings; (d) merge
+> `book-modules` → `main` when ready.
+>
+> **▶ ALSO (2026-06-19) — "Trop facile" skip. ✅ DONE + MERGED to `main`.** Per-drill
+> too-easy gate: mark it, still answer once — correct → suspend forever; wrong →
+> clean records, stays in stack, re-markable. Carried through the restructure, now
+> keyed per element.
 >
 > **STEP 1 — merge the content pipeline. ✅ DONE (2026-06-19).** Branch
 > `content-pipeline` fast-forward-merged into `main` and deleted; stray

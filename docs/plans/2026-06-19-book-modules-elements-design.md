@@ -171,6 +171,26 @@ gate (`xcodebuild … iPhone 16 CODE_SIGNING_ALLOWED=NO` = BUILD SUCCEEDED) → 
   `lint_topics.py` updated to the new contract. (Module 2 optional.)
 - **T7 Cleanup** — remove dead `GrammarTopic`/topic seeders; update CLAUDE.md.
 
+## As built — deviations from the plan above
+
+- **Content is NOT persisted in SQLite.** Books/Modules/Elements/Examples load
+  in-memory from bundle JSON each launch (`ContentLoader`). Only `review_status`
+  persists (rekeyed to `element_id`, plus `distinct_correct` /
+  `mastered_example_ids` / `suspended`). This dropped the planned content tables
+  and all their CRUD — far less surface, and the content-migration concern with it.
+  Setup includes a one-time dev migration: drop obsolete `topics`/`exercises` and
+  the old exercise-keyed `review_status`.
+- **Module-complete = all elements mastered** via `distinct_correct >= 3` (or
+  suspended), as planned — achievable in one session through the shuffle (no forced
+  multi-day waits).
+- **Back/forward read-only review inside a session was dropped** (it existed in the
+  old flat `DrillSessionView`). The element/example driver is forward-only;
+  revisiting is the job of the Réviser queue.
+- **`newPerDay` now counts ELEMENTS** (default 10, range 3–20). `masteryThreshold`
+  is a constant (`StudySettings.masteryThreshold = 3`), not yet a Settings control.
+- **Status:** structure + Module 1 shipped and merged-pending. Modules 2–25 are
+  titled only; T7 cleanup folded into the same commit.
+
 ## Open / deferred
 
 - Multi-book shelf UI (model ready, UI later).
