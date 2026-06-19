@@ -71,8 +71,9 @@ Branch: `french-grammar-pivot`. Status legend: ☐ todo · ◐ in progress · �
   Visually validated.
 
 ### Ease-in English (before T7 content)
-- ☐ T-EN `Exercise.translation`/`hint` + schema/content + DrillView surfacing +
-  topic intro card. English for a beginner — see decision #5.
+- ☑ T-EN `Exercise.translation`/`hint` + schema/content + DrillView surfacing +
+  topic intro card ("LEÇON"). English for a beginner (decision #5). Visually
+  validated — intro card + subtle translation + "Indice" reveal.
 
 ### P3 — Topic map + unlock
 - ☐ T6 `TopicMapView` nav; remove vocabulary flow
@@ -104,6 +105,14 @@ Branch: `french-grammar-pivot`. Status legend: ☐ todo · ◐ in progress · �
 - `seedIfNeeded()` only seeds when `topicCount() == 0`. To re-seed after editing
   content during dev: `xcrun simctl uninstall booted wen.carambole` then reinstall
   (clears the SQLite DB). Bundle id = `wen.carambole`.
+
+## Known tech debt
+- **No SQLite schema migration.** Tables use `CREATE TABLE IF NOT EXISTS`; new
+  columns (e.g. T-EN's `translation`/`hint`) only exist on a fresh DB. There is no
+  `ALTER TABLE`/`PRAGMA user_version` versioning, so an in-place schema change can
+  break installs that already have the old `exercises` table populated. Masked in
+  dev by uninstall-to-reseed + `TopicLoader` short-circuit. **Add a `user_version`
+  migration strategy before shipping to real users.**
 
 ## Execution
 
