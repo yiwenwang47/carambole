@@ -37,7 +37,12 @@ def check_against_seed(ex: dict, seed: dict) -> list[str]:
         errors.append("prompt must contain the blank '___'")
 
     pronoun = seed["pronoun"]
-    if not re.search(rf"\b{re.escape(pronoun)}\b", prompt, flags=re.IGNORECASE):
+    # "je" correctly elides to "j'" before a vowel (j'ai, j'étais); accept either.
+    if pronoun == "je":
+        pronoun_pat = r"\b(?:je|j['’])"
+    else:
+        pronoun_pat = rf"\b{re.escape(pronoun)}\b"
+    if not re.search(pronoun_pat, prompt, flags=re.IGNORECASE):
         errors.append(f"prompt must contain the subject pronoun {pronoun!r}")
 
     if ex.get("cue") != seed["verb"]:

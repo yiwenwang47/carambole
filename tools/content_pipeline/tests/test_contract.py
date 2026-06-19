@@ -75,6 +75,30 @@ def test_cue_must_be_the_infinitive():
     assert any("cue" in e.lower() or "infinitive" in e.lower() for e in errors)
 
 
+def test_je_elision_in_prompt_is_accepted():
+    # "je" correctly elides to "j'" before a vowel (j'ai, j'avais). The contract
+    # must accept the elided subject, not demand a literal "je".
+    seed = {
+        "verb": "avoir", "mood": "indicatif", "tense": "présent",
+        "person_index": 0, "pronoun": "je",
+        "correct_form": "ai", "distractors": ["as", "a", "avons"],
+    }
+    ex = {
+        "id": "indicatif_present_avoir_0",
+        "topicID": "indicatif_present",
+        "type": "conjugate",
+        "prompt": "J'___ un chien noir. (avoir)",
+        "cue": "avoir",
+        "answerTokens": ["ai"],
+        "tokenBank": ["as", "ai", "a", "avons"],
+        "inputMode": "multipleChoice",
+        "explanation": "je form of avoir is 'ai' (j'ai).",
+        "translation": "I have a black dog.",
+        "hint": "je + avoir -> j'ai.",
+    }
+    assert check_against_seed(ex, seed) == []
+
+
 def test_invalid_exercise_also_surfaces_schema_errors():
     # check_against_seed should also run the base schema validator.
     ex = _conforming_exercise()
