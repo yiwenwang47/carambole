@@ -20,7 +20,11 @@ private struct ElementSession: Identifiable {
 }
 
 struct BookView: View {
+    /// Shown with a back affordance when pushed from the library shelf.
+    var showBack: Bool = false
+
     @StateObject private var viewModel = BookViewModel()
+    @Environment(\.dismiss) private var dismiss
 
     @State private var session: ElementSession?
     @State private var showingSettings = false
@@ -59,12 +63,25 @@ struct BookView: View {
         .sheet(isPresented: $showingSettings, onDismiss: { viewModel.refresh() }) {
             SettingsView(store: viewModel.settingsStore)
         }
+        .toolbar(.hidden, for: .navigationBar)
+        .navigationBarBackButtonHidden(true)
     }
 
     // MARK: - Header (book title)
 
     private var header: some View {
         HStack(alignment: .firstTextBaseline) {
+            if showBack {
+                Button { dismiss() } label: {
+                    Image(systemName: "chevron.left")
+                        .font(.system(size: 16, weight: .semibold))
+                        .foregroundColor(AppColor.graphite)
+                        .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .padding(.trailing, Spacing.sm)
+                .accessibilityLabel("Bibliothèque")
+            }
             VStack(alignment: .leading, spacing: Spacing.sm) {
                 SectionLabel("Grammaire")
                 Text(viewModel.book.title)

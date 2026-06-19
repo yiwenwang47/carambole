@@ -1,11 +1,10 @@
 import SwiftUI
 import Foundation
 
-/// App root: a thin host for the book home. Content loading is owned by
-/// `BookViewModel` (see its `load()`).
+/// App root: the library shelf. Pick a book → its `BookView`.
 struct RootView: View {
     var body: some View {
-        BookView()
+        LibraryView()
     }
 }
 
