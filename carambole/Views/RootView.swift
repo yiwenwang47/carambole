@@ -38,6 +38,7 @@ struct RootView: View {
     @State private var isLoading = true
     @State private var isNavigatingForward = true
     @State private var isBackPressed = false
+    @State private var devDrillTopic: GrammarTopic? = nil // TEMP-T5
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -77,7 +78,14 @@ struct RootView: View {
                         .padding(.leading, 42)
                         .padding(.top, 40)
                         .buttonStyle(.plain)
-                        
+
+                        Button("Grammar (dev)") { openDevDrill() } // TEMP-T5
+                            .font(.system(size: 16, weight: .regular)) // TEMP-T5
+                            .foregroundColor(AppColor.saffronDeep) // TEMP-T5
+                            .padding(.leading, 42) // TEMP-T5
+                            .padding(.top, 8) // TEMP-T5
+                            .buttonStyle(.plain) // TEMP-T5
+
                         HomeContent { title in
                             isNavigatingForward = true
                             withAnimation(.spring(response: 0.5, dampingFraction: 0.8)) { 
@@ -140,8 +148,22 @@ struct RootView: View {
         .onAppear {
             loadData()
         }
+        // TEMP-T5: temporary drill entry point; remove in T6 once real nav lands.
+        .fullScreenCover(item: $devDrillTopic) { topic in // TEMP-T5
+            DrillSessionView(topic: topic) { devDrillTopic = nil } // TEMP-T5
+        } // TEMP-T5
     }
-    
+
+    // TEMP-T5: loads the first seeded topic and presents the drill session.
+    private func openDevDrill() { // TEMP-T5
+        DataManager.shared.fetchAllTopics { topics in // TEMP-T5
+            DispatchQueue.main.async { // TEMP-T5
+                if let first = topics.first { devDrillTopic = first } // TEMP-T5
+                else { devDrillTopic = GrammarTopic.sample } // TEMP-T5
+            } // TEMP-T5
+        } // TEMP-T5
+    } // TEMP-T5
+
     private func goBack() {
         switch screen {
         case .home:
