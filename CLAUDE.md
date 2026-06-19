@@ -9,13 +9,13 @@
 > Simulator,name=iPhone 16' CODE_SIGNING_ALLOWED=NO` = EXIT 0; screenshot UI
 > changes; commit per task; update this block as you go).
 >
-> **STEP 1 — merge the content pipeline.** Branch `content-pipeline` (6 commits,
-> clean fast-forward) is unmerged. Run:
-> `git checkout main && git merge --ff-only content-pipeline`. Do NOT push unless
-> the user asks. Then delete the merged branch if clean.
+> **STEP 1 — merge the content pipeline. ✅ DONE (2026-06-19).** Branch
+> `content-pipeline` fast-forward-merged into `main` and deleted; stray
+> `verbecc.log` gitignored. Not pushed.
 >
-> **STEP 2 — build the app-side scheduler.** Spec: `docs/plans/2026-06-19-schedule-design.md`
-> → "Still to build". Branch `scheduler` off main, then:
+> **STEP 2 — build the app-side scheduler. ◐ IN PROGRESS.** Spec:
+> `docs/plans/2026-06-19-schedule-design.md` → "Still to build". Plan:
+> `docs/plans/2026-06-19-scheduler-implementation.md`. Branch `scheduler` off main, then:
 > - (a) Settings + daily-driven home: `newPerDay` (default **20**, tunable 5–40,
 >   HARD cap) + a review *target* (~200, exceedable). Home shows "X new · Y due".
 > - (b) Decouple "introduce N new/day" from finishing a whole topic (pull the next
