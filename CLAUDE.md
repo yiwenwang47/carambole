@@ -22,10 +22,25 @@
 > code-quality + whole-branch reviews passed. Plan + details:
 > `docs/plans/2026-06-19-scheduler-implementation.md`, progress §P6.
 >
-> **STEP 3 (optional, ask first)** — run the pipeline at scale (5 agents × 100 →
+> **STEP 3 — sentence-composition track. ✅ BUILT (2026-06-19, branch
+> `sentence-composition`, not yet merged).** Replaced the 4 verb-conjugation
+> topics with a 4-topic **"Composer des phrases"** track (01 S-V-O · 02
+> adjectives · 03 prepositions · 04 negation+questions), shared daily-life vocab,
+> controlled distractors, English ease-in per drill; grammar-audited; `type` maps
+> to existing enums so ZERO Swift content changes. Added `tools/lint_topics.py`
+> (Codable-contract + multiset token-bank lint). Also shipped drill-UX fixes
+> (pinned footer, auto-advance on correct, read-only back/forward review) + a
+> scheduler refresh fix (topic-session dismiss now recomputes daily counts).
+> Full end-to-end verified on sim (home, intro card, build/MC drills,
+> correct/wrong, review, completion→unlock, count refresh). Design:
+> `docs/plans/2026-06-19-sentence-composition-track-design.md`. NEXT: merge to
+> main (prior steps ff-merged, not pushed).
+>
+> **STEP 4 (optional, ask first)** — run the pipeline at scale (5 agents × 100 →
 > ~500) via `tools/content_pipeline/` (`prepare_all.py` → agents on
 > `agent_template.md` → `finalize_all.py`), then CURATE `out/staging/` into
-> `carambole/Resources/Topics/`. Leave for a dedicated curated session.
+> `carambole/Resources/Topics/`. NOTE: pipeline output is verb-conjugation; the
+> live course is now sentence-composition — reconcile before curating.
 >
 > Status tracker for the pivot is below; pipeline details in its `README.md`.
 
@@ -152,6 +167,23 @@ Review surfaces SRS-due items. Adding a topic = JSON + manifest line.
   Réviser = due + overflow top-up. Topic ToC + topic-tap drilling preserved.
   Build-green + screenshot-validated; spec + code-quality + whole-branch reviews
   passed. Fast-forward-merged into `main` (not pushed); `scheduler` branch deleted.
+
+### P7 — Sentence-composition track (branch `sentence-composition`, 2026-06-19)
+- ☑ C1 4-topic **"Composer des phrases"** course replacing the verb topics:
+  01 `phrases_svo` (S-V-O + article/gender) · 02 `phrases_adjectifs` (placement +
+  agreement) · 03 `phrases_prepositions` (à/de/dans/avec + à+le→au) · 04
+  `phrases_negation_questions` (ne…pas / n' / est-ce que / inversion). Shared
+  daily-life vocab, controlled distractors, English `translation`+`hint` per
+  drill, grammar-audited. `type` reuses existing enums → no Swift content changes.
+- ☑ C2 `tools/lint_topics.py` — validates topic JSON vs the Codable contract
+  (types, multiset token-bank subset, MC shape, required English ease-in).
+- ☑ C3 Drill UX: pinned Vérifier/Suivant footer (no longer hidden by a tall
+  banner); correct → green flash + auto-advance; wrong → stays with answer +
+  manual Suivant; read-only back/forward **review** of answered drills (session
+  holds submitted tokens + result). `DrillView`/`DrillSessionView`.
+- ☑ C4 Scheduler fix: topic-session `fullScreenCover` now refreshes daily counts
+  on dismiss (was the only cover missing it → stale "X new"). `TopicMapView`.
+- Verified end-to-end on sim; lint + build green. NOT yet merged to `main`.
 
 ## Authoring a new grammar module
 
