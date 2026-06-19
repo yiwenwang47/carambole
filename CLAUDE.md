@@ -76,8 +76,9 @@ Branch: `french-grammar-pivot`. Status legend: ☐ todo · ◐ in progress · �
   validated — intro card + subtle translation + "Indice" reveal.
 
 ### P3 — Topic map + unlock
-- ☐ T6 `TopicMapView` nav; remove vocabulary flow
-- ☐ T7 add 2–3 more topic modules (present / -ER / imparfait)
+- ☑ T6 `TopicMapView` ("Table des matières") nav; vocabulary flow removed.
+  Visually validated. Single seeder = `TopicMapViewModel`. `Font.appDisplay` added.
+- ☐ T7 add 2–3 more topic modules (present / -ER / imparfait), English baked in
 
 ### P4 — SRS / Daily Review
 - ☐ T8 `SRSScheduler` + persisted `review_status`
