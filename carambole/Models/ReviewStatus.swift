@@ -1,5 +1,12 @@
 import Foundation
 
+/// Spaced-repetition learning state for a review item.
+enum LearningState: String, Codable {
+    case new
+    case learning
+    case learned
+}
+
 struct ReviewStatus: Codable {
     let exerciseID: String
     var learningState: LearningState
