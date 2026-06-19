@@ -309,7 +309,11 @@ class DataManager {
                     sqlite3_bind_null(statement, 4)
                 }
                 sqlite3_bind_int(statement, 5, Int32(status.intervalDays))
-                // First grade stamps the introduction time; COALESCE keeps it stable later.
+                // Card's introduction time, inferred from `lastReviewDate` —
+                // `SRSScheduler.grade` always sets that to `now` on the first grade,
+                // which is when the first row is written. The `?? Date()` is a
+                // defensive fallback for an unexpectedly-nil date; on later writes
+                // the COALESCE in the SQL keeps the original `first_seen_date`.
                 let firstSeen = status.lastReviewDate?.timeIntervalSince1970 ?? Date().timeIntervalSince1970
                 sqlite3_bind_double(statement, 6, firstSeen)
 
@@ -387,6 +391,12 @@ class DataManager {
 
     /// All exercise IDs that have ever been graded (i.e. have a `review_status`
     /// row). Used to distinguish seen exercises from brand-new ones.
+    ///
+    /// "Seen" here means GRADED, not merely presented: a `review_status` row is
+    /// written only on the first grade (via `upsertReviewStatus`, called from
+    /// `SRSScheduler.grade`). An exercise that was shown but abandoned before
+    /// grading has no row, so it is NOT counted here and will be re-pulled by
+    /// `StudyScheduler.newQueue` next time. This is the intended model.
     func fetchSeenExerciseIDs() -> Set<String> {
         var ids: Set<String> = []
         dbQueue.sync {
@@ -409,6 +419,12 @@ class DataManager {
     /// Number of exercises first introduced on the calendar day containing `day`,
     /// over the half-open interval `[startOfDay, startOfNextDay)`. Drives the
     /// `newPerDay` hard cap.
+    ///
+    /// "Introduced" is derived from the `review_status` row, which is written
+    /// only on the first GRADE (via `upsertReviewStatus`). An exercise presented
+    /// but abandoned before grading is NOT counted here — it never created a row
+    /// — so it does not consume the daily `newPerDay` budget and will be
+    /// re-pulled by `StudyScheduler.newQueue` next time. This is the intended model.
     func countNewIntroduced(on day: Date) -> Int {
         var count = 0
         let calendar = Calendar.current
@@ -441,6 +457,9 @@ class DataManager {
         guard limit > 0 else { return [] }
         var ids: [String] = []
         dbQueue.sync {
+            // `next_review_date ASC` = soonest-due first; `interval_days ASC` is
+            // the "lowest-familiarity" proxy (a shorter interval ≈ less well-known)
+            // used to break ties.
             let query = """
                 SELECT exercise_id FROM review_status
                 WHERE next_review_date IS NOT NULL AND next_review_date > ?
