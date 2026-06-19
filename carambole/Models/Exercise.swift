@@ -12,9 +12,13 @@ enum InputMode: String, Codable {
     case buildFromTokens
 }
 
+/// One drillable example sentence — the leaf of Book → Module → Element → Example.
+/// Several examples (≥5) belong to one `GrammarElement`; they are interchangeable
+/// test instances of the same rule, shuffled to prevent memorizing a fixed answer.
 struct Exercise: Identifiable, Codable, Equatable {
     let id: String
-    let topicID: String
+    /// The `GrammarElement` this example drills. Injected by the loader.
+    let elementID: String
     let type: ExerciseType
     let prompt: String
     let cue: String?
@@ -32,7 +36,7 @@ struct Exercise: Identifiable, Codable, Equatable {
     /// (absent JSON keys decode the optionals to `nil`).
     init(
         id: String,
-        topicID: String,
+        elementID: String,
         type: ExerciseType,
         prompt: String,
         cue: String?,
@@ -44,7 +48,7 @@ struct Exercise: Identifiable, Codable, Equatable {
         hint: String? = nil
     ) {
         self.id = id
-        self.topicID = topicID
+        self.elementID = elementID
         self.type = type
         self.prompt = prompt
         self.cue = cue
@@ -58,7 +62,7 @@ struct Exercise: Identifiable, Codable, Equatable {
 
     static let sample = Exercise(
         id: "exercise-sample",
-        topicID: "topic-sample",
+        elementID: "el-sample",
         type: .conjugate,
         prompt: "Il ___ (partir) hier.",
         cue: "partir",

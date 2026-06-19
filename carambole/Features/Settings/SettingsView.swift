@@ -63,7 +63,7 @@ struct SettingsView: View {
                 in: StudySettings.newPerDayRange
             ) {
                 HStack(alignment: .firstTextBaseline, spacing: Spacing.sm) {
-                    Text("Cartes / jour")
+                    Text("Éléments / jour")
                         .font(.system(size: 18, weight: .regular, design: .serif))
                         .foregroundColor(AppColor.ink)
                     Spacer()
@@ -74,7 +74,7 @@ struct SettingsView: View {
             }
             .tint(AppColor.saffronDeep)
 
-            Text("New cards per day — a hard cap.")
+            Text("New grammar elements per day — a hard cap.")
                 .font(.appExplain)
                 .foregroundColor(AppColor.graphite)
                 .fixedSize(horizontal: false, vertical: true)

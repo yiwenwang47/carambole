@@ -22,17 +22,20 @@ struct SRSScheduler {
         }
         let next = Calendar.current.date(byAdding: .day, value: newInterval, to: now) ?? now
 
-        var result = ReviewStatus(exerciseID: status.exerciseID,
-                                  learningState: newState,
-                                  intervalDays: newInterval)
+        // Mutate a COPY so mastery counters (`distinctCorrect` /
+        // `masteredExampleIDs`) and `suspended` carry through — only the SRS
+        // schedule fields change here.
+        var result = status
+        result.learningState = newState
+        result.intervalDays = newInterval
         result.lastReviewDate = now
         result.nextReviewDate = next
         return result
     }
 
-    /// A fresh status for an exercise never reviewed.
-    static func fresh(_ exerciseID: String) -> ReviewStatus {
-        ReviewStatus(exerciseID: exerciseID, learningState: .new, intervalDays: 0)
+    /// A fresh status for an element never reviewed.
+    static func fresh(_ elementID: String) -> ReviewStatus {
+        ReviewStatus(elementID: elementID, learningState: .new, intervalDays: 0)
     }
 }
 

@@ -17,7 +17,7 @@ extension DrillEngine {
         assert(!check(Array(ex.answerTokens.dropLast()), ex), "missing token must fail")
         assert(!check([], ex), "empty must fail")
         // single-token (multiple-choice style) exact match
-        let mc = Exercise(id: "t", topicID: "t", type: .conjugate, prompt: "p",
+        let mc = Exercise(id: "t", elementID: "t", type: .conjugate, prompt: "p",
                           cue: nil, answerTokens: ["sont allés"],
                           tokenBank: ["sont allés","ont allés"],
                           inputMode: .multipleChoice, explanation: "e")

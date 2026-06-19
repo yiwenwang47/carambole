@@ -79,7 +79,7 @@ struct ChoiceView: View {
     struct Harness: View {
         @State private var answer: [String] = []
         private let exercise = Exercise(
-            id: "mc", topicID: "t", type: .conjugate,
+            id: "mc", elementID: "t", type: .conjugate,
             prompt: "Elles ___ (aller) au marché.",
             cue: "aller",
             answerTokens: ["sont allées"],

@@ -2,72 +2,71 @@
 //  DrillSessionView.swift
 //  carambole
 //
-//  "Le Cahier" drill session — drives a whole topic's exercises, tracks
-//  correctness, and shows a self-contained editorial completion summary.
-//  Built entirely from the design system; no FlashcardView symbols referenced.
+//  Drives a study session over GRAMMAR ELEMENTS (not a flat exercise list). The
+//  SRS unit is the element; each element is drilled via its example sentences,
+//  shuffled so the learner masters the rule, not a memorized token order.
+//
+//  Two modes:
+//  - .learn  — walk each element, drilling shuffled examples until the element is
+//              mastered (`masteryThreshold` distinct examples answered correctly),
+//              then advance. Used by "Apprendre" and by tapping a module.
+//  - .review — one fresh example per due element, SRS-regraded. Used by "Réviser".
+//
+//  See docs/plans/2026-06-19-book-modules-elements-design.md.
 //
 
 import SwiftUI
 
 struct DrillSessionView: View {
+    enum Mode { case learn, review }
+
     let title: String
-    let exercises: [Exercise]
-    /// English topic rule note shown on the one-time intro card. Empty when the
-    /// session was built from a raw exercise list (no intro card in that case).
+    /// English module intro shown once on the "Leçon" card. Empty → no card.
     let ruleNote: String
-    /// Called when the user finishes the session ("Done").
+    let elements: [GrammarElement]
+    let mode: Mode
+    let masteryThreshold: Int
     var onFinish: () -> Void = {}
 
-    @State private var currentIndex = 0
-    /// The live frontier — the furthest exercise reached. Indices below this are
-    /// answered and shown read-only when revisited.
-    @State private var maxIndex = 0
-    /// Latest correctness per answered exercise index. Keyed so revisiting a
-    /// drill (via the back chevron) overwrites rather than double-counts.
-    @State private var results: [Int: Bool] = [:]
-    /// The tokens the user submitted per exercise index, for read-only revisits.
-    @State private var submittedAnswers: [Int: [String]] = [:]
-    @State private var finished = false
-
-    private var correctCount: Int { results.values.filter { $0 }.count }
-
-    /// Review payload for the current index when it sits behind the frontier.
-    private var currentReview: DrillView.ReviewData? {
-        guard currentIndex < maxIndex else { return nil }
-        return DrillView.ReviewData(
-            answer: submittedAnswers[currentIndex] ?? [],
-            correct: results[currentIndex] ?? false
-        )
+    init(title: String, ruleNote: String, elements: [GrammarElement], mode: Mode,
+         masteryThreshold: Int = StudySettings.masteryThreshold,
+         onFinish: @escaping () -> Void = {}) {
+        self.title = title
+        self.ruleNote = ruleNote
+        self.elements = elements
+        self.mode = mode
+        self.masteryThreshold = masteryThreshold
+        self.onFinish = onFinish
     }
-    /// Whether the one-time English intro card is showing.
+
+    private enum NextAction { case nextExample, nextElement }
+
+    @State private var elementIndex = 0
+    @State private var currentExample: Exercise?
+    /// Pending examples for the current element (learn mode queue).
+    @State private var pending: [Exercise] = []
+    @State private var lastExampleID: String?
+    @State private var nextAction: NextAction = .nextElement
+    /// Distinct presentation id so DrillView resets its state even when the same
+    /// example is shown twice in a row across a refill.
+    @State private var presentationToken = 0
+
+    @State private var answeredCount = 0
+    @State private var correctCount = 0
+    @State private var finished = false
     @State private var showingIntro = true
 
-    /// Convenience: drive a session straight from a `GrammarTopic`.
-    init(topic: GrammarTopic, onFinish: @escaping () -> Void = {}) {
-        self.title = topic.title
-        self.exercises = topic.exercises
-        self.ruleNote = topic.ruleNote
-        self.onFinish = onFinish
+    private var currentElement: GrammarElement? {
+        elements.indices.contains(elementIndex) ? elements[elementIndex] : nil
     }
 
-    /// Drive a session from a raw exercise list plus a display title.
-    /// No `ruleNote` here → the intro card is gated off.
-    init(title: String, exercises: [Exercise], onFinish: @escaping () -> Void = {}) {
-        self.title = title
-        self.exercises = exercises
-        self.ruleNote = ""
-        self.onFinish = onFinish
-    }
-
-    /// Whether the intro card should be presented (only when a rule note exists).
     private var shouldShowIntro: Bool {
-        showingIntro && !ruleNote.isEmpty && !exercises.isEmpty
+        showingIntro && !ruleNote.isEmpty && !elements.isEmpty
     }
 
     private var progress: Double {
-        guard !exercises.isEmpty else { return 0 }
-        // Track the frontier so the ring holds steady while reviewing earlier drills.
-        return Double(maxIndex) / Double(exercises.count)
+        guard !elements.isEmpty else { return 0 }
+        return Double(elementIndex) / Double(elements.count)
     }
 
     var body: some View {
@@ -75,73 +74,156 @@ struct DrillSessionView: View {
             AppColor.paper.ignoresSafeArea()
 
             if shouldShowIntro {
-                introCard
-                    .transition(.opacity)
-            } else if finished || exercises.isEmpty {
+                introCard.transition(.opacity)
+            } else if finished || elements.isEmpty {
                 completionSummary
                     .transition(.move(edge: .trailing).combined(with: .opacity))
-            } else {
+            } else if let example = currentExample {
                 DrillView(
-                    exercise: exercises[currentIndex],
+                    exercise: example,
                     progress: progress,
-                    onResult: { correct, tokens in
-                        results[currentIndex] = correct
-                        submittedAnswers[currentIndex] = tokens
-                        grade(exercises[currentIndex], wasCorrect: correct)
-                    },
-                    onTooEasy: { correct, tokens in
-                        results[currentIndex] = correct
-                        submittedAnswers[currentIndex] = tokens
-                        tooEasy(exercises[currentIndex], answeredCorrectly: correct)
-                    },
-                    onNext: advance,
-                    canGoBack: currentIndex > 0,
-                    onBack: goBack,
-                    canGoForward: currentIndex < maxIndex,
-                    onForward: goForward,
-                    reviewData: currentReview
+                    onResult: { correct, _ in handleResult(correct: correct) },
+                    onTooEasy: { correct, _ in handleTooEasy(correct: correct) },
+                    onNext: advance
                 )
-                .id(currentIndex) // fresh DrillView state per exercise
+                .id(presentationToken)
                 .transition(.asymmetric(
                     insertion: .move(edge: .trailing).combined(with: .opacity),
                     removal: .move(edge: .leading).combined(with: .opacity)
                 ))
             }
         }
-        .animation(.spring(response: 0.5, dampingFraction: 0.85), value: currentIndex)
+        .onAppear {
+            if currentExample == nil && !elements.isEmpty { startElement(0) }
+        }
+        .animation(.spring(response: 0.5, dampingFraction: 0.85), value: presentationToken)
         .animation(.spring(response: 0.5, dampingFraction: 0.85), value: finished)
         .animation(.spring(response: 0.5, dampingFraction: 0.85), value: showingIntro)
     }
 
-    // MARK: - Topic intro card (one-time English ease-in)
+    // MARK: - Element / example driver
+
+    private func startElement(_ index: Int) {
+        elementIndex = index
+        pending = buildQueue()
+        presentNextExample()
+    }
+
+    /// The examples to drill for the current element. Learn: the examples not yet
+    /// mastered (from the DB), shuffled; if all are mastered, the full pool. Review:
+    /// a single example.
+    private func buildQueue() -> [Exercise] {
+        guard let element = currentElement else { return [] }
+        if mode == .review {
+            return [reviewExample(for: element)].compactMap { $0 }
+        }
+        let mastered = DataManager.shared.fetchReviewStatus(elementID: element.id)?.masteredExampleIDs ?? []
+        var remaining = element.examples.filter { !mastered.contains($0.id) }
+        if remaining.isEmpty { remaining = element.examples }
+        remaining.shuffle()
+        // Avoid showing the same sentence twice in a row when there's a choice.
+        if remaining.count > 1, remaining.first?.id == lastExampleID { remaining.swapAt(0, 1) }
+        return remaining
+    }
+
+    private func reviewExample(for element: GrammarElement) -> Exercise? {
+        let pool = element.examples.count > 1
+            ? element.examples.filter { $0.id != lastExampleID }
+            : element.examples
+        return pool.randomElement() ?? element.examples.first
+    }
+
+    private func presentNextExample() {
+        if pending.isEmpty { pending = buildQueue() }
+        guard !pending.isEmpty else { goToNextElement(); return }
+        let next = pending.removeFirst()
+        lastExampleID = next.id
+        currentExample = next
+        presentationToken += 1
+    }
+
+    private func goToNextElement() {
+        let next = elementIndex + 1
+        if next < elements.count {
+            startElement(next)
+        } else {
+            elementIndex = elements.count
+            currentExample = nil
+            finished = true
+        }
+    }
+
+    private func advance() {
+        switch nextAction {
+        case .nextExample: presentNextExample()
+        case .nextElement: goToNextElement()
+        }
+    }
+
+    // MARK: - Grading (element-level)
+
+    private func handleResult(correct: Bool) {
+        answeredCount += 1
+        if correct { correctCount += 1 }
+        guard let element = currentElement, let example = currentExample else { return }
+        gradeElement(element, exampleID: example.id, correct: correct)
+
+        if mode == .review {
+            nextAction = .nextElement
+        } else {
+            nextAction = isMastered(element) ? .nextElement : .nextExample
+        }
+    }
+
+    /// "Trop facile" gate resolved per element: correct → master this example, then
+    /// suspend the element (gone for good); wrong → clean the element's records
+    /// (back to fresh/unseen). Either way move to the next element.
+    private func handleTooEasy(correct: Bool) {
+        answeredCount += 1
+        if correct { correctCount += 1 }
+        guard let element = currentElement, let example = currentExample else { return }
+        if correct {
+            gradeElement(element, exampleID: example.id, correct: true)
+            DataManager.shared.setSuspended(elementID: element.id)
+        } else {
+            DataManager.shared.clearReviewStatus(elementID: element.id)
+        }
+        nextAction = .nextElement
+    }
+
+    /// Fetch-or-fresh → record the correct example → SRS grade → upsert. Reads/writes
+    /// run on the database's serial queue, so the follow-up `isMastered` read sees
+    /// this write.
+    private func gradeElement(_ element: GrammarElement, exampleID: String, correct: Bool) {
+        var status = DataManager.shared.fetchReviewStatus(elementID: element.id)
+            ?? SRSScheduler.fresh(element.id)
+        if correct { status.recordCorrect(exampleID: exampleID) }
+        status = SRSScheduler.grade(status, pass: correct, now: Date())
+        DataManager.shared.upsertReviewStatus(status)
+    }
+
+    private func isMastered(_ element: GrammarElement) -> Bool {
+        (DataManager.shared.fetchReviewStatus(elementID: element.id)?.distinctCorrect ?? 0) >= masteryThreshold
+    }
+
+    // MARK: - Intro card (one-time English ease-in)
 
     private var introCard: some View {
         VStack(alignment: .leading, spacing: Spacing.lg) {
             Spacer(minLength: Spacing.xl)
-
             SectionLabel("Leçon")
-
             Text(title)
                 .font(.appTitle)
                 .foregroundColor(AppColor.ink)
                 .fixedSize(horizontal: false, vertical: true)
-
-            Rectangle()
-                .fill(AppColor.hairline)
-                .frame(height: 1)
-                .padding(.vertical, Spacing.sm)
-
+            Rectangle().fill(AppColor.hairline).frame(height: 1).padding(.vertical, Spacing.sm)
             Text(ruleNote)
                 .font(.appExplain)
                 .foregroundColor(AppColor.graphite)
                 .fixedSize(horizontal: false, vertical: true)
-
             Spacer()
-
             Button("Commencer") {
-                withAnimation(.spring(response: 0.5, dampingFraction: 0.85)) {
-                    showingIntro = false
-                }
+                withAnimation(.spring(response: 0.5, dampingFraction: 0.85)) { showingIntro = false }
             }
             .buttonStyle(PrimaryButtonStyle())
         }
@@ -150,85 +232,39 @@ struct DrillSessionView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
     }
 
-    // MARK: - Spaced-repetition grading
-
-    /// Persist the SRS outcome for one answered exercise: fetch-or-fresh → grade → upsert.
-    private func grade(_ exercise: Exercise, wasCorrect: Bool) {
-        let prev = DataManager.shared.fetchReviewStatus(exerciseID: exercise.id)
-            ?? SRSScheduler.fresh(exercise.id)
-        let next = SRSScheduler.grade(prev, pass: wasCorrect, now: Date())
-        DataManager.shared.upsertReviewStatus(next)
-    }
-
-    /// Resolve a "too easy" gate. Correct → grade (writes the row) then suspend it
-    /// so it never returns to the new/review stack. Wrong → clean its records so it
-    /// drops back to fresh/unseen and can be marked too-easy again next time.
-    private func tooEasy(_ exercise: Exercise, answeredCorrectly: Bool) {
-        if answeredCorrectly {
-            grade(exercise, wasCorrect: true)
-            DataManager.shared.setSuspended(exerciseID: exercise.id)
-        } else {
-            DataManager.shared.clearReviewStatus(exerciseID: exercise.id)
-        }
-    }
-
-    // MARK: - Advance
-
-    private func advance() {
-        // Push the frontier forward when leaving the live drill.
-        if currentIndex == maxIndex { maxIndex = currentIndex + 1 }
-        if currentIndex + 1 < exercises.count {
-            currentIndex += 1
-        } else {
-            finished = true
-        }
-    }
-
-    /// Return to the previous drill to review it read-only.
-    private func goBack() {
-        if currentIndex > 0 {
-            currentIndex -= 1
-        }
-    }
-
-    /// Move forward out of review. Stops at the live frontier; if the frontier is
-    /// past the last drill, the session is complete.
-    private func goForward() {
-        if currentIndex + 1 < exercises.count {
-            currentIndex += 1
-        } else {
-            finished = true
-        }
-    }
-
-    // MARK: - Completion summary (self-contained)
+    // MARK: - Completion / empty state
 
     private var completionSummary: some View {
         VStack(alignment: .leading, spacing: Spacing.lg) {
             Spacer(minLength: Spacing.xl)
-
             SectionLabel(title)
 
-            Text("Terminé")
-                .font(.appDisplay)
-                .foregroundColor(AppColor.ink)
-
-            HStack(alignment: .firstTextBaseline, spacing: Spacing.sm) {
-                Text("\(correctCount)")
-                    .font(.appPrompt)
+            if elements.isEmpty {
+                Text(mode == .review ? "Rien à réviser" : "Rien à apprendre")
+                    .font(.appDisplay)
                     .foregroundColor(AppColor.ink)
-                Text("/ \(exercises.count) correct")
-                    .font(.appTitle)
+                Text(mode == .review
+                     ? "Aucun élément à réviser pour le moment. Reviens plus tard."
+                     : "Tu as parcouru tout le contenu disponible.")
+                    .font(.appExplain)
                     .foregroundColor(AppColor.graphite)
+                    .fixedSize(horizontal: false, vertical: true)
+            } else {
+                Text("Terminé")
+                    .font(.appDisplay)
+                    .foregroundColor(AppColor.ink)
+                HStack(alignment: .firstTextBaseline, spacing: Spacing.sm) {
+                    Text("\(correctCount)")
+                        .font(.appPrompt)
+                        .foregroundColor(AppColor.ink)
+                    Text("/ \(answeredCount) correct")
+                        .font(.appTitle)
+                        .foregroundColor(AppColor.graphite)
+                }
             }
 
-            Rectangle()
-                .fill(AppColor.hairline)
-                .frame(height: 1)
-                .padding(.vertical, Spacing.sm)
-
+            Rectangle().fill(AppColor.hairline).frame(height: 1).padding(.vertical, Spacing.sm)
             Spacer()
-
             Button("Terminer") { onFinish() }
                 .buttonStyle(PrimaryButtonStyle())
         }
@@ -241,5 +277,6 @@ struct DrillSessionView: View {
 // MARK: - Preview
 
 #Preview {
-    DrillSessionView(topic: .sample, onFinish: {})
+    DrillSessionView(title: "Test", ruleNote: "An English lesson intro.",
+                     elements: [GrammarElement.sample], mode: .learn, onFinish: {})
 }

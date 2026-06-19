@@ -1,0 +1,1368 @@
+{
+  "id": "mod_01_articles",
+  "sortOrder": 1,
+  "title": "Noms, articles et genre",
+  "ruleNote": "In French, every noun has a gender — masculine or feminine — and the article you use changes to match it. This module builds the noun phrase from the ground up: a/the, singular/plural, and the small words that point things out. Learn the noun with its article and the gender comes for free.",
+  "elements": [
+    {
+      "id": "el_un_une",
+      "sortOrder": 1,
+      "label": "Article indéfini : un / une",
+      "ruleNote": "Use 'un' before a masculine noun and 'une' before a feminine noun. Both mean 'a/an'.",
+      "examples": [
+        {
+          "id": "el_un_une_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « He has a dog. »",
+          "cue": null,
+          "answerTokens": ["Il", "a", "un", "chien"],
+          "tokenBank": ["Il", "a", "un", "une", "chien", "ont"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« chien » est masculin, donc on utilise « un ».",
+          "translation": "He has a dog.",
+          "hint": "chien is masculine → un."
+        },
+        {
+          "id": "el_un_une_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « She eats an apple. »",
+          "cue": null,
+          "answerTokens": ["Elle", "mange", "une", "pomme"],
+          "tokenBank": ["Elle", "mange", "une", "un", "pomme", "mangent"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« pomme » est féminin, donc « une ».",
+          "translation": "She eats an apple.",
+          "hint": "pomme is feminine → une."
+        },
+        {
+          "id": "el_un_une_03",
+          "type": "genderArticle",
+          "prompt": "Choisis l'article : ___ café",
+          "cue": "café (m)",
+          "answerTokens": ["un"],
+          "tokenBank": ["un", "une", "des"],
+          "inputMode": "multipleChoice",
+          "explanation": "« café » est masculin → « un ».",
+          "translation": "a coffee",
+          "hint": "café is masculine."
+        },
+        {
+          "id": "el_un_une_04",
+          "type": "genderArticle",
+          "prompt": "Choisis l'article : ___ table",
+          "cue": "table (f)",
+          "answerTokens": ["une"],
+          "tokenBank": ["une", "un", "des"],
+          "inputMode": "multipleChoice",
+          "explanation": "« table » est féminin → « une ».",
+          "translation": "a table",
+          "hint": "table is feminine."
+        },
+        {
+          "id": "el_un_une_05",
+          "type": "wordOrder",
+          "prompt": "Construis : « I have a car. »",
+          "cue": null,
+          "answerTokens": ["J'", "ai", "une", "voiture"],
+          "tokenBank": ["J'", "ai", "une", "un", "voiture", "a"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« voiture » est féminin → « une ».",
+          "translation": "I have a car.",
+          "hint": "voiture is feminine → une."
+        }
+      ]
+    },
+    {
+      "id": "el_le_la",
+      "sortOrder": 2,
+      "label": "Article défini : le / la",
+      "ruleNote": "Use 'le' before a masculine noun and 'la' before a feminine noun. Both mean 'the'.",
+      "examples": [
+        {
+          "id": "el_le_la_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « The dog eats. »",
+          "cue": null,
+          "answerTokens": ["Le", "chien", "mange"],
+          "tokenBank": ["Le", "La", "chien", "mange", "mangent"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« chien » est masculin → « le ».",
+          "translation": "The dog eats.",
+          "hint": "chien is masculine → le."
+        },
+        {
+          "id": "el_le_la_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « The house is big. »",
+          "cue": null,
+          "answerTokens": ["La", "maison", "est", "grande"],
+          "tokenBank": ["La", "Le", "maison", "est", "grande", "grand"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« maison » est féminin → « la », et l'adjectif s'accorde : « grande ».",
+          "translation": "The house is big.",
+          "hint": "maison is feminine → la."
+        },
+        {
+          "id": "el_le_la_03",
+          "type": "genderArticle",
+          "prompt": "Choisis l'article : ___ livre",
+          "cue": "livre (m)",
+          "answerTokens": ["le"],
+          "tokenBank": ["le", "la", "les"],
+          "inputMode": "multipleChoice",
+          "explanation": "« livre » est masculin → « le ».",
+          "translation": "the book",
+          "hint": "livre is masculine."
+        },
+        {
+          "id": "el_le_la_04",
+          "type": "genderArticle",
+          "prompt": "Choisis l'article : ___ voiture",
+          "cue": "voiture (f)",
+          "answerTokens": ["la"],
+          "tokenBank": ["la", "le", "les"],
+          "inputMode": "multipleChoice",
+          "explanation": "« voiture » est féminin → « la ».",
+          "translation": "the car",
+          "hint": "voiture is feminine."
+        },
+        {
+          "id": "el_le_la_05",
+          "type": "wordOrder",
+          "prompt": "Construis : « The coffee is good. »",
+          "cue": null,
+          "answerTokens": ["Le", "café", "est", "bon"],
+          "tokenBank": ["Le", "La", "café", "est", "bon", "bonne"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« café » est masculin → « le » et « bon ».",
+          "translation": "The coffee is good.",
+          "hint": "café is masculine → le."
+        }
+      ]
+    },
+    {
+      "id": "el_elision_l",
+      "sortOrder": 3,
+      "label": "Élision : l' devant voyelle ou h",
+      "ruleNote": "Before a vowel or a silent 'h', both 'le' and 'la' shrink to 'l''. Say l'eau, l'ami, l'école — never le eau.",
+      "examples": [
+        {
+          "id": "el_elision_l_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « The water is cold. »",
+          "cue": null,
+          "answerTokens": ["L'", "eau", "est", "froide"],
+          "tokenBank": ["L'", "La", "eau", "est", "froide", "froid"],
+          "inputMode": "buildFromTokens",
+          "explanation": "Devant une voyelle, « la » devient « l' » : « l'eau ».",
+          "translation": "The water is cold.",
+          "hint": "Before a vowel, le/la → l'."
+        },
+        {
+          "id": "el_elision_l_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « The friend arrives. »",
+          "cue": null,
+          "answerTokens": ["L'", "ami", "arrive"],
+          "tokenBank": ["L'", "Le", "ami", "arrive", "arrivent"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« ami » commence par une voyelle → « l' ».",
+          "translation": "The friend arrives.",
+          "hint": "ami starts with a vowel → l'."
+        },
+        {
+          "id": "el_elision_l_03",
+          "type": "genderArticle",
+          "prompt": "Choisis l'article : ___ école",
+          "cue": "école (f), starts with a vowel",
+          "answerTokens": ["l'"],
+          "tokenBank": ["l'", "la", "le"],
+          "inputMode": "multipleChoice",
+          "explanation": "« école » commence par une voyelle → « l' ».",
+          "translation": "the school",
+          "hint": "Vowel start forces l', even though école is feminine."
+        },
+        {
+          "id": "el_elision_l_04",
+          "type": "genderArticle",
+          "prompt": "Choisis l'article : ___ homme",
+          "cue": "homme (m), silent h",
+          "answerTokens": ["l'"],
+          "tokenBank": ["l'", "le", "la"],
+          "inputMode": "multipleChoice",
+          "explanation": "« homme » a un « h » muet → « l' ».",
+          "translation": "the man",
+          "hint": "Silent h acts like a vowel → l'."
+        },
+        {
+          "id": "el_elision_l_05",
+          "type": "wordOrder",
+          "prompt": "Construis : « I love the school. »",
+          "cue": null,
+          "answerTokens": ["J'", "aime", "l'", "école"],
+          "tokenBank": ["J'", "aime", "l'", "la", "école", "aiment"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« école » → « l' », et « je » devient « j' » devant « aime ».",
+          "translation": "I love the school.",
+          "hint": "Both je→j' and la→l' before a vowel."
+        }
+      ]
+    },
+    {
+      "id": "el_les",
+      "sortOrder": 4,
+      "label": "Article défini pluriel : les",
+      "ruleNote": "For 'the' with a plural noun, both genders use 'les'. One word for masculine and feminine.",
+      "examples": [
+        {
+          "id": "el_les_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « The dogs eat. »",
+          "cue": null,
+          "answerTokens": ["Les", "chiens", "mangent"],
+          "tokenBank": ["Les", "Le", "chiens", "mangent", "mange"],
+          "inputMode": "buildFromTokens",
+          "explanation": "Au pluriel, « le/la » devient « les ».",
+          "translation": "The dogs eat.",
+          "hint": "Plural the = les for both genders."
+        },
+        {
+          "id": "el_les_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « The apples are red. »",
+          "cue": null,
+          "answerTokens": ["Les", "pommes", "sont", "rouges"],
+          "tokenBank": ["Les", "La", "pommes", "sont", "rouges", "rouge"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« les pommes » est pluriel → « sont » et « rouges ».",
+          "translation": "The apples are red.",
+          "hint": "les + plural noun → plural verb sont."
+        },
+        {
+          "id": "el_les_03",
+          "type": "genderArticle",
+          "prompt": "Choisis l'article : ___ tables",
+          "cue": "tables (plural)",
+          "answerTokens": ["les"],
+          "tokenBank": ["les", "la", "le"],
+          "inputMode": "multipleChoice",
+          "explanation": "Pluriel → « les ».",
+          "translation": "the tables",
+          "hint": "Plural → les."
+        },
+        {
+          "id": "el_les_04",
+          "type": "genderArticle",
+          "prompt": "Choisis l'article : ___ amis",
+          "cue": "amis (plural)",
+          "answerTokens": ["les"],
+          "tokenBank": ["les", "l'", "le"],
+          "inputMode": "multipleChoice",
+          "explanation": "Au pluriel, on n'élide pas : « les amis ».",
+          "translation": "the friends",
+          "hint": "No elision in the plural → les amis."
+        },
+        {
+          "id": "el_les_05",
+          "type": "wordOrder",
+          "prompt": "Construis : « The children are here. »",
+          "cue": null,
+          "answerTokens": ["Les", "enfants", "sont", "ici"],
+          "tokenBank": ["Les", "L'", "enfants", "sont", "ici", "est"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« les enfants » est pluriel → « sont ».",
+          "translation": "The children are here.",
+          "hint": "les + plural → sont."
+        }
+      ]
+    },
+    {
+      "id": "el_des",
+      "sortOrder": 5,
+      "label": "Article indéfini pluriel : des",
+      "ruleNote": "'des' is the plural of un/une — it means 'some' or just marks an unspecified plural. Both genders use 'des'.",
+      "examples": [
+        {
+          "id": "el_des_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « I have some books. »",
+          "cue": null,
+          "answerTokens": ["J'", "ai", "des", "livres"],
+          "tokenBank": ["J'", "ai", "des", "les", "livres", "livre"],
+          "inputMode": "buildFromTokens",
+          "explanation": "Pluriel de « un livre » → « des livres ».",
+          "translation": "I have some books.",
+          "hint": "Plural of un/une → des."
+        },
+        {
+          "id": "el_des_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « She eats some apples. »",
+          "cue": null,
+          "answerTokens": ["Elle", "mange", "des", "pommes"],
+          "tokenBank": ["Elle", "mange", "des", "une", "pommes", "pomme"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« des pommes » : pluriel indéfini.",
+          "translation": "She eats some apples.",
+          "hint": "des = unspecified plural."
+        },
+        {
+          "id": "el_des_03",
+          "type": "genderArticle",
+          "prompt": "Choisis l'article : ___ voitures",
+          "cue": "voitures (plural, indefinite)",
+          "answerTokens": ["des"],
+          "tokenBank": ["des", "les", "une"],
+          "inputMode": "multipleChoice",
+          "explanation": "Pluriel indéfini → « des ».",
+          "translation": "some cars",
+          "hint": "Indefinite plural → des."
+        },
+        {
+          "id": "el_des_04",
+          "type": "genderArticle",
+          "prompt": "Choisis l'article : ___ amis",
+          "cue": "amis (plural, indefinite)",
+          "answerTokens": ["des"],
+          "tokenBank": ["des", "les", "un"],
+          "inputMode": "multipleChoice",
+          "explanation": "« des amis » : pluriel indéfini.",
+          "translation": "some friends",
+          "hint": "des, not les, for 'some'."
+        },
+        {
+          "id": "el_des_05",
+          "type": "wordOrder",
+          "prompt": "Construis : « There are some tables. »",
+          "cue": null,
+          "answerTokens": ["Il", "y", "a", "des", "tables"],
+          "tokenBank": ["Il", "y", "a", "des", "les", "tables"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« il y a » + « des tables ».",
+          "translation": "There are some tables.",
+          "hint": "il y a + des for a plural."
+        }
+      ]
+    },
+    {
+      "id": "el_pluriel_s",
+      "sortOrder": 6,
+      "label": "Pluriel régulier en -s",
+      "ruleNote": "Most nouns form their plural by adding -s. The -s is usually silent — you hear the plural in the article (les, des).",
+      "examples": [
+        {
+          "id": "el_pluriel_s_01",
+          "type": "fillBlank",
+          "prompt": "Pluriel : un chat → des ___",
+          "cue": "chat",
+          "answerTokens": ["chats"],
+          "tokenBank": ["chats", "chat", "chatx"],
+          "inputMode": "multipleChoice",
+          "explanation": "Pluriel régulier : « chat » → « chats ».",
+          "translation": "cats",
+          "hint": "Add -s for a regular plural."
+        },
+        {
+          "id": "el_pluriel_s_02",
+          "type": "fillBlank",
+          "prompt": "Pluriel : une maison → des ___",
+          "cue": "maison",
+          "answerTokens": ["maisons"],
+          "tokenBank": ["maisons", "maison", "maisonx"],
+          "inputMode": "multipleChoice",
+          "explanation": "« maison » → « maisons ».",
+          "translation": "houses",
+          "hint": "Regular plural adds -s."
+        },
+        {
+          "id": "el_pluriel_s_03",
+          "type": "wordOrder",
+          "prompt": "Construis : « The friends are here. »",
+          "cue": null,
+          "answerTokens": ["Les", "amis", "sont", "ici"],
+          "tokenBank": ["Les", "amis", "ami", "sont", "ici", "est"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« ami » → « amis » au pluriel.",
+          "translation": "The friends are here.",
+          "hint": "ami → amis."
+        },
+        {
+          "id": "el_pluriel_s_04",
+          "type": "wordOrder",
+          "prompt": "Construis : « I have two cars. »",
+          "cue": null,
+          "answerTokens": ["J'", "ai", "deux", "voitures"],
+          "tokenBank": ["J'", "ai", "deux", "voitures", "voiture", "a"],
+          "inputMode": "buildFromTokens",
+          "explanation": "Après « deux », le nom est pluriel : « voitures ».",
+          "translation": "I have two cars.",
+          "hint": "deux → noun takes -s."
+        },
+        {
+          "id": "el_pluriel_s_05",
+          "type": "fillBlank",
+          "prompt": "Pluriel : un livre → des ___",
+          "cue": "livre",
+          "answerTokens": ["livres"],
+          "tokenBank": ["livres", "livre", "livrs"],
+          "inputMode": "multipleChoice",
+          "explanation": "« livre » → « livres ».",
+          "translation": "books",
+          "hint": "Add -s."
+        }
+      ]
+    },
+    {
+      "id": "el_pluriel_x",
+      "sortOrder": 7,
+      "label": "Pluriel en -x (-eau → -eaux, -al → -aux)",
+      "ruleNote": "Nouns ending in -eau take -x in the plural (eau→eaux), and most ending in -al change to -aux (animal→animaux).",
+      "examples": [
+        {
+          "id": "el_pluriel_x_01",
+          "type": "fillBlank",
+          "prompt": "Pluriel : un gâteau → des ___",
+          "cue": "gâteau",
+          "answerTokens": ["gâteaux"],
+          "tokenBank": ["gâteaux", "gâteaus", "gâteau"],
+          "inputMode": "multipleChoice",
+          "explanation": "« -eau » → « -eaux » : « gâteaux ».",
+          "translation": "cakes",
+          "hint": "-eau → -eaux, not -eaus."
+        },
+        {
+          "id": "el_pluriel_x_02",
+          "type": "fillBlank",
+          "prompt": "Pluriel : un animal → des ___",
+          "cue": "animal",
+          "answerTokens": ["animaux"],
+          "tokenBank": ["animaux", "animals", "animales"],
+          "inputMode": "multipleChoice",
+          "explanation": "« -al » → « -aux » : « animaux ».",
+          "translation": "animals",
+          "hint": "-al → -aux."
+        },
+        {
+          "id": "el_pluriel_x_03",
+          "type": "fillBlank",
+          "prompt": "Pluriel : un château → des ___",
+          "cue": "château",
+          "answerTokens": ["châteaux"],
+          "tokenBank": ["châteaux", "châteaus", "château"],
+          "inputMode": "multipleChoice",
+          "explanation": "« château » → « châteaux ».",
+          "translation": "castles",
+          "hint": "-eau → -eaux."
+        },
+        {
+          "id": "el_pluriel_x_04",
+          "type": "wordOrder",
+          "prompt": "Construis : « The cakes are good. »",
+          "cue": null,
+          "answerTokens": ["Les", "gâteaux", "sont", "bons"],
+          "tokenBank": ["Les", "gâteaux", "gâteaus", "sont", "bons", "bon"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« gâteaux » pluriel → « sont bons ».",
+          "translation": "The cakes are good.",
+          "hint": "gâteau → gâteaux, then bons."
+        },
+        {
+          "id": "el_pluriel_x_05",
+          "type": "fillBlank",
+          "prompt": "Pluriel : un bureau → des ___",
+          "cue": "bureau (desk)",
+          "answerTokens": ["bureaux"],
+          "tokenBank": ["bureaux", "bureaus", "bureau"],
+          "inputMode": "multipleChoice",
+          "explanation": "« bureau » → « bureaux ».",
+          "translation": "desks",
+          "hint": "-eau → -eaux."
+        }
+      ]
+    },
+    {
+      "id": "el_fin_masc",
+      "sortOrder": 8,
+      "label": "Terminaisons masculines : -age, -ment, -eau",
+      "ruleNote": "Some endings reliably signal a masculine noun: -age, -ment, and -eau are almost always masculine.",
+      "examples": [
+        {
+          "id": "el_fin_masc_01",
+          "type": "genderArticle",
+          "prompt": "Choisis l'article : ___ fromage",
+          "cue": "fromage (-age)",
+          "answerTokens": ["le"],
+          "tokenBank": ["le", "la", "l'"],
+          "inputMode": "multipleChoice",
+          "explanation": "« -age » est masculin → « le fromage ».",
+          "translation": "the cheese",
+          "hint": "-age → masculine."
+        },
+        {
+          "id": "el_fin_masc_02",
+          "type": "genderArticle",
+          "prompt": "Choisis l'article : ___ appartement",
+          "cue": "appartement (-ment, vowel start)",
+          "answerTokens": ["l'"],
+          "tokenBank": ["l'", "le", "la"],
+          "inputMode": "multipleChoice",
+          "explanation": "« -ment » est masculin, mais le mot commence par une voyelle → « l' ».",
+          "translation": "the apartment",
+          "hint": "-ment is masculine; vowel start still forces l'."
+        },
+        {
+          "id": "el_fin_masc_03",
+          "type": "genderArticle",
+          "prompt": "Choisis l'article : ___ bureau",
+          "cue": "bureau (-eau)",
+          "answerTokens": ["le"],
+          "tokenBank": ["le", "la", "l'"],
+          "inputMode": "multipleChoice",
+          "explanation": "« -eau » est masculin → « le bureau ».",
+          "translation": "the desk",
+          "hint": "-eau → masculine."
+        },
+        {
+          "id": "el_fin_masc_04",
+          "type": "wordOrder",
+          "prompt": "Construis : « The cheese is good. »",
+          "cue": null,
+          "answerTokens": ["Le", "fromage", "est", "bon"],
+          "tokenBank": ["Le", "La", "fromage", "est", "bon", "bonne"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« fromage » (-age) est masculin → « le » et « bon ».",
+          "translation": "The cheese is good.",
+          "hint": "-age → masculine → le, bon."
+        },
+        {
+          "id": "el_fin_masc_05",
+          "type": "genderArticle",
+          "prompt": "Choisis l'article : ___ voyage",
+          "cue": "voyage (-age)",
+          "answerTokens": ["un"],
+          "tokenBank": ["un", "une", "des"],
+          "inputMode": "multipleChoice",
+          "explanation": "« -age » est masculin → « un voyage ».",
+          "translation": "a trip",
+          "hint": "-age → masculine → un."
+        }
+      ]
+    },
+    {
+      "id": "el_fin_fem",
+      "sortOrder": 9,
+      "label": "Terminaisons féminines : -tion, -té, -ette",
+      "ruleNote": "Other endings reliably signal a feminine noun: -tion, -té, and -ette are almost always feminine.",
+      "examples": [
+        {
+          "id": "el_fin_fem_01",
+          "type": "genderArticle",
+          "prompt": "Choisis l'article : ___ question",
+          "cue": "question (-tion)",
+          "answerTokens": ["la"],
+          "tokenBank": ["la", "le", "l'"],
+          "inputMode": "multipleChoice",
+          "explanation": "« -tion » est féminin → « la question ».",
+          "translation": "the question",
+          "hint": "-tion → feminine."
+        },
+        {
+          "id": "el_fin_fem_02",
+          "type": "genderArticle",
+          "prompt": "Choisis l'article : ___ télévision",
+          "cue": "télévision (-sion family)",
+          "answerTokens": ["une"],
+          "tokenBank": ["une", "un", "des"],
+          "inputMode": "multipleChoice",
+          "explanation": "« télévision » est féminin → « une ».",
+          "translation": "a television",
+          "hint": "-sion/-tion → feminine → une."
+        },
+        {
+          "id": "el_fin_fem_03",
+          "type": "genderArticle",
+          "prompt": "Choisis l'article : ___ université",
+          "cue": "université (-té, vowel start)",
+          "answerTokens": ["l'"],
+          "tokenBank": ["l'", "la", "le"],
+          "inputMode": "multipleChoice",
+          "explanation": "« -té » est féminin, mais voyelle initiale → « l'université ».",
+          "translation": "the university",
+          "hint": "-té is feminine; vowel start → l'."
+        },
+        {
+          "id": "el_fin_fem_04",
+          "type": "wordOrder",
+          "prompt": "Construis : « The question is easy. »",
+          "cue": null,
+          "answerTokens": ["La", "question", "est", "facile"],
+          "tokenBank": ["La", "Le", "question", "est", "facile", "faciles"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« question » (-tion) est féminin → « la ».",
+          "translation": "The question is easy.",
+          "hint": "-tion → feminine → la."
+        },
+        {
+          "id": "el_fin_fem_05",
+          "type": "genderArticle",
+          "prompt": "Choisis l'article : ___ baguette",
+          "cue": "baguette (-ette)",
+          "answerTokens": ["une"],
+          "tokenBank": ["une", "un", "des"],
+          "inputMode": "multipleChoice",
+          "explanation": "« -ette » est féminin → « une baguette ».",
+          "translation": "a baguette",
+          "hint": "-ette → feminine → une."
+        }
+      ]
+    },
+    {
+      "id": "el_cest_cesont",
+      "sortOrder": 10,
+      "label": "Présenter : c'est / ce sont",
+      "ruleNote": "Use 'c'est' (it is / this is) before a singular noun and 'ce sont' (they are / these are) before a plural.",
+      "examples": [
+        {
+          "id": "el_cest_cesont_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « It is a dog. »",
+          "cue": null,
+          "answerTokens": ["C'", "est", "un", "chien"],
+          "tokenBank": ["C'", "Ce", "est", "un", "chien", "sont"],
+          "inputMode": "buildFromTokens",
+          "explanation": "Au singulier, on dit « c'est ».",
+          "translation": "It is a dog.",
+          "hint": "Singular → c'est."
+        },
+        {
+          "id": "el_cest_cesont_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « They are friends. »",
+          "cue": null,
+          "answerTokens": ["Ce", "sont", "des", "amis"],
+          "tokenBank": ["Ce", "C'", "sont", "des", "amis", "est"],
+          "inputMode": "buildFromTokens",
+          "explanation": "Au pluriel, on dit « ce sont ».",
+          "translation": "They are friends.",
+          "hint": "Plural → ce sont."
+        },
+        {
+          "id": "el_cest_cesont_03",
+          "type": "fillBlank",
+          "prompt": "Choisis : ___ une maison.",
+          "cue": "singular",
+          "answerTokens": ["C'est"],
+          "tokenBank": ["C'est", "Ce sont", "Il sont"],
+          "inputMode": "multipleChoice",
+          "explanation": "« une maison » est singulier → « c'est ».",
+          "translation": "It is a house.",
+          "hint": "One thing → c'est."
+        },
+        {
+          "id": "el_cest_cesont_04",
+          "type": "fillBlank",
+          "prompt": "Choisis : ___ des livres.",
+          "cue": "plural",
+          "answerTokens": ["Ce sont"],
+          "tokenBank": ["Ce sont", "C'est", "C'ont"],
+          "inputMode": "multipleChoice",
+          "explanation": "« des livres » est pluriel → « ce sont ».",
+          "translation": "They are books.",
+          "hint": "Several things → ce sont."
+        },
+        {
+          "id": "el_cest_cesont_05",
+          "type": "wordOrder",
+          "prompt": "Construis : « It is the school. »",
+          "cue": null,
+          "answerTokens": ["C'", "est", "l'", "école"],
+          "tokenBank": ["C'", "est", "l'", "la", "école", "sont"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« c'est » + « l'école » (voyelle).",
+          "translation": "It is the school.",
+          "hint": "c'est + l'école."
+        }
+      ]
+    },
+    {
+      "id": "el_ilya",
+      "sortOrder": 11,
+      "label": "Il y a (there is / there are)",
+      "ruleNote": "'il y a' means both 'there is' and 'there are' — it never changes for singular or plural.",
+      "examples": [
+        {
+          "id": "el_ilya_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « There is a cat. »",
+          "cue": null,
+          "answerTokens": ["Il", "y", "a", "un", "chat"],
+          "tokenBank": ["Il", "y", "a", "un", "une", "chat"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« il y a » + « un chat ».",
+          "translation": "There is a cat.",
+          "hint": "il y a stays the same for singular."
+        },
+        {
+          "id": "el_ilya_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « There are some apples. »",
+          "cue": null,
+          "answerTokens": ["Il", "y", "a", "des", "pommes"],
+          "tokenBank": ["Il", "y", "a", "des", "une", "pommes"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« il y a » ne change pas au pluriel.",
+          "translation": "There are some apples.",
+          "hint": "il y a = there is AND there are."
+        },
+        {
+          "id": "el_ilya_03",
+          "type": "wordOrder",
+          "prompt": "Construis : « There is water. »",
+          "cue": null,
+          "answerTokens": ["Il", "y", "a", "de", "l'", "eau"],
+          "tokenBank": ["Il", "y", "a", "de", "l'", "eau", "la"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« de l'eau » : article partitif devant une voyelle.",
+          "translation": "There is water.",
+          "hint": "Uncountable → de l'eau."
+        },
+        {
+          "id": "el_ilya_04",
+          "type": "fillBlank",
+          "prompt": "Choisis : ___ un livre sur la table.",
+          "cue": "there is",
+          "answerTokens": ["Il y a"],
+          "tokenBank": ["Il y a", "C'est", "Ce sont"],
+          "inputMode": "multipleChoice",
+          "explanation": "Pour situer/exister, on utilise « il y a ».",
+          "translation": "There is a book on the table.",
+          "hint": "Existence/location → il y a."
+        },
+        {
+          "id": "el_ilya_05",
+          "type": "wordOrder",
+          "prompt": "Construis : « There are two dogs. »",
+          "cue": null,
+          "answerTokens": ["Il", "y", "a", "deux", "chiens"],
+          "tokenBank": ["Il", "y", "a", "deux", "chiens", "chien"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« il y a » + « deux chiens » (pluriel).",
+          "translation": "There are two dogs.",
+          "hint": "deux → chiens, but il y a unchanged."
+        }
+      ]
+    },
+    {
+      "id": "el_voici_voila",
+      "sortOrder": 12,
+      "label": "Voici / Voilà (here is / there is)",
+      "ruleNote": "Use 'voici' to point at something near ('here is') and 'voilà' for something a bit farther ('there is'). Both can show singular or plural.",
+      "examples": [
+        {
+          "id": "el_voici_voila_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « Here is the book. »",
+          "cue": null,
+          "answerTokens": ["Voici", "le", "livre"],
+          "tokenBank": ["Voici", "Voilà", "le", "la", "livre"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« voici » présente quelque chose de proche.",
+          "translation": "Here is the book.",
+          "hint": "voici = here is (near)."
+        },
+        {
+          "id": "el_voici_voila_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « There is the house. »",
+          "cue": null,
+          "answerTokens": ["Voilà", "la", "maison"],
+          "tokenBank": ["Voilà", "Voici", "la", "le", "maison"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« voilà » présente quelque chose de plus loin.",
+          "translation": "There is the house.",
+          "hint": "voilà = there is (farther)."
+        },
+        {
+          "id": "el_voici_voila_03",
+          "type": "wordOrder",
+          "prompt": "Construis : « Here are the keys. »",
+          "cue": null,
+          "answerTokens": ["Voici", "les", "clés"],
+          "tokenBank": ["Voici", "Voilà", "les", "la", "clés"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« voici » marche aussi au pluriel : « les clés ».",
+          "translation": "Here are the keys.",
+          "hint": "voici + plural noun works too."
+        },
+        {
+          "id": "el_voici_voila_04",
+          "type": "fillBlank",
+          "prompt": "Choisis : ___ ma maison (au loin).",
+          "cue": "pointing far away",
+          "answerTokens": ["Voilà"],
+          "tokenBank": ["Voilà", "Voici", "Il y a"],
+          "inputMode": "multipleChoice",
+          "explanation": "Pour quelque chose de loin, « voilà ».",
+          "translation": "There is my house (far away).",
+          "hint": "Far → voilà."
+        },
+        {
+          "id": "el_voici_voila_05",
+          "type": "wordOrder",
+          "prompt": "Construis : « Here is a coffee. »",
+          "cue": null,
+          "answerTokens": ["Voici", "un", "café"],
+          "tokenBank": ["Voici", "Voilà", "un", "une", "café"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« voici » + « un café » (masculin).",
+          "translation": "Here is a coffee.",
+          "hint": "café is masculine → un."
+        }
+      ]
+    },
+    {
+      "id": "el_genre_courant",
+      "sortOrder": 13,
+      "label": "Genre des noms courants",
+      "ruleNote": "Some everyday nouns just have to be memorised with their gender. Learn each one with its article and you'll remember the gender.",
+      "examples": [
+        {
+          "id": "el_genre_courant_01",
+          "type": "genderArticle",
+          "prompt": "Choisis l'article : ___ pain",
+          "cue": "pain (m)",
+          "answerTokens": ["le"],
+          "tokenBank": ["le", "la", "l'"],
+          "inputMode": "multipleChoice",
+          "explanation": "« pain » est masculin → « le pain ».",
+          "translation": "the bread",
+          "hint": "pain is masculine."
+        },
+        {
+          "id": "el_genre_courant_02",
+          "type": "genderArticle",
+          "prompt": "Choisis l'article : ___ fille",
+          "cue": "fille (f)",
+          "answerTokens": ["la"],
+          "tokenBank": ["la", "le", "l'"],
+          "inputMode": "multipleChoice",
+          "explanation": "« fille » est féminin → « la fille ».",
+          "translation": "the girl",
+          "hint": "fille is feminine."
+        },
+        {
+          "id": "el_genre_courant_03",
+          "type": "genderArticle",
+          "prompt": "Choisis l'article : ___ femme",
+          "cue": "femme (f)",
+          "answerTokens": ["la"],
+          "tokenBank": ["la", "le", "l'"],
+          "inputMode": "multipleChoice",
+          "explanation": "« femme » est féminin → « la femme ».",
+          "translation": "the woman",
+          "hint": "femme is feminine."
+        },
+        {
+          "id": "el_genre_courant_04",
+          "type": "wordOrder",
+          "prompt": "Construis : « The bread is good. »",
+          "cue": null,
+          "answerTokens": ["Le", "pain", "est", "bon"],
+          "tokenBank": ["Le", "La", "pain", "est", "bon", "bonne"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« pain » est masculin → « le » et « bon ».",
+          "translation": "The bread is good.",
+          "hint": "pain is masculine → le, bon."
+        },
+        {
+          "id": "el_genre_courant_05",
+          "type": "genderArticle",
+          "prompt": "Choisis l'article : ___ homme",
+          "cue": "homme (m), silent h",
+          "answerTokens": ["l'"],
+          "tokenBank": ["l'", "le", "la"],
+          "inputMode": "multipleChoice",
+          "explanation": "« homme » est masculin mais a un « h » muet → « l' ».",
+          "translation": "the man",
+          "hint": "homme: masculine, but silent h → l'."
+        }
+      ]
+    },
+    {
+      "id": "el_demonstratif",
+      "sortOrder": 14,
+      "label": "Démonstratif : ce / cet / cette",
+      "ruleNote": "'this/that' is 'ce' before a masculine noun, 'cette' before a feminine one, and 'cet' before a masculine noun starting with a vowel or silent h.",
+      "examples": [
+        {
+          "id": "el_demonstratif_01",
+          "type": "genderArticle",
+          "prompt": "Choisis : ___ chien",
+          "cue": "chien (m, consonant)",
+          "answerTokens": ["ce"],
+          "tokenBank": ["ce", "cette", "cet"],
+          "inputMode": "multipleChoice",
+          "explanation": "Masculin devant consonne → « ce chien ».",
+          "translation": "this dog",
+          "hint": "Masculine + consonant → ce."
+        },
+        {
+          "id": "el_demonstratif_02",
+          "type": "genderArticle",
+          "prompt": "Choisis : ___ maison",
+          "cue": "maison (f)",
+          "answerTokens": ["cette"],
+          "tokenBank": ["cette", "ce", "cet"],
+          "inputMode": "multipleChoice",
+          "explanation": "Féminin → « cette maison ».",
+          "translation": "this house",
+          "hint": "Feminine → cette."
+        },
+        {
+          "id": "el_demonstratif_03",
+          "type": "genderArticle",
+          "prompt": "Choisis : ___ homme",
+          "cue": "homme (m, silent h)",
+          "answerTokens": ["cet"],
+          "tokenBank": ["cet", "ce", "cette"],
+          "inputMode": "multipleChoice",
+          "explanation": "Masculin devant voyelle/h muet → « cet homme ».",
+          "translation": "this man",
+          "hint": "Masculine + vowel/silent h → cet."
+        },
+        {
+          "id": "el_demonstratif_04",
+          "type": "wordOrder",
+          "prompt": "Construis : « This dog is big. »",
+          "cue": null,
+          "answerTokens": ["Ce", "chien", "est", "grand"],
+          "tokenBank": ["Ce", "Cette", "chien", "est", "grand", "grande"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« chien » masculin → « ce » et « grand ».",
+          "translation": "This dog is big.",
+          "hint": "Masculine → ce, grand."
+        },
+        {
+          "id": "el_demonstratif_05",
+          "type": "genderArticle",
+          "prompt": "Choisis : ___ ami",
+          "cue": "ami (m, starts with vowel)",
+          "answerTokens": ["cet"],
+          "tokenBank": ["cet", "ce", "cette"],
+          "inputMode": "multipleChoice",
+          "explanation": "Masculin devant voyelle → « cet ami ».",
+          "translation": "this friend",
+          "hint": "Masculine + vowel → cet."
+        }
+      ]
+    },
+    {
+      "id": "el_un_vs_le",
+      "sortOrder": 15,
+      "label": "un/une vs le/la (a vs the)",
+      "ruleNote": "Use un/une for something new or unspecified ('a'), and le/la for something specific or already known ('the').",
+      "examples": [
+        {
+          "id": "el_un_vs_le_01",
+          "type": "fillBlank",
+          "prompt": "Choisis : Je mange ___ pomme. (one apple, any)",
+          "cue": "a / any apple",
+          "answerTokens": ["une"],
+          "tokenBank": ["une", "la", "le"],
+          "inputMode": "multipleChoice",
+          "explanation": "Une pomme quelconque → « une ».",
+          "translation": "I eat an apple.",
+          "hint": "Unspecified → un/une."
+        },
+        {
+          "id": "el_un_vs_le_02",
+          "type": "fillBlank",
+          "prompt": "Choisis : J'aime ___ café. (coffee in general)",
+          "cue": "coffee in general",
+          "answerTokens": ["le"],
+          "tokenBank": ["le", "un", "des"],
+          "inputMode": "multipleChoice",
+          "explanation": "Avec « aimer », on parle en général → « le café ».",
+          "translation": "I love coffee.",
+          "hint": "General likes use le/la."
+        },
+        {
+          "id": "el_un_vs_le_03",
+          "type": "wordOrder",
+          "prompt": "Construis : « I have a book. »",
+          "cue": null,
+          "answerTokens": ["J'", "ai", "un", "livre"],
+          "tokenBank": ["J'", "ai", "un", "le", "livre", "a"],
+          "inputMode": "buildFromTokens",
+          "explanation": "Un livre quelconque → « un ».",
+          "translation": "I have a book.",
+          "hint": "New/unspecified → un."
+        },
+        {
+          "id": "el_un_vs_le_04",
+          "type": "wordOrder",
+          "prompt": "Construis : « The book is here. »",
+          "cue": null,
+          "answerTokens": ["Le", "livre", "est", "ici"],
+          "tokenBank": ["Le", "Un", "livre", "est", "ici", "a"],
+          "inputMode": "buildFromTokens",
+          "explanation": "Un livre précis → « le livre ».",
+          "translation": "The book is here.",
+          "hint": "Specific/known → le."
+        },
+        {
+          "id": "el_un_vs_le_05",
+          "type": "fillBlank",
+          "prompt": "Choisis : Voici ___ voiture de Marie. (Marie's specific car)",
+          "cue": "Marie's specific car",
+          "answerTokens": ["la"],
+          "tokenBank": ["la", "une", "des"],
+          "inputMode": "multipleChoice",
+          "explanation": "Voiture précise → « la voiture ».",
+          "translation": "Here is Marie's car.",
+          "hint": "Specific → le/la."
+        }
+      ]
+    },
+    {
+      "id": "el_pas_de",
+      "sortOrder": 16,
+      "label": "Négation : pas de",
+      "ruleNote": "After a negative, un/une/des usually become 'de' (or 'd'' before a vowel): j'ai un chien → je n'ai pas de chien.",
+      "examples": [
+        {
+          "id": "el_pas_de_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « I don't have a dog. »",
+          "cue": null,
+          "answerTokens": ["Je", "n'", "ai", "pas", "de", "chien"],
+          "tokenBank": ["Je", "n'", "ai", "pas", "de", "un", "chien"],
+          "inputMode": "buildFromTokens",
+          "explanation": "À la forme négative, « un » devient « de ».",
+          "translation": "I don't have a dog.",
+          "hint": "Negative → pas de, not pas un."
+        },
+        {
+          "id": "el_pas_de_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « She doesn't eat apples. »",
+          "cue": null,
+          "answerTokens": ["Elle", "ne", "mange", "pas", "de", "pommes"],
+          "tokenBank": ["Elle", "ne", "mange", "pas", "de", "des", "pommes"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« des » devient « de » à la forme négative.",
+          "translation": "She doesn't eat apples.",
+          "hint": "des → de after a negative."
+        },
+        {
+          "id": "el_pas_de_03",
+          "type": "fillBlank",
+          "prompt": "Choisis : Je n'ai pas ___ voiture.",
+          "cue": "negative",
+          "answerTokens": ["de"],
+          "tokenBank": ["de", "une", "la"],
+          "inputMode": "multipleChoice",
+          "explanation": "Après « pas », « une » devient « de ».",
+          "translation": "I don't have a car.",
+          "hint": "pas + de."
+        },
+        {
+          "id": "el_pas_de_04",
+          "type": "wordOrder",
+          "prompt": "Construis : « There isn't any water. »",
+          "cue": null,
+          "answerTokens": ["Il", "n'", "y", "a", "pas", "d'", "eau"],
+          "tokenBank": ["Il", "n'", "y", "a", "pas", "d'", "de", "eau"],
+          "inputMode": "buildFromTokens",
+          "explanation": "Devant une voyelle, « de » devient « d' » : « pas d'eau ».",
+          "translation": "There isn't any water.",
+          "hint": "de → d' before a vowel."
+        },
+        {
+          "id": "el_pas_de_05",
+          "type": "fillBlank",
+          "prompt": "Choisis : Il n'y a pas ___ pain.",
+          "cue": "negative, consonant start",
+          "answerTokens": ["de"],
+          "tokenBank": ["de", "du", "le"],
+          "inputMode": "multipleChoice",
+          "explanation": "À la négative → « pas de pain ».",
+          "translation": "There isn't any bread.",
+          "hint": "Negative → de."
+        }
+      ]
+    },
+    {
+      "id": "el_profession",
+      "sortOrder": 17,
+      "label": "Professions sans article",
+      "ruleNote": "After être, professions take no article: 'Il est médecin' (He is a doctor), not 'Il est un médecin'.",
+      "examples": [
+        {
+          "id": "el_profession_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « He is a doctor. »",
+          "cue": null,
+          "answerTokens": ["Il", "est", "médecin"],
+          "tokenBank": ["Il", "est", "médecin", "un", "une"],
+          "inputMode": "buildFromTokens",
+          "explanation": "Pas d'article devant une profession après « être ».",
+          "translation": "He is a doctor.",
+          "hint": "Il est médecin — no article."
+        },
+        {
+          "id": "el_profession_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « She is a teacher. »",
+          "cue": null,
+          "answerTokens": ["Elle", "est", "professeure"],
+          "tokenBank": ["Elle", "est", "professeure", "une", "un"],
+          "inputMode": "buildFromTokens",
+          "explanation": "Profession après « être » → pas d'article.",
+          "translation": "She is a teacher.",
+          "hint": "No article with a profession."
+        },
+        {
+          "id": "el_profession_03",
+          "type": "fillBlank",
+          "prompt": "Choisis : Il est ___ médecin.",
+          "cue": "after être",
+          "answerTokens": ["(rien)"],
+          "tokenBank": ["(rien)", "un", "le"],
+          "inputMode": "multipleChoice",
+          "explanation": "« (rien) » = pas d'article : « Il est médecin ».",
+          "translation": "He is a doctor.",
+          "hint": "Choose 'no article'."
+        },
+        {
+          "id": "el_profession_04",
+          "type": "wordOrder",
+          "prompt": "Construis : « I am a student. »",
+          "cue": null,
+          "answerTokens": ["Je", "suis", "étudiant"],
+          "tokenBank": ["Je", "suis", "étudiant", "un", "l'"],
+          "inputMode": "buildFromTokens",
+          "explanation": "Profession/statut après « être » → pas d'article.",
+          "translation": "I am a student.",
+          "hint": "Je suis étudiant — no article."
+        },
+        {
+          "id": "el_profession_05",
+          "type": "fillBlank",
+          "prompt": "Choisis : Elle est ___ professeure.",
+          "cue": "after être",
+          "answerTokens": ["(rien)"],
+          "tokenBank": ["(rien)", "une", "la"],
+          "inputMode": "multipleChoice",
+          "explanation": "Pas d'article : « Elle est professeure ».",
+          "translation": "She is a teacher.",
+          "hint": "No article after être here."
+        }
+      ]
+    },
+    {
+      "id": "el_pays_lieux",
+      "sortOrder": 18,
+      "label": "Genre des pays et des lieux",
+      "ruleNote": "Countries have a gender too: la France, le Canada, l'Italie, les États-Unis. Most ending in -e are feminine.",
+      "examples": [
+        {
+          "id": "el_pays_lieux_01",
+          "type": "genderArticle",
+          "prompt": "Choisis l'article : ___ France",
+          "cue": "France (f, ends in -e)",
+          "answerTokens": ["la"],
+          "tokenBank": ["la", "le", "l'"],
+          "inputMode": "multipleChoice",
+          "explanation": "« France » est féminin → « la France ».",
+          "translation": "France",
+          "hint": "Most -e countries are feminine."
+        },
+        {
+          "id": "el_pays_lieux_02",
+          "type": "genderArticle",
+          "prompt": "Choisis l'article : ___ Canada",
+          "cue": "Canada (m)",
+          "answerTokens": ["le"],
+          "tokenBank": ["le", "la", "l'"],
+          "inputMode": "multipleChoice",
+          "explanation": "« Canada » est masculin → « le Canada ».",
+          "translation": "Canada",
+          "hint": "Canada is masculine."
+        },
+        {
+          "id": "el_pays_lieux_03",
+          "type": "genderArticle",
+          "prompt": "Choisis l'article : ___ Italie",
+          "cue": "Italie (f, vowel start)",
+          "answerTokens": ["l'"],
+          "tokenBank": ["l'", "la", "le"],
+          "inputMode": "multipleChoice",
+          "explanation": "« Italie » est féminin et commence par une voyelle → « l'Italie ».",
+          "translation": "Italy",
+          "hint": "Feminine, but vowel start → l'."
+        },
+        {
+          "id": "el_pays_lieux_04",
+          "type": "genderArticle",
+          "prompt": "Choisis l'article : ___ États-Unis",
+          "cue": "États-Unis (plural)",
+          "answerTokens": ["les"],
+          "tokenBank": ["les", "le", "l'"],
+          "inputMode": "multipleChoice",
+          "explanation": "« États-Unis » est pluriel → « les États-Unis ».",
+          "translation": "the United States",
+          "hint": "Plural country → les."
+        },
+        {
+          "id": "el_pays_lieux_05",
+          "type": "wordOrder",
+          "prompt": "Construis : « France is beautiful. »",
+          "cue": null,
+          "answerTokens": ["La", "France", "est", "belle"],
+          "tokenBank": ["La", "Le", "France", "est", "belle", "beau"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« la France » est féminin → « belle ».",
+          "translation": "France is beautiful.",
+          "hint": "la France → belle (feminine)."
+        }
+      ]
+    },
+    {
+      "id": "el_nombres_nom",
+      "sortOrder": 19,
+      "label": "Nombres + nom (un, deux + nom)",
+      "ruleNote": "After a number, the noun is plural (and takes -s), except after 'un/une' which stays singular: un chat, deux chats.",
+      "examples": [
+        {
+          "id": "el_nombres_nom_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « I have one cat. »",
+          "cue": null,
+          "answerTokens": ["J'", "ai", "un", "chat"],
+          "tokenBank": ["J'", "ai", "un", "deux", "chat", "chats"],
+          "inputMode": "buildFromTokens",
+          "explanation": "Après « un », le nom reste au singulier : « un chat ».",
+          "translation": "I have one cat.",
+          "hint": "un → singular noun."
+        },
+        {
+          "id": "el_nombres_nom_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « I have three books. »",
+          "cue": null,
+          "answerTokens": ["J'", "ai", "trois", "livres"],
+          "tokenBank": ["J'", "ai", "trois", "livres", "livre", "a"],
+          "inputMode": "buildFromTokens",
+          "explanation": "Après « trois », le nom est pluriel : « livres ».",
+          "translation": "I have three books.",
+          "hint": "trois → noun takes -s."
+        },
+        {
+          "id": "el_nombres_nom_03",
+          "type": "fillBlank",
+          "prompt": "Choisis : deux ___",
+          "cue": "two + maison",
+          "answerTokens": ["maisons"],
+          "tokenBank": ["maisons", "maison", "maisonx"],
+          "inputMode": "multipleChoice",
+          "explanation": "Après « deux », pluriel : « maisons ».",
+          "translation": "two houses",
+          "hint": "Number above 1 → plural -s."
+        },
+        {
+          "id": "el_nombres_nom_04",
+          "type": "fillBlank",
+          "prompt": "Choisis : une ___",
+          "cue": "one + pomme",
+          "answerTokens": ["pomme"],
+          "tokenBank": ["pomme", "pommes", "pommex"],
+          "inputMode": "multipleChoice",
+          "explanation": "Après « une », singulier : « pomme ».",
+          "translation": "one apple",
+          "hint": "un/une → singular noun."
+        },
+        {
+          "id": "el_nombres_nom_05",
+          "type": "wordOrder",
+          "prompt": "Construis : « There are four cats. »",
+          "cue": null,
+          "answerTokens": ["Il", "y", "a", "quatre", "chats"],
+          "tokenBank": ["Il", "y", "a", "quatre", "chats", "chat"],
+          "inputMode": "buildFromTokens",
+          "explanation": "Après « quatre », pluriel : « chats ».",
+          "translation": "There are four cats.",
+          "hint": "quatre → chats (plural)."
+        }
+      ]
+    },
+    {
+      "id": "el_synthese_svo",
+      "sortOrder": 20,
+      "label": "Synthèse : phrase S-V-O avec article",
+      "ruleNote": "Now put it together: subject + verb + a noun phrase with the correct article. Watch the gender, the number, and any elision.",
+      "examples": [
+        {
+          "id": "el_synthese_svo_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « The girl eats an apple. »",
+          "cue": null,
+          "answerTokens": ["La", "fille", "mange", "une", "pomme"],
+          "tokenBank": ["La", "Le", "fille", "mange", "une", "un", "pomme"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« la fille » (f) + « mange » + « une pomme » (f).",
+          "translation": "The girl eats an apple.",
+          "hint": "fille → la, pomme → une."
+        },
+        {
+          "id": "el_synthese_svo_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « The man has a car. »",
+          "cue": null,
+          "answerTokens": ["L'", "homme", "a", "une", "voiture"],
+          "tokenBank": ["L'", "Le", "homme", "a", "une", "un", "voiture"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« l'homme » (h muet) + « a » + « une voiture » (f).",
+          "translation": "The man has a car.",
+          "hint": "homme → l', voiture → une."
+        },
+        {
+          "id": "el_synthese_svo_03",
+          "type": "wordOrder",
+          "prompt": "Construis : « The children eat the bread. »",
+          "cue": null,
+          "answerTokens": ["Les", "enfants", "mangent", "le", "pain"],
+          "tokenBank": ["Les", "enfants", "mangent", "mange", "le", "la", "pain"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« les enfants » (pluriel) → « mangent » ; « le pain » (m).",
+          "translation": "The children eat the bread.",
+          "hint": "Plural subject → mangent; pain → le."
+        },
+        {
+          "id": "el_synthese_svo_04",
+          "type": "wordOrder",
+          "prompt": "Construis : « She drinks the water. »",
+          "cue": null,
+          "answerTokens": ["Elle", "boit", "l'", "eau"],
+          "tokenBank": ["Elle", "boit", "l'", "la", "eau", "boivent"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« elle boit » + « l'eau » (voyelle).",
+          "translation": "She drinks the water.",
+          "hint": "eau → l' before a vowel."
+        },
+        {
+          "id": "el_synthese_svo_05",
+          "type": "wordOrder",
+          "prompt": "Construis : « The friend has some books. »",
+          "cue": null,
+          "answerTokens": ["L'", "ami", "a", "des", "livres"],
+          "tokenBank": ["L'", "Le", "ami", "a", "des", "les", "livres"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« l'ami » (voyelle) + « a » + « des livres » (pluriel indéfini).",
+          "translation": "The friend has some books.",
+          "hint": "ami → l', plural some → des."
+        }
+      ]
+    }
+  ]
+}

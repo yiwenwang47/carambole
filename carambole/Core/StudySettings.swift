@@ -6,14 +6,19 @@ import Foundation
 /// clamped on init — out-of-range values are an invariant violation and are never
 /// stored.
 struct StudySettings: Equatable {
+    /// HARD cap on new ELEMENTS (grammar points) introduced per calendar day.
     var newPerDay: Int
     var reviewTarget: Int
 
-    static let newPerDayRange = 5...40
+    static let newPerDayRange = 3...20
     static let reviewTargetRange = 40...600
     static let reviewTargetStep = 20
 
-    static let `default` = StudySettings(newPerDay: 20, reviewTarget: 200)
+    /// Distinct example sentences a learner must answer correctly for an element to
+    /// count as mastered (the module-unlock gate). Not user-tunable in v1.
+    static let masteryThreshold = 3
+
+    static let `default` = StudySettings(newPerDay: 10, reviewTarget: 200)
 
     init(newPerDay: Int, reviewTarget: Int) {
         self.newPerDay = newPerDay.clamped(to: StudySettings.newPerDayRange)
@@ -61,8 +66,8 @@ final class StudySettingsStore: ObservableObject {
 extension StudySettingsStore {
     static func _selfTest() {
         // Clamping invariant.
-        assert(StudySettings(newPerDay: 1, reviewTarget: 200).newPerDay == 5, "newPerDay clamps up to 5")
-        assert(StudySettings(newPerDay: 99, reviewTarget: 200).newPerDay == 40, "newPerDay clamps down to 40")
+        assert(StudySettings(newPerDay: 1, reviewTarget: 200).newPerDay == 3, "newPerDay clamps up to 3")
+        assert(StudySettings(newPerDay: 99, reviewTarget: 200).newPerDay == 20, "newPerDay clamps down to 20")
         assert(StudySettings(newPerDay: 20, reviewTarget: 0).reviewTarget == 40, "reviewTarget clamps up to 40")
         assert(StudySettings(newPerDay: 20, reviewTarget: 9999).reviewTarget == 600, "reviewTarget clamps down to 600")
 
@@ -74,14 +79,14 @@ extension StudySettingsStore {
         let store = StudySettingsStore(defaults: suite)
         assert(store.settings == .default, "absent keys fall back to default")
 
-        store.settings = StudySettings(newPerDay: 30, reviewTarget: 150)
+        store.settings = StudySettings(newPerDay: 15, reviewTarget: 150)
         let reloaded = StudySettingsStore(defaults: suite)
-        assert(reloaded.settings == StudySettings(newPerDay: 30, reviewTarget: 150), "values round-trip")
+        assert(reloaded.settings == StudySettings(newPerDay: 15, reviewTarget: 150), "values round-trip")
 
         // Out-of-range write is stored clamped.
         store.settings = StudySettings(newPerDay: 99, reviewTarget: 0)
         let reloadedClamped = StudySettingsStore(defaults: suite)
-        assert(reloadedClamped.settings == StudySettings(newPerDay: 40, reviewTarget: 40), "persisted values stay clamped")
+        assert(reloadedClamped.settings == StudySettings(newPerDay: 20, reviewTarget: 40), "persisted values stay clamped")
 
         suite.removePersistentDomain(forName: suiteName)
     }
