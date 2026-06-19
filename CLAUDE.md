@@ -1,5 +1,37 @@
 # Carambole — French Grammar Trainer
 
+> ## ▶ ACTIVE TASK — START HERE (next session, continue without re-asking)
+>
+> The French-grammar pivot + the content pipeline are DONE. Two things remain;
+> do them in order, using the same discipline as before (branch off `main`;
+> subagent-driven implement → spec review → code-quality review per task; build
+> gate `xcodebuild build ... -scheme carambole -destination 'platform=iOS
+> Simulator,name=iPhone 16' CODE_SIGNING_ALLOWED=NO` = EXIT 0; screenshot UI
+> changes; commit per task; update this block as you go).
+>
+> **STEP 1 — merge the content pipeline.** Branch `content-pipeline` (6 commits,
+> clean fast-forward) is unmerged. Run:
+> `git checkout main && git merge --ff-only content-pipeline`. Do NOT push unless
+> the user asks. Then delete the merged branch if clean.
+>
+> **STEP 2 — build the app-side scheduler.** Spec: `docs/plans/2026-06-19-schedule-design.md`
+> → "Still to build". Branch `scheduler` off main, then:
+> - (a) Settings + daily-driven home: `newPerDay` (default **20**, tunable 5–40,
+>   HARD cap) + a review *target* (~200, exceedable). Home shows "X new · Y due".
+> - (b) Decouple "introduce N new/day" from finishing a whole topic (pull the next
+>   N unseen exercises across the course).
+> - (c) Overflow review: when the SRS due-stack empties before the target, top up
+>   with not-yet-due cards (soonest-due / lowest-familiarity first); they grade
+>   normally. "Weak accumulation still counts."
+> - Ladder stays `[1,3,7,16,35]` (already in `SRSScheduler`) — do NOT extend it.
+>
+> **STEP 3 (optional, ask first)** — run the pipeline at scale (5 agents × 100 →
+> ~500) via `tools/content_pipeline/` (`prepare_all.py` → agents on
+> `agent_template.md` → `finalize_all.py`), then CURATE `out/staging/` into
+> `carambole/Resources/Topics/`. Leave for a dedicated curated session.
+>
+> Status tracker for the pivot is below; pipeline details in its `README.md`.
+
 SwiftUI + raw-SQLite iOS app. **Pivoted** from a vocabulary swipe-flashcard app
 to a modular French grammar trainer: active-production drills (tap-to-build +
 multiple choice), an unlockable topic tree, and spaced-repetition review.
