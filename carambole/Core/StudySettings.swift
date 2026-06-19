@@ -10,7 +10,8 @@ struct StudySettings: Equatable {
     var reviewTarget: Int
 
     static let newPerDayRange = 5...40
-    static let reviewTargetRange = 1...1000
+    static let reviewTargetRange = 40...600
+    static let reviewTargetStep = 20
 
     static let `default` = StudySettings(newPerDay: 20, reviewTarget: 200)
 
@@ -62,8 +63,8 @@ extension StudySettingsStore {
         // Clamping invariant.
         assert(StudySettings(newPerDay: 1, reviewTarget: 200).newPerDay == 5, "newPerDay clamps up to 5")
         assert(StudySettings(newPerDay: 99, reviewTarget: 200).newPerDay == 40, "newPerDay clamps down to 40")
-        assert(StudySettings(newPerDay: 20, reviewTarget: 0).reviewTarget == 1, "reviewTarget clamps up to 1")
-        assert(StudySettings(newPerDay: 20, reviewTarget: 9999).reviewTarget == 1000, "reviewTarget clamps down to 1000")
+        assert(StudySettings(newPerDay: 20, reviewTarget: 0).reviewTarget == 40, "reviewTarget clamps up to 40")
+        assert(StudySettings(newPerDay: 20, reviewTarget: 9999).reviewTarget == 600, "reviewTarget clamps down to 600")
 
         // Round-trip persistence through an isolated suite.
         let suiteName = "carambole.selftest.settings"
@@ -80,7 +81,7 @@ extension StudySettingsStore {
         // Out-of-range write is stored clamped.
         store.settings = StudySettings(newPerDay: 99, reviewTarget: 0)
         let reloadedClamped = StudySettingsStore(defaults: suite)
-        assert(reloadedClamped.settings == StudySettings(newPerDay: 40, reviewTarget: 1), "persisted values stay clamped")
+        assert(reloadedClamped.settings == StudySettings(newPerDay: 40, reviewTarget: 40), "persisted values stay clamped")
 
         suite.removePersistentDomain(forName: suiteName)
     }

@@ -72,25 +72,59 @@ final class TopicMapViewModel: ObservableObject {
 
     /// All exercises across every loaded topic whose SRS schedule is due as of now.
     /// Semantics = ACTUAL due — drives the home's "Y due" count.
+    /// Reads `self.topics`; call from the MAIN thread.
     func dueExercises() -> [Exercise] {
+        dueExercises(topics: topics)
+    }
+
+    /// The new exercises to introduce in today's "Apprendre" session: course
+    /// order, minus anything already seen, capped at today's remaining budget.
+    /// Read a fresh value at present-time (do NOT cache).
+    /// Reads `self.topics` / `self.settingsStore`; call from the MAIN thread.
+    func todaysNewExercises() -> [Exercise] {
+        todaysNewExercises(topics: topics, settings: settingsStore.settings)
+    }
+
+    /// The exercises for today's "Réviser" session: every due item (never
+    /// truncated) topped up with overflow toward the soft target.
+    /// Read a fresh value at present-time (do NOT cache).
+    /// Reads `self.topics` / `self.settingsStore`; call from the MAIN thread.
+    func reviewSessionExercises() -> [Exercise] {
+        let settings = settingsStore.settings
+        // One `dueExercises()` call per tap — `overflowExercises` reuses this count
+        // rather than re-querying the DB.
+        let due = dueExercises(topics: topics)
+        return StudyScheduler.reviewQueue(
+            due: due,
+            overflow: overflowExercises(topics: topics, dueCount: due.count, target: settings.reviewTarget),
+            target: settings.reviewTarget
+        )
+    }
+
+    // MARK: - Pure helpers (no `self.topics` / `self.settingsStore` access)
+    //
+    // Each takes an explicit `topics` snapshot so it can run either on the main
+    // thread (passed `self.topics`) or off-main in `refresh()` (passed a snapshot
+    // captured on main). `DataManager.shared` reads are thread-safe via `dbQueue`.
+
+    /// Due exercises computed from an explicit `topics` snapshot.
+    private func dueExercises(topics: [GrammarTopic]) -> [Exercise] {
         let due = Set(DataManager.shared.fetchDueExerciseIDs(asOf: Date()))
         return topics.flatMap(\.exercises).filter { due.contains($0.id) }
     }
 
     /// The day's remaining `newPerDay` headroom: the hard cap minus the number of
     /// new cards already introduced today. Never negative.
-    private var remainingNewBudget: Int {
-        max(0, settingsStore.settings.newPerDay - DataManager.shared.countNewIntroduced(on: Date()))
+    private func remainingNewBudget(settings: StudySettings) -> Int {
+        max(0, settings.newPerDay - DataManager.shared.countNewIntroduced(on: Date()))
     }
 
-    /// The new exercises to introduce in today's "Apprendre" session: course
-    /// order, minus anything already seen, capped at today's remaining budget.
-    /// Read a fresh value at present-time (do NOT cache).
-    func todaysNewExercises() -> [Exercise] {
+    /// New queue computed from explicit `topics` / `settings` snapshots.
+    private func todaysNewExercises(topics: [GrammarTopic], settings: StudySettings) -> [Exercise] {
         StudyScheduler.newQueue(
             topics: topics,
             seen: DataManager.shared.fetchSeenExerciseIDs(),
-            remainingBudget: remainingNewBudget
+            remainingBudget: remainingNewBudget(settings: settings)
         )
     }
 
@@ -98,9 +132,9 @@ final class TopicMapViewModel: ObservableObject {
     /// mapped back to loaded `Exercise`s while PRESERVING the SQL order — built
     /// via an id→Exercise dictionary so a Set lookup can't drop ordering. Capped
     /// so the review queue grows toward (never truncates below) the target.
-    private func overflowExercises() -> [Exercise] {
-        let target = settingsStore.settings.reviewTarget
-        let limit = max(0, target - dueExercises().count)
+    /// Takes the already-computed `dueCount` so it does NOT re-query due ids.
+    private func overflowExercises(topics: [GrammarTopic], dueCount: Int, target: Int) -> [Exercise] {
+        let limit = max(0, target - dueCount)
         let ids = DataManager.shared.fetchOverflowExerciseIDs(asOf: Date(), limit: limit)
         let byID = Dictionary(
             topics.flatMap(\.exercises).map { ($0.id, $0) },
@@ -109,37 +143,32 @@ final class TopicMapViewModel: ObservableObject {
         return ids.compactMap { byID[$0] }
     }
 
-    /// The exercises for today's "Réviser" session: every due item (never
-    /// truncated) topped up with overflow toward the soft target.
-    /// Read a fresh value at present-time (do NOT cache).
-    func reviewSessionExercises() -> [Exercise] {
-        StudyScheduler.reviewQueue(
-            due: dueExercises(),
-            overflow: overflowExercises(),
-            target: settingsStore.settings.reviewTarget
-        )
-    }
-
     /// Recomputes BOTH the due count and the available-new count from the SRS
     /// schedule + settings, publishing on the main thread. Safe to call from the
     /// view on appear / after a session or settings sheet dismisses.
     func refresh() {
-        let work = { [weak self] in
+        let compute = { [weak self] (topicsSnapshot: [GrammarTopic], settings: StudySettings) in
             guard let self else { return }
-            let due = self.dueExercises().count
-            // `todaysNewExercises().count` already applies BOTH the budget cap
+            let due = self.dueExercises(topics: topicsSnapshot).count
+            // `todaysNewExercises(...).count` already applies BOTH the budget cap
             // and the unseen filter, so it is exactly `newAvailableToday`.
-            let new = self.todaysNewExercises().count
+            let new = self.todaysNewExercises(topics: topicsSnapshot, settings: settings).count
             DispatchQueue.main.async {
                 self.dueCount = due
                 self.newAvailableToday = new
             }
         }
         // DB reads use `dbQueue.sync` internally; keep them off the main thread.
+        // Snapshot the main-thread-owned `topics` / settings BEFORE dispatching so
+        // the background block never reads a published property cross-thread.
         if Thread.isMainThread {
-            DispatchQueue.global(qos: .userInitiated).async(execute: work)
+            let topicsSnapshot = topics
+            let settings = settingsStore.settings
+            DispatchQueue.global(qos: .userInitiated).async {
+                compute(topicsSnapshot, settings)
+            }
         } else {
-            work()
+            compute(topics, settingsStore.settings)
         }
     }
 

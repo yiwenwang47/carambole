@@ -56,8 +56,9 @@ struct TopicMapView: View {
             }
         }
         .onAppear {
+            // `loadSeedingIfNeeded()` ends in a `refresh()` once topics load; no
+            // need to refresh again here against still-empty `topics`.
             viewModel.loadSeedingIfNeeded()
-            viewModel.refresh()
             withAnimation(.easeOut(duration: 0.45)) {
                 revealed = true
             }

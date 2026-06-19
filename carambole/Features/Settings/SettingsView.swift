@@ -18,11 +18,6 @@ struct SettingsView: View {
 
     @Environment(\.dismiss) private var dismiss
 
-    /// Step granularity for the review target — moves in chunks of 20.
-    private let reviewTargetStep = 20
-    /// A sensible review-target band; clamps further in `StudySettings.init`.
-    private let reviewTargetRange = 40...600
-
     var body: some View {
         ZStack {
             AppColor.paper.ignoresSafeArea()
@@ -92,8 +87,8 @@ struct SettingsView: View {
         VStack(alignment: .leading, spacing: Spacing.sm) {
             Stepper(
                 value: $store.settings.reviewTarget,
-                in: reviewTargetRange,
-                step: reviewTargetStep
+                in: StudySettings.reviewTargetRange,
+                step: StudySettings.reviewTargetStep
             ) {
                 HStack(alignment: .firstTextBaseline, spacing: Spacing.sm) {
                     Text("Objectif de révision")
