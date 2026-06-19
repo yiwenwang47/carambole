@@ -63,7 +63,12 @@ struct TopicMapView: View {
                 revealed = true
             }
         }
-        .fullScreenCover(item: $presentedDrill) { presentation in
+        .fullScreenCover(item: $presentedDrill, onDismiss: {
+            // Recompute the daily new/due counts after a topic session — grading
+            // during the drill changes what's seen/due. (The new/review covers
+            // and the settings sheet already do this; the topic cover must too.)
+            viewModel.refresh()
+        }) { presentation in
             DrillSessionView(topic: presentation.topic) {
                 viewModel.markComplete(presentation.topic.id)
                 presentedDrill = nil
