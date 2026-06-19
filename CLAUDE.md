@@ -17,6 +17,7 @@ multiple choice), an unlockable topic tree, and spaced-repetition review.
 
 Full design: `docs/plans/2026-06-18-french-grammar-pivot-design.md`
 Implementation plan: `docs/plans/2026-06-18-french-grammar-pivot.md`
+Design system ("Le Cahier"): `docs/plans/2026-06-18-design-system.md`
 
 ## Architecture
 
@@ -49,13 +50,17 @@ Expected: `** BUILD SUCCEEDED **`.
 Branch: `french-grammar-pivot`. Status legend: ☐ todo · ◐ in progress · ☑ done.
 
 ### P1 — Data spine
-- ☐ T1 `GrammarTopic` + `Exercise` models; rekey `ReviewStatus`
+- ☑ T1 `GrammarTopic` + `Exercise` models; rekey `ReviewStatus`
 - ☐ T2 SQLite tables + `DataManager` methods (topics/exercises/review_status)
 - ☐ T3 `TopicLoader` + first module (`03_passe_compose_etre.json`)
 
+### Design foundation (before any UI task)
+- ☐ T-DS `DesignSystem.swift` — palette, serif typography, `PrimaryButtonStyle`,
+  recolored progress ("Le Cahier" direction). Blocks T5.
+
 ### P2 — Drill core
 - ☐ T4 `DrillEngine` (exact-token check)
-- ☐ T5 `DrillView` + token/choice input + `DrillSessionView`
+- ☐ T5 `DrillView` + token/choice input + `DrillSessionView` (consumes T-DS)
 
 ### P3 — Topic map + unlock
 - ☐ T6 `TopicMapView` nav; remove vocabulary flow
