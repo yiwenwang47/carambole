@@ -78,7 +78,9 @@ Branch: `french-grammar-pivot`. Status legend: ☐ todo · ◐ in progress · �
 ### P3 — Topic map + unlock
 - ☑ T6 `TopicMapView` ("Table des matières") nav; vocabulary flow removed.
   Visually validated. Single seeder = `TopicMapViewModel`. `Font.appDisplay` added.
-- ☐ T7 add 2–3 more topic modules (present / -ER / imparfait), English baked in
+- ☑ T7 4-topic course: être/avoir présent → -ER présent → passé composé être →
+  imparfait. English + `wordOrder` sentence-build drills. Grammar-audited (0
+  errors / 21 exercises). Chain verified: only topic 01 unlocked.
 
 ### P4 — SRS / Daily Review
 - ☐ T8 `SRSScheduler` + persisted `review_status`
