@@ -51,7 +51,7 @@ Branch: `french-grammar-pivot`. Status legend: ☐ todo · ◐ in progress · �
 
 ### P1 — Data spine
 - ☑ T1 `GrammarTopic` + `Exercise` models; rekey `ReviewStatus`
-- ☐ T2 SQLite tables + `DataManager` methods (topics/exercises/review_status)
+- ☑ T2 SQLite tables + `DataManager` methods (topics/exercises/review_status)
 - ☐ T3 `TopicLoader` + first module (`03_passe_compose_etre.json`)
 
 ### Design foundation (before any UI task)
