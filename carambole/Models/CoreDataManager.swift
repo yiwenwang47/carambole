@@ -1,6 +1,8 @@
 import Foundation
 import SQLite3
 
+private let SQLITE_TRANSIENT = unsafeBitCast(-1, to: sqlite3_destructor_type.self)
+
 class DataManager {
     static let shared = DataManager()
     private var db: OpaquePointer?
@@ -369,15 +371,15 @@ class DataManager {
             var statement: OpaquePointer?
 
             if sqlite3_prepare_v2(self.db, upsertTopicQuery, -1, &statement, nil) == SQLITE_OK {
-                sqlite3_bind_text(statement, 1, (topic.id as NSString).utf8String, -1, nil)
-                sqlite3_bind_text(statement, 2, (topic.title as NSString).utf8String, -1, nil)
+                sqlite3_bind_text(statement, 1, (topic.id as NSString).utf8String, -1, SQLITE_TRANSIENT)
+                sqlite3_bind_text(statement, 2, (topic.title as NSString).utf8String, -1, SQLITE_TRANSIENT)
                 sqlite3_bind_int(statement, 3, Int32(topic.sortOrder))
                 if let prerequisiteID = topic.prerequisiteID {
-                    sqlite3_bind_text(statement, 4, (prerequisiteID as NSString).utf8String, -1, nil)
+                    sqlite3_bind_text(statement, 4, (prerequisiteID as NSString).utf8String, -1, SQLITE_TRANSIENT)
                 } else {
                     sqlite3_bind_null(statement, 4)
                 }
-                sqlite3_bind_text(statement, 5, (topic.ruleNote as NSString).utf8String, -1, nil)
+                sqlite3_bind_text(statement, 5, (topic.ruleNote as NSString).utf8String, -1, SQLITE_TRANSIENT)
 
                 if sqlite3_step(statement) == SQLITE_DONE {
                     print("Successfully upserted topic with ID: \(topic.id)")
@@ -408,19 +410,19 @@ class DataManager {
                     let tokenBankJSON = (try? JSONEncoder().encode(exercise.tokenBank))
                         .flatMap { String(data: $0, encoding: .utf8) } ?? "[]"
 
-                    sqlite3_bind_text(exerciseStatement, 1, (exercise.id as NSString).utf8String, -1, nil)
-                    sqlite3_bind_text(exerciseStatement, 2, (exercise.topicID as NSString).utf8String, -1, nil)
-                    sqlite3_bind_text(exerciseStatement, 3, (exercise.type.rawValue as NSString).utf8String, -1, nil)
-                    sqlite3_bind_text(exerciseStatement, 4, (exercise.prompt as NSString).utf8String, -1, nil)
+                    sqlite3_bind_text(exerciseStatement, 1, (exercise.id as NSString).utf8String, -1, SQLITE_TRANSIENT)
+                    sqlite3_bind_text(exerciseStatement, 2, (exercise.topicID as NSString).utf8String, -1, SQLITE_TRANSIENT)
+                    sqlite3_bind_text(exerciseStatement, 3, (exercise.type.rawValue as NSString).utf8String, -1, SQLITE_TRANSIENT)
+                    sqlite3_bind_text(exerciseStatement, 4, (exercise.prompt as NSString).utf8String, -1, SQLITE_TRANSIENT)
                     if let cue = exercise.cue {
-                        sqlite3_bind_text(exerciseStatement, 5, (cue as NSString).utf8String, -1, nil)
+                        sqlite3_bind_text(exerciseStatement, 5, (cue as NSString).utf8String, -1, SQLITE_TRANSIENT)
                     } else {
                         sqlite3_bind_null(exerciseStatement, 5)
                     }
-                    sqlite3_bind_text(exerciseStatement, 6, (answerTokensJSON as NSString).utf8String, -1, nil)
-                    sqlite3_bind_text(exerciseStatement, 7, (tokenBankJSON as NSString).utf8String, -1, nil)
-                    sqlite3_bind_text(exerciseStatement, 8, (exercise.inputMode.rawValue as NSString).utf8String, -1, nil)
-                    sqlite3_bind_text(exerciseStatement, 9, (exercise.explanation as NSString).utf8String, -1, nil)
+                    sqlite3_bind_text(exerciseStatement, 6, (answerTokensJSON as NSString).utf8String, -1, SQLITE_TRANSIENT)
+                    sqlite3_bind_text(exerciseStatement, 7, (tokenBankJSON as NSString).utf8String, -1, SQLITE_TRANSIENT)
+                    sqlite3_bind_text(exerciseStatement, 8, (exercise.inputMode.rawValue as NSString).utf8String, -1, SQLITE_TRANSIENT)
+                    sqlite3_bind_text(exerciseStatement, 9, (exercise.explanation as NSString).utf8String, -1, SQLITE_TRANSIENT)
 
                     if sqlite3_step(exerciseStatement) == SQLITE_DONE {
                         print("Successfully upserted exercise with ID: \(exercise.id)")
@@ -514,7 +516,7 @@ class DataManager {
         var statement: OpaquePointer?
 
         if sqlite3_prepare_v2(self.db, query, -1, &statement, nil) == SQLITE_OK {
-            sqlite3_bind_text(statement, 1, (topicID as NSString).utf8String, -1, nil)
+            sqlite3_bind_text(statement, 1, (topicID as NSString).utf8String, -1, SQLITE_TRANSIENT)
 
             while sqlite3_step(statement) == SQLITE_ROW {
                 let id = String(cString: sqlite3_column_text(statement, 0))
