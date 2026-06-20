@@ -60,6 +60,31 @@
 > via per-answer upsert, so partial mastery survives exit. NOT tapped on sim
 > (automation still blocked).
 >
+> **▶ DRILL BACK/FORWARD NAV RESTORED (branch `fix-drill-back-button` → MERGED to
+> `main`, NOT pushed; 2026-06-19).** Commit `25fd220`. Regression: the
+> Book→Module→Element rewrite of `DrillSessionView` dropped its drill history and
+> stopped passing the back/forward params to `DrillView`, so the "Exercice
+> précédent" chevron never rendered (`canGoBack` defaulted false). `DrillView`
+> still had full support (`canGoBack`/`onBack`/`canGoForward`/`onForward`/
+> `reviewData` + chevrons in its `header`) — only the wiring was missing. Fix
+> (DrillSessionView only): the element driver streams shuffled examples across
+> elements with no flat array, so reintroduce an append-only `history: [Exercise]`
+> of presented examples + a `cursor` index; `submittedAnswers`/`resultByIndex`
+> (keyed by history index) feed read-only revisits; `answeredCount`/`correctCount`
+> derive from the dicts (idempotent on re-answer); `presentNextExample` appends +
+> parks cursor at the frontier; `goBack`/`goForward` walk the cursor;
+> `isReviewing = cursor < history.count-1` drives `reviewData` + chevrons. Mirrors
+> the pre-rewrite (`d419532`) semantics. Build EXIT 0; code-review APPROVE (no
+> CRITICAL/HIGH). VERIFIED on sim against the REAL `DrillSessionView` via a
+> temporary `#if DEBUG` state-seed (reverted, NOT on main): frontier state shows
+> `‹ EXERCICE` back chevron on the live drill; cursor-back state shows the prior
+> drill read-only (`RÉVISION` + `VOTRE RÉPONSE` + forward chevron). Sim taps still
+> not automatable (Apple-events denied `-1743`, no idb/cliclick) → the literal
+> answer→advance→tap-back gesture is still untapped here (logic code-reviewed),
+> see NEXT (a). GOTCHA hit: after reverting the debug scaffold + rebuilding, the
+> sim still ran the stale seeded build until `simctl uninstall`+reinstall — always
+> reinstall the clean build before judging "broken."
+>
 > **▶ NEXT (new session):**
 > - (a) **Tap-through the on-device loop.** App is now INSTALLED on the iPhone (see
 >   "Shipped to phone"), but the flows were never automatable here (no
@@ -67,7 +92,9 @@
 >   screenshot-validated, not user-tapped. Verify on the phone: Apprendre drills an
 >   element to 3-distinct-correct → module completes → next module unlocks →
 >   Réviser resurfaces due items; "Trop facile" suspend/clean; exit bar mid-session
->   keeps progress; Settings "Exporter" shares the .sqlite.
+>   keeps progress; Settings "Exporter" shares the .sqlite; **back/forward chevrons
+>   (`‹`/`›`) navigate to prior drills read-only** (restored — see DRILL BACK/FORWARD
+>   NAV; real-view screenshot-verified, literal tap still TODO on-device).
 > - (b) **More books** — Conversation / Intermédiaire are locked placeholders in
 >   `LibraryView`; the `Book` model already supports many. Wire real content +
 >   per-book selection into `BookView` (currently loads the single `ContentLoader`
@@ -76,8 +103,8 @@
 > - (d) ✅ **DONE** — `PRAGMA user_version` migration shipped (see above). Remaining:
 >   fix pre-existing `first_seen_date` binding in `upsertReviewStatus` (bound from
 >   `lastReviewDate`, masked by COALESCE — low impact, worth a follow-up).
-> - `main` PUSHED to origin (persistence work + docs). This doc commit may be
->   ahead until pushed.
+> - `main` PUSHED to origin through the persistence work. **NOT yet pushed: the
+>   drill back/forward nav fix (`25fd220`) + this doc update** — push when ready.
 > - Uncommitted local: `project.pbxproj` carries your `DEVELOPMENT_TEAM` signing id
 >   (left alone intentionally).
 >
