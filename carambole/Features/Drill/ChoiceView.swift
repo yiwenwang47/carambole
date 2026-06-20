@@ -21,12 +21,16 @@ struct ChoiceView: View {
 
     private var selected: String? { answer.first }
 
+    /// Choices in presentation order: a deterministic, stable-per-`id` shuffle so the
+    /// correct answer is not pinned to the first row (see `Exercise.displayBank`).
+    private var choices: [String] { exercise.displayBank }
+
     var body: some View {
         VStack(spacing: 0) {
-            ForEach(Array(exercise.tokenBank.enumerated()), id: \.offset) { index, choice in
+            ForEach(Array(choices.enumerated()), id: \.offset) { index, choice in
                 choiceRow(choice: choice)
 
-                if index < exercise.tokenBank.count - 1 {
+                if index < choices.count - 1 {
                     Rectangle()
                         .fill(AppColor.hairline)
                         .frame(height: 1)

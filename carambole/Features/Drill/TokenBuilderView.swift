@@ -27,6 +27,12 @@ struct TokenBuilderView: View {
     /// correctly and each chip maps to exactly one slot.
     @State private var placedIndices: [Int] = []
 
+    /// Presentation order of the chips: a deterministic, stable-per-`id` shuffle so
+    /// the bank never mirrors the answer order (see `Exercise.displayBank`). All
+    /// rendering AND index→token mapping go through this one array, so `placedIndices`
+    /// stay valid.
+    private var bank: [String] { exercise.displayBank }
+
     var body: some View {
         VStack(alignment: .leading, spacing: Spacing.lg) {
             // Answer area: underlined worksheet blanks.
@@ -81,7 +87,7 @@ struct TokenBuilderView: View {
             guard !isLocked else { return }
             returnToken(bankIndex: bankIndex)
         } label: {
-            Text(exercise.tokenBank[bankIndex])
+            Text(bank[bankIndex])
                 .font(.appToken)
                 .foregroundColor(AppColor.ink)
                 .padding(.horizontal, Spacing.sm)
@@ -100,7 +106,7 @@ struct TokenBuilderView: View {
 
     private var tokenBank: some View {
         FlowLayout(spacing: Spacing.sm, lineSpacing: Spacing.sm) {
-            ForEach(Array(exercise.tokenBank.enumerated()), id: \.offset) { index, token in
+            ForEach(Array(bank.enumerated()), id: \.offset) { index, token in
                 bankChip(index: index, token: token)
             }
         }
@@ -148,7 +154,7 @@ struct TokenBuilderView: View {
     }
 
     private func syncAnswer() {
-        answer = placedIndices.map { exercise.tokenBank[$0] }
+        answer = placedIndices.map { bank[$0] }
     }
 }
 
