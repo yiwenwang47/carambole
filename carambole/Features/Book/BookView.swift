@@ -119,12 +119,11 @@ struct BookView: View {
 
             HStack(spacing: Spacing.md) {
                 Button("Apprendre") {
-                    session = ElementSession(title: "Apprendre", ruleNote: "",
-                                             elements: viewModel.todaysNewElements(), mode: .learn)
+                    guard let m = viewModel.newestUnlockedModule() else { return }
+                    session = ElementSession(title: m.title, ruleNote: m.ruleNote,
+                                             elements: viewModel.moduleLearnElements(m), mode: .learn)
                 }
                 .buttonStyle(PrimaryButtonStyle())
-                .disabled(viewModel.newAvailableToday == 0)
-                .opacity(viewModel.newAvailableToday == 0 ? 0.4 : 1)
 
                 Button("Réviser") {
                     session = ElementSession(title: "Réviser", ruleNote: "",

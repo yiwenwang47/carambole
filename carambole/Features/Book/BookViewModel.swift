@@ -22,7 +22,7 @@ final class BookViewModel: ObservableObject {
 
     /// Elements due for review right now — drives "Y due".
     @Published var dueCount: Int = 0
-    /// New elements still introducible today (budget ∧ unseen) — drives "X new".
+    /// Unmastered elements in the newest unlocked module — drives "X new".
     @Published var newAvailableToday: Int = 0
     /// Elements first introduced today, in this book — drives "N appris".
     @Published var learnedToday: Int = 0
@@ -59,16 +59,20 @@ final class BookViewModel: ObservableObject {
     /// thread (on appear, after a session or settings sheet dismisses).
     func refresh() {
         let book = self.book
-        let settings = settingsStore.settings
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             guard let self else { return }
             let dueIDs = Set(DataManager.shared.fetchDueElementIDs(asOf: Date()))
             let due = book.allElements.filter { dueIDs.contains($0.id) }.count
-            let seen = DataManager.shared.fetchSeenElementIDs()
-            let remaining = max(0, settings.newPerDay - DataManager.shared.countNewIntroduced(on: Date()))
-            let newCount = StudyScheduler.newQueue(book: book, seen: seen, remainingBudget: remaining).count
             let satisfied = DataManager.shared.fetchUnlockSatisfiedElementIDs(threshold: self.masteryThreshold)
             let unlocked = StudyScheduler.unlockedModuleIDs(book, satisfied: satisfied)
+
+            // Apprendre drills the newest unlocked (frontier) module; "X new" is how
+            // many of its elements are still unmastered — what one tap will teach.
+            // No daily cap on new material.
+            let frontier = book.modules
+                .filter { unlocked.contains($0.id) }
+                .max(by: { $0.sortOrder < $1.sortOrder })
+            let newCount = frontier?.elements.filter { !satisfied.contains($0.id) }.count ?? 0
 
             // Today's done-work, scoped to this book. "reviewed" excludes elements
             // first-seen today (a first sighting is not a re-grade) — matches the
@@ -92,11 +96,12 @@ final class BookViewModel: ObservableObject {
 
     // MARK: - Session builders (call at tap-time on the MAIN thread)
 
-    /// New elements to introduce today: course order, minus seen, capped at budget.
-    func todaysNewElements() -> [GrammarElement] {
-        let seen = DataManager.shared.fetchSeenElementIDs()
-        let remaining = max(0, settingsStore.settings.newPerDay - DataManager.shared.countNewIntroduced(on: Date()))
-        return StudyScheduler.newQueue(book: book, seen: seen, remainingBudget: remaining)
+    /// The newest unlocked (frontier) module — the one Apprendre drills. Highest
+    /// `sortOrder` among unlocked modules (complete ones + the current frontier).
+    func newestUnlockedModule() -> CourseModule? {
+        book.modules
+            .filter { unlockedIDs.contains($0.id) }
+            .max(by: { $0.sortOrder < $1.sortOrder })
     }
 
     /// Due elements (never truncated) topped up with overflow toward the soft target.
