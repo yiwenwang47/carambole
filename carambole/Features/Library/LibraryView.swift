@@ -56,6 +56,8 @@ struct LibraryView: View {
 
     private var header: some View {
         VStack(alignment: .leading, spacing: Spacing.sm) {
+            CaramboleLogo(color: AppColor.ink, size: 34)
+                .padding(.bottom, Spacing.sm)
             SectionLabel("Bibliothèque")
             Text("Mes livres")
                 .font(.appTitle)
