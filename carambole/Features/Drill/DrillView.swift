@@ -161,7 +161,7 @@ struct DrillView: View {
     private var promptBlock: some View {
         VStack(alignment: .leading, spacing: Spacing.sm) {
             CornerBracketFrame {
-                Text(blankedPrompt(exercise.prompt))
+                Text(Self.blankedPrompt(exercise.prompt))
                     .font(.appPrompt)
                     .foregroundColor(AppColor.ink)
                     .fixedSize(horizontal: false, vertical: true)
@@ -191,11 +191,24 @@ struct DrillView: View {
         }
     }
 
+    /// Width of a blank slot: 4 figure spaces (`\u{2007}`) — reads clearly as a gap
+    /// yet never leaks the answer's length.
+    private static let blankSlot = String(repeating: "\u{2007}", count: 4)
+    /// Zero-width, non-breaking, NON-whitespace anchor (U+2060 WORD JOINER). Bracketing
+    /// the whitespace slot with it keeps the slot off the start/end of any (possibly
+    /// wrapped) line, where SwiftUI trims trailing/leading whitespace and the underline
+    /// would silently vanish.
+    private static let wordJoiner = "\u{2060}"
+
     /// Renders the prompt with each underscore "blank" (`___`) drawn as ONE
     /// continuous underline instead of literal underscore glyphs, which render with
-    /// visible gaps in the serif prompt face. The blank is a fixed width (4 figure
-    /// spaces) so it reads clearly as a gap yet never leaks the answer's length.
-    private func blankedPrompt(_ prompt: String) -> AttributedString {
+    /// visible gaps in the serif prompt face.
+    ///
+    /// Each slot is wrapped in WORD JOINERs so a blank that lands at the very start or
+    /// end of the prompt (e.g. "des ___" / "___ tu as faim") still shows its underline:
+    /// the slot is pure whitespace, which SwiftUI trims at line edges, so without the
+    /// anchors the underline disappears for exactly those prompts.
+    static func blankedPrompt(_ prompt: String) -> AttributedString {
         var result = AttributedString()
         var run = ""
         func flush() {
@@ -207,9 +220,11 @@ struct DrillView: View {
             if chars[i] == "_" {
                 while i < chars.count && chars[i] == "_" { i += 1 }   // consume run
                 flush()
-                var slot = AttributedString(String(repeating: "\u{2007}", count: 4))
+                result.append(AttributedString(wordJoiner))            // leading anchor
+                var slot = AttributedString(blankSlot)
                 slot.underlineStyle = .single                          // one solid line
                 result.append(slot)
+                result.append(AttributedString(wordJoiner))            // trailing anchor
             } else {
                 run.append(chars[i]); i += 1
             }
@@ -217,6 +232,24 @@ struct DrillView: View {
         flush()
         return result
     }
+
+    #if DEBUG
+    static func _selfTest() {
+        // Trailing blank: the slot must be anchored by a non-whitespace WORD JOINER so
+        // SwiftUI doesn't trim the underline off the end of the line.
+        let trailing = blankedPrompt("des ___")
+        assert(trailing.characters.last == "\u{2060}", "trailing blank not anchored")
+        // Leading blank: anchored at the front too.
+        let leading = blankedPrompt("___ tu as faim")
+        assert(leading.characters.first == "\u{2060}", "leading blank not anchored")
+        // The figure-space slot is present, underlined, and no raw underscores leak.
+        assert(String(trailing.characters).contains("\u{2007}"), "blank slot missing")
+        assert(trailing.runs.contains { $0.underlineStyle == .single }, "slot not underlined")
+        assert(!String(blankedPrompt("a ___ b").characters).contains("_"), "underscores leaked")
+        // A prompt with no blank is passed through unchanged.
+        assert(String(blankedPrompt("Bonjour").characters) == "Bonjour", "plain prompt altered")
+    }
+    #endif
 
     // MARK: - Hint (tap-to-reveal)
 
