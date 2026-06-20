@@ -85,6 +85,40 @@
 > sim still ran the stale seeded build until `simctl uninstall`+reinstall — always
 > reinstall the clean build before judging "broken."
 >
+> **▶ PROGRESS + HISTORY TRACKER (branch `progress-history-tracker` → MERGED to
+> `main` + PUSHED; 2026-06-19).** Three additions, all per-book-scoped. **(1) Daily
+> progress line** on the book home under "X new · Y due": `N appris · M révisés`
+> (work DONE today) — `appris` = elements first-seen today, `révisés` = elements
+> re-graded today MINUS first-seen-today (genuine reviews only). Taps through
+> (chevron) to the History page. `BookViewModel.refresh()` computes both off-main
+> (`learnedToday`/`reviewedToday`), intersecting with `book.allElements`. **(2)
+> History page** (`Features/History/HistoryView.swift`, pushed in LibraryView's
+> NavigationStack, own back chevron): per-day rows newest-first (`19 juin · 3 appris
+> · 5 révisés`) with two-tone proportional bars (saffron=learned, hairline=reviewed)
+> scaled to the busiest day, an "approximatives" footnote, and an empty state.
+> Pure-static `HistoryViewModel.activities(...)` buckets by `Calendar.startOfDay`
+> (same reviewed-minus-first-seen rule as the today line), self-tested deterministic
+> (fixed UTC calendar). **(3) Réviser round-size toggle** `10·20·50` (default 20),
+> inline segmented "RÉVISION PAR TOUR" under Apprendre/Réviser; `StudySettings.
+> reviewRoundSize` (snaps to nearest allowed option) persisted in the store;
+> `reviewSessionElements()` slices the existing due+overflow queue with
+> `.prefix(reviewRoundSize)` — layered ON TOP of `reviewTarget` (still the day's soft
+> pool). **Data layer:** `review_log(element_id, day_start)` table + `user_version`
+> **2** migration (additive block; backfilled once from `last_review_date` so
+> existing installs aren't all-zeros — reviewed-history before this is forward-only,
+> documented); `upsertReviewStatus` now also `INSERT OR IGNORE`s a `review_log` row
+> per graded answer; reads `fetchElementIDsFirstSeen/ReviewedLogged(on:)`,
+> `fetchFirstSeenByElement()`, `fetchReviewLog()`. Build EXIT 0; per-task spec +
+> code-quality + whole-branch reviews all APPROVE. BOTH new screens
+> SCREENSHOT-VALIDATED on sim with a temporary `#if DEBUG` seed fixture (reverted,
+> NOT on main — same revert-then-uninstall/reinstall gotcha applies). Design:
+> `docs/plans/2026-06-19-progress-history-tracker-design.md`. **GOTCHA (build gate):
+> the CLAUDE.md `name:iPhone 16` destination now FAILS** — `iPhone 16` sims are only
+> at iOS 18.5 while `OS:latest` is 26.5 (iPhone 17 line), so the name+latest pair
+> matches nothing (EXIT 70). Build against the explicit booted device id instead
+> (`-destination 'id=<udid>'`; the iPhone 16 / 18.5 sim here was
+> `7C7BA0A7-C367-4CD4-AAE5-462B1F754986`).
+>
 > **▶ NEXT (new session):**
 > - (a) **Tap-through the on-device loop.** App is now INSTALLED on the iPhone (see
 >   "Shipped to phone"), but the flows were never automatable here (no
