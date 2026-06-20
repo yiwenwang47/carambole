@@ -112,68 +112,11 @@ struct DrillView: View {
             .background(AppColor.paper)
         }
         .background(AppColor.paper.ignoresSafeArea())
-        .simultaneousGesture(
-            DragGesture(minimumDistance: 20)
-                .onEnded { value in
-                    handleSwipe(value.translation)
-                },
-            // While typing a `freeText` answer the embedded UITextField owns
-            // horizontal drags (caret placement, selection, the magnifier loupe);
-            // disable our swipe there so it can't hijack them. Once checked the
-            // field is locked, so the swipe is safe to revisit/advance.
-            including: isTypingAnswer ? .subviews : .all
-        )
     }
 
-    /// True while the learner is actively typing a free-text answer.
-    private var isTypingAnswer: Bool {
-        exercise.resolvedInputMode == .freeText && !checked && reviewData == nil
-    }
-
-    // MARK: - Swipe navigation
-
-    /// Minimum horizontal travel before a swipe navigates.
-    private static let swipeThreshold: CGFloat = 60
-
-    /// What a horizontal swipe should do, given the drill's state. Pure so it can be
-    /// self-tested. Direction = iOS convention: a RIGHTWARD drag (`width > 0`) goes
-    /// to the previous drill; a LEFTWARD drag advances, but only when the current
-    /// drill is "finished" (answered in a live drill, or being reviewed read-only).
-    /// A correct LIVE answer auto-advances on its own, so a leftward swipe there is a
-    /// no-op (returning `.next` would double-advance and skip a drill).
-    enum SwipeOutcome: Equatable { case back, forward, next, none }
-
-    static func swipeOutcome(width: CGFloat, height: CGFloat, threshold: CGFloat,
-                             canGoBack: Bool, reviewing: Bool, canGoForward: Bool,
-                             checked: Bool, isCorrect: Bool) -> SwipeOutcome {
-        guard abs(width) > abs(height), abs(width) > threshold else { return .none }
-        if width > 0 {                                    // finger right → previous
-            return canGoBack ? .back : .none
-        }
-        // finger left → next, only if this drill is finished.
-        if reviewing { return canGoForward ? .forward : .none }
-        if checked && !isCorrect { return .next }         // correct auto-advances
-        return .none
-    }
-
-    private func handleSwipe(_ translation: CGSize) {
-        let outcome = Self.swipeOutcome(
-            width: translation.width, height: translation.height,
-            threshold: Self.swipeThreshold,
-            canGoBack: canGoBack, reviewing: reviewData != nil,
-            canGoForward: canGoForward, checked: checked, isCorrect: isCorrect
-        )
-        switch outcome {
-        case .none: return
-        case .back:    navHaptic(); onBack()
-        case .forward: navHaptic(); onForward()
-        case .next:    navHaptic(); onNext()
-        }
-    }
-
-    private func navHaptic() {
-        UIImpactFeedbackGenerator(style: .light).impactOccurred()
-    }
+    // Navigation between drills is driven by the finger-tracked card stack in
+    // DrillSessionView (the carousel), which owns the horizontal drag gesture. The
+    // header chevrons (onBack/onForward) remain as an explicit fallback.
 
     // MARK: - Header (label + progress ring)
 
@@ -309,30 +252,6 @@ struct DrillView: View {
         assert(!String(blankedPrompt("a ___ b").characters).contains("_"), "underscores leaked")
         // A prompt with no blank is passed through unchanged.
         assert(String(blankedPrompt("Bonjour").characters) == "Bonjour", "plain prompt altered")
-
-        // --- Swipe navigation decisions (iOS direction: right = back, left = next) ---
-        let t: CGFloat = 60
-        func out(_ w: CGFloat, _ h: CGFloat = 0, back: Bool = false, reviewing: Bool = false,
-                 fwd: Bool = false, checked: Bool = false, correct: Bool = false) -> SwipeOutcome {
-            swipeOutcome(width: w, height: h, threshold: t, canGoBack: back, reviewing: reviewing,
-                         canGoForward: fwd, checked: checked, isCorrect: correct)
-        }
-        // Below threshold / vertical-dominant → no navigation.
-        assert(out(40, back: true) == .none, "below-threshold swipe should not navigate")
-        assert(out(100, 200, back: true) == .none, "vertical-dominant swipe should not navigate")
-        // Right swipe → previous, only when a previous exists (back wins even while reviewing).
-        assert(out(100, back: true) == .back, "right swipe with history → back")
-        assert(out(100, back: false) == .none, "right swipe at first drill → none")
-        assert(out(100, back: true, reviewing: true) == .back, "right swipe while reviewing → back")
-        assert(out(100, back: false, reviewing: true) == .none, "right swipe at start of review → none")
-        // Left swipe while reviewing → forward, only when one exists.
-        assert(out(-100, reviewing: true, fwd: true) == .forward, "left swipe reviewing → forward")
-        assert(out(-100, reviewing: true, fwd: false) == .none, "left swipe at frontier-of-review → none")
-        // Left swipe on a finished (wrong) live drill → next; correct auto-advances (none).
-        assert(out(-100, checked: true, correct: false) == .next, "left swipe on wrong answer → next")
-        assert(out(-100, checked: true, correct: true) == .none, "left swipe on correct (auto-advances) → none")
-        // Left swipe on an unanswered live drill → no advance.
-        assert(out(-100, checked: false) == .none, "left swipe on unanswered drill → none")
     }
     #endif
 

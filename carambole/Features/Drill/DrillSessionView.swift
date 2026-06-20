@@ -16,6 +16,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct DrillSessionView: View {
     enum Mode { case learn, review }
@@ -60,17 +61,28 @@ struct DrillSessionView: View {
     /// Index into `history` of the drill on screen. Equals the frontier
     /// (`history.count - 1`) when live; below it when reviewing read-only.
     @State private var cursor = 0
-    /// Direction of the last cursor move, so the slide matches the intent:
-    /// forward = new drill enters from the right; back = it enters from the left.
-    @State private var navBack = false
+    /// Live horizontal drag of the card stack, in points. 0 at rest; tracks the
+    /// finger during a swipe and springs back to 0 (or commits to the next/prev
+    /// card) on release. Each card is offset by `(i - cursor) * width + dragOffset`.
+    @State private var dragOffset: CGFloat = 0
 
     @State private var finished = false
     @State private var showingIntro = true
 
     private var answeredCount: Int { resultByIndex.count }
     private var correctCount: Int { resultByIndex.values.filter { $0 }.count }
-    /// The cursor sits behind the frontier → showing an answered drill read-only.
-    private var isReviewing: Bool { cursor < history.count - 1 }
+    /// Index of the live (gradable) card — always the last one presented.
+    private var frontier: Int { history.count - 1 }
+    /// True once the live card has been answered, so a forward swipe may advance.
+    private var liveCardFinished: Bool { resultByIndex[frontier] != nil }
+    /// While typing a free-text answer the embedded UITextField owns horizontal
+    /// drags (caret/selection); pause the carousel swipe so it can't hijack them.
+    private var isTypingLiveCard: Bool {
+        cursor == frontier
+            && history.indices.contains(frontier)
+            && history[frontier].resolvedInputMode == .freeText
+            && resultByIndex[frontier] == nil
+    }
 
     private var currentElement: GrammarElement? {
         elements.indices.contains(elementIndex) ? elements[elementIndex] : nil
@@ -105,48 +117,125 @@ struct DrillSessionView: View {
                         completionSummary
                             .transition(.move(edge: .trailing).combined(with: .opacity))
                     } else if history.indices.contains(cursor) {
-                        DrillView(
-                            exercise: history[cursor],
-                            progress: progress,
-                            onResult: { correct, tokens in handleResult(correct: correct, answer: tokens) },
-                            onTooEasy: { correct, tokens in handleTooEasy(correct: correct, answer: tokens) },
-                            onNext: advance,
-                            canGoBack: cursor > 0,
-                            onBack: goBack,
-                            canGoForward: isReviewing,
-                            onForward: goForward,
-                            reviewData: isReviewing
-                                ? DrillView.ReviewData(answer: submittedAnswers[cursor] ?? [],
-                                                       correct: resultByIndex[cursor] ?? false)
-                                : nil
-                        )
-                        .id(cursor)
-                        // Continuous directional push: the incoming and outgoing drills
-                        // slide together in the same direction (next = leftward, back =
-                        // rightward). No opacity fade — the white paper background hides
-                        // the brief seam, so it reads as one clean slide, not a cross-over.
-                        .transition(.asymmetric(
-                            insertion: .move(edge: navBack ? .leading : .trailing),
-                            removal: .move(edge: navBack ? .trailing : .leading)
-                        ))
+                        carousel
                     }
                 }
             }
         }
         .onAppear {
-            if history.isEmpty && !elements.isEmpty { startElement(0) }
+            if history.isEmpty && !elements.isEmpty { startElement(0, animated: false) }
         }
-        // NOTE: the drill swap is animated EXPLICITLY via `withAnimation` inside the
-        // cursor-mutating helpers (presentNextExample/goBack/goForward), NOT by an
-        // implicit `.animation(_:, value: cursor)` here. With an `.id(cursor)` swap,
-        // SwiftUI removes the old drill and inserts the new one and BOTH need to run
-        // their transitions inside one transaction; an implicit value-animation on the
-        // container reliably plays the insertion but tends to drop the removal, so the
-        // old drill vanished instead of sliding out. A single explicit transaction —
-        // wrapping the `navBack` (edge direction) and `cursor` writes together — keeps
-        // both views in the same animation so they slide in opposite/together direction.
+        // The drill stack (carousel) animates itself via `dragOffset`/`cursor` inside
+        // explicit withAnimation transactions; only the intro/completion swaps animate
+        // here.
         .animation(.spring(response: 0.5, dampingFraction: 0.85), value: finished)
         .animation(.spring(response: 0.5, dampingFraction: 0.85), value: showingIntro)
+    }
+
+    // MARK: - Swipeable card stack (finger-tracked paging)
+
+    /// Render only the on-screen card and its immediate neighbors — a long session
+    /// builds a big `history`, so we never instantiate every DrillView.
+    private var visibleIndices: [Int] {
+        guard !history.isEmpty else { return [] }
+        let lo = max(0, cursor - 1)
+        let hi = min(history.count - 1, cursor + 1)
+        return Array(lo...hi)
+    }
+
+    private var carousel: some View {
+        GeometryReader { geo in
+            let w = geo.size.width
+            ZStack {
+                ForEach(visibleIndices, id: \.self) { i in
+                    cardView(at: i)
+                        .frame(width: w, height: geo.size.height)
+                        .offset(x: CGFloat(i - cursor) * w + dragOffset)
+                        // Only the centered card takes touches; neighbors are parked
+                        // off-screen and must not steal taps.
+                        .allowsHitTesting(i == cursor)
+                }
+            }
+            .frame(width: w, height: geo.size.height)
+            .contentShape(Rectangle())
+            .simultaneousGesture(dragGesture(width: w),
+                                 including: isTypingLiveCard ? .subviews : .all)
+        }
+    }
+
+    @ViewBuilder
+    private func cardView(at i: Int) -> some View {
+        DrillView(
+            exercise: history[i],
+            progress: progress,
+            onResult: { correct, tokens in handleResult(correct: correct, answer: tokens) },
+            onTooEasy: { correct, tokens in handleTooEasy(correct: correct, answer: tokens) },
+            onNext: advance,
+            canGoBack: i > 0,
+            onBack: goBack,
+            canGoForward: i < frontier,
+            onForward: goForward,
+            // Any card behind the frontier is an answered drill → read-only review.
+            reviewData: i < frontier
+                ? DrillView.ReviewData(answer: submittedAnswers[i] ?? [],
+                                       correct: resultByIndex[i] ?? false)
+                : nil
+        )
+        .id(i)
+    }
+
+    private func dragGesture(width: CGFloat) -> some Gesture {
+        DragGesture(minimumDistance: 12)
+            .onChanged { value in
+                dragOffset = resistedOffset(value.translation.width, width: width)
+            }
+            .onEnded { value in
+                endDrag(translation: value.translation.width,
+                        predicted: value.predictedEndTranslation.width,
+                        width: width)
+            }
+    }
+
+    /// Track the finger 1:1 toward an existing neighbor; rubber-band (damp + cap)
+    /// toward an edge or a not-yet-finished frontier so the stack resists where it
+    /// can't go but still gives a little.
+    private func resistedOffset(_ raw: CGFloat, width: CGFloat) -> CGFloat {
+        let towardPrevious = raw > 0
+        let canTrack = towardPrevious ? cursor > 0 : cursor < frontier
+        if canTrack { return raw }
+        let cap = width * 0.22
+        return max(-cap, min(cap, raw * 0.32))
+    }
+
+    /// Commit to the next/prev card if the finger moved far enough OR flicked fast
+    /// (velocity via `predictedEndTranslation`); otherwise spring back to rest.
+    private func endDrag(translation: CGFloat, predicted: CGFloat, width: CGFloat) {
+        let commit = abs(translation) > width * 0.28 || abs(predicted) > width * 0.55
+        let towardPrevious = translation > 0
+        if commit {
+            if towardPrevious {
+                if cursor > 0 { navHaptic(); goBack(); return }
+            } else if cursor < frontier {
+                navHaptic(); goForward(); return
+            } else if cursor == frontier && liveCardFinished {
+                navHaptic(); advance(); return
+            }
+        }
+        withAnimation(.interactiveSpring(response: 0.32, dampingFraction: 0.86)) {
+            dragOffset = 0
+        }
+    }
+
+    private func navHaptic() {
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+    }
+
+    /// Animate the stack so card `index` becomes centered (and clear any drag).
+    private func animateCursor(to index: Int) {
+        withAnimation(.interactiveSpring(response: 0.32, dampingFraction: 0.86)) {
+            dragOffset = 0
+            cursor = index
+        }
     }
 
     /// Thin top bar with a leading close button. Tapping leaves the session; the
@@ -171,10 +260,12 @@ struct DrillSessionView: View {
 
     // MARK: - Element / example driver
 
-    private func startElement(_ index: Int) {
+    /// `animated` is false only for the very first card (it just appears); element
+    /// advances during a session slide the new card in.
+    private func startElement(_ index: Int, animated: Bool) {
         elementIndex = index
         pending = buildQueue()
-        presentNextExample()
+        presentNextExample(animated: animated)
     }
 
     /// The examples to drill for the current element. Learn: the examples not yet
@@ -201,60 +292,53 @@ struct DrillSessionView: View {
         return pool.randomElement() ?? element.examples.first
     }
 
-    private func presentNextExample() {
+    /// Append the next example to the stack. The new card lands at `frontier`
+    /// (history.count - 1); the caller decides whether to slide the cursor to it.
+    private func presentNextExample(animated: Bool) {
         if pending.isEmpty { pending = buildQueue() }
-        guard !pending.isEmpty else { goToNextElement(); return }
+        guard !pending.isEmpty else { goToNextElement(animated: animated); return }
         let next = pending.removeFirst()
         lastExampleID = next.id
         history.append(next)
-        // Forward move: set the edge direction (navBack = false → new enters from the
-        // RIGHT, old exits LEFT) and advance the cursor in ONE explicit transaction so
-        // the `.id(cursor)` swap removes the old drill and inserts the new one inside
-        // a single animation — both slide together leftward, neither is dropped.
-        withAnimation(.easeInOut(duration: 0.3)) {
-            navBack = false
+        if animated {
+            // New card was appended at frontier (cursor + 1), parked off-screen right;
+            // sliding the cursor to it brings it in from the right while the old
+            // frontier slides out left.
+            animateCursor(to: history.count - 1)
+        } else {
             cursor = history.count - 1
         }
     }
 
-    private func goToNextElement() {
+    private func goToNextElement(animated: Bool) {
         let next = elementIndex + 1
         if next < elements.count {
-            startElement(next)
+            startElement(next, animated: animated)
         } else {
             elementIndex = elements.count
-            navBack = false
             finished = true
         }
     }
 
+    /// Commit forward from the live card to a freshly-generated next card.
     private func advance() {
         switch nextAction {
-        case .nextExample: presentNextExample()
-        case .nextElement: goToNextElement()
+        case .nextExample: presentNextExample(animated: true)
+        case .nextElement: goToNextElement(animated: true)
         }
     }
 
-    /// Step back to the previous presented drill, shown read-only. Back move: new
-    /// enters from the LEFT, old exits RIGHT (both slide right). `navBack` and `cursor`
-    /// are written in ONE explicit transaction so the `.id(cursor)` swap animates both
-    /// the outgoing and incoming drill together (see body NOTE).
+    /// Slide back to the previous (answered, read-only) card.
     private func goBack() {
         guard cursor > 0 else { return }
-        withAnimation(.easeInOut(duration: 0.3)) {
-            navBack = true
-            cursor -= 1
-        }
+        animateCursor(to: cursor - 1)
     }
 
-    /// Step forward out of review toward the live drill. Never passes the frontier.
-    /// Forward move: new enters from the RIGHT, old exits LEFT (both slide left).
+    /// Slide forward through already-seen cards toward the live drill. Never passes
+    /// the frontier (advancing to a NEW card goes through `advance()`).
     private func goForward() {
-        guard cursor < history.count - 1 else { return }
-        withAnimation(.easeInOut(duration: 0.3)) {
-            navBack = false
-            cursor += 1
-        }
+        guard cursor < frontier else { return }
+        animateCursor(to: cursor + 1)
     }
 
     // MARK: - Grading (element-level)
