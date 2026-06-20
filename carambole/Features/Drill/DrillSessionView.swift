@@ -136,7 +136,15 @@ struct DrillSessionView: View {
         .onAppear {
             if history.isEmpty && !elements.isEmpty { startElement(0) }
         }
-        .animation(.easeInOut(duration: 0.3), value: cursor)
+        // NOTE: the drill swap is animated EXPLICITLY via `withAnimation` inside the
+        // cursor-mutating helpers (presentNextExample/goBack/goForward), NOT by an
+        // implicit `.animation(_:, value: cursor)` here. With an `.id(cursor)` swap,
+        // SwiftUI removes the old drill and inserts the new one and BOTH need to run
+        // their transitions inside one transaction; an implicit value-animation on the
+        // container reliably plays the insertion but tends to drop the removal, so the
+        // old drill vanished instead of sliding out. A single explicit transaction —
+        // wrapping the `navBack` (edge direction) and `cursor` writes together — keeps
+        // both views in the same animation so they slide in opposite/together direction.
         .animation(.spring(response: 0.5, dampingFraction: 0.85), value: finished)
         .animation(.spring(response: 0.5, dampingFraction: 0.85), value: showingIntro)
     }
@@ -199,8 +207,14 @@ struct DrillSessionView: View {
         let next = pending.removeFirst()
         lastExampleID = next.id
         history.append(next)
-        navBack = false
-        cursor = history.count - 1
+        // Forward move: set the edge direction (navBack = false → new enters from the
+        // RIGHT, old exits LEFT) and advance the cursor in ONE explicit transaction so
+        // the `.id(cursor)` swap removes the old drill and inserts the new one inside
+        // a single animation — both slide together leftward, neither is dropped.
+        withAnimation(.easeInOut(duration: 0.3)) {
+            navBack = false
+            cursor = history.count - 1
+        }
     }
 
     private func goToNextElement() {
@@ -221,11 +235,27 @@ struct DrillSessionView: View {
         }
     }
 
-    /// Step back to the previous presented drill, shown read-only.
-    private func goBack() { if cursor > 0 { navBack = true; cursor -= 1 } }
+    /// Step back to the previous presented drill, shown read-only. Back move: new
+    /// enters from the LEFT, old exits RIGHT (both slide right). `navBack` and `cursor`
+    /// are written in ONE explicit transaction so the `.id(cursor)` swap animates both
+    /// the outgoing and incoming drill together (see body NOTE).
+    private func goBack() {
+        guard cursor > 0 else { return }
+        withAnimation(.easeInOut(duration: 0.3)) {
+            navBack = true
+            cursor -= 1
+        }
+    }
 
     /// Step forward out of review toward the live drill. Never passes the frontier.
-    private func goForward() { if cursor < history.count - 1 { navBack = false; cursor += 1 } }
+    /// Forward move: new enters from the RIGHT, old exits LEFT (both slide left).
+    private func goForward() {
+        guard cursor < history.count - 1 else { return }
+        withAnimation(.easeInOut(duration: 0.3)) {
+            navBack = false
+            cursor += 1
+        }
+    }
 
     // MARK: - Grading (element-level)
 

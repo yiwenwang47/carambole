@@ -67,57 +67,42 @@ struct DrillView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            ScrollViewReader { proxy in
-                ScrollView {
-                    VStack(alignment: .leading, spacing: Spacing.xl) {
-                        header
+            // No ScrollView: the card is laid out to fit on screen. After grading
+            // the content stays short (a correct answer auto-advances; a wrong one
+            // shows only the correct answer compactly in the footer; the full
+            // explanation appears only in read-only review), so nothing scrolls.
+            VStack(alignment: .leading, spacing: Spacing.xl) {
+                header
 
-                        promptBlock
+                promptBlock
 
-                        if let review = reviewData {
-                            // Read-only revisit: show what was submitted + result.
-                            submittedAnswerBlock(review.answer)
-                            banner(correct: review.correct)
-                                .id(Self.bannerID)
-                        } else {
-                            inputBlock
-
-                            // The full banner only appears on a wrong answer (the
-                            // teaching moment). A correct answer flashes the footer
-                            // green and auto-advances — no banner, no scroll needed.
-                            if checked && !isCorrect {
-                                banner(correct: false)
-                                    .id(Self.bannerID)
-                                    .transition(.move(edge: .bottom).combined(with: .opacity))
-                            }
-                        }
-                    }
-                    .padding(.horizontal, Spacing.screenH)
-                    .padding(.top, Spacing.xl)
-                    .padding(.bottom, Spacing.lg)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                if let review = reviewData {
+                    // Read-only revisit: show what was submitted, the result, the
+                    // correct answer (if wrong), and the full bilingual explanation.
+                    submittedAnswerBlock(review.answer)
+                    reviewResultBlock(correct: review.correct)
+                } else {
+                    inputBlock
                 }
-                // A tall input (e.g. a 4-option choice) can push the wrong-answer
-                // banner below the fold; scroll it into view so it never hides
-                // behind the pinned footer. Deferred a runloop so the banner is
-                // laid out before we scroll to it.
-                .onChange(of: checked) { _, isChecked in
-                    guard isChecked, !isCorrect else { return }
-                    DispatchQueue.main.async {
-                        withAnimation(.spring(response: 0.4, dampingFraction: 0.85)) {
-                            proxy.scrollTo(Self.bannerID, anchor: .bottom)
-                        }
-                    }
-                }
+
+                Spacer(minLength: 0)
             }
+            .padding(.horizontal, Spacing.screenH)
+            .padding(.top, Spacing.xl)
+            .padding(.bottom, Spacing.lg)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
 
-            // Pinned footer: the primary action stays reachable no matter how
-            // tall the prompt / result banner grows (a tall "wrong" banner used
-            // to push it under the home indicator with no way to scroll to it).
+            // Pinned footer: the primary action stays reachable. On a wrong LIVE
+            // answer the correct answer sits compactly directly above "Suivant".
             VStack(spacing: Spacing.sm) {
                 // "Too easy" affordance — only before checking, never in review.
                 if !checked && reviewData == nil {
                     tooEasyControl
+                }
+                // Wrong LIVE answer: show ONLY the correct answer, just above the
+                // button. No banner, no explanation (that lives in review mode).
+                if checked && !isCorrect && reviewData == nil {
+                    correctAnswerHint
                 }
                 actionButton
             }
@@ -144,8 +129,6 @@ struct DrillView: View {
     private var isTypingAnswer: Bool {
         exercise.resolvedInputMode == .freeText && !checked && reviewData == nil
     }
-
-    private static let bannerID = "result-banner"
 
     // MARK: - Swipe navigation
 
@@ -418,11 +401,14 @@ struct DrillView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
     }
 
-    // MARK: - Result banner
+    // MARK: - Review result (read-only revisit only)
 
-    /// Result banner for a given correctness. The correct answer ("Réponse") is
-    /// only revealed on a miss; the rule explanation always shows.
-    private func banner(correct: Bool) -> some View {
+    /// Result block shown ONLY when revisiting an already-answered drill
+    /// (`reviewData != nil`). Shows correctness, the correct answer if it was a
+    /// miss, and the FULL bilingual rule explanation (French, then the subtler
+    /// English line). Live drills never render this — a wrong live answer shows
+    /// only the compact `correctAnswerHint` in the footer instead.
+    private func reviewResultBlock(correct: Bool) -> some View {
         let tint = correct ? AppColor.success : AppColor.error
         return VStack(alignment: .leading, spacing: Spacing.md) {
             HStack(spacing: Spacing.sm) {
@@ -433,7 +419,7 @@ struct DrillView: View {
                     .foregroundColor(tint)
                 Spacer()
                 // Hear the correct French sentence read aloud. Only ever shown after
-                // checking (here in the banner), so it can't leak the answer.
+                // checking (here in review), so it can't leak the answer.
                 speakButton(exercise.spokenFrench)
             }
 
@@ -447,8 +433,8 @@ struct DrillView: View {
                 }
             }
 
-            // Always show the rule explanation after checking — French, then a
-            // subtler English rendering beneath it (bilingual explanation).
+            // Full rule explanation — French, then a subtler English rendering
+            // beneath it (bilingual explanation). English shows when populated.
             VStack(alignment: .leading, spacing: 4) {
                 Text(exercise.explanation)
                     .font(.appExplain)
@@ -473,6 +459,23 @@ struct DrillView: View {
             RoundedRectangle(cornerRadius: 12, style: .continuous)
                 .stroke(tint.opacity(0.4), lineWidth: 1)
         )
+    }
+
+    // MARK: - Wrong live answer (compact, footer)
+
+    /// Shown directly above "Suivant" on a WRONG live answer: just the correct
+    /// answer, compactly. No banner, no explanation — that's reserved for review.
+    private var correctAnswerHint: some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text("Réponse")
+                .uppercaseLabel()
+            Text(Exercise.displayJoin(exercise.answerTokens))
+                .font(.appToken)
+                .foregroundColor(AppColor.ink)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .transition(.opacity)
     }
 
     // MARK: - "Too easy" gate control

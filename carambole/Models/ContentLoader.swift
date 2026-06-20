@@ -42,6 +42,7 @@ private struct ExampleDTO: Codable {
     let explanation: String
     let translation: String?
     let hint: String?
+    let explanationEN: String?
 }
 
 enum ContentLoader {
@@ -96,7 +97,8 @@ enum ContentLoader {
             Exercise(id: ex.id, elementID: dto.id, type: ex.type, prompt: ex.prompt,
                      cue: ex.cue, answerTokens: ex.answerTokens, tokenBank: ex.tokenBank,
                      inputMode: ex.inputMode, explanation: ex.explanation,
-                     translation: ex.translation, hint: ex.hint)
+                     translation: ex.translation, hint: ex.hint,
+                     explanationEN: ex.explanationEN)
         }
         return GrammarElement(id: dto.id, moduleID: moduleID, sortOrder: dto.sortOrder,
                               label: dto.label, ruleNote: dto.ruleNote, examples: examples)
