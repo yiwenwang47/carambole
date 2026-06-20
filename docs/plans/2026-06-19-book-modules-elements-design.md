@@ -188,8 +188,16 @@ gate (`xcodebuild … iPhone 16 CODE_SIGNING_ALLOWED=NO` = BUILD SUCCEEDED) → 
   revisiting is the job of the Réviser queue.
 - **`newPerDay` now counts ELEMENTS** (default 10, range 3–20). `masteryThreshold`
   is a constant (`StudySettings.masteryThreshold = 3`), not yet a Settings control.
-- **Status:** structure + Module 1 shipped and merged-pending. Modules 2–25 are
-  titled only; T7 cleanup folded into the same commit.
+- **Status (final):** structure + **ALL 25 modules** (500 elements, ~2600
+  grammar-audited sentences, authored by two subagent workflows) + the **library
+  shelf** (`LibraryView` root) + branding (carambole star logo, app icon, pure-white
+  background) are MERGED to `main` and PUSHED. `tools/lint_topics.py` rewritten for
+  the module schema and green. Modules 2–25 were generated against the locked DTO
+  contract; the 25-module arc titles match the syllabus above.
+- **Not yet done:** real end-to-end run of learn→master→unlock→review on
+  device/sim (automation was blocked — logic-self-tested + screenshot-validated
+  only); additional books beyond "Français — Fondations"; `masteryThreshold` in
+  Settings; `user_version` SQLite migration.
 
 ## Open / deferred
 
