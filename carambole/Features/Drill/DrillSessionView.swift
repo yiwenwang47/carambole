@@ -42,19 +42,32 @@ struct DrillSessionView: View {
     private enum NextAction { case nextExample, nextElement }
 
     @State private var elementIndex = 0
-    @State private var currentExample: Exercise?
     /// Pending examples for the current element (learn mode queue).
     @State private var pending: [Exercise] = []
     @State private var lastExampleID: String?
     @State private var nextAction: NextAction = .nextElement
-    /// Distinct presentation id so DrillView resets its state even when the same
-    /// example is shown twice in a row across a refill.
-    @State private var presentationToken = 0
 
-    @State private var answeredCount = 0
-    @State private var correctCount = 0
+    /// Append-only log of every example presented this session, in order. The
+    /// drill on screen is `history[cursor]`; this is what makes the back chevron
+    /// possible across element boundaries — the live stream has no flat index to
+    /// step through, so we keep our own.
+    @State private var history: [Exercise] = []
+    /// Tokens the user submitted, keyed by history index, for read-only revisits.
+    @State private var submittedAnswers: [Int: [String]] = [:]
+    /// Correctness keyed by history index. Doubles as the answered-set so the
+    /// summary counts distinct presentations even if a drill is re-answered.
+    @State private var resultByIndex: [Int: Bool] = [:]
+    /// Index into `history` of the drill on screen. Equals the frontier
+    /// (`history.count - 1`) when live; below it when reviewing read-only.
+    @State private var cursor = 0
+
     @State private var finished = false
     @State private var showingIntro = true
+
+    private var answeredCount: Int { resultByIndex.count }
+    private var correctCount: Int { resultByIndex.values.filter { $0 }.count }
+    /// The cursor sits behind the frontier → showing an answered drill read-only.
+    private var isReviewing: Bool { cursor < history.count - 1 }
 
     private var currentElement: GrammarElement? {
         elements.indices.contains(elementIndex) ? elements[elementIndex] : nil
@@ -88,15 +101,23 @@ struct DrillSessionView: View {
                     } else if finished || elements.isEmpty {
                         completionSummary
                             .transition(.move(edge: .trailing).combined(with: .opacity))
-                    } else if let example = currentExample {
+                    } else if history.indices.contains(cursor) {
                         DrillView(
-                            exercise: example,
+                            exercise: history[cursor],
                             progress: progress,
-                            onResult: { correct, _ in handleResult(correct: correct) },
-                            onTooEasy: { correct, _ in handleTooEasy(correct: correct) },
-                            onNext: advance
+                            onResult: { correct, tokens in handleResult(correct: correct, answer: tokens) },
+                            onTooEasy: { correct, tokens in handleTooEasy(correct: correct, answer: tokens) },
+                            onNext: advance,
+                            canGoBack: cursor > 0,
+                            onBack: goBack,
+                            canGoForward: isReviewing,
+                            onForward: goForward,
+                            reviewData: isReviewing
+                                ? DrillView.ReviewData(answer: submittedAnswers[cursor] ?? [],
+                                                       correct: resultByIndex[cursor] ?? false)
+                                : nil
                         )
-                        .id(presentationToken)
+                        .id(cursor)
                         .transition(.asymmetric(
                             insertion: .move(edge: .trailing).combined(with: .opacity),
                             removal: .move(edge: .leading).combined(with: .opacity)
@@ -106,9 +127,9 @@ struct DrillSessionView: View {
             }
         }
         .onAppear {
-            if currentExample == nil && !elements.isEmpty { startElement(0) }
+            if history.isEmpty && !elements.isEmpty { startElement(0) }
         }
-        .animation(.spring(response: 0.5, dampingFraction: 0.85), value: presentationToken)
+        .animation(.spring(response: 0.5, dampingFraction: 0.85), value: cursor)
         .animation(.spring(response: 0.5, dampingFraction: 0.85), value: finished)
         .animation(.spring(response: 0.5, dampingFraction: 0.85), value: showingIntro)
     }
@@ -170,8 +191,8 @@ struct DrillSessionView: View {
         guard !pending.isEmpty else { goToNextElement(); return }
         let next = pending.removeFirst()
         lastExampleID = next.id
-        currentExample = next
-        presentationToken += 1
+        history.append(next)
+        cursor = history.count - 1
     }
 
     private func goToNextElement() {
@@ -180,7 +201,6 @@ struct DrillSessionView: View {
             startElement(next)
         } else {
             elementIndex = elements.count
-            currentExample = nil
             finished = true
         }
     }
@@ -192,13 +212,23 @@ struct DrillSessionView: View {
         }
     }
 
+    /// Step back to the previous presented drill, shown read-only.
+    private func goBack() { if cursor > 0 { cursor -= 1 } }
+
+    /// Step forward out of review toward the live drill. Never passes the frontier.
+    private func goForward() { if cursor < history.count - 1 { cursor += 1 } }
+
     // MARK: - Grading (element-level)
 
-    private func handleResult(correct: Bool) {
-        answeredCount += 1
-        if correct { correctCount += 1 }
-        guard let element = currentElement, let example = currentExample else { return }
-        gradeElement(element, exampleID: example.id, correct: correct)
+    // This only fires from a LIVE drill (DrillView shows Vérifier solely when
+    // `reviewData == nil`, i.e. cursor == frontier), so `currentElement`
+    // (driven by `elementIndex`) is guaranteed to be the element that produced
+    // `history[cursor]`. Keep that gating intact or grading targets the wrong element.
+    private func handleResult(correct: Bool, answer: [String]) {
+        submittedAnswers[cursor] = answer
+        resultByIndex[cursor] = correct
+        guard let element = currentElement, history.indices.contains(cursor) else { return }
+        gradeElement(element, exampleID: history[cursor].id, correct: correct)
 
         if mode == .review {
             nextAction = .nextElement
@@ -210,12 +240,12 @@ struct DrillSessionView: View {
     /// "Trop facile" gate resolved per element: correct → master this example, then
     /// suspend the element (gone for good); wrong → clean the element's records
     /// (back to fresh/unseen). Either way move to the next element.
-    private func handleTooEasy(correct: Bool) {
-        answeredCount += 1
-        if correct { correctCount += 1 }
-        guard let element = currentElement, let example = currentExample else { return }
+    private func handleTooEasy(correct: Bool, answer: [String]) {
+        submittedAnswers[cursor] = answer
+        resultByIndex[cursor] = correct
+        guard let element = currentElement, history.indices.contains(cursor) else { return }
         if correct {
-            gradeElement(element, exampleID: example.id, correct: true)
+            gradeElement(element, exampleID: history[cursor].id, correct: true)
             DataManager.shared.setSuspended(elementID: element.id)
         } else {
             DataManager.shared.clearReviewStatus(elementID: element.id)
