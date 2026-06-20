@@ -341,11 +341,21 @@ struct DrillView: View {
                 }
             }
 
-            // Always show the rule explanation after checking.
-            Text(exercise.explanation)
-                .font(.appExplain)
-                .foregroundColor(AppColor.ink)
-                .fixedSize(horizontal: false, vertical: true)
+            // Always show the rule explanation after checking — French, then a
+            // subtler English rendering beneath it (bilingual explanation).
+            VStack(alignment: .leading, spacing: 4) {
+                Text(exercise.explanation)
+                    .font(.appExplain)
+                    .foregroundColor(AppColor.ink)
+                    .fixedSize(horizontal: false, vertical: true)
+
+                if let english = exercise.explanationEN, !english.isEmpty {
+                    Text(english)
+                        .font(.appExplain)
+                        .foregroundColor(AppColor.graphite)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
         }
         .padding(Spacing.md)
         .frame(maxWidth: .infinity, alignment: .leading)

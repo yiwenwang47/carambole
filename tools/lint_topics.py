@@ -175,6 +175,13 @@ def lint(content_dir: Path) -> list[str]:
                     if not (isinstance(val, str) and val.strip()):
                         err(f"{tag}: empty/missing {field} (English ease-in required)")
 
+                # The post-answer banner is bilingual: French `explanation` plus a
+                # parallel English `explanationEN`. Every example must carry one.
+                en = ex.get("explanationEN")
+                if not (isinstance(en, str) and en.strip()):
+                    err(f"{tag}: empty/missing explanationEN (bilingual "
+                        f"post-answer explanation required)")
+
     return errors
 
 

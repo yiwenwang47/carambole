@@ -34,10 +34,14 @@ struct Exercise: Identifiable, Codable, Equatable {
     let translation: String?
     /// Short English grammar nudge, revealed on tap.
     let hint: String?
+    /// English rendering of `explanation`, shown beneath the French one in the
+    /// post-answer banner (a full bilingual explanation, distinct from the terse
+    /// pre-answer `hint`). Optional so JSON lacking the key still decodes.
+    let explanationEN: String?
 
-    /// Memberwise initializer with `translation`/`hint` defaulted last so existing
-    /// call sites keep compiling. Codable's synthesized `init(from:)` is unaffected
-    /// (absent JSON keys decode the optionals to `nil`).
+    /// Memberwise initializer with `translation`/`hint`/`explanationEN` defaulted
+    /// last so existing call sites keep compiling. Codable's synthesized
+    /// `init(from:)` is unaffected (absent JSON keys decode the optionals to `nil`).
     init(
         id: String,
         elementID: String,
@@ -49,7 +53,8 @@ struct Exercise: Identifiable, Codable, Equatable {
         inputMode: InputMode,
         explanation: String,
         translation: String? = nil,
-        hint: String? = nil
+        hint: String? = nil,
+        explanationEN: String? = nil
     ) {
         self.id = id
         self.elementID = elementID
@@ -62,6 +67,7 @@ struct Exercise: Identifiable, Codable, Equatable {
         self.explanation = explanation
         self.translation = translation
         self.hint = hint
+        self.explanationEN = explanationEN
     }
 
     /// The input actually presented to the learner. Long answers (≥3 tokens) keep
@@ -189,9 +195,10 @@ struct Exercise: Identifiable, Codable, Equatable {
         answerTokens: ["est", "parti"],
         tokenBank: ["a", "est", "parti", "partie", "partait"],
         inputMode: .buildFromTokens,
-        explanation: "Partir uses être in the passé composé, and the past participle agrees with the subject.",
+        explanation: "« partir » utilise « être » au passé composé, et le participe s'accorde avec le sujet.",
         translation: "He left yesterday.",
-        hint: "'partir' takes être; match the participle to the subject."
+        hint: "'partir' takes être; match the participle to the subject.",
+        explanationEN: "“partir” uses “être” in the passé composé, and the past participle agrees with the subject."
     )
 }
 
