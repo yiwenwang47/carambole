@@ -72,6 +72,13 @@ extension DrillEngine {
         assert(!Exercise.isTypeable(["n'"]), "bare elision must stay picked")
         assert(!Exercise.isTypeable(["de"]), "2-char particle must stay picked")
         assert(!Exercise.isTypeable(["n'", "est"]), "elision token must stay picked")
+
+        // HARD RULE: never make a learner type punctuation — answers carrying
+        // . , ? ! etc. are barred from the typing shuffle (stay picked).
+        assert(!Exercise.isTypeable(["Tu aimes le café?"]), "trailing ? must stay picked")
+        assert(!Exercise.isTypeable(["Oui, je la vois"]), "inner comma must stay picked")
+        assert(!Exercise.isTypeable(["À midi."]), "trailing period must stay picked")
+        assert(Exercise.isTypeable(["va-t-il"]), "intra-word hyphen still typeable")
     }
 }
 #endif

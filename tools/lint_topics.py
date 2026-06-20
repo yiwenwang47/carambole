@@ -21,6 +21,8 @@ solvability rules so a bad token bank or malformed module can't reach the app:
   Content policy
   - each module has exactly 20 elements
   - each element has at least 5 examples
+  - a freeText (typed) answer carries no punctuation the learner would type
+    (`. , ? ! ; : « » … " ( )`) — see Exercise.isTypeable
 
 Usage: python3 tools/lint_topics.py [carambole/Resources/Topics]
 Exit 0 = clean, 1 = errors.
@@ -31,6 +33,10 @@ import json
 import sys
 from collections import Counter
 from pathlib import Path
+
+# Punctuation a learner would have to type — barred from any typed answer
+# (mirrors Exercise.untypeablePunctuation). Apostrophes/hyphens are intra-word.
+UNTYPEABLE_PUNCT = set('.,?!;:«»…"()')
 
 VALID_TYPES = {"conjugate", "fillBlank", "genderArticle", "wordOrder"}
 VALID_MODES = {"multipleChoice", "buildFromTokens", "freeText"}
@@ -151,6 +157,18 @@ def lint(content_dir: Path) -> list[str]:
                 if ex["inputMode"] == "multipleChoice" and len(ans) != 1:
                     err(f"{tag}: multipleChoice must have exactly 1 answer token, "
                         f"has {len(ans)}")
+
+                # HARD RULE: a typing answer must never contain punctuation the
+                # learner would have to type (mirrors Exercise.isTypeable). Only
+                # freeText is unconditionally typed; the auto-shuffle skips any
+                # punctuated answer at runtime, so this guards explicit authoring.
+                if ex["inputMode"] == "freeText":
+                    bad = sorted({c for t in ans for c in t
+                                  if c in UNTYPEABLE_PUNCT})
+                    if bad:
+                        err(f"{tag}: freeText answer must not contain "
+                            f"punctuation {bad} (learner would type it) — "
+                            f"answer={ans}")
 
                 for field in ("translation", "hint"):
                     val = ex.get(field)

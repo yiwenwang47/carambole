@@ -77,15 +77,27 @@ struct Exercise: Identifiable, Codable, Equatable {
         return Exercise.typeBit(id) ? .freeText : inputMode
     }
 
+    /// Punctuation a learner would have to type out — terminal marks and
+    /// separators. HARD RULE: a typing drill must never ask the learner to type
+    /// these, so any answer carrying one is barred from the typing shuffle (it
+    /// stays in its authored picked mode). Apostrophes and hyphens are intra-word
+    /// (`l'eau`, `va-t-il`) and stay allowed.
+    static let untypeablePunctuation: Set<Character> =
+        [".", ",", "?", "!", ";", ":", "«", "»", "…", "\"", "(", ")"]
+
     /// Whether an answer is worth *typing* rather than picking. Excludes bare
     /// elisions and ultra-short particles (`n'`, `d'`, `de`, `ne`, `la`, `y`) and
     /// any answer carrying an elision token (`["n'", "est"]` → `"n' est"`, which a
     /// learner can't reproduce because answers are space-joined). Those are
     /// discrimination drills — typing defeats the contrast and the accent-strict
-    /// grader would punish the very apostrophe being taught. Substantial words stay
-    /// eligible for the typing shuffle.
+    /// grader would punish the very apostrophe being taught. Also excludes any
+    /// answer containing `untypeablePunctuation` — we never make a learner type a
+    /// `.`, `,`, `?`, `!` etc. Substantial words stay eligible for the typing shuffle.
     static func isTypeable(_ tokens: [String]) -> Bool {
         guard tokens.joined(separator: " ").count >= 3 else { return false }
+        if tokens.contains(where: { $0.contains(where: untypeablePunctuation.contains) }) {
+            return false        // never ask the learner to type punctuation
+        }
         return !tokens.contains { $0.hasSuffix("'") || $0.hasSuffix("\u{2019}") }
     }
 

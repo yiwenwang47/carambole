@@ -221,6 +221,11 @@ multiple choice), an unlockable topic tree, and spaced-repetition review.
    `Exercise.displayBank` (deterministic per-id shuffle, never answer-order) and
    carries grammar-trap distractors sized ≈1.6× the answer length — NOT the raw
    authored order. (Also: short answers shuffle ~50/50 into typed `freeText`.)
+   **HARD RULE — typing answers carry no punctuation the learner would type**
+   (`. , ? ! ; : « » … " ( )`). Enforced at the chokepoint `Exercise.isTypeable`
+   (a punctuated answer is barred from the typing shuffle → stays picked) and in
+   `tools/lint_topics.py` (author-set `freeText` + punctuation = lint error).
+   Practically: sentences served for typing have no commas or terminal marks.
 3. **Topic tree + SRS mixing** — ordered unlockable topics; daily review queue
    resurfaces due drills across finished topics.
 4. **Modular content** — one topic = one JSON in `Resources/Topics/`. Add grammar
@@ -452,6 +457,14 @@ shuffles it deterministically at render time, so don't hand-shuffle. Each
 ≈1.6× the answer length (min +2). To bulk-add distractors to existing modules use
 `tools/distractors/extract.py` (per-drill spec) → author distractors → `apply.py`
 (merges back, touching only `tokenBank`; validates count + multiset subset).
+
+**Typing answers — no punctuation (HARD RULE):** short answers (≤2 tokens) may be
+shuffled into typed `freeText`, and the learner is never asked to type punctuation
+(`. , ? ! ; : « » … " ( )`). Don't put terminal marks or commas in an answer you
+want typed; an answer carrying them is auto-demoted to its picked mode by
+`Exercise.isTypeable`, and an explicit `freeText` answer with punctuation fails
+lint. Build/MC answers may keep punctuation as their own chips (it's tapped, not
+typed).
 
 **Gotchas (verified in T3):**
 - Xcode 16 `PBXFileSystemSynchronizedRootGroup` **flattens** `Resources/Topics/*`
