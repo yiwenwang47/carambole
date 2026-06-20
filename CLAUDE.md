@@ -119,6 +119,34 @@
 > (`-destination 'id=<udid>'`; the iPhone 16 / 18.5 sim here was
 > `7C7BA0A7-C367-4CD4-AAE5-462B1F754986`).
 >
+> **▶ TOKEN-BANK SHUFFLE + HARDER CONSTRUIS DISTRACTORS (commit `365f8fc` —
+> committed + PUSHED to `main`; 2026-06-19).** Construis (`buildFromTokens`) + MC
+> drills presented candidates in the AUTHORED order — answer tokens first in answer
+> order — so a construis was solvable by tapping left-to-right and the MC answer sat
+> at row 0 in **1162/1166** drills; banks carried only ~1.2 distractors. Two fixes.
+> **(1) Deterministic shuffle** — `Exercise.displayBank`: Fisher-Yates seeded from
+> the exercise `id` via `splitmix64` off `Exercise.seed64` (the FNV-1a hash now
+> shared with `typeBit`). STABLE per id, so chip order never reshuffles on a SwiftUI
+> re-render or a read-only review-nav revisit, yet never mirrors the answer order.
+> Guards: result ≠ authored order; for multi-token answers the first N chips never
+> spell the answer; MC (1-token) is a uniform shuffle (answer at any row, no
+> learnable position bias). `TokenBuilderView` + `ChoiceView` render `displayBank`
+> (the builder maps placed indices through that same array, so duplicate tokens stay
+> correct). Covered by `Exercise._selfTest()` wired into the launch DEBUG block.
+> **(2) Harder distractors** — all **1440** construis banks re-authored with targeted
+> grammar traps (wrong conjugation / article-gender / agreement / tense,
+> indic-vs-subj, qui-vs-que…) tuned per module; bank ≈ **1.6×** answer length
+> (min +2 distractors): avg extra distractors **1.24 → 2.62**. `answerTokens` +
+> prompts are byte-identical. Tooling `tools/distractors/{extract,apply}.py` — extract
+> emits a per-drill spec, 25 subagents (one per module) author distractors, apply
+> merges them back touching ONLY `tokenBank` via a style-preserving serializer (diff
+> = just the changed bank lines). lint clean; build EXIT 0; app loads + self-tests
+> pass. Sim taps still unautomatable → the shuffle was proven via a Python replica of
+> the Swift algo, not a literal drill screenshot. NOTE: a few modules keep
+> over-regularization traps (`prendu`, `etrai`, `s'elle`) — real learner-error forms
+> shown on-screen; strip later if undesired. Design:
+> `docs/plans/2026-06-19-token-shuffle-distractors-design.md`.
+>
 > **▶ NEXT (new session):**
 > - (a) **Tap-through the on-device loop.** App is now INSTALLED on the iPhone (see
 >   "Shipped to phone"), but the flows were never automatable here (no
@@ -137,8 +165,8 @@
 > - (d) ✅ **DONE** — `PRAGMA user_version` migration shipped (see above). Remaining:
 >   fix pre-existing `first_seen_date` binding in `upsertReviewStatus` (bound from
 >   `lastReviewDate`, masked by COALESCE — low impact, worth a follow-up).
-> - `main` PUSHED to origin through the persistence work. **NOT yet pushed: the
->   drill back/forward nav fix (`25fd220`) + this doc update** — push when ready.
+> - `main` PUSHED to origin through the shuffle + distractor work (head `365f8fc`);
+>   the drill back/forward nav fix (`25fd220`) went up with it. Tree clean except:
 > - Uncommitted local: `project.pbxproj` carries your `DEVELOPMENT_TEAM` signing id
 >   (left alone intentionally).
 >
@@ -189,7 +217,10 @@ multiple choice), an unlockable topic tree, and spaced-repetition review.
 1. **Active production** — user produces answers (conjugate / fill blank / pick
    gender), not recognition swipe.
 2. **Input = tap-to-build + multiple choice** — fixed token bank → exact match,
-   no free-text / accent / typo handling.
+   no free-text / accent / typo handling. The bank is presented via
+   `Exercise.displayBank` (deterministic per-id shuffle, never answer-order) and
+   carries grammar-trap distractors sized ≈1.6× the answer length — NOT the raw
+   authored order. (Also: short answers shuffle ~50/50 into typed `freeText`.)
 3. **Topic tree + SRS mixing** — ordered unlockable topics; daily review queue
    resurfaces due drills across finished topics.
 4. **Modular content** — one topic = one JSON in `Resources/Topics/`. Add grammar
@@ -232,7 +263,10 @@ See `docs/plans/2026-06-19-scheduler-implementation.md`.
 - **Content** `Resources/Topics/manifest.json` + per-topic JSON; seeded by
   `TopicLoader`.
 - **Study loop** one `DrillView` (`DrillEngine.check` = exact token match) serves
-  both topic sessions and the daily review queue.
+  both topic sessions and the daily review queue. Token chips / MC choices render
+  in `Exercise.displayBank` order — a deterministic per-id shuffle so candidates
+  never follow the answer order; banks carry grammar-trap distractors (≈1.6×
+  answer length). See `tools/distractors/`.
 - **SRS** `SRSScheduler`, intervals `[1, 3, 7, 16, 35]` days.
 - **Feature folders** `Features/{TopicMap,Drill,Review,Completion}`, `Core/`.
 
@@ -388,6 +422,19 @@ Review surfaces SRS-due items. Adding a topic = JSON + manifest line.
   + **PUSHED** (head `bf0ed87`); branch deleted. Design:
   `docs/plans/2026-06-19-progress-history-tracker-design.md`.
 
+### P9 — Token-bank shuffle + harder construis distractors (commit `365f8fc`, 2026-06-19)
+- ☑ S1 `Exercise.displayBank` — deterministic per-id Fisher-Yates (`splitmix64` off
+  `Exercise.seed64`, the FNV-1a hash now shared with `typeBit`); stable across
+  re-renders + review-nav; guards so it never reproduces authored order / answer
+  order (multi-token) and MC is uniform. `TokenBuilderView` + `ChoiceView` render it.
+  `Exercise._selfTest()` wired into the launch DEBUG block.
+- ☑ S2 All 1440 `buildFromTokens` banks re-authored with targeted grammar-trap
+  distractors, bank ≈1.6× answer length (avg extra distractors 1.24→2.62);
+  `answerTokens`/prompts unchanged. Authored by 25 subagents (1/module) gated by
+  `tools/distractors/{extract,apply}.py` (style-preserving merge, touches only
+  `tokenBank`) + `lint_topics.py`. Committed + **PUSHED** to `main` (head `365f8fc`).
+  Design: `docs/plans/2026-06-19-token-shuffle-distractors-design.md`.
+
 ## Authoring a new grammar module
 
 1. Add `carambole/Resources/Topics/NN_slug.json` — one `GrammarTopic` + 5–6
@@ -398,6 +445,13 @@ Review surfaces SRS-due items. Adding a topic = JSON + manifest line.
 2. Add the filename to `carambole/Resources/Topics/manifest.json` →
    `{ "topicFiles": [ ... ] }`.
 3. No Swift changes. `TopicLoader.seedIfNeeded()` picks it up.
+
+**Token banks:** authored bank ORDER does not matter — `Exercise.displayBank`
+shuffles it deterministically at render time, so don't hand-shuffle. Each
+`buildFromTokens` bank should be `answerTokens` + grammar-trap distractors sized
+≈1.6× the answer length (min +2). To bulk-add distractors to existing modules use
+`tools/distractors/extract.py` (per-drill spec) → author distractors → `apply.py`
+(merges back, touching only `tokenBank`; validates count + multiset subset).
 
 **Gotchas (verified in T3):**
 - Xcode 16 `PBXFileSystemSynchronizedRootGroup` **flattens** `Resources/Topics/*`
