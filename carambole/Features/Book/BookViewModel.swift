@@ -24,6 +24,11 @@ final class BookViewModel: ObservableObject {
     @Published var dueCount: Int = 0
     /// New elements still introducible today (budget ∧ unseen) — drives "X new".
     @Published var newAvailableToday: Int = 0
+    /// Elements first introduced today, in this book — drives "N appris".
+    @Published var learnedToday: Int = 0
+    /// Elements genuinely re-graded today (reviewed minus first-seen-today), in this
+    /// book — drives "M révisés".
+    @Published var reviewedToday: Int = 0
     /// Module ids currently unlocked (strict chain).
     @Published private(set) var unlockedIDs: Set<String> = []
     /// Element ids that satisfy the unlock gate (mastered or suspended).
@@ -64,9 +69,21 @@ final class BookViewModel: ObservableObject {
             let newCount = StudyScheduler.newQueue(book: book, seen: seen, remainingBudget: remaining).count
             let satisfied = DataManager.shared.fetchUnlockSatisfiedElementIDs(threshold: self.masteryThreshold)
             let unlocked = StudyScheduler.unlockedModuleIDs(book, satisfied: satisfied)
+
+            // Today's done-work, scoped to this book. "reviewed" excludes elements
+            // first-seen today (a first sighting is not a re-grade) — matches the
+            // history page's rule.
+            let bookIDs = Set(book.allElements.map(\.id))
+            let firstSeenToday = DataManager.shared.fetchElementIDsFirstSeen(on: Date())
+            let reviewedToday = DataManager.shared.fetchElementIDsReviewedLogged(on: Date())
+            let learnedCount = firstSeenToday.intersection(bookIDs).count
+            let reviewedCount = reviewedToday.subtracting(firstSeenToday).intersection(bookIDs).count
+
             DispatchQueue.main.async {
                 self.dueCount = due
                 self.newAvailableToday = newCount
+                self.learnedToday = learnedCount
+                self.reviewedToday = reviewedCount
                 self.satisfiedIDs = satisfied
                 self.unlockedIDs = unlocked
             }
@@ -90,7 +107,11 @@ final class BookViewModel: ObservableObject {
         let target = settingsStore.settings.reviewTarget
         let overflowIDs = DataManager.shared.fetchOverflowElementIDs(asOf: Date(), limit: max(0, target - due.count))
         let overflow = overflowIDs.compactMap { byID[$0] }
-        return StudyScheduler.reviewQueue(due: due, overflow: overflow, target: target)
+        let queue = StudyScheduler.reviewQueue(due: due, overflow: overflow, target: target)
+        // One Réviser tap = one round of at most `reviewRoundSize` problems; tap
+        // again for the next round. The day's pool (`reviewTarget`) still bounds the
+        // overflow top-up above.
+        return Array(queue.prefix(settingsStore.settings.reviewRoundSize))
     }
 
     /// Elements to drill when a module is tapped: its not-yet-mastered elements

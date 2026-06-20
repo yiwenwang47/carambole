@@ -115,6 +115,8 @@ struct BookView: View {
                 Spacer()
             }
 
+            progressLine
+
             HStack(spacing: Spacing.md) {
                 Button("Apprendre") {
                     session = ElementSession(title: "Apprendre", ruleNote: "",
@@ -130,7 +132,28 @@ struct BookView: View {
                 }
                 .buttonStyle(PrimaryButtonStyle())
             }
+
+            RoundSizeSelector(store: viewModel.settingsStore)
         }
+    }
+
+    /// Today's done-work, scoped to this book; taps through to the full history.
+    private var progressLine: some View {
+        NavigationLink {
+            HistoryView()
+        } label: {
+            HStack(spacing: Spacing.sm) {
+                Text("\(viewModel.learnedToday) appris · \(viewModel.reviewedToday) révisés")
+                    .uppercaseLabel()
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 10, weight: .semibold))
+                    .foregroundColor(AppColor.graphite)
+                Spacer()
+            }
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(ScaleButtonStyle())
+        .accessibilityLabel("Historique de progression")
     }
 
     private func count(_ value: Int, label: String) -> some View {
@@ -176,6 +199,53 @@ struct BookView: View {
 
     private var divider: some View {
         Rectangle().fill(AppColor.hairline).frame(height: 1)
+    }
+}
+
+// MARK: - Réviser round-size selector
+
+/// Inline segmented control for how many problems one Réviser tap presents
+/// (`StudySettings.reviewRoundSizeOptions`). Writes straight to the settings store.
+private struct RoundSizeSelector: View {
+    @ObservedObject var store: StudySettingsStore
+
+    var body: some View {
+        HStack(spacing: Spacing.sm) {
+            Text("Révision par tour").uppercaseLabel()
+            Spacer()
+            HStack(spacing: 0) {
+                ForEach(StudySettings.reviewRoundSizeOptions, id: \.self) { n in
+                    let selected = store.settings.reviewRoundSize == n
+                    Button { select(n) } label: {
+                        Text("\(n)")
+                            .font(.appLabel)
+                            .tracking(1)
+                            .foregroundColor(selected ? AppColor.paper : AppColor.graphite)
+                            .frame(minWidth: 38)
+                            .padding(.vertical, Spacing.sm)
+                            .background(
+                                RoundedRectangle(cornerRadius: 9, style: .continuous)
+                                    .fill(selected ? AppColor.ink : Color.clear)
+                            )
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel("\(n) révisions par tour")
+                    .accessibilityAddTraits(selected ? [.isSelected] : [])
+                }
+            }
+            .padding(3)
+            .background(
+                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    .fill(AppColor.hairline.opacity(0.5))
+            )
+        }
+    }
+
+    private func select(_ n: Int) {
+        let s = store.settings
+        store.settings = StudySettings(newPerDay: s.newPerDay,
+                                       reviewTarget: s.reviewTarget,
+                                       reviewRoundSize: n)
     }
 }
 
