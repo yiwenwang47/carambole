@@ -13,6 +13,12 @@ class DataManager {
     private var db: OpaquePointer?
     private let dbQueue = DispatchQueue(label: "com.carambole.database", qos: .userInitiated)
 
+    /// On-disk location of the SQLite store (Documents/carambole.sqlite). Exposed
+    /// so Settings can export a backup of accumulated learning progress.
+    let databaseFileURL: URL = try! FileManager.default
+        .url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        .appendingPathComponent("carambole.sqlite")
+
     private init() {
         setupDatabase()
     }
@@ -20,56 +26,116 @@ class DataManager {
     // MARK: - Setup & migration
 
     private func setupDatabase() {
-        let fileURL = try! FileManager.default
-            .url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-            .appendingPathComponent("carambole.sqlite")
-        print("Database path: \(fileURL.path)")
+        print("Database path: \(databaseFileURL.path)")
 
-        guard sqlite3_open(fileURL.path, &db) == SQLITE_OK else {
+        guard sqlite3_open(databaseFileURL.path, &db) == SQLITE_OK else {
             print("Error opening database: \(String(cString: sqlite3_errmsg(db)))")
             return
         }
 
-        // Content tables from the pre-Book schema are obsolete (content is now
-        // in-memory). Drop them if an old install left them behind.
-        sqlite3_exec(db, "DROP TABLE IF EXISTS topics;", nil, nil, nil)
-        sqlite3_exec(db, "DROP TABLE IF EXISTS exercises;", nil, nil, nil)
+        migrate()
+    }
 
-        // review_status was keyed by exercise_id before the element rekey. That
-        // old shape is incompatible (and its per-exercise progress is meaningless
-        // under element-level SRS), so drop it and start clean. No production users
-        // yet; dev keeps its reseed-on-uninstall habit. (This is the place the
-        // CLAUDE.md tech-debt note asks for — a real `user_version` scheme can
-        // layer on later.)
-        if tableExists("review_status") && !columnExists(table: "review_status", column: "element_id") {
-            print("Migrating: dropping old exercise-keyed review_status")
-            sqlite3_exec(db, "DROP TABLE IF EXISTS review_status;", nil, nil, nil)
+    /// Versioned schema migration. `PRAGMA user_version` records which schema the
+    /// open DB is at; each `if version < N` block upgrades ONE step and bumps the
+    /// version. A fresh DB starts at 0 and runs every block in order; an existing
+    /// install runs only the blocks newer than it.
+    ///
+    /// `review_status` is accumulated USER data and is NEVER reseeded. So every
+    /// future schema change MUST be an additive step added here as a new block —
+    /// never edit an earlier block, and never DROP this table. Adding a column
+    /// only to the `CREATE TABLE` below does nothing on installs that already have
+    /// the table; it must be an `ALTER TABLE … ADD COLUMN` inside its own block.
+    private func migrate() {
+        let version = userVersion()
+
+        // v1 — element-keyed review_status (the current baseline). Every statement
+        // is idempotent, so this also upgrades a pre-versioning dev DB (which sits
+        // at user_version 0) in place without touching its accumulated rows.
+        if version < 1 {
+            // Pre-Book content tables are obsolete (content is now in-memory).
+            sqlite3_exec(db, "DROP TABLE IF EXISTS topics;", nil, nil, nil)
+            sqlite3_exec(db, "DROP TABLE IF EXISTS exercises;", nil, nil, nil)
+
+            // review_status was exercise-keyed before the element rekey; that shape
+            // is incompatible and its per-exercise progress is meaningless under
+            // element-level SRS. Drop ONLY the old shape (no element_id column) —
+            // never the current element-keyed table.
+            if tableExists("review_status") && !columnExists(table: "review_status", column: "element_id") {
+                print("Migrating: dropping old exercise-keyed review_status")
+                sqlite3_exec(db, "DROP TABLE IF EXISTS review_status;", nil, nil, nil)
+            }
+
+            sqlite3_exec(db, """
+                CREATE TABLE IF NOT EXISTS review_status (
+                    element_id TEXT PRIMARY KEY,
+                    learning_state TEXT,
+                    last_review_date REAL,
+                    next_review_date REAL,
+                    interval_days INTEGER,
+                    first_seen_date REAL,
+                    suspended INTEGER DEFAULT 0,
+                    distinct_correct INTEGER DEFAULT 0,
+                    mastered_example_ids TEXT DEFAULT '[]'
+                );
+                """, nil, nil, nil)
+
+            // Additive column adds for an element-keyed table predating them
+            // (duplicate-column ALTER errors when present are ignored).
+            for alter in [
+                "ALTER TABLE review_status ADD COLUMN suspended INTEGER DEFAULT 0;",
+                "ALTER TABLE review_status ADD COLUMN distinct_correct INTEGER DEFAULT 0;",
+                "ALTER TABLE review_status ADD COLUMN mastered_example_ids TEXT DEFAULT '[]';",
+            ] {
+                sqlite3_exec(db, alter, nil, nil, nil)
+            }
+
+            setUserVersion(1)
         }
 
-        let create = """
-            CREATE TABLE IF NOT EXISTS review_status (
-                element_id TEXT PRIMARY KEY,
-                learning_state TEXT,
-                last_review_date REAL,
-                next_review_date REAL,
-                interval_days INTEGER,
-                first_seen_date REAL,
-                suspended INTEGER DEFAULT 0,
-                distinct_correct INTEGER DEFAULT 0,
-                mastered_example_ids TEXT DEFAULT '[]'
-            );
-            """
-        sqlite3_exec(db, create, nil, nil, nil)
+        // v2+ — future schema changes go here, each in its own block, e.g.:
+        //   if version < 2 {
+        //       sqlite3_exec(db, "ALTER TABLE review_status ADD COLUMN streak INTEGER DEFAULT 0;", nil, nil, nil)
+        //       setUserVersion(2)
+        //   }
+    }
 
-        // Idempotent column adds for an element-keyed table predating these
-        // columns. ALTER fails with "duplicate column name" when present; ignored.
-        for alter in [
-            "ALTER TABLE review_status ADD COLUMN suspended INTEGER DEFAULT 0;",
-            "ALTER TABLE review_status ADD COLUMN distinct_correct INTEGER DEFAULT 0;",
-            "ALTER TABLE review_status ADD COLUMN mastered_example_ids TEXT DEFAULT '[]';",
-        ] {
-            sqlite3_exec(db, alter, nil, nil, nil)
+    /// Current `PRAGMA user_version` (0 on a DB that predates versioning).
+    private func userVersion() -> Int32 {
+        var v: Int32 = 0
+        var statement: OpaquePointer?
+        if sqlite3_prepare_v2(db, "PRAGMA user_version;", -1, &statement, nil) == SQLITE_OK,
+           sqlite3_step(statement) == SQLITE_ROW {
+            v = sqlite3_column_int(statement, 0)
         }
+        sqlite3_finalize(statement)
+        return v
+    }
+
+    /// Stamp the schema version. `user_version` takes no bound parameters, so the
+    /// Int32 is interpolated directly (no injection surface).
+    private func setUserVersion(_ v: Int32) {
+        sqlite3_exec(db, "PRAGMA user_version = \(v);", nil, nil, nil)
+    }
+
+    /// Copy the live DB to a temp file for backup/share. Checkpoints first so a
+    /// WAL (if ever enabled) is folded into the main file, giving a consistent
+    /// snapshot. Returns nil on failure.
+    func exportSnapshot() -> URL? {
+        var snapshot: URL?
+        dbQueue.sync {
+            sqlite3_exec(db, "PRAGMA wal_checkpoint(FULL);", nil, nil, nil)
+            let dest = FileManager.default.temporaryDirectory
+                .appendingPathComponent("carambole-progress.sqlite")
+            try? FileManager.default.removeItem(at: dest)
+            do {
+                try FileManager.default.copyItem(at: databaseFileURL, to: dest)
+                snapshot = dest
+            } catch {
+                print("Export snapshot failed: \(error)")
+            }
+        }
+        return snapshot
     }
 
     private func tableExists(_ name: String) -> Bool {

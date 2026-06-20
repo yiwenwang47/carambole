@@ -73,24 +73,36 @@ struct DrillSessionView: View {
         ZStack {
             AppColor.paper.ignoresSafeArea()
 
-            if shouldShowIntro {
-                introCard.transition(.opacity)
-            } else if finished || elements.isEmpty {
-                completionSummary
-                    .transition(.move(edge: .trailing).combined(with: .opacity))
-            } else if let example = currentExample {
-                DrillView(
-                    exercise: example,
-                    progress: progress,
-                    onResult: { correct, _ in handleResult(correct: correct) },
-                    onTooEasy: { correct, _ in handleTooEasy(correct: correct) },
-                    onNext: advance
-                )
-                .id(presentationToken)
-                .transition(.asymmetric(
-                    insertion: .move(edge: .trailing).combined(with: .opacity),
-                    removal: .move(edge: .leading).combined(with: .opacity)
-                ))
+            VStack(spacing: 0) {
+                // Exit affordance during a live session (intro + drilling). The
+                // completion/empty states have their own "Terminer" button, so the
+                // bar is hidden there. Progress is already durable — every answer
+                // upserts review_status as it happens — so leaving simply dismisses.
+                if !finished && !elements.isEmpty {
+                    exitBar
+                }
+
+                ZStack {
+                    if shouldShowIntro {
+                        introCard.transition(.opacity)
+                    } else if finished || elements.isEmpty {
+                        completionSummary
+                            .transition(.move(edge: .trailing).combined(with: .opacity))
+                    } else if let example = currentExample {
+                        DrillView(
+                            exercise: example,
+                            progress: progress,
+                            onResult: { correct, _ in handleResult(correct: correct) },
+                            onTooEasy: { correct, _ in handleTooEasy(correct: correct) },
+                            onNext: advance
+                        )
+                        .id(presentationToken)
+                        .transition(.asymmetric(
+                            insertion: .move(edge: .trailing).combined(with: .opacity),
+                            removal: .move(edge: .leading).combined(with: .opacity)
+                        ))
+                    }
+                }
             }
         }
         .onAppear {
@@ -99,6 +111,26 @@ struct DrillSessionView: View {
         .animation(.spring(response: 0.5, dampingFraction: 0.85), value: presentationToken)
         .animation(.spring(response: 0.5, dampingFraction: 0.85), value: finished)
         .animation(.spring(response: 0.5, dampingFraction: 0.85), value: showingIntro)
+    }
+
+    /// Thin top bar with a leading close button. Tapping leaves the session; the
+    /// learner's progress is already saved (per-answer upsert), so nothing extra
+    /// to flush.
+    private var exitBar: some View {
+        HStack {
+            Button(action: onFinish) {
+                Image(systemName: "xmark")
+                    .font(.system(size: 16, weight: .semibold))
+                    .foregroundColor(AppColor.graphite)
+                    .frame(width: 40, height: 40, alignment: .leading)
+                    .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel("Quitter")
+            Spacer()
+        }
+        .padding(.horizontal, Spacing.screenH)
+        .padding(.top, Spacing.sm)
     }
 
     // MARK: - Element / example driver

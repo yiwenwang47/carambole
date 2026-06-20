@@ -10,6 +10,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct SettingsView: View {
     /// The shared settings store — NOT created here. Editing `store.settings`
@@ -17,6 +18,10 @@ struct SettingsView: View {
     @ObservedObject var store: StudySettingsStore
 
     @Environment(\.dismiss) private var dismiss
+
+    /// Set when the user taps "Exporter" — drives the share sheet. Identifiable
+    /// wrapper because a bare URL is not.
+    @State private var shareItem: ShareItem?
 
     var body: some View {
         ZStack {
@@ -28,6 +33,8 @@ struct SettingsView: View {
                     newPerDaySection
                     divider
                     reviewTargetSection
+                    divider
+                    backupSection
 
                     Spacer(minLength: Spacing.lg)
 
@@ -39,6 +46,9 @@ struct SettingsView: View {
                 .padding(.bottom, Spacing.xl)
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
+        }
+        .sheet(item: $shareItem) { item in
+            ActivityView(activityItems: [item.url])
         }
     }
 
@@ -109,6 +119,32 @@ struct SettingsView: View {
         }
     }
 
+    // MARK: - Backup / export
+
+    private var backupSection: some View {
+        VStack(alignment: .leading, spacing: Spacing.sm) {
+            Button {
+                if let url = DataManager.shared.exportSnapshot() {
+                    shareItem = ShareItem(url: url)
+                }
+            } label: {
+                HStack(alignment: .firstTextBaseline, spacing: Spacing.sm) {
+                    Text("Exporter ma progression")
+                        .font(.system(size: 18, weight: .regular, design: .serif))
+                        .foregroundColor(AppColor.ink)
+                    Spacer()
+                    Image(systemName: "square.and.arrow.up")
+                        .foregroundColor(AppColor.saffronDeep)
+                }
+            }
+
+            Text("Save a backup of your learning progress (the SQLite file) before a risky rebuild.")
+                .font(.appExplain)
+                .foregroundColor(AppColor.graphite)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+    }
+
     // MARK: - Divider
 
     private var divider: some View {
@@ -116,6 +152,21 @@ struct SettingsView: View {
             .fill(AppColor.hairline)
             .frame(height: 1)
     }
+}
+
+/// Identifiable URL wrapper so `.sheet(item:)` can present the share sheet.
+private struct ShareItem: Identifiable {
+    let id = UUID()
+    let url: URL
+}
+
+/// Thin SwiftUI bridge to `UIActivityViewController` (the system share sheet).
+private struct ActivityView: UIViewControllerRepresentable {
+    let activityItems: [Any]
+    func makeUIViewController(context: Context) -> UIActivityViewController {
+        UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
+    }
+    func updateUIViewController(_ controller: UIActivityViewController, context: Context) {}
 }
 
 // MARK: - Preview
