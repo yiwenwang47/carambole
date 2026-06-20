@@ -46,6 +46,11 @@ struct DrillView: View {
     /// How long the green "Correct" confirmation shows before auto-advancing.
     private let correctAdvanceDelay: TimeInterval = 1.0
 
+    /// Opt-in: read the model sentence aloud automatically on a correct answer.
+    /// OFF by default. Same UserDefaults key the `StudySettingsStore` toggle writes
+    /// ("settings.autoSpeak") — they stay in sync via UserDefaults.standard.
+    @AppStorage("settings.autoSpeak") private var autoSpeak = false
+
     @State private var answer: [String] = []
     @State private var checked = false
     @State private var isCorrect = false
@@ -142,6 +147,18 @@ struct DrillView: View {
             }
             ProgressRing(progress: progress, size: 36, lineWidth: 4)
         }
+    }
+
+    /// Small "écouter" control that reads a French string aloud via `Speaker`.
+    private func speakButton(_ text: String) -> some View {
+        Button { Speaker.shared.speak(text) } label: {
+            Image(systemName: "speaker.wave.2.fill")
+                .font(.system(size: 16, weight: .semibold))
+                .foregroundColor(AppColor.saffronDeep)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel("Écouter la phrase")
     }
 
     private func navChevron(_ systemName: String, label: String,
@@ -329,6 +346,10 @@ struct DrillView: View {
                 Text(correct ? "Correct" : "Pas tout à fait")
                     .font(.appTitle)
                     .foregroundColor(tint)
+                Spacer()
+                // Hear the correct French sentence read aloud. Only ever shown after
+                // checking (here in the banner), so it can't leak the answer.
+                speakButton(exercise.spokenFrench)
             }
 
             if !correct {
@@ -488,6 +509,13 @@ struct DrillView: View {
         // Correct → linger on the green confirmation briefly, then auto-advance.
         // Wrong → stay put; the learner reads the answer and taps Suivant.
         if correct {
+            // No banner is shown on a correct answer (it auto-advances), so — when the
+            // learner has opted into auto-play — read the sentence aloud here. A wrong
+            // answer keeps its banner with a tappable speaker either way. Speech
+            // continues across the advance (Speaker is shared).
+            if autoSpeak {
+                Speaker.shared.speak(exercise.spokenFrench)
+            }
             DispatchQueue.main.asyncAfter(deadline: .now() + correctAdvanceDelay) {
                 onNext()
             }

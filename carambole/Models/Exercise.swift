@@ -254,6 +254,45 @@ struct Exercise: Identifiable, Codable, Equatable {
         return z ^ (z >> 31)
     }
 
+    /// The full, correct French sentence to read aloud (text-to-speech). For a
+    /// build prompt ("Construis : « He has a dog. »", whose visible text is the
+    /// English instruction), the assembled answer *is* the French sentence. For a
+    /// blanked prompt ("Complète : « Vous ne ___ pas. » (parler)"), the blank is
+    /// filled with the answer and the scaffolding — the leading "instruction :"
+    /// prefix, the « » display quotes, and any parenthetical cue — is stripped so
+    /// only real, speakable French remains. See `Speaker`.
+    var spokenFrench: String {
+        Exercise.spokenFrench(prompt: prompt,
+                              answer: Exercise.displayJoin(answerTokens),
+                              hasBlank: Exercise.promptHasBlank(prompt))
+    }
+
+    /// Pure builder behind `spokenFrench` (testable without an `Exercise`).
+    static func spokenFrench(prompt: String, answer: String, hasBlank: Bool) -> String {
+        // No blank → the prompt is an English build instruction; the assembled
+        // answer is the whole French sentence.
+        guard hasBlank else { return answer }
+
+        var body = prompt
+        // Drop a leading "instruction :" (e.g. "Complète :", "Choisis l'article :").
+        if let r = body.range(of: " : ") { body = String(body[r.upperBound...]) }
+        // Strip parenthetical cues ("(parler)") and the « » display quotes — neither
+        // is part of the spoken sentence.
+        body = body.replacingOccurrences(of: #"\([^)]*\)"#, with: "",
+                                         options: .regularExpression)
+        body = body.replacingOccurrences(of: "«", with: "")
+                   .replacingOccurrences(of: "»", with: "")
+        // Fill each blank (a run of underscores) with the answer.
+        body = body.replacingOccurrences(of: #"_+"#, with: answer,
+                                         options: .regularExpression)
+        // Tidy: glue elisions ("l' eau" → "l'eau"), collapse runs of spaces, trim.
+        body = body.replacingOccurrences(of: "' ", with: "'")
+                   .replacingOccurrences(of: "\u{2019} ", with: "\u{2019}")
+                   .replacingOccurrences(of: #"\s+"#, with: " ",
+                                         options: .regularExpression)
+        return body.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
     static let sample = Exercise(
         id: "exercise-sample",
         elementID: "el-sample",
@@ -379,6 +418,28 @@ extension Exercise {
                                  inputMode: .multipleChoice, explanation: "e")
         assert(withBlank.resolvedInputMode == .freeText,
                "blanked prompt with a typeBit id resolves to typing")
+
+        // spokenFrench: text-to-speech sentence builder.
+        // Build prompt (English instruction) → the assembled answer is the sentence.
+        assert(Exercise.spokenFrench(prompt: "Construis : « He has a dog. »",
+                                     answer: "Il a un chien", hasBlank: false)
+               == "Il a un chien", "build prompt speaks the answer sentence")
+        // Article blank: strip the "Choisis … :" prefix, fill the blank.
+        assert(Exercise.spokenFrench(prompt: "Choisis l'article : ___ café",
+                                     answer: "un", hasBlank: true)
+               == "un café", "article blank filled, instruction prefix stripped")
+        // Complète with a trailing cue + « » quotes: strip both, fill the blank.
+        assert(Exercise.spokenFrench(prompt: "Complète : « Vous ne ___ pas. » (parler)",
+                                     answer: "parlez", hasBlank: true)
+               == "Vous ne parlez pas.", "guillemets + parenthetical cue stripped")
+        // Cue before the colon lands in the instruction prefix and is dropped.
+        assert(Exercise.spokenFrench(prompt: "Complète (never) : « Je ne parle ___. »",
+                                     answer: "jamais", hasBlank: true)
+               == "Je ne parle jamais.", "pre-colon cue dropped with the prefix")
+        // Elision answer glues to its noun ("l' école" → "l'école").
+        assert(Exercise.spokenFrench(prompt: "Choisis l'article : ___ école",
+                                     answer: "l'", hasBlank: true)
+               == "l'école", "elision answer glued to the noun")
     }
 }
 #endif

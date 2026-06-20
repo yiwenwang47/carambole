@@ -34,6 +34,8 @@ struct SettingsView: View {
                     divider
                     reviewTargetSection
                     divider
+                    audioSection
+                    divider
                     backupSection
 
                     Spacer(minLength: Spacing.lg)
@@ -113,6 +115,26 @@ struct SettingsView: View {
             .tint(AppColor.saffronDeep)
 
             Text("Daily review goal — you can exceed it.")
+                .font(.appExplain)
+                .foregroundColor(AppColor.graphite)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+    }
+
+    // MARK: - Audio (auto-play toggle)
+
+    private var audioSection: some View {
+        VStack(alignment: .leading, spacing: Spacing.sm) {
+            Toggle(isOn: $store.autoSpeak) {
+                HStack(alignment: .firstTextBaseline, spacing: Spacing.sm) {
+                    Text("Lecture audio automatique")
+                        .font(.system(size: 18, weight: .regular, design: .serif))
+                        .foregroundColor(AppColor.ink)
+                }
+            }
+            .tint(AppColor.saffronDeep)
+
+            Text("Read the sentence aloud automatically on a correct answer. The 🔊 button is always available either way.")
                 .font(.appExplain)
                 .foregroundColor(AppColor.graphite)
                 .fixedSize(horizontal: false, vertical: true)

@@ -55,6 +55,9 @@ final class StudySettingsStore: ObservableObject {
         static let newPerDay = "settings.newPerDay"
         static let reviewTarget = "settings.reviewTarget"
         static let reviewRoundSize = "settings.reviewRoundSize"
+        /// Also read by `DrillView` via `@AppStorage` under this exact literal — keep
+        /// the two in sync if it ever changes.
+        static let autoSpeak = "settings.autoSpeak"
     }
 
     private let defaults: UserDefaults
@@ -67,6 +70,13 @@ final class StudySettingsStore: ObservableObject {
         }
     }
 
+    /// Read aloud the model French sentence automatically on a correct answer.
+    /// Default OFF — the learner opts in. The drill always offers a manual 🔊
+    /// regardless. Persisted under `Key.autoSpeak` (shared with `DrillView`).
+    @Published var autoSpeak: Bool {
+        didSet { defaults.set(autoSpeak, forKey: Key.autoSpeak) }
+    }
+
     init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
         let newPerDay = defaults.object(forKey: Key.newPerDay) as? Int
@@ -75,6 +85,8 @@ final class StudySettingsStore: ObservableObject {
             ?? StudySettings.default.reviewTarget
         let reviewRoundSize = defaults.object(forKey: Key.reviewRoundSize) as? Int
             ?? StudySettings.default.reviewRoundSize
+        // Absent key → OFF by default; opt-in only.
+        self.autoSpeak = defaults.object(forKey: Key.autoSpeak) as? Bool ?? false
         // Clamps via init; persists clamped values back through didSet.
         self.settings = StudySettings(newPerDay: newPerDay, reviewTarget: reviewTarget, reviewRoundSize: reviewRoundSize)
     }
@@ -105,6 +117,13 @@ extension StudySettingsStore {
 
         let store = StudySettingsStore(defaults: suite)
         assert(store.settings == .default, "absent keys fall back to default")
+        assert(store.autoSpeak == false, "autoSpeak defaults OFF (opt-in)")
+
+        // autoSpeak round-trips through the suite.
+        store.autoSpeak = true
+        assert(StudySettingsStore(defaults: suite).autoSpeak == true, "autoSpeak round-trips on")
+        store.autoSpeak = false
+        assert(StudySettingsStore(defaults: suite).autoSpeak == false, "autoSpeak round-trips off")
 
         store.settings = StudySettings(newPerDay: 15, reviewTarget: 150, reviewRoundSize: 50)
         let reloaded = StudySettingsStore(defaults: suite)
