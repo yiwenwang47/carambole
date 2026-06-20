@@ -34,20 +34,39 @@
 >   startup self-tests pass. Design + as-built deviations:
 >   `docs/plans/2026-06-19-book-modules-elements-design.md`.
 >
+> **▶ PERSISTENCE + UX (branch `persistence-migration` → MERGED to `main`, NOT
+> pushed; 2026-06-19).** Book-1 grammar re-audited (5 agents × 25 modules + lint):
+> 0 errors. Three changes shipped (build EXIT 0, code-review passed, commit
+> `6ad8353`): **(1)** `PRAGMA user_version` migration in `CoreDataManager.migrate()`
+> — v1 = element-keyed `review_status` baseline, idempotent so existing installs
+> upgrade in place WITHOUT dropping accumulated rows (drops ONLY the legacy
+> exercise-keyed table). Future schema change = add an `if version < N` block with
+> an additive `ALTER`; **never edit an earlier block or DROP the table.** Closes the
+> silent-SRS-data-loss footgun on rebuilds. **(2)** Settings → "Exporter ma
+> progression": checkpoint + copy `carambole.sqlite` to temp, share via system
+> sheet (backup before risky rebuilds; `DataManager.exportSnapshot()` +
+> `databaseFileURL`). **(3)** Mid-session **exit bar** (leading ✕) in
+> `DrillSessionView` during intro + drilling → `onFinish`; progress already durable
+> via per-answer upsert, so partial mastery survives exit. NOT tapped on sim
+> (automation still blocked).
+>
 > **▶ NEXT (new session):**
 > - (a) **Real end-to-end device/sim run** of a full learn→master→unlock→review
 >   loop. Sim UI automation was BLOCKED all session (no idb/cliclick, Apple-events
 >   denied), so flows are logic-self-tested + screenshot-validated but NOT tapped
 >   through. Verify: Apprendre drills an element to 3-distinct-correct → module
 >   completes → next module unlocks → Réviser resurfaces due items; "Trop facile"
->   suspend/clean.
+>   suspend/clean; **new: exit bar mid-session keeps progress; Settings export
+>   shares the .sqlite.**
 > - (b) **More books** — Conversation / Intermédiaire are locked placeholders in
 >   `LibraryView`; the `Book` model already supports many. Wire real content +
 >   per-book selection into `BookView` (currently loads the single `ContentLoader`
 >   book).
 > - (c) Expose `masteryThreshold` in Settings (today a constant).
-> - (d) `PRAGMA user_version` migration before real ship (restructure added an
->   ad-hoc drop-old-table dev migration only — see Known tech debt).
+> - (d) ✅ **DONE** — `PRAGMA user_version` migration shipped (see above). Remaining:
+>   fix pre-existing `first_seen_date` binding in `upsertReviewStatus` (bound from
+>   `lastReviewDate`, masked by COALESCE — low impact, worth a follow-up).
+> - Not pushed: `main` is ahead of `origin/main` by 1 commit (`6ad8353`).
 > - Uncommitted local: `project.pbxproj` carries your `DEVELOPMENT_TEAM` signing id
 >   (left alone intentionally).
 >
