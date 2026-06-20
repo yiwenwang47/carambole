@@ -70,7 +70,7 @@ struct DesignGalleryView: View {
     }
 
     private static let swatches: [(name: String, hex: String, color: Color)] = [
-        ("paper", "#FAF7F0", AppColor.paper),
+        ("paper", "#FFFFFF", AppColor.paper),
         ("ink", "#14110E", AppColor.ink),
         ("graphite", "#6B655C", AppColor.graphite),
         ("saffron", "#FFB879", AppColor.saffron),
