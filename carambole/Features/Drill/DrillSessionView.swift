@@ -60,9 +60,6 @@ struct DrillSessionView: View {
     /// Index into `history` of the drill on screen. Equals the frontier
     /// (`history.count - 1`) when live; below it when reviewing read-only.
     @State private var cursor = 0
-    /// Direction of the last cursor move, so the slide transition matches it:
-    /// forward = new drill enters from the right; back = it enters from the left.
-    @State private var navBack = false
 
     @State private var finished = false
     @State private var showingIntro = true
@@ -121,10 +118,9 @@ struct DrillSessionView: View {
                                 : nil
                         )
                         .id(cursor)
-                        .transition(.asymmetric(
-                            insertion: .move(edge: navBack ? .leading : .trailing).combined(with: .opacity),
-                            removal: .move(edge: navBack ? .trailing : .leading).combined(with: .opacity)
-                        ))
+                        // Continuous cross-fade: the outgoing drill fades out while the
+                        // incoming one fades in, simultaneously — no directional slide.
+                        .transition(.opacity)
                     }
                 }
             }
@@ -132,7 +128,7 @@ struct DrillSessionView: View {
         .onAppear {
             if history.isEmpty && !elements.isEmpty { startElement(0) }
         }
-        .animation(.spring(response: 0.5, dampingFraction: 0.85), value: cursor)
+        .animation(.easeInOut(duration: 0.28), value: cursor)
         .animation(.spring(response: 0.5, dampingFraction: 0.85), value: finished)
         .animation(.spring(response: 0.5, dampingFraction: 0.85), value: showingIntro)
     }
@@ -195,7 +191,6 @@ struct DrillSessionView: View {
         let next = pending.removeFirst()
         lastExampleID = next.id
         history.append(next)
-        navBack = false
         cursor = history.count - 1
     }
 
@@ -205,7 +200,6 @@ struct DrillSessionView: View {
             startElement(next)
         } else {
             elementIndex = elements.count
-            navBack = false
             finished = true
         }
     }
@@ -218,10 +212,10 @@ struct DrillSessionView: View {
     }
 
     /// Step back to the previous presented drill, shown read-only.
-    private func goBack() { if cursor > 0 { navBack = true; cursor -= 1 } }
+    private func goBack() { if cursor > 0 { cursor -= 1 } }
 
     /// Step forward out of review toward the live drill. Never passes the frontier.
-    private func goForward() { if cursor < history.count - 1 { navBack = false; cursor += 1 } }
+    private func goForward() { if cursor < history.count - 1 { cursor += 1 } }
 
     // MARK: - Grading (element-level)
 
