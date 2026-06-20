@@ -118,6 +118,11 @@ class DataManager {
     /// One-time v2 backfill: seed `review_log` from each `review_status` row that
     /// already has a `last_review_date`, computing `day_start` in Swift. Wrapped in a
     /// transaction for speed; `INSERT OR IGNORE` makes it idempotent.
+    ///
+    /// Caveat: `day_start` is recomputed at migration time with the device's CURRENT
+    /// timezone, which may differ from the zone in effect when the review happened, so
+    /// a backfilled day can drift by a day vs a live-logged one. Inherent to
+    /// reconstructing from a single timestamp — reviewed-history is documented lossy.
     private func backfillReviewLog() {
         let calendar = Calendar.current
         var rows: [(id: String, dayStart: Double)] = []
