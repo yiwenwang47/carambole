@@ -33,7 +33,7 @@ from collections import Counter
 from pathlib import Path
 
 VALID_TYPES = {"conjugate", "fillBlank", "genderArticle", "wordOrder"}
-VALID_MODES = {"multipleChoice", "buildFromTokens"}
+VALID_MODES = {"multipleChoice", "buildFromTokens", "freeText"}
 MODULE_KEYS = {"id", "sortOrder", "title", "ruleNote", "elements"}
 ELEMENT_KEYS = {"id", "sortOrder", "label", "ruleNote", "examples"}
 EXAMPLE_KEYS = {"id", "type", "prompt", "answerTokens", "tokenBank",
@@ -139,11 +139,14 @@ def lint(content_dir: Path) -> list[str]:
                 ans, bank = ex["answerTokens"], ex["tokenBank"]
                 if not ans:
                     err(f"{tag}: empty answerTokens")
-                # multiset subset: each answer token needs enough copies in the bank
-                need, have = Counter(ans), Counter(bank)
-                for tok, n in need.items():
-                    if have[tok] < n:
-                        err(f"{tag}: token '{tok}' needs {n} in bank, has {have[tok]}")
+                # freeText is typed — no token bank to validate against.
+                if ex["inputMode"] != "freeText":
+                    # multiset subset: each answer token needs enough copies in bank
+                    need, have = Counter(ans), Counter(bank)
+                    for tok, n in need.items():
+                        if have[tok] < n:
+                            err(f"{tag}: token '{tok}' needs {n} in bank, "
+                                f"has {have[tok]}")
 
                 if ex["inputMode"] == "multipleChoice" and len(ans) != 1:
                     err(f"{tag}: multipleChoice must have exactly 1 answer token, "

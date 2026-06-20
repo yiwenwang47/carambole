@@ -161,7 +161,7 @@ struct DrillView: View {
     private var promptBlock: some View {
         VStack(alignment: .leading, spacing: Spacing.sm) {
             CornerBracketFrame {
-                Text(exercise.prompt)
+                Text(blankedPrompt(exercise.prompt))
                     .font(.appPrompt)
                     .foregroundColor(AppColor.ink)
                     .fixedSize(horizontal: false, vertical: true)
@@ -189,6 +189,33 @@ struct DrillView: View {
                     .padding(.leading, Spacing.sm)
             }
         }
+    }
+
+    /// Renders the prompt with each underscore "blank" (`___`) drawn as ONE
+    /// continuous underline instead of literal underscore glyphs, which render with
+    /// visible gaps in the serif prompt face. The blank is a fixed width (4 figure
+    /// spaces) so it reads clearly as a gap yet never leaks the answer's length.
+    private func blankedPrompt(_ prompt: String) -> AttributedString {
+        var result = AttributedString()
+        var run = ""
+        func flush() {
+            if !run.isEmpty { result.append(AttributedString(run)); run = "" }
+        }
+        let chars = Array(prompt)
+        var i = 0
+        while i < chars.count {
+            if chars[i] == "_" {
+                while i < chars.count && chars[i] == "_" { i += 1 }   // consume run
+                flush()
+                var slot = AttributedString(String(repeating: "\u{2007}", count: 4))
+                slot.underlineStyle = .single                          // one solid line
+                result.append(slot)
+            } else {
+                run.append(chars[i]); i += 1
+            }
+        }
+        flush()
+        return result
     }
 
     // MARK: - Hint (tap-to-reveal)
@@ -231,11 +258,13 @@ struct DrillView: View {
 
     @ViewBuilder
     private var inputBlock: some View {
-        switch exercise.inputMode {
+        switch exercise.resolvedInputMode {
         case .buildFromTokens:
             TokenBuilderView(exercise: exercise, answer: $answer, isLocked: checked)
         case .multipleChoice:
             ChoiceView(exercise: exercise, answer: $answer, isLocked: checked)
+        case .freeText:
+            TypeAnswerView(exercise: exercise, answer: $answer, isLocked: checked)
         }
     }
 

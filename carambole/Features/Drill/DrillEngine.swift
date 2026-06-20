@@ -1,9 +1,30 @@
 import Foundation
 
 struct DrillEngine {
-    /// Exact, order-sensitive token match.
+    /// Grades a submitted answer. Token modes (multiple-choice / build-from-tokens)
+    /// require an exact, order-sensitive match. Free-text typing normalizes case,
+    /// apostrophe shape, and surrounding/inner whitespace, but PRESERVES accents
+    /// (`é` ≠ `e`) — accent correctness is graded.
     static func check(_ submitted: [String], _ exercise: Exercise) -> Bool {
-        submitted == exercise.answerTokens
+        switch exercise.resolvedInputMode {
+        case .freeText:
+            return normalize(submitted.joined(separator: " "))
+                == normalize(exercise.answerTokens.joined(separator: " "))
+        case .multipleChoice, .buildFromTokens:
+            return submitted == exercise.answerTokens
+        }
+    }
+
+    /// Lowercases, trims, collapses internal whitespace, and unifies curly/straight
+    /// apostrophes. Does NOT strip diacritics — accent spelling must be correct.
+    static func normalize(_ s: String) -> String {
+        let unified = s
+            .replacingOccurrences(of: "\u{2019}", with: "'")   // ’ → '
+            .replacingOccurrences(of: "\u{02BC}", with: "'")   // ʼ → '
+        return unified
+            .split(whereSeparator: { $0.isWhitespace })
+            .joined(separator: " ")
+            .lowercased()
     }
 }
 
@@ -23,6 +44,34 @@ extension DrillEngine {
                           inputMode: .multipleChoice, explanation: "e")
         assert(check(["sont allés"], mc), "mc correct must pass")
         assert(!check(["ont allés"], mc), "mc wrong must fail")
+
+        // free-text: accent-strict, but case / whitespace / apostrophe lenient.
+        let ft = Exercise(id: "ft", elementID: "t", type: .fillBlank, prompt: "p",
+                          cue: nil, answerTokens: ["café"], tokenBank: [],
+                          inputMode: .freeText, explanation: "e")
+        assert(check(["café"], ft), "exact typed must pass")
+        assert(check(["  Café "], ft), "case + surrounding space must pass")
+        assert(!check(["cafe"], ft), "missing accent must fail (accent-strict)")
+        assert(!check([], ft), "empty typed must fail")
+        let ap = Exercise(id: "ap", elementID: "t", type: .fillBlank, prompt: "p",
+                          cue: nil, answerTokens: ["l'eau"], tokenBank: [],
+                          inputMode: .freeText, explanation: "e")
+        assert(check(["l\u{2019}eau"], ap), "curly apostrophe must match straight")
+        assert(check(["l'eau"], ap), "straight apostrophe must pass")
+
+        // typeBit: deterministic, and not all-one-value across distinct ids.
+        assert(Exercise.typeBit("ft") == Exercise.typeBit("ft"), "typeBit stable")
+        let ids = (0..<200).map { "id-\($0)" }
+        let trues = ids.filter { Exercise.typeBit($0) }.count
+        assert(trues > 40 && trues < 160, "typeBit should split, got \(trues)/200")
+
+        // typeability guard: substantial words type; elisions / particles stay picked.
+        assert(Exercise.isTypeable(["café"]), "real word is typeable")
+        assert(Exercise.isTypeable(["est"]), "3-letter word is typeable")
+        assert(Exercise.isTypeable(["l'eau"]), "mid-word apostrophe is typeable")
+        assert(!Exercise.isTypeable(["n'"]), "bare elision must stay picked")
+        assert(!Exercise.isTypeable(["de"]), "2-char particle must stay picked")
+        assert(!Exercise.isTypeable(["n'", "est"]), "elision token must stay picked")
     }
 }
 #endif
