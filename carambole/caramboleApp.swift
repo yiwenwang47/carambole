@@ -15,6 +15,7 @@ struct caramboleApp: App {
         SRSScheduler._selfTest()
         StudyScheduler._selfTest()
         StudySettingsStore._selfTest()
+        HistoryViewModel._selfTest()
         #endif
     }
 
