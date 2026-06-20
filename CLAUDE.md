@@ -223,8 +223,12 @@ See `docs/plans/2026-06-19-scheduler-implementation.md`.
 
 - **Models** `GrammarTopic`, `Exercise` (replace `Word`/`WordList`/`Book`);
   `ReviewStatus` keyed by `exerciseID`.
-- **Persistence** `DataManager` (raw SQLite C API). Tables: `topics`,
-  `exercises`, `review_status`.
+- **Persistence** `DataManager` (raw SQLite C API). Tables: `review_status`
+  (one row per element — SRS schedule + mastery counters, keyed `element_id`) and
+  `review_log` (`element_id, day_start` PK — one row per element per day it was
+  reviewed; drives the per-day history tracker). Legacy `topics`/`exercises` were
+  DROPPED by the v1 migration (content is now in-memory via `ContentLoader`).
+  Schema is `user_version`-migrated (now at **2** — see `CoreDataManager.migrate()`).
 - **Content** `Resources/Topics/manifest.json` + per-topic JSON; seeded by
   `TopicLoader`.
 - **Study loop** one `DrillView` (`DrillEngine.check` = exact token match) serves
@@ -244,6 +248,19 @@ xcodebuild build -project carambole.xcodeproj -scheme carambole \
   -quiet CODE_SIGNING_ALLOWED=NO
 ```
 Expected: `** BUILD SUCCEEDED **`.
+
+**GOTCHA (2026-06-19): the `name:iPhone 16` destination above now FAILS** with
+EXIT 70 (`Unable to find a device matching the provided destination specifier`).
+The name form resolves `OS:latest` = **26.5**, but the installed `iPhone 16` sims
+sit at **iOS 18.5** (the 26.5 line is iPhone 17+), so name+latest matches nothing.
+Build against the explicit booted device id instead:
+```bash
+xcodebuild build -project carambole.xcodeproj -scheme carambole \
+  -destination 'id=<sim-udid>' -quiet CODE_SIGNING_ALLOWED=NO
+# find it: xcrun simctl list devices available | grep 'iPhone 16 ('
+# this machine's iPhone 16 / 18.5 sim was 7C7BA0A7-C367-4CD4-AAE5-462B1F754986
+```
+Note `-quiet` suppresses the `** BUILD SUCCEEDED **` banner — judge by `$?` (0).
 
 ### Install on a physical device (deployed 2026-06-19)
 
@@ -352,6 +369,25 @@ Review surfaces SRS-due items. Adding a topic = JSON + manifest line.
 - Verified end-to-end on sim; lint + build green. Fast-forward-merged into
   `main` (not pushed); `sentence-composition` branch deleted.
 
+### P8 — Progress + history tracker (branch `progress-history-tracker`, 2026-06-19)
+- ☑ H1 Data: `review_log(element_id, day_start)` table + `user_version` **2**
+  migration (additive block, backfilled once from `last_review_date`);
+  `upsertReviewStatus` logs a row per graded answer; reads
+  `fetchElementIDsFirstSeen/ReviewedLogged(on:)`, `fetchFirstSeenByElement()`,
+  `fetchReviewLog()`. `CoreDataManager`.
+- ☑ H2 `StudySettings.reviewRoundSize` {10,20,50} default 20 (snaps to nearest),
+  persisted in `StudySettingsStore`; self-tested.
+- ☑ H3 `HistoryView` + `HistoryViewModel` (pure-static `activities(...)`,
+  self-tested) — per-day learned/reviewed page, two-tone bars, footnote, empty
+  state. `Features/History/`.
+- ☑ H4 Book home: daily progress line `N appris · M révisés` (→ pushes
+  `HistoryView`), inline `10·20·50` "Révision par tour" selector,
+  `reviewSessionElements().prefix(reviewRoundSize)` round slice. `BookView`/
+  `BookViewModel`. Per-task spec + code-quality + whole-branch reviews APPROVE;
+  build EXIT 0; both screens screenshot-validated. Fast-forward-merged into `main`
+  + **PUSHED** (head `bf0ed87`); branch deleted. Design:
+  `docs/plans/2026-06-19-progress-history-tracker-design.md`.
+
 ## Authoring a new grammar module
 
 1. Add `carambole/Resources/Topics/NN_slug.json` — one `GrammarTopic` + 5–6
@@ -373,22 +409,24 @@ Review surfaces SRS-due items. Adding a topic = JSON + manifest line.
   (clears the SQLite DB). Bundle id = `wen.carambole`.
 
 ## Known tech debt
-- **No SQLite schema migration.** Tables use `CREATE TABLE IF NOT EXISTS`; new
-  columns only exist on a fresh DB. There is no `ALTER TABLE`/`PRAGMA user_version`
-  versioning, so an in-place schema change can break installs that already have the
-  old table populated. Masked in dev by uninstall-to-reseed + `TopicLoader`
-  short-circuit. Affected columns so far:
-  - `exercises.translation` / `exercises.hint` (T-EN). Lower risk: `exercises` is
-    re-seeded whenever `topics` is empty.
-  - `review_status.first_seen_date` (scheduler). **Higher risk:** `review_status`
-    is accumulated *user* data and is NEVER reseeded. On an upgraded DB missing the
-    column, `upsertReviewStatus` (which now always references `first_seen_date`)
-    fails to prepare → SRS grading silently stops persisting. The new READ queries
-    (`countNewIntroduced`, `fetchOverflowExerciseIDs`) degrade safely to 0/empty.
-
-  **Before shipping to real users**, add a `user_version` migration that runs
-  `ALTER TABLE review_status ADD COLUMN first_seen_date REAL` (and any future
-  column adds) on existing DBs.
+- **SQLite schema is now `user_version`-migrated** (RESOLVED — was the top debt
+  here). `CoreDataManager.migrate()` runs ordered `if version < N` blocks; current
+  version = **2** (v1 = element-keyed `review_status` baseline; v2 = `review_log`
+  table + backfill). RULES for any future change: add a NEW block, additive only
+  (`ALTER TABLE … ADD COLUMN` / `CREATE TABLE IF NOT EXISTS`), bump `setUserVersion`;
+  **never edit an earlier block, never DROP a user-data table.** The old
+  exercise-keyed `review_status` and the `topics`/`exercises` content tables are
+  dropped by v1; content is in-memory now.
+- **`first_seen_date` binding quirk in `upsertReviewStatus`** (low impact, open —
+  NEXT (d)). The bind is sourced from `lastReviewDate`, not a true first-seen
+  timestamp; masked by `COALESCE` so the FIRST write still stamps ≈ introduction
+  time. Fine for the per-day "learned" counts (first write ≈ today) but worth a
+  clean follow-up.
+- **Reviewed-history before the v2 migration is forward-only.** The `review_log`
+  backfill seeds only the *latest* review day per element (all `last_review_date`
+  retained). Learned-per-day is fully historical (`first_seen_date` is permanent);
+  reviewed-per-day for past days fills in going forward. Documented in-app
+  (`HistoryView` footnote) + in `backfillReviewLog()`.
 
 ## Execution
 

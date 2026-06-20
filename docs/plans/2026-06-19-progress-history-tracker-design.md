@@ -3,6 +3,12 @@
 Date: 2026-06-19
 Branch: `progress-history-tracker` (off `main`)
 
+> **STATUS: ✅ SHIPPED as designed — MERGED + PUSHED to `main` (head `bf0ed87`).**
+> Built in 4 tasks (data → settings → history page → book-home wiring), each
+> spec + code-quality reviewed; whole-branch review APPROVE; build EXIT 0; both
+> new screens screenshot-validated. No deviations from the design below. See repo
+> `CLAUDE.md` (ACTIVE TASK block + Progress §P8) for the as-built log.
+
 ## Goal
 
 Three additions, scoped to the current book:
