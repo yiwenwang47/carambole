@@ -93,11 +93,70 @@ class DataManager {
             setUserVersion(1)
         }
 
-        // v2+ — future schema changes go here, each in its own block, e.g.:
-        //   if version < 2 {
-        //       sqlite3_exec(db, "ALTER TABLE review_status ADD COLUMN streak INTEGER DEFAULT 0;", nil, nil, nil)
-        //       setUserVersion(2)
-        //   }
+        // v2 — append-only `review_log` (one row per element per calendar day it was
+        // reviewed). `review_status.last_review_date` keeps only the LATEST review, so
+        // it can't reconstruct reviews-per-day; this event log can. Backfilled once
+        // from existing rows so installed users aren't all-zeros.
+        if version < 2 {
+            sqlite3_exec(db, """
+                CREATE TABLE IF NOT EXISTS review_log (
+                    element_id TEXT NOT NULL,
+                    day_start REAL NOT NULL,
+                    PRIMARY KEY (element_id, day_start)
+                );
+                """, nil, nil, nil)
+
+            // Backfill: stamp one (element_id, startOfDay(last_review_date)) per
+            // already-reviewed element. day_start is computed in Swift via Calendar
+            // (no date math in SQL), consistent with countNewIntroduced.
+            backfillReviewLog()
+
+            setUserVersion(2)
+        }
+    }
+
+    /// One-time v2 backfill: seed `review_log` from each `review_status` row that
+    /// already has a `last_review_date`, computing `day_start` in Swift. Wrapped in a
+    /// transaction for speed; `INSERT OR IGNORE` makes it idempotent.
+    private func backfillReviewLog() {
+        let calendar = Calendar.current
+        var rows: [(id: String, dayStart: Double)] = []
+
+        var read: OpaquePointer?
+        if sqlite3_prepare_v2(db,
+            "SELECT element_id, last_review_date FROM review_status WHERE last_review_date IS NOT NULL;",
+            -1, &read, nil) == SQLITE_OK {
+            while sqlite3_step(read) == SQLITE_ROW {
+                guard let c = sqlite3_column_text(read, 0) else { continue }
+                let id = String(cString: c)
+                let last = Date(timeIntervalSince1970: sqlite3_column_double(read, 1))
+                rows.append((id, calendar.startOfDay(for: last).timeIntervalSince1970))
+            }
+        } else {
+            print("Error preparing review_log backfill read: \(String(cString: sqlite3_errmsg(db)))")
+        }
+        sqlite3_finalize(read)
+
+        guard !rows.isEmpty else { return }
+
+        sqlite3_exec(db, "BEGIN;", nil, nil, nil)
+        var insert: OpaquePointer?
+        if sqlite3_prepare_v2(db,
+            "INSERT OR IGNORE INTO review_log (element_id, day_start) VALUES (?, ?);",
+            -1, &insert, nil) == SQLITE_OK {
+            for row in rows {
+                sqlite3_reset(insert)
+                sqlite3_bind_text(insert, 1, (row.id as NSString).utf8String, -1, SQLITE_TRANSIENT)
+                sqlite3_bind_double(insert, 2, row.dayStart)
+                if sqlite3_step(insert) != SQLITE_DONE {
+                    print("Error backfilling review_log: \(String(cString: sqlite3_errmsg(db)))")
+                }
+            }
+        } else {
+            print("Error preparing review_log backfill insert: \(String(cString: sqlite3_errmsg(db)))")
+        }
+        sqlite3_finalize(insert)
+        sqlite3_exec(db, "COMMIT;", nil, nil, nil)
     }
 
     /// Current `PRAGMA user_version` (0 on a DB that predates versioning).
@@ -211,6 +270,25 @@ class DataManager {
                 print("Error upserting review status: \(String(cString: sqlite3_errmsg(self.db)))")
             }
             sqlite3_finalize(statement)
+
+            // Append-only review event: one (element_id, startOfDay) row per day the
+            // element was reviewed. INSERT OR IGNORE collapses repeats within a day.
+            if let last = status.lastReviewDate {
+                let dayStart = Calendar.current.startOfDay(for: last).timeIntervalSince1970
+                var logStmt: OpaquePointer?
+                if sqlite3_prepare_v2(self.db,
+                    "INSERT OR IGNORE INTO review_log (element_id, day_start) VALUES (?, ?);",
+                    -1, &logStmt, nil) == SQLITE_OK {
+                    sqlite3_bind_text(logStmt, 1, (status.elementID as NSString).utf8String, -1, SQLITE_TRANSIENT)
+                    sqlite3_bind_double(logStmt, 2, dayStart)
+                    if sqlite3_step(logStmt) != SQLITE_DONE {
+                        print("Error logging review event: \(String(cString: sqlite3_errmsg(self.db)))")
+                    }
+                } else {
+                    print("Error preparing review log insert: \(String(cString: sqlite3_errmsg(self.db)))")
+                }
+                sqlite3_finalize(logStmt)
+            }
         }
     }
 
@@ -330,6 +408,88 @@ class DataManager {
             sqlite3_finalize(statement)
         }
         return ids
+    }
+
+    // MARK: - Per-day history (learned & reviewed)
+
+    /// Element ids first introduced on the calendar day of `day`. Window computed
+    /// in Swift via Calendar, mirroring `countNewIntroduced`.
+    func fetchElementIDsFirstSeen(on day: Date) -> Set<String> {
+        var ids: Set<String> = []
+        let calendar = Calendar.current
+        let start = calendar.startOfDay(for: day)
+        let next = calendar.date(byAdding: .day, value: 1, to: start) ?? start
+        dbQueue.sync {
+            let query = "SELECT element_id FROM review_status WHERE first_seen_date >= ? AND first_seen_date < ?;"
+            var statement: OpaquePointer?
+            if sqlite3_prepare_v2(self.db, query, -1, &statement, nil) == SQLITE_OK {
+                sqlite3_bind_double(statement, 1, start.timeIntervalSince1970)
+                sqlite3_bind_double(statement, 2, next.timeIntervalSince1970)
+                while sqlite3_step(statement) == SQLITE_ROW {
+                    if let c = sqlite3_column_text(statement, 0) { ids.insert(String(cString: c)) }
+                }
+            }
+            sqlite3_finalize(statement)
+        }
+        return ids
+    }
+
+    /// Element ids logged as reviewed on the calendar day of `day`. `day_start` is
+    /// already a startOfDay stamp, so this is an exact match.
+    func fetchElementIDsReviewedLogged(on day: Date) -> Set<String> {
+        var ids: Set<String> = []
+        let start = Calendar.current.startOfDay(for: day).timeIntervalSince1970
+        dbQueue.sync {
+            let query = "SELECT element_id FROM review_log WHERE day_start = ?;"
+            var statement: OpaquePointer?
+            if sqlite3_prepare_v2(self.db, query, -1, &statement, nil) == SQLITE_OK {
+                sqlite3_bind_double(statement, 1, start)
+                while sqlite3_step(statement) == SQLITE_ROW {
+                    if let c = sqlite3_column_text(statement, 0) { ids.insert(String(cString: c)) }
+                }
+            }
+            sqlite3_finalize(statement)
+        }
+        return ids
+    }
+
+    /// Every element's `first_seen_date` (the introduction stamp), as
+    /// element_id → Date. Drives the historical "learned per day" reconstruction.
+    func fetchFirstSeenByElement() -> [String: Date] {
+        var result: [String: Date] = [:]
+        dbQueue.sync {
+            let query = "SELECT element_id, first_seen_date FROM review_status WHERE first_seen_date IS NOT NULL;"
+            var statement: OpaquePointer?
+            if sqlite3_prepare_v2(self.db, query, -1, &statement, nil) == SQLITE_OK {
+                while sqlite3_step(statement) == SQLITE_ROW {
+                    if let c = sqlite3_column_text(statement, 0) {
+                        result[String(cString: c)] = Date(timeIntervalSince1970: sqlite3_column_double(statement, 1))
+                    }
+                }
+            }
+            sqlite3_finalize(statement)
+        }
+        return result
+    }
+
+    /// Every `review_log` event as (elementID, dayStart). Drives the historical
+    /// "reviewed per day" reconstruction.
+    func fetchReviewLog() -> [(elementID: String, dayStart: Date)] {
+        var rows: [(elementID: String, dayStart: Date)] = []
+        dbQueue.sync {
+            let query = "SELECT element_id, day_start FROM review_log;"
+            var statement: OpaquePointer?
+            if sqlite3_prepare_v2(self.db, query, -1, &statement, nil) == SQLITE_OK {
+                while sqlite3_step(statement) == SQLITE_ROW {
+                    if let c = sqlite3_column_text(statement, 0) {
+                        rows.append((String(cString: c),
+                                     Date(timeIntervalSince1970: sqlite3_column_double(statement, 1))))
+                    }
+                }
+            }
+            sqlite3_finalize(statement)
+        }
+        return rows
     }
 
     /// Mark an element "too easy" — suspended from the new + review queues.
