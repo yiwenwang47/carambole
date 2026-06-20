@@ -9,26 +9,40 @@ struct StudySettings: Equatable {
     /// HARD cap on new ELEMENTS (grammar points) introduced per calendar day.
     var newPerDay: Int
     var reviewTarget: Int
+    /// How many problems one Réviser tap presents. A discrete choice — snapped to
+    /// the NEAREST allowed option on init, layered on top of `reviewTarget`.
+    var reviewRoundSize: Int
 
     static let newPerDayRange = 3...20
     static let reviewTargetRange = 40...600
     static let reviewTargetStep = 20
+    static let reviewRoundSizeOptions = [10, 20, 50]
 
     /// Distinct example sentences a learner must answer correctly for an element to
     /// count as mastered (the module-unlock gate). Not user-tunable in v1.
     static let masteryThreshold = 3
 
-    static let `default` = StudySettings(newPerDay: 10, reviewTarget: 200)
+    static let `default` = StudySettings(newPerDay: 10, reviewTarget: 200, reviewRoundSize: 20)
 
-    init(newPerDay: Int, reviewTarget: Int) {
+    init(newPerDay: Int, reviewTarget: Int, reviewRoundSize: Int) {
         self.newPerDay = newPerDay.clamped(to: StudySettings.newPerDayRange)
         self.reviewTarget = reviewTarget.clamped(to: StudySettings.reviewTargetRange)
+        self.reviewRoundSize = reviewRoundSize.snapped(to: StudySettings.reviewRoundSizeOptions)
     }
 }
 
 private extension Int {
     func clamped(to range: ClosedRange<Int>) -> Int {
         Swift.min(Swift.max(self, range.lowerBound), range.upperBound)
+    }
+
+    /// Snap to the option with the smallest absolute distance; ties pick the
+    /// smaller option. `options` is assumed non-empty.
+    func snapped(to options: [Int]) -> Int {
+        options.min { lhs, rhs in
+            let dl = abs(lhs - self), dr = abs(rhs - self)
+            return dl != dr ? dl < dr : lhs < rhs
+        } ?? self
     }
 }
 
@@ -40,6 +54,7 @@ final class StudySettingsStore: ObservableObject {
     private enum Key {
         static let newPerDay = "settings.newPerDay"
         static let reviewTarget = "settings.reviewTarget"
+        static let reviewRoundSize = "settings.reviewRoundSize"
     }
 
     private let defaults: UserDefaults
@@ -48,6 +63,7 @@ final class StudySettingsStore: ObservableObject {
         didSet {
             defaults.set(settings.newPerDay, forKey: Key.newPerDay)
             defaults.set(settings.reviewTarget, forKey: Key.reviewTarget)
+            defaults.set(settings.reviewRoundSize, forKey: Key.reviewRoundSize)
         }
     }
 
@@ -57,8 +73,10 @@ final class StudySettingsStore: ObservableObject {
             ?? StudySettings.default.newPerDay
         let reviewTarget = defaults.object(forKey: Key.reviewTarget) as? Int
             ?? StudySettings.default.reviewTarget
+        let reviewRoundSize = defaults.object(forKey: Key.reviewRoundSize) as? Int
+            ?? StudySettings.default.reviewRoundSize
         // Clamps via init; persists clamped values back through didSet.
-        self.settings = StudySettings(newPerDay: newPerDay, reviewTarget: reviewTarget)
+        self.settings = StudySettings(newPerDay: newPerDay, reviewTarget: reviewTarget, reviewRoundSize: reviewRoundSize)
     }
 }
 
@@ -66,10 +84,19 @@ final class StudySettingsStore: ObservableObject {
 extension StudySettingsStore {
     static func _selfTest() {
         // Clamping invariant.
-        assert(StudySettings(newPerDay: 1, reviewTarget: 200).newPerDay == 3, "newPerDay clamps up to 3")
-        assert(StudySettings(newPerDay: 99, reviewTarget: 200).newPerDay == 20, "newPerDay clamps down to 20")
-        assert(StudySettings(newPerDay: 20, reviewTarget: 0).reviewTarget == 40, "reviewTarget clamps up to 40")
-        assert(StudySettings(newPerDay: 20, reviewTarget: 9999).reviewTarget == 600, "reviewTarget clamps down to 600")
+        assert(StudySettings(newPerDay: 1, reviewTarget: 200, reviewRoundSize: 20).newPerDay == 3, "newPerDay clamps up to 3")
+        assert(StudySettings(newPerDay: 99, reviewTarget: 200, reviewRoundSize: 20).newPerDay == 20, "newPerDay clamps down to 20")
+        assert(StudySettings(newPerDay: 20, reviewTarget: 0, reviewRoundSize: 20).reviewTarget == 40, "reviewTarget clamps up to 40")
+        assert(StudySettings(newPerDay: 20, reviewTarget: 9999, reviewRoundSize: 20).reviewTarget == 600, "reviewTarget clamps down to 600")
+
+        // reviewRoundSize snaps to the nearest allowed option ({10, 20, 50}).
+        assert(StudySettings(newPerDay: 10, reviewTarget: 200, reviewRoundSize: 7).reviewRoundSize == 10, "7 snaps to 10")
+        assert(StudySettings(newPerDay: 10, reviewTarget: 200, reviewRoundSize: 33).reviewRoundSize == 20, "33 snaps to 20")
+        assert(StudySettings(newPerDay: 10, reviewTarget: 200, reviewRoundSize: 40).reviewRoundSize == 50, "40 snaps to 50")
+        assert(StudySettings(newPerDay: 10, reviewTarget: 200, reviewRoundSize: 99).reviewRoundSize == 50, "99 snaps to 50")
+        // Exact options pass through unchanged.
+        assert(StudySettings(newPerDay: 10, reviewTarget: 200, reviewRoundSize: 10).reviewRoundSize == 10, "10 stays 10")
+        assert(StudySettings(newPerDay: 10, reviewTarget: 200, reviewRoundSize: 50).reviewRoundSize == 50, "50 stays 50")
 
         // Round-trip persistence through an isolated suite.
         let suiteName = "carambole.selftest.settings"
@@ -79,14 +106,15 @@ extension StudySettingsStore {
         let store = StudySettingsStore(defaults: suite)
         assert(store.settings == .default, "absent keys fall back to default")
 
-        store.settings = StudySettings(newPerDay: 15, reviewTarget: 150)
+        store.settings = StudySettings(newPerDay: 15, reviewTarget: 150, reviewRoundSize: 50)
         let reloaded = StudySettingsStore(defaults: suite)
-        assert(reloaded.settings == StudySettings(newPerDay: 15, reviewTarget: 150), "values round-trip")
+        assert(reloaded.settings == StudySettings(newPerDay: 15, reviewTarget: 150, reviewRoundSize: 50), "values round-trip")
+        assert(reloaded.settings.reviewRoundSize == 50, "reviewRoundSize round-trips")
 
-        // Out-of-range write is stored clamped.
-        store.settings = StudySettings(newPerDay: 99, reviewTarget: 0)
+        // Out-of-range write is stored clamped/snapped.
+        store.settings = StudySettings(newPerDay: 99, reviewTarget: 0, reviewRoundSize: 7)
         let reloadedClamped = StudySettingsStore(defaults: suite)
-        assert(reloadedClamped.settings == StudySettings(newPerDay: 20, reviewTarget: 40), "persisted values stay clamped")
+        assert(reloadedClamped.settings == StudySettings(newPerDay: 20, reviewTarget: 40, reviewRoundSize: 10), "persisted values stay clamped/snapped")
 
         suite.removePersistentDomain(forName: suiteName)
     }
