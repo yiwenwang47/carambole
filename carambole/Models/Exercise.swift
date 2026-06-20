@@ -107,6 +107,56 @@ struct Exercise: Identifiable, Codable, Equatable {
         return !tokens.contains { $0.hasSuffix("'") || $0.hasSuffix("\u{2019}") }
     }
 
+    /// Opening punctuation that hugs the *following* token (`« mot`, `(mot`).
+    static let openingPunctuation: Set<Character> = ["«", "(", "\""]
+
+    /// True when a token is *purely* punctuation the learner would have to produce —
+    /// a bare `.` / `,` / `?` chip. HARD RULE (same spirit as `isTypeable`): never
+    /// make the learner produce punctuation, so these are stripped from build-mode
+    /// chips and grading. A multi-char token that merely *contains* punctuation
+    /// (`"C'est"`, `"(rien)"`, a whole MC sentence `"Tu aimes le café?"`) is NOT
+    /// produced-punctuation and stays intact.
+    static func isProducedPunctuation(_ token: String) -> Bool {
+        guard !token.isEmpty else { return false }
+        return token.allSatisfy { untypeablePunctuation.contains($0) }
+    }
+
+    /// The tokens the learner actually builds (and is graded on) in `buildFromTokens`:
+    /// `answerTokens` minus bare-punctuation chips. Identical to `answerTokens` for
+    /// every MC / typed answer (those carry no bare-punctuation tokens). The original
+    /// `answerTokens` stays the source of truth for *display* (see `displayJoin`), so
+    /// the model answer is still shown correctly punctuated.
+    var producibleAnswerTokens: [String] {
+        answerTokens.filter { !Exercise.isProducedPunctuation($0) }
+    }
+
+    /// `tokenBank` minus bare-punctuation chips — the chips actually offered.
+    var producibleTokenBank: [String] {
+        tokenBank.filter { !Exercise.isProducedPunctuation($0) }
+    }
+
+    /// Joins tokens into a display string, hugging bare-punctuation tokens to their
+    /// neighbour without a stray space — so `["Non", ",", "je"]` reads `"Non, je"`
+    /// and `["chien", "."]` reads `"chien."`. Used to show the full, correctly
+    /// punctuated model answer even though the learner never produced the punctuation.
+    static func displayJoin(_ tokens: [String]) -> String {
+        var out = ""
+        var hugNext = false        // previous token was an opener (« ( ")
+        for token in tokens {
+            let punct = isProducedPunctuation(token)
+            let opening = punct && token.allSatisfy { openingPunctuation.contains($0) }
+            if out.isEmpty {
+                out = token
+            } else if hugNext || (punct && !opening) {
+                out += token        // no space: after an opener, or before a closer/terminal
+            } else {
+                out += " " + token
+            }
+            hugNext = opening
+        }
+        return out
+    }
+
     /// Stable 50/50 bit derived from the exercise `id` (FNV-1a parity). Deterministic
     /// across launches and processes — unlike `String.hashValue`, which is seeded per
     /// run and would let a drill change input mode between sessions inconsistently.
@@ -140,24 +190,27 @@ struct Exercise: Identifiable, Codable, Equatable {
     /// to differ from the authored order — a uniform shuffle, so the answer lands at any
     /// row with no learnable position bias.
     var displayBank: [String] {
-        guard tokenBank.count > 1 else { return tokenBank }
+        let bank = producibleTokenBank        // bare-punctuation chips are never offered
+        guard bank.count > 1 else { return bank }
         var seed = Exercise.seed64(id)
         for _ in 0..<16 {
-            let order = Exercise.deterministicShuffle(tokenBank, seed: seed)
+            let order = Exercise.deterministicShuffle(bank, seed: seed)
             if passesShuffleGuards(order) { return order }
             seed = seed &+ 0x9E3779B97F4A7C15        // perturb and retry
         }
         // Last resort: a single rotation always differs from the authored order
         // (for distinct-element banks of count > 1).
-        return Array(tokenBank.dropFirst()) + [tokenBank[0]]
+        return Array(bank.dropFirst()) + [bank[0]]
     }
 
     /// A shuffled bank is acceptable when it changes the authored order and is not
-    /// solvable by tapping chips left-to-right (multi-token answers only).
+    /// solvable by tapping chips left-to-right (multi-token answers only). Compared
+    /// against the *producible* bank/answer, since bare punctuation is stripped.
     private func passesShuffleGuards(_ order: [String]) -> Bool {
-        if order == tokenBank { return false }
-        if answerTokens.count > 1,
-           Array(order.prefix(answerTokens.count)) == answerTokens {
+        if order == producibleTokenBank { return false }
+        let answer = producibleAnswerTokens
+        if answer.count > 1,
+           Array(order.prefix(answer.count)) == answer {
             return false
         }
         return true
@@ -252,6 +305,40 @@ extension Exercise {
             answerTokens: ["oui"], tokenBank: ["oui"],
             inputMode: .multipleChoice, explanation: "e")
         assert(one.displayBank == ["oui"], "single-chip bank returned as-is")
+
+        // HARD RULE (build mode): the learner never produces bare punctuation.
+        // A bare `.` / `,` / `?` chip is produced-punctuation; words and whole
+        // sentences that merely contain a mark are not.
+        assert(Exercise.isProducedPunctuation(","), "bare comma is produced-punctuation")
+        assert(Exercise.isProducedPunctuation("."), "bare period is produced-punctuation")
+        assert(Exercise.isProducedPunctuation("…"), "ellipsis is produced-punctuation")
+        assert(!Exercise.isProducedPunctuation(""), "empty token is not punctuation")
+        assert(!Exercise.isProducedPunctuation("C'est"), "elided word is not punctuation")
+        assert(!Exercise.isProducedPunctuation("(rien)"), "(rien) is a word, not punctuation")
+        assert(!Exercise.isProducedPunctuation("café?"), "word+mark is not bare punctuation")
+
+        // Build answer carrying bare punctuation: chips + grading drop it, but the
+        // model answer still displays correctly punctuated.
+        let punc = Exercise(
+            id: "punc", elementID: "t", type: .wordOrder, prompt: "p", cue: nil,
+            answerTokens: ["Non", ",", "je", "ne", "mange", "pas"],
+            tokenBank: ["Non", ",", "je", "ne", "mange", "pas", "tu"],
+            inputMode: .buildFromTokens, explanation: "e")
+        assert(punc.producibleAnswerTokens == ["Non", "je", "ne", "mange", "pas"],
+               "bare punctuation stripped from producible answer")
+        assert(!punc.displayBank.contains(","), "no bare-punctuation chip is offered")
+        assert(punc.displayBank.sorted() == punc.producibleTokenBank.sorted(),
+               "displayBank is a permutation of the producible bank")
+        assert(Exercise.displayJoin(punc.answerTokens) == "Non, je ne mange pas",
+               "displayJoin hugs the comma to the previous word")
+        assert(Exercise.displayJoin(["C'est", "mon", "chien", "."]) == "C'est mon chien.",
+               "displayJoin hugs the terminal period")
+
+        // displayJoin is a no-op for punctuation-free answers (MC / typed).
+        assert(Exercise.displayJoin(["je", "suis", "là"]) == "je suis là",
+               "displayJoin spaces ordinary words")
+        assert(Exercise.displayJoin(["Tu aimes le café?"]) == "Tu aimes le café?",
+               "displayJoin leaves a whole MC sentence intact")
     }
 }
 #endif

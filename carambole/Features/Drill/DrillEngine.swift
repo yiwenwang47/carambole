@@ -10,8 +10,12 @@ struct DrillEngine {
         case .freeText:
             return normalize(submitted.joined(separator: " "))
                 == normalize(exercise.answerTokens.joined(separator: " "))
-        case .multipleChoice, .buildFromTokens:
+        case .multipleChoice:
             return submitted == exercise.answerTokens
+        case .buildFromTokens:
+            // The learner builds words only — bare-punctuation chips are never
+            // offered, so grade against the punctuation-stripped answer.
+            return submitted == exercise.producibleAnswerTokens
         }
     }
 
@@ -44,6 +48,18 @@ extension DrillEngine {
                           inputMode: .multipleChoice, explanation: "e")
         assert(check(["sont allés"], mc), "mc correct must pass")
         assert(!check(["ont allés"], mc), "mc wrong must fail")
+
+        // build mode: the learner never produces bare punctuation, so grading
+        // ignores it — the punctuation-free word sequence is the correct answer.
+        let punc = Exercise(id: "punc", elementID: "t", type: .wordOrder, prompt: "p",
+                            cue: nil,
+                            answerTokens: ["Non", ",", "je", "ne", "mange", "pas"],
+                            tokenBank: ["Non", ",", "je", "ne", "mange", "pas", "tu"],
+                            inputMode: .buildFromTokens, explanation: "e")
+        assert(check(["Non", "je", "ne", "mange", "pas"], punc),
+               "build grades the punctuation-free production as correct")
+        assert(!check(["Non", ",", "je", "ne", "mange", "pas"], punc),
+               "a literal punctuation token is never required")
 
         // free-text: accent-strict, but case / whitespace / apostrophe lenient.
         let ft = Exercise(id: "ft", elementID: "t", type: .fillBlank, prompt: "p",

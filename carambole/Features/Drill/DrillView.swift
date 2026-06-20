@@ -308,7 +308,7 @@ struct DrillView: View {
         VStack(alignment: .leading, spacing: Spacing.sm) {
             Text("Votre réponse")
                 .uppercaseLabel()
-            Text(tokens.isEmpty ? "—" : tokens.joined(separator: " "))
+            Text(tokens.isEmpty ? "—" : Exercise.displayJoin(tokens))
                 .font(.appToken)
                 .foregroundColor(AppColor.ink)
                 .fixedSize(horizontal: false, vertical: true)
@@ -335,7 +335,7 @@ struct DrillView: View {
                 VStack(alignment: .leading, spacing: 2) {
                     Text("Réponse")
                         .uppercaseLabel()
-                    Text(exercise.answerTokens.joined(separator: " "))
+                    Text(Exercise.displayJoin(exercise.answerTokens))
                         .font(.appToken)
                         .foregroundColor(AppColor.ink)
                 }
