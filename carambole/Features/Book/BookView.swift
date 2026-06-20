@@ -65,6 +65,7 @@ struct BookView: View {
         }
         .toolbar(.hidden, for: .navigationBar)
         .navigationBarBackButtonHidden(true)
+        .swipeToGoBack(enabled: showBack) { dismiss() }
     }
 
     // MARK: - Header (book title)

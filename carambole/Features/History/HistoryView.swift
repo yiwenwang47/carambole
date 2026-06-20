@@ -121,6 +121,7 @@ struct HistoryView: View {
         .onAppear { viewModel.load() }
         .toolbar(.hidden, for: .navigationBar)
         .navigationBarBackButtonHidden(true)
+        .swipeToGoBack { dismiss() }
     }
 
     // MARK: Header
