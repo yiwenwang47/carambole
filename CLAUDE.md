@@ -34,8 +34,18 @@
 >   startup self-tests pass. Design + as-built deviations:
 >   `docs/plans/2026-06-19-book-modules-elements-design.md`.
 >
-> **▶ PERSISTENCE + UX (branch `persistence-migration` → MERGED to `main`, NOT
-> pushed; 2026-06-19).** Book-1 grammar re-audited (5 agents × 25 modules + lint):
+> **▶ SHIPPED TO PHONE (2026-06-19).** App now installed + running on a physical
+> iPhone 16 (iOS 26.5), `wen.carambole` v1.0, signed with team `QMV4SPL476` (Apple
+> ID `yiwenwang9702@gmail.com`, free/personal). `main` (incl. the persistence work
+> below) PUSHED to origin. One-time device setup done (Developer Mode on, account
+> signed in, device paired, profile auto-created). Per-build install = see
+> "Install on a physical device" under Build/verify. Caveat: free profile expires
+> in 7 days → reinstall to refresh (user data survives). Still TODO: actually
+> tap-through the learn→master→unlock→review loop on-device (was never automatable
+> here) — see NEXT (a).
+>
+> **▶ PERSISTENCE + UX (branch `persistence-migration` → MERGED to `main`, PUSHED;
+> 2026-06-19).** Book-1 grammar re-audited (5 agents × 25 modules + lint):
 > 0 errors. Three changes shipped (build EXIT 0, code-review passed, commit
 > `6ad8353`): **(1)** `PRAGMA user_version` migration in `CoreDataManager.migrate()`
 > — v1 = element-keyed `review_status` baseline, idempotent so existing installs
@@ -51,13 +61,13 @@
 > (automation still blocked).
 >
 > **▶ NEXT (new session):**
-> - (a) **Real end-to-end device/sim run** of a full learn→master→unlock→review
->   loop. Sim UI automation was BLOCKED all session (no idb/cliclick, Apple-events
->   denied), so flows are logic-self-tested + screenshot-validated but NOT tapped
->   through. Verify: Apprendre drills an element to 3-distinct-correct → module
->   completes → next module unlocks → Réviser resurfaces due items; "Trop facile"
->   suspend/clean; **new: exit bar mid-session keeps progress; Settings export
->   shares the .sqlite.**
+> - (a) **Tap-through the on-device loop.** App is now INSTALLED on the iPhone (see
+>   "Shipped to phone"), but the flows were never automatable here (no
+>   idb/cliclick, Apple-events denied) — they are logic-self-tested +
+>   screenshot-validated, not user-tapped. Verify on the phone: Apprendre drills an
+>   element to 3-distinct-correct → module completes → next module unlocks →
+>   Réviser resurfaces due items; "Trop facile" suspend/clean; exit bar mid-session
+>   keeps progress; Settings "Exporter" shares the .sqlite.
 > - (b) **More books** — Conversation / Intermédiaire are locked placeholders in
 >   `LibraryView`; the `Book` model already supports many. Wire real content +
 >   per-book selection into `BookView` (currently loads the single `ContentLoader`
@@ -66,7 +76,8 @@
 > - (d) ✅ **DONE** — `PRAGMA user_version` migration shipped (see above). Remaining:
 >   fix pre-existing `first_seen_date` binding in `upsertReviewStatus` (bound from
 >   `lastReviewDate`, masked by COALESCE — low impact, worth a follow-up).
-> - Not pushed: `main` is ahead of `origin/main` by 1 commit (`6ad8353`).
+> - `main` PUSHED to origin (persistence work + docs). This doc commit may be
+>   ahead until pushed.
 > - Uncommitted local: `project.pbxproj` carries your `DEVELOPMENT_TEAM` signing id
 >   (left alone intentionally).
 >
@@ -172,6 +183,36 @@ xcodebuild build -project carambole.xcodeproj -scheme carambole \
   -quiet CODE_SIGNING_ALLOWED=NO
 ```
 Expected: `** BUILD SUCCEEDED **`.
+
+### Install on a physical device (deployed 2026-06-19)
+
+Target: iPhone 16, iOS 26.5. Bundle `wen.carambole`. Signing team `QMV4SPL476`
+(Apple ID `yiwenwang9702@gmail.com`, free/personal). Hardware UDID
+`00008140-000103393A87001C`; CoreDevice id `320124DF-9F69-5DB9-94D2-054D20732476`.
+
+One-time setup (DONE, don't repeat): Developer Mode on (Settings → Privacy &
+Security → Developer Mode → restart); Apple ID signed into Xcode → Settings →
+Accounts; device paired + trusted; iOS 26.5 platform/DDI downloaded; profile
+auto-created via `-allowProvisioningUpdates`.
+
+Per-build install from CLI (device must be unlocked + `devicectl list devices`
+showing `connected`):
+```bash
+xcodebuild -project carambole.xcodeproj -scheme carambole \
+  -destination 'id=00008140-000103393A87001C' \
+  -allowProvisioningUpdates -derivedDataPath /tmp/cb-device build
+xcrun devicectl device install app --device 320124DF-9F69-5DB9-94D2-054D20732476 \
+  /tmp/cb-device/Build/Products/Debug-iphoneos/carambole.app
+```
+Or simply ⌘R in Xcode. Gotchas seen during first deploy, in the order they
+surfaced: `Device is busy (Waiting to reconnect)` → device still preparing, retry;
+`iOS 26.5 is not installed` → download the platform (`xcodebuild -downloadPlatform
+iOS` or Xcode → Settings → Components); `Developer Mode disabled` → enable on phone
++ restart; `Unable to log in … rejected` / `No profiles … found` → re-sign-in the
+Apple ID in Xcode → Settings → Accounts (interactive, needs 2FA — NOT doable
+headless). Free profile expires after 7 days → reinstall to refresh; **user data
+(`review_status`) survives reinstall** (same bundle id + `user_version` migration);
+only deleting the app icon wipes it.
 
 ## Progress
 
