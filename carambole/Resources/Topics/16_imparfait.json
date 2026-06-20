@@ -1,0 +1,1368 @@
+{
+  "id": "mod_16_imparfait",
+  "sortOrder": 16,
+  "title": "L’imparfait",
+  "ruleNote": "The imparfait is the past tense for things that lasted, repeated, or set the scene: descriptions, habits, and background actions. To build it, take the 'nous' form of the present, drop -ons, and add one fixed set of endings (-ais, -ais, -ait, -ions, -iez, -aient). Only 'être' is irregular, using the stem 'ét-'.",
+  "elements": [
+    {
+      "id": "el_imparfait_intro",
+      "sortOrder": 1,
+      "label": "L'imparfait : le passé qui dure",
+      "ruleNote": "The imparfait describes the past without a clear end: ongoing situations, descriptions, and habits. It often means 'was/were doing' or 'used to do'.",
+      "examples": [
+        {
+          "id": "el_imparfait_intro_01",
+          "type": "fillBlank",
+          "prompt": "Quel temps décrit une habitude ou une description au passé ?",
+          "cue": null,
+          "answerTokens": ["l'imparfait"],
+          "tokenBank": ["l'imparfait", "le futur", "le présent"],
+          "inputMode": "multipleChoice",
+          "explanation": "The imparfait is the past tense for habits, descriptions and background.",
+          "translation": "The imparfait describes a past habit or a past scene.",
+          "hint": "It is the 'used to' / 'was doing' past."
+        },
+        {
+          "id": "el_imparfait_intro_02",
+          "type": "fillBlank",
+          "prompt": "« I used to play » se traduit avec ___.",
+          "cue": null,
+          "answerTokens": ["l'imparfait"],
+          "tokenBank": ["l'imparfait", "le passé composé", "le présent"],
+          "inputMode": "multipleChoice",
+          "explanation": "'Used to' points to a repeated past habit, so we use the imparfait.",
+          "translation": "'I used to play' is expressed with the imparfait.",
+          "hint": "'Used to' = habit = imparfait."
+        },
+        {
+          "id": "el_imparfait_intro_03",
+          "type": "fillBlank",
+          "prompt": "Pour décrire le décor d'une scène passée, on utilise ___.",
+          "cue": null,
+          "answerTokens": ["l'imparfait"],
+          "tokenBank": ["l'imparfait", "le futur", "le conditionnel"],
+          "inputMode": "multipleChoice",
+          "explanation": "Describing a past setting is a job for the imparfait.",
+          "translation": "To describe the setting of a past scene, we use the imparfait.",
+          "hint": "Background scene = imparfait."
+        },
+        {
+          "id": "el_imparfait_intro_04",
+          "type": "wordOrder",
+          "prompt": "Construis : « It was raining. »",
+          "cue": null,
+          "answerTokens": ["il", "pleuvait"],
+          "tokenBank": ["il", "pleuvait", "pleut", "elle"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'Il pleuvait' sets a past background — a classic imparfait.",
+          "translation": "It was raining.",
+          "hint": "'It was raining' = il pleuvait."
+        },
+        {
+          "id": "el_imparfait_intro_05",
+          "type": "wordOrder",
+          "prompt": "Construis : « We were happy. »",
+          "cue": null,
+          "answerTokens": ["nous", "étions", "contents"],
+          "tokenBank": ["nous", "étions", "contents", "sommes", "content"],
+          "inputMode": "buildFromTokens",
+          "explanation": "A past state of mind is described with the imparfait.",
+          "translation": "We were happy.",
+          "hint": "'were happy' = étions contents."
+        }
+      ]
+    },
+    {
+      "id": "el_imparfait_radical",
+      "sortOrder": 2,
+      "label": "Le radical : la forme nous",
+      "ruleNote": "To form the imparfait, take the 'nous' form of the present and drop -ons: nous parlons → parl-, nous finissons → finiss-.",
+      "examples": [
+        {
+          "id": "el_imparfait_radical_01",
+          "type": "fillBlank",
+          "prompt": "Le radical de l'imparfait de « parler » (nous parlons) est ___.",
+          "cue": null,
+          "answerTokens": ["parl"],
+          "tokenBank": ["parl", "parle", "parlon"],
+          "inputMode": "multipleChoice",
+          "explanation": "Nous parlons → drop -ons → parl-.",
+          "translation": "The imparfait stem of 'parler' is parl-.",
+          "hint": "Drop -ons from nous parlons."
+        },
+        {
+          "id": "el_imparfait_radical_02",
+          "type": "fillBlank",
+          "prompt": "Le radical de l'imparfait de « finir » (nous finissons) est ___.",
+          "cue": null,
+          "answerTokens": ["finiss"],
+          "tokenBank": ["finiss", "fini", "finis"],
+          "inputMode": "multipleChoice",
+          "explanation": "Nous finissons → drop -ons → finiss-.",
+          "translation": "The imparfait stem of 'finir' is finiss-.",
+          "hint": "Keep the -iss from nous finissons."
+        },
+        {
+          "id": "el_imparfait_radical_03",
+          "type": "fillBlank",
+          "prompt": "Le radical de l'imparfait de « prendre » (nous prenons) est ___.",
+          "cue": null,
+          "answerTokens": ["pren"],
+          "tokenBank": ["pren", "prend", "prenn"],
+          "inputMode": "multipleChoice",
+          "explanation": "Nous prenons → drop -ons → pren-.",
+          "translation": "The imparfait stem of 'prendre' is pren-.",
+          "hint": "Use the nous form: prenons."
+        },
+        {
+          "id": "el_imparfait_radical_04",
+          "type": "fillBlank",
+          "prompt": "Le radical de l'imparfait de « boire » (nous buvons) est ___.",
+          "cue": null,
+          "answerTokens": ["buv"],
+          "tokenBank": ["buv", "boi", "boiv"],
+          "inputMode": "multipleChoice",
+          "explanation": "Nous buvons → drop -ons → buv-.",
+          "translation": "The imparfait stem of 'boire' is buv-.",
+          "hint": "The nous form is buvons."
+        },
+        {
+          "id": "el_imparfait_radical_05",
+          "type": "fillBlank",
+          "prompt": "Le radical de l'imparfait de « venir » (nous venons) est ___.",
+          "cue": null,
+          "answerTokens": ["ven"],
+          "tokenBank": ["ven", "vien", "vienn"],
+          "inputMode": "multipleChoice",
+          "explanation": "Nous venons → drop -ons → ven-.",
+          "translation": "The imparfait stem of 'venir' is ven-.",
+          "hint": "The nous form is venons."
+        }
+      ]
+    },
+    {
+      "id": "el_imparfait_terminaisons",
+      "sortOrder": 3,
+      "label": "Les terminaisons : ais, ais, ait...",
+      "ruleNote": "Add the same endings to every verb: -ais, -ais, -ait, -ions, -iez, -aient. Learn this one set.",
+      "examples": [
+        {
+          "id": "el_imparfait_terminaisons_01",
+          "type": "fillBlank",
+          "prompt": "La terminaison de l'imparfait pour « je » est ___.",
+          "cue": null,
+          "answerTokens": ["-ais"],
+          "tokenBank": ["-ais", "-ait", "-ions"],
+          "inputMode": "multipleChoice",
+          "explanation": "The 'je' ending in the imparfait is -ais.",
+          "translation": "The imparfait ending for 'je' is -ais.",
+          "hint": "je parl-ais."
+        },
+        {
+          "id": "el_imparfait_terminaisons_02",
+          "type": "fillBlank",
+          "prompt": "La terminaison de l'imparfait pour « il » est ___.",
+          "cue": null,
+          "answerTokens": ["-ait"],
+          "tokenBank": ["-ait", "-ais", "-aient"],
+          "inputMode": "multipleChoice",
+          "explanation": "The 'il/elle/on' ending in the imparfait is -ait.",
+          "translation": "The imparfait ending for 'il' is -ait.",
+          "hint": "il parl-ait."
+        },
+        {
+          "id": "el_imparfait_terminaisons_03",
+          "type": "fillBlank",
+          "prompt": "La terminaison de l'imparfait pour « nous » est ___.",
+          "cue": null,
+          "answerTokens": ["-ions"],
+          "tokenBank": ["-ions", "-iez", "-ons"],
+          "inputMode": "multipleChoice",
+          "explanation": "The 'nous' ending in the imparfait is -ions.",
+          "translation": "The imparfait ending for 'nous' is -ions.",
+          "hint": "Note the i: -ions, not -ons."
+        },
+        {
+          "id": "el_imparfait_terminaisons_04",
+          "type": "fillBlank",
+          "prompt": "La terminaison de l'imparfait pour « vous » est ___.",
+          "cue": null,
+          "answerTokens": ["-iez"],
+          "tokenBank": ["-iez", "-ez", "-ions"],
+          "inputMode": "multipleChoice",
+          "explanation": "The 'vous' ending in the imparfait is -iez.",
+          "translation": "The imparfait ending for 'vous' is -iez.",
+          "hint": "Note the i: -iez, not -ez."
+        },
+        {
+          "id": "el_imparfait_terminaisons_05",
+          "type": "fillBlank",
+          "prompt": "La terminaison de l'imparfait pour « ils » est ___.",
+          "cue": null,
+          "answerTokens": ["-aient"],
+          "tokenBank": ["-aient", "-ait", "-ais"],
+          "inputMode": "multipleChoice",
+          "explanation": "The 'ils/elles' ending in the imparfait is -aient.",
+          "translation": "The imparfait ending for 'ils' is -aient.",
+          "hint": "ils parl-aient (silent ending)."
+        }
+      ]
+    },
+    {
+      "id": "el_imparfait_je",
+      "sortOrder": 4,
+      "label": "je + -ais (je parlais)",
+      "ruleNote": "For 'I', add -ais: je parlais, je finissais, je faisais. The -ais is pronounced like 'è'.",
+      "examples": [
+        {
+          "id": "el_imparfait_je_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « I was speaking French. »",
+          "cue": null,
+          "answerTokens": ["je", "parlais", "français"],
+          "tokenBank": ["je", "parlais", "français", "parle", "parlait"],
+          "inputMode": "buildFromTokens",
+          "explanation": "je + parl- + -ais = je parlais.",
+          "translation": "I was speaking French.",
+          "hint": "je parl-ais."
+        },
+        {
+          "id": "el_imparfait_je_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « I used to work a lot. »",
+          "cue": null,
+          "answerTokens": ["je", "travaillais", "beaucoup"],
+          "tokenBank": ["je", "travaillais", "beaucoup", "travaille", "travaillait"],
+          "inputMode": "buildFromTokens",
+          "explanation": "je + travaill- + -ais = je travaillais.",
+          "translation": "I used to work a lot.",
+          "hint": "je travaill-ais."
+        },
+        {
+          "id": "el_imparfait_je_03",
+          "type": "wordOrder",
+          "prompt": "Construis : « I was finishing my book. »",
+          "cue": null,
+          "answerTokens": ["je", "finissais", "mon", "livre"],
+          "tokenBank": ["je", "finissais", "mon", "livre", "finis", "finissait"],
+          "inputMode": "buildFromTokens",
+          "explanation": "je + finiss- + -ais = je finissais.",
+          "translation": "I was finishing my book.",
+          "hint": "je finiss-ais."
+        },
+        {
+          "id": "el_imparfait_je_04",
+          "type": "fillBlank",
+          "prompt": "Je ___ la télé. (regarder, imparfait)",
+          "cue": null,
+          "answerTokens": ["regardais"],
+          "tokenBank": ["regardais", "regardait", "regarde"],
+          "inputMode": "multipleChoice",
+          "explanation": "With 'je', use the -ais ending: regardais.",
+          "translation": "I was watching TV.",
+          "hint": "je regard-ais."
+        },
+        {
+          "id": "el_imparfait_je_05",
+          "type": "fillBlank",
+          "prompt": "Je ___ chez mes parents. (habiter, imparfait)",
+          "cue": null,
+          "answerTokens": ["habitais"],
+          "tokenBank": ["habitais", "habitait", "habite"],
+          "inputMode": "multipleChoice",
+          "explanation": "With 'je', use the -ais ending: habitais.",
+          "translation": "I used to live at my parents' place.",
+          "hint": "j'habit-ais."
+        }
+      ]
+    },
+    {
+      "id": "el_imparfait_tu",
+      "sortOrder": 5,
+      "label": "tu + -ais (tu parlais)",
+      "ruleNote": "For 'you' (singular), add -ais: tu parlais, tu mangeais. It sounds the same as 'je parlais'.",
+      "examples": [
+        {
+          "id": "el_imparfait_tu_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « You were watching TV. »",
+          "cue": null,
+          "answerTokens": ["tu", "regardais", "la", "télé"],
+          "tokenBank": ["tu", "regardais", "la", "télé", "regarde", "regardait"],
+          "inputMode": "buildFromTokens",
+          "explanation": "tu + regard- + -ais = tu regardais.",
+          "translation": "You were watching TV.",
+          "hint": "tu regard-ais."
+        },
+        {
+          "id": "el_imparfait_tu_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « You used to sing well. »",
+          "cue": null,
+          "answerTokens": ["tu", "chantais", "bien"],
+          "tokenBank": ["tu", "chantais", "bien", "chante", "chantait"],
+          "inputMode": "buildFromTokens",
+          "explanation": "tu + chant- + -ais = tu chantais.",
+          "translation": "You used to sing well.",
+          "hint": "tu chant-ais."
+        },
+        {
+          "id": "el_imparfait_tu_03",
+          "type": "wordOrder",
+          "prompt": "Construis : « You were waiting for the bus. »",
+          "cue": null,
+          "answerTokens": ["tu", "attendais", "le", "bus"],
+          "tokenBank": ["tu", "attendais", "le", "bus", "attends", "attendait"],
+          "inputMode": "buildFromTokens",
+          "explanation": "tu + attend- + -ais = tu attendais.",
+          "translation": "You were waiting for the bus.",
+          "hint": "tu attend-ais."
+        },
+        {
+          "id": "el_imparfait_tu_04",
+          "type": "fillBlank",
+          "prompt": "Tu ___ souvent en vacances. (partir, imparfait)",
+          "cue": null,
+          "answerTokens": ["partais"],
+          "tokenBank": ["partais", "partait", "pars"],
+          "inputMode": "multipleChoice",
+          "explanation": "With 'tu', use the -ais ending: partais.",
+          "translation": "You often used to go on holiday.",
+          "hint": "tu part-ais."
+        },
+        {
+          "id": "el_imparfait_tu_05",
+          "type": "fillBlank",
+          "prompt": "Tu ___ un café le matin. (boire, imparfait)",
+          "cue": null,
+          "answerTokens": ["buvais"],
+          "tokenBank": ["buvais", "buvait", "bois"],
+          "inputMode": "multipleChoice",
+          "explanation": "Stem buv- + -ais = buvais.",
+          "translation": "You used to drink a coffee in the morning.",
+          "hint": "tu buv-ais."
+        }
+      ]
+    },
+    {
+      "id": "el_imparfait_il",
+      "sortOrder": 6,
+      "label": "il / elle + -ait (il parlait)",
+      "ruleNote": "For il/elle/on, add -ait: il parlait, elle finissait, on jouait.",
+      "examples": [
+        {
+          "id": "el_imparfait_il_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « She used to live in Paris. »",
+          "cue": null,
+          "answerTokens": ["elle", "habitait", "à", "Paris"],
+          "tokenBank": ["elle", "habitait", "à", "Paris", "habitais", "habite"],
+          "inputMode": "buildFromTokens",
+          "explanation": "elle + habit- + -ait = elle habitait.",
+          "translation": "She used to live in Paris.",
+          "hint": "elle habit-ait."
+        },
+        {
+          "id": "el_imparfait_il_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « He was speaking softly. »",
+          "cue": null,
+          "answerTokens": ["il", "parlait", "doucement"],
+          "tokenBank": ["il", "parlait", "doucement", "parlais", "parle"],
+          "inputMode": "buildFromTokens",
+          "explanation": "il + parl- + -ait = il parlait.",
+          "translation": "He was speaking softly.",
+          "hint": "il parl-ait."
+        },
+        {
+          "id": "el_imparfait_il_03",
+          "type": "wordOrder",
+          "prompt": "Construis : « We were playing in the park. »",
+          "cue": null,
+          "answerTokens": ["on", "jouait", "dans", "le", "parc"],
+          "tokenBank": ["on", "jouait", "dans", "le", "parc", "jouais", "joue"],
+          "inputMode": "buildFromTokens",
+          "explanation": "on takes the same -ait ending: on jouait.",
+          "translation": "We were playing in the park.",
+          "hint": "on jou-ait (on = il)."
+        },
+        {
+          "id": "el_imparfait_il_04",
+          "type": "fillBlank",
+          "prompt": "Elle ___ son travail à six heures. (finir, imparfait)",
+          "cue": null,
+          "answerTokens": ["finissait"],
+          "tokenBank": ["finissait", "finissais", "finit"],
+          "inputMode": "multipleChoice",
+          "explanation": "Stem finiss- + -ait = finissait.",
+          "translation": "She used to finish her work at six.",
+          "hint": "elle finiss-ait."
+        },
+        {
+          "id": "el_imparfait_il_05",
+          "type": "fillBlank",
+          "prompt": "Il ___ du sport tous les jours. (faire, imparfait)",
+          "cue": null,
+          "answerTokens": ["faisait"],
+          "tokenBank": ["faisait", "faisais", "fait"],
+          "inputMode": "multipleChoice",
+          "explanation": "Stem fais- + -ait = faisait.",
+          "translation": "He used to do sport every day.",
+          "hint": "il fais-ait."
+        }
+      ]
+    },
+    {
+      "id": "el_imparfait_nous",
+      "sortOrder": 7,
+      "label": "nous + -ions (nous parlions)",
+      "ruleNote": "For 'we', add -ions: nous parlions, nous finissions. Note the i: it's -ions, not -ons.",
+      "examples": [
+        {
+          "id": "el_imparfait_nous_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « We were speaking together. »",
+          "cue": null,
+          "answerTokens": ["nous", "parlions", "ensemble"],
+          "tokenBank": ["nous", "parlions", "ensemble", "parlons", "parlaient"],
+          "inputMode": "buildFromTokens",
+          "explanation": "nous + parl- + -ions = nous parlions.",
+          "translation": "We were speaking together.",
+          "hint": "nous parl-ions (not -ons)."
+        },
+        {
+          "id": "el_imparfait_nous_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « We used to eat at noon. »",
+          "cue": null,
+          "answerTokens": ["nous", "mangions", "à", "midi"],
+          "tokenBank": ["nous", "mangions", "à", "midi", "mangeons", "mangeait"],
+          "inputMode": "buildFromTokens",
+          "explanation": "nous + mang- + -ions = nous mangions (no e before -ions).",
+          "translation": "We used to eat at noon.",
+          "hint": "nous mang-ions."
+        },
+        {
+          "id": "el_imparfait_nous_03",
+          "type": "wordOrder",
+          "prompt": "Construis : « We were finishing the project. »",
+          "cue": null,
+          "answerTokens": ["nous", "finissions", "le", "projet"],
+          "tokenBank": ["nous", "finissions", "le", "projet", "finissons", "finissait"],
+          "inputMode": "buildFromTokens",
+          "explanation": "nous + finiss- + -ions = nous finissions.",
+          "translation": "We were finishing the project.",
+          "hint": "nous finiss-ions."
+        },
+        {
+          "id": "el_imparfait_nous_04",
+          "type": "fillBlank",
+          "prompt": "Nous ___ au tennis le dimanche. (jouer, imparfait)",
+          "cue": null,
+          "answerTokens": ["jouions"],
+          "tokenBank": ["jouions", "jouons", "jouaient"],
+          "inputMode": "multipleChoice",
+          "explanation": "Stem jou- + -ions = jouions.",
+          "translation": "We used to play tennis on Sundays.",
+          "hint": "nous jou-ions."
+        },
+        {
+          "id": "el_imparfait_nous_05",
+          "type": "fillBlank",
+          "prompt": "Nous ___ la radio le matin. (écouter, imparfait)",
+          "cue": null,
+          "answerTokens": ["écoutions"],
+          "tokenBank": ["écoutions", "écoutons", "écoutait"],
+          "inputMode": "multipleChoice",
+          "explanation": "Stem écout- + -ions = écoutions.",
+          "translation": "We used to listen to the radio in the morning.",
+          "hint": "nous écout-ions."
+        }
+      ]
+    },
+    {
+      "id": "el_imparfait_vous",
+      "sortOrder": 8,
+      "label": "vous + -iez (vous parliez)",
+      "ruleNote": "For 'you' (plural/formal), add -iez: vous parliez, vous aviez. Again, note the i.",
+      "examples": [
+        {
+          "id": "el_imparfait_vous_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « You used to work here. »",
+          "cue": null,
+          "answerTokens": ["vous", "travailliez", "ici"],
+          "tokenBank": ["vous", "travailliez", "ici", "travaillez", "travaillait"],
+          "inputMode": "buildFromTokens",
+          "explanation": "vous + travaill- + -iez = vous travailliez.",
+          "translation": "You used to work here.",
+          "hint": "vous travaill-iez (not -ez)."
+        },
+        {
+          "id": "el_imparfait_vous_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « You were speaking too fast. »",
+          "cue": null,
+          "answerTokens": ["vous", "parliez", "trop", "vite"],
+          "tokenBank": ["vous", "parliez", "trop", "vite", "parlez", "parlait"],
+          "inputMode": "buildFromTokens",
+          "explanation": "vous + parl- + -iez = vous parliez.",
+          "translation": "You were speaking too fast.",
+          "hint": "vous parl-iez."
+        },
+        {
+          "id": "el_imparfait_vous_03",
+          "type": "wordOrder",
+          "prompt": "Construis : « You used to choose the menu. »",
+          "cue": null,
+          "answerTokens": ["vous", "choisissiez", "le", "menu"],
+          "tokenBank": ["vous", "choisissiez", "le", "menu", "choisissez", "choisissait"],
+          "inputMode": "buildFromTokens",
+          "explanation": "vous + choisiss- + -iez = vous choisissiez.",
+          "translation": "You used to choose the menu.",
+          "hint": "vous choisiss-iez."
+        },
+        {
+          "id": "el_imparfait_vous_04",
+          "type": "fillBlank",
+          "prompt": "Vous ___ beaucoup d'amis. (avoir, imparfait)",
+          "cue": null,
+          "answerTokens": ["aviez"],
+          "tokenBank": ["aviez", "avez", "avaient"],
+          "inputMode": "multipleChoice",
+          "explanation": "Stem av- + -iez = aviez.",
+          "translation": "You used to have a lot of friends.",
+          "hint": "vous av-iez."
+        },
+        {
+          "id": "el_imparfait_vous_05",
+          "type": "fillBlank",
+          "prompt": "Vous ___ très vite. (lire, imparfait)",
+          "cue": null,
+          "answerTokens": ["lisiez"],
+          "tokenBank": ["lisiez", "lisez", "lisait"],
+          "inputMode": "multipleChoice",
+          "explanation": "Stem lis- + -iez = lisiez.",
+          "translation": "You used to read very fast.",
+          "hint": "vous lis-iez."
+        }
+      ]
+    },
+    {
+      "id": "el_imparfait_ils",
+      "sortOrder": 9,
+      "label": "ils / elles + -aient (ils parlaient)",
+      "ruleNote": "For ils/elles, add -aient: ils parlaient, elles finissaient. The -aient is silent — it sounds like -ait.",
+      "examples": [
+        {
+          "id": "el_imparfait_ils_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « They used to play football. »",
+          "cue": null,
+          "answerTokens": ["ils", "jouaient", "au", "foot"],
+          "tokenBank": ["ils", "jouaient", "au", "foot", "jouait", "jouent"],
+          "inputMode": "buildFromTokens",
+          "explanation": "ils + jou- + -aient = ils jouaient.",
+          "translation": "They used to play football.",
+          "hint": "ils jou-aient."
+        },
+        {
+          "id": "el_imparfait_ils_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « They were speaking quietly. »",
+          "cue": null,
+          "answerTokens": ["ils", "parlaient", "doucement"],
+          "tokenBank": ["ils", "parlaient", "doucement", "parlait", "parlent"],
+          "inputMode": "buildFromTokens",
+          "explanation": "ils + parl- + -aient = ils parlaient.",
+          "translation": "They were speaking quietly.",
+          "hint": "ils parl-aient."
+        },
+        {
+          "id": "el_imparfait_ils_03",
+          "type": "wordOrder",
+          "prompt": "Construis : « The girls were finishing their homework. »",
+          "cue": null,
+          "answerTokens": ["elles", "finissaient", "leurs", "devoirs"],
+          "tokenBank": ["elles", "finissaient", "leurs", "devoirs", "finissait", "finissent"],
+          "inputMode": "buildFromTokens",
+          "explanation": "elles + finiss- + -aient = elles finissaient.",
+          "translation": "The girls were finishing their homework.",
+          "hint": "elles finiss-aient."
+        },
+        {
+          "id": "el_imparfait_ils_04",
+          "type": "fillBlank",
+          "prompt": "Ils ___ à la campagne. (habiter, imparfait)",
+          "cue": null,
+          "answerTokens": ["habitaient"],
+          "tokenBank": ["habitaient", "habitait", "habitent"],
+          "inputMode": "multipleChoice",
+          "explanation": "Stem habit- + -aient = habitaient.",
+          "translation": "They used to live in the countryside.",
+          "hint": "ils habit-aient."
+        },
+        {
+          "id": "el_imparfait_ils_05",
+          "type": "fillBlank",
+          "prompt": "Elles ___ du thé chaque soir. (boire, imparfait)",
+          "cue": null,
+          "answerTokens": ["buvaient"],
+          "tokenBank": ["buvaient", "buvait", "boivent"],
+          "inputMode": "multipleChoice",
+          "explanation": "Stem buv- + -aient = buvaient.",
+          "translation": "They used to drink tea every evening.",
+          "hint": "elles buv-aient."
+        }
+      ]
+    },
+    {
+      "id": "el_imparfait_paradigme",
+      "sortOrder": 10,
+      "label": "Conjugaison complète : parler",
+      "ruleNote": "The full model: je parlais, tu parlais, il parlait, nous parlions, vous parliez, ils parlaient.",
+      "examples": [
+        {
+          "id": "el_imparfait_paradigme_01",
+          "type": "fillBlank",
+          "prompt": "Je ___ avec mon voisin. (parler, imparfait)",
+          "cue": null,
+          "answerTokens": ["parlais"],
+          "tokenBank": ["parlais", "parlait", "parlions"],
+          "inputMode": "multipleChoice",
+          "explanation": "je parlais — first person of the model.",
+          "translation": "I was talking with my neighbour.",
+          "hint": "je parl-ais."
+        },
+        {
+          "id": "el_imparfait_paradigme_02",
+          "type": "fillBlank",
+          "prompt": "Tu ___ trop fort. (parler, imparfait)",
+          "cue": null,
+          "answerTokens": ["parlais"],
+          "tokenBank": ["parlais", "parliez", "parlaient"],
+          "inputMode": "multipleChoice",
+          "explanation": "tu parlais — same form as 'je'.",
+          "translation": "You were talking too loudly.",
+          "hint": "tu parl-ais."
+        },
+        {
+          "id": "el_imparfait_paradigme_03",
+          "type": "fillBlank",
+          "prompt": "Il ___ de son voyage. (parler, imparfait)",
+          "cue": null,
+          "answerTokens": ["parlait"],
+          "tokenBank": ["parlait", "parlais", "parlions"],
+          "inputMode": "multipleChoice",
+          "explanation": "il parlait — third person singular.",
+          "translation": "He was talking about his trip.",
+          "hint": "il parl-ait."
+        },
+        {
+          "id": "el_imparfait_paradigme_04",
+          "type": "wordOrder",
+          "prompt": "Construis : « We were talking about the film. »",
+          "cue": null,
+          "answerTokens": ["nous", "parlions", "du", "film"],
+          "tokenBank": ["nous", "parlions", "du", "film", "parliez", "parlaient"],
+          "inputMode": "buildFromTokens",
+          "explanation": "nous parlions — first person plural.",
+          "translation": "We were talking about the film.",
+          "hint": "nous parl-ions."
+        },
+        {
+          "id": "el_imparfait_paradigme_05",
+          "type": "wordOrder",
+          "prompt": "Construis : « They were talking in the kitchen. »",
+          "cue": null,
+          "answerTokens": ["ils", "parlaient", "dans", "la", "cuisine"],
+          "tokenBank": ["ils", "parlaient", "dans", "la", "cuisine", "parlait", "parliez"],
+          "inputMode": "buildFromTokens",
+          "explanation": "ils parlaient — third person plural.",
+          "translation": "They were talking in the kitchen.",
+          "hint": "ils parl-aient."
+        }
+      ]
+    },
+    {
+      "id": "el_imparfait_avoir",
+      "sortOrder": 11,
+      "label": "L'imparfait de avoir (j'avais)",
+      "ruleNote": "'avoir' is regular here: nous avons → av- → j'avais, tu avais, il avait, nous avions.",
+      "examples": [
+        {
+          "id": "el_imparfait_avoir_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « I was hungry. »",
+          "cue": null,
+          "answerTokens": ["j'avais", "faim"],
+          "tokenBank": ["j'avais", "faim", "j'ai", "j'avait"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'Avoir faim' = to be hungry; j'avais faim.",
+          "translation": "I was hungry.",
+          "hint": "j'av-ais faim."
+        },
+        {
+          "id": "el_imparfait_avoir_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « She had a small car. »",
+          "cue": null,
+          "answerTokens": ["elle", "avait", "une", "petite", "voiture"],
+          "tokenBank": ["elle", "avait", "une", "petite", "voiture", "avais", "avaient"],
+          "inputMode": "buildFromTokens",
+          "explanation": "elle + av- + -ait = elle avait.",
+          "translation": "She had a small car.",
+          "hint": "elle av-ait."
+        },
+        {
+          "id": "el_imparfait_avoir_03",
+          "type": "wordOrder",
+          "prompt": "Construis : « We had a lot of time. »",
+          "cue": null,
+          "answerTokens": ["nous", "avions", "beaucoup", "de", "temps"],
+          "tokenBank": ["nous", "avions", "beaucoup", "de", "temps", "avez", "avaient"],
+          "inputMode": "buildFromTokens",
+          "explanation": "nous + av- + -ions = nous avions.",
+          "translation": "We had a lot of time.",
+          "hint": "nous av-ions."
+        },
+        {
+          "id": "el_imparfait_avoir_04",
+          "type": "fillBlank",
+          "prompt": "Tu ___ dix ans en 2010. (avoir, imparfait)",
+          "cue": null,
+          "answerTokens": ["avais"],
+          "tokenBank": ["avais", "avait", "avions"],
+          "inputMode": "multipleChoice",
+          "explanation": "With 'tu', av- + -ais = avais.",
+          "translation": "You were ten years old in 2010.",
+          "hint": "tu av-ais."
+        },
+        {
+          "id": "el_imparfait_avoir_05",
+          "type": "fillBlank",
+          "prompt": "Ils ___ un grand jardin. (avoir, imparfait)",
+          "cue": null,
+          "answerTokens": ["avaient"],
+          "tokenBank": ["avaient", "avait", "avions"],
+          "inputMode": "multipleChoice",
+          "explanation": "With 'ils', av- + -aient = avaient.",
+          "translation": "They had a big garden.",
+          "hint": "ils av-aient."
+        }
+      ]
+    },
+    {
+      "id": "el_imparfait_faire",
+      "sortOrder": 12,
+      "label": "L'imparfait de faire (je faisais)",
+      "ruleNote": "'faire' uses the nous-stem: nous faisons → fais- → je faisais, nous faisions.",
+      "examples": [
+        {
+          "id": "el_imparfait_faire_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « I was doing my homework. »",
+          "cue": null,
+          "answerTokens": ["je", "faisais", "mes", "devoirs"],
+          "tokenBank": ["je", "faisais", "mes", "devoirs", "faisait", "fais"],
+          "inputMode": "buildFromTokens",
+          "explanation": "je + fais- + -ais = je faisais.",
+          "translation": "I was doing my homework.",
+          "hint": "je fais-ais."
+        },
+        {
+          "id": "el_imparfait_faire_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « She was cooking. »",
+          "cue": null,
+          "answerTokens": ["elle", "faisait", "la", "cuisine"],
+          "tokenBank": ["elle", "faisait", "la", "cuisine", "faisais", "fait"],
+          "inputMode": "buildFromTokens",
+          "explanation": "elle + fais- + -ait = elle faisait; 'faire la cuisine' = to cook.",
+          "translation": "She was cooking.",
+          "hint": "elle fais-ait la cuisine."
+        },
+        {
+          "id": "el_imparfait_faire_03",
+          "type": "wordOrder",
+          "prompt": "Construis : « We used to do sport together. »",
+          "cue": null,
+          "answerTokens": ["nous", "faisions", "du", "sport", "ensemble"],
+          "tokenBank": ["nous", "faisions", "du", "sport", "ensemble", "faisons", "faisait"],
+          "inputMode": "buildFromTokens",
+          "explanation": "nous + fais- + -ions = nous faisions.",
+          "translation": "We used to do sport together.",
+          "hint": "nous fais-ions."
+        },
+        {
+          "id": "el_imparfait_faire_04",
+          "type": "fillBlank",
+          "prompt": "Tu ___ souvent des erreurs. (faire, imparfait)",
+          "cue": null,
+          "answerTokens": ["faisais"],
+          "tokenBank": ["faisais", "faisait", "faisons"],
+          "inputMode": "multipleChoice",
+          "explanation": "With 'tu', fais- + -ais = faisais.",
+          "translation": "You often used to make mistakes.",
+          "hint": "tu fais-ais."
+        },
+        {
+          "id": "el_imparfait_faire_05",
+          "type": "fillBlank",
+          "prompt": "Ils ___ un gâteau le dimanche. (faire, imparfait)",
+          "cue": null,
+          "answerTokens": ["faisaient"],
+          "tokenBank": ["faisaient", "faisait", "faisions"],
+          "inputMode": "multipleChoice",
+          "explanation": "With 'ils', fais- + -aient = faisaient.",
+          "translation": "They used to make a cake on Sundays.",
+          "hint": "ils fais-aient."
+        }
+      ]
+    },
+    {
+      "id": "el_imparfait_etre",
+      "sortOrder": 13,
+      "label": "Exception : être → ét-",
+      "ruleNote": "'être' is the one irregular stem: use 'ét-' for everyone: j'étais, tu étais, il était, nous étions, vous étiez, ils étaient.",
+      "examples": [
+        {
+          "id": "el_imparfait_etre_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « I was tired. »",
+          "cue": null,
+          "answerTokens": ["j'étais", "fatigué"],
+          "tokenBank": ["j'étais", "fatigué", "j'étions", "j'ai"],
+          "inputMode": "buildFromTokens",
+          "explanation": "être uses the stem ét-: j'étais.",
+          "translation": "I was tired.",
+          "hint": "j'ét-ais."
+        },
+        {
+          "id": "el_imparfait_etre_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « He was very nice. »",
+          "cue": null,
+          "answerTokens": ["il", "était", "très", "gentil"],
+          "tokenBank": ["il", "était", "très", "gentil", "étais", "étaient"],
+          "inputMode": "buildFromTokens",
+          "explanation": "il + ét- + -ait = il était.",
+          "translation": "He was very nice.",
+          "hint": "il ét-ait."
+        },
+        {
+          "id": "el_imparfait_etre_03",
+          "type": "wordOrder",
+          "prompt": "Construis : « We were at home. »",
+          "cue": null,
+          "answerTokens": ["nous", "étions", "à", "la", "maison"],
+          "tokenBank": ["nous", "étions", "à", "la", "maison", "étiez", "étaient"],
+          "inputMode": "buildFromTokens",
+          "explanation": "nous + ét- + -ions = nous étions.",
+          "translation": "We were at home.",
+          "hint": "nous ét-ions."
+        },
+        {
+          "id": "el_imparfait_etre_04",
+          "type": "fillBlank",
+          "prompt": "Tu ___ en retard ce matin. (être, imparfait)",
+          "cue": null,
+          "answerTokens": ["étais"],
+          "tokenBank": ["étais", "était", "étions"],
+          "inputMode": "multipleChoice",
+          "explanation": "With 'tu', ét- + -ais = étais.",
+          "translation": "You were late this morning.",
+          "hint": "tu ét-ais."
+        },
+        {
+          "id": "el_imparfait_etre_05",
+          "type": "fillBlank",
+          "prompt": "Ils ___ contents de te voir. (être, imparfait)",
+          "cue": null,
+          "answerTokens": ["étaient"],
+          "tokenBank": ["étaient", "était", "étions"],
+          "inputMode": "multipleChoice",
+          "explanation": "With 'ils', ét- + -aient = étaient.",
+          "translation": "They were happy to see you.",
+          "hint": "ils ét-aient."
+        }
+      ]
+    },
+    {
+      "id": "el_imparfait_germinaux",
+      "sortOrder": 14,
+      "label": "Verbes en -ger et -cer",
+      "ruleNote": "'manger' and 'commencer' keep their soft sound: je mangeais, je commençais — but nous mangions, nous commencions.",
+      "examples": [
+        {
+          "id": "el_imparfait_germinaux_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « I was eating slowly. »",
+          "cue": null,
+          "answerTokens": ["je", "mangeais", "lentement"],
+          "tokenBank": ["je", "mangeais", "lentement", "mangais", "mangeait"],
+          "inputMode": "buildFromTokens",
+          "explanation": "Keep the e for the soft g: je mangeais.",
+          "translation": "I was eating slowly.",
+          "hint": "mange-ais keeps the e."
+        },
+        {
+          "id": "el_imparfait_germinaux_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « He was starting his work. »",
+          "cue": null,
+          "answerTokens": ["il", "commençait", "son", "travail"],
+          "tokenBank": ["il", "commençait", "son", "travail", "commencait", "commençais"],
+          "inputMode": "buildFromTokens",
+          "explanation": "ç keeps the soft c: il commençait.",
+          "translation": "He was starting his work.",
+          "hint": "commen-ç-ait uses ç."
+        },
+        {
+          "id": "el_imparfait_germinaux_03",
+          "type": "fillBlank",
+          "prompt": "Tu ___ trop vite. (manger, imparfait)",
+          "cue": null,
+          "answerTokens": ["mangeais"],
+          "tokenBank": ["mangeais", "mangais", "mangeait"],
+          "inputMode": "multipleChoice",
+          "explanation": "Before -ais we keep the e: mangeais.",
+          "translation": "You were eating too fast.",
+          "hint": "tu mange-ais."
+        },
+        {
+          "id": "el_imparfait_germinaux_04",
+          "type": "fillBlank",
+          "prompt": "Nous ___ à huit heures. (commencer, imparfait)",
+          "cue": null,
+          "answerTokens": ["commencions"],
+          "tokenBank": ["commencions", "commençions", "commencons"],
+          "inputMode": "multipleChoice",
+          "explanation": "Before -ions there is no ç: nous commencions.",
+          "translation": "We used to start at eight o'clock.",
+          "hint": "nous commenc-ions (plain c)."
+        },
+        {
+          "id": "el_imparfait_germinaux_05",
+          "type": "fillBlank",
+          "prompt": "Ils ___ ensemble au restaurant. (manger, imparfait)",
+          "cue": null,
+          "answerTokens": ["mangeaient"],
+          "tokenBank": ["mangeaient", "mangaient", "mangeait"],
+          "inputMode": "multipleChoice",
+          "explanation": "Before -aient we keep the e: mangeaient.",
+          "translation": "They used to eat together at the restaurant.",
+          "hint": "ils mange-aient."
+        }
+      ]
+    },
+    {
+      "id": "el_imparfait_description",
+      "sortOrder": 15,
+      "label": "Usage : la description",
+      "ruleNote": "Use the imparfait to describe a past scene or state: il faisait beau, la maison était grande, j'étais fatigué.",
+      "examples": [
+        {
+          "id": "el_imparfait_description_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « The weather was nice. »",
+          "cue": null,
+          "answerTokens": ["il", "faisait", "beau"],
+          "tokenBank": ["il", "faisait", "beau", "fait", "faisaient"],
+          "inputMode": "buildFromTokens",
+          "explanation": "Describing the weather in the past uses the imparfait.",
+          "translation": "The weather was nice.",
+          "hint": "il fais-ait beau."
+        },
+        {
+          "id": "el_imparfait_description_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « The house was big. »",
+          "cue": null,
+          "answerTokens": ["la", "maison", "était", "grande"],
+          "tokenBank": ["la", "maison", "était", "grande", "est", "étaient"],
+          "inputMode": "buildFromTokens",
+          "explanation": "A past description of a thing uses the imparfait.",
+          "translation": "The house was big.",
+          "hint": "la maison ét-ait grande."
+        },
+        {
+          "id": "el_imparfait_description_03",
+          "type": "wordOrder",
+          "prompt": "Construis : « She was wearing a red dress. »",
+          "cue": null,
+          "answerTokens": ["elle", "portait", "une", "robe", "rouge"],
+          "tokenBank": ["elle", "portait", "une", "robe", "rouge", "porte", "portaient"],
+          "inputMode": "buildFromTokens",
+          "explanation": "Describing what someone wore uses the imparfait.",
+          "translation": "She was wearing a red dress.",
+          "hint": "elle port-ait."
+        },
+        {
+          "id": "el_imparfait_description_04",
+          "type": "fillBlank",
+          "prompt": "Le ciel ___ gris. (être, imparfait)",
+          "cue": null,
+          "answerTokens": ["était"],
+          "tokenBank": ["était", "est", "étaient"],
+          "inputMode": "multipleChoice",
+          "explanation": "Describing the sky in the past: était.",
+          "translation": "The sky was grey.",
+          "hint": "le ciel ét-ait."
+        },
+        {
+          "id": "el_imparfait_description_05",
+          "type": "fillBlank",
+          "prompt": "Il ___ froid dans la chambre. (faire, imparfait)",
+          "cue": null,
+          "answerTokens": ["faisait"],
+          "tokenBank": ["faisait", "fait", "faisaient"],
+          "inputMode": "multipleChoice",
+          "explanation": "'Il faisait froid' describes the past weather.",
+          "translation": "It was cold in the bedroom.",
+          "hint": "il fais-ait froid."
+        }
+      ]
+    },
+    {
+      "id": "el_imparfait_habitude",
+      "sortOrder": 16,
+      "label": "Usage : l'habitude",
+      "ruleNote": "Use the imparfait for repeated past habits — 'used to': quand j'étais petit, je jouais au foot tous les jours.",
+      "examples": [
+        {
+          "id": "el_imparfait_habitude_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « I used to play football often. »",
+          "cue": null,
+          "answerTokens": ["je", "jouais", "souvent", "au", "foot"],
+          "tokenBank": ["je", "jouais", "souvent", "au", "foot", "joue", "jouait"],
+          "inputMode": "buildFromTokens",
+          "explanation": "A repeated past habit uses the imparfait.",
+          "translation": "I used to play football often.",
+          "hint": "je jou-ais souvent."
+        },
+        {
+          "id": "el_imparfait_habitude_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « She used to read every evening. »",
+          "cue": null,
+          "answerTokens": ["elle", "lisait", "chaque", "soir"],
+          "tokenBank": ["elle", "lisait", "chaque", "soir", "lit", "lisaient"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'Chaque soir' marks a repeated habit → imparfait.",
+          "translation": "She used to read every evening.",
+          "hint": "elle lis-ait chaque soir."
+        },
+        {
+          "id": "el_imparfait_habitude_03",
+          "type": "wordOrder",
+          "prompt": "Construis : « We used to go to the beach in summer. »",
+          "cue": null,
+          "answerTokens": ["nous", "allions", "à", "la", "plage", "en", "été"],
+          "tokenBank": ["nous", "allions", "à", "la", "plage", "en", "été", "allons", "allaient"],
+          "inputMode": "buildFromTokens",
+          "explanation": "A recurring summer habit uses the imparfait: nous allions.",
+          "translation": "We used to go to the beach in summer.",
+          "hint": "nous all-ions à la plage."
+        },
+        {
+          "id": "el_imparfait_habitude_04",
+          "type": "fillBlank",
+          "prompt": "Quand j'étais petit, je ___ au parc. (jouer, imparfait)",
+          "cue": null,
+          "answerTokens": ["jouais"],
+          "tokenBank": ["jouais", "jouait", "joue"],
+          "inputMode": "multipleChoice",
+          "explanation": "'Quand j'étais petit' signals a past habit → jouais.",
+          "translation": "When I was little, I used to play in the park.",
+          "hint": "je jou-ais."
+        },
+        {
+          "id": "el_imparfait_habitude_05",
+          "type": "fillBlank",
+          "prompt": "Tous les jours, il ___ le bus. (prendre, imparfait)",
+          "cue": null,
+          "answerTokens": ["prenait"],
+          "tokenBank": ["prenait", "prenais", "prend"],
+          "inputMode": "multipleChoice",
+          "explanation": "'Tous les jours' marks a habit; stem pren- + -ait = prenait.",
+          "translation": "Every day, he used to take the bus.",
+          "hint": "il pren-ait."
+        }
+      ]
+    },
+    {
+      "id": "el_imparfait_background",
+      "sortOrder": 17,
+      "label": "Usage : l'action en cours (background)",
+      "ruleNote": "Use the imparfait for an action in progress that sets the scene: je dormais, je regardais la télé. It's the background.",
+      "examples": [
+        {
+          "id": "el_imparfait_background_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « I was sleeping. »",
+          "cue": null,
+          "answerTokens": ["je", "dormais"],
+          "tokenBank": ["je", "dormais", "dort", "dormait"],
+          "inputMode": "buildFromTokens",
+          "explanation": "An ongoing background action uses the imparfait.",
+          "translation": "I was sleeping.",
+          "hint": "je dorm-ais."
+        },
+        {
+          "id": "el_imparfait_background_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « It was raining outside. »",
+          "cue": null,
+          "answerTokens": ["il", "pleuvait", "dehors"],
+          "tokenBank": ["il", "pleuvait", "dehors", "pleut", "pleuvaient"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'Il pleuvait' sets the scene in the background.",
+          "translation": "It was raining outside.",
+          "hint": "il pleuv-ait."
+        },
+        {
+          "id": "el_imparfait_background_03",
+          "type": "wordOrder",
+          "prompt": "Construis : « She was waiting for me. »",
+          "cue": null,
+          "answerTokens": ["elle", "m'attendait"],
+          "tokenBank": ["elle", "m'attendait", "m'attend", "m'attendais"],
+          "inputMode": "buildFromTokens",
+          "explanation": "An action in progress in the background: elle m'attendait.",
+          "translation": "She was waiting for me.",
+          "hint": "elle m'attend-ait."
+        },
+        {
+          "id": "el_imparfait_background_04",
+          "type": "fillBlank",
+          "prompt": "Je ___ la télé quand tu as appelé. (regarder, imparfait)",
+          "cue": null,
+          "answerTokens": ["regardais"],
+          "tokenBank": ["regardais", "regardait", "regarde"],
+          "inputMode": "multipleChoice",
+          "explanation": "The ongoing background action is in the imparfait: regardais.",
+          "translation": "I was watching TV when you called.",
+          "hint": "je regard-ais."
+        },
+        {
+          "id": "el_imparfait_background_05",
+          "type": "fillBlank",
+          "prompt": "Nous ___ quand le téléphone a sonné. (dîner, imparfait)",
+          "cue": null,
+          "answerTokens": ["dînions"],
+          "tokenBank": ["dînions", "dînons", "dînaient"],
+          "inputMode": "multipleChoice",
+          "explanation": "The background action while something happened: nous dînions.",
+          "translation": "We were having dinner when the phone rang.",
+          "hint": "nous dîn-ions."
+        }
+      ]
+    },
+    {
+      "id": "el_imparfait_marqueurs",
+      "sortOrder": 18,
+      "label": "Marqueurs : souvent, tous les jours, quand",
+      "ruleNote": "Words like 'souvent', 'tous les jours', 'd'habitude' and 'quand j'étais petit' often signal the imparfait.",
+      "examples": [
+        {
+          "id": "el_imparfait_marqueurs_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « Often, we used to walk. »",
+          "cue": null,
+          "answerTokens": ["souvent", "nous", "marchions"],
+          "tokenBank": ["souvent", "nous", "marchions", "marchons", "marchait"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'Souvent' signals a habit → imparfait (nous marchions).",
+          "translation": "Often, we used to walk.",
+          "hint": "souvent + imparfait."
+        },
+        {
+          "id": "el_imparfait_marqueurs_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « Every day, I used to run. »",
+          "cue": null,
+          "answerTokens": ["tous", "les", "jours", "je", "courais"],
+          "tokenBank": ["tous", "les", "jours", "je", "courais", "cours", "courait"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'Tous les jours' marks a habit → je courais.",
+          "translation": "Every day, I used to run.",
+          "hint": "tous les jours + imparfait."
+        },
+        {
+          "id": "el_imparfait_marqueurs_03",
+          "type": "fillBlank",
+          "prompt": "D'habitude, elle ___ tôt. (se lever, imparfait)",
+          "cue": null,
+          "answerTokens": ["se levait"],
+          "tokenBank": ["se levait", "se lève", "se levaient"],
+          "inputMode": "multipleChoice",
+          "explanation": "'D'habitude' marks a routine → se levait.",
+          "translation": "Usually, she used to get up early.",
+          "hint": "elle se lev-ait."
+        },
+        {
+          "id": "el_imparfait_marqueurs_04",
+          "type": "fillBlank",
+          "prompt": "Quand j'étais petit, je ___ peur du noir. (avoir, imparfait)",
+          "cue": null,
+          "answerTokens": ["avais"],
+          "tokenBank": ["avais", "avait", "ai"],
+          "inputMode": "multipleChoice",
+          "explanation": "'Quand j'étais petit' frames a past state → j'avais.",
+          "translation": "When I was little, I was afraid of the dark.",
+          "hint": "j'av-ais peur."
+        },
+        {
+          "id": "el_imparfait_marqueurs_05",
+          "type": "fillBlank",
+          "prompt": "Chaque été, nous ___ en Italie. (aller, imparfait)",
+          "cue": null,
+          "answerTokens": ["allions"],
+          "tokenBank": ["allions", "allons", "allaient"],
+          "inputMode": "multipleChoice",
+          "explanation": "'Chaque été' marks a yearly habit → nous allions.",
+          "translation": "Every summer, we used to go to Italy.",
+          "hint": "nous all-ions."
+        }
+      ]
+    },
+    {
+      "id": "el_imparfait_negation",
+      "sortOrder": 19,
+      "label": "Négation à l'imparfait",
+      "ruleNote": "Negate with ne...pas around the verb: je ne parlais pas, il n'était pas content, nous n'avions pas faim.",
+      "examples": [
+        {
+          "id": "el_imparfait_negation_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « She did not work. »",
+          "cue": null,
+          "answerTokens": ["elle", "ne", "travaillait", "pas"],
+          "tokenBank": ["elle", "ne", "travaillait", "pas", "travaille", "n'"],
+          "inputMode": "buildFromTokens",
+          "explanation": "ne ... pas surrounds the verb: elle ne travaillait pas.",
+          "translation": "She did not work. / She was not working.",
+          "hint": "ne + verb + pas."
+        },
+        {
+          "id": "el_imparfait_negation_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « I was not hungry. »",
+          "cue": null,
+          "answerTokens": ["je", "n'avais", "pas", "faim"],
+          "tokenBank": ["je", "n'avais", "pas", "faim", "ne", "avais"],
+          "inputMode": "buildFromTokens",
+          "explanation": "Before a vowel, ne becomes n': je n'avais pas faim.",
+          "translation": "I was not hungry.",
+          "hint": "n' + avais + pas."
+        },
+        {
+          "id": "el_imparfait_negation_03",
+          "type": "wordOrder",
+          "prompt": "Construis : « He was not happy. »",
+          "cue": null,
+          "answerTokens": ["il", "n'était", "pas", "content"],
+          "tokenBank": ["il", "n'était", "pas", "content", "ne", "était"],
+          "inputMode": "buildFromTokens",
+          "explanation": "n' before était: il n'était pas content.",
+          "translation": "He was not happy.",
+          "hint": "n'était pas."
+        },
+        {
+          "id": "el_imparfait_negation_04",
+          "type": "fillBlank",
+          "prompt": "Nous ne ___ pas la télé. (regarder, imparfait)",
+          "cue": null,
+          "answerTokens": ["regardions"],
+          "tokenBank": ["regardions", "regardons", "regardaient"],
+          "inputMode": "multipleChoice",
+          "explanation": "The verb stays imparfait between ne...pas: regardions.",
+          "translation": "We did not watch TV.",
+          "hint": "nous regard-ions."
+        },
+        {
+          "id": "el_imparfait_negation_05",
+          "type": "fillBlank",
+          "prompt": "Tu n' ___ pas à l'heure. (être, imparfait)",
+          "cue": null,
+          "answerTokens": ["étais"],
+          "tokenBank": ["étais", "était", "es"],
+          "inputMode": "multipleChoice",
+          "explanation": "With 'tu', ét- + -ais = étais; n'...pas surrounds it.",
+          "translation": "You were not on time.",
+          "hint": "tu ét-ais."
+        }
+      ]
+    },
+    {
+      "id": "el_imparfait_synthese",
+      "sortOrder": 20,
+      "label": "Synthèse : l'imparfait",
+      "ruleNote": "Put it together: take the nous-stem (or ét- for être), add the right ending, and choose it for description, habit, or background.",
+      "examples": [
+        {
+          "id": "el_imparfait_synthese_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « When I was little, we used to live in Lyon. »",
+          "cue": null,
+          "answerTokens": ["quand", "j'étais", "petit", "nous", "habitions", "à", "Lyon"],
+          "tokenBank": ["quand", "j'étais", "petit", "nous", "habitions", "à", "Lyon", "habitons", "suis"],
+          "inputMode": "buildFromTokens",
+          "explanation": "Past frame + habit: j'étais (être exception) and nous habitions.",
+          "translation": "When I was little, we used to live in Lyon.",
+          "hint": "j'ét-ais ... nous habit-ions."
+        },
+        {
+          "id": "el_imparfait_synthese_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « It was cold and I was tired. »",
+          "cue": null,
+          "answerTokens": ["il", "faisait", "froid", "et", "j'étais", "fatigué"],
+          "tokenBank": ["il", "faisait", "froid", "et", "j'étais", "fatigué", "fait", "suis"],
+          "inputMode": "buildFromTokens",
+          "explanation": "Two past descriptions: il faisait froid, j'étais fatigué.",
+          "translation": "It was cold and I was tired.",
+          "hint": "fais-ait ... ét-ais."
+        },
+        {
+          "id": "el_imparfait_synthese_03",
+          "type": "wordOrder",
+          "prompt": "Construis : « They did not have a car. »",
+          "cue": null,
+          "answerTokens": ["ils", "n'avaient", "pas", "de", "voiture"],
+          "tokenBank": ["ils", "n'avaient", "pas", "de", "voiture", "ne", "avaient"],
+          "inputMode": "buildFromTokens",
+          "explanation": "Negated imparfait of avoir: ils n'avaient pas de voiture.",
+          "translation": "They did not have a car.",
+          "hint": "n'avaient pas de."
+        },
+        {
+          "id": "el_imparfait_synthese_04",
+          "type": "fillBlank",
+          "prompt": "Tous les matins, nous ___ un café. (boire, imparfait)",
+          "cue": null,
+          "answerTokens": ["buvions"],
+          "tokenBank": ["buvions", "buvons", "buvaient"],
+          "inputMode": "multipleChoice",
+          "explanation": "Habit + nous: stem buv- + -ions = buvions.",
+          "translation": "Every morning, we used to drink a coffee.",
+          "hint": "nous buv-ions."
+        },
+        {
+          "id": "el_imparfait_synthese_05",
+          "type": "fillBlank",
+          "prompt": "Elle ___ pendant que je lisais. (dormir, imparfait)",
+          "cue": null,
+          "answerTokens": ["dormait"],
+          "tokenBank": ["dormait", "dormais", "dort"],
+          "inputMode": "multipleChoice",
+          "explanation": "Two simultaneous background actions: elle dormait, je lisais.",
+          "translation": "She was sleeping while I was reading.",
+          "hint": "elle dorm-ait."
+        }
+      ]
+    }
+  ]
+}

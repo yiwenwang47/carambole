@@ -1,0 +1,1368 @@
+{
+  "id": "mod_17_pronoms_objets",
+  "sortOrder": 17,
+  "title": "Pronoms compléments",
+  "ruleNote": "Object pronouns let you skip repeating a noun you already mentioned: 'Tu vois Marie ? Oui, je la vois.' Direct objects (no preposition) become le, la, or les; indirect objects (à + a person) become lui or leur. In French, the pronoun goes right before the verb, which is different from English.",
+  "elements": [
+    {
+      "id": "el_pronoms_objets_intro",
+      "sortOrder": 1,
+      "label": "Les pronoms compléments",
+      "ruleNote": "Object pronouns replace a noun already mentioned, so you don't repeat it: 'Tu vois Marie ? Oui, je la vois.' They go before the verb.",
+      "examples": [
+        {
+          "id": "el_pronoms_objets_intro_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « Yes, I see her. »",
+          "cue": null,
+          "answerTokens": ["Oui", "je", "la", "vois"],
+          "tokenBank": ["Oui", "je", "la", "le", "vois"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« la » remplace le nom déjà mentionné.",
+          "translation": "Yes, I see her.",
+          "hint": "The pronoun replaces the noun and comes before the verb."
+        },
+        {
+          "id": "el_pronoms_objets_intro_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « Yes, I know him. »",
+          "cue": null,
+          "answerTokens": ["Oui", "je", "le", "connais"],
+          "tokenBank": ["Oui", "je", "le", "la", "connais"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« le » évite de répéter le nom.",
+          "translation": "Yes, I know him.",
+          "hint": "Replace the name with le, before the verb."
+        },
+        {
+          "id": "el_pronoms_objets_intro_03",
+          "type": "wordOrder",
+          "prompt": "Construis : « I speak to him every day. »",
+          "cue": null,
+          "answerTokens": ["Je", "lui", "parle", "tous", "les", "jours"],
+          "tokenBank": ["Je", "lui", "le", "parle", "tous", "les", "jours"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« lui » remplace « à + personne ».",
+          "translation": "I speak to him every day.",
+          "hint": "Use lui to avoid repeating the person."
+        },
+        {
+          "id": "el_pronoms_objets_intro_04",
+          "type": "fillBlank",
+          "prompt": "Complète : « Tu connais Paul ? Oui, je ___ connais. »",
+          "cue": "Paul = masculin, direct",
+          "answerTokens": ["le"],
+          "tokenBank": ["le", "la", "lui"],
+          "inputMode": "multipleChoice",
+          "explanation": "« le » remplace « Paul » (COD masculin).",
+          "translation": "Do you know Paul? Yes, I know him.",
+          "hint": "Paul is a masculine direct object."
+        },
+        {
+          "id": "el_pronoms_objets_intro_05",
+          "type": "fillBlank",
+          "prompt": "Complète : « Tu vois Marie ? Oui, je ___ vois. »",
+          "cue": "Marie = féminin, direct",
+          "answerTokens": ["la"],
+          "tokenBank": ["la", "le", "lui"],
+          "inputMode": "multipleChoice",
+          "explanation": "« la » remplace « Marie » (COD féminin).",
+          "translation": "Do you see Marie? Yes, I see her.",
+          "hint": "Marie is a feminine direct object."
+        }
+      ]
+    },
+    {
+      "id": "el_pronoms_objets_cod",
+      "sortOrder": 2,
+      "label": "Le complément d'objet direct (COD)",
+      "ruleNote": "A direct object follows the verb with no preposition: je regarde la télé → la télé is the direct object. It can become le/la/les.",
+      "examples": [
+        {
+          "id": "el_pronoms_objets_cod_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « I eat the apple. »",
+          "cue": null,
+          "answerTokens": ["Je", "mange", "la", "pomme"],
+          "tokenBank": ["Je", "mange", "la", "à", "pomme"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« la pomme » est l'objet direct, sans préposition.",
+          "translation": "I eat the apple.",
+          "hint": "The direct object follows the verb directly."
+        },
+        {
+          "id": "el_pronoms_objets_cod_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « She watches the film. »",
+          "cue": null,
+          "answerTokens": ["Elle", "regarde", "le", "film"],
+          "tokenBank": ["Elle", "regarde", "le", "à", "film"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« le film » est le COD : aucune préposition.",
+          "translation": "She watches the film.",
+          "hint": "No preposition before a direct object."
+        },
+        {
+          "id": "el_pronoms_objets_cod_03",
+          "type": "wordOrder",
+          "prompt": "Construis : « We invite the friends. »",
+          "cue": null,
+          "answerTokens": ["Nous", "invitons", "les", "amis"],
+          "tokenBank": ["Nous", "invitons", "les", "aux", "amis"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« les amis » est le COD direct.",
+          "translation": "We invite the friends.",
+          "hint": "Inviter takes a direct object: no à."
+        },
+        {
+          "id": "el_pronoms_objets_cod_04",
+          "type": "fillBlank",
+          "prompt": "Quel est l'objet direct ? « Je regarde la télé. »",
+          "cue": "objet direct",
+          "answerTokens": ["la télé"],
+          "tokenBank": ["la télé", "je", "regarde"],
+          "inputMode": "multipleChoice",
+          "explanation": "« la télé » suit le verbe sans préposition.",
+          "translation": "I watch the TV.",
+          "hint": "What follows the verb with no preposition?"
+        },
+        {
+          "id": "el_pronoms_objets_cod_05",
+          "type": "fillBlank",
+          "prompt": "Quel est l'objet direct ? « Il achète le pain. »",
+          "cue": "objet direct",
+          "answerTokens": ["le pain"],
+          "tokenBank": ["le pain", "il", "achète"],
+          "inputMode": "multipleChoice",
+          "explanation": "« le pain » est le COD de « achète ».",
+          "translation": "He buys the bread.",
+          "hint": "The thing being bought is the direct object."
+        }
+      ]
+    },
+    {
+      "id": "el_pronoms_objets_le",
+      "sortOrder": 3,
+      "label": "le (remplace un nom masculin)",
+      "ruleNote": "'le' replaces a masculine direct object: Tu regardes le film ? Oui, je le regarde.",
+      "examples": [
+        {
+          "id": "el_pronoms_objets_le_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « Yes, I watch it. »",
+          "cue": null,
+          "answerTokens": ["Oui", "je", "le", "regarde"],
+          "tokenBank": ["Oui", "je", "le", "la", "regarde"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« le » remplace « le film » (masculin).",
+          "translation": "Yes, I watch it.",
+          "hint": "Masculine direct object → le."
+        },
+        {
+          "id": "el_pronoms_objets_le_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « I take it. »",
+          "cue": null,
+          "answerTokens": ["Je", "le", "prends"],
+          "tokenBank": ["Je", "le", "la", "prends"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« le » remplace un nom masculin (le livre).",
+          "translation": "I take it.",
+          "hint": "le for a masculine thing, before the verb."
+        },
+        {
+          "id": "el_pronoms_objets_le_03",
+          "type": "wordOrder",
+          "prompt": "Construis : « He sells it. »",
+          "cue": null,
+          "answerTokens": ["Il", "le", "vend"],
+          "tokenBank": ["Il", "le", "les", "vend"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« le » remplace « le vélo » (masculin).",
+          "translation": "He sells it.",
+          "hint": "Masculine object → le, placed before the verb."
+        },
+        {
+          "id": "el_pronoms_objets_le_04",
+          "type": "fillBlank",
+          "prompt": "Complète : « Tu regardes le film ? Oui, je ___ regarde. »",
+          "cue": "le film = masculin",
+          "answerTokens": ["le"],
+          "tokenBank": ["le", "la", "les"],
+          "inputMode": "multipleChoice",
+          "explanation": "« le » remplace le COD masculin « le film ».",
+          "translation": "Do you watch the film? Yes, I watch it.",
+          "hint": "Le film is masculine singular."
+        },
+        {
+          "id": "el_pronoms_objets_le_05",
+          "type": "fillBlank",
+          "prompt": "Complète : « Tu prends le bus ? Oui, je ___ prends. »",
+          "cue": "le bus = masculin",
+          "answerTokens": ["le"],
+          "tokenBank": ["le", "la", "lui"],
+          "inputMode": "multipleChoice",
+          "explanation": "« le » remplace « le bus » (masculin).",
+          "translation": "Do you take the bus? Yes, I take it.",
+          "hint": "Masculine direct object → le."
+        }
+      ]
+    },
+    {
+      "id": "el_pronoms_objets_la",
+      "sortOrder": 4,
+      "label": "la (remplace un nom féminin)",
+      "ruleNote": "'la' replaces a feminine direct object: Tu aimes la musique ? Oui, je l'aime — la before a consonant, l' before a vowel.",
+      "examples": [
+        {
+          "id": "el_pronoms_objets_la_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « Yes, I know her. »",
+          "cue": null,
+          "answerTokens": ["Oui", "je", "la", "connais"],
+          "tokenBank": ["Oui", "je", "la", "le", "connais"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« la » remplace un nom féminin devant une consonne.",
+          "translation": "Yes, I know her.",
+          "hint": "Feminine object before a consonant → la."
+        },
+        {
+          "id": "el_pronoms_objets_la_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « I am reading it. »",
+          "cue": null,
+          "answerTokens": ["Je", "la", "lis"],
+          "tokenBank": ["Je", "la", "le", "lis"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« la » remplace « la lettre » (féminin).",
+          "translation": "I am reading it.",
+          "hint": "la for a feminine thing, before the verb."
+        },
+        {
+          "id": "el_pronoms_objets_la_03",
+          "type": "wordOrder",
+          "prompt": "Construis : « We sell it. »",
+          "cue": null,
+          "answerTokens": ["Nous", "la", "vendons"],
+          "tokenBank": ["Nous", "la", "les", "vendons"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« la » remplace « la voiture » (féminin).",
+          "translation": "We sell it.",
+          "hint": "Feminine singular object → la."
+        },
+        {
+          "id": "el_pronoms_objets_la_04",
+          "type": "fillBlank",
+          "prompt": "Complète : « Tu connais la ville ? Oui, je ___ connais. »",
+          "cue": "la ville = féminin",
+          "answerTokens": ["la"],
+          "tokenBank": ["la", "le", "les"],
+          "inputMode": "multipleChoice",
+          "explanation": "« la » remplace « la ville » (COD féminin).",
+          "translation": "Do you know the city? Yes, I know it.",
+          "hint": "La ville is feminine singular."
+        },
+        {
+          "id": "el_pronoms_objets_la_05",
+          "type": "fillBlank",
+          "prompt": "Complète : « Tu fais la cuisine ? Oui, je ___ fais. »",
+          "cue": "la cuisine = féminin",
+          "answerTokens": ["la"],
+          "tokenBank": ["la", "le", "lui"],
+          "inputMode": "multipleChoice",
+          "explanation": "« la » remplace « la cuisine » (féminin).",
+          "translation": "Do you do the cooking? Yes, I do it.",
+          "hint": "Feminine direct object → la."
+        }
+      ]
+    },
+    {
+      "id": "el_pronoms_objets_les",
+      "sortOrder": 5,
+      "label": "les (remplace un pluriel)",
+      "ruleNote": "'les' replaces a plural direct object, masculine or feminine: Tu vois les enfants ? Oui, je les vois.",
+      "examples": [
+        {
+          "id": "el_pronoms_objets_les_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « Yes, I see them. »",
+          "cue": null,
+          "answerTokens": ["Oui", "je", "les", "vois"],
+          "tokenBank": ["Oui", "je", "les", "le", "vois"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« les » remplace un COD pluriel.",
+          "translation": "Yes, I see them.",
+          "hint": "Plural direct object → les."
+        },
+        {
+          "id": "el_pronoms_objets_les_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « I buy them. »",
+          "cue": null,
+          "answerTokens": ["Je", "les", "achète"],
+          "tokenBank": ["Je", "les", "la", "achète"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« les » remplace « les pommes » (pluriel).",
+          "translation": "I buy them.",
+          "hint": "les works for masculine or feminine plurals."
+        },
+        {
+          "id": "el_pronoms_objets_les_03",
+          "type": "wordOrder",
+          "prompt": "Construis : « She invites them. »",
+          "cue": null,
+          "answerTokens": ["Elle", "les", "invite"],
+          "tokenBank": ["Elle", "les", "le", "invite"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« les » remplace « les amis » (pluriel).",
+          "translation": "She invites them.",
+          "hint": "Plural object → les, before the verb."
+        },
+        {
+          "id": "el_pronoms_objets_les_04",
+          "type": "fillBlank",
+          "prompt": "Complète : « Tu vois les enfants ? Oui, je ___ vois. »",
+          "cue": "les enfants = pluriel",
+          "answerTokens": ["les"],
+          "tokenBank": ["les", "le", "la"],
+          "inputMode": "multipleChoice",
+          "explanation": "« les » remplace « les enfants » (pluriel).",
+          "translation": "Do you see the children? Yes, I see them.",
+          "hint": "Plural direct object → les."
+        },
+        {
+          "id": "el_pronoms_objets_les_05",
+          "type": "fillBlank",
+          "prompt": "Complète : « Tu prends les clés ? Oui, je ___ prends. »",
+          "cue": "les clés = pluriel féminin",
+          "answerTokens": ["les"],
+          "tokenBank": ["les", "la", "lui"],
+          "inputMode": "multipleChoice",
+          "explanation": "« les » remplace « les clés » (pluriel).",
+          "translation": "Do you take the keys? Yes, I take them.",
+          "hint": "les covers feminine plurals too."
+        }
+      ]
+    },
+    {
+      "id": "el_pronoms_objets_elision",
+      "sortOrder": 6,
+      "label": "Élision : le / la → l'",
+      "ruleNote": "Before a vowel, both 'le' and 'la' become 'l'': je l'aime, je l'écoute. Only 'les' never elides.",
+      "examples": [
+        {
+          "id": "el_pronoms_objets_elision_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « I love her. »",
+          "cue": null,
+          "answerTokens": ["Je", "l'", "aime"],
+          "tokenBank": ["Je", "l'", "la", "aime"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« la » devient « l' » devant « aime » (voyelle).",
+          "translation": "I love her.",
+          "hint": "le/la → l' before a vowel sound."
+        },
+        {
+          "id": "el_pronoms_objets_elision_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « I listen to him. »",
+          "cue": null,
+          "answerTokens": ["Je", "l'", "écoute"],
+          "tokenBank": ["Je", "l'", "le", "écoute"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« le » devient « l' » devant « écoute ».",
+          "translation": "I listen to him.",
+          "hint": "Elide le before the vowel of écoute."
+        },
+        {
+          "id": "el_pronoms_objets_elision_03",
+          "type": "wordOrder",
+          "prompt": "Construis : « We invite her. »",
+          "cue": null,
+          "answerTokens": ["Nous", "l'", "invitons"],
+          "tokenBank": ["Nous", "l'", "les", "invitons"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« la » devient « l' » devant « invitons ».",
+          "translation": "We invite her.",
+          "hint": "l' before a vowel; les never elides."
+        },
+        {
+          "id": "el_pronoms_objets_elision_04",
+          "type": "fillBlank",
+          "prompt": "Complète : « Tu aimes la musique ? Oui, je ___ aime. »",
+          "cue": "devant une voyelle",
+          "answerTokens": ["l'"],
+          "tokenBank": ["l'", "la", "les"],
+          "inputMode": "multipleChoice",
+          "explanation": "« la » → « l' » devant « aime ».",
+          "translation": "Do you like the music? Yes, I like it.",
+          "hint": "Aime starts with a vowel, so elide."
+        },
+        {
+          "id": "el_pronoms_objets_elision_05",
+          "type": "fillBlank",
+          "prompt": "Complète : « Tu écoutes le professeur ? Oui, je ___ écoute. »",
+          "cue": "devant une voyelle",
+          "answerTokens": ["l'"],
+          "tokenBank": ["l'", "le", "lui"],
+          "inputMode": "multipleChoice",
+          "explanation": "« le » → « l' » devant « écoute ».",
+          "translation": "Do you listen to the teacher? Yes, I listen to him.",
+          "hint": "le elides to l' before écoute."
+        }
+      ]
+    },
+    {
+      "id": "el_pronoms_objets_place_verbe",
+      "sortOrder": 7,
+      "label": "Place : devant le verbe",
+      "ruleNote": "The direct-object pronoun goes immediately before the conjugated verb: je le regarde, tu la connais. Different from English word order.",
+      "examples": [
+        {
+          "id": "el_pronoms_objets_place_verbe_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « He sees her. »",
+          "cue": null,
+          "answerTokens": ["Il", "la", "voit"],
+          "tokenBank": ["Il", "la", "voit", "le"],
+          "inputMode": "buildFromTokens",
+          "explanation": "Le pronom se place juste avant le verbe.",
+          "translation": "He sees her.",
+          "hint": "Pronoun goes before the verb, not after."
+        },
+        {
+          "id": "el_pronoms_objets_place_verbe_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « You know him. »",
+          "cue": null,
+          "answerTokens": ["Tu", "le", "connais"],
+          "tokenBank": ["Tu", "le", "connais", "la"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« le » est devant le verbe « connais ».",
+          "translation": "You know him.",
+          "hint": "Unlike English, the pronoun precedes the verb."
+        },
+        {
+          "id": "el_pronoms_objets_place_verbe_03",
+          "type": "wordOrder",
+          "prompt": "Construis : « We hear them. »",
+          "cue": null,
+          "answerTokens": ["Nous", "les", "entendons"],
+          "tokenBank": ["Nous", "les", "entendons", "le"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« les » est placé avant le verbe.",
+          "translation": "We hear them.",
+          "hint": "Place the pronoun directly before the verb."
+        },
+        {
+          "id": "el_pronoms_objets_place_verbe_04",
+          "type": "fillBlank",
+          "prompt": "Choisis la phrase correcte :",
+          "cue": "place du pronom",
+          "answerTokens": ["Je le vois"],
+          "tokenBank": ["Je le vois", "Je vois le", "Le je vois"],
+          "inputMode": "multipleChoice",
+          "explanation": "Le pronom va avant le verbe : « Je le vois ».",
+          "translation": "I see him.",
+          "hint": "Subject + pronoun + verb."
+        },
+        {
+          "id": "el_pronoms_objets_place_verbe_05",
+          "type": "fillBlank",
+          "prompt": "Choisis la phrase correcte :",
+          "cue": "place du pronom",
+          "answerTokens": ["Tu la connais"],
+          "tokenBank": ["Tu la connais", "Tu connais la", "La tu connais"],
+          "inputMode": "multipleChoice",
+          "explanation": "« la » se place avant « connais ».",
+          "translation": "You know her.",
+          "hint": "The pronoun comes right before the verb."
+        }
+      ]
+    },
+    {
+      "id": "el_pronoms_objets_coi",
+      "sortOrder": 8,
+      "label": "Le complément d'objet indirect (COI)",
+      "ruleNote": "An indirect object follows the verb with 'à' and refers to a person: je parle à Marie → I speak to her. These become lui/leur.",
+      "examples": [
+        {
+          "id": "el_pronoms_objets_coi_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « I phone Paul. »",
+          "cue": null,
+          "answerTokens": ["Je", "téléphone", "à", "Paul"],
+          "tokenBank": ["Je", "téléphone", "à", "de", "Paul"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« à Paul » est le COI : « téléphoner à » quelqu'un.",
+          "translation": "I phone Paul.",
+          "hint": "Téléphoner needs à before the person."
+        },
+        {
+          "id": "el_pronoms_objets_coi_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « She talks to Marie. »",
+          "cue": null,
+          "answerTokens": ["Elle", "parle", "à", "Marie"],
+          "tokenBank": ["Elle", "parle", "à", "de", "Marie"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« à Marie » est l'objet indirect.",
+          "translation": "She talks to Marie.",
+          "hint": "Parler à quelqu'un = indirect object."
+        },
+        {
+          "id": "el_pronoms_objets_coi_03",
+          "type": "wordOrder",
+          "prompt": "Construis : « We write to the teacher. »",
+          "cue": null,
+          "answerTokens": ["Nous", "écrivons", "au", "professeur"],
+          "tokenBank": ["Nous", "écrivons", "au", "à", "professeur"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« au professeur » (à + le → au) montre le COI (à + personne).",
+          "translation": "We write to the teacher.",
+          "hint": "Écrire à + person marks the indirect object."
+        },
+        {
+          "id": "el_pronoms_objets_coi_04",
+          "type": "fillBlank",
+          "prompt": "Quel est l'objet indirect ? « Je parle à Marie. »",
+          "cue": "objet indirect (à + personne)",
+          "answerTokens": ["à Marie"],
+          "tokenBank": ["à Marie", "je", "parle"],
+          "inputMode": "multipleChoice",
+          "explanation": "« à Marie » suit le verbe avec « à ».",
+          "translation": "I speak to Marie.",
+          "hint": "Look for à + a person."
+        },
+        {
+          "id": "el_pronoms_objets_coi_05",
+          "type": "fillBlank",
+          "prompt": "Quel est l'objet indirect ? « Il écrit à ses parents. »",
+          "cue": "objet indirect (à + personnes)",
+          "answerTokens": ["à ses parents"],
+          "tokenBank": ["à ses parents", "il", "écrit"],
+          "inputMode": "multipleChoice",
+          "explanation": "« à ses parents » est le COI de « écrit ».",
+          "translation": "He writes to his parents.",
+          "hint": "The à + people group is the indirect object."
+        }
+      ]
+    },
+    {
+      "id": "el_pronoms_objets_lui",
+      "sortOrder": 9,
+      "label": "lui (à une personne)",
+      "ruleNote": "'lui' replaces 'à + one person', masculine or feminine: Tu parles à Marie ? Oui, je lui parle.",
+      "examples": [
+        {
+          "id": "el_pronoms_objets_lui_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « Yes, I speak to him. »",
+          "cue": null,
+          "answerTokens": ["Oui", "je", "lui", "parle"],
+          "tokenBank": ["Oui", "je", "lui", "leur", "parle"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« lui » remplace « à + une personne ».",
+          "translation": "Yes, I speak to him.",
+          "hint": "à + one person → lui."
+        },
+        {
+          "id": "el_pronoms_objets_lui_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « I phone her. »",
+          "cue": null,
+          "answerTokens": ["Je", "lui", "téléphone"],
+          "tokenBank": ["Je", "lui", "la", "téléphone"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« lui » marche au masculin et au féminin.",
+          "translation": "I phone her.",
+          "hint": "lui works for him or her, before the verb."
+        },
+        {
+          "id": "el_pronoms_objets_lui_03",
+          "type": "wordOrder",
+          "prompt": "Construis : « She writes to him. »",
+          "cue": null,
+          "answerTokens": ["Elle", "lui", "écrit"],
+          "tokenBank": ["Elle", "lui", "leur", "écrit"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« lui » remplace « à + une personne ».",
+          "translation": "She writes to him.",
+          "hint": "One person with à → lui."
+        },
+        {
+          "id": "el_pronoms_objets_lui_04",
+          "type": "fillBlank",
+          "prompt": "Complète : « Tu parles à Marie ? Oui, je ___ parle. »",
+          "cue": "à Marie = une personne",
+          "answerTokens": ["lui"],
+          "tokenBank": ["lui", "leur", "la"],
+          "inputMode": "multipleChoice",
+          "explanation": "« lui » remplace « à Marie ».",
+          "translation": "Do you speak to Marie? Yes, I speak to her.",
+          "hint": "à + one person → lui."
+        },
+        {
+          "id": "el_pronoms_objets_lui_05",
+          "type": "fillBlank",
+          "prompt": "Complète : « Tu téléphones à Paul ? Oui, je ___ téléphone. »",
+          "cue": "à Paul = une personne",
+          "answerTokens": ["lui"],
+          "tokenBank": ["lui", "le", "leur"],
+          "inputMode": "multipleChoice",
+          "explanation": "« lui » remplace « à Paul » (une personne).",
+          "translation": "Do you phone Paul? Yes, I phone him.",
+          "hint": "One person + à → lui."
+        }
+      ]
+    },
+    {
+      "id": "el_pronoms_objets_leur",
+      "sortOrder": 10,
+      "label": "leur (à des personnes)",
+      "ruleNote": "'leur' replaces 'à + several people': Tu parles aux enfants ? Oui, je leur parle. (No -s — it's not 'leurs'.)",
+      "examples": [
+        {
+          "id": "el_pronoms_objets_leur_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « Yes, I speak to them. »",
+          "cue": null,
+          "answerTokens": ["Oui", "je", "leur", "parle"],
+          "tokenBank": ["Oui", "je", "leur", "lui", "parle"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« leur » remplace « à + plusieurs personnes ».",
+          "translation": "Yes, I speak to them.",
+          "hint": "à + several people → leur (no -s)."
+        },
+        {
+          "id": "el_pronoms_objets_leur_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « I write to them. »",
+          "cue": null,
+          "answerTokens": ["Je", "leur", "écris"],
+          "tokenBank": ["Je", "leur", "lui", "écris"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« leur » est invariable : pas de -s.",
+          "translation": "I write to them.",
+          "hint": "Pronoun leur never takes an -s."
+        },
+        {
+          "id": "el_pronoms_objets_leur_03",
+          "type": "wordOrder",
+          "prompt": "Construis : « She phones them. »",
+          "cue": null,
+          "answerTokens": ["Elle", "leur", "téléphone"],
+          "tokenBank": ["Elle", "leur", "les", "téléphone"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« leur » remplace « à + plusieurs personnes ».",
+          "translation": "She phones them.",
+          "hint": "Several people with à → leur."
+        },
+        {
+          "id": "el_pronoms_objets_leur_04",
+          "type": "fillBlank",
+          "prompt": "Complète : « Tu parles aux enfants ? Oui, je ___ parle. »",
+          "cue": "aux enfants = plusieurs personnes",
+          "answerTokens": ["leur"],
+          "tokenBank": ["leur", "lui", "les"],
+          "inputMode": "multipleChoice",
+          "explanation": "« leur » remplace « aux enfants ».",
+          "translation": "Do you speak to the children? Yes, I speak to them.",
+          "hint": "à + several people → leur."
+        },
+        {
+          "id": "el_pronoms_objets_leur_05",
+          "type": "fillBlank",
+          "prompt": "Complète : « Tu écris à tes amis ? Oui, je ___ écris. »",
+          "cue": "à tes amis = plusieurs personnes",
+          "answerTokens": ["leur"],
+          "tokenBank": ["leur", "lui", "leurs"],
+          "inputMode": "multipleChoice",
+          "explanation": "« leur » (sans -s) remplace « à tes amis ».",
+          "translation": "Do you write to your friends? Yes, I write to them.",
+          "hint": "The pronoun leur has no -s."
+        }
+      ]
+    },
+    {
+      "id": "el_pronoms_objets_verbes_a",
+      "sortOrder": 11,
+      "label": "Verbes avec à : parler, téléphoner, écrire",
+      "ruleNote": "Some verbs need 'à' before the person: parler à, téléphoner à, écrire à, répondre à. Their pronoun is lui/leur.",
+      "examples": [
+        {
+          "id": "el_pronoms_objets_verbes_a_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « I answer him. »",
+          "cue": null,
+          "answerTokens": ["Je", "lui", "réponds"],
+          "tokenBank": ["Je", "lui", "le", "réponds"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« répondre à » → pronom « lui ».",
+          "translation": "I answer him.",
+          "hint": "Répondre à quelqu'un → lui."
+        },
+        {
+          "id": "el_pronoms_objets_verbes_a_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « We phone them. »",
+          "cue": null,
+          "answerTokens": ["Nous", "leur", "téléphonons"],
+          "tokenBank": ["Nous", "leur", "les", "téléphonons"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« téléphoner à » → « leur » au pluriel.",
+          "translation": "We phone them.",
+          "hint": "Téléphoner à several people → leur."
+        },
+        {
+          "id": "el_pronoms_objets_verbes_a_03",
+          "type": "wordOrder",
+          "prompt": "Construis : « She writes to him. »",
+          "cue": null,
+          "answerTokens": ["Elle", "lui", "écrit"],
+          "tokenBank": ["Elle", "lui", "leur", "écrit"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« écrire à » → « lui » pour une personne.",
+          "translation": "She writes to him.",
+          "hint": "Écrire à one person → lui."
+        },
+        {
+          "id": "el_pronoms_objets_verbes_a_04",
+          "type": "fillBlank",
+          "prompt": "Complète : « Tu réponds au professeur ? Oui, je ___ réponds. »",
+          "cue": "répondre à une personne",
+          "answerTokens": ["lui"],
+          "tokenBank": ["lui", "le", "leur"],
+          "inputMode": "multipleChoice",
+          "explanation": "« répondre à » → « lui » (une personne).",
+          "translation": "Do you answer the teacher? Yes, I answer him.",
+          "hint": "Répondre à → lui/leur, not le."
+        },
+        {
+          "id": "el_pronoms_objets_verbes_a_05",
+          "type": "fillBlank",
+          "prompt": "Complète : « Tu parles à tes collègues ? Oui, je ___ parle. »",
+          "cue": "parler à plusieurs personnes",
+          "answerTokens": ["leur"],
+          "tokenBank": ["leur", "lui", "les"],
+          "inputMode": "multipleChoice",
+          "explanation": "« parler à » + pluriel → « leur ».",
+          "translation": "Do you talk to your colleagues? Yes, I talk to them.",
+          "hint": "Parler à several people → leur."
+        }
+      ]
+    },
+    {
+      "id": "el_pronoms_objets_direct_indirect",
+      "sortOrder": 12,
+      "label": "le/la/les ou lui/leur ?",
+      "ruleNote": "Direct objects (no 'à') take le/la/les; indirect objects ('à' + person) take lui/leur: je le vois vs. je lui parle.",
+      "examples": [
+        {
+          "id": "el_pronoms_objets_direct_indirect_01",
+          "type": "fillBlank",
+          "prompt": "Complète : « Tu vois Paul ? Oui, je ___ vois. »",
+          "cue": "voir = direct",
+          "answerTokens": ["le"],
+          "tokenBank": ["le", "lui", "leur"],
+          "inputMode": "multipleChoice",
+          "explanation": "« voir » est direct : on utilise « le ».",
+          "translation": "Do you see Paul? Yes, I see him.",
+          "hint": "Voir takes a direct object → le."
+        },
+        {
+          "id": "el_pronoms_objets_direct_indirect_02",
+          "type": "fillBlank",
+          "prompt": "Complète : « Tu parles à Paul ? Oui, je ___ parle. »",
+          "cue": "parler à = indirect",
+          "answerTokens": ["lui"],
+          "tokenBank": ["lui", "le", "la"],
+          "inputMode": "multipleChoice",
+          "explanation": "« parler à » est indirect : on utilise « lui ».",
+          "translation": "Do you speak to Paul? Yes, I speak to him.",
+          "hint": "Parler à → lui (indirect)."
+        },
+        {
+          "id": "el_pronoms_objets_direct_indirect_03",
+          "type": "fillBlank",
+          "prompt": "Complète : « Tu invites les amis ? Oui, je ___ invite. »",
+          "cue": "inviter = direct",
+          "answerTokens": ["les"],
+          "tokenBank": ["les", "leur", "lui"],
+          "inputMode": "multipleChoice",
+          "explanation": "« inviter » est direct : « les » au pluriel.",
+          "translation": "Do you invite the friends? Yes, I invite them.",
+          "hint": "Inviter is direct → les, not leur."
+        },
+        {
+          "id": "el_pronoms_objets_direct_indirect_04",
+          "type": "fillBlank",
+          "prompt": "Complète : « Tu écris aux amis ? Oui, je ___ écris. »",
+          "cue": "écrire à = indirect",
+          "answerTokens": ["leur"],
+          "tokenBank": ["leur", "les", "la"],
+          "inputMode": "multipleChoice",
+          "explanation": "« écrire à » est indirect : « leur » au pluriel.",
+          "translation": "Do you write to the friends? Yes, I write to them.",
+          "hint": "Écrire à → leur (indirect plural)."
+        },
+        {
+          "id": "el_pronoms_objets_direct_indirect_05",
+          "type": "fillBlank",
+          "prompt": "Complète : « Tu connais Marie ? Oui, je ___ connais. »",
+          "cue": "connaître = direct",
+          "answerTokens": ["la"],
+          "tokenBank": ["la", "lui", "leur"],
+          "inputMode": "multipleChoice",
+          "explanation": "« connaître » est direct : « la » au féminin.",
+          "translation": "Do you know Marie? Yes, I know her.",
+          "hint": "Connaître takes a direct object → la."
+        }
+      ]
+    },
+    {
+      "id": "el_pronoms_objets_infinitif",
+      "sortOrder": 13,
+      "label": "Place devant un verbe + infinitif",
+      "ruleNote": "With two verbs, the pronoun goes before the infinitive it belongs to: je vais le voir, je veux lui parler.",
+      "examples": [
+        {
+          "id": "el_pronoms_objets_infinitif_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « I want to see him. »",
+          "cue": null,
+          "answerTokens": ["Je", "veux", "le", "voir"],
+          "tokenBank": ["Je", "veux", "le", "la", "voir"],
+          "inputMode": "buildFromTokens",
+          "explanation": "Le pronom va devant l'infinitif « voir ».",
+          "translation": "I want to see him.",
+          "hint": "Pronoun goes before the infinitive."
+        },
+        {
+          "id": "el_pronoms_objets_infinitif_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « I want to speak to him. »",
+          "cue": null,
+          "answerTokens": ["Je", "veux", "lui", "parler"],
+          "tokenBank": ["Je", "veux", "lui", "le", "parler"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« lui » est devant l'infinitif « parler ».",
+          "translation": "I want to speak to him.",
+          "hint": "lui sits right before parler."
+        },
+        {
+          "id": "el_pronoms_objets_infinitif_03",
+          "type": "wordOrder",
+          "prompt": "Construis : « She can buy them. »",
+          "cue": null,
+          "answerTokens": ["Elle", "peut", "les", "acheter"],
+          "tokenBank": ["Elle", "peut", "les", "le", "acheter"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« les » se place devant « acheter ».",
+          "translation": "She can buy them.",
+          "hint": "Place the pronoun before the infinitive acheter."
+        },
+        {
+          "id": "el_pronoms_objets_infinitif_04",
+          "type": "fillBlank",
+          "prompt": "Choisis la phrase correcte :",
+          "cue": "place du pronom",
+          "answerTokens": ["Je veux le voir"],
+          "tokenBank": ["Je veux le voir", "Je le veux voir", "Je veux voir le"],
+          "inputMode": "multipleChoice",
+          "explanation": "Le pronom va devant l'infinitif : « Je veux le voir ».",
+          "translation": "I want to see him.",
+          "hint": "Pronoun attaches to the infinitive, not the first verb."
+        },
+        {
+          "id": "el_pronoms_objets_infinitif_05",
+          "type": "fillBlank",
+          "prompt": "Choisis la phrase correcte :",
+          "cue": "place du pronom",
+          "answerTokens": ["Je dois lui parler"],
+          "tokenBank": ["Je dois lui parler", "Je lui dois parler", "Je dois parler lui"],
+          "inputMode": "multipleChoice",
+          "explanation": "« lui » se place devant « parler ».",
+          "translation": "I must speak to him.",
+          "hint": "The pronoun comes before the infinitive parler."
+        }
+      ]
+    },
+    {
+      "id": "el_pronoms_objets_futur_proche",
+      "sortOrder": 14,
+      "label": "Pronom au futur proche",
+      "ruleNote": "In the near future, the pronoun sits before the infinitive: je vais le faire, tu vas lui téléphoner.",
+      "examples": [
+        {
+          "id": "el_pronoms_objets_futur_proche_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « I'm going to do it. »",
+          "cue": null,
+          "answerTokens": ["Je", "vais", "le", "faire"],
+          "tokenBank": ["Je", "vais", "le", "la", "faire"],
+          "inputMode": "buildFromTokens",
+          "explanation": "Au futur proche, le pronom est devant l'infinitif.",
+          "translation": "I'm going to do it.",
+          "hint": "vais + pronoun + infinitive."
+        },
+        {
+          "id": "el_pronoms_objets_futur_proche_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « You're going to phone him. »",
+          "cue": null,
+          "answerTokens": ["Tu", "vas", "lui", "téléphoner"],
+          "tokenBank": ["Tu", "vas", "lui", "le", "téléphoner"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« lui » se place devant « téléphoner ».",
+          "translation": "You're going to phone him.",
+          "hint": "Pronoun goes before the infinitive téléphoner."
+        },
+        {
+          "id": "el_pronoms_objets_futur_proche_03",
+          "type": "wordOrder",
+          "prompt": "Construis : « She's going to invite them. »",
+          "cue": null,
+          "answerTokens": ["Elle", "va", "les", "inviter"],
+          "tokenBank": ["Elle", "va", "les", "le", "inviter"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« les » est devant l'infinitif « inviter ».",
+          "translation": "She's going to invite them.",
+          "hint": "va + les + inviter."
+        },
+        {
+          "id": "el_pronoms_objets_futur_proche_04",
+          "type": "fillBlank",
+          "prompt": "Complète : « Je vais ___ voir demain. » (Paul)",
+          "cue": "Paul = masculin, direct",
+          "answerTokens": ["le"],
+          "tokenBank": ["le", "lui", "la"],
+          "inputMode": "multipleChoice",
+          "explanation": "« le » (Paul) devant l'infinitif « voir ».",
+          "translation": "I'm going to see him tomorrow.",
+          "hint": "Voir is direct; Paul is masculine → le."
+        },
+        {
+          "id": "el_pronoms_objets_futur_proche_05",
+          "type": "fillBlank",
+          "prompt": "Complète : « Tu vas ___ parler ce soir. » (à Marie)",
+          "cue": "à Marie = indirect",
+          "answerTokens": ["lui"],
+          "tokenBank": ["lui", "la", "leur"],
+          "inputMode": "multipleChoice",
+          "explanation": "« parler à Marie » → « lui » devant l'infinitif.",
+          "translation": "You're going to speak to her tonight.",
+          "hint": "Parler à one person → lui."
+        }
+      ]
+    },
+    {
+      "id": "el_pronoms_objets_negation",
+      "sortOrder": 15,
+      "label": "Négation : ne le...pas",
+      "ruleNote": "In the negative, 'ne' comes before the pronoun and 'pas' after the verb: je ne le vois pas, il ne lui parle pas.",
+      "examples": [
+        {
+          "id": "el_pronoms_objets_negation_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « I don't see him. »",
+          "cue": null,
+          "answerTokens": ["Je", "ne", "le", "vois", "pas"],
+          "tokenBank": ["Je", "ne", "le", "la", "vois", "pas"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« ne » + pronom + verbe + « pas ».",
+          "translation": "I don't see him.",
+          "hint": "ne goes before the pronoun, pas after the verb."
+        },
+        {
+          "id": "el_pronoms_objets_negation_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « He doesn't speak to her. »",
+          "cue": null,
+          "answerTokens": ["Il", "ne", "lui", "parle", "pas"],
+          "tokenBank": ["Il", "ne", "lui", "le", "parle", "pas"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« ne lui parle pas » : « ne » avant le pronom.",
+          "translation": "He doesn't speak to her.",
+          "hint": "ne + lui + verb + pas."
+        },
+        {
+          "id": "el_pronoms_objets_negation_03",
+          "type": "wordOrder",
+          "prompt": "Construis : « We don't know them. »",
+          "cue": null,
+          "answerTokens": ["Nous", "ne", "les", "connaissons", "pas"],
+          "tokenBank": ["Nous", "ne", "les", "le", "connaissons", "pas"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« les » reste entre « ne » et le verbe.",
+          "translation": "We don't know them.",
+          "hint": "The pronoun stays between ne and the verb."
+        },
+        {
+          "id": "el_pronoms_objets_negation_04",
+          "type": "fillBlank",
+          "prompt": "Choisis la phrase correcte :",
+          "cue": "négation",
+          "answerTokens": ["Je ne la connais pas"],
+          "tokenBank": ["Je ne la connais pas", "Je la ne connais pas", "Je ne connais la pas"],
+          "inputMode": "multipleChoice",
+          "explanation": "« ne » va avant le pronom « la ».",
+          "translation": "I don't know her.",
+          "hint": "ne + pronoun + verb + pas."
+        },
+        {
+          "id": "el_pronoms_objets_negation_05",
+          "type": "fillBlank",
+          "prompt": "Choisis la phrase correcte :",
+          "cue": "négation",
+          "answerTokens": ["Il ne leur parle pas"],
+          "tokenBank": ["Il ne leur parle pas", "Il leur ne parle pas", "Il ne parle leur pas"],
+          "inputMode": "multipleChoice",
+          "explanation": "« ne » précède le pronom « leur ».",
+          "translation": "He doesn't speak to them.",
+          "hint": "Keep ne before leur."
+        }
+      ]
+    },
+    {
+      "id": "el_pronoms_objets_reponse_courte",
+      "sortOrder": 16,
+      "label": "Réponse courte avec pronom",
+      "ruleNote": "Answer a yes/no question using the pronoun to avoid repeating: 'Tu connais Paul ? — Oui, je le connais. / Non, je ne le connais pas.'",
+      "examples": [
+        {
+          "id": "el_pronoms_objets_reponse_courte_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « Yes, I know him. »",
+          "cue": null,
+          "answerTokens": ["Oui", "je", "le", "connais"],
+          "tokenBank": ["Oui", "je", "le", "la", "connais"],
+          "inputMode": "buildFromTokens",
+          "explanation": "On répond court avec « le » pour ne pas répéter le nom.",
+          "translation": "Yes, I know him.",
+          "hint": "Replace the name with le in the short answer."
+        },
+        {
+          "id": "el_pronoms_objets_reponse_courte_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « No, I don't know him. »",
+          "cue": null,
+          "answerTokens": ["Non", "je", "ne", "le", "connais", "pas"],
+          "tokenBank": ["Non", "je", "ne", "le", "la", "connais", "pas"],
+          "inputMode": "buildFromTokens",
+          "explanation": "Réponse négative : « ne le connais pas ».",
+          "translation": "No, I don't know him.",
+          "hint": "Negative short answer keeps the pronoun before the verb."
+        },
+        {
+          "id": "el_pronoms_objets_reponse_courte_03",
+          "type": "wordOrder",
+          "prompt": "Construis : « Yes, I phone her. »",
+          "cue": null,
+          "answerTokens": ["Oui", "je", "lui", "téléphone"],
+          "tokenBank": ["Oui", "je", "lui", "la", "téléphone"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« téléphoner à » → « lui » dans la réponse.",
+          "translation": "Yes, I phone her.",
+          "hint": "Téléphoner à → lui."
+        },
+        {
+          "id": "el_pronoms_objets_reponse_courte_04",
+          "type": "fillBlank",
+          "prompt": "Réponse à « Tu vois Marie ? » :",
+          "cue": "réponse courte",
+          "answerTokens": ["Oui, je la vois"],
+          "tokenBank": ["Oui, je la vois", "Oui, je vois Marie la", "Oui, je le vois"],
+          "inputMode": "multipleChoice",
+          "explanation": "« la » remplace « Marie » (féminin, direct).",
+          "translation": "Do you see Marie? Yes, I see her.",
+          "hint": "Marie is feminine direct → la."
+        },
+        {
+          "id": "el_pronoms_objets_reponse_courte_05",
+          "type": "fillBlank",
+          "prompt": "Réponse à « Tu écris à tes parents ? » :",
+          "cue": "réponse courte",
+          "answerTokens": ["Oui, je leur écris"],
+          "tokenBank": ["Oui, je leur écris", "Oui, je lui écris", "Oui, j'écris leur"],
+          "inputMode": "multipleChoice",
+          "explanation": "« écrire à » + pluriel → « leur ».",
+          "translation": "Do you write to your parents? Yes, I write to them.",
+          "hint": "à several people → leur."
+        }
+      ]
+    },
+    {
+      "id": "el_pronoms_objets_passe_compose",
+      "sortOrder": 17,
+      "label": "Au passé composé (place du pronom)",
+      "ruleNote": "In the passé composé, the pronoun goes before the helper verb: je l'ai vu, je lui ai parlé.",
+      "examples": [
+        {
+          "id": "el_pronoms_objets_passe_compose_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « I saw him. »",
+          "cue": null,
+          "answerTokens": ["Je", "l'", "ai", "vu"],
+          "tokenBank": ["Je", "l'", "le", "ai", "vu"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« l' » est devant l'auxiliaire « ai ».",
+          "translation": "I saw him.",
+          "hint": "Pronoun goes before ai; le elides to l'."
+        },
+        {
+          "id": "el_pronoms_objets_passe_compose_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « I spoke to him. »",
+          "cue": null,
+          "answerTokens": ["Je", "lui", "ai", "parlé"],
+          "tokenBank": ["Je", "lui", "le", "ai", "parlé"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« lui » est placé devant « ai parlé ».",
+          "translation": "I spoke to him.",
+          "hint": "lui before the helper verb ai."
+        },
+        {
+          "id": "el_pronoms_objets_passe_compose_03",
+          "type": "wordOrder",
+          "prompt": "Construis : « I bought them. »",
+          "cue": null,
+          "answerTokens": ["Je", "les", "ai", "achetés"],
+          "tokenBank": ["Je", "les", "le", "ai", "achetés"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« les » devant « ai » ; le participe s'accorde : « achetés ».",
+          "translation": "I bought them.",
+          "hint": "les before ai; the participle agrees → achetés."
+        },
+        {
+          "id": "el_pronoms_objets_passe_compose_04",
+          "type": "fillBlank",
+          "prompt": "Choisis la phrase correcte :",
+          "cue": "passé composé",
+          "answerTokens": ["Je l'ai vu"],
+          "tokenBank": ["Je l'ai vu", "J'ai le vu", "Je ai le vu"],
+          "inputMode": "multipleChoice",
+          "explanation": "Le pronom va avant l'auxiliaire : « Je l'ai vu ».",
+          "translation": "I saw him.",
+          "hint": "Pronoun precedes ai, not the participle."
+        },
+        {
+          "id": "el_pronoms_objets_passe_compose_05",
+          "type": "fillBlank",
+          "prompt": "Choisis la phrase correcte :",
+          "cue": "passé composé",
+          "answerTokens": ["Je lui ai parlé"],
+          "tokenBank": ["Je lui ai parlé", "J'ai lui parlé", "Je ai parlé lui"],
+          "inputMode": "multipleChoice",
+          "explanation": "« lui » se place avant « ai parlé ».",
+          "translation": "I spoke to him.",
+          "hint": "lui comes before the auxiliary ai."
+        }
+      ]
+    },
+    {
+      "id": "el_pronoms_objets_imperatif",
+      "sortOrder": 18,
+      "label": "Pronom + impératif (light)",
+      "ruleNote": "In a positive command, the pronoun comes after, joined by a hyphen: Regarde-le ! Parle-lui ! (In the negative it stays before: Ne le regarde pas.)",
+      "examples": [
+        {
+          "id": "el_pronoms_objets_imperatif_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « Look at him! »",
+          "cue": null,
+          "answerTokens": ["Regarde", "-le"],
+          "tokenBank": ["Regarde", "-le", "-la"],
+          "inputMode": "buildFromTokens",
+          "explanation": "À l'impératif affirmatif, le pronom suit le verbe : « Regarde-le ».",
+          "translation": "Look at him!",
+          "hint": "Positive command: pronoun after, with a hyphen."
+        },
+        {
+          "id": "el_pronoms_objets_imperatif_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « Speak to him! »",
+          "cue": null,
+          "answerTokens": ["Parle", "-lui"],
+          "tokenBank": ["Parle", "-lui", "-le"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« Parle-lui » : le pronom suit le verbe.",
+          "translation": "Speak to him!",
+          "hint": "Command + hyphen + lui."
+        },
+        {
+          "id": "el_pronoms_objets_imperatif_03",
+          "type": "wordOrder",
+          "prompt": "Construis : « Listen to her! »",
+          "cue": null,
+          "answerTokens": ["Écoute", "-la"],
+          "tokenBank": ["Écoute", "-la", "-le"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« Écoute-la » : pronom après le verbe à l'impératif.",
+          "translation": "Listen to her!",
+          "hint": "Affirmative command: verb-pronoun with a hyphen."
+        },
+        {
+          "id": "el_pronoms_objets_imperatif_04",
+          "type": "fillBlank",
+          "prompt": "Choisis la forme correcte (ordre affirmatif) :",
+          "cue": "impératif affirmatif",
+          "answerTokens": ["Regarde-le"],
+          "tokenBank": ["Regarde-le", "Le regarde", "Regarde le"],
+          "inputMode": "multipleChoice",
+          "explanation": "À l'affirmatif, le pronom suit avec un trait d'union.",
+          "translation": "Look at him!",
+          "hint": "Positive command → verb-le."
+        },
+        {
+          "id": "el_pronoms_objets_imperatif_05",
+          "type": "fillBlank",
+          "prompt": "Choisis la forme correcte (ordre négatif) :",
+          "cue": "impératif négatif",
+          "answerTokens": ["Ne le regarde pas"],
+          "tokenBank": ["Ne le regarde pas", "Ne regarde-le pas", "Regarde-le pas"],
+          "inputMode": "multipleChoice",
+          "explanation": "Au négatif, le pronom reste avant le verbe.",
+          "translation": "Don't look at him.",
+          "hint": "Negative command keeps the pronoun before the verb."
+        }
+      ]
+    },
+    {
+      "id": "el_pronoms_objets_choisir",
+      "sortOrder": 19,
+      "label": "Choisir le bon pronom",
+      "ruleNote": "Check gender, number, and whether there's an 'à': masculine direct → le, plural people with à → leur, and so on.",
+      "examples": [
+        {
+          "id": "el_pronoms_objets_choisir_01",
+          "type": "fillBlank",
+          "prompt": "Complète : « Tu achètes la robe ? Oui, je ___ achète. »",
+          "cue": "la robe = féminin, direct, voyelle",
+          "answerTokens": ["l'"],
+          "tokenBank": ["l'", "la", "lui"],
+          "inputMode": "multipleChoice",
+          "explanation": "« la » → « l' » devant « achète » (voyelle).",
+          "translation": "Do you buy the dress? Yes, I buy it.",
+          "hint": "Feminine direct, but achète starts with a vowel → l'."
+        },
+        {
+          "id": "el_pronoms_objets_choisir_02",
+          "type": "fillBlank",
+          "prompt": "Complète : « Tu téléphones aux clients ? Oui, je ___ téléphone. »",
+          "cue": "aux clients = pluriel, indirect",
+          "answerTokens": ["leur"],
+          "tokenBank": ["leur", "les", "lui"],
+          "inputMode": "multipleChoice",
+          "explanation": "« téléphoner à » + pluriel → « leur ».",
+          "translation": "Do you phone the clients? Yes, I phone them.",
+          "hint": "à several people → leur."
+        },
+        {
+          "id": "el_pronoms_objets_choisir_03",
+          "type": "fillBlank",
+          "prompt": "Complète : « Tu regardes les photos ? Oui, je ___ regarde. »",
+          "cue": "les photos = pluriel, direct",
+          "answerTokens": ["les"],
+          "tokenBank": ["les", "leur", "la"],
+          "inputMode": "multipleChoice",
+          "explanation": "« regarder » est direct : « les » au pluriel.",
+          "translation": "Do you look at the photos? Yes, I look at them.",
+          "hint": "Regarder is direct → les, not leur."
+        },
+        {
+          "id": "el_pronoms_objets_choisir_04",
+          "type": "fillBlank",
+          "prompt": "Complète : « Tu réponds à ta sœur ? Oui, je ___ réponds. »",
+          "cue": "à ta sœur = une personne, indirect",
+          "answerTokens": ["lui"],
+          "tokenBank": ["lui", "la", "leur"],
+          "inputMode": "multipleChoice",
+          "explanation": "« répondre à » + une personne → « lui ».",
+          "translation": "Do you answer your sister? Yes, I answer her.",
+          "hint": "Répondre à one person → lui."
+        },
+        {
+          "id": "el_pronoms_objets_choisir_05",
+          "type": "fillBlank",
+          "prompt": "Complète : « Tu prends le train ? Oui, je ___ prends. »",
+          "cue": "le train = masculin, direct",
+          "answerTokens": ["le"],
+          "tokenBank": ["le", "lui", "les"],
+          "inputMode": "multipleChoice",
+          "explanation": "« prendre » est direct : « le » au masculin.",
+          "translation": "Do you take the train? Yes, I take it.",
+          "hint": "Masculine direct object → le."
+        }
+      ]
+    },
+    {
+      "id": "el_pronoms_objets_synthese",
+      "sortOrder": 20,
+      "label": "Synthèse : pronoms compléments",
+      "ruleNote": "Put it together: choose le/la/les for direct objects or lui/leur for indirect, and place it before the verb (or infinitive).",
+      "examples": [
+        {
+          "id": "el_pronoms_objets_synthese_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « I don't see her. »",
+          "cue": null,
+          "answerTokens": ["Je", "ne", "la", "vois", "pas"],
+          "tokenBank": ["Je", "ne", "la", "le", "vois", "pas"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« la » (féminin, direct) entre « ne » et le verbe.",
+          "translation": "I don't see her.",
+          "hint": "ne + la + verb + pas."
+        },
+        {
+          "id": "el_pronoms_objets_synthese_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « I'm going to speak to them. »",
+          "cue": null,
+          "answerTokens": ["Je", "vais", "leur", "parler"],
+          "tokenBank": ["Je", "vais", "leur", "lui", "parler"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« leur » devant l'infinitif « parler » au futur proche.",
+          "translation": "I'm going to speak to them.",
+          "hint": "à several people → leur, before the infinitive."
+        },
+        {
+          "id": "el_pronoms_objets_synthese_03",
+          "type": "wordOrder",
+          "prompt": "Construis : « I spoke to her. »",
+          "cue": null,
+          "answerTokens": ["Je", "lui", "ai", "parlé"],
+          "tokenBank": ["Je", "lui", "la", "ai", "parlé"],
+          "inputMode": "buildFromTokens",
+          "explanation": "« lui » devant l'auxiliaire au passé composé.",
+          "translation": "I spoke to her.",
+          "hint": "Parler à → lui, before the helper ai."
+        },
+        {
+          "id": "el_pronoms_objets_synthese_04",
+          "type": "fillBlank",
+          "prompt": "Complète : « Tu invites tes amis ? Oui, je ___ invite. »",
+          "cue": "tes amis = pluriel, direct",
+          "answerTokens": ["les"],
+          "tokenBank": ["les", "leur", "lui"],
+          "inputMode": "multipleChoice",
+          "explanation": "« inviter » est direct : « les » au pluriel.",
+          "translation": "Do you invite your friends? Yes, I invite them.",
+          "hint": "Inviter is direct → les."
+        },
+        {
+          "id": "el_pronoms_objets_synthese_05",
+          "type": "fillBlank",
+          "prompt": "Complète : « Tu écris à ton frère ? Oui, je ___ écris. »",
+          "cue": "à ton frère = une personne, indirect",
+          "answerTokens": ["lui"],
+          "tokenBank": ["lui", "le", "leur"],
+          "inputMode": "multipleChoice",
+          "explanation": "« écrire à » + une personne → « lui ».",
+          "translation": "Do you write to your brother? Yes, I write to him.",
+          "hint": "Écrire à one person → lui."
+        }
+      ]
+    }
+  ]
+}

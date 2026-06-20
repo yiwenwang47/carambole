@@ -1,0 +1,1380 @@
+{
+  "id": "mod_21_futur_simple",
+  "sortOrder": 21,
+  "title": "Le futur simple",
+  "ruleNote": "The futur simple expresses what will happen: je parlerai (I will speak). It is one word built from the infinitive stem plus a fixed set of endings. A few common verbs use irregular stems, but the endings never change.",
+  "elements": [
+    {
+      "id": "el_futur_simple_intro",
+      "sortOrder": 1,
+      "label": "Le futur simple : le futur lointain",
+      "ruleNote": "The futur simple states what will happen, often less immediate than the near future: je parlerai (I will speak). It is one word, not 'aller + infinitive'.",
+      "examples": [
+        {
+          "id": "el_futur_simple_intro_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « One day I will speak French. »",
+          "cue": null,
+          "answerTokens": ["Un", "jour", "je", "parlerai", "français"],
+          "tokenBank": ["Un", "jour", "je", "parlerai", "français", "parle"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'parlerai' is the one-word futur simple, not 'vais parler'.",
+          "translation": "One day I will speak French.",
+          "hint": "Use the single futur verb 'parlerai'."
+        },
+        {
+          "id": "el_futur_simple_intro_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « We will travel next year. »",
+          "cue": null,
+          "answerTokens": ["Nous", "voyagerons", "l'", "année", "prochaine"],
+          "tokenBank": ["Nous", "voyagerons", "l'", "année", "prochaine", "voyageons"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'voyagerons' places the action in the future.",
+          "translation": "We will travel next year.",
+          "hint": "'l'' attaches to 'année'."
+        },
+        {
+          "id": "el_futur_simple_intro_03",
+          "type": "fillBlank",
+          "prompt": "Choisis le verbe au futur : « Demain, il ___ chez nous. »",
+          "cue": null,
+          "answerTokens": ["mangera"],
+          "tokenBank": ["mangera", "mange", "a mangé", "mangeait"],
+          "inputMode": "multipleChoice",
+          "explanation": "'mangera' is the futur simple of 'manger'.",
+          "translation": "Tomorrow, he will eat at our place.",
+          "hint": "'Demain' signals the future."
+        },
+        {
+          "id": "el_futur_simple_intro_04",
+          "type": "wordOrder",
+          "prompt": "Construis : « You will understand later. »",
+          "cue": null,
+          "answerTokens": ["Tu", "comprendras", "plus", "tard"],
+          "tokenBank": ["Tu", "comprendras", "plus", "tard", "comprends"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'comprendras' is the futur simple, one word.",
+          "translation": "You will understand later.",
+          "hint": "One verb, not 'vas comprendre'."
+        },
+        {
+          "id": "el_futur_simple_intro_05",
+          "type": "fillBlank",
+          "prompt": "Choisis le futur simple : « Plus tard, elles ___ ici. »",
+          "cue": null,
+          "answerTokens": ["habiteront"],
+          "tokenBank": ["habiteront", "habitent", "habitaient", "ont habité"],
+          "inputMode": "multipleChoice",
+          "explanation": "'habiteront' is the one-word futur simple for 'elles'.",
+          "translation": "Later, they will live here.",
+          "hint": "Future for 'elles' ends in -ont."
+        }
+      ]
+    },
+    {
+      "id": "el_futur_simple_radical",
+      "sortOrder": 2,
+      "label": "Le radical : l'infinitif",
+      "ruleNote": "The stem is usually the whole infinitive: parler-, finir-. For -RE verbs, drop the final -e: prendre → prendr-.",
+      "examples": [
+        {
+          "id": "el_futur_simple_radical_01",
+          "type": "fillBlank",
+          "prompt": "Quel est le radical du futur de « parler » ?",
+          "cue": null,
+          "answerTokens": ["parler-"],
+          "tokenBank": ["parler-", "parl-", "parlon-", "parlr-"],
+          "inputMode": "multipleChoice",
+          "explanation": "For -ER verbs, the stem is the full infinitive: parler-.",
+          "translation": "What is the future stem of 'parler'?",
+          "hint": "Keep the whole infinitive."
+        },
+        {
+          "id": "el_futur_simple_radical_02",
+          "type": "fillBlank",
+          "prompt": "Quel est le radical du futur de « finir » ?",
+          "cue": null,
+          "answerTokens": ["finir-"],
+          "tokenBank": ["finir-", "fin-", "finiss-", "finr-"],
+          "inputMode": "multipleChoice",
+          "explanation": "For -IR verbs, the stem is the full infinitive: finir-.",
+          "translation": "What is the future stem of 'finir'?",
+          "hint": "Keep the whole infinitive."
+        },
+        {
+          "id": "el_futur_simple_radical_03",
+          "type": "fillBlank",
+          "prompt": "Quel est le radical du futur de « prendre » ?",
+          "cue": null,
+          "answerTokens": ["prendr-"],
+          "tokenBank": ["prendr-", "prendre-", "pren-", "prend-"],
+          "inputMode": "multipleChoice",
+          "explanation": "For -RE verbs, drop the final -e: prendre → prendr-.",
+          "translation": "What is the future stem of 'prendre'?",
+          "hint": "Drop the final -e."
+        },
+        {
+          "id": "el_futur_simple_radical_04",
+          "type": "fillBlank",
+          "prompt": "Quel est le radical du futur de « attendre » ?",
+          "cue": null,
+          "answerTokens": ["attendr-"],
+          "tokenBank": ["attendr-", "attendre-", "attend-", "atten-"],
+          "inputMode": "multipleChoice",
+          "explanation": "Drop the final -e of the -RE verb: attendre → attendr-.",
+          "translation": "What is the future stem of 'attendre'?",
+          "hint": "Drop the -e of -RE verbs."
+        },
+        {
+          "id": "el_futur_simple_radical_05",
+          "type": "fillBlank",
+          "prompt": "Quel est le radical du futur de « choisir » ?",
+          "cue": null,
+          "answerTokens": ["choisir-"],
+          "tokenBank": ["choisir-", "chois-", "choisiss-", "choir-"],
+          "inputMode": "multipleChoice",
+          "explanation": "The stem is the full infinitive: choisir-.",
+          "translation": "What is the future stem of 'choisir'?",
+          "hint": "Keep the whole infinitive."
+        }
+      ]
+    },
+    {
+      "id": "el_futur_simple_terminaisons",
+      "sortOrder": 3,
+      "label": "Les terminaisons : ai, as, a...",
+      "ruleNote": "Add these endings to every verb: -ai, -as, -a, -ons, -ez, -ont. They look like the present of 'avoir'.",
+      "examples": [
+        {
+          "id": "el_futur_simple_terminaisons_01",
+          "type": "fillBlank",
+          "prompt": "Quelle terminaison pour « je » ? « je parler___ »",
+          "cue": null,
+          "answerTokens": ["ai"],
+          "tokenBank": ["ai", "as", "a", "ons"],
+          "inputMode": "multipleChoice",
+          "explanation": "The ending for 'je' is -ai.",
+          "translation": "Which ending for 'je'?",
+          "hint": "It sounds like 'j'ai'."
+        },
+        {
+          "id": "el_futur_simple_terminaisons_02",
+          "type": "fillBlank",
+          "prompt": "Quelle terminaison pour « tu » ? « tu finir___ »",
+          "cue": null,
+          "answerTokens": ["as"],
+          "tokenBank": ["as", "ai", "ez", "ont"],
+          "inputMode": "multipleChoice",
+          "explanation": "The ending for 'tu' is -as.",
+          "translation": "Which ending for 'tu'?",
+          "hint": "Like 'tu as'."
+        },
+        {
+          "id": "el_futur_simple_terminaisons_03",
+          "type": "fillBlank",
+          "prompt": "Quelle terminaison pour « nous » ? « nous parler___ »",
+          "cue": null,
+          "answerTokens": ["ons"],
+          "tokenBank": ["ons", "ez", "ont", "a"],
+          "inputMode": "multipleChoice",
+          "explanation": "The ending for 'nous' is -ons.",
+          "translation": "Which ending for 'nous'?",
+          "hint": "Like most 'nous' forms."
+        },
+        {
+          "id": "el_futur_simple_terminaisons_04",
+          "type": "fillBlank",
+          "prompt": "Quelle terminaison pour « vous » ? « vous finir___ »",
+          "cue": null,
+          "answerTokens": ["ez"],
+          "tokenBank": ["ez", "ons", "ont", "as"],
+          "inputMode": "multipleChoice",
+          "explanation": "The ending for 'vous' is -ez.",
+          "translation": "Which ending for 'vous'?",
+          "hint": "Like most 'vous' forms."
+        },
+        {
+          "id": "el_futur_simple_terminaisons_05",
+          "type": "fillBlank",
+          "prompt": "Quelle terminaison pour « ils » ? « ils parler___ »",
+          "cue": null,
+          "answerTokens": ["ont"],
+          "tokenBank": ["ont", "ons", "ez", "a"],
+          "inputMode": "multipleChoice",
+          "explanation": "The ending for 'ils/elles' is -ont.",
+          "translation": "Which ending for 'ils'?",
+          "hint": "Like 'ils ont'."
+        }
+      ]
+    },
+    {
+      "id": "el_futur_simple_je",
+      "sortOrder": 4,
+      "label": "je + -ai (je parlerai)",
+      "ruleNote": "For 'I', add -ai: je parlerai, je finirai, je prendrai.",
+      "examples": [
+        {
+          "id": "el_futur_simple_je_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « I will work tomorrow. »",
+          "cue": null,
+          "answerTokens": ["Je", "travaillerai", "demain"],
+          "tokenBank": ["Je", "travaillerai", "demain", "travaille"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'travaillerai' = travailler- + ai.",
+          "translation": "I will work tomorrow.",
+          "hint": "'je' takes -ai."
+        },
+        {
+          "id": "el_futur_simple_je_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « I will finish the book. »",
+          "cue": null,
+          "answerTokens": ["Je", "finirai", "le", "livre"],
+          "tokenBank": ["Je", "finirai", "le", "livre", "finis"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'finirai' = finir- + ai.",
+          "translation": "I will finish the book.",
+          "hint": "'je' takes -ai."
+        },
+        {
+          "id": "el_futur_simple_je_03",
+          "type": "fillBlank",
+          "prompt": "Choisis la forme « je » : « Je ___ la maison demain. »",
+          "cue": null,
+          "answerTokens": ["chercherai"],
+          "tokenBank": ["chercherai", "chercheras", "cherchera", "cherche"],
+          "inputMode": "multipleChoice",
+          "explanation": "'je' uses the -ai ending: chercherai.",
+          "translation": "I will look for the house tomorrow.",
+          "hint": "'je' ending is -ai."
+        },
+        {
+          "id": "el_futur_simple_je_04",
+          "type": "wordOrder",
+          "prompt": "Construis : « I will call my brother. »",
+          "cue": null,
+          "answerTokens": ["J'", "appellerai", "mon", "frère"],
+          "tokenBank": ["J'", "appellerai", "mon", "frère", "appelle"],
+          "inputMode": "buildFromTokens",
+          "explanation": "Before a vowel, 'je' becomes 'j'': j'appellerai.",
+          "translation": "I will call my brother.",
+          "hint": "'j'' attaches before a vowel."
+        },
+        {
+          "id": "el_futur_simple_je_05",
+          "type": "fillBlank",
+          "prompt": "Choisis la forme « je » : « Je ___ le métro. »",
+          "cue": null,
+          "answerTokens": ["prendrai"],
+          "tokenBank": ["prendrai", "prendras", "prendra", "prends"],
+          "inputMode": "multipleChoice",
+          "explanation": "'prendre' → prendr- + ai = prendrai.",
+          "translation": "I will take the metro.",
+          "hint": "-RE verb: drop the -e, add -ai."
+        }
+      ]
+    },
+    {
+      "id": "el_futur_simple_tu",
+      "sortOrder": 5,
+      "label": "tu + -as (tu parleras)",
+      "ruleNote": "For 'you' (singular), add -as: tu parleras, tu finiras.",
+      "examples": [
+        {
+          "id": "el_futur_simple_tu_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « You will watch the film. »",
+          "cue": null,
+          "answerTokens": ["Tu", "regarderas", "le", "film"],
+          "tokenBank": ["Tu", "regarderas", "le", "film", "regardes"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'regarderas' = regarder- + as.",
+          "translation": "You will watch the film.",
+          "hint": "'tu' takes -as."
+        },
+        {
+          "id": "el_futur_simple_tu_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « You will choose a present. »",
+          "cue": null,
+          "answerTokens": ["Tu", "choisiras", "un", "cadeau"],
+          "tokenBank": ["Tu", "choisiras", "un", "cadeau", "choisis"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'choisiras' = choisir- + as.",
+          "translation": "You will choose a present.",
+          "hint": "'tu' takes -as."
+        },
+        {
+          "id": "el_futur_simple_tu_03",
+          "type": "fillBlank",
+          "prompt": "Choisis la forme « tu » : « Tu ___ chez moi. »",
+          "cue": null,
+          "answerTokens": ["mangeras"],
+          "tokenBank": ["mangeras", "mangerai", "mangera", "manges"],
+          "inputMode": "multipleChoice",
+          "explanation": "'tu' uses the -as ending: mangeras.",
+          "translation": "You will eat at my place.",
+          "hint": "'tu' ending is -as."
+        },
+        {
+          "id": "el_futur_simple_tu_04",
+          "type": "wordOrder",
+          "prompt": "Construis : « You will wait for the bus. »",
+          "cue": null,
+          "answerTokens": ["Tu", "attendras", "le", "bus"],
+          "tokenBank": ["Tu", "attendras", "le", "bus", "attends"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'attendre' → attendr- + as = attendras.",
+          "translation": "You will wait for the bus.",
+          "hint": "-RE verb: drop the -e."
+        },
+        {
+          "id": "el_futur_simple_tu_05",
+          "type": "fillBlank",
+          "prompt": "Choisis la forme « tu » : « Tu ___ la porte. »",
+          "cue": null,
+          "answerTokens": ["fermeras"],
+          "tokenBank": ["fermeras", "fermerai", "fermera", "fermes"],
+          "inputMode": "multipleChoice",
+          "explanation": "'tu' uses -as: fermeras.",
+          "translation": "You will close the door.",
+          "hint": "'tu' ending is -as."
+        }
+      ]
+    },
+    {
+      "id": "el_futur_simple_il",
+      "sortOrder": 6,
+      "label": "il / elle + -a (il parlera)",
+      "ruleNote": "For il/elle/on, add -a: il parlera, elle finira, on prendra.",
+      "examples": [
+        {
+          "id": "el_futur_simple_il_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « She will arrive at noon. »",
+          "cue": null,
+          "answerTokens": ["Elle", "arrivera", "à", "midi"],
+          "tokenBank": ["Elle", "arrivera", "à", "midi", "arrive"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'arrivera' = arriver- + a.",
+          "translation": "She will arrive at noon.",
+          "hint": "'elle' takes -a."
+        },
+        {
+          "id": "el_futur_simple_il_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « He will speak with the teacher. »",
+          "cue": null,
+          "answerTokens": ["Il", "parlera", "avec", "le", "professeur"],
+          "tokenBank": ["Il", "parlera", "avec", "le", "professeur", "parle"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'parlera' = parler- + a.",
+          "translation": "He will speak with the teacher.",
+          "hint": "'il' takes -a."
+        },
+        {
+          "id": "el_futur_simple_il_03",
+          "type": "fillBlank",
+          "prompt": "Choisis la forme « elle » : « Elle ___ ses devoirs. »",
+          "cue": null,
+          "answerTokens": ["finira"],
+          "tokenBank": ["finira", "finirai", "finiras", "finit"],
+          "inputMode": "multipleChoice",
+          "explanation": "'elle' uses -a: finira.",
+          "translation": "She will finish her homework.",
+          "hint": "'elle' ending is -a."
+        },
+        {
+          "id": "el_futur_simple_il_04",
+          "type": "wordOrder",
+          "prompt": "Construis : « We will take the train. »",
+          "cue": null,
+          "answerTokens": ["On", "prendra", "le", "train"],
+          "tokenBank": ["On", "prendra", "le", "train", "prend"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'on' acts like 'il/elle': prendra.",
+          "translation": "We will take the train.",
+          "hint": "'on' takes -a."
+        },
+        {
+          "id": "el_futur_simple_il_05",
+          "type": "fillBlank",
+          "prompt": "Choisis la forme « il » : « Il ___ à la maison. »",
+          "cue": null,
+          "answerTokens": ["restera"],
+          "tokenBank": ["restera", "resteras", "resterai", "reste"],
+          "inputMode": "multipleChoice",
+          "explanation": "'il' uses -a: restera.",
+          "translation": "He will stay at home.",
+          "hint": "'il' ending is -a."
+        }
+      ]
+    },
+    {
+      "id": "el_futur_simple_nous",
+      "sortOrder": 7,
+      "label": "nous + -ons (nous parlerons)",
+      "ruleNote": "For 'we', add -ons: nous parlerons, nous finirons.",
+      "examples": [
+        {
+          "id": "el_futur_simple_nous_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « We will eat together. »",
+          "cue": null,
+          "answerTokens": ["Nous", "mangerons", "ensemble"],
+          "tokenBank": ["Nous", "mangerons", "ensemble", "mangeons"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'mangerons' = manger- + ons.",
+          "translation": "We will eat together.",
+          "hint": "'nous' takes -ons."
+        },
+        {
+          "id": "el_futur_simple_nous_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « We will speak French. »",
+          "cue": null,
+          "answerTokens": ["Nous", "parlerons", "français"],
+          "tokenBank": ["Nous", "parlerons", "français", "parlons"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'parlerons' = parler- + ons.",
+          "translation": "We will speak French.",
+          "hint": "'nous' takes -ons."
+        },
+        {
+          "id": "el_futur_simple_nous_03",
+          "type": "fillBlank",
+          "prompt": "Choisis la forme « nous » : « Nous ___ le travail. »",
+          "cue": null,
+          "answerTokens": ["finirons"],
+          "tokenBank": ["finirons", "finirez", "finiront", "finissons"],
+          "inputMode": "multipleChoice",
+          "explanation": "'nous' uses -ons: finirons.",
+          "translation": "We will finish the work.",
+          "hint": "'nous' ending is -ons."
+        },
+        {
+          "id": "el_futur_simple_nous_04",
+          "type": "wordOrder",
+          "prompt": "Construis : « We will wait here. »",
+          "cue": null,
+          "answerTokens": ["Nous", "attendrons", "ici"],
+          "tokenBank": ["Nous", "attendrons", "ici", "attendons"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'attendre' → attendr- + ons = attendrons.",
+          "translation": "We will wait here.",
+          "hint": "-RE verb: drop the -e."
+        },
+        {
+          "id": "el_futur_simple_nous_05",
+          "type": "fillBlank",
+          "prompt": "Choisis la forme « nous » : « Nous ___ la ville. »",
+          "cue": null,
+          "answerTokens": ["visiterons"],
+          "tokenBank": ["visiterons", "visiterez", "visiteront", "visitons"],
+          "inputMode": "multipleChoice",
+          "explanation": "'nous' uses -ons: visiterons.",
+          "translation": "We will visit the city.",
+          "hint": "'nous' ending is -ons."
+        }
+      ]
+    },
+    {
+      "id": "el_futur_simple_vous",
+      "sortOrder": 8,
+      "label": "vous + -ez (vous parlerez)",
+      "ruleNote": "For 'you' (plural/formal), add -ez: vous parlerez, vous prendrez.",
+      "examples": [
+        {
+          "id": "el_futur_simple_vous_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « You will travel to Paris. »",
+          "cue": null,
+          "answerTokens": ["Vous", "voyagerez", "à", "Paris"],
+          "tokenBank": ["Vous", "voyagerez", "à", "Paris", "voyagez"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'voyagerez' = voyager- + ez.",
+          "translation": "You will travel to Paris.",
+          "hint": "'vous' takes -ez."
+        },
+        {
+          "id": "el_futur_simple_vous_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « You will take the bus. »",
+          "cue": null,
+          "answerTokens": ["Vous", "prendrez", "le", "bus"],
+          "tokenBank": ["Vous", "prendrez", "le", "bus", "prenez"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'prendre' → prendr- + ez = prendrez.",
+          "translation": "You will take the bus.",
+          "hint": "'vous' takes -ez."
+        },
+        {
+          "id": "el_futur_simple_vous_03",
+          "type": "fillBlank",
+          "prompt": "Choisis la forme « vous » : « Vous ___ demain. »",
+          "cue": null,
+          "answerTokens": ["arriverez"],
+          "tokenBank": ["arriverez", "arriverons", "arriveront", "arrivez"],
+          "inputMode": "multipleChoice",
+          "explanation": "'vous' uses -ez: arriverez.",
+          "translation": "You will arrive tomorrow.",
+          "hint": "'vous' ending is -ez."
+        },
+        {
+          "id": "el_futur_simple_vous_04",
+          "type": "wordOrder",
+          "prompt": "Construis : « You will choose a meal. »",
+          "cue": null,
+          "answerTokens": ["Vous", "choisirez", "un", "repas"],
+          "tokenBank": ["Vous", "choisirez", "un", "repas", "choisissez"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'choisirez' = choisir- + ez.",
+          "translation": "You will choose a meal.",
+          "hint": "'vous' takes -ez."
+        },
+        {
+          "id": "el_futur_simple_vous_05",
+          "type": "fillBlank",
+          "prompt": "Choisis la forme « vous » : « Vous ___ la lettre. »",
+          "cue": null,
+          "answerTokens": ["enverrez"],
+          "tokenBank": ["enverrez", "envoyez", "enverront", "enverrons"],
+          "inputMode": "multipleChoice",
+          "explanation": "'envoyer' has the irregular stem enverr-; 'vous' adds -ez.",
+          "translation": "You will send the letter.",
+          "hint": "'vous' ending is -ez."
+        }
+      ]
+    },
+    {
+      "id": "el_futur_simple_ils",
+      "sortOrder": 9,
+      "label": "ils / elles + -ont (ils parleront)",
+      "ruleNote": "For ils/elles, add -ont: ils parleront, elles finiront. Don't confuse -ont with the present 'ils parlent'.",
+      "examples": [
+        {
+          "id": "el_futur_simple_ils_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « They will play in the park. »",
+          "cue": null,
+          "answerTokens": ["Ils", "joueront", "dans", "le", "parc"],
+          "tokenBank": ["Ils", "joueront", "dans", "le", "parc", "jouent"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'joueront' = jouer- + ont.",
+          "translation": "They will play in the park.",
+          "hint": "'ils' takes -ont."
+        },
+        {
+          "id": "el_futur_simple_ils_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « They will finish the project. »",
+          "cue": null,
+          "answerTokens": ["Elles", "finiront", "le", "projet"],
+          "tokenBank": ["Elles", "finiront", "le", "projet", "finissent"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'finiront' = finir- + ont.",
+          "translation": "They will finish the project.",
+          "hint": "'elles' takes -ont."
+        },
+        {
+          "id": "el_futur_simple_ils_03",
+          "type": "fillBlank",
+          "prompt": "Choisis la forme « ils » au futur : « Ils ___ bientôt. »",
+          "cue": null,
+          "answerTokens": ["arriveront"],
+          "tokenBank": ["arriveront", "arrivent", "arriverons", "arriverez"],
+          "inputMode": "multipleChoice",
+          "explanation": "Futur 'ils' is -ont (arriveront), not present 'arrivent'.",
+          "translation": "They will arrive soon.",
+          "hint": "Future for 'ils' ends in -ont."
+        },
+        {
+          "id": "el_futur_simple_ils_04",
+          "type": "wordOrder",
+          "prompt": "Construis : « They will speak to us. »",
+          "cue": null,
+          "answerTokens": ["Ils", "nous", "parleront"],
+          "tokenBank": ["Ils", "nous", "parleront", "parlent"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'parleront' = parler- + ont.",
+          "translation": "They will speak to us.",
+          "hint": "'ils' takes -ont."
+        },
+        {
+          "id": "el_futur_simple_ils_05",
+          "type": "fillBlank",
+          "prompt": "Choisis la forme « elles » : « Elles ___ la porte. »",
+          "cue": null,
+          "answerTokens": ["fermeront"],
+          "tokenBank": ["fermeront", "ferment", "fermerons", "fermerez"],
+          "inputMode": "multipleChoice",
+          "explanation": "Futur 'elles' is -ont: fermeront.",
+          "translation": "They will close the door.",
+          "hint": "Future for 'elles' ends in -ont."
+        }
+      ]
+    },
+    {
+      "id": "el_futur_simple_paradigme",
+      "sortOrder": 10,
+      "label": "Conjugaison complète : parler",
+      "ruleNote": "Full model: je parlerai, tu parleras, il parlera, nous parlerons, vous parlerez, ils parleront.",
+      "examples": [
+        {
+          "id": "el_futur_simple_paradigme_01",
+          "type": "fillBlank",
+          "prompt": "Complète : « je ___ »",
+          "cue": null,
+          "answerTokens": ["parlerai"],
+          "tokenBank": ["parlerai", "parleras", "parlera", "parlerons"],
+          "inputMode": "multipleChoice",
+          "explanation": "'je' → parlerai.",
+          "translation": "I will speak.",
+          "hint": "'je' ending is -ai."
+        },
+        {
+          "id": "el_futur_simple_paradigme_02",
+          "type": "fillBlank",
+          "prompt": "Complète : « tu ___ »",
+          "cue": null,
+          "answerTokens": ["parleras"],
+          "tokenBank": ["parleras", "parlerai", "parlerez", "parleront"],
+          "inputMode": "multipleChoice",
+          "explanation": "'tu' → parleras.",
+          "translation": "You will speak.",
+          "hint": "'tu' ending is -as."
+        },
+        {
+          "id": "el_futur_simple_paradigme_03",
+          "type": "fillBlank",
+          "prompt": "Complète : « il ___ »",
+          "cue": null,
+          "answerTokens": ["parlera"],
+          "tokenBank": ["parlera", "parleras", "parlerai", "parleront"],
+          "inputMode": "multipleChoice",
+          "explanation": "'il' → parlera.",
+          "translation": "He will speak.",
+          "hint": "'il' ending is -a."
+        },
+        {
+          "id": "el_futur_simple_paradigme_04",
+          "type": "fillBlank",
+          "prompt": "Complète : « nous ___ »",
+          "cue": null,
+          "answerTokens": ["parlerons"],
+          "tokenBank": ["parlerons", "parlerez", "parleront", "parlera"],
+          "inputMode": "multipleChoice",
+          "explanation": "'nous' → parlerons.",
+          "translation": "We will speak.",
+          "hint": "'nous' ending is -ons."
+        },
+        {
+          "id": "el_futur_simple_paradigme_05",
+          "type": "fillBlank",
+          "prompt": "Complète : « vous ___ »",
+          "cue": null,
+          "answerTokens": ["parlerez"],
+          "tokenBank": ["parlerez", "parlerons", "parleront", "parlera"],
+          "inputMode": "multipleChoice",
+          "explanation": "'vous' → parlerez.",
+          "translation": "You will speak.",
+          "hint": "'vous' ending is -ez."
+        },
+        {
+          "id": "el_futur_simple_paradigme_06",
+          "type": "fillBlank",
+          "prompt": "Complète : « ils ___ »",
+          "cue": null,
+          "answerTokens": ["parleront"],
+          "tokenBank": ["parleront", "parlerons", "parlerez", "parlera"],
+          "inputMode": "multipleChoice",
+          "explanation": "'ils' → parleront.",
+          "translation": "They will speak.",
+          "hint": "'ils' ending is -ont."
+        }
+      ]
+    },
+    {
+      "id": "el_futur_simple_re",
+      "sortOrder": 11,
+      "label": "Futur des -RE (prendre → prendr-)",
+      "ruleNote": "For -RE verbs, drop the final -e before the endings: prendre → je prendrai, attendre → tu attendras.",
+      "examples": [
+        {
+          "id": "el_futur_simple_re_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « I will take a coffee. »",
+          "cue": null,
+          "answerTokens": ["Je", "prendrai", "un", "café"],
+          "tokenBank": ["Je", "prendrai", "un", "café", "prendre"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'prendre' → prendr- + ai = prendrai.",
+          "translation": "I will take a coffee.",
+          "hint": "Drop the -e of 'prendre'."
+        },
+        {
+          "id": "el_futur_simple_re_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « You will wait for me. »",
+          "cue": null,
+          "answerTokens": ["Tu", "m'", "attendras"],
+          "tokenBank": ["Tu", "m'", "attendras", "attendre"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'attendre' → attendr- + as; 'm'' attaches before a vowel.",
+          "translation": "You will wait for me.",
+          "hint": "'m'' attaches to 'attendras'."
+        },
+        {
+          "id": "el_futur_simple_re_03",
+          "type": "fillBlank",
+          "prompt": "Choisis le futur de « attendre » : « Nous ___ le train. »",
+          "cue": null,
+          "answerTokens": ["attendrons"],
+          "tokenBank": ["attendrons", "attendons", "attendrez", "attendront"],
+          "inputMode": "multipleChoice",
+          "explanation": "'attendre' → attendr- + ons = attendrons.",
+          "translation": "We will wait for the train.",
+          "hint": "Drop the -e, then add 'nous' ending."
+        },
+        {
+          "id": "el_futur_simple_re_04",
+          "type": "wordOrder",
+          "prompt": "Construis : « She will understand the lesson. »",
+          "cue": null,
+          "answerTokens": ["Elle", "comprendra", "la", "leçon"],
+          "tokenBank": ["Elle", "comprendra", "la", "leçon", "comprendre"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'comprendre' → comprendr- + a = comprendra.",
+          "translation": "She will understand the lesson.",
+          "hint": "Drop the -e of 'comprendre'."
+        },
+        {
+          "id": "el_futur_simple_re_05",
+          "type": "fillBlank",
+          "prompt": "Choisis le futur de « vendre » : « Ils ___ la voiture. »",
+          "cue": null,
+          "answerTokens": ["vendront"],
+          "tokenBank": ["vendront", "vendent", "vendrons", "vendrez"],
+          "inputMode": "multipleChoice",
+          "explanation": "'vendre' → vendr- + ont = vendront.",
+          "translation": "They will sell the car.",
+          "hint": "Drop the -e, then add 'ils' ending."
+        }
+      ]
+    },
+    {
+      "id": "el_futur_simple_etre",
+      "sortOrder": 12,
+      "label": "Radical irrégulier : être → ser-",
+      "ruleNote": "'être' uses the stem 'ser-': je serai, tu seras, il sera, nous serons. The endings are the normal ones.",
+      "examples": [
+        {
+          "id": "el_futur_simple_etre_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « I will be there. »",
+          "cue": null,
+          "answerTokens": ["Je", "serai", "là"],
+          "tokenBank": ["Je", "serai", "là", "suis"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'être' → ser- + ai = serai.",
+          "translation": "I will be there.",
+          "hint": "Stem is 'ser-'."
+        },
+        {
+          "id": "el_futur_simple_etre_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « You will be happy. »",
+          "cue": null,
+          "answerTokens": ["Tu", "seras", "content"],
+          "tokenBank": ["Tu", "seras", "content", "es"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'être' → ser- + as = seras.",
+          "translation": "You will be happy.",
+          "hint": "Stem is 'ser-'."
+        },
+        {
+          "id": "el_futur_simple_etre_03",
+          "type": "fillBlank",
+          "prompt": "Choisis le futur de « être » : « Il ___ médecin. »",
+          "cue": null,
+          "answerTokens": ["sera"],
+          "tokenBank": ["sera", "serai", "seras", "est"],
+          "inputMode": "multipleChoice",
+          "explanation": "'il' → ser- + a = sera.",
+          "translation": "He will be a doctor.",
+          "hint": "Stem 'ser-', ending -a."
+        },
+        {
+          "id": "el_futur_simple_etre_04",
+          "type": "wordOrder",
+          "prompt": "Construis : « We will be at home. »",
+          "cue": null,
+          "answerTokens": ["Nous", "serons", "à", "la", "maison"],
+          "tokenBank": ["Nous", "serons", "à", "la", "maison", "sommes"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'être' → ser- + ons = serons.",
+          "translation": "We will be at home.",
+          "hint": "Stem 'ser-', ending -ons."
+        },
+        {
+          "id": "el_futur_simple_etre_05",
+          "type": "fillBlank",
+          "prompt": "Choisis le futur de « être » : « Ils ___ prêts. »",
+          "cue": null,
+          "answerTokens": ["seront"],
+          "tokenBank": ["seront", "serons", "serez", "sont"],
+          "inputMode": "multipleChoice",
+          "explanation": "'ils' → ser- + ont = seront.",
+          "translation": "They will be ready.",
+          "hint": "Stem 'ser-', ending -ont."
+        }
+      ]
+    },
+    {
+      "id": "el_futur_simple_avoir",
+      "sortOrder": 13,
+      "label": "Radical irrégulier : avoir → aur-",
+      "ruleNote": "'avoir' uses 'aur-': j'aurai, tu auras, il aura, nous aurons.",
+      "examples": [
+        {
+          "id": "el_futur_simple_avoir_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « I will have time. »",
+          "cue": null,
+          "answerTokens": ["J'", "aurai", "le", "temps"],
+          "tokenBank": ["J'", "aurai", "le", "temps", "ai"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'avoir' → aur- + ai; 'j'' before the vowel = j'aurai.",
+          "translation": "I will have time.",
+          "hint": "Stem 'aur-', with 'j''."
+        },
+        {
+          "id": "el_futur_simple_avoir_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « You will have a dog. »",
+          "cue": null,
+          "answerTokens": ["Tu", "auras", "un", "chien"],
+          "tokenBank": ["Tu", "auras", "un", "chien", "as"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'avoir' → aur- + as = auras.",
+          "translation": "You will have a dog.",
+          "hint": "Stem 'aur-', ending -as."
+        },
+        {
+          "id": "el_futur_simple_avoir_03",
+          "type": "fillBlank",
+          "prompt": "Choisis le futur de « avoir » : « Elle ___ vingt ans. »",
+          "cue": null,
+          "answerTokens": ["aura"],
+          "tokenBank": ["aura", "aurai", "auras", "a"],
+          "inputMode": "multipleChoice",
+          "explanation": "'elle' → aur- + a = aura.",
+          "translation": "She will be twenty years old.",
+          "hint": "Stem 'aur-', ending -a."
+        },
+        {
+          "id": "el_futur_simple_avoir_04",
+          "type": "wordOrder",
+          "prompt": "Construis : « We will have a house. »",
+          "cue": null,
+          "answerTokens": ["Nous", "aurons", "une", "maison"],
+          "tokenBank": ["Nous", "aurons", "une", "maison", "avons"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'avoir' → aur- + ons = aurons.",
+          "translation": "We will have a house.",
+          "hint": "Stem 'aur-', ending -ons."
+        },
+        {
+          "id": "el_futur_simple_avoir_05",
+          "type": "fillBlank",
+          "prompt": "Choisis le futur de « avoir » : « Ils ___ besoin d'aide. »",
+          "cue": null,
+          "answerTokens": ["auront"],
+          "tokenBank": ["auront", "aurons", "aurez", "ont"],
+          "inputMode": "multipleChoice",
+          "explanation": "'ils' → aur- + ont = auront.",
+          "translation": "They will need help.",
+          "hint": "Stem 'aur-', ending -ont."
+        }
+      ]
+    },
+    {
+      "id": "el_futur_simple_aller",
+      "sortOrder": 14,
+      "label": "Radical irrégulier : aller → ir-",
+      "ruleNote": "'aller' uses 'ir-': j'irai, tu iras, il ira, nous irons.",
+      "examples": [
+        {
+          "id": "el_futur_simple_aller_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « I will go to Paris. »",
+          "cue": null,
+          "answerTokens": ["J'", "irai", "à", "Paris"],
+          "tokenBank": ["J'", "irai", "à", "Paris", "vais"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'aller' → ir- + ai; 'j'' before the vowel = j'irai.",
+          "translation": "I will go to Paris.",
+          "hint": "Stem 'ir-', with 'j''."
+        },
+        {
+          "id": "el_futur_simple_aller_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « You will go to the cinema. »",
+          "cue": null,
+          "answerTokens": ["Tu", "iras", "au", "cinéma"],
+          "tokenBank": ["Tu", "iras", "au", "cinéma", "vas"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'aller' → ir- + as = iras.",
+          "translation": "You will go to the cinema.",
+          "hint": "Stem 'ir-', ending -as."
+        },
+        {
+          "id": "el_futur_simple_aller_03",
+          "type": "fillBlank",
+          "prompt": "Choisis le futur de « aller » : « Il ___ au marché. »",
+          "cue": null,
+          "answerTokens": ["ira"],
+          "tokenBank": ["ira", "irai", "iras", "va"],
+          "inputMode": "multipleChoice",
+          "explanation": "'il' → ir- + a = ira.",
+          "translation": "He will go to the market.",
+          "hint": "Stem 'ir-', ending -a."
+        },
+        {
+          "id": "el_futur_simple_aller_04",
+          "type": "wordOrder",
+          "prompt": "Construis : « We will go to the beach. »",
+          "cue": null,
+          "answerTokens": ["Nous", "irons", "à", "la", "plage"],
+          "tokenBank": ["Nous", "irons", "à", "la", "plage", "allons"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'aller' → ir- + ons = irons.",
+          "translation": "We will go to the beach.",
+          "hint": "Stem 'ir-', ending -ons."
+        },
+        {
+          "id": "el_futur_simple_aller_05",
+          "type": "fillBlank",
+          "prompt": "Choisis le futur de « aller » : « Elles ___ ensemble. »",
+          "cue": null,
+          "answerTokens": ["iront"],
+          "tokenBank": ["iront", "irons", "irez", "vont"],
+          "inputMode": "multipleChoice",
+          "explanation": "'elles' → ir- + ont = iront.",
+          "translation": "They will go together.",
+          "hint": "Stem 'ir-', ending -ont."
+        }
+      ]
+    },
+    {
+      "id": "el_futur_simple_faire",
+      "sortOrder": 15,
+      "label": "Radical irrégulier : faire → fer-",
+      "ruleNote": "'faire' uses 'fer-': je ferai, tu feras, il fera, nous ferons.",
+      "examples": [
+        {
+          "id": "el_futur_simple_faire_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « I will do the shopping. »",
+          "cue": null,
+          "answerTokens": ["Je", "ferai", "les", "courses"],
+          "tokenBank": ["Je", "ferai", "les", "courses", "fais"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'faire' → fer- + ai = ferai.",
+          "translation": "I will do the shopping.",
+          "hint": "Stem 'fer-', ending -ai."
+        },
+        {
+          "id": "el_futur_simple_faire_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « You will make a cake. »",
+          "cue": null,
+          "answerTokens": ["Tu", "feras", "un", "gâteau"],
+          "tokenBank": ["Tu", "feras", "un", "gâteau", "fais"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'faire' → fer- + as = feras.",
+          "translation": "You will make a cake.",
+          "hint": "Stem 'fer-', ending -as."
+        },
+        {
+          "id": "el_futur_simple_faire_03",
+          "type": "fillBlank",
+          "prompt": "Choisis le futur de « faire » : « Il ___ du sport. »",
+          "cue": null,
+          "answerTokens": ["fera"],
+          "tokenBank": ["fera", "ferai", "feras", "fait"],
+          "inputMode": "multipleChoice",
+          "explanation": "'il' → fer- + a = fera.",
+          "translation": "He will do sport.",
+          "hint": "Stem 'fer-', ending -a."
+        },
+        {
+          "id": "el_futur_simple_faire_04",
+          "type": "wordOrder",
+          "prompt": "Construis : « We will do the work. »",
+          "cue": null,
+          "answerTokens": ["Nous", "ferons", "le", "travail"],
+          "tokenBank": ["Nous", "ferons", "le", "travail", "faisons"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'faire' → fer- + ons = ferons.",
+          "translation": "We will do the work.",
+          "hint": "Stem 'fer-', ending -ons."
+        },
+        {
+          "id": "el_futur_simple_faire_05",
+          "type": "fillBlank",
+          "prompt": "Choisis le futur de « faire » : « Ils ___ attention. »",
+          "cue": null,
+          "answerTokens": ["feront"],
+          "tokenBank": ["feront", "ferons", "ferez", "font"],
+          "inputMode": "multipleChoice",
+          "explanation": "'ils' → fer- + ont = feront.",
+          "translation": "They will pay attention.",
+          "hint": "Stem 'fer-', ending -ont."
+        }
+      ]
+    },
+    {
+      "id": "el_futur_simple_venir",
+      "sortOrder": 16,
+      "label": "Radical irrégulier : venir → viendr-",
+      "ruleNote": "'venir' uses 'viendr-': je viendrai, tu viendras, il viendra. Its family follows: revenir → reviendr-.",
+      "examples": [
+        {
+          "id": "el_futur_simple_venir_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « I will come tomorrow. »",
+          "cue": null,
+          "answerTokens": ["Je", "viendrai", "demain"],
+          "tokenBank": ["Je", "viendrai", "demain", "viens"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'venir' → viendr- + ai = viendrai.",
+          "translation": "I will come tomorrow.",
+          "hint": "Stem 'viendr-', ending -ai."
+        },
+        {
+          "id": "el_futur_simple_venir_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « You will come with us. »",
+          "cue": null,
+          "answerTokens": ["Tu", "viendras", "avec", "nous"],
+          "tokenBank": ["Tu", "viendras", "avec", "nous", "viens"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'venir' → viendr- + as = viendras.",
+          "translation": "You will come with us.",
+          "hint": "Stem 'viendr-', ending -as."
+        },
+        {
+          "id": "el_futur_simple_venir_03",
+          "type": "fillBlank",
+          "prompt": "Choisis le futur de « venir » : « Il ___ ce soir. »",
+          "cue": null,
+          "answerTokens": ["viendra"],
+          "tokenBank": ["viendra", "viendrai", "viendras", "vient"],
+          "inputMode": "multipleChoice",
+          "explanation": "'il' → viendr- + a = viendra.",
+          "translation": "He will come this evening.",
+          "hint": "Stem 'viendr-', ending -a."
+        },
+        {
+          "id": "el_futur_simple_venir_04",
+          "type": "wordOrder",
+          "prompt": "Construis : « We will come back later. »",
+          "cue": null,
+          "answerTokens": ["Nous", "reviendrons", "plus", "tard"],
+          "tokenBank": ["Nous", "reviendrons", "plus", "tard", "revenons"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'revenir' → reviendr- + ons = reviendrons.",
+          "translation": "We will come back later.",
+          "hint": "Family verb: 'reviendr-'."
+        },
+        {
+          "id": "el_futur_simple_venir_05",
+          "type": "fillBlank",
+          "prompt": "Choisis le futur de « venir » : « Elles ___ à la fête. »",
+          "cue": null,
+          "answerTokens": ["viendront"],
+          "tokenBank": ["viendront", "viendrons", "viendrez", "viennent"],
+          "inputMode": "multipleChoice",
+          "explanation": "'elles' → viendr- + ont = viendront.",
+          "translation": "They will come to the party.",
+          "hint": "Stem 'viendr-', ending -ont."
+        }
+      ]
+    },
+    {
+      "id": "el_futur_simple_marqueurs",
+      "sortOrder": 17,
+      "label": "Marqueurs : demain, l'année prochaine",
+      "ruleNote": "Future time markers fit the futur simple: demain, l'année prochaine, dans deux ans, un jour.",
+      "examples": [
+        {
+          "id": "el_futur_simple_marqueurs_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « Tomorrow, I will work. »",
+          "cue": null,
+          "answerTokens": ["Demain", "je", "travaillerai"],
+          "tokenBank": ["Demain", "je", "travaillerai", "travaille"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'Demain' pairs naturally with the futur simple.",
+          "translation": "Tomorrow, I will work.",
+          "hint": "'Demain' signals the future."
+        },
+        {
+          "id": "el_futur_simple_marqueurs_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « Next year, we will travel. »",
+          "cue": null,
+          "answerTokens": ["L'", "année", "prochaine", "nous", "voyagerons"],
+          "tokenBank": ["L'", "année", "prochaine", "nous", "voyagerons", "voyageons"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'L'année prochaine' fits the futur simple.",
+          "translation": "Next year, we will travel.",
+          "hint": "'L'' attaches to 'année'."
+        },
+        {
+          "id": "el_futur_simple_marqueurs_03",
+          "type": "wordOrder",
+          "prompt": "Construis : « In two years, she will speak French. »",
+          "cue": null,
+          "answerTokens": ["Dans", "deux", "ans", "elle", "parlera", "français"],
+          "tokenBank": ["Dans", "deux", "ans", "elle", "parlera", "français", "parle"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'Dans deux ans' points to the future.",
+          "translation": "In two years, she will speak French.",
+          "hint": "'Dans deux ans' is a future marker."
+        },
+        {
+          "id": "el_futur_simple_marqueurs_04",
+          "type": "fillBlank",
+          "prompt": "Choisis le verbe au futur : « Un jour, ils ___ ici. »",
+          "cue": null,
+          "answerTokens": ["habiteront"],
+          "tokenBank": ["habiteront", "habitent", "habitaient", "ont habité"],
+          "inputMode": "multipleChoice",
+          "explanation": "'Un jour' calls for the futur simple: habiteront.",
+          "translation": "One day, they will live here.",
+          "hint": "'Un jour' signals the future."
+        },
+        {
+          "id": "el_futur_simple_marqueurs_05",
+          "type": "wordOrder",
+          "prompt": "Construis : « Tomorrow, you will come. »",
+          "cue": null,
+          "answerTokens": ["Demain", "tu", "viendras"],
+          "tokenBank": ["Demain", "tu", "viendras", "viens"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'Demain' + futur simple 'viendras'.",
+          "translation": "Tomorrow, you will come.",
+          "hint": "'Demain' signals the future."
+        }
+      ]
+    },
+    {
+      "id": "el_futur_simple_negation",
+      "sortOrder": 18,
+      "label": "Négation au futur",
+      "ruleNote": "Negate with ne...pas around the one-word verb: je ne parlerai pas, il ne viendra pas.",
+      "examples": [
+        {
+          "id": "el_futur_simple_negation_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « We will not stay here. »",
+          "cue": null,
+          "answerTokens": ["Nous", "ne", "resterons", "pas", "ici"],
+          "tokenBank": ["Nous", "ne", "resterons", "pas", "ici", "restons"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'ne...pas' wraps the one-word verb 'resterons'.",
+          "translation": "We will not stay here.",
+          "hint": "'ne' before, 'pas' after the verb."
+        },
+        {
+          "id": "el_futur_simple_negation_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « I will not speak. »",
+          "cue": null,
+          "answerTokens": ["Je", "ne", "parlerai", "pas"],
+          "tokenBank": ["Je", "ne", "parlerai", "pas", "parle"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'ne parlerai pas' surrounds the verb.",
+          "translation": "I will not speak.",
+          "hint": "'ne' before, 'pas' after."
+        },
+        {
+          "id": "el_futur_simple_negation_03",
+          "type": "wordOrder",
+          "prompt": "Construis : « He will not come tomorrow. »",
+          "cue": null,
+          "answerTokens": ["Il", "ne", "viendra", "pas", "demain"],
+          "tokenBank": ["Il", "ne", "viendra", "pas", "demain", "vient"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'ne viendra pas' wraps the verb.",
+          "translation": "He will not come tomorrow.",
+          "hint": "'ne' before, 'pas' after."
+        },
+        {
+          "id": "el_futur_simple_negation_04",
+          "type": "wordOrder",
+          "prompt": "Construis : « You will not have time. »",
+          "cue": null,
+          "answerTokens": ["Tu", "n'", "auras", "pas", "le", "temps"],
+          "tokenBank": ["Tu", "n'", "auras", "pas", "le", "temps", "as"],
+          "inputMode": "buildFromTokens",
+          "explanation": "Before a vowel, 'ne' becomes 'n'': n'auras pas.",
+          "translation": "You will not have time.",
+          "hint": "'n'' attaches before the vowel."
+        },
+        {
+          "id": "el_futur_simple_negation_05",
+          "type": "fillBlank",
+          "prompt": "Choisis : « Elle ___ à la fête. » (négatif)",
+          "cue": null,
+          "answerTokens": ["n'ira pas"],
+          "tokenBank": ["n'ira pas", "ne ira pas", "n'irait pas", "ne va pas"],
+          "inputMode": "multipleChoice",
+          "explanation": "'aller' → ira; negated with n'...pas = n'ira pas.",
+          "translation": "She will not go to the party.",
+          "hint": "'ne' becomes 'n'' before 'ira'."
+        }
+      ]
+    },
+    {
+      "id": "el_futur_simple_question",
+      "sortOrder": 19,
+      "label": "Question au futur",
+      "ruleNote": "Ask with est-ce que: Est-ce que tu viendras ? Quand est-ce qu'ils arriveront ?",
+      "examples": [
+        {
+          "id": "el_futur_simple_question_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « Will you come? »",
+          "cue": null,
+          "answerTokens": ["Est-ce", "que", "tu", "viendras"],
+          "tokenBank": ["Est-ce", "que", "tu", "viendras", "viens"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'Est-ce que' + futur simple makes a question.",
+          "translation": "Will you come?",
+          "hint": "Start with 'Est-ce que'."
+        },
+        {
+          "id": "el_futur_simple_question_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « Will we eat together? »",
+          "cue": null,
+          "answerTokens": ["Est-ce", "que", "nous", "mangerons", "ensemble"],
+          "tokenBank": ["Est-ce", "que", "nous", "mangerons", "ensemble", "mangeons"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'Est-ce que' + 'mangerons' forms the question.",
+          "translation": "Will we eat together?",
+          "hint": "Start with 'Est-ce que'."
+        },
+        {
+          "id": "el_futur_simple_question_03",
+          "type": "wordOrder",
+          "prompt": "Construis : « When will they arrive? »",
+          "cue": null,
+          "answerTokens": ["Quand", "est-ce", "qu'", "ils", "arriveront"],
+          "tokenBank": ["Quand", "est-ce", "qu'", "ils", "arriveront", "arrivent"],
+          "inputMode": "buildFromTokens",
+          "explanation": "Before 'ils', 'que' becomes 'qu''.",
+          "translation": "When will they arrive?",
+          "hint": "'qu'' attaches before 'ils'."
+        },
+        {
+          "id": "el_futur_simple_question_04",
+          "type": "wordOrder",
+          "prompt": "Construis : « Will she be there? »",
+          "cue": null,
+          "answerTokens": ["Est-ce", "qu'", "elle", "sera", "là"],
+          "tokenBank": ["Est-ce", "qu'", "elle", "sera", "là", "est"],
+          "inputMode": "buildFromTokens",
+          "explanation": "Before 'elle', 'que' becomes 'qu''; 'être' → sera.",
+          "translation": "Will she be there?",
+          "hint": "'qu'' attaches before 'elle'."
+        },
+        {
+          "id": "el_futur_simple_question_05",
+          "type": "fillBlank",
+          "prompt": "Choisis la question correcte au futur :",
+          "cue": null,
+          "answerTokens": ["Est-ce que vous viendrez ?"],
+          "tokenBank": ["Est-ce que vous viendrez ?", "Est-ce que vous venez ?", "Est-ce que vous viendriez ?", "Est-ce que vous viendrai ?"],
+          "inputMode": "multipleChoice",
+          "explanation": "'vous' futur of 'venir' is 'viendrez'.",
+          "translation": "Will you come?",
+          "hint": "Use the futur form for 'vous'."
+        }
+      ]
+    },
+    {
+      "id": "el_futur_simple_synthese",
+      "sortOrder": 20,
+      "label": "Synthèse : le futur simple",
+      "ruleNote": "Put it together: take the infinitive stem (or an irregular like ser-, aur-, ir-, fer-, viendr-), add the ending, and handle negation/questions.",
+      "examples": [
+        {
+          "id": "el_futur_simple_synthese_01",
+          "type": "wordOrder",
+          "prompt": "Construis : « Tomorrow, I will be ready. »",
+          "cue": null,
+          "answerTokens": ["Demain", "je", "serai", "prêt"],
+          "tokenBank": ["Demain", "je", "serai", "prêt", "suis"],
+          "inputMode": "buildFromTokens",
+          "explanation": "Marker 'Demain' + irregular 'serai' (être → ser-).",
+          "translation": "Tomorrow, I will be ready.",
+          "hint": "'être' stem is 'ser-'."
+        },
+        {
+          "id": "el_futur_simple_synthese_02",
+          "type": "wordOrder",
+          "prompt": "Construis : « We will not go to the cinema. »",
+          "cue": null,
+          "answerTokens": ["Nous", "n'", "irons", "pas", "au", "cinéma"],
+          "tokenBank": ["Nous", "n'", "irons", "pas", "au", "cinéma", "allons"],
+          "inputMode": "buildFromTokens",
+          "explanation": "'aller' → irons; negation 'n'...pas'.",
+          "translation": "We will not go to the cinema.",
+          "hint": "'n'' attaches before 'irons'."
+        },
+        {
+          "id": "el_futur_simple_synthese_03",
+          "type": "wordOrder",
+          "prompt": "Construis : « Will you have time tomorrow? »",
+          "cue": null,
+          "answerTokens": ["Est-ce", "que", "tu", "auras", "le", "temps", "demain"],
+          "tokenBank": ["Est-ce", "que", "tu", "auras", "le", "temps", "demain", "as"],
+          "inputMode": "buildFromTokens",
+          "explanation": "Question with 'Est-ce que' + 'avoir' → auras.",
+          "translation": "Will you have time tomorrow?",
+          "hint": "'avoir' stem is 'aur-'."
+        },
+        {
+          "id": "el_futur_simple_synthese_04",
+          "type": "fillBlank",
+          "prompt": "Choisis le futur de « faire » : « Demain, il ___ ses devoirs. »",
+          "cue": null,
+          "answerTokens": ["fera"],
+          "tokenBank": ["fera", "fait", "faisait", "a fait"],
+          "inputMode": "multipleChoice",
+          "explanation": "'faire' → fer- + a = fera.",
+          "translation": "Tomorrow, he will do his homework.",
+          "hint": "'faire' stem is 'fer-'."
+        },
+        {
+          "id": "el_futur_simple_synthese_05",
+          "type": "wordOrder",
+          "prompt": "Construis : « Next year, they will come back. »",
+          "cue": null,
+          "answerTokens": ["L'", "année", "prochaine", "ils", "reviendront"],
+          "tokenBank": ["L'", "année", "prochaine", "ils", "reviendront", "reviennent"],
+          "inputMode": "buildFromTokens",
+          "explanation": "Marker + 'revenir' → reviendr- + ont = reviendront.",
+          "translation": "Next year, they will come back.",
+          "hint": "'revenir' stem is 'reviendr-'."
+        }
+      ]
+    }
+  ]
+}
