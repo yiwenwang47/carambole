@@ -36,8 +36,8 @@ extension Color {
 /// The "Le Cahier" palette. Single accent discipline: saffron only.
 /// Sage/terracotta appear ONLY on answer result state.
 enum AppColor {
-    /// App background — warm cream, NOT pure white.
-    static let paper = Color(hex: "FAF7F0")
+    /// App background — pure white.
+    static let paper = Color(hex: "FFFFFF")
     /// Primary text, borders, primary button fill.
     static let ink = Color(hex: "14110E")
     /// Secondary text, uppercase labels.
