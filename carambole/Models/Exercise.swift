@@ -75,12 +75,27 @@ struct Exercise: Identifiable, Codable, Equatable {
     /// typing and their authored mode for variety. An explicit `.freeText` author
     /// choice always types. Deterministic per `id`, so revisiting a drill via review
     /// navigation never flips its mode mid-session.
+    ///
+    /// Gated on a visible blank: the typing shuffle only fires when the prompt carries
+    /// a `___` slot (rendered as an underline by `DrillView.blankedPrompt`). Build /
+    /// transform / identify prompts ("Construis : …", "Quel est …") have no slot —
+    /// in pick mode you assemble the whole answer, but typed they'd show a complete
+    /// sentence with no cue for what one word to type where. Those stay in pick mode.
     var resolvedInputMode: InputMode {
         if inputMode == .freeText { return .freeText }
-        guard answerTokens.count <= 2, Exercise.isTypeable(answerTokens) else {
+        guard answerTokens.count <= 2,
+              Exercise.isTypeable(answerTokens),
+              Exercise.promptHasBlank(prompt) else {
             return inputMode
         }
         return Exercise.typeBit(id) ? .freeText : inputMode
+    }
+
+    /// Whether a prompt has a fill-in-the-blank slot — a run of underscores that
+    /// `DrillView.blankedPrompt` draws as an underline. Only blanked prompts are
+    /// eligible for the typing shuffle (see `resolvedInputMode`).
+    static func promptHasBlank(_ prompt: String) -> Bool {
+        return prompt.contains("_")
     }
 
     /// Punctuation a learner would have to type out — terminal marks and
@@ -339,6 +354,31 @@ extension Exercise {
                "displayJoin spaces ordinary words")
         assert(Exercise.displayJoin(["Tu aimes le café?"]) == "Tu aimes le café?",
                "displayJoin leaves a whole MC sentence intact")
+
+        // Typing shuffle is gated on a visible blank: a no-blank build/identify prompt
+        // never resolves to typing, even when its short answer is otherwise typeable.
+        assert(Exercise.promptHasBlank("Il ___ content."), "underscore run is a blank")
+        assert(!Exercise.promptHasBlank("Construis : « Do you speak French? »"),
+               "no underscore = no blank")
+        // Force a typeable answer whose id would flip to typing if not gated…
+        let noBlankIds = (0..<40).map { "nb-\($0)" }.filter { Exercise.typeBit($0) }
+        for tid in noBlankIds {
+            let ex = Exercise(id: tid, elementID: "t", type: .wordOrder,
+                              prompt: "Construis : « She eats. »", cue: nil,
+                              answerTokens: ["Elle", "mange"],
+                              tokenBank: ["Elle", "mange", "il", "mangent"],
+                              inputMode: .buildFromTokens, explanation: "e")
+            assert(ex.resolvedInputMode == .buildFromTokens,
+                   "no-blank prompt must never shuffle to typing")
+        }
+        // …but the same answer WITH a blank still shuffles to typing for those ids.
+        let withBlank = Exercise(id: noBlankIds.first ?? "nb-0", elementID: "t",
+                                 type: .fillBlank, prompt: "___ mange.", cue: nil,
+                                 answerTokens: ["Elle"],
+                                 tokenBank: ["Elle", "Il", "On"],
+                                 inputMode: .multipleChoice, explanation: "e")
+        assert(withBlank.resolvedInputMode == .freeText,
+               "blanked prompt with a typeBit id resolves to typing")
     }
 }
 #endif
