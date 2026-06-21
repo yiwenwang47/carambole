@@ -67,29 +67,31 @@ struct DrillView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            // No ScrollView: the card is laid out to fit on screen. After grading
-            // the content stays short (a correct answer auto-advances; a wrong one
-            // shows only the correct answer compactly in the footer; the full
-            // explanation appears only in read-only review), so nothing scrolls.
-            VStack(alignment: .leading, spacing: Spacing.xl) {
-                header
+            // Content scrolls ONLY when it overflows (long prompt, many tokens, an
+            // expanded Indice, or the full review block) — `.basedOnSize` keeps short
+            // drills static (no bounce, looks like a fixed card). The footer below is
+            // pinned OUTSIDE the scroll, so "Suivant" is always reachable.
+            ScrollView {
+                VStack(alignment: .leading, spacing: Spacing.xl) {
+                    header
 
-                promptBlock
+                    promptBlock
 
-                if let review = reviewData {
-                    // Read-only revisit: show what was submitted, the result, the
-                    // correct answer (if wrong), and the full bilingual explanation.
-                    submittedAnswerBlock(review.answer)
-                    reviewResultBlock(correct: review.correct)
-                } else {
-                    inputBlock
+                    if let review = reviewData {
+                        // Read-only revisit: show what was submitted, the result, the
+                        // correct answer (if wrong), and the full bilingual explanation.
+                        submittedAnswerBlock(review.answer)
+                        reviewResultBlock(correct: review.correct)
+                    } else {
+                        inputBlock
+                    }
                 }
-
-                Spacer(minLength: 0)
+                .padding(.horizontal, Spacing.screenH)
+                .padding(.top, Spacing.xl)
+                .padding(.bottom, Spacing.lg)
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .padding(.horizontal, Spacing.screenH)
-            .padding(.top, Spacing.xl)
-            .padding(.bottom, Spacing.lg)
+            .scrollBounceBehavior(.basedOnSize)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
 
             // Pinned footer: the primary action stays reachable. On a wrong LIVE

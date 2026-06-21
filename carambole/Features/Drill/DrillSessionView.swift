@@ -65,6 +65,17 @@ struct DrillSessionView: View {
     /// finger during a swipe and springs back to 0 (or commits to the next/prev
     /// card) on release. Each card is offset by `(i - cursor) * width + dragOffset`.
     @State private var dragOffset: CGFloat = 0
+    /// Index of the card we just ADVANCED past (forward). It is still on screen,
+    /// sliding out left, but must NOT flip into the explanation/review chrome —
+    /// "just slide to the next drill." It keeps its live answered look (the card is
+    /// still alive, so its internal state shows). Cleared the moment the learner
+    /// drags BACK, so a deliberate slide-back reveals the explanation as intended.
+    @State private var hideExplanationAt: Int? = nil
+    /// Manual keyboard inset (keyboard + accent bar height, above the home
+    /// indicator). The carousel's fixed-height cards defeat SwiftUI's automatic
+    /// keyboard avoidance, so for typing drills we lift the card content by this
+    /// much to keep "Vérifier" above the keyboard. 0 whenever the keyboard is down.
+    @State private var keyboardInset: CGFloat = 0
 
     @State private var finished = false
     @State private var showingIntro = true
@@ -120,11 +131,24 @@ struct DrillSessionView: View {
                         carousel
                     }
                 }
+                // The carousel's fixed-height cards swallow SwiftUI's automatic
+                // keyboard avoidance, so own it manually: opt out of the auto inset
+                // and lift the content by the keyboard (+ accent bar) height. 0 when
+                // the keyboard is down, so token/MC drills are unaffected.
+                .padding(.bottom, keyboardInset)
+                .ignoresSafeArea(.keyboard, edges: .bottom)
+                .animation(.easeOut(duration: 0.25), value: keyboardInset)
             }
         }
         .onAppear {
             if history.isEmpty && !elements.isEmpty { startElement(0, animated: false) }
         }
+        .onReceive(NotificationCenter.default.publisher(
+            for: UIResponder.keyboardWillShowNotification)) { updateKeyboardInset($0) }
+        .onReceive(NotificationCenter.default.publisher(
+            for: UIResponder.keyboardWillChangeFrameNotification)) { updateKeyboardInset($0) }
+        .onReceive(NotificationCenter.default.publisher(
+            for: UIResponder.keyboardWillHideNotification)) { _ in keyboardInset = 0 }
         // The drill stack (carousel) animates itself via `dragOffset`/`cursor` inside
         // explicit withAnimation transactions; only the intro/completion swaps animate
         // here.
@@ -175,8 +199,10 @@ struct DrillSessionView: View {
             onBack: goBack,
             canGoForward: i < frontier,
             onForward: goForward,
-            // Any card behind the frontier is an answered drill → read-only review.
-            reviewData: i < frontier
+            // An answered card behind the frontier is a read-only review — EXCEPT
+            // the one we just advanced past (`hideExplanationAt`), which keeps its
+            // live answered look while sliding out so the explanation never flashes.
+            reviewData: (i < frontier && i != hideExplanationAt)
                 ? DrillView.ReviewData(answer: submittedAnswers[i] ?? [],
                                        correct: resultByIndex[i] ?? false)
                 : nil
@@ -187,6 +213,11 @@ struct DrillSessionView: View {
     private func dragGesture(width: CGFloat) -> some Gesture {
         DragGesture(minimumDistance: 12)
             .onChanged { value in
+                // Dragging back toward the previous card → reveal its explanation
+                // as it slides in (clear the advance-suppression).
+                if value.translation.width > 0, hideExplanationAt != nil {
+                    hideExplanationAt = nil
+                }
                 dragOffset = resistedOffset(value.translation.width, width: width)
             }
             .onEnded { value in
@@ -228,6 +259,19 @@ struct DrillSessionView: View {
 
     private func navHaptic() {
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
+    }
+
+    /// Compute the on-screen keyboard inset from a keyboard frame notification:
+    /// how far the keyboard (with its accent-bar accessory) rises ABOVE the home
+    /// indicator's safe area, which is what `padding(.bottom,)` must add to clear it.
+    private func updateKeyboardInset(_ note: Notification) {
+        guard let frame = note.userInfo?[UIResponder.keyboardFrameEndUserInfoKey]
+                as? CGRect else { return }
+        let window = UIApplication.shared.connectedScenes
+            .compactMap { ($0 as? UIWindowScene)?.keyWindow }.first
+        let screenH = window?.bounds.height ?? UIScreen.main.bounds.height
+        let safeBottom = window?.safeAreaInsets.bottom ?? 0
+        keyboardInset = max(0, screenH - frame.origin.y - safeBottom)
     }
 
     /// Animate the stack so card `index` becomes centered (and clear any drag).
@@ -322,14 +366,20 @@ struct DrillSessionView: View {
 
     /// Commit forward from the live card to a freshly-generated next card.
     private func advance() {
+        // The card we're leaving stays on screen sliding out — suppress its review
+        // chrome so it slides away cleanly instead of flashing the explanation.
+        hideExplanationAt = cursor
         switch nextAction {
         case .nextExample: presentNextExample(animated: true)
         case .nextElement: goToNextElement(animated: true)
         }
     }
 
-    /// Slide back to the previous (answered, read-only) card.
+    /// Slide back to the previous (answered, read-only) card. A deliberate
+    /// slide-back is exactly when the explanation SHOULD appear, so lift any
+    /// suppression first.
     private func goBack() {
+        hideExplanationAt = nil
         guard cursor > 0 else { return }
         animateCursor(to: cursor - 1)
     }
