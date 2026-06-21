@@ -138,18 +138,6 @@ struct DrillView: View {
         }
     }
 
-    /// Small "écouter" control that reads a French string aloud via `Speaker`.
-    private func speakButton(_ text: String) -> some View {
-        Button { Speaker.shared.speak(text) } label: {
-            Image(systemName: "speaker.wave.2.fill")
-                .font(.system(size: 16, weight: .semibold))
-                .foregroundColor(AppColor.saffronDeep)
-                .contentShape(Rectangle())
-        }
-        .buttonStyle(.plain)
-        .accessibilityLabel("Écouter la phrase")
-    }
-
     private func navChevron(_ systemName: String, label: String,
                             action: @escaping () -> Void) -> some View {
         Button(action: action) {
@@ -189,11 +177,10 @@ struct DrillView: View {
                     .padding(.leading, Spacing.sm)
             }
 
-            // Tap-to-reveal English grammar hint, only when one exists.
-            if let hint = exercise.hint, !hint.isEmpty {
-                hintControl(hint)
-                    .padding(.leading, Spacing.sm)
-            }
+            // Opt-in assists on one line: English "Indice" (left, when present) and
+            // "Écouter" (right, always) — the learner chooses to reveal/hear.
+            assistRow
+                .padding(.leading, Spacing.sm)
         }
     }
 
@@ -257,33 +244,22 @@ struct DrillView: View {
     }
     #endif
 
-    // MARK: - Hint (tap-to-reveal)
+    // MARK: - Learner assists (Indice + Écouter), one line
 
-    @ViewBuilder
-    private func hintControl(_ hint: String) -> some View {
+    /// One line of opt-in assists: tap-to-reveal English "Indice" (left, only when
+    /// the exercise has a hint) and "Écouter" (right, always). Both are deliberate
+    /// taps — nothing is shown or played automatically. The revealed hint text drops
+    /// in below the row.
+    private var assistRow: some View {
         VStack(alignment: .leading, spacing: Spacing.sm) {
-            Button {
-                withAnimation(.spring(response: 0.35, dampingFraction: 0.85)) {
-                    showHint.toggle()
+            HStack(alignment: .center) {
+                if let hint = exercise.hint, !hint.isEmpty {
+                    indiceButton
                 }
-            } label: {
-                HStack(spacing: 6) {
-                    Image(systemName: "lightbulb")
-                        .font(.system(size: 13, weight: .semibold))
-                    Text("Indice")
-                        .font(.appLabel)
-                        .textCase(.uppercase)
-                        .tracking(2)
-                    Image(systemName: "chevron.down")
-                        .font(.system(size: 11, weight: .semibold))
-                        .rotationEffect(.degrees(showHint ? 180 : 0))
-                }
-                .foregroundColor(showHint ? AppColor.saffronDeep : AppColor.graphite)
-                .contentShape(Rectangle())
+                Spacer(minLength: Spacing.sm)
+                listenButton
             }
-            .buttonStyle(.plain)
-
-            if showHint {
+            if showHint, let hint = exercise.hint, !hint.isEmpty {
                 Text(hint)
                     .font(.appExplain)
                     .foregroundColor(AppColor.graphite)
@@ -291,6 +267,52 @@ struct DrillView: View {
                     .transition(.opacity.combined(with: .move(edge: .top)))
             }
         }
+    }
+
+    /// Tap-to-reveal English grammar hint toggle.
+    private var indiceButton: some View {
+        Button {
+            withAnimation(.spring(response: 0.35, dampingFraction: 0.85)) {
+                showHint.toggle()
+            }
+        } label: {
+            HStack(spacing: 6) {
+                Image(systemName: "lightbulb")
+                    .font(.system(size: 13, weight: .semibold))
+                Text("Indice")
+                    .font(.appLabel)
+                    .textCase(.uppercase)
+                    .tracking(2)
+                Image(systemName: "chevron.down")
+                    .font(.system(size: 11, weight: .semibold))
+                    .rotationEffect(.degrees(showHint ? 180 : 0))
+            }
+            .foregroundColor(showHint ? AppColor.saffronDeep : AppColor.graphite)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+    }
+
+    /// Opt-in "hear the sentence" hint, available while solving. Plays the bundled
+    /// model audio (or on-device synth) of `spokenFrench`. The learner decides
+    /// whether hearing the model sentence helps — this reads the full sentence, so
+    /// it's a chosen hint, not a passive aid (auto-play stays an off-by-default
+    /// Settings toggle).
+    private var listenButton: some View {
+        Button { Speaker.shared.speak(exercise.spokenFrench, key: exercise.audioKey) } label: {
+            HStack(spacing: 6) {
+                Image(systemName: "speaker.wave.2.fill")
+                    .font(.system(size: 13, weight: .semibold))
+                Text("Écouter")
+                    .font(.appLabel)
+                    .textCase(.uppercase)
+                    .tracking(2)
+            }
+            .foregroundColor(AppColor.saffronDeep)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel("Écouter la phrase")
     }
 
     // MARK: - Input
@@ -339,9 +361,8 @@ struct DrillView: View {
                     .font(.appTitle)
                     .foregroundColor(tint)
                 Spacer()
-                // Hear the correct French sentence read aloud. Only ever shown after
-                // checking (here in review), so it can't leak the answer.
-                speakButton(exercise.spokenFrench)
+                // (Audio is on the prompt's "Écouter" assist row above, shown in both
+                // solving and review — no separate banner speaker needed here.)
             }
 
             if !correct {
@@ -523,7 +544,7 @@ struct DrillView: View {
             // answer keeps its banner with a tappable speaker either way. Speech
             // continues across the advance (Speaker is shared).
             if autoSpeak {
-                Speaker.shared.speak(exercise.spokenFrench)
+                Speaker.shared.speak(exercise.spokenFrench, key: exercise.audioKey)
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + correctAdvanceDelay) {
                 onNext()

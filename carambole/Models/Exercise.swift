@@ -268,29 +268,44 @@ struct Exercise: Identifiable, Codable, Equatable {
     }
 
     /// Pure builder behind `spokenFrench` (testable without an `Exercise`).
+    /// Mirrors the Python port in `tools/tts/extract.py` byte-for-byte so the
+    /// pre-generated `<audioKey>.mp3` filenames line up.
     static func spokenFrench(prompt: String, answer: String, hasBlank: Bool) -> String {
-        // No blank → the prompt is an English build instruction; the assembled
-        // answer is the whole French sentence.
-        guard hasBlank else { return answer }
-
-        var body = prompt
-        // Drop a leading "instruction :" (e.g. "Complète :", "Choisis l'article :").
-        if let r = body.range(of: " : ") { body = String(body[r.upperBound...]) }
-        // Strip parenthetical cues ("(parler)") and the « » display quotes — neither
-        // is part of the spoken sentence.
-        body = body.replacingOccurrences(of: #"\([^)]*\)"#, with: "",
-                                         options: .regularExpression)
-        body = body.replacingOccurrences(of: "«", with: "")
-                   .replacingOccurrences(of: "»", with: "")
-        // Fill each blank (a run of underscores) with the answer.
-        body = body.replacingOccurrences(of: #"_+"#, with: answer,
-                                         options: .regularExpression)
-        // Tidy: glue elisions ("l' eau" → "l'eau"), collapse runs of spaces, trim.
+        var body: String
+        if hasBlank {
+            body = prompt
+            // Drop a leading "instruction :" (e.g. "Complète :", "Choisis l'article :").
+            if let r = body.range(of: " : ") { body = String(body[r.upperBound...]) }
+            // Strip parenthetical cues ("(parler)") and the « » display quotes — neither
+            // is part of the spoken sentence.
+            body = body.replacingOccurrences(of: #"\([^)]*\)"#, with: "",
+                                             options: .regularExpression)
+            body = body.replacingOccurrences(of: "«", with: "")
+                       .replacingOccurrences(of: "»", with: "")
+            // Fill each blank (a run of underscores) with the answer.
+            body = body.replacingOccurrences(of: #"_+"#, with: answer,
+                                             options: .regularExpression)
+        } else {
+            // No blank → the prompt is an English build instruction; the assembled
+            // answer is the whole French sentence.
+            body = answer
+        }
+        // Tidy (both shapes): glue elisions ("C' est" → "C'est", "l' eau" → "l'eau"),
+        // collapse runs of spaces, trim. Gluing in the no-blank branch too matters for
+        // TTS — a detached "C' est" is otherwise read as the letter "C".
         body = body.replacingOccurrences(of: "' ", with: "'")
                    .replacingOccurrences(of: "\u{2019} ", with: "\u{2019}")
                    .replacingOccurrences(of: #"\s+"#, with: " ",
                                          options: .regularExpression)
         return body.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    /// Filename key for the pre-generated audio of `spokenFrench`: the FNV-1a 64-bit
+    /// hash (lowercase hex, 16 chars) of the spoken sentence — identical to the
+    /// `audio_key` in `tools/tts/extract.py`, so the bundled `<audioKey>.mp3` is
+    /// found. Identical sentences across drills share one file. See `Speaker`.
+    var audioKey: String {
+        String(format: "%016llx", Exercise.seed64(spokenFrench))
     }
 
     static let sample = Exercise(
@@ -424,6 +439,11 @@ extension Exercise {
         assert(Exercise.spokenFrench(prompt: "Construis : « He has a dog. »",
                                      answer: "Il a un chien", hasBlank: false)
                == "Il a un chien", "build prompt speaks the answer sentence")
+        // Build prompt with a split elision: glue it ("C' est" → "C'est") so TTS
+        // doesn't read the letter "C". (Regression: was only glued in the blank branch.)
+        assert(Exercise.spokenFrench(prompt: "Construis : « It is a dog. »",
+                                     answer: "C' est un chien", hasBlank: false)
+               == "C'est un chien", "build prompt glues a split elision")
         // Article blank: strip the "Choisis … :" prefix, fill the blank.
         assert(Exercise.spokenFrench(prompt: "Choisis l'article : ___ café",
                                      answer: "un", hasBlank: true)
@@ -440,6 +460,14 @@ extension Exercise {
         assert(Exercise.spokenFrench(prompt: "Choisis l'article : ___ école",
                                      answer: "l'", hasBlank: true)
                == "l'école", "elision answer glued to the noun")
+
+        // audioKey: FNV-1a hex of spokenFrench, locked to tools/tts/extract.py output
+        // (so the bundled <audioKey>.mp3 matches). 16 lowercase hex chars, stable.
+        func key(_ s: String) -> String { String(format: "%016llx", Exercise.seed64(s)) }
+        assert(key("Il a un chien") == "4691d1e1d17ac879", "audioKey matches Python (build)")
+        assert(key("C'est un chien") == "94941bbb2116861f", "audioKey matches Python (elision)")
+        assert(key("un café") == "6f306303253d7792", "audioKey matches Python (blank)")
+        assert(key("x").count == 16, "audioKey is 16 hex chars")
     }
 }
 #endif
