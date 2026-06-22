@@ -147,6 +147,8 @@ struct BookView: View {
                     .font(.appExplain)
                     .foregroundColor(AppColor.graphite)
 
+                fragileChip
+
                 estimateLine
                     .font(.appExplain)
                     .foregroundColor(AppColor.graphite)
@@ -154,6 +156,41 @@ struct BookView: View {
             }
             .accessibilityElement(children: .combine)
             .accessibilityLabel(progressAccessibilityLabel)
+        }
+    }
+
+    /// At-risk band: maîtrisés whose memory has decayed below the fragile floor
+    /// (`R < 0.80`). Shown ONLY when > 0; tapping it starts a Réviser round (which is
+    /// ordered fragiles-first, so these surface immediately). Singular/plural French.
+    @ViewBuilder
+    private var fragileChip: some View {
+        let n = viewModel.estimate.fragileCount
+        if n > 0 {
+            Button {
+                session = ElementSession(title: "Réviser", ruleNote: "",
+                                         elements: viewModel.reviewSessionElements(), mode: .review)
+            } label: {
+                HStack(spacing: 5) {
+                    Image(systemName: "exclamationmark.triangle.fill")
+                        .font(.system(size: 10, weight: .semibold))
+                    // House label treatment (uppercase + tracking) but recolored to
+                    // `error` — `uppercaseLabel()` would force `graphite`, so apply the
+                    // pieces inline and let the HStack's `foregroundColor` win.
+                    Text("\(n) \(n == 1 ? "fragile" : "fragiles") · à réviser")
+                        .font(.appLabel)
+                        .tracking(2)
+                        .textCase(.uppercase)
+                }
+                .foregroundColor(AppColor.error)
+                .padding(.horizontal, Spacing.sm)
+                .padding(.vertical, 5)
+                .background(
+                    Capsule().fill(AppColor.error.opacity(0.10))
+                )
+                .contentShape(Capsule())
+            }
+            .buttonStyle(ScaleButtonStyle())
+            .accessibilityLabel("\(n) \(n == 1 ? "élément fragile" : "éléments fragiles") à réviser")
         }
     }
 

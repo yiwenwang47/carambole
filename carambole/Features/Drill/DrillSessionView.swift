@@ -444,7 +444,7 @@ struct DrillSessionView: View {
         // calendar-day gap since the last review (0 if never reviewed / same day).
         let newState: FSRS.State
         if let s = status.stability, let d = status.difficulty {
-            let elapsed = elapsedDays(since: status.lastReviewDate, until: now)
+            let elapsed = CalendarDays.elapsed(from: status.lastReviewDate, to: now)
             newState = FSRS.next(FSRS.State(stability: s, difficulty: d),
                                  elapsedDays: elapsed, rating: rating)
         } else {
@@ -466,18 +466,6 @@ struct DrillSessionView: View {
         if correct && newState.stability >= FSRS.graduationStability {
             DataManager.shared.markGraduated(elementID: element.id, on: now)
         }
-    }
-
-    /// Non-negative whole-day gap between two dates (calendar days). The I/O layer uses
-    /// `Calendar.current` directly (the pure FSRS core stays date-free); same-day or a
-    /// missing `lastReviewDate` → 0.
-    private func elapsedDays(since last: Date?, until now: Date) -> Double {
-        guard let last else { return 0 }
-        let cal = Calendar.current
-        let days = cal.dateComponents([.day],
-                                      from: cal.startOfDay(for: last),
-                                      to: cal.startOfDay(for: now)).day ?? 0
-        return Double(max(0, days))
     }
 
     // MARK: - Intro card (one-time English ease-in)

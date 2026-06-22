@@ -35,7 +35,8 @@ final class BookViewModel: ObservableObject {
     @Published private(set) var satisfiedIDs: Set<String> = []
     /// Book-completion bar segments + % + time-to-finish estimate. Mastered/segments/%
     /// come from the LIVE `satisfied` gate (a cleared element drops out); the
-    /// `mastery_log` day stamps feed ONLY the pace. See `ProgressEstimate`.
+    /// `mastery_log` day stamps feed ONLY the pace. The fragile annotation (graduated
+    /// AND `R(now) < 0.80`) rides on the same value. See `ProgressEstimate`.
     @Published var estimate: ProgressEstimate = ProgressEstimate(
         total: 0, mastered: 0, seen: 0, masteryDays: [], firstActivity: nil, today: Date())
 
@@ -109,9 +110,24 @@ final class BookViewModel: ObservableObject {
             let firstActivity = DataManager.shared.fetchFirstSeenByElement()
                 .filter { bookIDs.contains($0.key) }
                 .values.min()
+
+            // FRAGILE = graduated ∧ ¬suspended ∧ R(now) < 0.80, ∩ book. A subset of
+            // maîtrisé (annotation only — never changes the bar segments above). R is
+            // predicted recall over the calendar-day gap since the element's last
+            // review (`CalendarDays.elapsed`, the same bridge grading uses).
+            let now = Date()
+            let fragileInBook = DataManager.shared.fetchGraduatedStates()
+                .filter { bookIDs.contains($0.elementID) }
+                .filter { row in
+                    let elapsed = CalendarDays.elapsed(from: row.lastReviewDate, to: now)
+                    return FSRS.retrievability(stability: row.stability, elapsedDays: elapsed) < FSRS.fragileRecall
+                }
+                .count
+
             let estimate = ProgressEstimate(total: total, mastered: masteredInBook,
                                             seen: seenInBook, masteryDays: masteryDays,
-                                            firstActivity: firstActivity, today: Date())
+                                            firstActivity: firstActivity, today: now,
+                                            fragile: fragileInBook)
 
             DispatchQueue.main.async {
                 self.dueCount = due
@@ -135,19 +151,55 @@ final class BookViewModel: ObservableObject {
             .max(by: { $0.sortOrder < $1.sortOrder })
     }
 
-    /// Due elements (never truncated) topped up with overflow toward the soft target.
+    /// Due elements (never truncated) topped up with overflow toward the soft target,
+    /// then **ordered fragiles-first** — by ASCENDING predicted recall `R(now)` — so the
+    /// most-decayed (lowest-recall, most-at-risk) elements surface first within the
+    /// round. Only the ORDER changes; the due+overflow+target membership is untouched.
     func reviewSessionElements() -> [GrammarElement] {
+        let now = Date()
         let byID = Dictionary(book.allElements.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
-        let dueIDs = Set(DataManager.shared.fetchDueElementIDs(asOf: Date()))
+        let dueIDs = Set(DataManager.shared.fetchDueElementIDs(asOf: now))
         let due = book.allElements.filter { dueIDs.contains($0.id) }
         let target = settingsStore.settings.reviewTarget
-        let overflowIDs = DataManager.shared.fetchOverflowElementIDs(asOf: Date(), limit: max(0, target - due.count))
+        let overflowIDs = DataManager.shared.fetchOverflowElementIDs(asOf: now, limit: max(0, target - due.count))
         let overflow = overflowIDs.compactMap { byID[$0] }
         let queue = StudyScheduler.reviewQueue(due: due, overflow: overflow, target: target)
+
+        // Lowest predicted recall first. R per element from its (stability,
+        // lastReviewDate); an element with no FSRS state yet (shouldn't happen for a
+        // due/overflow item, but be safe) sorts LAST (recall treated as 1.0). The
+        // original index is the tiebreaker, keeping the existing due-then-overflow
+        // order stable for equal recall.
+        // TODO(perf): N+1 — `currentRecall` does one `fetchReviewStatus` per queued
+        // element (bounded by `reviewTarget`, once per tap). Batch into a single
+        // `fetchReviewStatuses(forIDs:)` reader if review rounds start to feel slow.
+        struct Ranked { let index: Int; let element: GrammarElement; let recall: Double }
+        var ranked: [Ranked] = []
+        ranked.reserveCapacity(queue.count)
+        for (offset, element) in queue.enumerated() {
+            let recall = Self.currentRecall(elementID: element.id, asOf: now)
+            ranked.append(Ranked(index: offset, element: element, recall: recall))
+        }
+        ranked.sort { lhs, rhs in
+            lhs.recall != rhs.recall ? lhs.recall < rhs.recall : lhs.index < rhs.index
+        }
+        let ordered = ranked.map(\.element)
+
         // One Réviser tap = one round of at most `reviewRoundSize` problems; tap
         // again for the next round. The day's pool (`reviewTarget`) still bounds the
-        // overflow top-up above.
-        return Array(queue.prefix(settingsStore.settings.reviewRoundSize))
+        // overflow top-up above; fragiles-first ordering happens BEFORE this slice.
+        return Array(ordered.prefix(settingsStore.settings.reviewRoundSize))
+    }
+
+    // MARK: - FSRS recall helpers (I/O layer — date math lives here, not in pure FSRS)
+
+    /// Predicted recall `R(now)` for an element from its persisted `(stability,
+    /// lastReviewDate)`. No FSRS state yet → `1.0` (treat as freshest, sorts last).
+    private static func currentRecall(elementID: String, asOf now: Date) -> Double {
+        guard let status = DataManager.shared.fetchReviewStatus(elementID: elementID),
+              let stability = status.stability else { return 1.0 }
+        let elapsed = CalendarDays.elapsed(from: status.lastReviewDate, to: now)
+        return FSRS.retrievability(stability: stability, elapsedDays: elapsed)
     }
 
     /// Elements to drill when a module is tapped: its not-yet-mastered elements

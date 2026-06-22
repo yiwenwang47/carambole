@@ -20,6 +20,7 @@ struct caramboleApp: App {
         HistoryViewModel._selfTest()
         ProgressEstimate._selfTest()
         FSRS._selfTest()
+        CalendarDays._selfTest()
         LearnLoop._selfTest()
         DataManager._selfTest()
         #endif

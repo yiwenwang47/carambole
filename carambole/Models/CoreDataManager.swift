@@ -730,6 +730,38 @@ class DataManager {
                      bindDouble: nil))
     }
 
+    /// FSRS state for every graduated, non-suspended element that has a stability —
+    /// the rows whose predicted recall `R(now)` can still decay into "fragile". A
+    /// suspended element never decays (the too-easy-skip graduation path), so it is
+    /// excluded here; a graduated row without a stability (shouldn't happen post-v4)
+    /// is excluded too. ONE query (no N+1). The caller computes `R` per row via
+    /// `FSRS.retrievability` over the calendar-day gap since `lastReviewDate`.
+    func fetchGraduatedStates() -> [(elementID: String, stability: Double, lastReviewDate: Date?)] {
+        var rows: [(elementID: String, stability: Double, lastReviewDate: Date?)] = []
+        dbQueue.sync {
+            let query = """
+                SELECT element_id, stability, last_review_date FROM review_status
+                WHERE graduated_date IS NOT NULL
+                  AND (suspended IS NULL OR suspended = 0)
+                  AND stability IS NOT NULL;
+                """
+            var statement: OpaquePointer?
+            if sqlite3_prepare_v2(self.db, query, -1, &statement, nil) == SQLITE_OK {
+                while sqlite3_step(statement) == SQLITE_ROW {
+                    guard let c = sqlite3_column_text(statement, 0) else { continue }
+                    let id = String(cString: c)
+                    let stability = sqlite3_column_double(statement, 1)
+                    let last: Date? = sqlite3_column_type(statement, 2) != SQLITE_NULL
+                        ? Date(timeIntervalSince1970: sqlite3_column_double(statement, 2))
+                        : nil
+                    rows.append((id, stability, last))
+                }
+            }
+            sqlite3_finalize(statement)
+        }
+        return rows
+    }
+
     // MARK: - Per-day history (learned & reviewed)
 
     /// Element ids first introduced on the calendar day of `day`. Window computed

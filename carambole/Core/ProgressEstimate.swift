@@ -10,13 +10,20 @@ import Foundation
 struct ProgressEstimate: Equatable {
     // --- Inputs (book-scoped counts) ---
     let total: Int        // total elements in the book
-    let mastered: Int     // elements CURRENTLY satisfied (live review_status gate) ∩ book
+    let mastered: Int     // graduated elements (live sticky `graduated_date` flag) ∩ book
     let seen: Int         // elements ever introduced ∩ book
 
     // --- Bar segments (always sum to `total` for normal inputs) ---
     let masteredCount: Int    // = mastered                  (maîtrisé)
     let inProgressCount: Int   // = max(0, seen - mastered)   (en cours)
     let toComeCount: Int       // = max(0, total - seen)      (à venir)
+
+    /// Annotation, NOT a fourth segment: graduated elements whose predicted recall
+    /// `R(now)` has decayed below `FSRS.fragileRecall` (0.80). A subset of
+    /// `masteredCount` (clamped `0...masteredCount`) — it drives the ⚠ chip + the
+    /// Réviser ordering, and deliberately does NOT shrink the maîtrisé segment (the
+    /// bar stays monotonic; forgetting surfaces here, not as a % drop).
+    let fragileCount: Int
 
     // --- Completion ---
     let fractionComplete: Double  // mastered/total, 0 when total == 0
@@ -40,6 +47,7 @@ struct ProgressEstimate: Equatable {
          masteryDays: [Date],
          firstActivity: Date?,
          today: Date,
+         fragile: Int = 0,
          calendar: Calendar = .current,
          window: Int = 14) {
         self.total = total
@@ -50,6 +58,10 @@ struct ProgressEstimate: Equatable {
         self.masteredCount = mastered
         self.inProgressCount = max(0, seen - mastered)
         self.toComeCount = max(0, total - seen)
+
+        // Fragile is a subset of maîtrisé — clamp to `[0, masteredCount]`. Annotation
+        // only; it does not touch the three segment counts above.
+        self.fragileCount = min(max(0, fragile), max(0, mastered))
 
         // --- Completion ---
         let fraction = total > 0 ? Double(mastered) / Double(total) : 0
@@ -208,6 +220,35 @@ extension ProgressEstimate {
                                       today: today, calendar: cal)
         assert(almost.isComplete == false, "almost not complete")
         assert(almost.percentComplete == 99, "almost capped at 99, got \(almost.percentComplete)")
+
+        // 9. Fragile annotation: a subset of maîtrisé, clamped, and it changes NONE of
+        //    the three segments / percent (the bar stays monotonic — forgetting shows
+        //    as the chip, not a shrunk maîtrisé segment).
+        let withFragile = ProgressEstimate(total: 20, mastered: 10, seen: 14,
+                                           masteryDays: steadyDays,
+                                           firstActivity: ago(6),
+                                           today: today, fragile: 4, calendar: cal)
+        assert(withFragile.fragileCount == 4, "fragile count passes through, got \(withFragile.fragileCount)")
+        assert(withFragile.masteredCount == steady.masteredCount
+               && withFragile.inProgressCount == steady.inProgressCount
+               && withFragile.toComeCount == steady.toComeCount,
+               "fragile leaves segments identical to the no-fragile case")
+        assert(withFragile.percentComplete == steady.percentComplete, "fragile leaves percent unchanged")
+        // Default fragile is 0 (back-compat with the no-fragile callers / earlier tests).
+        assert(steady.fragileCount == 0, "fragile defaults to 0")
+
+        // 10. Fragile clamps to [0, masteredCount]: an over-count or a negative is
+        //     never allowed to exceed the maîtrisé set (or go below 0).
+        let overFragile = ProgressEstimate(total: 20, mastered: 10, seen: 14,
+                                           masteryDays: steadyDays,
+                                           firstActivity: ago(6),
+                                           today: today, fragile: 99, calendar: cal)
+        assert(overFragile.fragileCount == 10, "fragile clamps to masteredCount, got \(overFragile.fragileCount)")
+        let negFragile = ProgressEstimate(total: 20, mastered: 10, seen: 14,
+                                          masteryDays: steadyDays,
+                                          firstActivity: ago(6),
+                                          today: today, fragile: -3, calendar: cal)
+        assert(negFragile.fragileCount == 0, "negative fragile clamps to 0, got \(negFragile.fragileCount)")
     }
 }
 #endif
