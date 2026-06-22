@@ -47,7 +47,7 @@ struct BookView: View {
                     moduleList
                 }
                 .padding(.horizontal, Spacing.screenH)
-                .padding(.top, 72)
+                .padding(.top, 32)
                 .padding(.bottom, Spacing.xl)
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
