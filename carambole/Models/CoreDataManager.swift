@@ -113,6 +113,34 @@ class DataManager {
 
             setUserVersion(2)
         }
+
+        // v3 — append-only `mastery_log` (one row per element, the day it FIRST
+        // became mastered/satisfied). `review_status` keeps only the latest counters,
+        // so it can't reconstruct masteries-per-day; this event log can — driving an
+        // honest "time to finish the book" pace estimate. PK is element_id alone
+        // because mastery happens once per element. Backfilled once so installed
+        // users with already-satisfied elements aren't all-zeros.
+        //
+        // This is a HISTORICAL EVENT log, not a live "is-currently-mastered" set:
+        // `clearReviewStatus` ("Trop facile → wrong → clean records") deliberately does
+        // NOT retract a logged mastery (same as `review_log`). So consumers must use it
+        // ONLY for the per-day pace count — current mastery/% comes from the live
+        // `review_status` gate (`fetchUnlockSatisfiedElementIDs`), never from this log.
+        if version < 3 {
+            sqlite3_exec(db, """
+                CREATE TABLE IF NOT EXISTS mastery_log (
+                    element_id TEXT PRIMARY KEY,
+                    day_start REAL NOT NULL
+                );
+                """, nil, nil, nil)
+
+            // Backfill: stamp one (element_id, startOfDay(last_review_date)) per
+            // currently-satisfied element. day_start is computed in Swift via Calendar
+            // (no date math in SQL), consistent with backfillReviewLog.
+            backfillMasteryLog()
+
+            setUserVersion(3)
+        }
     }
 
     /// One-time v2 backfill: seed `review_log` from each `review_status` row that
@@ -159,6 +187,65 @@ class DataManager {
             }
         } else {
             print("Error preparing review_log backfill insert: \(String(cString: sqlite3_errmsg(db)))")
+        }
+        sqlite3_finalize(insert)
+        sqlite3_exec(db, "COMMIT;", nil, nil, nil)
+    }
+
+    /// One-time v3 backfill: seed `mastery_log` from each `review_status` row that
+    /// is currently satisfied — suspended ("too easy") OR mastered
+    /// (`distinct_correct >= StudySettings.masteryThreshold`) — computing `day_start`
+    /// in Swift from `last_review_date`. Wrapped in a transaction for speed;
+    /// `INSERT OR IGNORE` makes it idempotent. Rows with a NULL `last_review_date`
+    /// (no crossing timestamp to stamp) are defensively skipped — a satisfied
+    /// element will normally have one.
+    ///
+    /// Caveat (same as `backfillReviewLog`): `day_start` is recomputed at migration
+    /// time with the device's CURRENT timezone, which may differ from the zone in
+    /// effect when mastery happened, so a backfilled day can drift by a day vs a
+    /// live-logged one. Inherent to reconstructing from a single timestamp —
+    /// mastery-history before this migration is forward-only / approximate.
+    private func backfillMasteryLog() {
+        let calendar = Calendar.current
+        var rows: [(id: String, dayStart: Double)] = []
+
+        var read: OpaquePointer?
+        if sqlite3_prepare_v2(db,
+            """
+            SELECT element_id, last_review_date FROM review_status
+            WHERE last_review_date IS NOT NULL
+              AND (suspended = 1 OR distinct_correct >= ?);
+            """,
+            -1, &read, nil) == SQLITE_OK {
+            sqlite3_bind_int(read, 1, Int32(StudySettings.masteryThreshold))
+            while sqlite3_step(read) == SQLITE_ROW {
+                guard let c = sqlite3_column_text(read, 0) else { continue }
+                let id = String(cString: c)
+                let last = Date(timeIntervalSince1970: sqlite3_column_double(read, 1))
+                rows.append((id, calendar.startOfDay(for: last).timeIntervalSince1970))
+            }
+        } else {
+            print("Error preparing mastery_log backfill read: \(String(cString: sqlite3_errmsg(db)))")
+        }
+        sqlite3_finalize(read)
+
+        guard !rows.isEmpty else { return }
+
+        sqlite3_exec(db, "BEGIN;", nil, nil, nil)
+        var insert: OpaquePointer?
+        if sqlite3_prepare_v2(db,
+            "INSERT OR IGNORE INTO mastery_log (element_id, day_start) VALUES (?, ?);",
+            -1, &insert, nil) == SQLITE_OK {
+            for row in rows {
+                sqlite3_reset(insert)
+                sqlite3_bind_text(insert, 1, (row.id as NSString).utf8String, -1, SQLITE_TRANSIENT)
+                sqlite3_bind_double(insert, 2, row.dayStart)
+                if sqlite3_step(insert) != SQLITE_DONE {
+                    print("Error backfilling mastery_log: \(String(cString: sqlite3_errmsg(db)))")
+                }
+            }
+        } else {
+            print("Error preparing mastery_log backfill insert: \(String(cString: sqlite3_errmsg(db)))")
         }
         sqlite3_finalize(insert)
         sqlite3_exec(db, "COMMIT;", nil, nil, nil)
@@ -293,6 +380,29 @@ class DataManager {
                     print("Error preparing review log insert: \(String(cString: sqlite3_errmsg(self.db)))")
                 }
                 sqlite3_finalize(logStmt)
+            }
+
+            // Append-only mastery event: stamp the FIRST day this element became
+            // satisfied (mastered or suspended). PK on element_id + INSERT OR IGNORE
+            // means only that first crossing sticks; later satisfied writes no-op.
+            if status.suspended || status.distinctCorrect >= StudySettings.masteryThreshold {
+                // A graded answer always sets lastReviewDate; the `?? Date()` is purely
+                // defensive so a satisfied write always logs a crossing day.
+                let dayStart = Calendar.current
+                    .startOfDay(for: status.lastReviewDate ?? Date()).timeIntervalSince1970
+                var masteryStmt: OpaquePointer?
+                if sqlite3_prepare_v2(self.db,
+                    "INSERT OR IGNORE INTO mastery_log (element_id, day_start) VALUES (?, ?);",
+                    -1, &masteryStmt, nil) == SQLITE_OK {
+                    sqlite3_bind_text(masteryStmt, 1, (status.elementID as NSString).utf8String, -1, SQLITE_TRANSIENT)
+                    sqlite3_bind_double(masteryStmt, 2, dayStart)
+                    if sqlite3_step(masteryStmt) != SQLITE_DONE {
+                        print("Error logging mastery event: \(String(cString: sqlite3_errmsg(self.db)))")
+                    }
+                } else {
+                    print("Error preparing mastery log insert: \(String(cString: sqlite3_errmsg(self.db)))")
+                }
+                sqlite3_finalize(masteryStmt)
             }
         }
     }
@@ -497,12 +607,64 @@ class DataManager {
         return rows
     }
 
-    /// Mark an element "too easy" — suspended from the new + review queues.
-    func setSuspended(elementID: String) {
-        execWithID("UPDATE review_status SET suspended = 1 WHERE element_id = ?;", id: elementID)
+    /// Every `mastery_log` event as (elementID, dayStart) — one row per element, the
+    /// day it first became satisfied. Drives the masteries-per-day finish-pace.
+    func fetchMasteryLog() -> [(elementID: String, dayStart: Date)] {
+        var rows: [(elementID: String, dayStart: Date)] = []
+        dbQueue.sync {
+            let query = "SELECT element_id, day_start FROM mastery_log;"
+            var statement: OpaquePointer?
+            if sqlite3_prepare_v2(self.db, query, -1, &statement, nil) == SQLITE_OK {
+                while sqlite3_step(statement) == SQLITE_ROW {
+                    if let c = sqlite3_column_text(statement, 0) {
+                        rows.append((String(cString: c),
+                                     Date(timeIntervalSince1970: sqlite3_column_double(statement, 1))))
+                    }
+                }
+            }
+            sqlite3_finalize(statement)
+        }
+        return rows
     }
 
-    /// Delete an element's row — "clean records" (drops back to fresh/unseen).
+    /// Mark an element "too easy" — suspended from the new + review queues.
+    /// Suspending makes the element satisfied, so this also logs a mastery event
+    /// (this is a separate UPDATE path that does NOT go through `upsertReviewStatus`).
+    func setSuspended(elementID: String) {
+        dbQueue.async {
+            var statement: OpaquePointer?
+            let update = "UPDATE review_status SET suspended = 1 WHERE element_id = ?;"
+            if sqlite3_prepare_v2(self.db, update, -1, &statement, nil) == SQLITE_OK {
+                sqlite3_bind_text(statement, 1, (elementID as NSString).utf8String, -1, SQLITE_TRANSIENT)
+                if sqlite3_step(statement) != SQLITE_DONE {
+                    print("Error executing \(update): \(String(cString: sqlite3_errmsg(self.db)))")
+                }
+            }
+            sqlite3_finalize(statement)
+
+            // Append-only mastery event. Suspend is a live user action, so the
+            // crossing day is today. INSERT OR IGNORE preserves an earlier mastery day
+            // if one already exists (PK on element_id).
+            let dayStart = Calendar.current.startOfDay(for: Date()).timeIntervalSince1970
+            var masteryStmt: OpaquePointer?
+            if sqlite3_prepare_v2(self.db,
+                "INSERT OR IGNORE INTO mastery_log (element_id, day_start) VALUES (?, ?);",
+                -1, &masteryStmt, nil) == SQLITE_OK {
+                sqlite3_bind_text(masteryStmt, 1, (elementID as NSString).utf8String, -1, SQLITE_TRANSIENT)
+                sqlite3_bind_double(masteryStmt, 2, dayStart)
+                if sqlite3_step(masteryStmt) != SQLITE_DONE {
+                    print("Error logging mastery event: \(String(cString: sqlite3_errmsg(self.db)))")
+                }
+            } else {
+                print("Error preparing mastery log insert: \(String(cString: sqlite3_errmsg(self.db)))")
+            }
+            sqlite3_finalize(masteryStmt)
+        }
+    }
+
+    /// Delete an element's row — "clean records" (drops back to fresh/unseen). Note:
+    /// intentionally does NOT delete any `mastery_log` row — that log is historical
+    /// (see the v3 migration comment); a past mastery stays recorded for the pace.
     func clearReviewStatus(elementID: String) {
         execWithID("DELETE FROM review_status WHERE element_id = ?;", id: elementID)
     }
