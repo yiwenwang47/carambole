@@ -129,7 +129,7 @@ struct TokenBuilderView: View {
                 )
                 .overlay(
                     RoundedRectangle(cornerRadius: 10, style: .continuous)
-                        .stroke(AppColor.ink, lineWidth: 1)
+                        .strokeBorder(AppColor.ink, lineWidth: 1)
                 )
                 .opacity(used ? 0.28 : 1.0)
         }
