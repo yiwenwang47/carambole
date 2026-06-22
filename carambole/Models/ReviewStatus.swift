@@ -26,6 +26,20 @@ struct ReviewStatus: Codable {
     /// "Too easy" — suspended from the new + review queues (see DrillSessionView).
     var suspended: Bool
 
+    // MARK: FSRS memory-strength state (added in the v4 schema migration)
+
+    /// FSRS stability `S` (days) — the memory-strength half of the `(S, D)` pair that
+    /// replaces the count gate. `nil` until the element's first FSRS grade (T3). Once
+    /// set, scheduling + the maîtrisé bar derive from it (see `Core/FSRS.swift`).
+    var stability: Double?
+    /// FSRS difficulty `D` (1–10) — how hard the element is to retain. `nil` until the
+    /// first FSRS grade, then drifts per rating.
+    var difficulty: Double?
+    /// Sticky "maîtrisé" flag: the day the element FIRST graduated (`S` crossed the
+    /// 21-day bar via a spaced success, or a "too easy" skip). Non-nil ⇒ graduated;
+    /// monotonic — decay never un-sets it (forgetting surfaces as "fragile" instead).
+    var graduatedDate: Date?
+
     init(elementID: String, learningState: LearningState = .new, intervalDays: Int = 0) {
         self.elementID = elementID
         self.learningState = learningState
@@ -35,6 +49,9 @@ struct ReviewStatus: Codable {
         self.distinctCorrect = 0
         self.masteredExampleIDs = []
         self.suspended = false
+        self.stability = nil
+        self.difficulty = nil
+        self.graduatedDate = nil
     }
 
     /// Record a correct answer for `exampleID`, bumping distinct-correct if new.

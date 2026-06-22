@@ -141,6 +141,32 @@ class DataManager {
 
             setUserVersion(3)
         }
+
+        // v4 — FSRS memory-strength state. Adds the `(S, D)` pair + a sticky
+        // graduated flag to `review_status`, replacing the count gate as the
+        // authority for the maîtrisé bar (the legacy `distinct_correct` /
+        // `learning_state` / `interval_days` columns stay but no longer gate).
+        // All three ALTERs are additive (duplicate-column errors on a re-run are
+        // ignored), then a ONE-TIME backfill re-derives FSRS state + graduation
+        // from the spacing data already in each row — so the existing install
+        // (real data on a physical iPhone) is honestly re-rated, not wiped or
+        // grandfathered. `mastery_log` is LEFT UNTOUCHED here: pre-migration pace
+        // stays approximate (and ages out of the 14-day pace window on its own);
+        // the bar's maîtrisé COUNT is exact from the live `graduated_date` flag,
+        // never the log.
+        if version < 4 {
+            for alter in [
+                "ALTER TABLE review_status ADD COLUMN stability REAL;",
+                "ALTER TABLE review_status ADD COLUMN difficulty REAL;",
+                "ALTER TABLE review_status ADD COLUMN graduated_date REAL;",
+            ] {
+                sqlite3_exec(db, alter, nil, nil, nil)
+            }
+
+            backfillFSRSState()
+
+            setUserVersion(4)
+        }
     }
 
     /// One-time v2 backfill: seed `review_log` from each `review_status` row that
@@ -251,6 +277,125 @@ class DataManager {
         sqlite3_exec(db, "COMMIT;", nil, nil, nil)
     }
 
+    /// One-time v4 backfill: seed each `review_status` row's FSRS `(S, D)` from the
+    /// spacing data it already carries, and re-derive the sticky `graduated_date`.
+    /// Wrapped in a transaction for speed; only writes rows whose `stability` is still
+    /// NULL, so running migrate() twice never re-seeds (a row graded by the live FSRS
+    /// engine has a non-NULL `stability` and is skipped). Forward-only / approximate
+    /// (we're reconstructing from a single interval + the last review day).
+    ///
+    /// Backfill rule (see `fsrsBackfill(intervalDays:learningState:suspended:lastReviewDate:)`
+    /// for the exact, unit-tested computation):
+    ///   - `stability  ← max(interval_days, ε)` — the old SRS interval is a stability
+    ///     proxy: the day-gap the element had already survived (ε = FSRS.stabilityMin).
+    ///   - `difficulty ← default nudged by learning_state` (.learned 4 / .learning 5 /
+    ///     .new|unknown 6, all in [1,10]; easier the further along the element was).
+    ///   - `graduated_date ← last_review_date` IFF seeded `stability >= 21`
+    ///     (FSRS.graduationStability) OR `suspended = 1` (suspended elements were
+    ///     "done" under the old gate → stay graduated). Else NULL — those fall into
+    ///     en-cours under the new gate (the honest re-rating of the old lenient 150).
+    private func backfillFSRSState() {
+        struct Row {
+            let id: String
+            let stability: Double
+            let difficulty: Double
+            let graduatedDate: Double?
+        }
+        var rows: [Row] = []
+
+        var read: OpaquePointer?
+        if sqlite3_prepare_v2(db,
+            """
+            SELECT element_id, interval_days, learning_state, suspended, last_review_date
+            FROM review_status
+            WHERE stability IS NULL;
+            """,
+            -1, &read, nil) == SQLITE_OK {
+            while sqlite3_step(read) == SQLITE_ROW {
+                guard let c = sqlite3_column_text(read, 0) else { continue }
+                let id = String(cString: c)
+                let interval = Int(sqlite3_column_int(read, 1))
+                let stateRaw = sqlite3_column_text(read, 2).map { String(cString: $0) } ?? ""
+                let learningState = LearningState(rawValue: stateRaw)
+                let suspended = sqlite3_column_int(read, 3) != 0
+                let lastReview: Date? = sqlite3_column_type(read, 4) != SQLITE_NULL
+                    ? Date(timeIntervalSince1970: sqlite3_column_double(read, 4)) : nil
+
+                let seed = DataManager.fsrsBackfill(
+                    intervalDays: interval,
+                    learningState: learningState,
+                    suspended: suspended,
+                    lastReviewDate: lastReview)
+                rows.append(Row(id: id,
+                                stability: seed.stability,
+                                difficulty: seed.difficulty,
+                                graduatedDate: seed.graduatedDate?.timeIntervalSince1970))
+            }
+        } else {
+            print("Error preparing FSRS backfill read: \(String(cString: sqlite3_errmsg(db)))")
+        }
+        sqlite3_finalize(read)
+
+        guard !rows.isEmpty else { return }
+
+        sqlite3_exec(db, "BEGIN;", nil, nil, nil)
+        var update: OpaquePointer?
+        if sqlite3_prepare_v2(db,
+            "UPDATE review_status SET stability = ?, difficulty = ?, graduated_date = ? WHERE element_id = ?;",
+            -1, &update, nil) == SQLITE_OK {
+            for row in rows {
+                sqlite3_reset(update)
+                sqlite3_bind_double(update, 1, row.stability)
+                sqlite3_bind_double(update, 2, row.difficulty)
+                if let g = row.graduatedDate {
+                    sqlite3_bind_double(update, 3, g)
+                } else {
+                    sqlite3_bind_null(update, 3)
+                }
+                sqlite3_bind_text(update, 4, (row.id as NSString).utf8String, -1, SQLITE_TRANSIENT)
+                if sqlite3_step(update) != SQLITE_DONE {
+                    print("Error backfilling FSRS state: \(String(cString: sqlite3_errmsg(db)))")
+                }
+            }
+        } else {
+            print("Error preparing FSRS backfill update: \(String(cString: sqlite3_errmsg(db)))")
+        }
+        sqlite3_finalize(update)
+        sqlite3_exec(db, "COMMIT;", nil, nil, nil)
+    }
+
+    /// Pure, deterministic v4-backfill rule — derives seed FSRS `(S, D)` + the sticky
+    /// `graduated_date` from a row's pre-FSRS spacing data. Extracted from
+    /// `backfillFSRSState` so it is unit-testable without live SQLite (see
+    /// `_selfTest()`). No `Date()` / `Calendar` — `lastReviewDate` enters as a param.
+    static func fsrsBackfill(intervalDays: Int,
+                             learningState: LearningState?,
+                             suspended: Bool,
+                             lastReviewDate: Date?) -> (stability: Double, difficulty: Double, graduatedDate: Date?) {
+        // S ← the old interval (days survived), floored at FSRS.stabilityMin so it's
+        // never 0 (a 0-interval massed element seeds at ε → far below the 21-day bar).
+        let stability = max(Double(intervalDays), FSRS.stabilityMin)
+
+        // D ← a sensible default nudged by how far the element had progressed: the
+        // further along (.learned), the easier we assume it is. Values within [1,10],
+        // centred near the FSRS mid-range so later real grades can drift either way.
+        let difficulty: Double
+        switch learningState {
+        case .learned:  difficulty = 4.0   // easiest — repeatedly recalled
+        case .learning: difficulty = 5.0   // mid
+        case .new, .none: difficulty = 6.0 // hardest assumption — barely seen / unknown
+        }
+
+        // Sticky graduation: an element is re-rated maîtrisé iff its seeded stability
+        // already clears the durable bar (deep-ladder element) OR it was suspended
+        // ("too easy" → done under the old gate). Stamp the crossing day = the last
+        // review; if that's missing, no honest crossing day → not graduated.
+        let graduated = stability >= FSRS.graduationStability || suspended
+        let graduatedDate = graduated ? lastReviewDate : nil
+
+        return (stability, difficulty, graduatedDate)
+    }
+
     /// Current `PRAGMA user_version` (0 on a DB that predates versioning).
     private func userVersion() -> Int32 {
         var v: Int32 = 0
@@ -324,8 +469,9 @@ class DataManager {
             let query = """
                 INSERT INTO review_status
                     (element_id, learning_state, last_review_date, next_review_date,
-                     interval_days, first_seen_date, suspended, distinct_correct, mastered_example_ids)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                     interval_days, first_seen_date, suspended, distinct_correct, mastered_example_ids,
+                     stability, difficulty, graduated_date)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 ON CONFLICT(element_id) DO UPDATE SET
                     learning_state       = excluded.learning_state,
                     last_review_date     = excluded.last_review_date,
@@ -334,7 +480,10 @@ class DataManager {
                     first_seen_date      = COALESCE(review_status.first_seen_date, excluded.first_seen_date),
                     suspended            = excluded.suspended,
                     distinct_correct     = excluded.distinct_correct,
-                    mastered_example_ids = excluded.mastered_example_ids;
+                    mastered_example_ids = excluded.mastered_example_ids,
+                    stability            = excluded.stability,
+                    difficulty           = excluded.difficulty,
+                    graduated_date       = excluded.graduated_date;
                 """
             var statement: OpaquePointer?
             guard sqlite3_prepare_v2(self.db, query, -1, &statement, nil) == SQLITE_OK else {
@@ -357,6 +506,16 @@ class DataManager {
             let masteredJSON = (try? JSONEncoder().encode(Array(status.masteredExampleIDs)))
                 .flatMap { String(data: $0, encoding: .utf8) } ?? "[]"
             sqlite3_bind_text(statement, 9, (masteredJSON as NSString).utf8String, -1, SQLITE_TRANSIENT)
+            // FSRS state (v4): nil until the element's first FSRS grade.
+            if let s = status.stability {
+                sqlite3_bind_double(statement, 10, s)
+            } else { sqlite3_bind_null(statement, 10) }
+            if let d = status.difficulty {
+                sqlite3_bind_double(statement, 11, d)
+            } else { sqlite3_bind_null(statement, 11) }
+            if let g = status.graduatedDate {
+                sqlite3_bind_double(statement, 12, g.timeIntervalSince1970)
+            } else { sqlite3_bind_null(statement, 12) }
 
             if sqlite3_step(statement) != SQLITE_DONE {
                 print("Error upserting review status: \(String(cString: sqlite3_errmsg(self.db)))")
@@ -382,28 +541,57 @@ class DataManager {
                 sqlite3_finalize(logStmt)
             }
 
-            // Append-only mastery event: stamp the FIRST day this element became
-            // satisfied (mastered or suspended). PK on element_id + INSERT OR IGNORE
-            // means only that first crossing sticks; later satisfied writes no-op.
-            if status.suspended || status.distinctCorrect >= StudySettings.masteryThreshold {
-                // A graded answer always sets lastReviewDate; the `?? Date()` is purely
-                // defensive so a satisfied write always logs a crossing day.
-                let dayStart = Calendar.current
-                    .startOfDay(for: status.lastReviewDate ?? Date()).timeIntervalSince1970
-                var masteryStmt: OpaquePointer?
-                if sqlite3_prepare_v2(self.db,
-                    "INSERT OR IGNORE INTO mastery_log (element_id, day_start) VALUES (?, ?);",
-                    -1, &masteryStmt, nil) == SQLITE_OK {
-                    sqlite3_bind_text(masteryStmt, 1, (status.elementID as NSString).utf8String, -1, SQLITE_TRANSIENT)
-                    sqlite3_bind_double(masteryStmt, 2, dayStart)
-                    if sqlite3_step(masteryStmt) != SQLITE_DONE {
-                        print("Error logging mastery event: \(String(cString: sqlite3_errmsg(self.db)))")
-                    }
-                } else {
-                    print("Error preparing mastery log insert: \(String(cString: sqlite3_errmsg(self.db)))")
+            // NOTE (v4): the old count-based mastery_log trigger
+            // (`distinct_correct >= masteryThreshold || suspended`) is GONE. Under FSRS
+            // a mastery_log row = a GRADUATION event, which is no longer derivable from
+            // the count — it happens when `S` crosses the 21-day bar (a spaced success)
+            // or via a too-easy skip. The grading layer (T3) records it explicitly by
+            // calling `markGraduated`, and `setSuspended` calls it for the skip path.
+            // A plain graded write here must NOT stamp a graduation.
+        }
+    }
+
+    /// Stamp an element's GRADUATION (FSRS S crossed the 21-day bar, or a too-easy
+    /// skip). Idempotent: sets the sticky `graduated_date` only if it's currently NULL
+    /// (first crossing wins — later calls no-op), and `INSERT OR IGNORE`s the
+    /// `mastery_log` row keyed on element_id (PK ⇒ only the first day sticks). Reuses
+    /// the same `startOfDay(day)` bucketing the v3 mastery_log hook used. Calling this
+    /// on an already-graduated element changes nothing.
+    func markGraduated(elementID: String, on day: Date) {
+        dbQueue.async {
+            // Sticky flag — only stamp if not already graduated (COALESCE-style guard
+            // via the WHERE clause so a re-graduate keeps the original crossing date).
+            let dayTS = day.timeIntervalSince1970
+            var flag: OpaquePointer?
+            if sqlite3_prepare_v2(self.db,
+                "UPDATE review_status SET graduated_date = ? WHERE element_id = ? AND graduated_date IS NULL;",
+                -1, &flag, nil) == SQLITE_OK {
+                sqlite3_bind_double(flag, 1, dayTS)
+                sqlite3_bind_text(flag, 2, (elementID as NSString).utf8String, -1, SQLITE_TRANSIENT)
+                if sqlite3_step(flag) != SQLITE_DONE {
+                    print("Error stamping graduated_date: \(String(cString: sqlite3_errmsg(self.db)))")
                 }
-                sqlite3_finalize(masteryStmt)
+            } else {
+                print("Error preparing graduated_date update: \(String(cString: sqlite3_errmsg(self.db)))")
             }
+            sqlite3_finalize(flag)
+
+            // Append-only mastery event: one row per element, the day it first
+            // graduated. Same day bucket as the v3 hook (startOfDay).
+            let dayStart = Calendar.current.startOfDay(for: day).timeIntervalSince1970
+            var masteryStmt: OpaquePointer?
+            if sqlite3_prepare_v2(self.db,
+                "INSERT OR IGNORE INTO mastery_log (element_id, day_start) VALUES (?, ?);",
+                -1, &masteryStmt, nil) == SQLITE_OK {
+                sqlite3_bind_text(masteryStmt, 1, (elementID as NSString).utf8String, -1, SQLITE_TRANSIENT)
+                sqlite3_bind_double(masteryStmt, 2, dayStart)
+                if sqlite3_step(masteryStmt) != SQLITE_DONE {
+                    print("Error logging mastery event: \(String(cString: sqlite3_errmsg(self.db)))")
+                }
+            } else {
+                print("Error preparing mastery log insert: \(String(cString: sqlite3_errmsg(self.db)))")
+            }
+            sqlite3_finalize(masteryStmt)
         }
     }
 
@@ -413,7 +601,8 @@ class DataManager {
         dbQueue.sync {
             let query = """
                 SELECT learning_state, last_review_date, next_review_date, interval_days,
-                       suspended, distinct_correct, mastered_example_ids
+                       suspended, distinct_correct, mastered_example_ids,
+                       stability, difficulty, graduated_date
                 FROM review_status WHERE element_id = ?;
                 """
             var statement: OpaquePointer?
@@ -435,6 +624,13 @@ class DataManager {
                         status.masteredExampleIDs = (try? JSONDecoder().decode([String].self, from: data))
                             .map(Set.init) ?? []
                     }
+                    // FSRS state (v4) — NULL until the first FSRS grade.
+                    status.stability = sqlite3_column_type(statement, 7) != SQLITE_NULL ?
+                        sqlite3_column_double(statement, 7) : nil
+                    status.difficulty = sqlite3_column_type(statement, 8) != SQLITE_NULL ?
+                        sqlite3_column_double(statement, 8) : nil
+                    status.graduatedDate = sqlite3_column_type(statement, 9) != SQLITE_NULL ?
+                        Date(timeIntervalSince1970: sqlite3_column_double(statement, 9)) : nil
                     result = status
                 }
             } else {
@@ -523,6 +719,15 @@ class DataManager {
             sqlite3_finalize(statement)
         }
         return ids
+    }
+
+    /// Element ids that have GRADUATED — the sticky `graduated_date` flag is set. This
+    /// is the bar's maîtrisé set under FSRS: exact + monotonic, read from the live flag
+    /// (NOT the historical `mastery_log`). Set once `S` crosses 21d via a spaced success
+    /// or a too-easy skip; never un-set by decay (T4 surfaces forgetting as "fragile").
+    func fetchGraduatedElementIDs() -> Set<String> {
+        Set(queryIDs("SELECT element_id FROM review_status WHERE graduated_date IS NOT NULL;",
+                     bindDouble: nil))
     }
 
     // MARK: - Per-day history (learned & reviewed)
@@ -627,9 +832,12 @@ class DataManager {
         return rows
     }
 
-    /// Mark an element "too easy" — suspended from the new + review queues.
-    /// Suspending makes the element satisfied, so this also logs a mastery event
-    /// (this is a separate UPDATE path that does NOT go through `upsertReviewStatus`).
+    /// Mark an element "too easy" — suspended from the new + review queues. Under FSRS
+    /// this is the self-attested-skip graduation path (design decision #5): suspended ⇒
+    /// graduated, matching the old "satisfied" behaviour. So besides flipping
+    /// `suspended`, it stamps the sticky `graduated_date` + logs the mastery event via
+    /// `markGraduated`. Both run on the serial `dbQueue`, so the suspend write here
+    /// lands before the graduation stamp. The crossing day is today (a live user action).
     func setSuspended(elementID: String) {
         dbQueue.async {
             var statement: OpaquePointer?
@@ -641,25 +849,10 @@ class DataManager {
                 }
             }
             sqlite3_finalize(statement)
-
-            // Append-only mastery event. Suspend is a live user action, so the
-            // crossing day is today. INSERT OR IGNORE preserves an earlier mastery day
-            // if one already exists (PK on element_id).
-            let dayStart = Calendar.current.startOfDay(for: Date()).timeIntervalSince1970
-            var masteryStmt: OpaquePointer?
-            if sqlite3_prepare_v2(self.db,
-                "INSERT OR IGNORE INTO mastery_log (element_id, day_start) VALUES (?, ?);",
-                -1, &masteryStmt, nil) == SQLITE_OK {
-                sqlite3_bind_text(masteryStmt, 1, (elementID as NSString).utf8String, -1, SQLITE_TRANSIENT)
-                sqlite3_bind_double(masteryStmt, 2, dayStart)
-                if sqlite3_step(masteryStmt) != SQLITE_DONE {
-                    print("Error logging mastery event: \(String(cString: sqlite3_errmsg(self.db)))")
-                }
-            } else {
-                print("Error preparing mastery log insert: \(String(cString: sqlite3_errmsg(self.db)))")
-            }
-            sqlite3_finalize(masteryStmt)
         }
+        // Stamps graduated_date (if not already) + the mastery_log row. Also a
+        // dbQueue.async, enqueued after the suspend write above → ordered.
+        markGraduated(elementID: elementID, on: Date())
     }
 
     /// Delete an element's row — "clean records" (drops back to fresh/unseen). Note:
@@ -701,3 +894,59 @@ class DataManager {
         }
     }
 }
+
+// MARK: - Self-test (pure v4-backfill rule, no live SQLite)
+//
+// Exercises `fsrsBackfill` — the deterministic core of the v4 migration — over the
+// cases that matter for "the existing 150 re-rated honestly": deep-ladder graduates,
+// massed interval-1 demotes to en-cours, suspended stays graduated, and the D nudge
+// per learning_state. No DB is touched (the migration's SQLite plumbing is judged by
+// the build + the additive/idempotent reasoning in the review).
+
+#if DEBUG
+extension DataManager {
+    static func _selfTest() {
+        let day = Date(timeIntervalSince1970: 1_700_000_000)
+
+        // Deep-ladder element (interval 35 ≥ 21) → graduated, stamped at last review.
+        let deep = fsrsBackfill(intervalDays: 35, learningState: .learned, suspended: false, lastReviewDate: day)
+        assert(deep.stability == 35.0, "S ← interval (35)")
+        assert(deep.difficulty == 4.0, ".learned → D 4")
+        assert(deep.graduatedDate == day, "interval ≥ 21 graduates at last review")
+
+        // Exactly at the 21-day bar → graduates (>= is inclusive).
+        let atBar = fsrsBackfill(intervalDays: 21, learningState: .learned, suspended: false, lastReviewDate: day)
+        assert(atBar.graduatedDate == day, "interval == 21 graduates (inclusive bar)")
+
+        // Just below the bar (interval 16, the old ladder rung under 21) → en cours.
+        let shallow = fsrsBackfill(intervalDays: 16, learningState: .learning, suspended: false, lastReviewDate: day)
+        assert(shallow.stability == 16.0, "S ← interval (16)")
+        assert(shallow.difficulty == 5.0, ".learning → D 5")
+        assert(shallow.graduatedDate == nil, "interval < 21 → not graduated (en cours)")
+
+        // Massed interval-0 element (3-in-a-session under the old gate) → S floored at
+        // ε, NOT graduated. This is the lenient-massing case the design demotes.
+        let massed = fsrsBackfill(intervalDays: 0, learningState: .new, suspended: false, lastReviewDate: day)
+        assert(massed.stability == FSRS.stabilityMin, "interval 0 → S floored at ε")
+        assert(massed.difficulty == 6.0, ".new → D 6")
+        assert(massed.graduatedDate == nil, "massed interval-0 → demoted to en cours")
+
+        // Suspended ("too easy") stays graduated regardless of interval.
+        let easy = fsrsBackfill(intervalDays: 1, learningState: .learning, suspended: true, lastReviewDate: day)
+        assert(easy.graduatedDate == day, "suspended stays graduated even at interval 1")
+
+        // Graduated but no last-review timestamp → no honest crossing day → nil.
+        let noStamp = fsrsBackfill(intervalDays: 35, learningState: .learned, suspended: false, lastReviewDate: nil)
+        assert(noStamp.graduatedDate == nil, "graduated w/o last_review_date → no stamp")
+
+        // Unknown learning_state (nil) defaults to the hardest D, like .new.
+        let unknown = fsrsBackfill(intervalDays: 5, learningState: nil, suspended: false, lastReviewDate: day)
+        assert(unknown.difficulty == 6.0, "unknown state → D 6")
+
+        // All seeded difficulties live in FSRS's [1, 10] range.
+        for d in [deep.difficulty, shallow.difficulty, massed.difficulty] {
+            assert(d >= 1.0 && d <= 10.0, "seeded D in [1,10]")
+        }
+    }
+}
+#endif
