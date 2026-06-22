@@ -9,6 +9,33 @@
 > CODE_SIGNING_ALLOWED=NO` = EXIT 0; screenshot UI changes; commit per task; update
 > this block as you go).
 >
+> **▶ DRILL CARD: VERTICAL LOCKED + FIT-TO-HEIGHT (commit `a5dff57` — MERGED to
+> `main` + PUSHED; 2026-06-21).** Bug: drill content overflowed with no way to
+> reach the bottom, and vertical scroll was inconsistent (locked on live drills,
+> scrolling in review — distracting). Root cause: each card's `ScrollView` fought
+> the carousel's `simultaneousGesture` drag → non-deterministic vertical
+> arbitration. Fix (DrillView.swift only): **drop the per-card `ScrollView`** →
+> vertical is now deterministically LOCKED everywhere; the card is instead SIZED to
+> fit. (1) `GeometryReader` `compact` mode (`geo.height < 540`): when the region is
+> tight (keyboard up, or small screen / SE) hide the secondary chrome (cue,
+> translation, Indice/Écouter) so prompt + input + footer always fit — also stops
+> the English translation from half-giving the answer while typing. (2) Tighter
+> `contentStack` spacing/padding (`xl`→`lg`, `xl`→`md`) reclaims ~the exitBar
+> height. (3) Build/MC token input wrapped in a bounded `.basedOnSize` ScrollView —
+> invisible for normal drills (locked feel holds), scrolls ONLY the slots+bank when
+> a fully-built long answer (worst case: 10 slots / 16 chips) outgrows the card;
+> prompt + footer stay fixed. (4) Review explanation wrapped in a bounded 220pt
+> `.basedOnSize` ScrollView so long bilingual explanations fit without scrolling the
+> whole locked card. Build EXIT 0. SCREENSHOT-VALIDATED on sim against the REAL
+> `DrillView` via a temp `#if DEBUG` env-gated harness (`CB_HARNESS`/`CB_SCREEN`,
+> launched with `SIMCTL_CHILD_*` env, reverted + deleted — same revert-then-
+> uninstall/reinstall gotcha applies), using REAL worst-case content and a faithful
+> exit-bar-height spacer: worst construis fits all 16 chips, typing+keyboard goes
+> compact and fits, review explanation bounded-scrolls. STILL UNTESTED HERE (taps
+> unautomatable): the literal place-all-10-tokens-then-scroll gesture + the two
+> nested `.basedOnSize` scrolls coexisting with the carousel horizontal swipe —
+> logic-sound, empty states verified, needs on-device tap-through (see NEXT (a)).
+>
 > **▶ CURRENT STATE (2026-06-19) — full course + library + branding. ✅ MERGED + PUSHED.**
 > - **Architecture:** **Book → Module (×25) → Element (×20) → Example (×5+)** with
 >   **element-level SRS** — master a rule via SHUFFLED example sentences, not a
