@@ -47,7 +47,6 @@ final class BookViewModel: ObservableObject {
         total: 0, mastered: 0, seen: 0, masteryDays: [], firstActivity: nil, today: Date())
 
     let settingsStore: StudySettingsStore
-    private var masteryThreshold: Int { StudySettings.masteryThreshold }
 
     init(settingsStore: StudySettingsStore = StudySettingsStore()) {
         self.settingsStore = settingsStore

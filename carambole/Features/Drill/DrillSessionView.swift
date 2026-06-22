@@ -545,6 +545,9 @@ struct DrillSessionView: View {
         status.stability = newState.stability
         status.difficulty = newState.difficulty
         status.lastReviewDate = now
+        // NOTE: `learning_state` is intentionally NOT maintained under FSRS — it's
+        // non-gating now (S/D + graduated_date drive everything); it stays at its
+        // fetched/seed value and is read only by the one-time v4 backfill.
         // Next review when predicted recall decays to desiredRetention; round to whole
         // days (≥1) so the due-queue's date math stays day-granular, mirroring the old
         // integer-interval scheduling. interval_days is kept in sync for overflow order.

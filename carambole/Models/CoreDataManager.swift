@@ -125,7 +125,7 @@ class DataManager {
         // `clearReviewStatus` ("Trop facile → wrong → clean records") deliberately does
         // NOT retract a logged mastery (same as `review_log`). So consumers must use it
         // ONLY for the per-day pace count — current mastery/% comes from the live
-        // `review_status` gate (`fetchUnlockSatisfiedElementIDs`), never from this log.
+        // `graduated_date` gate (`fetchGraduatedElementIDs`), never from this log.
         if version < 3 {
             sqlite3_exec(db, """
                 CREATE TABLE IF NOT EXISTS mastery_log (
@@ -300,6 +300,10 @@ class DataManager {
             let stability: Double
             let difficulty: Double
             let graduatedDate: Double?
+            /// FSRS-derived next-review instant (`lastReview + intervalDays(S)`), so the
+            /// Réviser due queue agrees with the freshly-seeded `S`/fragile flag from
+            /// launch. `nil` when there's no `last_review_date` → keep the existing date.
+            let nextReviewDate: Double?
         }
         var rows: [Row] = []
 
@@ -326,10 +330,17 @@ class DataManager {
                     learningState: learningState,
                     suspended: suspended,
                     lastReviewDate: lastReview)
+                // Re-schedule onto the FSRS curve: next due = last review + the interval
+                // at which R decays to desiredRetention for the seeded S. Keeps the due
+                // queue consistent with the fragile (R<0.80) flag post-migration.
+                let nextReview = lastReview.map {
+                    $0.addingTimeInterval(FSRS.intervalDays(stability: seed.stability) * 86_400)
+                }
                 rows.append(Row(id: id,
                                 stability: seed.stability,
                                 difficulty: seed.difficulty,
-                                graduatedDate: seed.graduatedDate?.timeIntervalSince1970))
+                                graduatedDate: seed.graduatedDate?.timeIntervalSince1970,
+                                nextReviewDate: nextReview?.timeIntervalSince1970))
             }
         } else {
             print("Error preparing FSRS backfill read: \(String(cString: sqlite3_errmsg(db)))")
@@ -341,7 +352,12 @@ class DataManager {
         sqlite3_exec(db, "BEGIN;", nil, nil, nil)
         var update: OpaquePointer?
         if sqlite3_prepare_v2(db,
-            "UPDATE review_status SET stability = ?, difficulty = ?, graduated_date = ? WHERE element_id = ?;",
+            """
+            UPDATE review_status
+            SET stability = ?, difficulty = ?, graduated_date = ?,
+                next_review_date = COALESCE(?, next_review_date)
+            WHERE element_id = ?;
+            """,
             -1, &update, nil) == SQLITE_OK {
             for row in rows {
                 sqlite3_reset(update)
@@ -352,7 +368,12 @@ class DataManager {
                 } else {
                     sqlite3_bind_null(update, 3)
                 }
-                sqlite3_bind_text(update, 4, (row.id as NSString).utf8String, -1, SQLITE_TRANSIENT)
+                if let n = row.nextReviewDate {
+                    sqlite3_bind_double(update, 4, n)
+                } else {
+                    sqlite3_bind_null(update, 4)   // keep existing next_review_date
+                }
+                sqlite3_bind_text(update, 5, (row.id as NSString).utf8String, -1, SQLITE_TRANSIENT)
                 if sqlite3_step(update) != SQLITE_DONE {
                     print("Error backfilling FSRS state: \(String(cString: sqlite3_errmsg(db)))")
                 }
@@ -696,24 +717,6 @@ class DataManager {
                 sqlite3_bind_int(statement, 2, Int32(limit))
                 while sqlite3_step(statement) == SQLITE_ROW {
                     if let c = sqlite3_column_text(statement, 0) { ids.append(String(cString: c)) }
-                }
-            }
-            sqlite3_finalize(statement)
-        }
-        return ids
-    }
-
-    /// Element ids that satisfy the module-unlock gate: mastered
-    /// (`distinct_correct >= threshold`) OR suspended ("too easy" counts as done).
-    func fetchUnlockSatisfiedElementIDs(threshold: Int) -> Set<String> {
-        var ids: Set<String> = []
-        dbQueue.sync {
-            let query = "SELECT element_id FROM review_status WHERE suspended = 1 OR distinct_correct >= ?;"
-            var statement: OpaquePointer?
-            if sqlite3_prepare_v2(self.db, query, -1, &statement, nil) == SQLITE_OK {
-                sqlite3_bind_int(statement, 1, Int32(threshold))
-                while sqlite3_step(statement) == SQLITE_ROW {
-                    if let c = sqlite3_column_text(statement, 0) { ids.insert(String(cString: c)) }
                 }
             }
             sqlite3_finalize(statement)

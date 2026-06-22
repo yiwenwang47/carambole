@@ -14,7 +14,6 @@ struct caramboleApp: App {
         DrillEngine._selfTest()
         DrillView._selfTest()
         Exercise._selfTest()
-        SRSScheduler._selfTest()
         StudyScheduler._selfTest()
         StudySettingsStore._selfTest()
         HistoryViewModel._selfTest()

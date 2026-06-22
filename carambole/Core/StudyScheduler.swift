@@ -31,8 +31,8 @@ struct StudyScheduler {
         return due + overflow.prefix(target - due.count)
     }
 
-    /// A module is complete when every one of its elements satisfies the unlock
-    /// gate (mastered or suspended — see `DataManager.fetchUnlockSatisfiedElementIDs`).
+    /// A module is complete when every one of its elements is in the `satisfied` set
+    /// the caller passes (under FSRS that's the graduated set, `fetchGraduatedElementIDs`).
     static func isModuleComplete(_ module: CourseModule, satisfied: Set<String>) -> Bool {
         !module.elements.isEmpty && module.elements.allSatisfy { satisfied.contains($0.id) }
     }
