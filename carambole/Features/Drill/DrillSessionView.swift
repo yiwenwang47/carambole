@@ -244,6 +244,11 @@ struct DrillSessionView: View {
     private func dragGesture(width: CGFloat) -> some Gesture {
         DragGesture(minimumDistance: 12)
             .onChanged { value in
+                // A swipe over a lingering keyboard (e.g. an answered typing card)
+                // would scramble the neighbour as it slides under the inset — drop it
+                // the moment the drag starts. (This gesture is disabled while ACTIVELY
+                // typing a live card, so this never yanks the keyboard mid-entry.)
+                if keyboardInset > 0 { dismissKeyboard() }
                 // Dragging back toward the previous card → reveal its explanation
                 // as it slides in (clear the advance-suppression).
                 if value.translation.width > 0, hideExplanationAt != nil {
@@ -307,10 +312,20 @@ struct DrillSessionView: View {
 
     /// Animate the stack so card `index` becomes centered (and clear any drag).
     private func animateCursor(to index: Int) {
+        // Leaving the current card: drop any keyboard so a typing drill never drags a
+        // stale keyboard — and its layout inset — onto the neighbouring card.
+        dismissKeyboard()
         withAnimation(.interactiveSpring(response: 0.32, dampingFraction: 0.86)) {
             dragOffset = 0
             cursor = index
         }
+    }
+
+    /// Force-dismiss the keyboard (resign whatever is first responder). Idempotent;
+    /// safe to call when nothing is focused.
+    private func dismissKeyboard() {
+        UIApplication.shared.sendAction(
+            #selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 
     /// Thin top bar with a leading close button. Tapping leaves the session; the

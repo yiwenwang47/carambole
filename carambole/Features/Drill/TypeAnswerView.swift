@@ -76,11 +76,9 @@ private struct TypingTextField: UIViewRepresentable {
                      action: #selector(Coordinator.editingChanged(_:)),
                      for: .editingChanged)
         context.coordinator.textField = tf
-        // A typing drill should be immediately writable — raise the keyboard on
-        // appear, exactly like tapping a token/choice is instant.
-        if !isLocked {
-            DispatchQueue.main.async { tf.becomeFirstResponder() }
-        }
+        // Do NOT auto-raise the keyboard. Show the question first (with its
+        // translation / Indice / Écouter chrome); the learner taps the field
+        // ("Écris ta réponse…") to start typing, which raises the keyboard on demand.
         return tf
     }
 
@@ -91,6 +89,10 @@ private struct TypingTextField: UIViewRepresentable {
         context.coordinator.text = $text
         if tf.text != text { tf.text = text }
         tf.isEnabled = !isLocked
+        // Once the answer is checked, drop the keyboard so the result + footer are
+        // clear and swiping to the previous drill doesn't fight a stale keyboard
+        // (whose layout inset would otherwise scramble the neighbouring card).
+        if isLocked && tf.isFirstResponder { tf.resignFirstResponder() }
         context.coordinator.textField = tf
     }
 
