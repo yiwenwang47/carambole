@@ -9,6 +9,40 @@
 > CODE_SIGNING_ALLOWED=NO` = EXIT 0; screenshot UI changes; commit per task; update
 > this block as you go).
 >
+> **▶ PROGRESS BAR + TIME-TO-FINISH ESTIMATE (branch `progress-tracking-estimate`,
+> head `c2eeccc` — NOT yet merged/pushed; 2026-06-21).** Answers "how far through the
+> book am I / how much more time to finish" on the book home. Driven by web research
+> (Lingvist's learned/learning/at-risk buckets; course-completion stats: only ~8%
+> finish, realistic pace-based timelines → 3.2× more likely to finish) → design
+> `docs/plans/2026-06-21-progress-tracking-design.md`. Locked decisions: estimate =
+> **recent actual mastery pace** (not the daily-goal setting); finish-line = element
+> **mastered** (`distinct_correct ≥ 3` OR suspended — the live `satisfiedIDs` gate);
+> headline = **3-segment book bar** (maîtrisé / en cours / à venir); scope = bar +
+> estimate only (History untouched). Also FIXED a confusing daily zone: the old
+> `Aujourd'hui · X new · Y due` (to-do) sat right above `N appris · M révisés` (done)
+> — two look-alike number pairs, opposite meaning. New: to-do counts move onto the
+> **buttons** (`Apprendre · N` / `Réviser · M`, badge hidden at 0); one `fait : …`
+> done-line remains. **3 tasks, subagent-driven (implement → spec ✅ → code-quality ✅
+> each), + final whole-branch review = SHIP:** **T1** `90361d8` `mastery_log(element_id
+> PK, day_start)` table + `user_version` **3** migration (additive; backfilled once
+> from `last_review_date`, forward-only) + write-hooks in `upsertReviewStatus` AND
+> `setSuspended` (the only 2 satisfaction paths) + `fetchMasteryLog()`. **T2**
+> `594f80a` pure `ProgressEstimate` value type (`Core/ProgressEstimate.swift`):
+> segments + `percentComplete` (caps 99 unless truly done, floors 1 if any progress)
+> + trailing-14-day mastery pace ÷ elapsed-calendar-days → `daysRemaining` /
+> `projectedFinish`, with an early-state gate (suppress unless ≥3 days history AND ≥3
+> window masteries; nil → "Continue quelques jours…"); deterministic (injected
+> `today`/`calendar`), 8-case `#if DEBUG _selfTest()` wired at launch. **T3** `c2eeccc`
+> `BookView`/`BookViewModel`: capsule 3-segment bar + % + 3-state estimate line, French
+> formatting (`≈ N j`/`≈ N mois`, `~15 août`, `8,5/j`) IN the view; `mastered`/segments/%
+> come from the LIVE satisfied gate, `mastery_log` feeds ONLY the pace (no desync).
+> Build EXIT 0 (sim id `7C7BA0A7-…`; `name:iPhone 16` still broken). Launch self-tests
+> pass. Populated bar SCREENSHOT-validated against the real `BookView` via the
+> `CB_SCREEN` harness (reverted; same gotcha as prior) — caught+fixed a doubled-`≈`.
+> STILL UNTESTED HERE: literal on-device tap into BookView (BookView sits behind
+> `LibraryView`, taps unautomatable — see NEXT (a)). FINISHING THE BRANCH (merge/PR)
+> awaiting user choice.
+>
 > **▶ DRILL CARD: VERTICAL LOCKED + FIT-TO-HEIGHT (commit `a5dff57` — MERGED to
 > `main` + PUSHED; 2026-06-21).** Bug: drill content overflowed with no way to
 > reach the bottom, and vertical scroll was inconsistent (locked on live drills,
@@ -467,6 +501,26 @@ Review surfaces SRS-due items. Adding a topic = JSON + manifest line.
   `tokenBank`) + `lint_topics.py`. Committed + **PUSHED** to `main` (head `365f8fc`).
   Design: `docs/plans/2026-06-19-token-shuffle-distractors-design.md`.
 
+### P10 — Progress bar + time-to-finish estimate (branch `progress-tracking-estimate`, head `c2eeccc`, 2026-06-21)
+- ☑ T1 `mastery_log(element_id PK, day_start)` + `user_version` **3** migration
+  (additive; `backfillMasteryLog()` once from `last_review_date`, forward-only);
+  write-hooks in `upsertReviewStatus` + `setSuspended`; `fetchMasteryLog()`.
+  `CoreDataManager`. Commit `90361d8`.
+- ☑ T2 `ProgressEstimate` pure value type (`Core/ProgressEstimate.swift`): bar
+  segments + `percentComplete` + trailing-14d mastery-pace `daysRemaining` /
+  `projectedFinish`, early-state gate (≥3 days history AND ≥3 window masteries),
+  deterministic (injected `today`/`calendar`), 8-case `_selfTest()` at launch.
+  Commit `594f80a`.
+- ☑ T3 `BookView`/`BookViewModel`: 3-segment completion bar (maîtrisé/en cours/à
+  venir) + % + 3-state estimate line, French formatting in the view; daily zone
+  fix (to-do counts onto `Apprendre · N`/`Réviser · M` buttons, one `fait :`
+  done-line). `mastered`/segments/% from the LIVE satisfied gate; `mastery_log`
+  feeds ONLY pace. Commit `c2eeccc`.
+- Per-task spec + code-quality + final whole-branch reviews all APPROVE/SHIP;
+  build EXIT 0; launch self-tests pass; populated bar screenshot-validated vs the
+  real `BookView` (CB_SCREEN harness, reverted). Design:
+  `docs/plans/2026-06-21-progress-tracking-design.md`. NOT yet merged/pushed.
+
 ## Authoring a new grammar module
 
 1. Add `carambole/Resources/Topics/NN_slug.json` — one `GrammarTopic` + 5–6
@@ -505,8 +559,9 @@ typed).
 ## Known tech debt
 - **SQLite schema is now `user_version`-migrated** (RESOLVED — was the top debt
   here). `CoreDataManager.migrate()` runs ordered `if version < N` blocks; current
-  version = **2** (v1 = element-keyed `review_status` baseline; v2 = `review_log`
-  table + backfill). RULES for any future change: add a NEW block, additive only
+  version = **3** (v1 = element-keyed `review_status` baseline; v2 = `review_log`
+  table + backfill; v3 = `mastery_log` table + backfill). RULES for any future
+  change: add a NEW block, additive only
   (`ALTER TABLE … ADD COLUMN` / `CREATE TABLE IF NOT EXISTS`), bump `setUserVersion`;
   **never edit an earlier block, never DROP a user-data table.** The old
   exercise-keyed `review_status` and the `topics`/`exercises` content tables are
@@ -521,6 +576,14 @@ typed).
   retained). Learned-per-day is fully historical (`first_seen_date` is permanent);
   reviewed-per-day for past days fills in going forward. Documented in-app
   (`HistoryView` footnote) + in `backfillReviewLog()`.
+- **Mastery-per-day before the v3 migration is forward-only.** The `mastery_log`
+  backfill stamps each currently-satisfied element at its `last_review_date` day
+  (one row/element), so the trailing-window *pace* estimate is approximate for
+  pre-migration days; current `% complete`/segments are always exact (from the live
+  `review_status` gate, not the log). `mastery_log` is a HISTORICAL event log —
+  `clearReviewStatus` ("Trop facile → wrong → clean records") intentionally does NOT
+  retract a logged mastery (mirrors `review_log`). Documented in the v3 block +
+  `backfillMasteryLog()`.
 
 ## Execution
 
