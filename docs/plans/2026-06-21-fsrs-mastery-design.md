@@ -184,9 +184,9 @@ CLAUDE.md), screenshot UI changes, commit per task, final whole-branch review.
 |----|------------------------------------------------------------------------------------------------|-------------|
 | T1 | `Core/FSRS.swift` pure value type: `next(S,D,elapsed,rating)`, `retrievability`, `interval`. Default params. No persistence/UI. | `_selfTest()` vs known FSRS reference vectors |
 | T2 | v4 migration + S/D/graduated columns + backfill + `DataManager` FSRS read/write + graduation write-hook to `mastery_log` | migration idempotent; build |
-| T3 | `gradeElement` binary→rating→`FSRS.next`; too-easy→Easy+graduate+suspend+undo toast; Apprendre intro-not-master loop; unlock gate→seen | build + sim |
+| T3 | `gradeElement` binary→rating→`FSRS.next` (+ `markGraduated` when S≥21 on success); too-easy→Easy+graduate+suspend; Apprendre intro-not-master loop (advance after first success); unlock gate→seen | build + sim |
 | T4 | `BookViewModel`/`BookView` four buckets + fragile chip + `ProgressEstimate` rewire; Réviser = R≤0.90 fragiles-first | screenshot |
-| T5 | Module element-list view + swipe "remettre en cours" demote + `DataManager.demote` | screenshot |
+| T5 | Un-graduate UX: undo toast after "Trop facile" + module element-list view + swipe "remettre en cours" + `DataManager.demote` | screenshot |
 
 **Biggest risks:** T1 FSRS math correctness (mitigate: self-test against reference
 vectors) and the T3 learn-loop reshape (Apprendre stops completing elements — real
