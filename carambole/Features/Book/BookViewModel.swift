@@ -33,6 +33,11 @@ final class BookViewModel: ObservableObject {
     @Published private(set) var unlockedIDs: Set<String> = []
     /// Element ids that satisfy the unlock gate (mastered or suspended).
     @Published private(set) var satisfiedIDs: Set<String> = []
+    /// Book-completion bar segments + % + time-to-finish estimate. Mastered/segments/%
+    /// come from the LIVE `satisfied` gate (a cleared element drops out); the
+    /// `mastery_log` day stamps feed ONLY the pace. See `ProgressEstimate`.
+    @Published var estimate: ProgressEstimate = ProgressEstimate(
+        total: 0, mastered: 0, seen: 0, masteryDays: [], firstActivity: nil, today: Date())
 
     let settingsStore: StudySettingsStore
     private var masteryThreshold: Int { StudySettings.masteryThreshold }
@@ -83,6 +88,22 @@ final class BookViewModel: ObservableObject {
             let learnedCount = firstSeenToday.intersection(bookIDs).count
             let reviewedCount = reviewedToday.subtracting(firstSeenToday).intersection(bookIDs).count
 
+            // Book-completion bar + finish estimate. Segments/% come from the LIVE
+            // `satisfied` gate (so a cleared element correctly drops out); the
+            // `mastery_log` day stamps feed ONLY the pace.
+            let total = book.allElements.count
+            let masteredInBook = satisfied.intersection(bookIDs).count
+            let seenInBook = DataManager.shared.fetchSeenElementIDs().intersection(bookIDs).count
+            let masteryDays = DataManager.shared.fetchMasteryLog()
+                .filter { bookIDs.contains($0.elementID) }
+                .map(\.dayStart)
+            let firstActivity = DataManager.shared.fetchFirstSeenByElement()
+                .filter { bookIDs.contains($0.key) }
+                .values.min()
+            let estimate = ProgressEstimate(total: total, mastered: masteredInBook,
+                                            seen: seenInBook, masteryDays: masteryDays,
+                                            firstActivity: firstActivity, today: Date())
+
             DispatchQueue.main.async {
                 self.dueCount = due
                 self.newAvailableToday = newCount
@@ -90,6 +111,7 @@ final class BookViewModel: ObservableObject {
                 self.reviewedToday = reviewedCount
                 self.satisfiedIDs = satisfied
                 self.unlockedIDs = unlocked
+                self.estimate = estimate
             }
         }
     }

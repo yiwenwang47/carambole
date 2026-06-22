@@ -41,6 +41,7 @@ struct BookView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: Spacing.lg) {
                     header
+                    bookProgress
                     todayPanel
                     divider
                     moduleList
@@ -103,30 +104,137 @@ struct BookView: View {
         .padding(.bottom, Spacing.sm)
     }
 
+    // MARK: - Book-completion bar + time-to-finish estimate
+
+    /// Lingvist-style segmented book bar (maîtrisé · en cours · à venir), a % and a
+    /// time-to-finish estimate. Hidden until the book is loaded (`total == 0`).
+    @ViewBuilder
+    private var bookProgress: some View {
+        let est = viewModel.estimate
+        if est.total > 0 {
+            VStack(alignment: .leading, spacing: Spacing.sm) {
+                HStack(alignment: .center, spacing: Spacing.md) {
+                    GeometryReader { geo in
+                        let w = geo.size.width
+                        // total is already > 0 inside this branch; max(1,…) is a
+                        // belt-and-braces div-by-zero guard for the segment widths.
+                        let t = max(1, est.total)
+                        HStack(spacing: 0) {
+                            Rectangle()
+                                .fill(AppColor.saffron)
+                                .frame(width: CGFloat(est.masteredCount) / CGFloat(t) * w)
+                            Rectangle()
+                                .fill(AppColor.saffron.opacity(0.28))
+                                .frame(width: CGFloat(est.inProgressCount) / CGFloat(t) * w)
+                            Rectangle()
+                                .fill(AppColor.hairline)
+                                .frame(width: CGFloat(est.toComeCount) / CGFloat(t) * w)
+                        }
+                        .clipShape(Capsule())
+                    }
+                    .frame(height: 12)
+
+                    Text("\(est.percentComplete) %")
+                        .font(.appLabel)
+                        .tracking(1)
+                        .foregroundColor(AppColor.saffronDeep)
+                        .fixedSize()
+                }
+
+                legend
+
+                Text("\(est.masteredCount) / \(est.total) maîtrisés")
+                    .font(.appExplain)
+                    .foregroundColor(AppColor.graphite)
+
+                estimateLine
+                    .font(.appExplain)
+                    .foregroundColor(AppColor.graphite)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            .accessibilityElement(children: .combine)
+            .accessibilityLabel(progressAccessibilityLabel)
+        }
+    }
+
+    /// Three colored dots + bucket names.
+    private var legend: some View {
+        HStack(spacing: Spacing.md) {
+            legendItem(color: AppColor.saffron, label: "maîtrisé")
+            legendItem(color: AppColor.saffron.opacity(0.28), label: "en cours")
+            legendItem(color: AppColor.hairline, label: "à venir")
+        }
+    }
+
+    private func legendItem(color: Color, label: String) -> some View {
+        HStack(spacing: 4) {
+            Circle().fill(color).frame(width: 6, height: 6)
+            Text(label).uppercaseLabel()
+        }
+    }
+
+    /// Stat line 2: done / estimate / early-state, per `ProgressEstimate`.
+    @ViewBuilder
+    private var estimateLine: some View {
+        let est = viewModel.estimate
+        if est.isComplete {
+            Text("Terminé ! 🎉")
+        } else if est.hasEstimate, let days = est.daysRemaining,
+                  let pace = est.pacePerDay, let finish = est.projectedFinish {
+            Text("\(daysText(days)) restants · finir ~\(dateText(finish)) · rythme \(paceText(pace))/j")
+        } else {
+            Text("Continue quelques jours pour estimer la durée.")
+        }
+    }
+
+    /// "{percent} % du livre maîtrisé[, environ {n} jours restants]".
+    private var progressAccessibilityLabel: String {
+        let est = viewModel.estimate
+        var label = "\(est.percentComplete) % du livre maîtrisé"
+        if !est.isComplete, let days = est.daysRemaining {
+            label += ", environ \(days) jours restants"
+        }
+        return label
+    }
+
+    // MARK: Estimate formatting (French)
+
+    /// `< 90` → "≈ N j"; `>= 90` → "≈ N mois" (rounded from days/30).
+    private func daysText(_ n: Int) -> String {
+        if n < 90 { return "≈ \(n) j" }
+        return "≈ \(Int((Double(n) / 30).rounded())) mois"
+    }
+
+    /// Wide French month + day, e.g. "15 août". French is for DISPLAY only — the
+    /// projected date itself was computed with the device calendar/timezone (so the
+    /// learner's own day boundaries drive the estimate); don't force a UTC calendar
+    /// here just to match the locale, or the day math would shift under the user.
+    private func dateText(_ date: Date) -> String {
+        date.formatted(.dateTime.day().month(.wide).locale(Locale(identifier: "fr_FR")))
+    }
+
+    /// One-decimal pace with a French comma, e.g. "8,5".
+    private func paceText(_ pace: Double) -> String {
+        pace.formatted(.number.precision(.fractionLength(1)).locale(Locale(identifier: "fr_FR")))
+    }
+
     // MARK: - "Aujourd'hui" panel (lives inside the book)
 
     private var todayPanel: some View {
         VStack(alignment: .leading, spacing: Spacing.md) {
             SectionLabel("Aujourd'hui")
 
-            HStack(alignment: .firstTextBaseline, spacing: Spacing.sm) {
-                count(viewModel.newAvailableToday, label: "new")
-                Text("·").font(.appPrompt).foregroundColor(AppColor.hairline)
-                count(viewModel.dueCount, label: "due")
-                Spacer()
-            }
-
             progressLine
 
             HStack(spacing: Spacing.md) {
-                Button("Apprendre") {
+                Button(viewModel.newAvailableToday > 0 ? "Apprendre · \(viewModel.newAvailableToday)" : "Apprendre") {
                     guard let m = viewModel.newestUnlockedModule() else { return }
                     session = ElementSession(title: m.title, ruleNote: m.ruleNote,
                                              elements: viewModel.moduleLearnElements(m), mode: .learn)
                 }
                 .buttonStyle(PrimaryButtonStyle())
 
-                Button("Réviser") {
+                Button(viewModel.dueCount > 0 ? "Réviser · \(viewModel.dueCount)" : "Réviser") {
                     session = ElementSession(title: "Réviser", ruleNote: "",
                                              elements: viewModel.reviewSessionElements(), mode: .review)
                 }
@@ -143,7 +251,7 @@ struct BookView: View {
             HistoryView()
         } label: {
             HStack(spacing: Spacing.sm) {
-                Text("\(viewModel.learnedToday) appris · \(viewModel.reviewedToday) révisés")
+                Text("fait : \(viewModel.learnedToday) appris · \(viewModel.reviewedToday) révisés")
                     .uppercaseLabel()
                 Image(systemName: "chevron.right")
                     .font(.system(size: 10, weight: .semibold))
@@ -154,15 +262,6 @@ struct BookView: View {
         }
         .buttonStyle(ScaleButtonStyle())
         .accessibilityLabel("Historique de progression")
-    }
-
-    private func count(_ value: Int, label: String) -> some View {
-        HStack(alignment: .firstTextBaseline, spacing: 4) {
-            Text("\(value)")
-                .font(.appPrompt)
-                .foregroundColor(value > 0 ? AppColor.saffronDeep : AppColor.graphite)
-            Text(label).uppercaseLabel()
-        }
     }
 
     // MARK: - Module list
