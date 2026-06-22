@@ -264,14 +264,14 @@ struct BookView: View {
             progressLine
 
             HStack(spacing: Spacing.md) {
-                Button(viewModel.newAvailableToday > 0 ? "Apprendre · \(viewModel.newAvailableToday)" : "Apprendre") {
+                Button("Apprendre") {
                     guard let m = viewModel.newestUnlockedModule() else { return }
                     session = ElementSession(title: m.title, ruleNote: m.ruleNote,
                                              elements: viewModel.moduleLearnElements(m), mode: .learn)
                 }
                 .buttonStyle(PrimaryButtonStyle())
 
-                Button(viewModel.dueCount > 0 ? "Réviser · \(viewModel.dueCount)" : "Réviser") {
+                Button("Réviser") {
                     session = ElementSession(title: "Réviser", ruleNote: "",
                                              elements: viewModel.reviewSessionElements(), mode: .review)
                 }

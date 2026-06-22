@@ -148,17 +148,18 @@ struct DrillSessionView: View {
             }
 
             // Passive undo affordance after a "Trop facile" graduation — floats at the
-            // bottom over the (already-advanced) next drill, never blocking it. The
-            // surrounding VStack/Spacer is hit-transparent (only the pill itself takes
-            // touches) so the live card underneath stays fully interactive.
+            // TOP, just under the exit-bar ✕, so it never collides with the card's
+            // pinned Vérifier/Suivant footer. The surrounding VStack/Spacer is
+            // hit-transparent (only the pill itself takes touches) so the live card
+            // underneath stays fully interactive.
             if tooEasyUndoElementID != nil {
                 VStack {
-                    Spacer().allowsHitTesting(false)
                     tooEasyUndoToast
                         .padding(.horizontal, Spacing.screenH)
-                        .padding(.bottom, Spacing.lg)
+                        .padding(.top, 48)   // clear the exit-bar (✕) row above
+                    Spacer().allowsHitTesting(false)
                 }
-                .transition(.move(edge: .bottom).combined(with: .opacity))
+                .transition(.move(edge: .top).combined(with: .opacity))
             }
         }
         .animation(.spring(response: 0.4, dampingFraction: 0.85), value: tooEasyUndoElementID)
