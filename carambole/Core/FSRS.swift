@@ -84,6 +84,11 @@ enum FSRS {
     static let graduationStability: Double = 21.0
     /// A graduated element whose `R(now)` drops below this is flagged "fragile".
     static let fragileRecall: Double = 0.80
+    /// Stability (days) a demoted element is knocked down to ("remettre en cours").
+    /// Comfortably below `graduationStability`, so an un-graduated element genuinely
+    /// lands in en-cours and must re-earn graduation across spaced reviews. Capped by
+    /// the element's current `S` (never raise it) and floored at `stabilityMin`.
+    static let relearnStability: Double = 7.0
 
     // MARK: Forgetting curve & interval
 

@@ -33,6 +33,12 @@ final class BookViewModel: ObservableObject {
     @Published private(set) var unlockedIDs: Set<String> = []
     /// Element ids that satisfy the unlock gate (mastered or suspended).
     @Published private(set) var satisfiedIDs: Set<String> = []
+    /// Element ids ever introduced (en-cours-or-better) — drives the four-bucket
+    /// classification in the module detail list (`seen ∖ graduated = en cours`).
+    @Published private(set) var seenIDs: Set<String> = []
+    /// Graduated element ids whose memory has decayed below the fragile floor
+    /// (`R(now) < 0.80`). A subset of `satisfiedIDs`; drives the "fragile" badge.
+    @Published private(set) var fragileIDs: Set<String> = []
     /// Book-completion bar segments + % + time-to-finish estimate. Mastered/segments/%
     /// come from the LIVE `satisfied` gate (a cleared element drops out); the
     /// `mastery_log` day stamps feed ONLY the pace. The fragile annotation (graduated
@@ -114,15 +120,18 @@ final class BookViewModel: ObservableObject {
             // FRAGILE = graduated ∧ ¬suspended ∧ R(now) < 0.80, ∩ book. A subset of
             // maîtrisé (annotation only — never changes the bar segments above). R is
             // predicted recall over the calendar-day gap since the element's last
-            // review (`CalendarDays.elapsed`, the same bridge grading uses).
+            // review (`CalendarDays.elapsed`, the same bridge grading uses). Keep the
+            // id SET (not just the count) so the module detail list can badge each
+            // fragile element; the bar still uses `.count`.
             let now = Date()
-            let fragileInBook = DataManager.shared.fetchGraduatedStates()
+            let fragileIDs = Set(DataManager.shared.fetchGraduatedStates()
                 .filter { bookIDs.contains($0.elementID) }
                 .filter { row in
                     let elapsed = CalendarDays.elapsed(from: row.lastReviewDate, to: now)
                     return FSRS.retrievability(stability: row.stability, elapsedDays: elapsed) < FSRS.fragileRecall
                 }
-                .count
+                .map(\.elementID))
+            let fragileInBook = fragileIDs.count
 
             let estimate = ProgressEstimate(total: total, mastered: masteredInBook,
                                             seen: seenInBook, masteryDays: masteryDays,
@@ -135,6 +144,8 @@ final class BookViewModel: ObservableObject {
                 self.learnedToday = learnedCount
                 self.reviewedToday = reviewedCount
                 self.satisfiedIDs = satisfied
+                self.seenIDs = seen
+                self.fragileIDs = fragileIDs
                 self.unlockedIDs = unlocked
                 self.estimate = estimate
             }
@@ -223,5 +234,38 @@ final class BookViewModel: ObservableObject {
         if StudyScheduler.isModuleComplete(module, satisfied: satisfiedIDs) { return .done }
         if unlockedIDs.contains(module.id) { return .current }
         return .locked
+    }
+
+    // MARK: - Element-level bucket classification (module detail list)
+
+    /// The four memory-strength buckets an element can be in, derived from the live
+    /// sets refreshed above. `fragile` is a graduated element whose recall has decayed
+    /// below the floor — still maîtrisé on the bar, but flagged at-risk.
+    enum ElementBucket {
+        case mastered   // graduated, recall still healthy
+        case fragile    // graduated AND R(now) < 0.80
+        case enCours    // seen but not graduated
+        case aVenir     // unseen
+    }
+
+    /// Classify one element into its memory-strength bucket. Order matters: fragile is
+    /// a graduated element (checked within the graduated branch), and a graduated
+    /// element is by definition seen, so the graduated test precedes the seen test.
+    func bucket(for element: GrammarElement) -> ElementBucket {
+        if satisfiedIDs.contains(element.id) {
+            return fragileIDs.contains(element.id) ? .fragile : .mastered
+        }
+        if seenIDs.contains(element.id) { return .enCours }
+        return .aVenir
+    }
+
+    /// Un-graduate ("remettre en cours") an element from the module detail list, then
+    /// refresh so the bar + buckets re-rate. Only meaningful on a graduated element;
+    /// `demote` is harmless on others. `demote` and every reader in `refresh()` run on
+    /// the same serial `dbQueue`, so the write is guaranteed to land before the refresh
+    /// re-reads it — no settle delay needed.
+    func demoteElement(_ elementID: String) {
+        DataManager.shared.demote(elementID: elementID)
+        refresh()
     }
 }

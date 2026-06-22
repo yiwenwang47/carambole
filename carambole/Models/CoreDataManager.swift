@@ -894,6 +894,67 @@ class DataManager {
         execWithID("DELETE FROM review_status WHERE element_id = ?;", id: elementID)
     }
 
+    /// Un-graduate ("remettre en cours") — move a graduated element back to en-cours,
+    /// for an accidental graduation (massed-by-mistake, or a "Trop facile" the learner
+    /// regrets). The inverse of `markGraduated` at the row level, in ONE statement on
+    /// the serial `dbQueue`:
+    ///   - `graduated_date → NULL` — drops it from the live maîtrisé set
+    ///     (`fetchGraduatedElementIDs`), so the bar's green segment shrinks on the next
+    ///     `refresh()`. This sticky flag is the ONLY thing the bar reads, so clearing
+    ///     it is what actually demotes the element.
+    ///   - `suspended → 0` — re-enters the new/review queues (a "too easy" skip had
+    ///     suspended it; an earned graduate was never suspended, so this is a harmless
+    ///     no-op there).
+    ///   - `stability → min(current, relearnStability)`, floored at `stabilityMin` —
+    ///     knocks `S` below the 21-day graduation bar so the element genuinely lands in
+    ///     en-cours (`S < 21d`) and must RE-EARN graduation through spaced success. We
+    ///     never raise `S` (a freshly-massed graduate may already be under 7d). A row
+    ///     with no FSRS state yet (`stability IS NULL`, shouldn't happen for a graduate)
+    ///     is seeded to `relearnStability` via COALESCE so it still re-enters as en-cours.
+    ///   - `difficulty` is KEPT (the element's learned hardness survives the demote).
+    ///   - `next_review_date ≈ now`, `last_review_date = now` — re-enters the Réviser
+    ///     queue right away (`fetchDueElementIDs` keys off `next_review_date <= now`).
+    /// The `mastery_log` row is intentionally LEFT (historical event log, matching the
+    /// `clearReviewStatus` convention — only the live `graduated_date` flag drives the
+    /// bar, so the demote takes effect immediately without retracting past pace data).
+    ///
+    /// Idempotent-ish: calling it on a non-graduated element just re-asserts an
+    /// en-cours state (clears an already-NULL flag, caps an already-low `S`) — harmless.
+    /// A row that doesn't exist at all is untouched (the `WHERE element_id = ?` matches
+    /// nothing).
+    func demote(elementID: String) {
+        dbQueue.async {
+            let now = Date().timeIntervalSince1970
+            let relearn = FSRS.relearnStability
+            let floor = FSRS.stabilityMin
+            let query = """
+                UPDATE review_status SET
+                    graduated_date   = NULL,
+                    suspended        = 0,
+                    stability        = MAX(?, MIN(COALESCE(stability, ?), ?)),
+                    last_review_date = ?,
+                    next_review_date = ?
+                WHERE element_id = ?;
+                """
+            var statement: OpaquePointer?
+            guard sqlite3_prepare_v2(self.db, query, -1, &statement, nil) == SQLITE_OK else {
+                print("Error preparing demote: \(String(cString: sqlite3_errmsg(self.db)))")
+                return
+            }
+            // stability ← max(floor, min(coalesce(stability, relearn), relearn))
+            sqlite3_bind_double(statement, 1, floor)
+            sqlite3_bind_double(statement, 2, relearn)
+            sqlite3_bind_double(statement, 3, relearn)
+            sqlite3_bind_double(statement, 4, now)   // last_review_date = now
+            sqlite3_bind_double(statement, 5, now)   // next_review_date ≈ now (due immediately)
+            sqlite3_bind_text(statement, 6, (elementID as NSString).utf8String, -1, SQLITE_TRANSIENT)
+            if sqlite3_step(statement) != SQLITE_DONE {
+                print("Error demoting element: \(String(cString: sqlite3_errmsg(self.db)))")
+            }
+            sqlite3_finalize(statement)
+        }
+    }
+
     // MARK: - Small query helpers
 
     private func queryIDs(_ query: String, bindDouble value: Double?) -> [String] {

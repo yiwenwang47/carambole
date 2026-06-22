@@ -79,6 +79,14 @@ struct DrillSessionView: View {
     @State private var finished = false
     @State private var showingIntro = true
 
+    /// Element id just marked "Trop facile" (correct → instant graduate). Set so the
+    /// undo toast's "Annuler" can `demote` exactly that element even though the session
+    /// has already auto-advanced past it. Cleared when the toast is dismissed/undone.
+    @State private var tooEasyUndoElementID: String?
+    /// Bumped each time a too-easy graduation happens; the auto-dismiss task keys off
+    /// this so a NEW too-easy (toast re-shown) cancels the previous dismissal timer.
+    @State private var tooEasyUndoToken = 0
+
     private var answeredCount: Int { resultByIndex.count }
     private var correctCount: Int { resultByIndex.values.filter { $0 }.count }
     /// Index of the live (gradable) card — always the last one presented.
@@ -138,6 +146,29 @@ struct DrillSessionView: View {
                 .ignoresSafeArea(.keyboard, edges: .bottom)
                 .animation(.easeOut(duration: 0.25), value: keyboardInset)
             }
+
+            // Passive undo affordance after a "Trop facile" graduation — floats at the
+            // bottom over the (already-advanced) next drill, never blocking it. The
+            // surrounding VStack/Spacer is hit-transparent (only the pill itself takes
+            // touches) so the live card underneath stays fully interactive.
+            if tooEasyUndoElementID != nil {
+                VStack {
+                    Spacer().allowsHitTesting(false)
+                    tooEasyUndoToast
+                        .padding(.horizontal, Spacing.screenH)
+                        .padding(.bottom, Spacing.lg)
+                }
+                .transition(.move(edge: .bottom).combined(with: .opacity))
+            }
+        }
+        .animation(.spring(response: 0.4, dampingFraction: 0.85), value: tooEasyUndoElementID)
+        // Auto-dismiss the undo toast ~4.5s after each too-easy graduation. Keyed on
+        // the token so a fresh too-easy restarts the timer (and cancels the prior one);
+        // cancellation (token bumps / view teardown) silently aborts the sleep.
+        .task(id: tooEasyUndoToken) {
+            guard tooEasyUndoElementID != nil else { return }
+            try? await Task.sleep(nanoseconds: 4_500_000_000)
+            if !Task.isCancelled { dismissTooEasyUndo() }
         }
         .onAppear {
             if history.isEmpty && !elements.isEmpty { startElement(0, animated: false) }
@@ -301,6 +332,63 @@ struct DrillSessionView: View {
         .padding(.top, Spacing.sm)
     }
 
+    // MARK: - "Trop facile" undo toast
+
+    /// Subtle ink pill: "Marqué trop facile" + an "Annuler" action that demotes the
+    /// just-graduated element back to en-cours. Styled with design tokens (not a
+    /// system alert); passive — it never blocks the drill or the auto-advance.
+    private var tooEasyUndoToast: some View {
+        HStack(spacing: Spacing.md) {
+            Text("Marqué trop facile")
+                .font(.appLabel)
+                .foregroundColor(AppColor.paper)
+                .lineLimit(1)
+
+            Rectangle()
+                .fill(AppColor.paper.opacity(0.25))
+                .frame(width: 1, height: 16)
+
+            Button(action: undoTooEasy) {
+                Text("Annuler")
+                    .font(.appLabel)
+                    .fontWeight(.semibold)
+                    .tracking(1)
+                    .textCase(.uppercase)
+                    .foregroundColor(AppColor.saffron)
+                    .contentShape(Rectangle())
+            }
+            .buttonStyle(ScaleButtonStyle())
+            .accessibilityLabel("Annuler · remettre en cours")
+        }
+        .padding(.horizontal, Spacing.lg)
+        .padding(.vertical, Spacing.md)
+        .background(
+            Capsule().fill(AppColor.ink)
+                .shadow(color: AppColor.ink.opacity(0.18), radius: 14, y: 6)
+        )
+    }
+
+    /// Surface the undo toast for `elementID` (called on the too-easy-correct path).
+    /// Bumping the token (re)starts the auto-dismiss timer.
+    private func presentTooEasyUndo(elementID: String) {
+        tooEasyUndoElementID = elementID
+        tooEasyUndoToken += 1
+    }
+
+    /// "Annuler" → demote the just-graduated element back to en-cours, then hide the
+    /// toast. The session has already advanced past it; the demote is a pure data op,
+    /// reflected on the book bar at the next `refresh()` (cover dismiss).
+    private func undoTooEasy() {
+        if let id = tooEasyUndoElementID {
+            DataManager.shared.demote(elementID: id)
+        }
+        dismissTooEasyUndo()
+    }
+
+    private func dismissTooEasyUndo() {
+        tooEasyUndoElementID = nil
+    }
+
     // MARK: - Element / example driver
 
     /// `animated` is false only for the very first card (it just appears); element
@@ -418,6 +506,10 @@ struct DrillSessionView: View {
             // `markGraduated`, so this is the self-attested-skip graduation path.
             gradeElement(element, exampleID: history[cursor].id, rating: .easy)
             DataManager.shared.setSuspended(elementID: element.id)
+            // Surface a passive undo toast — capture THIS element's id now, before the
+            // session auto-advances past it, so "Annuler" can demote the right one.
+            // Only the too-easy-CORRECT (instant-graduate) path gets the toast.
+            presentTooEasyUndo(elementID: element.id)
         } else {
             DataManager.shared.clearReviewStatus(elementID: element.id)
         }

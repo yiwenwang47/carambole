@@ -309,19 +309,39 @@ struct BookView: View {
                 let state = viewModel.state(for: module)
                 let unlocked = state != .locked
 
-                Button {
-                    guard unlocked else { return }
-                    session = ElementSession(title: module.title, ruleNote: module.ruleNote,
-                                             elements: viewModel.moduleLearnElements(module), mode: .learn)
-                } label: {
-                    ModuleRow(number: index + 1,
-                              title: module.title,
-                              mastered: viewModel.masteredCount(in: module),
-                              total: module.elements.count,
-                              state: state)
+                // PRIMARY tap still starts the learn session; a SECONDARY trailing "ⓘ"
+                // detail link (unlocked rows only) opens the per-element bucket list —
+                // the durable un-graduate surface. They're HStack siblings so the
+                // detail tap never hijacks the row's learn tap.
+                HStack(spacing: 0) {
+                    Button {
+                        guard unlocked else { return }
+                        session = ElementSession(title: module.title, ruleNote: module.ruleNote,
+                                                 elements: viewModel.moduleLearnElements(module), mode: .learn)
+                    } label: {
+                        ModuleRow(number: index + 1,
+                                  title: module.title,
+                                  mastered: viewModel.masteredCount(in: module),
+                                  total: module.elements.count,
+                                  state: state)
+                    }
+                    .buttonStyle(ScaleButtonStyle())
+                    .disabled(!unlocked)
+
+                    if unlocked {
+                        NavigationLink {
+                            ModuleDetailView(module: module, viewModel: viewModel)
+                        } label: {
+                            Image(systemName: "info.circle")
+                                .font(.system(size: 17, weight: .regular))
+                                .foregroundColor(AppColor.graphite)
+                                .frame(width: 44, height: 44)
+                                .contentShape(Rectangle())
+                        }
+                        .buttonStyle(ScaleButtonStyle())
+                        .accessibilityLabel("Détails du module \(module.title)")
+                    }
                 }
-                .buttonStyle(ScaleButtonStyle())
-                .disabled(!unlocked)
                 .opacity(revealed ? 1 : 0)
                 .offset(y: revealed ? 0 : 12)
                 .animation(.easeOut(duration: 0.4).delay(Double(index) * 0.06), value: revealed)
