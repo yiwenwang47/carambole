@@ -67,31 +67,18 @@ struct DrillView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            // Content scrolls ONLY when it overflows (long prompt, many tokens, an
-            // expanded Indice, or the full review block) — `.basedOnSize` keeps short
-            // drills static (no bounce, looks like a fixed card). The footer below is
-            // pinned OUTSIDE the scroll, so "Suivant" is always reachable.
-            ScrollView {
-                VStack(alignment: .leading, spacing: Spacing.xl) {
-                    header
-
-                    promptBlock
-
-                    if let review = reviewData {
-                        // Read-only revisit: show what was submitted, the result, the
-                        // correct answer (if wrong), and the full bilingual explanation.
-                        submittedAnswerBlock(review.answer)
-                        reviewResultBlock(correct: review.correct)
-                    } else {
-                        inputBlock
-                    }
-                }
-                .padding(.horizontal, Spacing.screenH)
-                .padding(.top, Spacing.xl)
-                .padding(.bottom, Spacing.lg)
-                .frame(maxWidth: .infinity, alignment: .leading)
+            // Vertical is LOCKED — no ScrollView. The card content is sized to the
+            // available height by `GeometryReader`: when space is tight (typing, with
+            // the keyboard up, shrinks this region — see DrillSessionView.keyboardInset)
+            // it collapses to a `compact` layout that drops the secondary chrome
+            // (translation, cue, Indice/Écouter) so the prompt + input + footer always
+            // fit without scrolling. Text additionally shrinks via minimumScaleFactor.
+            GeometryReader { geo in
+                let compact = geo.size.height < 540
+                contentStack(spacing: compact ? Spacing.md : Spacing.lg, compact: compact)
+                    .frame(maxWidth: .infinity, minHeight: geo.size.height,
+                           alignment: .top)
             }
-            .scrollBounceBehavior(.basedOnSize)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
 
             // Pinned footer: the primary action stays reachable. On a wrong LIVE
@@ -114,6 +101,30 @@ struct DrillView: View {
             .background(AppColor.paper)
         }
         .background(AppColor.paper.ignoresSafeArea())
+    }
+
+    /// The card body, laid out top-down. `compact` drops the secondary chrome to
+    /// fit a constrained height (e.g. keyboard up); `spacing` tightens the gaps.
+    @ViewBuilder
+    private func contentStack(spacing: CGFloat, compact: Bool) -> some View {
+        VStack(alignment: .leading, spacing: spacing) {
+            header
+
+            promptBlock(compact: compact)
+
+            if let review = reviewData {
+                // Read-only revisit: show what was submitted, the result, the
+                // correct answer (if wrong), and the full bilingual explanation.
+                submittedAnswerBlock(review.answer)
+                reviewResultBlock(correct: review.correct)
+            } else {
+                inputBlock
+            }
+        }
+        .padding(.horizontal, Spacing.screenH)
+        .padding(.top, compact ? Spacing.sm : Spacing.md)
+        .padding(.bottom, Spacing.md)
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 
     // Navigation between drills is driven by the finger-tracked card stack in
@@ -152,7 +163,11 @@ struct DrillView: View {
 
     // MARK: - Prompt, framed by corner brackets
 
-    private var promptBlock: some View {
+    /// `compact` (tight height, e.g. keyboard up) hides the secondary chrome —
+    /// cue, the always-on translation, and the Indice/Écouter assist row — so the
+    /// prompt + input + footer fit without scrolling. The prompt itself always
+    /// shows, shrinking via `minimumScaleFactor` before it would clip.
+    private func promptBlock(compact: Bool) -> some View {
         VStack(alignment: .leading, spacing: Spacing.sm) {
             CornerBracketFrame {
                 Text(Self.blankedPrompt(exercise.prompt))
@@ -162,14 +177,14 @@ struct DrillView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
 
-            if let cue = exercise.cue, !cue.isEmpty {
+            if !compact, let cue = exercise.cue, !cue.isEmpty {
                 Text(cue)
                     .uppercaseLabel()
                     .padding(.leading, Spacing.sm)
             }
 
-            // Always-on, subtle English translation — one quiet line.
-            if let translation = exercise.translation, !translation.isEmpty {
+            // Always-on, subtle English translation — one quiet line (hidden when compact).
+            if !compact, let translation = exercise.translation, !translation.isEmpty {
                 Text("“\(translation)”")
                     .font(.appExplain)
                     .foregroundColor(AppColor.graphite)
@@ -179,8 +194,11 @@ struct DrillView: View {
 
             // Opt-in assists on one line: English "Indice" (left, when present) and
             // "Écouter" (right, always) — the learner chooses to reveal/hear.
-            assistRow
-                .padding(.leading, Spacing.sm)
+            // Hidden when compact to reclaim vertical space.
+            if !compact {
+                assistRow
+                    .padding(.leading, Spacing.sm)
+            }
         }
     }
 
@@ -321,7 +339,16 @@ struct DrillView: View {
     private var inputBlock: some View {
         switch exercise.resolvedInputMode {
         case .buildFromTokens:
-            TokenBuilderView(exercise: exercise, answer: $answer, isLocked: checked)
+            // Slots GROW as chips are placed (a placed chip stays faded in the bank
+            // AND shows in the slots), so a long answer can outgrow the locked card.
+            // Give just the slots+bank their own bounded scroll — `.basedOnSize` means
+            // normal drills never scroll (locked feel holds), but a fully-built 10-slot
+            // construis can always reach every chip. Prompt + footer stay fixed.
+            ScrollView {
+                TokenBuilderView(exercise: exercise, answer: $answer, isLocked: checked)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            .scrollBounceBehavior(.basedOnSize)
         case .multipleChoice:
             ChoiceView(exercise: exercise, answer: $answer, isLocked: checked)
         case .freeText:
@@ -377,19 +404,28 @@ struct DrillView: View {
 
             // Full rule explanation — French, then a subtler English rendering
             // beneath it (bilingual explanation). English shows when populated.
-            VStack(alignment: .leading, spacing: 4) {
-                Text(exercise.explanation)
-                    .font(.appExplain)
-                    .foregroundColor(AppColor.ink)
-                    .fixedSize(horizontal: false, vertical: true)
-
-                if let english = exercise.explanationEN, !english.isEmpty {
-                    Text(english)
+            // The card itself is locked (no scroll); a long explanation gets its
+            // OWN bounded scroll so it never pushes the card past the screen.
+            // `.basedOnSize` keeps short explanations static (no scroll at all),
+            // so the locked feel holds for the common case.
+            ScrollView {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(exercise.explanation)
                         .font(.appExplain)
-                        .foregroundColor(AppColor.graphite)
+                        .foregroundColor(AppColor.ink)
                         .fixedSize(horizontal: false, vertical: true)
+
+                    if let english = exercise.explanationEN, !english.isEmpty {
+                        Text(english)
+                            .font(.appExplain)
+                            .foregroundColor(AppColor.graphite)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
                 }
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
+            .scrollBounceBehavior(.basedOnSize)
+            .frame(maxHeight: 220)
         }
         .padding(Spacing.md)
         .frame(maxWidth: .infinity, alignment: .leading)
