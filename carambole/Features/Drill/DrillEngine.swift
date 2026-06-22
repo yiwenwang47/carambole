@@ -14,9 +14,27 @@ struct DrillEngine {
             return submitted == exercise.answerTokens
         case .buildFromTokens:
             // The learner builds words only — bare-punctuation chips are never
-            // offered, so grade against the punctuation-stripped answer.
-            return submitted == exercise.producibleAnswerTokens
+            // offered, so grade against the punctuation-stripped answer. Compare
+            // by SURFACE string, not chip array: a multi-word chip the bank offers
+            // ("à la") must grade the same as its separate parts ("à","la") — both
+            // produce the identical, correctly-ordered sentence. Word ORDER is still
+            // graded (a reorder changes the surface); only the pedagogically
+            // irrelevant chip partition is allowed to differ.
+            return buildSurface(submitted)
+                == buildSurface(exercise.producibleAnswerTokens)
         }
+    }
+
+    /// Surface form for build-mode grading: unify apostrophe shape, then split on
+    /// any whitespace and rejoin with single spaces, so a multi-word chip and its
+    /// separate parts collapse to the same string. Case + accents are PRESERVED
+    /// (chips are pre-cased / pre-accented, so any difference is a real error).
+    static func buildSurface(_ tokens: [String]) -> String {
+        tokens.joined(separator: " ")
+            .replacingOccurrences(of: "\u{2019}", with: "'")   // ’ → '
+            .replacingOccurrences(of: "\u{02BC}", with: "'")   // ʼ → '
+            .split(whereSeparator: { $0.isWhitespace })
+            .joined(separator: " ")
     }
 
     /// Lowercases, trims, collapses internal whitespace, and unifies curly/straight
@@ -60,6 +78,21 @@ extension DrillEngine {
                "build grades the punctuation-free production as correct")
         assert(!check(["Non", ",", "je", "ne", "mange", "pas"], punc),
                "a literal punctuation token is never required")
+
+        // build mode: a multi-word chip grades identically to its separate parts —
+        // both produce the same ordered surface sentence (real bug: the "à la"
+        // distractor chip was marked wrong though the sentence was correct).
+        let combo = Exercise(id: "combo", elementID: "t", type: .wordOrder, prompt: "p",
+                             cue: nil,
+                             answerTokens: ["Elle", "n'", "est", "pas", "à", "la", "maison"],
+                             tokenBank: ["Elle", "n'", "est", "pas", "à", "la", "maison", "à la"],
+                             inputMode: .buildFromTokens, explanation: "e")
+        assert(check(["Elle", "n'", "est", "pas", "à la", "maison"], combo),
+               "a combined 'à la' chip must grade the same as 'à'+'la'")
+        assert(check(["Elle", "n'", "est", "pas", "à", "la", "maison"], combo),
+               "the separate-parts build still passes")
+        assert(!check(["Elle", "est", "n'", "pas", "à", "la", "maison"], combo),
+               "wrong word order still fails on surface")
 
         // free-text: accent-strict, but case / whitespace / apostrophe lenient.
         let ft = Exercise(id: "ft", elementID: "t", type: .fillBlank, prompt: "p",
