@@ -68,16 +68,25 @@ final class BookViewModel: ObservableObject {
             guard let self else { return }
             let dueIDs = Set(DataManager.shared.fetchDueElementIDs(asOf: Date()))
             let due = book.allElements.filter { dueIDs.contains($0.id) }.count
-            let satisfied = DataManager.shared.fetchUnlockSatisfiedElementIDs(threshold: self.masteryThreshold)
-            let unlocked = StudyScheduler.unlockedModuleIDs(book, satisfied: satisfied)
+
+            // Under FSRS, MODULE UNLOCK keys off the SEEN set (en-cours-or-better) — an
+            // element graduates over spaced review days, NOT in the intro session, so
+            // gating unlock on graduation would stall the chain for weeks. The frontier
+            // therefore opens as soon as the previous module's elements are all SEEN.
+            let seen = DataManager.shared.fetchSeenElementIDs()
+            let unlocked = StudyScheduler.unlockedModuleIDs(book, satisfied: seen)
+
+            // The bar/module-"done" maîtrisé set is the live STICKY GRADUATION flag
+            // (`graduated_date IS NOT NULL`) — exact + monotonic, never the old count.
+            let satisfied = DataManager.shared.fetchGraduatedElementIDs()
 
             // Apprendre drills the newest unlocked (frontier) module; "X new" is how
-            // many of its elements are still unmastered — what one tap will teach.
-            // No daily cap on new material.
+            // many of its elements are still un-introduced (not yet seen) — what one tap
+            // will teach. No daily cap on new material.
             let frontier = book.modules
                 .filter { unlocked.contains($0.id) }
                 .max(by: { $0.sortOrder < $1.sortOrder })
-            let newCount = frontier?.elements.filter { !satisfied.contains($0.id) }.count ?? 0
+            let newCount = frontier?.elements.filter { !seen.contains($0.id) }.count ?? 0
 
             // Today's done-work, scoped to this book. "reviewed" excludes elements
             // first-seen today (a first sighting is not a re-grade) — matches the
@@ -88,12 +97,12 @@ final class BookViewModel: ObservableObject {
             let learnedCount = firstSeenToday.intersection(bookIDs).count
             let reviewedCount = reviewedToday.subtracting(firstSeenToday).intersection(bookIDs).count
 
-            // Book-completion bar + finish estimate. Segments/% come from the LIVE
-            // `satisfied` gate (so a cleared element correctly drops out); the
-            // `mastery_log` day stamps feed ONLY the pace.
+            // Book-completion bar + finish estimate. maîtrisé/segments/% come from the
+            // LIVE graduation flag (`satisfied`, so a cleared element correctly drops
+            // out); the `mastery_log` day stamps feed ONLY the pace.
             let total = book.allElements.count
             let masteredInBook = satisfied.intersection(bookIDs).count
-            let seenInBook = DataManager.shared.fetchSeenElementIDs().intersection(bookIDs).count
+            let seenInBook = seen.intersection(bookIDs).count
             let masteryDays = DataManager.shared.fetchMasteryLog()
                 .filter { bookIDs.contains($0.elementID) }
                 .map(\.dayStart)

@@ -61,5 +61,8 @@ struct ReviewStatus: Codable {
     }
 }
 
-// Scheduling lives in `SRSScheduler.grade(_:pass:now:)` — the single source of
-// truth for intervals + state transitions. Do not add ad-hoc date logic here.
+// Scheduling now lives in the FSRS path: `DrillSessionView.gradeElement` advances the
+// `(stability, difficulty)` pair via `Core/FSRS.swift` and writes `nextReviewDate` from
+// `FSRS.intervalDays`. The legacy `SRSScheduler.grade`/`.fresh` ladder is no longer on
+// the grading path (kept only for its `_selfTest`; dead code, slated for cleanup). Do
+// not add ad-hoc date logic here.

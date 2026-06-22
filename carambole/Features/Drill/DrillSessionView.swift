@@ -7,10 +7,13 @@
 //  shuffled so the learner masters the rule, not a memorized token order.
 //
 //  Two modes:
-//  - .learn  — walk each element, drilling shuffled examples until the element is
-//              mastered (`masteryThreshold` distinct examples answered correctly),
-//              then advance. Used by "Apprendre" and by tapping a module.
-//  - .review — one fresh example per due element, SRS-regraded. Used by "Réviser".
+//  - .learn  — walk each element, drilling shuffled examples to INTRODUCE it:
+//              advance to the next element after the FIRST correct answer (the
+//              element now carries FSRS state = "seen"/en-cours); a wrong answer
+//              stays on the element and presents another example (retry). Graduation
+//              to maîtrisé happens LATER, across spaced review days — never in this
+//              intro session. Used by "Apprendre" and by tapping a module.
+//  - .review — one fresh example per due element, FSRS-regraded. Used by "Réviser".
 //
 //  See docs/plans/2026-06-19-book-modules-elements-design.md.
 //
@@ -19,34 +22,30 @@ import SwiftUI
 import UIKit
 
 struct DrillSessionView: View {
-    enum Mode { case learn, review }
+    typealias Mode = SessionMode
 
     let title: String
     /// English module intro shown once on the "Leçon" card. Empty → no card.
     let ruleNote: String
     let elements: [GrammarElement]
     let mode: Mode
-    let masteryThreshold: Int
     var onFinish: () -> Void = {}
 
     init(title: String, ruleNote: String, elements: [GrammarElement], mode: Mode,
-         masteryThreshold: Int = StudySettings.masteryThreshold,
          onFinish: @escaping () -> Void = {}) {
         self.title = title
         self.ruleNote = ruleNote
         self.elements = elements
         self.mode = mode
-        self.masteryThreshold = masteryThreshold
         self.onFinish = onFinish
     }
-
-    private enum NextAction { case nextExample, nextElement }
 
     @State private var elementIndex = 0
     /// Pending examples for the current element (learn mode queue).
     @State private var pending: [Exercise] = []
     @State private var lastExampleID: String?
-    @State private var nextAction: NextAction = .nextElement
+    /// What `advance()` does next — set by grading via `LearnLoop.nextAction`.
+    @State private var nextAction: LearnLoop.NextAction = .nextElement
 
     /// Append-only log of every example presented this session, in order. The
     /// drill on screen is `history[cursor]`; this is what makes the back chevron
@@ -401,24 +400,23 @@ struct DrillSessionView: View {
         submittedAnswers[cursor] = answer
         resultByIndex[cursor] = correct
         guard let element = currentElement, history.indices.contains(cursor) else { return }
-        gradeElement(element, exampleID: history[cursor].id, correct: correct)
-
-        if mode == .review {
-            nextAction = .nextElement
-        } else {
-            nextAction = isMastered(element) ? .nextElement : .nextExample
-        }
+        // FSRS rating: correct → .good (S grows), wrong → .again (S collapses).
+        gradeElement(element, exampleID: history[cursor].id, rating: correct ? .good : .again)
+        nextAction = LearnLoop.nextAction(mode: mode, correct: correct)
     }
 
-    /// "Trop facile" gate resolved per element: correct → master this example, then
-    /// suspend the element (gone for good); wrong → clean the element's records
-    /// (back to fresh/unseen). Either way move to the next element.
+    /// "Trop facile" gate resolved per element: correct → grade .easy (S/D update),
+    /// then suspend (which stamps the sticky graduation) → instant maîtrisé + gone for
+    /// good; wrong → clean the element's records (back to fresh/unseen). Either way
+    /// move to the next element.
     private func handleTooEasy(correct: Bool, answer: [String]) {
         submittedAnswers[cursor] = answer
         resultByIndex[cursor] = correct
         guard let element = currentElement, history.indices.contains(cursor) else { return }
         if correct {
-            gradeElement(element, exampleID: history[cursor].id, correct: true)
+            // Grade .easy so S/D advance, THEN suspend — `setSuspended` itself calls
+            // `markGraduated`, so this is the self-attested-skip graduation path.
+            gradeElement(element, exampleID: history[cursor].id, rating: .easy)
             DataManager.shared.setSuspended(elementID: element.id)
         } else {
             DataManager.shared.clearReviewStatus(elementID: element.id)
@@ -426,19 +424,60 @@ struct DrillSessionView: View {
         nextAction = .nextElement
     }
 
-    /// Fetch-or-fresh → record the correct example → SRS grade → upsert. Reads/writes
-    /// run on the database's serial queue, so the follow-up `isMastered` read sees
-    /// this write.
-    private func gradeElement(_ element: GrammarElement, exampleID: String, correct: Bool) {
+    /// Grade one answer with FSRS. Fetch-or-fresh the element's `ReviewStatus`, advance
+    /// `(S, D)` via `FSRS.next` (or seed via `FSRS.initialState` on the first-ever
+    /// review), write back stability/difficulty + the FSRS-computed next-review date,
+    /// then persist (the upsert also logs a `review_log` row, keeping the History page
+    /// working). On a SUCCESSFUL grade that pushes `S` past the graduation bar, stamp
+    /// the sticky `graduated_date` via `markGraduated` (idempotent — safe every time).
+    /// Reads/writes run on the database's serial queue, so a follow-up read sees this.
+    private func gradeElement(_ element: GrammarElement, exampleID: String, rating: FSRS.Rating) {
+        let now = Date()
         var status = DataManager.shared.fetchReviewStatus(elementID: element.id)
-            ?? SRSScheduler.fresh(element.id)
+            ?? ReviewStatus(elementID: element.id)
+        let correct = rating != .again
+
+        // Keep the (now non-gating) distinct-correct bookkeeping for History/back-compat.
         if correct { status.recordCorrect(exampleID: exampleID) }
-        status = SRSScheduler.grade(status, pass: correct, now: Date())
+
+        // FSRS state: first-ever review (no S yet) → seed; otherwise advance over the
+        // calendar-day gap since the last review (0 if never reviewed / same day).
+        let newState: FSRS.State
+        if let s = status.stability, let d = status.difficulty {
+            let elapsed = elapsedDays(since: status.lastReviewDate, until: now)
+            newState = FSRS.next(FSRS.State(stability: s, difficulty: d),
+                                 elapsedDays: elapsed, rating: rating)
+        } else {
+            newState = FSRS.initialState(rating: rating)
+        }
+        status.stability = newState.stability
+        status.difficulty = newState.difficulty
+        status.lastReviewDate = now
+        // Next review when predicted recall decays to desiredRetention; round to whole
+        // days (≥1) so the due-queue's date math stays day-granular, mirroring the old
+        // integer-interval scheduling. interval_days is kept in sync for overflow order.
+        let intervalDays = max(1, Int(FSRS.intervalDays(stability: newState.stability).rounded()))
+        status.intervalDays = intervalDays
+        status.nextReviewDate = Calendar.current.date(byAdding: .day, value: intervalDays, to: now) ?? now
+
         DataManager.shared.upsertReviewStatus(status)
+
+        // Graduation hook: only on success, only once S crosses the 21-day bar. Idempotent.
+        if correct && newState.stability >= FSRS.graduationStability {
+            DataManager.shared.markGraduated(elementID: element.id, on: now)
+        }
     }
 
-    private func isMastered(_ element: GrammarElement) -> Bool {
-        (DataManager.shared.fetchReviewStatus(elementID: element.id)?.distinctCorrect ?? 0) >= masteryThreshold
+    /// Non-negative whole-day gap between two dates (calendar days). The I/O layer uses
+    /// `Calendar.current` directly (the pure FSRS core stays date-free); same-day or a
+    /// missing `lastReviewDate` → 0.
+    private func elapsedDays(since last: Date?, until now: Date) -> Double {
+        guard let last else { return 0 }
+        let cal = Calendar.current
+        let days = cal.dateComponents([.day],
+                                      from: cal.startOfDay(for: last),
+                                      to: cal.startOfDay(for: now)).day ?? 0
+        return Double(max(0, days))
     }
 
     // MARK: - Intro card (one-time English ease-in)
