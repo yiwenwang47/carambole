@@ -4,9 +4,14 @@
 //
 //  Free-text typing input for `resolvedInputMode == .freeText`. A "Le Cahier"
 //  writing line: the learner's rounded serif-ish answer sits on a single ink
-//  underline, with an accent toolbar above the keyboard so é/è/à/ç… are one tap
-//  (answers are graded accent-strict — see DrillEngine.normalize). Backed by a
-//  UITextField so accent taps insert at the CARET, not the end of the string.
+//  underline. The field PREFERS the French keyboard (so accents are a long-press
+//  away — é/è/ê via holding e, etc.) — the learner is expected to use the system
+//  keyboard, so there is no accent shortcut bar. Answers are graded accent-strict
+//  (see DrillEngine.normalize). Backed by a UITextField for caret-accurate editing.
+//
+//  Note: iOS cannot force-install a keyboard. The field returns the French input
+//  mode when the user has a Français keyboard enabled (Settings → General →
+//  Keyboard → Keyboards); otherwise it falls back to the system default.
 //
 
 import SwiftUI
@@ -34,7 +39,7 @@ struct TypeAnswerView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: Spacing.sm) {
-            AccentTextField(text: text, isLocked: isLocked,
+            TypingTextField(text: text, isLocked: isLocked,
                             placeholder: "Écris ta réponse…")
                 .frame(height: 40)
             Rectangle()
@@ -44,18 +49,15 @@ struct TypeAnswerView: View {
     }
 }
 
-// MARK: - UIKit-backed field (caret-accurate accent insertion)
+// MARK: - UIKit-backed field (caret-accurate editing, French-preferred keyboard)
 
-private struct AccentTextField: UIViewRepresentable {
+private struct TypingTextField: UIViewRepresentable {
     @Binding var text: String
     var isLocked: Bool
     var placeholder: String
 
-    /// Common French accented letters, in roughly descending frequency.
-    static let accents = ["é", "è", "ê", "à", "â", "ç", "ù", "û", "î", "ô"]
-
     func makeUIView(context: Context) -> UITextField {
-        let tf = UITextField()
+        let tf = FrenchPreferredTextField()
         tf.delegate = context.coordinator
         tf.placeholder = placeholder
         tf.autocorrectionType = .no
@@ -69,13 +71,13 @@ private struct AccentTextField: UIViewRepresentable {
         tf.font = Self.roundedFont
         tf.textColor = UIColor(AppColor.ink)
         tf.tintColor = UIColor(AppColor.saffronDeep)
-        tf.inputAccessoryView = context.coordinator.makeAccentBar()
+        tf.inputAccessoryView = context.coordinator.makeKeyboardBar()
         tf.addTarget(context.coordinator,
                      action: #selector(Coordinator.editingChanged(_:)),
                      for: .editingChanged)
         context.coordinator.textField = tf
-        // A typing drill should be immediately writable — raise the keyboard (and
-        // the accent bar) on appear, exactly like tapping a token/choice is instant.
+        // A typing drill should be immediately writable — raise the keyboard on
+        // appear, exactly like tapping a token/choice is instant.
         if !isLocked {
             DispatchQueue.main.async { tf.becomeFirstResponder() }
         }
@@ -116,32 +118,34 @@ private struct AccentTextField: UIViewRepresentable {
             return true
         }
 
-        func makeAccentBar() -> UIToolbar {
+        /// A Done bar only — no accent shortcuts. The learner uses the system
+        /// (ideally French) keyboard; Done dismisses so the Vérifier footer under
+        /// the keyboard is reachable.
+        func makeKeyboardBar() -> UIToolbar {
             let bar = UIToolbar()
             bar.sizeToFit()
-            let letterFont = UIFont(descriptor:
-                UIFont.systemFont(ofSize: 20, weight: .medium).fontDescriptor,
-                size: 20)
-            var items: [UIBarButtonItem] = []
-            for a in AccentTextField.accents {
-                let b = UIBarButtonItem(title: a, style: .plain, target: self,
-                                        action: #selector(insertAccent(_:)))
-                b.setTitleTextAttributes([.font: letterFont], for: .normal)
-                items.append(b)
-            }
-            items.append(.flexibleSpace())
-            items.append(UIBarButtonItem(barButtonSystemItem: .done, target: self,
-                                         action: #selector(dismiss)))
-            bar.items = items
+            bar.items = [
+                .flexibleSpace(),
+                UIBarButtonItem(barButtonSystemItem: .done, target: self,
+                                action: #selector(dismiss)),
+            ]
             return bar
         }
 
-        @objc func insertAccent(_ sender: UIBarButtonItem) {
-            guard let tf = textField, let ch = sender.title else { return }
-            tf.insertText(ch)               // inserts at the caret (UIKeyInput)
-            text.wrappedValue = tf.text ?? ""
-        }
-
         @objc func dismiss() { textField?.resignFirstResponder() }
+    }
+}
+
+/// Prefers the French keyboard when the user has one enabled. iOS cannot install
+/// a keyboard the user hasn't added (Settings → General → Keyboard → Keyboards),
+/// so this is a preference, not a guarantee — it falls back to the system default.
+private final class FrenchPreferredTextField: UITextField {
+    override var textInputMode: UITextInputMode? {
+        for mode in UITextInputMode.activeInputModes {
+            if let lang = mode.primaryLanguage, lang.hasPrefix("fr") {
+                return mode
+            }
+        }
+        return super.textInputMode
     }
 }
