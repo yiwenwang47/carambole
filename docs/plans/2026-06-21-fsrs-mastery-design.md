@@ -53,7 +53,8 @@ Sources:
 
 1. **Full memory-strength model**, driven by **FSRS** (what Anki ships):
    per-element `stability S` + `difficulty D`, power-law recall
-   `R(t) = (1 + t/(9S))^-1`. Ships pre-tuned default params (FSRS-6 weight vector)
+   `R(t) = (1 + FACTOR·t/S)^DECAY` (the FSRS-6 curve, `DECAY = -w[20]`,
+   `FACTOR = 0.9^(1/DECAY)-1`, so `R(S,S)=0.90`). Ships pre-tuned default params (FSRS-6 weight vector)
    so it works on day one with zero user training. FSRS computes its own intervals →
    **retires the `[1,3,7,16,35]` ladder and the `.new/.learning/.learned` enum**
    from the gate (columns kept, no longer authoritative).
