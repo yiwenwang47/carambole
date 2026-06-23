@@ -37,16 +37,23 @@ struct StudyScheduler {
         !module.elements.isEmpty && module.elements.allSatisfy { satisfied.contains($0.id) }
     }
 
-    /// The set of unlocked module ids: a strict chain — the first module is always
-    /// unlocked, and each later module unlocks only once its predecessor is complete.
+    /// The set of unlocked module ids: a chain that opens forward but never re-locks
+    /// work already started. A module is unlocked when it is the first, OR its
+    /// immediate predecessor is complete (every element seen), OR it has itself been
+    /// started (≥1 element in the `satisfied` set). The last clause is self-healing:
+    /// if an EARLIER module later gains a fresh, never-seen element (a content update),
+    /// the strict "predecessor complete" test would re-lock every module after it —
+    /// including ones the learner already finished. Keeping a started module unlocked
+    /// prevents that regression, while a fresh module with no progress still only
+    /// opens once its predecessor is complete (so the frontier advances one at a time).
     static func unlockedModuleIDs(_ book: Book, satisfied: Set<String>) -> Set<String> {
         let ordered = book.modules.sorted { $0.sortOrder < $1.sortOrder }
         var unlocked: Set<String> = []
         for (i, module) in ordered.enumerated() {
-            if i == 0 || isModuleComplete(ordered[i - 1], satisfied: satisfied) {
+            let predecessorComplete = i == 0 || isModuleComplete(ordered[i - 1], satisfied: satisfied)
+            let started = module.elements.contains { satisfied.contains($0.id) }
+            if i == 0 || predecessorComplete || started {
                 unlocked.insert(module.id)
-            } else {
-                break
             }
         }
         return unlocked
@@ -87,6 +94,14 @@ extension StudyScheduler {
         assert(isModuleComplete(m1, satisfied: ["a", "b"]), "all satisfied → complete")
         assert(unlockedModuleIDs(book, satisfied: []) == ["m1"], "only first unlocked initially")
         assert(unlockedModuleIDs(book, satisfied: ["a", "b"]) == ["m1", "m2"], "m2 unlocks when m1 complete")
+        // Self-heal: a started later module stays unlocked even if an earlier module is
+        // incomplete (e.g. it gained a fresh, never-seen element). m1 is missing "b" but
+        // m2 has progress ("c") → m2 must NOT re-lock.
+        assert(unlockedModuleIDs(book, satisfied: ["a", "c"]).contains("m2"),
+               "a started module stays unlocked despite an incomplete predecessor")
+        // A fresh module with no progress still waits for its predecessor to complete.
+        assert(!unlockedModuleIDs(book, satisfied: ["a"]).contains("m2"),
+               "an untouched module stays locked until its predecessor is complete")
     }
 }
 #endif
