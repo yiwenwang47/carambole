@@ -95,8 +95,14 @@ struct DrillSessionView: View {
     private var liveCardFinished: Bool { resultByIndex[frontier] != nil }
     /// While typing a free-text answer the embedded UITextField owns horizontal
     /// drags (caret/selection); pause the carousel swipe so it can't hijack them.
+    /// Gated on the keyboard being UP — the field only owns drags while it's the
+    /// first responder. With the keyboard down (now the default: it defers to a tap)
+    /// an unanswered typing card must still slide back to the previous drill, exactly
+    /// like a token/MC card. Without this gate the carousel was dead on every
+    /// freeText card whose field hadn't been tapped — e.g. one auto-advanced into.
     private var isTypingLiveCard: Bool {
-        cursor == frontier
+        keyboardInset > 0
+            && cursor == frontier
             && history.indices.contains(frontier)
             && history[frontier].resolvedInputMode == .freeText
             && resultByIndex[frontier] == nil
