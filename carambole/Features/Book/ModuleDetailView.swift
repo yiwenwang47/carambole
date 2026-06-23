@@ -227,13 +227,21 @@ private struct ElementRow: View {
     }
 
     private var swipe: some Gesture {
-        DragGesture(minimumDistance: 14)
+        DragGesture(minimumDistance: 20)
             .onChanged { value in
                 // Horizontally-dominant drags only, so vertical scroll still works.
                 guard abs(value.translation.width) > abs(value.translation.height) else { return }
-                // Capture the rest offset once, at the first horizontal change of this
-                // drag — so a drag begun from the OPEN position continues from -actionWidth.
-                if !isDragging { isDragging = true; dragStart = offset }
+                // Engage ONLY on a leftward pull (demote direction) or when the row is
+                // already open (so it can be dragged closed). A rightward drag on a
+                // closed row is left alone — it must pass through to the screen's
+                // swipe-to-go-back and to the ScrollView, never get eaten here. Without
+                // this gate every graduated row's gesture fought the back-swipe and the
+                // scroll on every touch → "can't swipe" + lag.
+                if !isDragging {
+                    guard value.translation.width < 0 || offset != 0 else { return }
+                    isDragging = true
+                    dragStart = offset
+                }
                 // Clamp between [-actionWidth, 0] with a little rightward rubber-band.
                 let raw = dragStart + value.translation.width
                 offset = min(0, max(-actionWidth - 24, raw))
