@@ -25,16 +25,30 @@ struct DrillEngine {
         }
     }
 
-    /// Surface form for build-mode grading: unify apostrophe shape, then split on
-    /// any whitespace and rejoin with single spaces, so a multi-word chip and its
-    /// separate parts collapse to the same string. Case + accents are PRESERVED
-    /// (chips are pre-cased / pre-accented, so any difference is a real error).
+    /// Surface form for build-mode grading: unify apostrophe shape, split every chip
+    /// on whitespace (so a multi-word chip and its separate parts collapse equal),
+    /// then rejoin with single spaces — EXCEPT glue (no space) after a token ending
+    /// in an apostrophe, so a French elision (`N'` + `es-tu`) reads `N'es-tu`,
+    /// identical to the combined `N'es-tu` chip. Case + accents are PRESERVED (chips
+    /// are pre-cased / pre-accented, so any difference is a real error).
     static func buildSurface(_ tokens: [String]) -> String {
-        tokens.joined(separator: " ")
-            .replacingOccurrences(of: "\u{2019}", with: "'")   // ’ → '
-            .replacingOccurrences(of: "\u{02BC}", with: "'")   // ʼ → '
-            .split(whereSeparator: { $0.isWhitespace })
-            .joined(separator: " ")
+        let words = tokens
+            .map {
+                $0.replacingOccurrences(of: "\u{2019}", with: "'")   // ’ → '
+                  .replacingOccurrences(of: "\u{02BC}", with: "'")   // ʼ → '
+            }
+            .flatMap { $0.split(whereSeparator: { $0.isWhitespace }).map(String.init) }
+        var out = ""
+        for word in words {
+            if out.isEmpty {
+                out = word
+            } else if out.hasSuffix("'") {
+                out += word            // elision: glue to the previous token, no space
+            } else {
+                out += " " + word
+            }
+        }
+        return out
     }
 
     /// Lowercases, trims, collapses internal whitespace, and unifies curly/straight
@@ -93,6 +107,22 @@ extension DrillEngine {
                "the separate-parts build still passes")
         assert(!check(["Elle", "est", "n'", "pas", "à", "la", "maison"], combo),
                "wrong word order still fails on surface")
+
+        // build mode: an elision token ("N'") glues to the next word with no space,
+        // so the combined "N'es-tu" distractor chip grades the same as the split
+        // "N'"+"es-tu" answer (real bug: "N'es-tu pas content" built from the
+        // combined chip was marked wrong because the surface kept a stray space).
+        let elision = Exercise(id: "elision", elementID: "t", type: .wordOrder, prompt: "p",
+                               cue: nil,
+                               answerTokens: ["N'", "es-tu", "pas", "content"],
+                               tokenBank: ["N'", "es-tu", "pas", "content", "N'es-tu", "contente"],
+                               inputMode: .buildFromTokens, explanation: "e")
+        assert(check(["N'es-tu", "pas", "content"], elision),
+               "a combined elision chip grades the same as split 'N'' + 'es-tu'")
+        assert(check(["N'", "es-tu", "pas", "content"], elision),
+               "the separate-parts elision build still passes")
+        assert(!check(["es-tu", "N'", "pas", "content"], elision),
+               "wrong elision order still fails on surface")
 
         // free-text: accent-strict, but case / whitespace / apostrophe lenient.
         let ft = Exercise(id: "ft", elementID: "t", type: .fillBlank, prompt: "p",
