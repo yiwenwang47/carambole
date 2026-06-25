@@ -30,6 +30,7 @@ Exit 0 = clean, 1 = errors.
 from __future__ import annotations
 
 import json
+import re
 import sys
 from collections import Counter
 from pathlib import Path
@@ -37,6 +38,39 @@ from pathlib import Path
 # Punctuation a learner would have to type — barred from any typed answer
 # (mirrors Exercise.untypeablePunctuation). Apostrophes/hyphens are intra-word.
 UNTYPEABLE_PUNCT = set('.,?!;:«»…"()')
+
+# Elision (deterministic, deliberately NOT comprehensive — see CLAUDE.md).
+# These bare words MUST drop their final vowel before a vowel-initial word
+# ("ne est" → "n'est", "le ami" → "l'ami"). Mandatory in writing, no register
+# exceptions, so a bare one before a vowel is always wrong. Checked on the
+# RENDERED surface (answer substituted into the blank) — the blank is exactly
+# what hid this class in fillBlank/MC drills. Deliberately omitted to stay
+# simple + false-positive-free: `si`→`s'il`, `jusque`, and all silent-h cases
+# (h aspiré like "le héros" blocks elision, so we skip `h` entirely).
+ELIDABLE = {"je", "me", "te", "se", "ce", "le", "la", "de", "ne", "que"}
+VOWELS = set("aeiouyàâäéèêëîïôöùûü")
+
+
+def elision_errors(prompt: str, cue, ans: list[str]) -> list[str]:
+    """Bare elidable word immediately before a vowel-initial word, on the
+    rendered surface (blank filled with the answer). Two words are in elision
+    contact only when separated by whitespace alone, so we split on whitespace
+    and require an EXACT bare elidable chunk: any attached punctuation (a comma,
+    or a closing guillemet from a quoted mention like « je ») lands in its own
+    chunk and breaks the pair. Already-elided forms (`n'`, `l'`, …) keep their
+    apostrophe, so they are never bare elidable words and never flagged."""
+    fill = " ".join(ans)
+    surfaces = {fill}
+    for text in (prompt, cue):
+        if isinstance(text, str) and "_" in text:
+            surfaces.add(re.sub(r"_+", fill, text))
+    bad: set[str] = set()
+    for surface in surfaces:
+        chunks = surface.split()
+        for c1, c2 in zip(chunks, chunks[1:]):
+            if c1.lower() in ELIDABLE and c2[:1].lower() in VOWELS:
+                bad.add(f"« {c1} {c2} » → must elide « {c1[:-1]}'{c2} »")
+    return sorted(bad)
 
 VALID_TYPES = {"conjugate", "fillBlank", "genderArticle", "wordOrder"}
 VALID_MODES = {"multipleChoice", "buildFromTokens", "freeText"}
@@ -169,6 +203,9 @@ def lint(content_dir: Path) -> list[str]:
                         err(f"{tag}: freeText answer must not contain "
                             f"punctuation {bad} (learner would type it) — "
                             f"answer={ans}")
+
+                for msg in elision_errors(ex.get("prompt"), ex.get("cue"), ans):
+                    err(f"{tag}: elision — {msg}")
 
                 for field in ("translation", "hint"):
                     val = ex.get(field)
