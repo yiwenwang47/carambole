@@ -547,6 +547,21 @@ want typed; an answer carrying them is auto-demoted to its picked mode by
 lint. Build/MC answers may keep punctuation as their own chips (it's tapped, not
 typed).
 
+**Prompt self-sufficiency (HARD RULE):** every drill must be answerable from the
+prompt (+ visible cue) alone — never only from the collapsed hint or the
+post-answer explanation. The classic violation: English "it" carries no gender,
+so `Construis : « We sell it. »` with answer `Nous la vendons` and a bank
+offering both `le` and `la` lets the learner build a grammatically valid
+sentence that gets marked wrong. When the answer hinges on the gender/number of
+an unstated referent, put the referent in the prompt as a French-style setup
+question mirroring the fillBlank pattern — e.g.
+`Construis la réponse : « Vous vendez la voiture ? » — « We sell it. »`.
+Enforced (heuristically, clause-final object "it" only) by
+`gender_ambiguity_errors` in `tools/lint_topics.py`; the same principle applies
+beyond that check — number, formality (tu/vous), and person must also be
+recoverable from the prompt, not hidden in the hint. (Found 2026-07-12: 5 items
+in `17_pronoms_objets.json` shipped ambiguous; fixed with setup questions.)
+
 **Gotchas (verified in T3):**
 - Xcode 16 `PBXFileSystemSynchronizedRootGroup` **flattens** `Resources/Topics/*`
   to the bundle ROOT at build time (no `Topics/` subdir in the `.app`).

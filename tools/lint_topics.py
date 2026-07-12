@@ -23,6 +23,10 @@ solvability rules so a bad token bank or malformed module can't reach the app:
   - each element has at least 5 examples
   - a freeText (typed) answer carries no punctuation the learner would type
     (`. , ? ! ; : « » … " ( )`) — see Exercise.isTypeable
+  - a build drill whose English prompt ends in object "it" must disambiguate
+    gender in the prompt/cue (English "it" is genderless): if the answer uses
+    le/la and the bank offers the opposite gender too, the learner can build a
+    grammatically valid sentence that gets marked wrong
 
 Usage: python3 tools/lint_topics.py [carambole/Resources/Topics]
 Exit 0 = clean, 1 = errors.
@@ -71,6 +75,35 @@ def elision_errors(prompt: str, cue, ans: list[str]) -> list[str]:
             if c1.lower() in ELIDABLE and c2[:1].lower() in VOWELS:
                 bad.add(f"« {c1} {c2} » → must elide « {c1[:-1]}'{c2} »")
     return sorted(bad)
+
+# Gendered direct-object pronouns — interchangeable in a bank, so an answer
+# using one while the bank offers the other lets the learner build the
+# wrong-gender twin sentence.
+GENDERED_PRONOUN_TWIN = {"le": "la", "la": "le"}
+
+
+def gender_ambiguity_errors(prompt, cue, ans: list[str],
+                            bank: list[str]) -> list[str]:
+    """English "it" carries no gender, so a build drill translating clause-final
+    object "it" (…« We sell it. ») must state the French referent in the prompt
+    or cue (e.g. « Vous vendez la voiture ? » — « We sell it. »). Flagged only
+    when the trap is live — the answer uses le/la AND the bank offers the
+    opposite gender — and no `le`/`la`/`l'` appears anywhere in prompt+cue.
+    Attributive uses («It is the book…» → « C'est le livre… ») don't match the
+    clause-final-object pattern, so noun-gender drills stay unflagged."""
+    if not (isinstance(prompt, str) and re.search(r"\bit\s*[.!?]", prompt, re.I)):
+        return []
+    bank_lower = {t.lower() for t in bank}
+    context = prompt + " " + (cue if isinstance(cue, str) else "")
+    for tok in ans:
+        twin = GENDERED_PRONOUN_TWIN.get(tok.lower())
+        if twin and twin in bank_lower and not re.search(r"\b(le|la|l')", context):
+            return [f"prompt translates object \"it\" but nothing fixes the "
+                    f"pronoun's gender — answer uses '{tok}', bank also offers "
+                    f"'{twin}'; state the referent in the prompt/cue "
+                    f"(French-style setup: « Tu vends la voiture ? » — …)"]
+    return []
+
 
 VALID_TYPES = {"conjugate", "fillBlank", "genderArticle", "wordOrder"}
 VALID_MODES = {"multipleChoice", "buildFromTokens", "freeText"}
@@ -206,6 +239,11 @@ def lint(content_dir: Path) -> list[str]:
 
                 for msg in elision_errors(ex.get("prompt"), ex.get("cue"), ans):
                     err(f"{tag}: elision — {msg}")
+
+                if ex["inputMode"] == "buildFromTokens":
+                    for msg in gender_ambiguity_errors(
+                            ex.get("prompt"), ex.get("cue"), ans, bank):
+                        err(f"{tag}: gender-ambiguous — {msg}")
 
                 for field in ("translation", "hint"):
                     val = ex.get(field)
