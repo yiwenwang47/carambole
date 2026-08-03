@@ -25,6 +25,14 @@ OPENING = set(['«', '(', '"'])
 
 MASK64 = 0xFFFFFFFFFFFFFFFF
 
+# Elision prefixes whose trailing apostrophe glues to the next word ("l' eau" →
+# "l'eau"). A word ending that merely precedes an apostrophe (the closing mark
+# of a quoted mention: "de 'parler' au") never matches — \b requires the prefix
+# to start the word. Pattern string must stay identical to Exercise.swift.
+ELISION_GLUE = (r"(?i)\b"
+                r"(j|n|l|d|s|t|m|c|qu|jusqu|lorsqu|puisqu|quoiqu|quelqu|presqu)"
+                r"(['’]) +")
+
 
 def seed64(s: str) -> int:
     """FNV-1a 64-bit over UTF-8 bytes (== Swift Exercise.seed64)."""
@@ -80,7 +88,11 @@ def spoken_french(prompt: str, answer: str, has_blank: bool) -> str:
         # No blank → the assembled answer is the whole French sentence.
         body = answer
     # Tidy (both shapes): glue elisions ("C' est" → "C'est"), collapse spaces, trim.
-    body = body.replace("' ", "'").replace('’ ', '’')
+    # Glue ONLY after a real elision prefix — a blanket "' " → "'" also swallowed
+    # the closing quote of straight-quoted mentions ("de 'parler' au" →
+    # "parler'au"), corrupting the spoken sentence. Keep byte-identical to the
+    # Swift Exercise.spokenFrench regex.
+    body = re.sub(ELISION_GLUE, r'\1\2', body)
     body = re.sub(r'\s+', ' ', body)
     return body.strip()
 
@@ -109,6 +121,15 @@ def _self_test() -> None:
        'Je ne parle jamais.', 'pre-colon cue dropped with the prefix')
     eq(spoken_french("Choisis l'article : ___ école", "l'", True),
        "l'école", 'elision answer glued to the noun')
+    # Straight-quoted mention: the closing quote must NOT glue to the next word
+    # (regression: "de 'parler' au" became "parler'au" and corrupted the TTS).
+    eq(spoken_french("Complète : Le radical de 'parler' au conditionnel est ___.",
+                     'parler-', True),
+       "Le radical de 'parler' au conditionnel est parler-.",
+       'closing straight quote of a mention never glues')
+    eq(spoken_french('Construis : « She calls herself Anna. »',
+                     "Elle s' appelle Anna", False),
+       "Elle s'appelle Anna", 'real elision prefix still glues')
 
     # displayJoin
     eq(display_join(['Non', ',', 'je', 'ne', 'mange', 'pas']), 'Non, je ne mange pas',

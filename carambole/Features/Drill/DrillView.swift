@@ -415,7 +415,7 @@ struct DrillView: View {
                         .foregroundColor(AppColor.ink)
                         .fixedSize(horizontal: false, vertical: true)
 
-                    if let english = exercise.explanationEN, !english.isEmpty {
+                    if let english = exercise.displayExplanationEN {
                         Text(english)
                             .font(.appExplain)
                             .foregroundColor(AppColor.graphite)

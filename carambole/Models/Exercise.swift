@@ -70,6 +70,26 @@ struct Exercise: Identifiable, Codable, Equatable {
         self.explanationEN = explanationEN
     }
 
+    /// The English explanation line actually shown beneath the French one — `nil`
+    /// when it would just repeat `explanation`. Some authored content carries the
+    /// same sentence in both fields differing only in quote style (`'je'` vs
+    /// `"je"` vs `« je »`), which rendered as a visibly doubled line in the
+    /// post-answer banner. Compared quote/space-insensitively.
+    var displayExplanationEN: String? {
+        guard let english = explanationEN, !english.isEmpty else { return nil }
+        return Exercise.normalizedExplanation(english)
+            == Exercise.normalizedExplanation(explanation) ? nil : english
+    }
+
+    /// Lowercases and strips quote marks + whitespace, so the same sentence in
+    /// different quoting styles compares equal. See `displayExplanationEN`.
+    static func normalizedExplanation(_ s: String) -> String {
+        let ignored: Set<Character> =
+            ["\"", "'", "\u{2018}", "\u{2019}", "\u{201C}", "\u{201D}",
+             "«", "»", " ", "\u{00A0}", "\u{202F}"]
+        return String(s.lowercased().filter { !ignored.contains($0) })
+    }
+
     /// The input actually presented to the learner. Long answers (≥3 tokens) keep
     /// their authored mode; short answers (≤2 tokens) are shuffled ~50/50 between
     /// typing and their authored mode for variety. An explicit `.freeText` author
@@ -293,8 +313,14 @@ struct Exercise: Identifiable, Codable, Equatable {
         // Tidy (both shapes): glue elisions ("C' est" → "C'est", "l' eau" → "l'eau"),
         // collapse runs of spaces, trim. Gluing in the no-blank branch too matters for
         // TTS — a detached "C' est" is otherwise read as the letter "C".
-        body = body.replacingOccurrences(of: "' ", with: "'")
-                   .replacingOccurrences(of: "\u{2019} ", with: "\u{2019}")
+        // Glue ONLY after a real elision prefix — a blanket "' " → "'" also swallowed
+        // the closing quote of straight-quoted mentions ("de 'parler' au" →
+        // "parler'au"), corrupting the spoken sentence. Pattern must stay
+        // byte-identical to ELISION_GLUE in tools/tts/extract.py.
+        body = body.replacingOccurrences(
+                       of: #"(?i)\b(j|n|l|d|s|t|m|c|qu|jusqu|lorsqu|puisqu|quoiqu|quelqu|presqu)(['’]) +"#,
+                       with: "$1$2",
+                       options: .regularExpression)
                    .replacingOccurrences(of: #"\s+"#, with: " ",
                                          options: .regularExpression)
         return body.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -434,6 +460,26 @@ extension Exercise {
         assert(withBlank.resolvedInputMode == .freeText,
                "blanked prompt with a typeBit id resolves to typing")
 
+        // displayExplanationEN: suppress an English line that just repeats the
+        // French field (quote-style differences only) — the doubled-line bug.
+        func exp(_ fr: String, _ en: String?) -> Exercise {
+            Exercise(id: "exp", elementID: "t", type: .conjugate, prompt: "p", cue: nil,
+                     answerTokens: ["a"], tokenBank: ["a", "b"],
+                     inputMode: .multipleChoice, explanation: fr, explanationEN: en)
+        }
+        assert(exp("With 'je', use -ais: habitais.",
+                   "With \"je\", use -ais: habitais.").displayExplanationEN == nil,
+               "same sentence in both fields (quote style only) is suppressed")
+        assert(exp("« il y a » + « des tables ».",
+                   "\"il y a\" + \"des tables\".").displayExplanationEN == nil,
+               "guillemets vs straight quotes still counts as a duplicate")
+        assert(exp("« chien » est masculin.",
+                   "\"chien\" is masculine.").displayExplanationEN
+               == "\"chien\" is masculine.",
+               "a genuine translation passes through unchanged")
+        assert(exp("e", nil).displayExplanationEN == nil, "nil stays nil")
+        assert(exp("e", "").displayExplanationEN == nil, "empty stays nil")
+
         // spokenFrench: text-to-speech sentence builder.
         // Build prompt (English instruction) → the assembled answer is the sentence.
         assert(Exercise.spokenFrench(prompt: "Construis : « He has a dog. »",
@@ -460,6 +506,16 @@ extension Exercise {
         assert(Exercise.spokenFrench(prompt: "Choisis l'article : ___ école",
                                      answer: "l'", hasBlank: true)
                == "l'école", "elision answer glued to the noun")
+        // Straight-quoted mention: the closing quote must NOT glue to the next word
+        // (regression: "de 'parler' au" became "parler'au" and corrupted the TTS).
+        assert(Exercise.spokenFrench(
+                   prompt: "Complète : Le radical de 'parler' au conditionnel est ___.",
+                   answer: "parler-", hasBlank: true)
+               == "Le radical de 'parler' au conditionnel est parler-.",
+               "closing straight quote of a mention never glues")
+        assert(Exercise.spokenFrench(prompt: "Construis : « She calls herself Anna. »",
+                                     answer: "Elle s' appelle Anna", hasBlank: false)
+               == "Elle s'appelle Anna", "real elision prefix still glues")
 
         // audioKey: FNV-1a hex of spokenFrench, locked to tools/tts/extract.py output
         // (so the bundled <audioKey>.mp3 matches). 16 lowercase hex chars, stable.
