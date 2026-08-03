@@ -49,10 +49,39 @@ UNTYPEABLE_PUNCT = set('.,?!;:«»…"()')
 # exceptions, so a bare one before a vowel is always wrong. Checked on the
 # RENDERED surface (answer substituted into the blank) — the blank is exactly
 # what hid this class in fillBlank/MC drills. Deliberately omitted to stay
-# simple + false-positive-free: `si`→`s'il`, `jusque`, and all silent-h cases
-# (h aspiré like "le héros" blocks elision, so we skip `h` entirely).
+# simple + false-positive-free: `si`→`s'il` and `jusque`. Mute-h words DO
+# elide ("je habitais" → "j'habitais") and ARE checked; only the h-aspiré
+# words in H_ASPIRE (which block elision: "le héros") are exempt — extend
+# that set when authoring content with a new aspirated-h word.
 ELIDABLE = {"je", "me", "te", "se", "ce", "le", "la", "de", "ne", "que"}
-VOWELS = set("aeiouyàâäéèêëîïôöùûü")
+VOWELS = set("aeiouyàâäéèêëîïôöùûüh")
+
+# h aspiré — no elision before these stems ("le haricot", "la haine"). Prefix
+# match on the following word, lowercased. (Found 2026-08-03: "Je habitais"
+# shipped in 16_imparfait because `h` was skipped entirely.)
+H_ASPIRE_PREFIXES = (
+    "hach", "haie", "haine", "haïr", "hair", "hall", "halte", "hamac",
+    "hamburger", "hameau", "hamster", "hanche", "handicap", "hangar",
+    "haricot", "harpe", "hasard", "hâte", "haut", "hérisson", "héros",
+    "hêtre", "hibou", "hockey", "hollande", "homard", "honte", "hoquet",
+    "hors", "hot-dog", "houx", "huit", "hurl",
+)
+
+
+def _blocks_elision(word: str) -> bool:
+    """True when `word` starts with an aspirated h (no elision before it)."""
+    return word.lower().startswith("h") and \
+        word.lower().startswith(H_ASPIRE_PREFIXES)
+
+
+# Mandatory contractions — these bare pairs must merge on the rendered surface.
+# Same chunking rules as elision: quoted mentions carry their quote marks into
+# the chunk (or split them off as their own chunk), so citations never match.
+CONTRACTIONS = {
+    ("à", "le"): "au", ("à", "les"): "aux",
+    ("de", "le"): "du", ("de", "les"): "des",
+}
+_TRAILING_PUNCT = ".,?!;:»…)"
 
 
 def elision_errors(prompt: str, cue, ans: list[str]) -> list[str]:
@@ -72,8 +101,18 @@ def elision_errors(prompt: str, cue, ans: list[str]) -> list[str]:
     for surface in surfaces:
         chunks = surface.split()
         for c1, c2 in zip(chunks, chunks[1:]):
-            if c1.lower() in ELIDABLE and c2[:1].lower() in VOWELS:
+            if c1.lower() in ELIDABLE and c2[:1].lower() in VOWELS \
+                    and not _blocks_elision(c2):
                 bad.add(f"« {c1} {c2} » → must elide « {c1[:-1]}'{c2} »")
+            # Mandatory contraction (à le → au, de les → des, …). The second
+            # word may carry trailing punctuation ("de le." is still wrong).
+            c2_bare = c2.rstrip(_TRAILING_PUNCT)
+            merged = CONTRACTIONS.get((c1.lower(), c2_bare.lower()))
+            if merged:
+                bad.add(f"« {c1} {c2_bare} » → must contract « {merged} »")
+            # si + il(s) → s'il(s) (si + elle never elides).
+            if c1.lower() == "si" and c2_bare.lower() in ("il", "ils"):
+                bad.add(f"« {c1} {c2_bare} » → must elide « s'{c2_bare} »")
     return sorted(bad)
 
 # Gendered direct-object pronouns — interchangeable in a bank, so an answer
