@@ -547,6 +547,30 @@ want typed; an answer carrying them is auto-demoted to its picked mode by
 lint. Build/MC answers may keep punctuation as their own chips (it's tapped, not
 typed).
 
+**Rendered-surface grammar (HARD RULE):** audit every drill by reading the
+RENDERED sentence — the blank filled with the answer — as final French, never as
+template slots. The blank hides agreement bugs: `Je ___` + `habitais` shipped as
+the ungrammatical « Je habitais » (h muet → « J'habitais », found 2026-08-03)
+because auditors read prompt and answer separately. Prompts must pre-elide
+(`J'___`, `N'___ pas`) when every bank candidate starts with a vowel or mute h.
+`tools/lint_topics.py` enforces the deterministic classes on the rendered
+surface — elision (je/ne/le/la/de/que/… + vowel or mute h, with an h-aspiré
+whitelist `H_ASPIRE_PREFIXES` to extend when new aspirated-h words enter the
+content), mandatory contractions (`à/de + le/les` → au/aux/du/des), and
+`si il(s)` → `s'il(s)`. `tools/deep_lint.py` (Grammalecte, vendored offline in
+`tools/vendor/`, ~1.5 s corpus) catches the open classes — agreement,
+conjugation, missing elision generally — on the same rendered surface; grammar
+flags are errors gated by the reviewed known-noise list
+`tools/deep_lint_suppressions.json` (read the sentence aloud before ever adding
+an entry), unknown-word spell flags are warnings (ease-in English + stem
+fragments). Both linters run automatically via the project PostToolUse hook
+(`.claude/settings.json` at the workspace root) after any edit to
+`Resources/Topics/*.json`. Run them manually before handing off a module anyway.
+Related gotcha this net caught: `Exercise.spokenFrench` / `tools/tts/extract.py`
+glue elisions with a whitelisted-prefix regex (`ELISION_GLUE`, byte-identical in
+both) — a blanket `"' " → "'"` once swallowed the closing quote of
+straight-quoted mentions and corrupted ~11 TTS sentences.
+
 **Prompt self-sufficiency (HARD RULE):** every drill must be answerable from the
 prompt (+ visible cue) alone — never only from the collapsed hint or the
 post-answer explanation. The classic violation: English "it" carries no gender,
