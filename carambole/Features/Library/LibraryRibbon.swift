@@ -48,9 +48,8 @@ struct LibraryRibbonGeometry: Hashable {
     static let tail: Float = 110
     /// World units per point (orthographic).
     static let k: Float = 0.0076
-    /// Started-book minimum width and book-to-come width (world units).
-    static let minWidth: Float = 0.16
-    static let toComeWidth: Float = 0.14
+    /// Book-to-come strip width (world units).
+    static let toComeWidth: Float = 0.12
     /// Mesh samples per point of spine.
     static let samplesPerPoint: Float = 1 / 1.2
 
@@ -86,9 +85,7 @@ struct LibraryRibbonGeometry: Hashable {
     }
 
     /// Ribbon width (world units). Started books share one scale so their
-    /// widths compare: 0.16 + 0.45 · √(v / 30), capped at 0.7 (≈ 92 pt). The
-    /// square root keeps light days (2–5 elements) readable instead of a
-    /// hairline. A started book with no activity yet sits at the 0.16 minimum.
+    /// widths compare: 0.05 + 0.4 · v / 30 (prototype, exact).
     func width(at py: Float) -> Float {
         guard !stretches.isEmpty else { return Self.toComeWidth }
         let b = stretchIndex(at: py)
@@ -99,13 +96,12 @@ struct LibraryRibbonGeometry: Hashable {
         let j = min(n - 1, i + 1)
         let e = Self.ease(d - Float(i))
         let v = Float(days[i]) * (1 - e) + Float(days[j]) * e
-        return min(0.7, Self.minWidth + 0.45 * (v / 30).squareRoot())
+        return 0.05 + 0.4 * v / 30
     }
 
-    /// Accumulated twist: a full 2π at every book boundary, and one per PAUSE
-    /// inside a started book (centres clamped so an end pause's twist
-    /// completes). A pause = a run of consecutive rest days (`restRuns`), so
-    /// sparse activity never coils the strip into dozens of tight twists.
+    /// Accumulated twist: a full 2π at every book boundary, and one per rest
+    /// day inside a started book (centres clamped so an end day's twist
+    /// completes). Prototype, exact.
     func twist(at py: Float) -> Float {
         var th: Float = 0
         for (bi, stretch) in stretches.enumerated() {
@@ -113,31 +109,12 @@ struct LibraryRibbonGeometry: Hashable {
             if bi > 0 { th += 2 * .pi * Self.ease((py - s0 + 22) / 44) }
             guard case let .started(days) = stretch else { continue }
             let span = Float(max(1, days.count - 1))
-            for centre in Self.restRuns(days) {
-                let c = s0 + min(span - 0.5, max(0.5, centre)) / span * Self.step
+            for (i, v) in days.enumerated() where v == 0 {
+                let c = s0 + min(span - 0.5, max(0.5, Float(i))) / span * Self.step
                 th += 2 * .pi * Self.ease((py - c) / (Self.step / span) + 0.5)
             }
         }
         return th
-    }
-
-    /// Centre day index of each pause: a run of consecutive rest days after
-    /// the book's first active day in the window (days before it aren't
-    /// pauses — the book wasn't started yet). Pure.
-    static func restRuns(_ days: [Int]) -> [Float] {
-        guard let first = days.firstIndex(where: { $0 > 0 }) else { return [] }
-        var centres: [Float] = []
-        var runStart: Int?
-        for i in first..<days.count {
-            if days[i] == 0 {
-                if runStart == nil { runStart = i }
-            } else if let r = runStart {
-                centres.append(Float(r + i - 1) / 2)
-                runStart = nil
-            }
-        }
-        if let r = runStart { centres.append(Float(r + days.count - 1) / 2) }
-        return centres
     }
 
     /// One sample along the ribbon: centre, unit width direction, unit
@@ -331,21 +308,14 @@ extension LibraryRibbonGeometry {
                                       viewWidth: 360)
         assert(g.contentHeight == 236 + 3 * 200 + 110, "content height = start + n·step + tail")
         assert(abs(g.wx(g.axisX) - (268 - 180) * k) < 1e-5, "axis at 268 of 360")
-        // Width: shared √ scale (idle book = minimum); a book to come = toComeWidth.
-        assert(abs(g.width(at: top(ofStretch: 0)) - (minWidth + 0.45 * (5 / 30 as Float).squareRoot())) < 1e-4,
-               "first day width")
-        assert(abs(g.width(at: top(ofStretch: 1) + 100) - minWidth) < 1e-5, "idle started book = minimum")
+        // Width: shared linear scale (prototype); a book to come = 0.12.
+        assert(abs(g.width(at: top(ofStretch: 0)) - (0.05 + 0.4 * 5 / 30)) < 1e-4, "first day width")
+        assert(abs(g.width(at: top(ofStretch: 1) + 100) - 0.05) < 1e-5, "idle started book = 0.05")
         assert(abs(g.width(at: top(ofStretch: 2) + 100) - toComeWidth) < 1e-5, "book to come")
-        let heavy = LibraryRibbonGeometry(stretches: [.started(Array(repeating: 200, count: 30))], viewWidth: 360)
-        assert(heavy.width(at: top(ofStretch: 0) + 50) == 0.7, "width capped at 0.7")
-        // Twist: one rest day (2π) inside book 0, plus 2π per boundary, none for the idle book.
+        // Twist: 1 rest day in book 0 + 30 in the idle book + 2 boundaries = 33 · 2π.
         let end = g.twist(at: g.contentHeight)
-        assert(abs(end - 3 * 2 * .pi) < 1e-3, "1 rest + 2 boundaries = 6π, got \(end)")
-        assert(abs(g.twist(at: top(ofStretch: 0)) ) < 1e-3, "no twist at the start")
-        // Pauses: leading rest days aren't pauses; a run of rest days is one pause.
-        assert(restRuns([0, 0, 3, 0, 0, 0, 4, 0, 5]) == [4, 7], "runs centred at 4 and 7")
-        assert(restRuns([2, 0, 0]) == [1.5], "trailing run counts")
-        assert(restRuns([0, 0, 0]).isEmpty, "never-started book has no pauses")
+        assert(abs(end - 33 * 2 * .pi) < 1e-2, "33 full twists, got \(end / (2 * .pi))")
+        assert(abs(g.twist(at: top(ofStretch: 0))) < 1e-3, "no twist at the start")
     }
 }
 #endif
