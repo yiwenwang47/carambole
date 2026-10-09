@@ -2,6 +2,15 @@
 
 > ## ▶ ACTIVE TASK — START HERE (next session, continue without re-asking)
 >
+> **▶ UI REDESIGN — BUILD NEXT (2026-10-09).** Design approved in
+> `design/motion.html`. Build plan + control inventory:
+> `docs/plans/2026-10-09-ui-redesign-implementation.md` (tasks T0–T9, branch
+> `ui-redesign`). View-layer only; every existing control (Trop facile, Indice,
+> Écouter, chevrons, exit, round size, fragile chip, swipe-to-demote, export…)
+> must survive. Gravité placement decided (behind the `fait :` line). Work in a
+> git worktree (`ui-redesign`); T0 commits `design/` + plan on `main` first.
+> The user tests on device after each screen. Everything below is older context.
+>
  Everything below is DONE, MERGED to `main`, and PUSHED to origin (2026-06-19).
 > Use the same discipline (branch off `main`; subagent-driven implement → spec
 > review → code-quality review per task; build gate `xcodebuild build ... -scheme

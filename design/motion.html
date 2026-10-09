@@ -1,0 +1,749 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Carambole Motion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Familjen+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Grayscale on purpose: layout, objects and motion only. */
+:root {
+  --ink: #141414; --g1: #4a4a4a; --g2: #8d8d8a; --g3: #c8c7c3; --g4: #e6e5e1;
+  --paper: #f8f7f4; --page: #dcdbd6;
+  --display: "Manrope", system-ui, sans-serif;
+  --label: "Familjen Grotesk", system-ui, sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--page); color: var(--ink); font-family: var(--display); font-weight: 300; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+
+.intro { max-width: 980px; padding: 56px 24px 16px; }
+.intro h1 { font-weight: 250; font-size: 40px; letter-spacing: -0.02em; }
+.intro p { margin-top: 12px; max-width: 660px; font-size: 15px; line-height: 1.55; color: var(--g1); font-weight: 400; }
+
+.concepts { display: flex; flex-wrap: wrap; gap: 48px 36px; padding: 32px 24px 80px; }
+.concept { width: 360px; }
+.concept .no { font-family: var(--label); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--g2); }
+.concept h2 { font-weight: 300; font-size: 26px; letter-spacing: -0.02em; margin: 2px 0 14px; }
+.concept .cap { margin-top: 14px; font-size: 13px; line-height: 1.5; color: var(--g1); font-weight: 400; }
+.concept .cap b { font-family: var(--label); font-weight: 500; font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink); display: block; margin: 12px 0 2px; }
+
+.phone { width: 360px; height: 760px; background: var(--paper); border-radius: 44px; overflow: hidden; position: relative;
+  box-shadow: 0 0 0 9px #111, 0 30px 60px -20px rgba(0,0,0,.35); }
+.sb { position: absolute; top: 0; left: 0; right: 0; height: 50px; display: flex; justify-content: space-between; align-items: center; padding: 6px 30px 0; font: 500 14px var(--label); z-index: 5; pointer-events: none; }
+.sb i { width: 64px; height: 10px; border-radius: 6px; background: var(--ink); opacity: .85; }
+.lab { font-family: var(--label); font-weight: 400; font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--g2); }
+.lab.ink { color: var(--ink); }
+.abs { position: absolute; }
+canvas { display: block; }
+
+/* 01 · Objet */
+.c1 canvas { position: absolute; inset: 0; cursor: grab; }
+.c1 canvas:active { cursor: grabbing; }
+.c1 .t { font-size: 15px; font-weight: 400; letter-spacing: -0.01em; }
+.c1 .num { font-size: 44px; font-weight: 200; letter-spacing: -0.04em; line-height: 1; }
+.c1 .go { display: flex; flex-direction: column; gap: 4px; }
+.c1 .go .lab { color: var(--ink); }
+.c1 .line { position: absolute; left: 22px; right: 22px; height: 1px; background: var(--g3); }
+
+/* 02 · Cinétique */
+.c2 .title { position: absolute; left: 20px; right: 20px; top: 112px; font-size: 54px; line-height: .98; letter-spacing: -0.035em; }
+.c2 .title span span { font-variation-settings: "wght" 200; display: inline-block; }
+.c2 .ticker { position: absolute; left: 20px; right: 20px; top: 330px; height: 128px; overflow: hidden; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--g3); }
+.c2 .ticker .col { transition: transform .9s cubic-bezier(.7,0,.2,1); }
+.c2 .ticker .row { height: 64px; display: flex; align-items: center; gap: 12px; font-size: 32px; letter-spacing: -0.025em; font-weight: 250; white-space: nowrap; }
+.c2 .ticker .row .p { width: 74px; color: var(--g2); }
+.c2 .ticker .row .v { font-weight: 500; }
+.c2 .ticker .row.dim { color: var(--g3); }
+.c2 .ticker .row.dim .p { color: var(--g3); }
+.c2 .els { position: absolute; left: 20px; right: 20px; top: 488px; }
+.c2 .els div { display: flex; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid var(--g4); font-size: 15px; font-weight: 400; }
+.c2 .els div.l { color: var(--g3); }
+
+/* 03 · Gravité */
+.c3 canvas { position: absolute; left: 0; top: 0; }
+.c3 .hd { position: absolute; left: 22px; right: 22px; top: 72px; display: flex; justify-content: space-between; align-items: flex-start; }
+.c3 .big { position: absolute; left: 22px; top: 104px; font-size: 40px; font-weight: 250; letter-spacing: -0.03em; line-height: 1.05; }
+.c3 .big em { font-style: normal; color: var(--g2); }
+.c3 .btn { position: absolute; left: 22px; right: 22px; bottom: 30px; height: 54px; border-radius: 27px; background: var(--ink); color: var(--paper); display: flex; align-items: center; justify-content: space-between; padding: 0 22px; font-size: 16px; font-weight: 400; z-index: 3; }
+.c3 .shake { position: absolute; right: 22px; top: 210px; z-index: 3; border-bottom: 1px solid var(--ink); }
+
+/* 05 · Ruban */
+.c5 canvas { position: absolute; inset: 0; cursor: grab; }
+.c5 .num { font-size: 64px; font-weight: 200; letter-spacing: -0.05em; line-height: .9; }
+.c5 .ribline { position: absolute; left: 22px; width: 54px; height: 1px; background: var(--ink); pointer-events: none; }
+.c5 .readout { position: absolute; left: 22px; bottom: 66px; }
+.c5 .readout .d { font-size: 22px; letter-spacing: -0.02em; margin-top: 6px; }
+
+/* 06 · Tranches */
+.c6 canvas { position: absolute; inset: 0; cursor: ns-resize; touch-action: none; }
+.c6 .num { font-size: 64px; font-weight: 200; letter-spacing: -0.05em; line-height: .9; }
+.c6 .readout { position: absolute; left: 22px; right: 22px; bottom: 64px; pointer-events: none; }
+.c6 .readout .t { font-size: 22px; letter-spacing: -0.02em; margin-top: 10px; }
+.c6 .readout .st { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+.c6.opening .readout, .c6.opening .tick { opacity: 0; }
+.c6 .readout, .c6 .tick { transition: opacity .3s; }
+.c6 .tick { position: absolute; left: 22px; width: 54px; height: 1px; background: var(--ink); pointer-events: none; }
+
+/* 07 · Aimants */
+.c7 .prompt { position: absolute; left: 22px; right: 22px; top: 118px; font-size: 28px; font-weight: 250; letter-spacing: -0.025em; line-height: 1.15; }
+.c7 .base { position: absolute; left: 22px; right: 22px; top: 358px; height: 1px; background: var(--ink); }
+.c7 .tile { position: absolute; left: 0; top: 0; height: 40px; padding: 0 15px; border-radius: 20px; border: 1px solid var(--ink); background: #fff;
+  display: flex; align-items: center; font-size: 19px; font-weight: 400; letter-spacing: -0.01em; white-space: nowrap; cursor: pointer; user-select: none;
+  transform-origin: 50% 50%; will-change: transform; transition: background .25s, color .25s, border-color .25s, padding .35s; }
+.c7 .tile.on { background: var(--ink); color: var(--paper); }
+.c7 .tile.bad { background: #fff; color: var(--ink); border-style: dashed; }
+.c7 .tile.weld { background: transparent; color: var(--ink); border-color: transparent; padding: 0 1px; font-size: 26px; font-weight: 300; letter-spacing: -0.02em; }
+.c7 .tile span { font-variation-settings: "wght" 300; }
+.c7 .fb { position: absolute; left: 22px; right: 22px; top: 372px; font-size: 15px; font-weight: 400; color: var(--g1); opacity: 0; transition: opacity .4s; }
+.c7 .fb.show { opacity: 1; }
+.c7 .btn { position: absolute; left: 22px; right: 22px; bottom: 30px; height: 54px; border-radius: 27px; background: var(--ink); color: var(--paper);
+  display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 400; transition: opacity .25s; }
+.c7 .btn[disabled] { opacity: .25; cursor: default; }
+
+@media (prefers-reduced-motion: reduce) { .c2 .ticker .col { transition: none; } }
+</style>
+</head>
+<body>
+
+<header class="intro">
+  <div class="lab">Carambole · objets et mouvement · round 3</div>
+  <h1>Moins de texte, plus d’objets</h1>
+  <p>Each concept gets one screen and one idea, with more empty space than round 1. Everything here is live, so drag, tap and wait. The objects are built in code, with no rendered images and no Blender, and each one has a native iOS route, noted under the screen. It is still grayscale: color comes later.</p>
+</header>
+
+<div class="concepts">
+
+  <!-- 01 -->
+  <section class="concept">
+    <div class="no">01 · Livre</div>
+    <h2>Objet</h2>
+    <div class="phone c1" id="p1">
+      <div class="sb"><span>9:41</span><i></i></div>
+      <canvas id="three"></canvas>
+      <div class="abs lab ink" style="left:22px;top:66px">‹ Fondations</div>
+      <div class="abs lab" style="right:22px;top:66px">Réglages</div>
+      <div class="abs" style="left:22px;top:104px"><div class="num">41 %</div><div class="lab" style="margin-top:6px">128 / 312 maîtrisés</div></div>
+      <div class="abs lab" style="right:22px;top:104px;text-align:right;line-height:1.6">Fin<br><span class="t" style="color:var(--ink);letter-spacing:0;text-transform:none;font-family:var(--display)">~22 déc.</span></div>
+      <div class="line" style="top:600px"></div>
+      <button class="abs go" style="left:22px;top:616px;text-align:left"><span class="num">8</span><span class="lab">Apprendre →</span></button>
+      <button class="abs go" style="right:22px;top:616px;text-align:right;align-items:flex-end"><span class="num">14</span><span class="lab">← Réviser</span></button>
+      <div class="abs lab" style="left:0;right:0;top:716px;text-align:center">Glisser vers le haut · 25 modules</div>
+    </div>
+    <p class="cap">The book is an object: a chrome carambole slice made by extruding the logo. The progress ring becomes a real ring orbiting it, with a 41% arc lit over a faint full track. Small type sits at the edges of the screen, as in IMG_0943. Drag the object to turn it.
+      <b>iOS route</b>RealityKit <code>RealityView</code> with a procedural extruded mesh and an environment-lit metal material (or SceneKit). No Blender needed. Use Blender only if you want a sculpted fruit exported as USDZ.</p>
+  </section>
+
+  <!-- 02 -->
+  <section class="concept">
+    <div class="no">02 · Module</div>
+    <h2>Cinétique</h2>
+    <div class="phone c2" id="p2">
+      <div class="sb"><span>9:41</span><i></i></div>
+      <div class="abs lab ink" style="left:20px;top:66px">‹ Module 12</div>
+      <div class="abs" style="right:20px;top:60px" id="ring2"></div>
+      <div class="title" id="kt">Le futur proche</div>
+      <div class="abs lab" style="left:20px;top:306px">aller + infinitif</div>
+      <div class="ticker"><div class="col" id="tk"></div></div>
+      <div class="els">
+        <div><span>aller au présent</span><span class="lab ink">Maîtrisé</span></div>
+        <div><span>aller + infinitif</span><span class="lab ink">Maîtrisé</span></div>
+        <div><span>Questions au futur proche</span><span class="lab">En cours</span></div>
+        <div class="l"><span>Pronominaux au futur proche</span><span class="lab">À venir</span></div>
+        <div class="l"><span>Futur proche ou présent ?</span><span class="lab">À venir</span></div>
+      </div>
+    </div>
+    <p class="cap">The type moves and the grammar is the motion. A weight wave runs slowly through the title, and below it the rule conjugates itself: “je vais partir → tu vas partir → …”, rolling like a split-flap board. The module teaches before you tap anything.
+      <b>iOS route</b><code>TimelineView(.animation)</code> driving per-letter variable-font weight (<code>Font.custom</code> with a <code>wght</code> axis), plus <code>.contentTransition(.numericText())</code>-style rolls for the conjugation ticker.</p>
+  </section>
+
+  <!-- 03 -->
+  <section class="concept">
+    <div class="no">03 · Aujourd’hui</div>
+    <h2>Gravité</h2>
+    <div class="phone c3" id="p3">
+      <canvas id="phys"></canvas>
+      <div class="sb"><span>9:41</span><i></i></div>
+      <div class="hd"><span class="lab ink">‹ Aujourd’hui</span><span class="lab">Ven. 9 oct.</span></div>
+      <div class="big">22 éléments<br><em>t’attendent.</em></div>
+      <button class="lab ink shake" id="shake">Secouer</button>
+      <div class="btn"><span>Commencer</span><span class="lab" style="color:#9b9a96">8 + 14</span></div>
+    </div>
+    <p class="cap">Today’s work is a pile of physical tokens: white for new elements, black for reviews, outlined for fragile items. They fall in, you can throw them around, and finishing a drill would make its token leave the pile. You can feel the size of today’s load.
+      <b>iOS route</b>SpriteKit <code>SpriteView</code> with physics bodies (gravity, plus the device tilt via CoreMotion as a bonus), embedded in a SwiftUI screen.</p>
+  </section>
+
+  <!-- 05 -->
+  <section class="concept">
+    <div class="no">05 · Historique</div>
+    <h2>Ruban</h2>
+    <div class="phone c5" id="p5">
+      <canvas id="rib"></canvas>
+      <div class="ribline" id="ribline"></div>
+      <div class="sb"><span>9:41</span><i></i></div>
+      <div class="abs lab ink" style="left:22px;top:66px">‹ Historique</div>
+      <div class="abs lab" style="right:22px;top:66px">30 jours</div>
+      <div class="abs" style="left:22px;top:100px"><div class="num">61</div><div class="lab" style="margin-top:8px">appris</div></div>
+      <div class="abs" style="right:22px;top:100px;text-align:right"><div class="num">148</div><div class="lab" style="margin-top:8px">révisés</div></div>
+      <div class="abs lab" style="left:22px;top:214px">10 sept. ↓</div>
+      <div class="readout" id="ribday"></div>
+      <div class="abs lab" style="left:22px;right:22px;bottom:30px;display:flex;justify-content:space-between"><span class="ink">Série 12 j</span><span>Largeur = travail · torsion = pause</span></div>
+    </div>
+    <p class="cap">The ribbon is the history timeline: oldest day at the top, today at the bottom. <b style="display:inline;font-size:inherit;letter-spacing:0;text-transform:none;font-family:inherit;font-weight:500">Width</b> is how much you did that day, and a rest day pinches it into a half-twist that shows the grey back of the paper. Run a finger down it to read any day, and drag sideways to turn it. Big weeks look wide and generous, and broken streaks look like knots.
+      <b>iOS route</b>RealityKit procedural <code>MeshResource</code> (≈2k vertices), a <code>DragGesture</code> mapped to a day index with a selection haptic per day, and a SwiftUI overlay for the readout.</p>
+  </section>
+
+  <!-- 06 -->
+  <section class="concept">
+    <div class="no">06 · Livre · sommaire · nouveau</div>
+    <h2>Tranches</h2>
+    <div class="phone c6" id="p6">
+      <canvas id="slices"></canvas>
+      <div class="tick" id="tick6"></div>
+      <div class="sb"><span>9:41</span><i></i></div>
+      <div class="abs lab ink" style="left:22px;top:66px">‹ Fondations</div>
+      <div class="abs lab" style="right:22px;top:66px">25 modules</div>
+      <div class="abs lab" style="left:22px;top:100px">25 ↑</div>
+      <div class="readout" id="sel6"></div>
+      <div class="abs lab" style="left:22px;right:22px;bottom:30px;display:flex;justify-content:space-between"><button class="lab ink" id="open6">Ouvrir →</button><span>Glisser ↕ · toucher pour ouvrir</span></div>
+    </div>
+    <p class="cap">The table of contents is the fruit itself. Cut a carambole and every slice is a star, so the book is 25 star slices stacked on a skewer, module 01 at the bottom. Mastered modules are chrome (the same metal as the 01 object), modules in progress are white, and the ones still to come are faint glass outlines. The column literally grows as you learn. <b style="display:inline;font-size:inherit;letter-spacing:0;text-transform:none;font-family:inherit;font-weight:500">How to use it:</b> slide a finger up or down the stack and the slice under your finger fans out, with a haptic tick per module and its name at the bottom. Let go to keep it chosen, drag sideways to turn the stack, and tap (or “Ouvrir”) to open: the slice lifts out, turns to face you and grows into the module page. Same gesture as scrubbing the 05 ribbon. This could be what “swipe up” on the 01 book home reveals: the single chrome star splits into its 25 slices.
+      <b>iOS route</b>RealityKit (or SceneKit) with 25 instances of the same extruded star mesh and three materials. A vertical <code>DragGesture</code> maps to a module index with a selection haptic per slice; the fan-open gap is a spring on each slice’s y. SwiftUI overlay for the readout.</p>
+  </section>
+
+  <!-- 07 -->
+  <section class="concept">
+    <div class="no">07 · Exercice · nouveau</div>
+    <h2>Aimants</h2>
+    <div class="phone c7" id="p7">
+      <div class="sb"><span>9:41</span><i></i></div>
+      <div class="abs lab ink" style="left:22px;top:66px">✕</div>
+      <div class="abs lab" style="left:0;right:0;top:66px;text-align:center">Module 12 · 7 / 20</div>
+      <div class="abs" style="right:22px;top:58px" id="ring7"></div>
+      <div class="abs lab" style="left:22px;top:100px">Construis la phrase</div>
+      <div class="prompt">« I’m going to leave tomorrow. »</div>
+      <div class="base"></div>
+      <div class="fb" id="fb7"></div>
+      <div id="tiles7"></div>
+      <button class="btn" id="go7" disabled>Vérifier</button>
+    </div>
+    <p class="cap">The drill keeps its standard layout (prompt, answer, fixed button), but the words become magnets. The bank is a level row of word tiles. Tap a word and it springs onto the line with a little overshoot; tap it again and it flies home. When the answer is right, the magnets weld into one sentence, the leftover words drop off the screen, and a single weight wave runs through it (the 02 motion). When it’s wrong, the line shakes and the wrong words turn dashed. Try both.
+      <b>iOS route</b>SwiftUI only: each token is a view with <code>.position</code> driven by <code>withAnimation(.spring(duration: .35, bounce: .3))</code>, a <code>matchedGeometryEffect</code> between bank and line, <code>.phaseAnimator</code> for the shake, and the 02 <code>wght</code> wave on success. Light haptic per snap.</p>
+  </section>
+
+</div>
+
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+
+<!-- 01 · chrome carambole + orbit ring -->
+<script type="module">
+import * as THREE from "three";
+import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
+
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const cv = document.getElementById("three");
+const W = 360, H = 760;
+const renderer = new THREE.WebGLRenderer({ canvas: cv, antialias: true, alpha: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setSize(W, H);
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.5;
+const scene = new THREE.Scene();
+const pmrem = new THREE.PMREMGenerator(renderer);
+scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+
+const cam = new THREE.PerspectiveCamera(30, W / H, 0.1, 100);
+cam.position.set(0, 0, 11.5);
+
+// Logo geometry: tips R=42, valleys r=17, one quadratic per lobe (see design/logo/README.md)
+const shape = new THREE.Shape();
+const tip = k => { const a = Math.PI / 2 + k * 2 * Math.PI / 5; return [Math.cos(a), Math.sin(a)]; };
+const val = k => { const a = Math.PI / 2 + (k + .5) * 2 * Math.PI / 5; return [Math.cos(a) * 17 / 42 * 1.25, Math.sin(a) * 17 / 42 * 1.25]; };
+shape.moveTo(...tip(0));
+for (let k = 0; k < 5; k++) shape.quadraticCurveTo(...val(k), ...tip(k + 1));
+const geo = new THREE.ExtrudeGeometry(shape, { depth: .34, bevelEnabled: true, bevelThickness: .14, bevelSize: .1, bevelSegments: 10, curveSegments: 48 });
+geo.center();
+scene.add(new THREE.HemisphereLight(0xffffff, 0x8a8a86, 1.4));
+const key = new THREE.DirectionalLight(0xffffff, 2.2); key.position.set(3, 4, 6); scene.add(key);
+const chrome = new THREE.MeshPhysicalMaterial({ color: 0xf2f2f2, metalness: .85, roughness: .22, envMapIntensity: 1.6, clearcoat: 1, clearcoatRoughness: .08 });
+const star = new THREE.Mesh(geo, chrome);
+star.scale.setScalar(.78);
+star.rotation.x = .35;
+
+const group = new THREE.Group();
+group.add(star);
+group.position.y = .1;
+scene.add(group);
+
+// Orbit ring: faint full track + 41% arc
+const ringG = new THREE.Group();
+const track = new THREE.Mesh(new THREE.TorusGeometry(1.32, .012, 8, 220),
+  new THREE.MeshBasicMaterial({ color: 0x9a9995, transparent: true, opacity: .55 }));
+const arc = new THREE.Mesh(new THREE.TorusGeometry(1.32, .045, 16, 220, Math.PI * 2 * .41),
+  new THREE.MeshPhysicalMaterial({ color: 0x141414, metalness: .6, roughness: .25 }));
+arc.rotation.z = Math.PI / 2;
+const bead = new THREE.Mesh(new THREE.SphereGeometry(.09, 24, 24), arc.material);
+const ba = Math.PI / 2 + Math.PI * 2 * .41;
+bead.position.set(Math.cos(ba) * 1.32, Math.sin(ba) * 1.32, 0);
+ringG.add(track, arc, bead);
+ringG.rotation.set(1.18, .22, 0);
+group.add(ringG);
+
+// drag to turn, with inertia
+let vx = 0, vy = .006, dragging = false, lx = 0, ly = 0;
+cv.addEventListener("pointerdown", e => { dragging = true; lx = e.clientX; ly = e.clientY; cv.setPointerCapture(e.pointerId); });
+cv.addEventListener("pointermove", e => { if (!dragging) return; vy = (e.clientX - lx) * .004; vx = (e.clientY - ly) * .004; lx = e.clientX; ly = e.clientY; });
+cv.addEventListener("pointerup", () => { dragging = false; });
+
+let t = 0;
+function frame() {
+  t += 1 / 60;
+  star.rotation.y += vy; star.rotation.x += vx;
+  if (!dragging) { vy += (.006 - vy) * .02; vx *= .95; star.rotation.x *= .985; }
+  ringG.rotation.z += .0025;
+  group.position.y = .1 + Math.sin(t * .9) * .06;
+  renderer.render(scene, cam);
+  if (!reduce) requestAnimationFrame(frame);
+}
+frame();
+</script>
+
+<!-- 02 · kinetic type + conjugation ticker -->
+<script>
+(() => {
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const kt = document.getElementById("kt");
+  const text = kt.textContent;
+  kt.innerHTML = text.split(" ").map(w => `<span style="white-space:nowrap">${[...w].map(ch => `<span>${ch}</span>`).join("")}</span>`).join(" ");
+  const letters = [...kt.querySelectorAll("span > span")];
+  function wave(ts) {
+    const t = ts / 1000;
+    letters.forEach((el, i) => {
+      const s = Math.max(0, Math.sin(t * 1.1 - i * .32));
+      el.style.fontVariationSettings = `"wght" ${Math.round(200 + 520 * s ** 4)}`;
+    });
+    if (!reduce) requestAnimationFrame(wave);
+  }
+  requestAnimationFrame(wave);
+
+  const rows = [["je","vais"],["tu","vas"],["il","va"],["nous","allons"],["vous","allez"],["elles","vont"]];
+  const tk = document.getElementById("tk");
+  const all = [...rows, rows[0], rows[1]];
+  tk.innerHTML = all.map(([p, v]) => `<div class="row"><span class="p">${p}</span><span class="v">${v}</span><span>partir</span></div>`).join("");
+  const els = [...tk.children];
+  let i = 0;
+  function step() {
+    els.forEach((el, k) => el.classList.toggle("dim", k !== i));
+    tk.style.transform = `translateY(${-i * 64}px)`;
+  }
+  step();
+  if (!reduce) setInterval(() => {
+    i++;
+    step();
+    if (i === rows.length) setTimeout(() => { tk.style.transition = "none"; i = 0; step(); tk.offsetHeight; tk.style.transition = ""; }, 950);
+  }, 1800);
+
+  const s = 30, w = 3, r = (s - w) / 2, c = 2 * Math.PI * r;
+  document.getElementById("ring2").innerHTML = `<svg width="${s}" height="${s}"><circle cx="15" cy="15" r="${r}" fill="none" stroke="#c8c7c3" stroke-width="${w}"/><circle cx="15" cy="15" r="${r}" fill="none" stroke="#141414" stroke-width="${w}" stroke-linecap="round" stroke-dasharray="${c * .52} ${c}" transform="rotate(-90 15 15)"/></svg>`;
+})();
+</script>
+
+<!-- 03 · physics tokens -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+<script>
+(() => {
+  const { Engine, Bodies, Composite, Body, Mouse, MouseConstraint } = Matter;
+  const cv = document.getElementById("phys");
+  const W = 360, H = 760, dpr = Math.min(devicePixelRatio, 2);
+  cv.width = W * dpr; cv.height = H * dpr; cv.style.width = W + "px"; cv.style.height = H + "px";
+  const ctx = cv.getContext("2d"); ctx.scale(dpr, dpr);
+  const engine = Engine.create(); engine.gravity.y = 1.1;
+  const floor = 666, wall = 60;
+  Composite.add(engine.world, [
+    Bodies.rectangle(W / 2, floor + wall / 2, W * 2, wall, { isStatic: true }),
+    Bodies.rectangle(-wall / 2, H / 2, wall, H * 2, { isStatic: true }),
+    Bodies.rectangle(W + wall / 2, H / 2, wall, H * 2, { isStatic: true }),
+  ]);
+  const items = [
+    ["aller + inf.", "new"], ["ne… pas", "rev"], ["au / aux", "rev"], ["du, de la", "new"], ["est-ce que", "rev"],
+    ["mon, ma, mes", "rev"], ["il y a", "fra"], ["-IR présent", "rev"], ["beau / bel", "new"], ["vais, vas, va", "new"],
+    ["à + le", "rev"], ["inversion", "rev"], ["des → de", "fra"], ["être", "rev"], ["avoir", "rev"],
+    ["le / la", "new"], ["-ER présent", "rev"], ["questions", "new"], ["chez", "rev"], ["pluriel -x", "fra"],
+    ["ce soir", "new"], ["en / au", "rev"],
+  ];
+  ctx.font = '400 13px "Manrope"';
+  let bodies = [];
+  function drop() {
+    bodies.forEach(b => Composite.remove(engine.world, b));
+    bodies = items.map(([label, kind], i) => {
+      ctx.font = '400 13px "Manrope"';
+      const w = Math.max(64, ctx.measureText(label).width + 30), h = 34;
+      const b = Bodies.rectangle(40 + Math.random() * (W - 80), -40 - i * 30, w, h,
+        { chamfer: { radius: h / 2 }, restitution: .25, friction: .3, angle: (Math.random() - .5) * 1.2 });
+      b.meta = { label, kind, w, h };
+      return b;
+    });
+    Composite.add(engine.world, bodies);
+  }
+  drop();
+  const mouse = Mouse.create(cv); mouse.pixelRatio = 1;
+  Composite.add(engine.world, MouseConstraint.create(engine, { mouse, constraint: { stiffness: .2, render: { visible: false } } }));
+  // let page scroll on wheel
+  cv.removeEventListener("wheel", mouse.mousewheel); cv.removeEventListener("DOMMouseScroll", mouse.mousewheel);
+  document.getElementById("shake").onclick = () => bodies.forEach(b => Body.setVelocity(b, { x: (Math.random() - .5) * 14, y: -10 - Math.random() * 10 }));
+
+  function pill(w, h) { const r = h / 2; ctx.beginPath(); ctx.moveTo(-w / 2 + r, -r); ctx.arcTo(w / 2, -r, w / 2, r, r); ctx.arcTo(w / 2, r, -w / 2, r, r); ctx.arcTo(-w / 2, r, -w / 2, -r, r); ctx.arcTo(-w / 2, -r, w / 2, -r, r); ctx.closePath(); }
+  function draw() {
+    Engine.update(engine, 1000 / 60);
+    ctx.clearRect(0, 0, W, H);
+    for (const b of bodies) {
+      const { label, kind, w, h } = b.meta;
+      ctx.save(); ctx.translate(b.position.x, b.position.y); ctx.rotate(b.angle);
+      pill(w, h);
+      if (kind === "rev") { ctx.fillStyle = "#141414"; ctx.fill(); }
+      else if (kind === "new") { ctx.fillStyle = "#ffffff"; ctx.fill(); ctx.strokeStyle = "#141414"; ctx.lineWidth = 1; ctx.stroke(); }
+      else { ctx.setLineDash([3, 3]); ctx.strokeStyle = "#141414"; ctx.lineWidth = 1; ctx.stroke(); ctx.setLineDash([]); }
+      ctx.fillStyle = kind === "rev" ? "#f8f7f4" : "#141414";
+      ctx.font = '400 13px "Manrope"'; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+      ctx.fillText(label, 0, 1);
+      ctx.restore();
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+  document.fonts.ready.then(drop);
+})();
+</script>
+
+<!-- 05 · ribbon history -->
+<script type="module">
+import * as THREE from "three";
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const cv = document.getElementById("rib");
+const W = 360, H = 760;
+const renderer = new THREE.WebGLRenderer({ canvas: cv, antialias: true, alpha: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2)); renderer.setSize(W, H);
+const scene = new THREE.Scene();
+const cam = new THREE.PerspectiveCamera(34, W / H, .1, 100);
+cam.position.set(0, 0, 9.5); cam.lookAt(0, 0, 0);
+scene.add(new THREE.HemisphereLight(0xffffff, 0x9a9995, 2.2));
+const key = new THREE.DirectionalLight(0xffffff, 2.2); key.position.set(-2, 4, 5); scene.add(key);
+
+// 10 sept → 9 oct: [learned, reviewed]; 0/0 = rest day
+const L = [4,5,0,6,7,5,8,9,6,0,7,8,7,9,8,5,6,9,10,0,9,8,8,5,9,0,7,8,6,6];
+const R = [10,13,0,16,18,14,19,21,15,0,17,20,19,22,21,12,17,21,23,0,21,22,21,11,24,0,17,21,12,14];
+const N = L.length, tot = L.map((l, i) => l + R[i]), mx = Math.max(...tot);
+const DOW = ["Dim.","Lun.","Mar.","Mer.","Jeu.","Ven.","Sam."];
+const dateOf = i => { const d = new Date(2026, 8, 10 + i); return `${DOW[d.getDay()]} ${d.getDate()} ${d.getMonth() === 8 ? "sept." : "oct."}`; };
+
+// spine: a calm S from top (oldest) to bottom (today)
+const Y0 = 2.0, Y1 = -2.1;
+const spine = t => new THREE.Vector3(Math.sin(t * Math.PI * 1.1) * .55, Y0 + (Y1 - Y0) * t, Math.sin(t * Math.PI * 2) * .35);
+const S = 900;
+const widthAt = s => { // ribbon width follows the day's total, eased between days
+  const d = s * (N - 1), i = Math.floor(d), f = d - i, j = Math.min(N - 1, i + 1);
+  const e = f * f * (3 - 2 * f);
+  const v = tot[i] * (1 - e) + tot[j] * e;
+  return .04 + .5 * (v / mx);
+};
+const twistAt = s => {
+  let th = 0; const d = s * (N - 1);
+  tot.forEach((v, i) => { if (v === 0) { const x = Math.min(1, Math.max(0, (d - i + .5) / 1)); th += 2 * Math.PI * x * x * (3 - 2 * x); } });
+  return th;
+};
+const Z = new THREE.Vector3(0, 0, 1), pos = [], eA = [], eB = [];
+const dt = 1e-3;
+for (let i = 0; i <= S; i++) {
+  const s = i / S, p = spine(s), T = spine(Math.min(1, s + dt)).sub(spine(Math.max(0, s - dt))).normalize();
+  const w0 = Z.clone().sub(T.clone().multiplyScalar(T.dot(Z))).normalize();
+  const xw = new THREE.Vector3().crossVectors(T, w0);  // in-screen width direction
+  const th = twistAt(s);
+  const w = xw.multiplyScalar(Math.cos(th)).add(w0.clone().multiplyScalar(Math.sin(th))).multiplyScalar(widthAt(s) / 2);
+  const a = p.clone().add(w), b = p.clone().sub(w);
+  pos.push(a.x, a.y, a.z, b.x, b.y, b.z); eA.push(a); eB.push(b);
+}
+const idx = [];
+for (let i = 0; i < S; i++) { const k = i * 2; idx.push(k, k + 1, k + 2, k + 1, k + 3, k + 2); }
+const g = new THREE.BufferGeometry();
+g.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3)); g.setIndex(idx); g.computeVertexNormals();
+// two-sided paper: white front, grey back (the back only shows inside a rest-day twist)
+const front = new THREE.Mesh(g, new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: .6, side: THREE.BackSide }));
+const back = new THREE.Mesh(g, new THREE.MeshStandardMaterial({ color: 0x8d8d8a, roughness: .7, side: THREE.FrontSide }));
+const lm = new THREE.LineBasicMaterial({ color: 0x141414 });
+const grp = new THREE.Group();
+grp.add(front, back, new THREE.Line(new THREE.BufferGeometry().setFromPoints(eA), lm), new THREE.Line(new THREE.BufferGeometry().setFromPoints(eB), lm));
+// selection marker: a thin bar across the ribbon at the chosen day
+const mark = new THREE.Mesh(new THREE.BoxGeometry(1, .012, .012), new THREE.MeshBasicMaterial({ color: 0x141414 }));
+grp.add(mark);
+scene.add(grp);
+
+const readout = document.getElementById("ribday"), rl = document.getElementById("ribline");
+let sel = N - 1;
+function select(i) {
+  sel = i;
+  const s = i / (N - 1), p = spine(s);
+  mark.position.copy(p); mark.scale.x = Math.max(.5, widthAt(s) + .5);
+  readout.innerHTML = tot[i] === 0
+    ? `<span class="lab ink">${dateOf(i)}${i === N - 1 ? " · aujourd’hui" : ""}</span><div class="d">Pause</div>`
+    : `<span class="lab ink">${dateOf(i)}${i === N - 1 ? " · aujourd’hui" : ""}</span><div class="d">${L[i]} appris · ${R[i]} révisés</div>`;
+}
+select(N - 1);
+
+// pointer: vertical position scrubs the day, horizontal drag turns the ribbon
+const proj = v => { const q = v.clone().applyMatrix4(grp.matrixWorld).project(cam); return (1 - q.y) / 2 * H; };
+let rotTarget = 0, rot = 0, dragging = false, lx = 0;
+function scrub(clientY) {
+  const y = clientY - cv.getBoundingClientRect().top;
+  let best = 0, bd = 1e9;
+  for (let i = 0; i < N; i++) { const d = Math.abs(proj(spine(i / (N - 1))) - y); if (d < bd) { bd = d; best = i; } }
+  if (best !== sel) select(best);
+  rl.style.top = proj(spine(best / (N - 1))) + "px";
+}
+cv.addEventListener("pointerdown", e => { dragging = true; lx = e.clientX; cv.setPointerCapture(e.pointerId); scrub(e.clientY); });
+cv.addEventListener("pointermove", e => { scrub(e.clientY); if (dragging) { rotTarget = Math.max(-1.2, Math.min(1.2, rotTarget + (e.clientX - lx) * .01)); lx = e.clientX; } });
+cv.addEventListener("pointerup", () => { dragging = false; rotTarget = 0; });
+
+let t = 0;
+function frame() {
+  t += 1 / 60;
+  rot += (rotTarget - rot) * .06;
+  grp.rotation.y = rot + (reduce ? 0 : Math.sin(t * .5) * .25);
+  renderer.render(scene, cam);
+  rl.style.top = proj(spine(sel / (N - 1))) + "px";
+  if (!reduce) requestAnimationFrame(frame);
+}
+frame();
+</script>
+
+<!-- 06 · carambole slices table of contents -->
+<script type="module">
+import * as THREE from "three";
+import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
+
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const cv = document.getElementById("slices");
+const W = 360, H = 760;
+const renderer = new THREE.WebGLRenderer({ canvas: cv, antialias: true, alpha: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2)); renderer.setSize(W, H);
+renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.4;
+const scene = new THREE.Scene();
+scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.04).texture;
+scene.add(new THREE.HemisphereLight(0xffffff, 0x8a8a86, 1.2));
+const key = new THREE.DirectionalLight(0xffffff, 1.8); key.position.set(3, 6, 5); scene.add(key);
+const cam = new THREE.PerspectiveCamera(30, W / H, .1, 100);
+cam.position.set(0, 2.2, 13.4); cam.lookAt(0, -.3, 0);
+
+const modules = ["Noms, articles et genre","Pronoms sujets et être","Avoir et il y a","Verbes en -ER (présent)","La négation (ne… pas)","Poser des questions","Les adjectifs : accord et place","Les adjectifs possessifs","Verbes en -IR et -RE (présent)","Prépositions et contractions","Pluriels et partitif","Le futur proche","Le passé composé avec avoir","Le passé composé avec être","Les verbes pronominaux","L’imparfait","Pronoms compléments","Les pronoms y et en","Comparatif et superlatif","L’impératif","Le futur simple","Le conditionnel présent","Les pronoms relatifs","Le subjonctif présent","Les phrases avec si"];
+const prog = modules.map((_, i) => i < 9 ? 1 : i === 9 ? .82 : i === 10 ? .64 : i === 11 ? .52 : i === 12 ? .1 : 0);
+const N = modules.length;
+
+// same logo geometry as 01, cut thin
+const shape = new THREE.Shape();
+const tip = k => { const a = Math.PI / 2 + k * 2 * Math.PI / 5; return [Math.cos(a), Math.sin(a)]; };
+const val = k => { const a = Math.PI / 2 + (k + .5) * 2 * Math.PI / 5; return [Math.cos(a) * .5, Math.sin(a) * .5]; };
+shape.moveTo(...tip(0));
+for (let k = 0; k < 5; k++) shape.quadraticCurveTo(...val(k), ...tip(k + 1));
+const geo = new THREE.ExtrudeGeometry(shape, { depth: .055, bevelEnabled: false, curveSegments: 40 });
+geo.rotateX(-Math.PI / 2); geo.center(); geo.scale(.55, 1, .55);
+// outline of the top face only: one clean line per slice, not a double contour
+const outline = new THREE.BufferGeometry().setFromPoints(shape.getPoints(40).map(p => new THREE.Vector3(p.x * .55, .028, -p.y * .55)));
+
+const mChrome = new THREE.MeshPhysicalMaterial({ color: 0xf2f2f2, metalness: .85, roughness: .2, envMapIntensity: 1.5, clearcoat: 1, clearcoatRoughness: .08 });
+const mPaper = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: .65 });
+const mGlass = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: .3, depthWrite: false });
+const lInk = new THREE.LineBasicMaterial({ color: 0x141414 });
+const lGrey = new THREE.LineBasicMaterial({ color: 0xbdbcb8 });
+
+const GAP = .17, Y0 = -GAP * (N - 1) / 2 - .2, OPEN = .36;
+const stack = new THREE.Group(); scene.add(stack);
+const rod = new THREE.Mesh(new THREE.CylinderGeometry(.014, .014, GAP * N + 1.3, 12), new THREE.MeshStandardMaterial({ color: 0x141414, roughness: .4 }));
+rod.position.y = Y0 + GAP * (N - 1) / 2 + .25; stack.add(rod);
+const slices = modules.map((_, i) => {
+  const p = prog[i], g = new THREE.Group();
+  const m = new THREE.Mesh(geo, p === 1 ? mChrome : p > 0 ? mPaper : mGlass);
+  const e = new THREE.LineLoop(outline, p === 1 ? lGrey : p > 0 ? lInk : lGrey);
+  e.visible = p < 1;
+  g.add(m, e); g.position.y = Y0 + i * GAP; g.rotation.y = i * .045; // a slight helical drift up the skewer
+  g.userData = { y: g.position.y, x: 0, spin: 0, edge: e, base: e.material };
+  stack.add(g); return g;
+});
+
+// --- selection
+const sel6 = document.getElementById("sel6"), tick = document.getElementById("tick6");
+const ringSvg = (p, s, w) => { const r = (s - w) / 2, c = 2 * Math.PI * r;
+  return `<svg width="${s}" height="${s}"><circle cx="${s/2}" cy="${s/2}" r="${r}" fill="none" stroke="#c8c7c3" stroke-width="${w}"/><circle cx="${s/2}" cy="${s/2}" r="${r}" fill="none" stroke="#141414" stroke-width="${w}" stroke-linecap="round" stroke-dasharray="${c * p} ${c}" transform="rotate(-90 ${s/2} ${s/2})"/></svg>`; };
+let sel = 11;
+function select(i) {
+  if (slices[sel]) slices[sel].userData.edge.material = slices[sel].userData.base;
+  sel = i;
+  slices[i].userData.edge.material = lInk; slices[i].userData.edge.visible = true;
+  slices.forEach((s, k) => { if (k !== i && prog[k] === 1) s.userData.edge.visible = false; });
+  const p = prog[i];
+  const st = p === 1 ? `<span class="lab ink">Maîtrisé</span>` : p > 0 ? `${ringSvg(p, 18, 2.5)}<span class="lab ink">En cours · ${Math.round(p * 100)} %</span>` : `<span class="lab">À venir</span>`;
+  sel6.innerHTML = `<div class="num">${String(i + 1).padStart(2, "0")}</div><div class="t">${modules[i]}</div><div class="st">${st}</div>`;
+}
+select(sel);
+
+// map pointer y onto the CLOSED stack's screen extent, so fanning open never makes the pick jitter
+const screenY = y => { const v = new THREE.Vector3(0, y, 0).project(cam); return (1 - v.y) / 2 * H; };
+const yTop = screenY(Y0 + (N - 1) * GAP + OPEN), yBot = screenY(Y0);
+let rotT = 0, rot = 0, drag = false, lx = 0;
+function pick(clientY) {
+  const y = clientY - cv.getBoundingClientRect().top;
+  const i = Math.max(0, Math.min(N - 1, Math.round((yBot - y) / (yBot - yTop) * (N - 1))));
+  if (i !== sel) select(i);
+}
+// Use: slide a finger up/down the stack to choose a module (one haptic tick per slice), sideways to turn it,
+// and tap (or "Ouvrir") to open the chosen slice: it lifts out, turns to face you and grows into the module page.
+let moved = 0, opening = 0, sy = 0;
+cv.addEventListener("pointerdown", e => { if (opening) return; drag = true; moved = 0; lx = e.clientX; sy = e.clientY; cv.setPointerCapture(e.pointerId); pick(e.clientY); });
+cv.addEventListener("pointermove", e => { if (!drag) return; moved = Math.max(moved, Math.abs(e.clientY - sy)); pick(e.clientY); rotT = Math.max(-1.4, Math.min(1.4, rotT + (e.clientX - lx) * .012)); moved = Math.max(moved, Math.abs(rotT) * 40); lx = e.clientX; });
+cv.addEventListener("pointerup", () => { if (drag && moved < 6) open(); drag = false; });
+function open() { if (opening) return; opening = performance.now(); p6.classList.add("opening"); setTimeout(() => { opening = 0; p6.classList.remove("opening"); }, 1900); }
+const p6 = document.getElementById("p6");
+document.getElementById("open6").onclick = open;
+
+let t = 0;
+const tmp = new THREE.Vector3();
+(function frame() {
+  t += 1 / 60;
+  const k = reduce ? 1 : .14;
+  slices.forEach((s, i) => {
+    const u = s.userData;
+    // fan open: everything above the selection lifts by OPEN; the selection itself lifts by half and slides out
+    const lift = opening && i === sel;
+    const ty = lift ? .6 : Y0 + i * GAP + (i > sel ? OPEN : i === sel ? OPEN / 2 : 0);
+    const tx = lift ? 0 : i === sel ? .4 : 0;
+    u.y += (ty - u.y) * k; u.x += (tx - u.x) * k;
+    u.z = (u.z || 0) + ((lift ? 3.2 : 0) - (u.z || 0)) * k;
+    u.tilt = (u.tilt || 0) + ((lift ? 1.05 : 0) - (u.tilt || 0)) * k;
+    s.position.set(u.x, u.y, u.z); s.rotation.x = u.tilt;
+    s.visible = !opening || i === sel || performance.now() - opening < 250;
+    if (i === sel && !reduce) u.spin += .012; else u.spin *= .9;
+    s.rotation.y = i * .045 + u.spin;
+  });
+  rod.visible = !opening;
+  rot += (rotT - rot) * .06;
+  stack.rotation.y = rot + (reduce ? 0 : Math.sin(t * .4) * .18);
+  renderer.render(scene, cam);
+  tmp.set(0, slices[sel].position.y, 0); stack.localToWorld(tmp);
+  tick.style.top = screenY(tmp.y) + "px";
+  requestAnimationFrame(frame);
+})();
+</script>
+
+<!-- 07 · word magnets -->
+<script>
+(() => {
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const p7 = document.getElementById("p7"), host = document.getElementById("tiles7"), go = document.getElementById("go7"), fb = document.getElementById("fb7");
+  const r = 13, c = 2 * Math.PI * r;
+  document.getElementById("ring7").innerHTML = `<svg width="30" height="30"><circle cx="15" cy="15" r="${r}" fill="none" stroke="#c8c7c3" stroke-width="3"/><circle cx="15" cy="15" r="${r}" fill="none" stroke="#141414" stroke-width="3" stroke-linecap="round" stroke-dasharray="${c * 7 / 20} ${c}" transform="rotate(-90 15 15)"/></svg>`;
+
+  const ANSWER = ["Je", "vais", "partir", "demain"];
+  const BANK = ["partir", "va", "Je", "demain", "allons", "vais", "hier"];
+  const TILT = [0, 0, 0, 0, 0, 0, 0]; // tiles stay level
+  const LINE = { x: 22, y: 312, w: 316, row: 50 }, BANK_Y = 446;
+  let tiles = [], line = [], state = "build";
+
+  function make() {
+    host.innerHTML = ""; line = []; state = "build"; fb.className = "fb"; go.textContent = "Vérifier"; go.disabled = true;
+    tiles = BANK.map((word, i) => {
+      const el = document.createElement("div");
+      el.className = "tile";
+      el.innerHTML = [...word].map(ch => `<span>${ch}</span>`).join("");
+      host.appendChild(el);
+      const tl = { el, word, i, x: 180, y: 900, r: 0, s: 1, vx: 0, vy: 0, vr: 0, vs: 0, tx: 0, ty: 0, tr: TILT[i], ts: 1, fall: false };
+      el.onclick = () => tap(tl);
+      return tl;
+    });
+    bankLayout();
+    tiles.forEach((tl, i) => { tl.vy = -40 * 60 - i * 120; }); // they arrive from below
+  }
+  // bank: a loose flow, slightly askew, homes never change while words come and go
+  function bankLayout() {
+    let x = 22, y = BANK_Y, gap = 14;
+    tiles.forEach(tl => {
+      const w = tl.el.offsetWidth;
+      if (x + w > 338) { x = 22; y += 56; }
+      tl.home = { x: x + w / 2, y: y + 20 }; x += w + gap;
+    });
+    retarget();
+  }
+  function lineLayout(gap) {
+    let x = LINE.x, y = LINE.y;
+    line.forEach(tl => {
+      const w = tl.el.offsetWidth;
+      if (x + w > LINE.x + LINE.w) { x = LINE.x; y += LINE.row; }
+      tl.tx = x + w / 2; tl.ty = y + 20; tl.tr = 0; x += w + gap;
+    });
+  }
+  function retarget() {
+    tiles.forEach(tl => { if (!line.includes(tl) && !tl.fall) { tl.tx = tl.home.x; tl.ty = tl.home.y; tl.tr = TILT[tl.i]; } });
+    lineLayout(8);
+  }
+  function tap(tl) {
+    if (state !== "build") return;
+    if (line.includes(tl)) { line = line.filter(x => x !== tl); tl.el.classList.remove("on"); }
+    else { line.push(tl); tl.el.classList.add("on"); tl.vs += 4; }
+    go.disabled = line.length === 0;
+    retarget();
+  }
+  go.onclick = () => {
+    if (state !== "build") { make(); return; }
+    const ok = line.length === ANSWER.length && line.every((tl, k) => tl.word === ANSWER[k]);
+    if (ok) weld(); else miss();
+  };
+  function weld() {
+    state = "done"; go.textContent = "Suivant";
+    tiles.forEach(tl => { if (!line.includes(tl)) { tl.fall = true; tl.vy = -260 - Math.random() * 200; tl.vx = 0; tl.vr = 0; } });
+    line.forEach(tl => { tl.el.classList.remove("on"); tl.el.classList.add("weld"); });
+    const letters = line.flatMap(tl => [...tl.el.children]), t0 = performance.now();
+    (function wave(now) {
+      const t = (now - t0) / 1000; let live = false;
+      letters.forEach((el, i) => { const ph = t * 9 - i * .55; const s = ph > 0 && ph < Math.PI ? Math.sin(ph) : 0; if (ph < Math.PI) live = true;
+        el.style.fontVariationSettings = `"wght" ${Math.round(300 + 420 * s * s)}`; });
+      if (live && !reduce) requestAnimationFrame(wave);
+    })(t0);
+    fb.textContent = "Juste."; fb.classList.add("show");
+  }
+  function miss() {
+    state = "wrong"; go.textContent = "Suivant";
+    line.forEach((tl, k) => { tl.vx += (k % 2 ? 1 : -1) * 900; if (tl.word !== ANSWER[k]) { tl.el.classList.remove("on"); tl.el.classList.add("bad"); } });
+    fb.innerHTML = `Réponse : <span style="color:var(--ink)">${ANSWER.join(" ")}</span>`; setTimeout(() => fb.classList.add("show"), 350);
+  }
+
+  // springs: slightly under-damped, so every snap overshoots once
+  const K = 300, C = 19, KS = 420, CS = 22;
+  let last = performance.now();
+  (function frame(now) {
+    const dt = Math.min(1 / 30, (now - last) / 1000); last = now;
+    if (state === "done") lineLayout(6); // widths shrink while the weld restyle animates, so keep re-measuring
+    for (const tl of tiles) {
+      if (tl.fall) { tl.vy += 2600 * dt; tl.x += tl.vx * dt; tl.y += tl.vy * dt; tl.r += tl.vr * dt; }
+      else if (reduce) { tl.x = tl.tx; tl.y = tl.ty; tl.r = tl.tr; tl.s = 1; }
+      else for (let n = 0; n < 4; n++) {
+        const h = dt / 4;
+        tl.vx += (K * (tl.tx - tl.x) - C * tl.vx) * h; tl.x += tl.vx * h;
+        tl.vy += (K * (tl.ty - tl.y) - C * tl.vy) * h; tl.y += tl.vy * h;
+        tl.vr += (K * (tl.tr - tl.r) - C * tl.vr) * h; tl.r += tl.vr * h;
+        tl.vs += (KS * (tl.ts - tl.s) - CS * tl.vs) * h; tl.s += tl.vs * h;
+      }
+      const w = tl.el.offsetWidth;
+      tl.el.style.transform = `translate(${tl.x - w / 2}px, ${tl.y - 20}px) rotate(${tl.r}deg) scale(${tl.s})`;
+      tl.el.style.visibility = tl.y > 820 ? "hidden" : "visible";
+    }
+    requestAnimationFrame(frame);
+  })(last);
+  document.fonts.ready.then(make);
+})();
+</script>
+
+</body>
+</html>

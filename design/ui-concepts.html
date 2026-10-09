@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Carambole / layout studies</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600&family=Instrument+Sans:wght@400;500;600&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: #eaeae6; color: #252924; font-family: 'Instrument Sans', sans-serif; }
+    a { color: inherit; }
+    .page-head, .intro, .study-inner { max-width: 1440px; margin: auto; }
+    .page-head { padding: 28px clamp(20px, 4vw, 60px); display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .page-brand { display: flex; align-items: center; gap: 8px; font-size: 17px; font-weight: 500; letter-spacing: -.06em; }
+    .page-brand img { width: 25px; height: 25px; }
+    .page-head small { max-width: 290px; text-align: right; font-size: 11px; line-height: 1.5; color: #656a63; }
+    .intro { padding: 54px clamp(20px, 4vw, 60px) 76px; }
+    .intro .meta { font-size: 12px; color: #626761; }
+    .intro h1 { max-width: 980px; margin: 22px 0 0; font-size: clamp(51px, 7vw, 100px); font-weight: 400; line-height: .99; letter-spacing: -.075em; }
+    .intro p { max-width: 760px; margin: 26px 0 0; font-size: 15px; line-height: 1.62; color: #5e665d; }
+    .jump { display: flex; gap: 24px; flex-wrap: wrap; margin-top: 33px; }
+    .jump a { font-size: 12px; text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 4px; transition: opacity .45s cubic-bezier(.32,.72,0,1); }
+    .jump a:hover { opacity: .5; }
+    .study { background: #f6f7f3; border-top: 1px solid #d8ddd5; padding: 78px clamp(20px, 4vw, 60px) 92px; }
+    .study:nth-of-type(3) { background: #f3f4f0; }
+    .study:nth-of-type(4) { background: #f7f7f4; }
+    .study-head { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: end; margin-bottom: 42px; }
+    .study-head .index { font-size: 11px; color: #606860; }
+    .study-head h2 { margin: 12px 0 0; font-size: clamp(52px, 6vw, 83px); font-weight: 400; line-height: .95; letter-spacing: -.075em; }
+    .study-head p { max-width: 515px; margin: 0 0 2px auto; font-size: 14px; line-height: 1.65; color: #5d655e; }
+    .phones { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(24px, 3vw, 48px); align-items: start; }
+    .sample { min-width: 0; }
+    .sample-label { max-width: 364px; margin: 0 auto 13px; display: flex; justify-content: space-between; font-size: 11px; }
+    .sample-label span:last-child { color: #697168; }
+    .phone { width: 100%; max-width: 364px; aspect-ratio: 390 / 765; padding: 7px; margin: auto; border-radius: 34px; background: #d9ddd6; box-shadow: 0 25px 55px rgb(34 41 34 / .12), 0 2px 7px rgb(34 41 34 / .08); }
+    .glass { position: relative; width: 100%; height: 100%; overflow: hidden; border-radius: 28px; background: #fcfdf9; color: #252c25; font-family: var(--face); }
+    .status { position: relative; z-index: 2; height: 40px; padding: 15px 25px 0; display: flex; justify-content: space-between; font-size: 10px; font-weight: 500; line-height: 1; }
+    .status span:last-child { letter-spacing: 2px; }
+    .surface { position: relative; height: calc(100% - 40px); overflow: hidden; padding: 12px 23px 35px; }
+    .homebar { position: absolute; z-index: 5; bottom: 8px; left: 50%; width: 103px; height: 4px; border-radius: 4px; background: #252c25; transform: translateX(-50%); }
+    .topline { position: relative; z-index: 2; display: flex; align-items: center; justify-content: space-between; min-height: 25px; font-size: 11px; }
+    .topline img { width: 22px; height: 22px; object-fit: contain; }
+    .topline .word { display: inline-flex; align-items: center; gap: 5px; font-size: 14px; font-weight: 500; letter-spacing: -.06em; }
+    .topline .word img { width: 17px; height: 17px; }
+    .muted { color: #646c64; }
+    .small { font-size: 9px; line-height: 1.45; }
+    .medium { font-size: 11px; line-height: 1.5; }
+    .action { position: relative; z-index: 2; display: flex; justify-content: space-between; align-items: center; min-height: 45px; padding: 0 15px; background: #2b382d; color: #fbfcf8; font-size: 12px; border-radius: 9px; }
+    .action b { font-size: 19px; font-weight: 400; line-height: 1; }
+    .secondary { display: flex; justify-content: space-between; align-items: center; height: 43px; border-bottom: 1px solid #c7cec5; font-size: 12px; }
+    .ring { width: 112px; height: 112px; flex: none; display: grid; place-items: center; border-radius: 50%; background: conic-gradient(#384a3b 0 18%, #d9dfd6 18% 100%); }
+    .ring-inner { width: 104px; height: 104px; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 50%; background: #fcfdf9; }
+    .ring strong { font-size: 28px; font-weight: 400; line-height: 1; letter-spacing: -.06em; }
+    .ring span { margin-top: 4px; font-size: 9px; }
+    .chapter-row { display: grid; grid-template-columns: 28px 1fr auto; gap: 9px; align-items: baseline; padding: 11px 0; border-bottom: 1px solid #cbd1c8; font-size: 11px; }
+    .chapter-row b { font-weight: 500; }
+    .chapter-row small { color: #6e766d; font-size: 9px; }
+    .annotation { max-width: 364px; margin: 16px auto 0; color: #5d655c; font-size: 12px; line-height: 1.55; }
+    .translation { position: relative; z-index: 2; margin: 8px 0 0; font-size: 10px; color: #667067; }
+    .notes { display: grid; grid-template-columns: 150px 1fr; gap: 24px; margin-top: 40px; padding-top: 20px; border-top: 1px solid #cbd1c8; font-size: 12px; line-height: 1.6; }
+    .notes strong { font-weight: 500; }
+    .notes p { margin: 0; max-width: 900px; color: #5d655c; }
+
+    /* Composition 1: staggered covers borrow the collage logic of reference 0940. */
+    .collage { --face: 'Instrument Sans', sans-serif; }
+    .collage .shelf-title { margin: 43px 0 0; font-size: 48px; line-height: .96; font-weight: 400; letter-spacing: -.07em; }
+    .collage .shelf-composition { position: relative; height: 395px; margin-top: 25px; }
+    .collage .cover { position: absolute; padding: 15px; overflow: hidden; font-size: 10px; }
+    .collage .cover-primary { z-index: 2; left: 0; top: 24px; width: 74%; height: 263px; background: #e0e7dd; box-shadow: 8px 11px 18px rgb(33 41 33 / .08); }
+    .collage .cover-primary h3 { position: relative; z-index: 2; margin: 90px 0 0; font-size: 32px; font-weight: 400; line-height: 1; letter-spacing: -.06em; }
+    .collage .cover-primary::before { content: 'fr'; position: absolute; right: -24px; top: -60px; font-size: 210px; letter-spacing: -.13em; opacity: .1; }
+    .collage .cover-primary .cover-foot { position: absolute; left: 15px; right: 15px; bottom: 15px; display: flex; justify-content: space-between; }
+    .collage .cover-secondary { z-index: 1; right: 0; top: 0; width: 40%; height: 159px; background: #d6dbd2; color: #515a50; padding: 13px; }
+    .collage .cover-secondary span { position: absolute; bottom: 14px; left: 13px; font-size: 16px; line-height: .98; }
+    .collage .cover-tertiary { right: 2%; top: 215px; width: 42%; height: 156px; background: #edf0ea; border: 1px solid #cbd3c8; color: #737d72; }
+    .collage .cover-tertiary span { position: absolute; right: 10px; bottom: 14px; font-size: 15px; line-height: .98; text-align: right; }
+    .collage .book-title { margin: 34px 0 0; font-size: 43px; line-height: 1.02; font-weight: 400; letter-spacing: -.07em; }
+    .collage .book-heading { position: relative; min-height: 220px; }
+    .collage .book-heading .ring { position: absolute; right: 3px; top: 117px; z-index: 3; box-shadow: 0 0 0 8px #fcfdf9; }
+    .collage .study-sheet { position: relative; z-index: 1; min-height: 165px; margin: 5px -23px 0 0; padding: 26px 132px 17px 23px; background: #e4eae0; }
+    .collage .study-sheet span { font-size: 9px; }
+    .collage .study-sheet h4 { max-width: 155px; margin: 15px 0 0; font-size: 23px; font-weight: 400; line-height: 1.05; letter-spacing: -.04em; }
+    .collage .book-actions { margin: -9px 15px 0 0; position: relative; z-index: 2; }
+    .collage .book-actions .secondary { margin-left: 15px; }
+    .collage .index-list { margin-top: 25px; }
+    .collage .index-list .small { margin-bottom: 7px; }
+    .collage .module-no { position: absolute; top: 84px; left: -21px; font-size: 176px; line-height: .8; letter-spacing: -.12em; opacity: .14; }
+    .collage .module-title { position: relative; z-index: 2; max-width: 275px; margin: 101px 0 20px 33px; font-size: 37px; font-weight: 400; line-height: 1.04; letter-spacing: -.06em; }
+    .collage .module-count { position: relative; z-index: 2; margin-left: 34px; font-size: 10px; }
+    .collage .lesson-list { position: relative; z-index: 2; margin-top: 34px; }
+    .collage .lesson { display: grid; grid-template-columns: 28px 1fr auto; gap: 10px; padding: 14px 0; border-bottom: 1px solid #cbd1c8; font-size: 11px; }
+    .collage .lesson span:last-child { font-size: 9px; color: #6e766d; }
+
+    /* Composition 2: text bleeds toward the edges, inspired by reference 0941. */
+    .typeset { --face: 'Space Grotesk', sans-serif; }
+    .typeset .shelf-title { width: 130%; margin: 36px 0 0 -11px; font-size: 63px; font-weight: 400; line-height: .9; letter-spacing: -.09em; }
+    .typeset .shelf-title span { display: block; }
+    .typeset .library-object { position: relative; height: 242px; margin: 34px 0 0; }
+    .typeset .library-object .tiny-mark { position: absolute; right: 4px; top: 0; width: 81px; height: 81px; display: grid; place-items: center; background: #e2e8de; }
+    .typeset .library-object .tiny-mark img { width: 48px; height: 48px; }
+    .typeset .library-object .book-strip { position: absolute; left: 0; top: 57px; width: 74%; height: 160px; padding: 17px; background: #dce5da; display: flex; flex-direction: column; }
+    .typeset .library-object .book-strip h3 { margin: auto 0 0; font-size: 28px; font-weight: 400; letter-spacing: -.06em; line-height: .98; }
+    .typeset .library-object .arrow-tile { position: absolute; right: 0; bottom: 25px; width: 79px; height: 76px; display: grid; place-items: center; background: #2b382d; color: white; font-size: 29px; }
+    .typeset .library-lines { margin-top: 20px; }
+    .typeset .library-lines div { display: flex; justify-content: space-between; border-top: 1px solid #cbd1c8; padding: 11px 0; font-size: 11px; }
+    .typeset .library-lines span:last-child { color: #6e766d; font-size: 9px; }
+    .typeset .book-title { width: 125%; margin: 34px 0 0 -9px; font-size: 56px; font-weight: 400; line-height: .91; letter-spacing: -.085em; }
+    .typeset .book-title span { display: block; }
+    .typeset .book-progress { display: grid; grid-template-columns: 1fr 120px; gap: 12px; align-items: end; margin-top: 37px; }
+    .typeset .book-progress .ring { transform: translateX(13px); }
+    .typeset .book-progress p { margin: 0 0 4px; font-size: 11px; line-height: 1.5; }
+    .typeset .book-controls { margin-top: 32px; }
+    .typeset .book-controls .secondary { margin-top: 2px; }
+    .typeset .book-index { margin-top: 29px; }
+    .typeset .book-index .small { margin-bottom: 6px; }
+    .typeset .module-number { margin: 23px 0 0 -14px; font-size: 143px; font-weight: 400; line-height: .8; letter-spacing: -.1em; }
+    .typeset .module-title { position: relative; z-index: 2; margin: -7px 0 0 53px; max-width: 245px; font-size: 35px; font-weight: 400; line-height: 1.05; letter-spacing: -.06em; }
+    .typeset .module-note { margin: 17px 0 0 54px; font-size: 10px; }
+    .typeset .lesson-list { margin-top: 40px; }
+    .typeset .lesson { display: grid; grid-template-columns: 28px 1fr auto; gap: 9px; padding: 13px 0; border-top: 1px solid #cbd1c8; font-size: 11px; }
+    .typeset .lesson span:last-child { color: #6e766d; font-size: 9px; }
+
+    /* Composition 3: the app's own mark becomes the silhouette and the index. */
+    .poster { --face: 'Familjen Grotesk', sans-serif; }
+    .poster .poster-library { position: relative; height: 430px; margin: 23px -23px 0; overflow: hidden; }
+    .poster .poster-library::before { content: ''; position: absolute; left: -65px; top: 25px; width: 355px; height: 355px; background: url('logo/final/png/icon-black-512.png') center / contain no-repeat; opacity: .11; transform: rotate(-13deg); }
+    .poster .poster-library h3 { position: absolute; z-index: 2; top: 71px; left: 25px; max-width: 310px; margin: 0; font-size: 53px; font-weight: 400; line-height: .92; letter-spacing: -.075em; }
+    .poster .poster-library .feature { position: absolute; z-index: 3; left: 80px; right: 0; top: 261px; min-height: 150px; padding: 17px 17px 14px; background: #e2e9de; }
+    .poster .poster-library .feature h4 { margin: 30px 0 12px; font-size: 29px; font-weight: 400; line-height: .98; letter-spacing: -.05em; }
+    .poster .poster-library .feature .feature-foot { display: flex; justify-content: space-between; font-size: 10px; }
+    .poster .library-next { display: flex; justify-content: space-between; border-top: 1px solid #cbd1c8; padding: 12px 0; font-size: 11px; }
+    .poster .library-next span:last-child { font-size: 9px; color: #6e766d; }
+    .poster .book-top { position: relative; margin: 25px -23px 0; min-height: 314px; overflow: hidden; }
+    .poster .book-top::before { content: ''; position: absolute; right: -98px; top: 23px; width: 315px; height: 315px; background: url('logo/final/png/icon-black-512.png') center / contain no-repeat; opacity: .08; transform: rotate(19deg); }
+    .poster .book-top h3 { position: absolute; top: 12px; left: 23px; z-index: 2; margin: 0; font-size: 48px; font-weight: 400; line-height: .94; letter-spacing: -.072em; }
+    .poster .book-top .ring { position: absolute; right: 23px; bottom: 10px; z-index: 2; }
+    .poster .book-top .progress-caption { position: absolute; left: 23px; bottom: 29px; max-width: 130px; z-index: 2; font-size: 10px; line-height: 1.45; }
+    .poster .book-actions { margin-top: 8px; }
+    .poster .book-actions .secondary { margin-top: 2px; }
+    .poster .book-index { margin-top: 27px; }
+    .poster .book-index .small { margin-bottom: 7px; }
+    .poster .module-art { position: relative; height: 311px; margin: 22px -23px 0; overflow: hidden; }
+    .poster .module-art::before { content: ''; position: absolute; right: -25px; top: 15px; width: 250px; height: 250px; background: url('logo/final/png/icon-black-512.png') center / contain no-repeat; opacity: .1; transform: rotate(16deg); }
+    .poster .module-art .giant-index { position: absolute; left: 9px; top: -12px; font-size: 135px; line-height: 1; letter-spacing: -.1em; font-weight: 400; }
+    .poster .module-art h3 { position: absolute; z-index: 2; left: 22px; top: 133px; max-width: 290px; margin: 0; font-size: 36px; font-weight: 400; letter-spacing: -.06em; line-height: 1.04; }
+    .poster .module-art .count { position: absolute; left: 23px; bottom: 9px; z-index: 2; font-size: 10px; }
+    .poster .lesson-list { margin-top: 4px; }
+    .poster .lesson { display: grid; grid-template-columns: 27px 1fr auto; gap: 10px; padding: 12px 0; border-top: 1px solid #cbd1c8; font-size: 11px; }
+    .poster .lesson span:last-child { color: #6e766d; font-size: 9px; }
+
+    @media (max-width: 950px) { .phones { grid-template-columns: 1fr 1fr; } .sample:last-child { width: calc(50% - 12px); grid-column: 1 / -1; } }
+    @media (max-width: 650px) { .page-head small { max-width: 155px; font-size: 10px; } .intro { padding-top: 34px; padding-bottom: 48px; } .study { padding-top: 54px; padding-bottom: 65px; } .study-head { grid-template-columns: 1fr; gap: 18px; } .study-head p { margin: 0; } .phones { display: flex; overflow-x: auto; gap: 17px; margin-right: -20px; padding: 0 20px 20px 0; scroll-snap-type: x mandatory; } .sample, .sample:last-child { grid-column: auto; flex: none; width: min(81vw, 340px); scroll-snap-align: start; } .notes { grid-template-columns: 1fr; gap: 4px; margin-top: 22px; } }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .jump a { transition: none; } }
+  </style>
+</head>
+<body>
+  <header class="page-head"><div class="page-brand"><img src="logo/final/png/icon-black-512.png" alt="">carambole</div><small>Layout study only. Neutral colors and sample progress let the compositions speak.</small></header>
+  <main>
+    <div class="intro"><div class="meta">Library / book home / module detail</div><h1>More page.<br>Less interface.</h1><p>I kept the drill out of this comparison. Its fixed, repeatable structure serves practice. These three proposals explore what the surrounding pages can do with scale, overlap, cropping, and the Carambole mark while preserving the real navigation and circular progress.</p><nav class="jump" aria-label="Jump to layout"><a href="#collage">Collage shelf</a><a href="#typeset">Type as space</a><a href="#poster">Mark as silhouette</a></nav></div>
+
+    <section class="study collage" id="collage" aria-labelledby="collage-title"><div class="study-inner"><div class="study-head"><div><div class="index">Reference cue / the layered composition in IMG_0940</div><h2 id="collage-title">Collage shelf</h2></div><p>The books behave like physical printed pieces. Overlap creates depth on the library, then the circle interrupts the book page instead of sitting in a standard progress panel.</p></div><div class="phones">
+      <div class="sample"><div class="sample-label"><span>Library</span><span>Stacked books</span></div><div class="phone"><div class="glass"><div class="status"><span>9:41</span><span>▮▮▮ ◉ ▰</span></div><div class="surface"><div class="topline"><img src="logo/final/png/icon-black-512.png" alt=""><span class="small muted">Bibliothèque</span></div><h3 class="shelf-title">Mes<br>livres.</h3><div class="shelf-composition"><div class="cover cover-secondary"><span>Conver-<br>sation</span></div><div class="cover cover-primary"><span>Français / A1 à B1</span><h3>Fonda-<br>tions</h3><div class="cover-foot"><span>25 modules</span><span>↗</span></div></div><div class="cover cover-tertiary"><span>Inter-<br>médiaire</span></div></div><div class="small muted">Les deux autres livres arrivent bientôt.</div></div><div class="homebar"></div></div></div><p class="annotation">Only the front cover is active; the receding covers signal future books.</p></div>
+      <div class="sample"><div class="sample-label"><span>Book home</span><span>Overlapping progress</span></div><div class="phone"><div class="glass"><div class="status"><span>9:41</span><span>▮▮▮ ◉ ▰</span></div><div class="surface"><div class="topline"><span>← Livres</span><span class="muted">Réglages</span></div><div class="book-heading"><h3 class="book-title">Français<br>Fondations</h3><div class="ring"><div class="ring-inner"><strong>18%</strong><span>maîtrisé</span></div></div></div><div class="study-sheet"><span class="small muted">Aujourd'hui</span><h4>Un peu de français, maintenant.</h4></div><div class="book-actions"><div class="action">Apprendre <b>↗</b></div><div class="secondary"><span>Réviser</span><span>↗</span></div></div><div class="index-list"><div class="small muted">Dans ce livre</div><div class="chapter-row"><b>01</b><span>Noms, articles et genre</span><small>20/20</small></div><div class="chapter-row"><b>02</b><span>Pronoms sujets et être</span><small>14/20</small></div><div class="chapter-row"><b>03</b><span>Avoir au présent</span><small>0/20</small></div></div></div><div class="homebar"></div></div></div><p class="annotation">Progress crosses the edge of the study sheet, making it part of the composition.</p></div>
+      <div class="sample"><div class="sample-label"><span>Module detail</span><span>Number as image</span></div><div class="phone"><div class="glass"><div class="status"><span>9:41</span><span>▮▮▮ ◉ ▰</span></div><div class="surface"><div class="topline"><span>← Fondations</span><span class="muted">Module</span></div><div class="module-no">01</div><h3 class="module-title">Noms,<br>articles<br>et genre</h3><div class="module-count muted">20 éléments / 20 maîtrisés</div><div class="lesson-list"><div class="lesson"><span>01</span><span>Article indéfini : un / une</span><span>maîtrisé</span></div><div class="lesson"><span>02</span><span>Article défini : le / la</span><span>maîtrisé</span></div><div class="lesson"><span>03</span><span>Élision devant une voyelle</span><span>maîtrisé</span></div><div class="lesson"><span>04</span><span>Article défini pluriel : les</span><span>maîtrisé</span></div></div></div><div class="homebar"></div></div></div><p class="annotation">The chapter number is a background shape; the lesson list stays orderly.</p></div>
+    </div><div class="notes"><strong>What changes</strong><p>The library becomes a shelf composition. The book home gains a deliberate overlap. The module page borrows the cover’s sense of scale while keeping individual elements scannable.</p></div></div></section>
+
+    <section class="study typeset" id="typeset" aria-labelledby="typeset-title"><div class="study-inner"><div class="study-head"><div><div class="index">Reference cue / the oversized typography in IMG_0941</div><h2 id="typeset-title">Type as space</h2></div><p>Regular-weight letters expand past the safe rectangle and make the small screen feel like a page. Small elements sit precisely beside them, like an image inset in an editorial layout.</p></div><div class="phones">
+      <div class="sample"><div class="sample-label"><span>Library</span><span>Large type, small object</span></div><div class="phone"><div class="glass"><div class="status"><span>9:41</span><span>▮▮▮ ◉ ▰</span></div><div class="surface"><div class="topline"><span class="word"><img src="logo/final/png/icon-black-512.png" alt="">carambole</span><span class="small muted">Livres</span></div><h3 class="shelf-title"><span>Le français</span><span>commence</span><span>ici.</span></h3><div class="library-object"><div class="tiny-mark"><img src="logo/final/png/icon-black-512.png" alt=""></div><div class="book-strip"><span class="small muted">Disponible / A1 à B1</span><h3>Français<br>Fondations</h3></div><div class="arrow-tile">↗</div></div><div class="library-lines"><div><span>Conversation</span><span>Bientôt</span></div><div><span>Intermédiaire</span><span>Bientôt</span></div></div></div><div class="homebar"></div></div></div><p class="annotation">The headline crops naturally; one small logo inset gives the type a visual counterweight.</p></div>
+      <div class="sample"><div class="sample-label"><span>Book home</span><span>Asymmetric spread</span></div><div class="phone"><div class="glass"><div class="status"><span>9:41</span><span>▮▮▮ ◉ ▰</span></div><div class="surface"><div class="topline"><span>← Livres</span><span class="muted">Réglages</span></div><h3 class="book-title"><span>Français</span><span>Fondations.</span></h3><div class="book-progress"><p><span class="small muted">Progression</span><br><br>92 sur 500 éléments maîtrisés.</p><div class="ring"><div class="ring-inner"><strong>18%</strong><span>maîtrisé</span></div></div></div><div class="book-controls"><div class="action">Apprendre <b>↗</b></div><div class="secondary"><span>Réviser</span><span>↗</span></div></div><div class="book-index"><div class="small muted">Modules</div><div class="chapter-row"><b>01</b><span>Noms, articles et genre</span><small>20/20</small></div><div class="chapter-row"><b>02</b><span>Pronoms sujets et être</span><small>14/20</small></div><div class="chapter-row"><b>03</b><span>Avoir au présent</span><small>0/20</small></div></div></div><div class="homebar"></div></div></div><p class="annotation">The title establishes scale. The ring occupies the right margin like a plate in print.</p></div>
+      <div class="sample"><div class="sample-label"><span>Module detail</span><span>Typographic index</span></div><div class="phone"><div class="glass"><div class="status"><span>9:41</span><span>▮▮▮ ◉ ▰</span></div><div class="surface"><div class="topline"><span>← Fondations</span><span class="muted">Module</span></div><div class="module-number">01</div><h3 class="module-title">Noms, articles<br>et genre</h3><p class="module-note muted">20 éléments / 20 maîtrisés</p><div class="lesson-list"><div class="lesson"><span>01</span><span>Article indéfini : un / une</span><span>maîtrisé</span></div><div class="lesson"><span>02</span><span>Article défini : le / la</span><span>maîtrisé</span></div><div class="lesson"><span>03</span><span>Élision devant une voyelle</span><span>maîtrisé</span></div><div class="lesson"><span>04</span><span>Article défini pluriel : les</span><span>maîtrisé</span></div></div></div><div class="homebar"></div></div></div><p class="annotation">The chapter number bleeds to the edge; the lesson list begins on its own grid.</p></div>
+    </div><div class="notes"><strong>What changes</strong><p>Page scale comes from type rather than cards or decorative effects. The primary actions remain at normal size and the syllabus remains a readable index.</p></div></div></section>
+
+    <section class="study poster" id="poster" aria-labelledby="poster-title"><div class="study-inner"><div class="study-head"><div><div class="index">Reference cue / the silhouette and overprint in IMG_0942 and IMG_0943</div><h2 id="poster-title">Mark as silhouette</h2></div><p>The existing Carambole mark takes the role of the large silhouette. Type can cross it without changing the logo itself. The result is closer to a poster while the study controls remain easy to find.</p></div><div class="phones">
+      <div class="sample"><div class="sample-label"><span>Library</span><span>Poster-like opening</span></div><div class="phone"><div class="glass"><div class="status"><span>9:41</span><span>▮▮▮ ◉ ▰</span></div><div class="surface"><div class="topline"><span class="word"><img src="logo/final/png/icon-black-512.png" alt="">carambole</span><span class="small muted">Livres</span></div><div class="poster-library"><h3>Une autre<br>façon de<br>pratiquer.</h3><div class="feature"><span class="small muted">Français / A1 à B1</span><h4>Fondations</h4><div class="feature-foot"><span>25 modules</span><span>Ouvrir ↗</span></div></div></div><div class="library-next"><span>Conversation</span><span>Bientôt</span></div><div class="library-next"><span>Intermédiaire</span><span>Bientôt</span></div></div><div class="homebar"></div></div></div><p class="annotation">The logo becomes a large quiet silhouette, while the active book crosses its edge.</p></div>
+      <div class="sample"><div class="sample-label"><span>Book home</span><span>Progress in the image field</span></div><div class="phone"><div class="glass"><div class="status"><span>9:41</span><span>▮▮▮ ◉ ▰</span></div><div class="surface"><div class="topline"><span>← Livres</span><span class="muted">Réglages</span></div><div class="book-top"><h3>Français<br>Fondations</h3><div class="progress-caption muted">92 sur 500 éléments maîtrisés</div><div class="ring"><div class="ring-inner"><strong>18%</strong><span>maîtrisé</span></div></div></div><div class="book-actions"><div class="action">Apprendre <b>↗</b></div><div class="secondary"><span>Réviser</span><span>↗</span></div></div><div class="book-index"><div class="small muted">Le programme</div><div class="chapter-row"><b>01</b><span>Noms, articles et genre</span><small>20/20</small></div><div class="chapter-row"><b>02</b><span>Pronoms sujets et être</span><small>14/20</small></div><div class="chapter-row"><b>03</b><span>Avoir au présent</span><small>0/20</small></div></div></div><div class="homebar"></div></div></div><p class="annotation">The progress circle shares one graphic field with the brand shape, without losing its function.</p></div>
+      <div class="sample"><div class="sample-label"><span>Module detail</span><span>Number and silhouette</span></div><div class="phone"><div class="glass"><div class="status"><span>9:41</span><span>▮▮▮ ◉ ▰</span></div><div class="surface"><div class="topline"><span>← Fondations</span><span class="muted">Module</span></div><div class="module-art"><div class="giant-index">01</div><h3>Noms,<br>articles et genre</h3><div class="count muted">20 éléments / 20 maîtrisés</div></div><div class="lesson-list"><div class="lesson"><span>01</span><span>Article indéfini : un / une</span><span>maîtrisé</span></div><div class="lesson"><span>02</span><span>Article défini : le / la</span><span>maîtrisé</span></div><div class="lesson"><span>03</span><span>Élision devant une voyelle</span><span>maîtrisé</span></div><div class="lesson"><span>04</span><span>Article défini pluriel : les</span><span>maîtrisé</span></div></div></div><div class="homebar"></div></div></div><p class="annotation">The large number and mark identify the chapter before the detailed index begins.</p></div>
+    </div><div class="notes"><strong>What changes</strong><p>A repeatable graphic language grows from the existing logo: large silhouette in the library, cropped background on the book home, and chapter art on detail pages. It is the most distinctive direction.</p></div></div></section>
+  </main>
+</body>
+</html>

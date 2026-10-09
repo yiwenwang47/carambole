@@ -1,0 +1,508 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Carambole Layouts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500&family=Familjen+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Grayscale on purpose: this page is about layout only. */
+:root {
+  --ink: #141414;
+  --g1: #4a4a4a;
+  --g2: #8d8d8a;
+  --g3: #c8c7c3;
+  --g4: #e6e5e1;
+  --paper: #f8f7f4;
+  --tile: #efeeea;
+  --page: #dcdbd6;
+  --display: "Manrope", system-ui, sans-serif;
+  --label: "Familjen Grotesk", system-ui, sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--page); color: var(--ink); font-family: var(--display); font-weight: 300; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+
+/* ---------- page chrome ---------- */
+.intro { max-width: 980px; padding: 56px 24px 24px; }
+.intro h1 { font-weight: 300; font-size: 40px; letter-spacing: -0.02em; }
+.intro p { margin-top: 12px; max-width: 640px; font-size: 15px; line-height: 1.55; color: var(--g1); font-weight: 400; }
+.dir { padding: 40px 0 56px; border-top: 1px solid var(--g3); }
+.dir-head { display: grid; grid-template-columns: 80px 1fr; gap: 8px 16px; padding: 0 24px 24px; max-width: 980px; }
+.dir-head .letter { font-size: 64px; font-weight: 200; line-height: .85; }
+.dir-head h2 { font-weight: 400; font-size: 22px; }
+.dir-head p { font-size: 14px; line-height: 1.55; color: var(--g1); font-weight: 400; max-width: 620px; margin-top: 6px; }
+.dir-head .src { font-family: var(--label); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--g2); margin-top: 10px; }
+.row { display: flex; gap: 28px; overflow-x: auto; padding: 0 24px 12px; scroll-snap-type: x mandatory; }
+.cell { flex: 0 0 auto; scroll-snap-align: start; }
+.cap { width: 360px; margin-top: 12px; font-size: 13px; line-height: 1.5; color: var(--g1); font-weight: 400; }
+.cap b { font-family: var(--label); font-weight: 500; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink); display: block; margin-bottom: 2px; }
+
+/* ---------- phone ---------- */
+.phone { width: 360px; height: 760px; background: var(--paper); border-radius: 44px; overflow: hidden; position: relative;
+  box-shadow: 0 0 0 9px #111, 0 30px 60px -20px rgba(0,0,0,.35); }
+.phone .scr { position: absolute; inset: 0; overflow-y: auto; scrollbar-width: none; }
+.phone .scr::-webkit-scrollbar { display: none; }
+.sb { height: 50px; display: flex; justify-content: space-between; align-items: center; padding: 6px 30px 0; font: 500 14px var(--label); flex: none; }
+.sb i { width: 64px; height: 10px; border-radius: 6px; background: var(--ink); opacity: .85; }
+
+/* shared atoms */
+.lab { font-family: var(--label); font-weight: 400; font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--g2); }
+.lab.ink { color: var(--ink); }
+.ring { display: inline-block; vertical-align: middle; }
+.ring svg { display: block; }
+.chev { font-family: var(--label); font-size: 18px; color: var(--g1); }
+.pad { padding: 0 22px; }
+
+/* ================= A · Texte courant ================= */
+.A .top { display: flex; justify-content: space-between; align-items: baseline; padding: 6px 22px 0; }
+.A .lede { font-size: 30px; line-height: 1.12; letter-spacing: -0.025em; font-weight: 300; padding: 28px 22px 0; }
+.A .lede .dim { color: var(--g3); }
+.A .lede .ring { vertical-align: -2px; margin: 0 2px; }
+.A .act { border-bottom: 1.5px solid var(--ink); padding-bottom: 1px; }
+.A .act sup { font-family: var(--label); font-size: 10px; letter-spacing: .1em; margin-left: 3px; vertical-align: 14px; }
+.A .meta { display: flex; gap: 18px; padding: 18px 22px 0; }
+.A .rule { height: 1px; background: var(--g3); margin: 26px 22px 18px; }
+.A .toc { padding: 0 22px 40px; font-size: 21px; line-height: 1.32; letter-spacing: -0.01em; }
+.A .toc span { cursor: pointer; }
+.A .toc sup { font-family: var(--label); font-size: 9.5px; letter-spacing: .05em; margin: 0 3px 0 0; vertical-align: 9px; color: var(--g2); }
+.A .toc .done { color: var(--ink); }
+.A .toc .now { color: var(--ink); background: linear-gradient(transparent 62%, var(--g4) 62%); }
+.A .toc .later { color: var(--g3); }
+.A .toc .sep { color: var(--g3); margin: 0 5px; }
+.A .books { padding: 34px 22px 0; }
+.A .book { padding: 18px 0 20px; border-top: 1px solid var(--g3); }
+.A .book .t { font-size: 38px; font-weight: 300; letter-spacing: -0.03em; line-height: 1.02; }
+.A .book .t.soon { color: var(--g3); }
+.A .book .row2 { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
+.A .hist { padding: 6px 22px 40px; }
+.A .day { padding: 16px 0; border-top: 1px solid var(--g4); display: grid; grid-template-columns: 54px 1fr; gap: 12px; }
+.A .day .d { font-size: 30px; font-weight: 200; line-height: 1; letter-spacing: -0.03em; }
+.A .day .d small { display: block; font: 400 10px var(--label); letter-spacing: .12em; text-transform: uppercase; color: var(--g2); margin-top: 4px; }
+.A .day p { font-size: 18px; line-height: 1.3; letter-spacing: -0.01em; }
+.A .day p em { font-style: normal; font-weight: 500; }
+.A .day.rest p { color: var(--g3); }
+.A .els { padding: 0 22px 40px; font-size: 20px; line-height: 1.38; letter-spacing: -0.01em; }
+.A .els div { padding: 10px 0; border-top: 1px solid var(--g4); display: grid; grid-template-columns: 28px 1fr auto; align-items: baseline; gap: 6px; }
+.A .els .n { font: 400 10px var(--label); color: var(--g2); letter-spacing: .08em; }
+.A .els .later { color: var(--g3); }
+.A .vert { position: absolute; right: 8px; top: 140px; writing-mode: vertical-rl; }
+/* drill A */
+.A .drill { display: flex; flex-direction: column; height: calc(100% - 50px); }
+.A .drill .q { font-size: 34px; line-height: 1.16; letter-spacing: -0.025em; padding: 40px 22px 0; }
+.A .blank { display: inline-block; min-width: 130px; border-bottom: 1.5px solid var(--ink); color: var(--g2); font-size: 22px; padding: 0 4px; vertical-align: 2px; }
+.A .drill .tr { padding: 16px 22px 0; font-size: 15px; color: var(--g1); font-weight: 400; }
+.A .drill .tools { display: flex; gap: 22px; padding: 22px 22px 0; }
+.A .drill .tools span { border-bottom: 1px solid var(--g3); }
+.A .drill .ans { margin: auto 22px 0; padding: 14px 0; border-top: 1px solid var(--ink); font-size: 22px; color: var(--g2); }
+.A .cta { margin: 0 22px 30px; height: 54px; border-radius: 27px; background: var(--ink); color: var(--paper); font: 400 16px var(--display); display: flex; align-items: center; justify-content: center; }
+
+/* ================= B · Affiche ================= */
+.B .spread { display: flex; justify-content: space-between; align-items: baseline; padding: 0 20px; }
+.B .huge { font-weight: 200; letter-spacing: -0.04em; line-height: .9; }
+.B .hair { height: 1px; background: var(--ink); margin: 0 20px; }
+.B .hair.g { background: var(--g3); }
+.B .grid25 { display: grid; grid-template-columns: repeat(5, 1fr); margin: 0 20px; border-left: 1px solid var(--g3); border-top: 1px solid var(--g3); }
+.B .grid25 > div { aspect-ratio: 1; border-right: 1px solid var(--g3); border-bottom: 1px solid var(--g3); padding: 6px; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; }
+.B .grid25 .n { font-size: 17px; font-weight: 300; letter-spacing: -0.02em; }
+.B .grid25 .later .n { color: var(--g3); }
+.B .grid25 .now { background: var(--ink); color: var(--paper); }
+.B .grid25 > div .ring { align-self: flex-end; }
+.B .bigtime { display: grid; grid-template-columns: 1fr auto 1fr; align-items: end; padding: 0 20px; }
+.B .bigtime .v { font-size: 92px; }
+.B .bigtime .colon { font-size: 60px; font-weight: 200; padding: 0 6px 12px; color: var(--g3); }
+.B .bigtime .r { text-align: right; }
+.B .bands .band { display: grid; grid-template-columns: 74px 1fr; padding: 18px 20px 22px; border-top: 1px solid var(--ink); gap: 4px; }
+.B .bands .band.soon { border-top-color: var(--g3); color: var(--g3); }
+.B .bands .num { font-size: 56px; }
+.B .bands .t { font-size: 24px; letter-spacing: -0.02em; line-height: 1.08; padding-top: 6px; }
+.B .bands .foot { grid-column: 2; display: flex; justify-content: space-between; align-items: center; margin-top: 18px; }
+.B .tbl { margin: 0 20px; }
+.B .tbl div { display: grid; grid-template-columns: 34px 1fr 74px; padding: 11px 0 12px; border-bottom: 1px solid var(--g3); align-items: baseline; font-size: 16px; letter-spacing: -0.01em; }
+.B .tbl .n { font: 400 11px var(--label); color: var(--g2); }
+.B .tbl .s { text-align: right; }
+.B .tbl .later { color: var(--g3); }
+.B .cal { display: grid; grid-template-columns: repeat(7, 1fr); margin: 0 20px; row-gap: 6px; }
+.B .cal .h { font: 400 10px var(--label); letter-spacing: .1em; color: var(--g2); padding-bottom: 6px; border-bottom: 1px solid var(--ink); }
+.B .cal .c { height: 58px; display: flex; align-items: flex-end; font-weight: 200; letter-spacing: -0.04em; line-height: .8; }
+.B .cal .c.e { color: var(--g3); }
+.B .cal .c.t { text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 5px; }
+.B .drill { display: flex; flex-direction: column; height: calc(100% - 50px); }
+.B .drill .q { font-size: 30px; letter-spacing: -0.025em; line-height: 1.14; padding: 0 20px; }
+.B .drill .q .bl { color: var(--g3); }
+.B .drill .ans { margin: 0 20px; padding: 16px 0; border-bottom: 1px solid var(--ink); font-size: 24px; color: var(--g3); }
+.B .cta { margin: 0 20px 30px; height: 56px; background: var(--ink); color: var(--paper); display: flex; justify-content: space-between; align-items: center; padding: 0 18px; font-size: 16px; font-weight: 400; }
+
+/* ================= C · Planche ================= */
+.C .board { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 74px; grid-auto-flow: dense; gap: 6px; padding: 0 12px 30px; }
+.C .t { background: var(--tile); padding: 10px; display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; cursor: pointer; }
+.C .t.w { background: #fff; }
+.C .t.k { background: var(--ink); color: var(--paper); }
+.C .t.k .lab { color: #9b9a96; }
+.C .t.o { background: transparent; border: 1px solid var(--g3); color: var(--g2); }
+.C .t.dash { background: transparent; border: 1px dashed var(--g3); color: var(--g3); }
+.C .t .big { font-size: 30px; font-weight: 300; letter-spacing: -0.03em; line-height: 1; }
+.C .t .mid { font-size: 19px; font-weight: 300; letter-spacing: -0.015em; line-height: 1.1; }
+.C .t .sm { font-size: 14px; font-weight: 400; line-height: 1.2; }
+.C .t .xl { font-size: 64px; font-weight: 200; letter-spacing: -0.05em; line-height: .85; }
+.C .t .br { display: flex; justify-content: space-between; align-items: flex-end; }
+.C .head { padding: 8px 14px 14px; display: flex; justify-content: space-between; align-items: baseline; }
+.C .head h3 { font-size: 26px; font-weight: 300; letter-spacing: -0.02em; }
+.c2 { grid-column: span 2; } .c3 { grid-column: span 3; } .c4 { grid-column: span 4; }
+.r2 { grid-row: span 2; } .r3 { grid-row: span 3; } .r4 { grid-row: span 4; }
+.C .bars { display: flex; gap: 2px; align-items: flex-end; height: 26px; }
+.C .bars i { flex: 1; background: currentColor; opacity: .85; }
+.C .bars i.z { opacity: .18; }
+.C .wk { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+.C .wk i { aspect-ratio: 1; background: var(--g4); display: block; }
+.C .wk i.a1 { background: var(--g3); } .C .wk i.a2 { background: var(--g2); } .C .wk i.a3 { background: var(--ink); }
+</style>
+</head>
+<body>
+
+<header class="intro">
+  <div class="lab">Carambole · étude de mise en page · 9 oct. 2026</div>
+  <h1>Trois façons de composer l’écran</h1>
+  <p>Layout only. Everything is grayscale so color doesn’t get in the way. Each direction takes one <em>structural</em> idea from the reference images: how the space is organized, not a surface effect. All three keep the circular progress ring, the light background and light grotesk type (Manrope&nbsp;300 with Familjen Grotesk labels). Each phone scrolls. Swipe the rows sideways.</p>
+</header>
+
+<!-- ======================= A ======================= -->
+<section class="dir A">
+  <div class="dir-head">
+    <div class="letter">A</div>
+    <div>
+      <h2>Texte courant: the screen is a typeset sentence</h2>
+      <p>Status and actions are written as prose and set large and light. Controls sit inside the sentence, the way the photo sits inside the type in IMG_0941. The table of contents is one continuous paragraph: color carries state (black = done or current, pale = upcoming) and the current module gets a soft highlight. It is calm and bookish, and you read it more than scan it.</p>
+      <div class="src">From IMG_0941 · image set inline with type, rhythm from one type size</div>
+    </div>
+  </div>
+  <div class="row">
+
+    <div class="cell"><div class="phone"><div class="scr">
+      <div class="sb"><span>9:41</span><i></i></div>
+      <div class="top"><span class="lab ink">Carambole</span><span class="lab">Réglages</span></div>
+      <div class="lede">Mes livres<span class="dim">, trois. Un ouvert, deux à venir.</span></div>
+      <div class="books">
+        <div class="book"><div class="t">Français —<br>Fondations</div>
+          <div class="row2"><span class="lab">25 modules · 312 éléments</span><span><span class="ring" data-p=".41" data-s="26" data-w="2.5"></span> <span class="lab ink">41 %</span></span></div></div>
+        <div class="book"><div class="t soon">Conversation</div>
+          <div class="row2"><span class="lab">Bientôt</span></div></div>
+        <div class="book"><div class="t soon">Intermédiaire</div>
+          <div class="row2"><span class="lab">Bientôt</span></div></div>
+      </div>
+      <div class="rule"></div>
+      <div class="pad" style="display:flex;justify-content:space-between;padding-bottom:40px"><span class="lab ink">Historique →</span><span class="lab">Série · 12 jours</span></div>
+    </div></div>
+    <p class="cap"><b>Bibliothèque</b>Book titles are set as big light words. Upcoming books are the same size in pale gray, so the shelf reads as one line of type, not cards.</p></div>
+
+    <div class="cell"><div class="phone"><div class="scr">
+      <div class="sb"><span>9:41</span><i></i></div>
+      <div class="top"><span class="chev">‹</span><span class="lab">Fondations</span><span class="lab">Réglages</span></div>
+      <div class="lede">Aujourd’hui, <span class="act">8 nouveaux<sup>Apprendre</sup></span> et <span class="act">14 à revoir<sup>Réviser</sup></span>. Le livre est à <span class="ring" data-p=".41" data-s="28" data-w="3"></span>&nbsp;41&nbsp;%<span class="dim">, fini vers le 22 déc.</span></div>
+      <div class="meta"><span class="lab ink">128 maîtrisés</span><span class="lab">46 en cours</span><span class="lab">3 fragiles</span></div>
+      <div class="rule"></div>
+      <div class="toc" id="a-toc"></div>
+    </div></div>
+    <p class="cap"><b>Livre</b>The two study actions are underlined phrases in the opening sentence. The ring sits in the text like a word. All 25 modules flow as one paragraph with superscript numbers. In SwiftUI this needs a custom flow <code>Layout</code>, which is straightforward.</p></div>
+
+    <div class="cell"><div class="phone"><div class="scr">
+      <div class="sb"><span>9:41</span><i></i></div>
+      <div class="top"><span class="chev">‹</span><span class="lab">Module 12 / 25</span><span></span></div>
+      <div class="lede">Le futur proche<span class="dim">: aller + infinitif. Trois maîtrisés, deux en cours, trois à venir.</span></div>
+      <div class="meta"><span class="ring" data-p=".52" data-s="22" data-w="2.5"></span><span class="lab ink" style="align-self:center">Commencer ce module</span></div>
+      <div class="rule"></div>
+      <div class="els" id="a-els"></div>
+    </div></div>
+    <p class="cap"><b>Module</b>The header is one sentence that already contains the counts. The elements below form a quiet indexed list (number, label, state in words), so swipe-to-demote still has rows to act on.</p></div>
+
+    <div class="cell"><div class="phone"><div class="scr">
+      <div class="sb"><span>9:41</span><i></i></div>
+      <div class="top"><span class="chev">‹</span><span class="lab">Historique</span><span></span></div>
+      <div class="lede">Octobre<span class="dim">: 61 appris, 148 révisés, un jour de pause.</span></div>
+      <div class="rule"></div>
+      <div class="hist" id="a-hist"></div>
+    </div></div>
+    <p class="cap"><b>Historique</b>Each day is written as a short line of prose instead of a chart. Rest days stay in the list, in pale gray. The day numbers are large and thin, like a diary margin.</p></div>
+
+    <div class="cell"><div class="phone"><div class="scr">
+      <div class="sb"><span>9:41</span><i></i></div>
+      <div class="drill">
+        <div class="top"><span class="chev">✕</span><span class="lab">Futur proche · 4 / 12</span><span class="ring" data-p=".33" data-s="30" data-w="3"></span></div>
+        <div class="q">Demain, nous <span class="blank">partir</span> à Lyon.</div>
+        <div class="tr">“Tomorrow we’re going to leave for Lyon.”</div>
+        <div class="tools"><span class="lab ink">Écouter</span><span class="lab ink">Indice</span></div>
+        <div class="ans">nous allons partir</div>
+        <div class="cta" style="margin-top:16px">Vérifier</div>
+      </div>
+    </div></div>
+    <p class="cap"><b>Exercice</b>Standardized: ring top-right, answer and button fixed at the bottom. The only change is that the blank sits inside the large sentence.</p></div>
+
+  </div>
+</section>
+
+<!-- ======================= B ======================= -->
+<section class="dir B">
+  <div class="dir-head">
+    <div class="letter">B</div>
+    <div>
+      <h2>Affiche: a poster grid locked to the edges</h2>
+      <p>The data is spread across the full width and pinned to the left and right margins, like “13&nbsp;&nbsp;12&nbsp;&nbsp;25” and “19&nbsp;:&nbsp;00&nbsp;Uhr” in IMG_0942. Today’s numbers become the poster: <em>8 : 14</em>. The 25 modules form a 5×5 matrix with a small ring in each cell, so the whole book is visible at once and the current module is the single black square. Strict, Swiss, and highly scannable.</p>
+      <div class="src">From IMG_0942 · justified numerals, hard rules, one big figure per screen</div>
+    </div>
+  </div>
+  <div class="row">
+
+    <div class="cell"><div class="phone"><div class="scr">
+      <div class="sb"><span>9:41</span><i></i></div>
+      <div class="spread" style="padding-top:8px"><span class="lab ink">Mes</span><span class="lab ink">livres</span><span class="lab ink">03</span></div>
+      <div class="spread" style="padding:30px 20px 26px"><span class="huge" style="font-size:96px">41</span><span class="ring" data-p=".41" data-s="84" data-w="5"></span></div>
+      <div class="bands">
+        <div class="band"><span class="num huge">01</span><div class="t">Français —<br>Fondations</div>
+          <div class="foot"><span class="lab">25 mod.</span><span class="lab">312 él.</span><span class="lab ink">Ouvrir →</span></div></div>
+        <div class="band soon"><span class="num huge">02</span><div class="t">Conversation</div>
+          <div class="foot"><span class="lab">Bientôt</span></div></div>
+        <div class="band soon"><span class="num huge">03</span><div class="t">Intermédiaire</div>
+          <div class="foot"><span class="lab">Bientôt</span></div></div>
+      </div>
+    </div></div>
+    <p class="cap"><b>Bibliothèque</b>Books are numbered bands separated by hard rules. The big 41 is the active book’s progress, set as a poster numeral beside its ring.</p></div>
+
+    <div class="cell"><div class="phone"><div class="scr">
+      <div class="sb"><span>9:41</span><i></i></div>
+      <div class="spread" style="padding-top:8px"><span class="chev">‹</span><span class="lab ink">Fondations</span><span class="lab">Réglages</span></div>
+      <div class="spread" style="padding-top:26px"><span class="lab">Maîtrisé</span><span class="lab">En cours</span><span class="lab">Fin</span></div>
+      <div class="spread" style="padding-top:4px;font-size:22px;letter-spacing:-0.02em"><span>128/312</span><span>46</span><span>~22.12</span></div>
+      <div class="spread" style="padding:22px 20px 22px;align-items:center">
+        <span class="ring" data-p=".41" data-s="120" data-w="6"></span>
+        <span class="huge" style="font-size:88px">41<span style="font-size:36px;color:var(--g2)">%</span></span>
+      </div>
+      <div class="hair"></div>
+      <div class="spread" style="padding-top:10px"><span class="lab ink">Apprendre</span><span class="lab">Aujourd’hui</span><span class="lab ink">Réviser</span></div>
+      <div class="bigtime"><span class="v huge">8</span><span class="colon">:</span><span class="v huge r">14</span></div>
+      <div class="spread" style="padding:6px 20px 26px"><span class="lab">nouveaux →</span><span class="lab">← à revoir · 3 fragiles</span></div>
+      <div class="hair g" style="margin-bottom:12px"></div>
+      <div class="spread" style="padding-bottom:10px"><span class="lab ink">Modules</span><span class="lab">01 — 25</span></div>
+      <div class="grid25" id="b-grid"></div>
+      <div style="height:40px"></div>
+    </div></div>
+    <p class="cap"><b>Livre</b>The page reads top to bottom like a poster: stats strip, ring with its numeral, then today as “8 : 14” with Apprendre and Réviser pinned to the two edges. The grid shows the whole book without scrolling a long list.</p></div>
+
+    <div class="cell"><div class="phone"><div class="scr">
+      <div class="sb"><span>9:41</span><i></i></div>
+      <div class="spread" style="padding-top:8px"><span class="chev">‹</span><span class="lab">Module</span><span class="lab ink">12 / 25</span></div>
+      <div class="spread" style="padding:22px 20px 0;align-items:flex-end">
+        <span class="huge" style="font-size:150px">12</span>
+        <span class="ring" data-p=".52" data-s="64" data-w="4" style="margin-bottom:14px"></span>
+      </div>
+      <div style="padding:10px 20px 22px;font-size:30px;letter-spacing:-0.025em;line-height:1.08">Le futur<br>proche</div>
+      <div class="hair"></div>
+      <div class="spread" style="padding:8px 20px"><span class="lab">N°</span><span class="lab">Élément</span><span class="lab">État</span></div>
+      <div class="tbl" id="b-tbl"></div>
+      <div style="height:40px"></div>
+    </div></div>
+    <p class="cap"><b>Module</b>The module number is the figure: very large, light, flush left, with the ring answering it on the right. Elements sit below in a ruled table with three fixed columns.</p></div>
+
+    <div class="cell"><div class="phone"><div class="scr">
+      <div class="sb"><span>9:41</span><i></i></div>
+      <div class="spread" style="padding-top:8px"><span class="chev">‹</span><span class="lab ink">Historique</span><span class="lab">2026</span></div>
+      <div class="spread" style="padding:24px 20px 4px;align-items:flex-end"><span class="huge" style="font-size:64px">10</span><span style="font-size:22px;letter-spacing:-0.02em">Octobre</span></div>
+      <div class="spread" style="padding:0 20px 18px"><span class="lab">61 appris</span><span class="lab">148 révisés</span><span class="lab">8/9 jours</span></div>
+      <div class="cal" id="b-cal"></div>
+      <div class="hair g" style="margin-top:22px"></div>
+      <div class="spread" style="padding:10px 20px 40px"><span class="lab">Taille du chiffre = activité du jour</span></div>
+    </div></div>
+    <p class="cap"><b>Historique</b>A month calendar where each date’s numeral grows with that day’s activity. It is a chart made only of type, with no bars or dots.</p></div>
+
+    <div class="cell"><div class="phone"><div class="scr">
+      <div class="sb"><span>9:41</span><i></i></div>
+      <div class="drill">
+        <div class="spread" style="padding-top:8px;align-items:center"><span class="chev">✕</span><span class="lab">Futur proche</span><span class="ring" data-p=".33" data-s="30" data-w="3"></span></div>
+        <div class="spread" style="padding-top:22px"><span class="huge" style="font-size:44px">04</span><span class="huge" style="font-size:44px;color:var(--g3)">/12</span></div>
+        <div class="hair" style="margin:14px 20px 26px"></div>
+        <div class="q">Demain, nous <span class="bl">____</span> (partir) à Lyon.</div>
+        <div class="spread" style="padding-top:14px"><span class="lab">Tomorrow we’re going to leave for Lyon.</span></div>
+        <div class="spread" style="padding-top:22px"><span class="lab ink">Écouter</span><span class="lab ink">Indice</span></div>
+        <div style="flex:1"></div>
+        <div class="spread" style="padding-bottom:4px"><span class="lab">Votre réponse</span></div>
+        <div class="ans">nous allons partir</div>
+        <div class="cta" style="margin-top:16px"><span>Vérifier</span><span>→</span></div>
+      </div>
+    </div></div>
+    <p class="cap"><b>Exercice</b>Same fixed skeleton as A. The counter is a justified pair of numerals and the rules match the book page.</p></div>
+
+  </div>
+</section>
+
+<!-- ======================= C ======================= -->
+<section class="dir C">
+  <div class="dir-head">
+    <div class="letter">C</div>
+    <div>
+      <h2>Planche: a pinned-up board of unequal pieces</h2>
+      <p>Each screen is a board of flat rectangles of different sizes and densities (black, white, pale gray, outline only), packed on a 4-column grid with tight gutters, like the moodboard in IMG_0940. Size carries importance: today’s session is the biggest piece, the current module is bigger than finished ones, and upcoming content is only an outline. Nothing overlaps.</p>
+      <div class="src">From IMG_0940 · collage of mixed scale and density, hierarchy through area</div>
+    </div>
+  </div>
+  <div class="row">
+
+    <div class="cell"><div class="phone"><div class="scr">
+      <div class="sb"><span>9:41</span><i></i></div>
+      <div class="head"><h3>Mes livres</h3><span class="lab">Réglages</span></div>
+      <div class="board">
+        <div class="t k c3 r4"><span class="lab">01 · Grammaire</span>
+          <div class="big" style="font-size:40px">Français —<br>Fondations</div>
+          <div class="br"><span class="lab">25 modules · 312 él.</span><span class="ring" data-p=".41" data-s="56" data-w="4" data-inv="1"></span></div></div>
+        <div class="t w r2"><span class="lab">%</span><span class="big">41</span></div>
+        <div class="t r2"><span class="lab">Série</span><span class="big">12<span style="font-size:13px"> j</span></span></div>
+        <div class="t o c2 r2"><span class="lab">02</span><span class="mid">Conversation</span><span class="lab">Bientôt</span></div>
+        <div class="t dash c2 r2"><span class="lab">03</span><span class="mid">Intermédiaire</span><span class="lab">Bientôt</span></div>
+        <div class="t w c4 r2"><div class="br"><span class="lab ink">Historique</span><span class="lab">14 derniers jours</span></div><div class="bars" id="c-bars1"></div></div>
+      </div>
+    </div></div>
+    <p class="cap"><b>Bibliothèque</b>The open book is a large black piece. Small stat pieces sit beside it, upcoming books are outlines and history is a wide strip. One glance shows what is alive and what isn’t.</p></div>
+
+    <div class="cell"><div class="phone"><div class="scr">
+      <div class="sb"><span>9:41</span><i></i></div>
+      <div class="head"><h3><span class="chev">‹</span> Fondations</h3><span class="lab">Réglages</span></div>
+      <div class="board" id="c-book" style="padding-bottom:18px">
+        <div class="t k c2 r3"><span class="lab">Apprendre</span><span class="xl">8</span><span class="sm">nouveaux →</span></div>
+        <div class="t w c2 r2"><span class="lab">Réviser</span><div class="br"><span class="big" style="font-size:44px">14</span><span class="sm">→</span></div></div>
+        <div class="t o"><span class="lab">Fragiles</span><span class="mid">3</span></div>
+        <div class="t"><span class="lab">Fin</span><span class="sm">~22 déc.</span></div>
+        <div class="t w c4 r2" style="flex-direction:row;align-items:center;gap:16px;justify-content:flex-start"><span class="ring" data-p=".41" data-s="96" data-w="5"></span><div><div class="big" style="font-size:40px">41 %</div><div class="lab" style="margin-top:6px">128 maîtrisés · 46 en cours</div></div></div>
+      </div>
+    </div></div>
+    <p class="cap"><b>Livre</b>Apprendre is the dominant black piece and Réviser the white one next to it. Below, modules are packed by status: the current module is a wide piece, finished modules are small pale chips and upcoming modules are outlines.</p></div>
+
+    <div class="cell"><div class="phone"><div class="scr">
+      <div class="sb"><span>9:41</span><i></i></div>
+      <div class="head"><h3><span class="chev">‹</span> Module 12</h3><span class="lab">8 éléments</span></div>
+      <div class="board" id="c-mod">
+        <div class="t w c3 r2"><span class="lab">Futur proche</span><span class="big">aller + infinitif</span></div>
+        <div class="t k r2" style="align-items:center;justify-content:center"><span class="ring" data-p=".52" data-s="52" data-w="4" data-inv="1"></span></div>
+      </div>
+    </div></div>
+    <p class="cap"><b>Module</b>Elements become pieces: mastered ones are filled, in-progress ones white and upcoming ones dashed. The mix of widths comes from label length, so the board looks different in every module.</p></div>
+
+    <div class="cell"><div class="phone"><div class="scr">
+      <div class="sb"><span>9:41</span><i></i></div>
+      <div class="head"><h3><span class="chev">‹</span> Historique</h3><span class="lab">Oct. 2026</span></div>
+      <div class="board">
+        <div class="t k c2 r2"><span class="lab">Appris</span><span class="xl" style="font-size:52px">61</span></div>
+        <div class="t w c2 r2"><span class="lab">Révisés</span><span class="xl" style="font-size:52px">148</span></div>
+        <div class="t w c4 r4"><div class="br"><span class="lab ink">Semaines</span><span class="lab">L M M J V S D</span></div><div class="wk" id="c-wk"></div></div>
+        <div class="t c3"><span class="lab">Aujourd’hui · ven. 9</span><span class="sm">6 appris · 12 révisés</span></div>
+        <div class="t o"><span class="lab">Série</span><span class="sm">12 j</span></div>
+        <div class="t c2"><span class="lab">Jeu. 8</span><span class="sm">8 · 21</span></div>
+        <div class="t c2"><span class="lab">Mer. 7</span><span class="sm">7 · 17</span></div>
+        <div class="t dash c4"><span class="lab">Mar. 6 · pause</span></div>
+      </div>
+    </div></div>
+    <p class="cap"><b>Historique</b>Two totals as large pieces, a block-calendar piece, then recent days as chips. Rest days become dashed outlines.</p></div>
+
+    <div class="cell"><div class="phone"><div class="scr">
+      <div class="sb"><span>9:41</span><i></i></div>
+      <div class="head"><h3 style="font-size:16px"><span class="chev">✕</span>&nbsp; Futur proche</h3><span class="ring" data-p=".33" data-s="30" data-w="3"></span></div>
+      <div class="board" style="grid-auto-rows:70px">
+        <div class="t w c4 r3"><span class="lab">04 / 12 · complète</span><span class="big" style="font-size:30px;line-height:1.15">Demain, nous ____ (partir) à Lyon.</span><span class="sm" style="color:var(--g2)">Tomorrow we’re going to leave for Lyon.</span></div>
+        <div class="t c2"><span class="lab">Écouter</span><span class="sm">▶</span></div>
+        <div class="t o c2"><span class="lab">Indice</span><span class="sm">aller + inf.</span></div>
+        <div class="t w c4 r2"><span class="lab">Votre réponse</span><span class="mid" style="color:var(--g2)">nous allons partir</span></div>
+        <div class="t k c4" style="justify-content:center;align-items:center;flex-direction:row;gap:8px"><span class="sm">Vérifier</span></div>
+      </div>
+    </div></div>
+    <p class="cap"><b>Exercice</b>The same fixed order (prompt, tools, answer, button) built from board pieces, so the drill feels part of the system without moving controls around.</p></div>
+
+  </div>
+</section>
+
+<script>
+const ink = "#141414", g3 = "#c8c7c3", g4 = "#e6e5e1";
+function ringSVG(p, s, w, inv) {
+  const r = (s - w) / 2, c = 2 * Math.PI * r;
+  const track = inv ? "#3a3a3a" : g3, fg = inv ? "#f8f7f4" : ink;
+  return `<svg width="${s}" height="${s}" viewBox="0 0 ${s} ${s}" role="img" aria-label="${Math.round(p*100)} %">
+    <circle cx="${s/2}" cy="${s/2}" r="${r}" fill="none" stroke="${track}" stroke-width="${w}"/>
+    <circle cx="${s/2}" cy="${s/2}" r="${r}" fill="none" stroke="${fg}" stroke-width="${w}" stroke-linecap="round"
+      stroke-dasharray="${c*p} ${c}" transform="rotate(-90 ${s/2} ${s/2})"/></svg>`;
+}
+
+const modules = ["Noms, articles et genre","Pronoms sujets et être","Avoir et il y a","Verbes en -ER (présent)","La négation (ne… pas)","Poser des questions","Les adjectifs : accord et place","Les adjectifs possessifs","Verbes en -IR et -RE (présent)","Prépositions et contractions","Pluriels et partitif","Le futur proche","Le passé composé avec avoir","Le passé composé avec être","Les verbes pronominaux","L’imparfait","Pronoms compléments","Les pronoms y et en","Comparatif et superlatif","L’impératif","Le futur simple","Le conditionnel présent","Les pronoms relatifs","Le subjonctif présent","Les phrases avec si"];
+const prog = modules.map((_, i) => i < 9 ? 1 : i === 9 ? .82 : i === 10 ? .64 : i === 11 ? .52 : i === 12 ? .1 : 0);
+const state = i => prog[i] === 1 ? "done" : i === 11 ? "now" : prog[i] > 0 ? "done" : "later";
+
+const els = [["aller au présent","Maîtrisé",2],["aller + infinitif","Maîtrisé",2],["Négation : ne va pas + inf.","Maîtrisé",2],["Questions au futur proche","En cours",1],["Pronoms avant l’infinitif","En cours",1],["Pronominaux au futur proche","À venir",0],["Expressions : demain, ce soir…","À venir",0],["Futur proche ou présent ?","À venir",0]];
+
+// A · TOC as run-on paragraph
+document.getElementById("a-toc").innerHTML = modules.map((m, i) =>
+  `<span class="${state(i)}"><sup>${String(i+1).padStart(2,"0")}</sup>${m}</span>`).join('<span class="sep">/</span>');
+document.getElementById("a-els").innerHTML = els.map((e, i) =>
+  `<div class="${e[2] ? "" : "later"}"><span class="n">${String(i+1).padStart(2,"0")}</span><span>${e[0]}</span><span class="lab ${e[2]===2?"ink":""}">${e[1]}</span></div>`).join("");
+
+const days = [[9,"Ven.",6,12],[8,"Jeu.",8,21],[7,"Mer.",7,17],[6,"Mar.",0,0],[5,"Lun.",9,24],[4,"Dim.",5,11],[3,"Sam.",10,19],[2,"Ven.",8,22],[1,"Jeu.",8,22]];
+document.getElementById("a-hist").innerHTML = days.map(d => d[2] === 0
+  ? `<div class="day rest"><div class="d">${d[0]}<small>${d[1]}</small></div><p>Pause. Rien de prévu ce jour-là.</p></div>`
+  : `<div class="day"><div class="d">${d[0]}<small>${d[1]}</small></div><p><em>${d[2]}</em> appris, <em>${d[3]}</em> révisés${d[0]===9?" — pour l’instant.":"."}</p></div>`).join("");
+
+// B · 5×5 module grid
+document.getElementById("b-grid").innerHTML = modules.map((m, i) => {
+  const cls = i === 11 ? "now" : prog[i] === 0 ? "later" : "";
+  const ring = prog[i] > 0 ? ringSVG(prog[i], 16, 2, i === 11) : "";
+  return `<div class="${cls}" title="${m}"><span class="n">${String(i+1).padStart(2,"0")}</span><span class="ring">${ring}</span></div>`;
+}).join("");
+document.getElementById("b-tbl").innerHTML = els.map((e, i) =>
+  `<div class="${e[2] ? "" : "later"}"><span class="n">${String(i+1).padStart(2,"0")}</span><span>${e[0]}</span><span class="s lab ${e[2]===2?"ink":""}">${e[1]}</span></div>`).join("");
+// Oct 2026 starts on Thursday
+const act = {1:30,2:30,3:29,4:16,5:33,6:0,7:24,8:29,9:18};
+let cal = ["L","M","M","J","V","S","D"].map(h => `<div class="h">${h}</div>`).join("");
+cal += "<div></div>".repeat(3);
+for (let d = 1; d <= 31; d++) {
+  const a = act[d];
+  const size = a === undefined ? 15 : a === 0 ? 15 : 18 + a * 1.15;
+  const cls = a === undefined || a === 0 ? "c e" : d === 9 ? "c t" : "c";
+  cal += `<div class="${cls}" style="font-size:${size}px">${d}</div>`;
+}
+document.getElementById("b-cal").innerHTML = cal;
+
+// C · boards
+const barVals = [12,22,18,30,0,25,28,30,30,29,16,33,0,24,29,18].slice(-14);
+const mx = Math.max(...barVals);
+document.getElementById("c-bars1").innerHTML = barVals.map(v => `<i class="${v?"":"z"}" style="height:${v ? Math.max(15, v/mx*100) : 8}%"></i>`).join("");
+
+const cb = document.getElementById("c-book");
+cb.insertAdjacentHTML("afterend", `<div class="head" style="padding-top:0"><span class="lab ink">Modules</span><span class="lab">01 — 25</span></div><div class="board" id="c-book2"></div>`);
+let html = "";
+html += `<div class="t k c4 r2"><div class="br"><span class="lab">12 · en cours</span>${ringSVG(.52, 26, 2.5, true)}</div><span class="big" style="font-size:26px">Le futur proche</span></div>`;
+[[9,.82],[10,.64],[12,.1]].forEach(([i, p]) => {
+  html += `<div class="t w c2 r2"><div class="br"><span class="lab">${String(i+1).padStart(2,"0")}</span>${ringSVG(p, 20, 2)}</div><span class="sm">${modules[i]}</span></div>`;
+});
+for (let i = 0; i < 9; i++) html += `<div class="t"><div class="br"><span class="lab">${String(i+1).padStart(2,"0")}</span>${ringSVG(1, 14, 2)}</div><span class="sm" style="font-size:11.5px">${modules[i].split(" ").slice(0,2).join(" ")}</span></div>`;
+html += `<div class="t c3" style="background:none;padding:6px 2px"><span class="lab">Maîtrisés · 9</span></div>`;
+for (let i = 13; i < 25; i++) html += `<div class="t dash ${i % 5 === 0 ? "c2" : ""}"><span class="lab">${String(i+1).padStart(2,"0")}</span><span class="sm" style="font-size:11.5px">${modules[i].replace(/^(Le |La |Les |L’)/,"").split(" ").slice(0,2).join(" ")}</span></div>`;
+document.getElementById("c-book2").innerHTML = html;
+
+const cm = document.getElementById("c-mod");
+cm.insertAdjacentHTML("beforeend", els.map((e, i) => {
+  const span = e[0].length > 18 ? "c4" : "c2";
+  const cls = e[2] === 2 ? "" : e[2] === 1 ? "w" : "dash";
+  const rows = "";
+  return `<div class="t ${cls} ${span} ${rows}"><div class="br"><span class="lab">${String(i+1).padStart(2,"0")}</span><span class="lab">${e[1]}</span></div><span class="mid">${e[0]}</span></div>`;
+}).join("") + `<div class="t c4" style="background:none;padding:8px 2px"><span class="lab">Glisse un élément maîtrisé vers la gauche pour le remettre en cours.</span></div>`);
+
+// Oct weeks: blank Mon–Wed, then days 1–31
+const wk = document.getElementById("c-wk");
+let w = "<i style='background:none'></i>".repeat(3);
+for (let d = 1; d <= 31; d++) {
+  const a = act[d];
+  const lv = a === undefined ? "" : a === 0 ? "" : a < 20 ? "a1" : a < 28 ? "a2" : "a3";
+  w += `<i class="${lv}"></i>`;
+}
+wk.innerHTML = w;
+
+document.querySelectorAll(".ring[data-p]").forEach(el => {
+  el.innerHTML = ringSVG(+el.dataset.p, +el.dataset.s, +(el.dataset.w || 3), el.dataset.inv === "1");
+});
+</script>
+</body>
+</html>
