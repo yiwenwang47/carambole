@@ -67,7 +67,7 @@ enum AppPalette: String, CaseIterable, Identifiable {
                 tokenNew: "CFC3FF", tokenReview: "D7EBA8", fragile: "6E56E8",
                 tileOn: "EAF2D6", buttonCount: "D7EBA8", ring: "9CC94A",
                 star: .iris, starArc: "141414", starArcSoft: "CFC3FF",
-                starBead: "BCDC6E", starTrack: "D7EBA8",
+                starBead: "141414", starTrack: "D7EBA8",
                 ribbonFront: "ECE8FB", ribbonBack: "C9E39A",
                 soonFront: "E1F0BE", soonBack: "DBD2FF",
                 buttonFill: "D9E6BC", quietFill: "D9D3EE", tint: "F2EFFF",
