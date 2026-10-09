@@ -76,12 +76,12 @@ struct LibraryRibbonGeometry: Hashable {
     static let k: Float = 0.0076
     /// Mesh samples per point of spine.
     static let samplesPerPoint: Float = 1 / 1.2
-    /// Link widths (world units): pinch at the ends, started belly 0.48…0.62
-    /// (≈ 63…82 pt), book-to-come belly 0.40 (≈ 53 pt).
+    /// Link widths (world units): pinch at the ends, started belly 0.62…0.78
+    /// (≈ 82…103 pt), book-to-come belly 0.52 (≈ 68 pt).
     static let pinch: Float = 0.03
-    static let startedBase: Float = 0.48
-    static let startedGain: Float = 0.14
-    static let toComeBelly: Float = 0.40
+    static let startedBase: Float = 0.62
+    static let startedGain: Float = 0.16
+    static let toComeBelly: Float = 0.52
     /// Fraction of a link spent opening from the pinch to the belly, and the
     /// flat neck (points) either side of a boundary where the paper twists.
     static let shoulder: Float = 0.2
@@ -90,17 +90,18 @@ struct LibraryRibbonGeometry: Hashable {
     /// the paper starts turning on the shoulders and catches grey light there.
     static let twistHalf: Float = 28
     /// Roll (radians) inside a link, so links tilt toward or away from the key.
-    static let roll: Float = 0.55
+    static let roll: Float = 0.7
     /// Cross-width curl: the paper bows by `curl · half` mid-width, so light
     /// grades from edge to edge instead of shading one flat colour.
-    static let curl: Float = 0.2
+    static let curl: Float = 0.6
     /// Mesh columns across the width (curl needs more than the 2 edges).
     static let columns = 10
 
     /// Content height the ribbon (and the shelf) occupy.
     var contentHeight: Float { Self.top(ofStretch: stretches.count) + Self.tail }
-    /// Ribbon axis x: 268 of the prototype's 360, kept as a right margin.
-    var axisX: Float { viewWidth - 92 }
+    /// Ribbon axis x: 84 pt in from the right edge (the prototype had 92 of
+    /// 360; nudged right so the wider links clear the titles).
+    var axisX: Float { viewWidth - 84 }
 
     /// Top y of link `i` (points); `i == count` is the end of the ribbon.
     static func top(ofStretch i: Int) -> Float { start + Float(i) * step }
@@ -342,17 +343,17 @@ struct LibraryRibbonScene: View {
             camera.position = [0, 0, 10]
             content.add(camera)
 
-            // Key light (prototype DirectionalLight at (-2, 4, 5)), soft enough that
-            // white paper facing the camera stays just under full white.
+            // Key light (prototype DirectionalLight at (-2, 4, 5)): paper facing
+            // the camera stays near white, paper turned away greys strongly.
             let key = DirectionalLight()
-            key.light.intensity = 650
+            key.light.intensity = 1000
             key.look(at: .zero, from: [-2, 4, 5], relativeTo: nil)
             content.add(key)
 
             // Soft fill from below-front (stands in for the prototype's
             // hemisphere ground colour) so turned paper greys, never blacks.
             let fill = DirectionalLight()
-            fill.light.intensity = 250
+            fill.light.intensity = 120
             fill.look(at: .zero, from: [1, -3, 4], relativeTo: nil)
             content.add(fill)
 
@@ -387,8 +388,9 @@ struct LibraryRibbonScene: View {
     }
 
     /// Two-sided paper: white front, grey back, lit by a soft key + fill so it
-    /// shades like the 05 ribbon. A little self-light keeps shadowed folds
-    /// paper, not black; books to come get more of it, so they read paler.
+    /// shades like the 05 ribbon (no self-light on a started book, so the
+    /// folds read strongly). Books to come get a little self-light, so they
+    /// read paler.
     private static func paper(white: Bool, live: Bool) -> PhysicallyBasedMaterial {
         var m = PhysicallyBasedMaterial()
         // Back = the 05 prototype's 0x8d8d8a paper grey.
@@ -401,7 +403,7 @@ struct LibraryRibbonScene: View {
         // Books to come: same paper, lit more by itself, so their shading
         // (and grey back) is fainter. Opaque on purpose: RealityKit's
         // transparent blending flattened the lighting to plain white.
-        m.emissiveIntensity = live ? 0.15 : 0.35
+        m.emissiveIntensity = live ? 0 : 0.1
         return m
     }
 }
@@ -415,7 +417,7 @@ extension LibraryRibbonGeometry {
         let g = LibraryRibbonGeometry(stretches: [.started(busy), .started(Array(repeating: 0, count: 30)), .toCome],
                                       viewWidth: 360)
         assert(g.contentHeight == 236 + 3 * 200 + 110, "one 200 pt link per book")
-        assert(abs(g.wx(g.axisX) - (268 - 180) * k) < 1e-5, "axis at 268 of 360")
+        assert(abs(g.wx(g.axisX) - (276 - 180) * k) < 1e-5, "axis 84 pt from the right")
         // Links pinch at every book boundary and bulge mid-book.
         for i in 0...3 {
             let y = top(ofStretch: i) + (i == 3 ? -1e-3 : 0)
