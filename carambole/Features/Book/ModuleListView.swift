@@ -5,7 +5,7 @@
 //  The book's table of contents: the 25 modules as quiet numbered rows in the
 //  motion.html edge-type language. Tapping a row opens that module's 02
 //  Cinétique page (`ModuleDetailView`). Reached from the book home's bottom
-//  line or a swipe up. (Replaces the dropped 06 Tranches stack.)
+//  line (`25 modules →`). (Replaces the dropped 06 Tranches stack.)
 //
 
 import SwiftUI

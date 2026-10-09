@@ -108,8 +108,8 @@ real browser. Concepts on the page now: **01 Objet, 02 Cinétique, 03 Gravité,
 |---|---|---|---|
 | Tokens/fonts | — | `DesignSystem/DesignSystem.swift` (grayscale `AppColor`, `Font.display(size:wght:)`, `Font.label`, `.uppercaseLabel(color)`), `Resources/Fonts/` (Manrope + Familjen variable TTF + OFL), `PrimaryButtonStyle` (54pt black pill), `ProgressRing` (ink/g3), `WaveText` (one-shot wght wave), `LoopWaveText` (02 continuous wave) | done |
 | Drill | 07 Aimants | `Features/Drill/MagnetBoard.swift` (tiles, matchedGeometry by bank index, weld + wave, shake + dashed, `FlowLayout`), `TokenBuilderView`/`ChoiceView` (thin wrappers), `TypeAnswerView`, `DrillView`, `DrillSessionView` (top bar ✕ · ‹ label › · ring) | done, user has seen it |
-| Book home | 01 Objet | `Features/Book/BookView.swift`, `ObjetStarView.swift`, `DesignSystem/CaramboleStarMesh.swift` (RealityKit extruded star, orbit-ring meshes, studio IBL) | done; bottom line `Glisser vers le haut · 25 modules ↑` enlarged to 17pt at user request |
-| Module list | (replaces dropped 06 Tranches) | `Features/Book/ModuleListView.swift` — numbered rows, status `x / 20` · `Maîtrisé` · `Verrouillé`; pushed from book-home bottom line / swipe up | done |
+| Book home | 01 Objet | `Features/Book/BookView.swift`, `ObjetStarView.swift`, `DesignSystem/CaramboleStarMesh.swift` (RealityKit extruded star, orbit-ring meshes, studio IBL) | done; bottom line `25 modules →` (17pt) is the ONLY way to the module list — swipe-up removed at user request (2026-10-09); `fait :` line Familjen 14/650 ink |
+| Module list | (replaces dropped 06 Tranches) | `Features/Book/ModuleListView.swift` — numbered rows, status `x / 20` · `Maîtrisé` · `Verrouillé`; pushed from the book-home bottom line only | done |
 | Module page | 02 Cinétique | `Features/Book/ModuleDetailView.swift` (signature `ModuleDetailView(module:viewModel:)` kept) | done |
 | Today | 03 Gravité | `Features/Today/TodayView.swift`, `TokenPileScene.swift` (SpriteKit) — opened from book home `fait : … →` | done |
 | History | 09 Liste | `Features/History/HistoryView.swift` (3D ribbon removed; `RibbonView.swift` deleted) | done (session 2) |
@@ -118,8 +118,8 @@ real browser. Concepts on the page now: **01 Objet, 02 Cinétique, 03 Gravité,
 
 Navigation now: Library → Fondations → book home (01).
 From 01: `Apprendre →` / `← Réviser` start sessions · `Réglages` sheet ·
-`fait : … →` → Aujourd'hui (03) → `Historique →` → History · bottom line /
-swipe up → module list → row → Cinétique (02) → `Apprendre` pill.
+`fait : … →` → Aujourd'hui (03) → `Historique →` → History · bottom line
+`25 modules →` → module list → row → Cinétique (02) → `Apprendre` pill.
 
 Every control in the plan's inventory survived (Trop facile + pending/Annuler,
 Indice, Écouter, auto-speak, chevrons, carousel swipe, compact mode, review mode,
@@ -229,7 +229,7 @@ rAF loops).
 
 ## Still open / unverified
 
-- No gesture was ever tapped (automation can't tap): star drag/inertia, swipe-up,
+- No gesture was ever tapped (automation can't tap): star drag/inertia,
   magnets spring/weld/shake, Gravité throw/Secouer/tilt, swipe-to-demote,
   ticker, edge swipe-backs. The user is testing these by hand.
 - Chrome star looks flat mid-grey in the simulator (`intensityExponent` in

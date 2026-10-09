@@ -16,9 +16,9 @@
 //    8                                       14
 //    Apprendre →                      ← Réviser
 //                                     Tour · 20
-//          Glisser vers le haut · 25 modules
+//                  25 modules →
 //
-//  Swipe up (or tap the bottom line) opens the module list (`ModuleListView`);
+//  Tapping the bottom line (only) opens the module list (`ModuleListView`);
 //  a row there opens the module's 02 Cinétique page.
 //  Positions are motion.html's 360×760 px read as points: the top block hangs
 //  from the safe area (prototype status bar = 50 px), the bottom block from the
@@ -77,8 +77,7 @@ struct BookView: View {
             }
             .opacity(revealed ? 1 : 0)
             .contentShape(Rectangle())
-            .gesture(dragGesture(height: geo.size.height + geo.safeAreaInsets.top + geo.safeAreaInsets.bottom,
-                                 safeTop: geo.safeAreaInsets.top))
+            .gesture(dragGesture)
         }
         .onAppear {
             viewModel.load()
@@ -221,7 +220,7 @@ struct BookView: View {
         return "Continue quelques jours pour estimer la durée."
     }
 
-    // MARK: - Bottom block (fait, divider, Apprendre / Réviser, round size, swipe-up)
+    // MARK: - Bottom block (fait, divider, Apprendre / Réviser, round size, modules)
 
     private var bottomBlock: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -229,7 +228,7 @@ struct BookView: View {
                 TodayView(viewModel: viewModel, startLearn: startLearn, startReview: startReview)
             } label: {
                 Text("fait : \(viewModel.learnedToday) appris · \(viewModel.reviewedToday) révisés →")
-                    .font(.label(wght: 650))   // inner font wins over uppercaseLabel's
+                    .font(.label(size: 14, wght: 650))   // inner font wins over uppercaseLabel's
                     .uppercaseLabel(AppColor.ink)
                     .padding(.vertical, 6)
                     .contentShape(Rectangle())
@@ -277,7 +276,7 @@ struct BookView: View {
             .frame(height: 100 + 15, alignment: .top)
 
             Button { openModules() } label: {
-                Text("Glisser vers le haut · \(viewModel.book.modules.count) modules  ↑")
+                Text("\(viewModel.book.modules.count) modules  →")
                     .font(.display(size: 17, wght: 400))
                     .tracking(-0.2)
                     .foregroundColor(AppColor.ink)
@@ -309,13 +308,13 @@ struct BookView: View {
         showingModules = true
     }
 
-    // MARK: - Gesture: turn the star · swipe up → modules · edge swipe → back
+    // MARK: - Gesture: turn the star · edge swipe → back
 
     /// One drag for the whole screen. From the left edge, a rightward swipe goes
-    /// back to the library (iOS back-swipe direction). A vertical upward flick —
-    /// or any upward swipe that starts below the divider — opens the module list.
-    /// Anything else turns the star.
-    private func dragGesture(height: CGFloat, safeTop: CGFloat) -> some Gesture {
+    /// back to the library (iOS back-swipe direction). Anything else turns the
+    /// star; swiping up no longer opens the module list (the user asked for the
+    /// bottom line only).
+    private var dragGesture: some Gesture {
         DragGesture(minimumDistance: 6, coordinateSpace: .global)
             .onChanged { v in
                 if v.startLocation.x < 24 { return }   // reserved for swipe-back
@@ -327,16 +326,9 @@ struct BookView: View {
             .onEnded { v in
                 lastDrag = .zero
                 star.dragEnded()
-                let h = v.translation.width, up = -v.translation.height
+                let h = v.translation.width
                 if showBack, v.startLocation.x < 24, h > 60, abs(h) > abs(v.translation.height) {
                     dismiss()
-                    return
-                }
-                let vertical = up > abs(h)
-                let fromBottom = v.startLocation.y > height - 170
-                let flick = -v.predictedEndTranslation.height > 260
-                if vertical, up > 40, fromBottom || (up > 70 && flick) {
-                    openModules()
                 }
             }
     }
