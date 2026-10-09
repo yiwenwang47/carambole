@@ -51,7 +51,13 @@ harness, removed). Deviations from the spec below:
   one 2π twist, and days before the book's first activity in the window don't
   twist (`LibraryRibbonGeometry.restRuns`). Per-day twists turned sparse real
   data into a tight coil (dense repeated shape) on the sim.
-- A started book with no activity yet = thin 0.05 live strip, no twists.
+- Width = `0.16 + 0.45·√(v/30)`, cap 0.7; books to come 0.14 (user: first
+  linear 0.05-min version was "too thin" with real, light days).
+- A started book with no activity yet = 0.16 live strip, no twists.
+- The ribbon RealityView is REMOVED when a book is pushed (`ribbonLive`), and
+  comes back on the shelf's `onAppear`. Left alive under the pushed book it
+  delayed the 01 star's first frame by ~5 s on the sim (measured with a
+  screenshot burst; star appears instantly once the ribbon is gone).
 - `OrthographicCameraComponent.scale` is the HALF extent (`W·k/2`).
 - History footnote keeps the old wording (2 lines at 393 pt); list bottom
   inset 84 so it never overlaps.

@@ -43,6 +43,12 @@ struct LibraryView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var motion = LibraryRibbonMotion()
     @State private var loaded = false
+    /// Pushes Fondations' `BookView`.
+    @State private var openBook = false
+    /// The ribbon's RealityView only exists while the shelf is on screen: left
+    /// rendering under a pushed book it starves the book's star scene, which
+    /// then takes seconds to show its first frame.
+    @State private var ribbonLive = true
 
     private var books: [ShelfBook] {
         catalog.filter(\.available) + catalog.filter { !$0.available }
@@ -64,7 +70,9 @@ struct LibraryView: View {
                     .background(AppColor.paper.ignoresSafeArea(edges: .top))
             }
             .toolbar(.hidden, for: .navigationBar)
+            .navigationDestination(isPresented: $openBook) { BookView(showBack: true) }
             .onAppear {
+                ribbonLive = true
                 motion.reduceMotion = reduceMotion
                 // First appearance loads content; returning from a book refreshes.
                 if loaded { bookViewModel.refresh() } else { bookViewModel.load(); loaded = true }
@@ -83,11 +91,15 @@ struct LibraryView: View {
         let height = CGFloat(geometry.contentHeight)
 
         return ZStack(alignment: .topLeading) {
-            LibraryRibbonScene(geometry: geometry, motion: motion)
-                .id(geometry)
-                .frame(width: width, height: height)
-                .allowsHitTesting(false)
-                .accessibilityHidden(true)
+            Group {
+                if ribbonLive {
+                    LibraryRibbonScene(geometry: geometry, motion: motion)
+                        .id(geometry)
+                }
+            }
+            .frame(width: width, height: height)
+            .allowsHitTesting(false)
+            .accessibilityHidden(true)
 
             edgeLabels
                 .padding(.horizontal, Spacing.screenH)
@@ -156,12 +168,16 @@ struct LibraryView: View {
 
     // MARK: - Book block
 
+    /// Drop the ribbon scene first, then push the book.
+    private func open() {
+        ribbonLive = false
+        openBook = true
+    }
+
     @ViewBuilder
     private func block(_ book: ShelfBook, number: Int) -> some View {
         if book.available {
-            NavigationLink {
-                BookView(showBack: true)
-            } label: {
+            Button(action: open) {
                 blockLabel(book, number: number)
             }
             .buttonStyle(ShelfRowButtonStyle())
