@@ -3,7 +3,7 @@
 //  carambole
 //
 //  The shelf — the app's root. motion.html 08 "Ruban": one paper ribbon runs
-//  down the right side of the shelf and each book is a 200 pt stretch of it
+//  down the right side of the shelf and each book is a stretch of it
 //  (`LibraryRibbon.swift`). Books sit on the left of their stretch: kicker
 //  label, light title, then `Ouvrir →` + % for open books or `Bientôt` for
 //  books to come. Open books sort first. The ribbon lives inside the scroll
@@ -113,7 +113,7 @@ struct LibraryView: View {
                 block(book, number: catalogNumber(book))
                     .frame(width: 220, alignment: .leading)
                     .padding(.leading, Spacing.screenH)
-                    .padding(.top, CGFloat(LibraryRibbonGeometry.top(ofStretch: index)) + 34)
+                    .padding(.top, CGFloat(geometry.top(ofStretch: index)) + 34)
             }
 
             Text("Fin de la bibliothèque")
