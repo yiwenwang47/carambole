@@ -6,9 +6,11 @@
 //  shelf, ONE LINK PER BOOK. Each book is a single soft blob of paper, 200 pt
 //  tall, pinched and given a full 2π twist where it meets the next book (the
 //  old 05 history ribbon's chain-of-links look), so three books fit on a
-//  screen. A started book's last 30 days shape its link's outline (learned +
-//  reviewed, smoothed, on a scale SHARED across books); a book to come is a
-//  small, faint link of tracing paper.
+//  screen. A link opens from its pinch with round shoulders, then runs at a
+//  near-constant belly whose two edges wobble independently (seeded per book),
+//  like hand-cut paper. A started book's belly grows with its 30-day total
+//  (scale SHARED across books) and its last 30 days tint the outline gently
+//  (±12 %, never jagged); a book to come is a slimmer link of tracing paper.
 //
 //  The RealityView is laid out INSIDE the scroll content, as tall as the list,
 //  so the system scroll moves it with the titles (no offset syncing). It uses
@@ -41,18 +43,29 @@ struct LibraryRibbonGeometry: Hashable {
     let stretches: [Stretch]
     /// Width of the view in points (the phone width).
     let viewWidth: Float
-    /// Per stretch: the smoothed 30-day profile, 0…1 against the busiest
-    /// smoothed day across ALL started books (empty for a book to come).
+    /// Per stretch: the smoothed 30-day profile, 0…1 against the book's own
+    /// busiest smoothed day (empty for a book to come).
     let profiles: [[Float]]
+    /// Per stretch: belly width (world units). Started books grow with their
+    /// 30-day total on a scale shared across books.
+    let bellies: [Float]
 
     init(stretches: [Stretch], viewWidth: Float) {
         self.stretches = stretches
         self.viewWidth = viewWidth
-        let smoothed = stretches.map { s -> [Float] in
-            if case let .started(days) = s { return Self.smooth(days) } else { return [] }
+        let totals = stretches.map { s -> Int in
+            if case let .started(days) = s { return days.reduce(0, +) } else { return 0 }
         }
-        let peak = max(1e-6, smoothed.flatMap { $0 }.max() ?? 0)
-        self.profiles = smoothed.map { $0.map { $0 / peak } }
+        let peakTotal = Float(max(1, totals.max() ?? 0))
+        self.profiles = stretches.map { s -> [Float] in
+            guard case let .started(days) = s else { return [] }
+            let sm = Self.smooth(days)
+            let peak = max(1e-6, sm.max() ?? 0)
+            return sm.map { $0 / peak }
+        }
+        self.bellies = zip(stretches, totals).map { s, total in
+            s.isLive ? Self.startedBase + Self.startedGain * sqrt(Float(total) / peakTotal) : Self.toComeBelly
+        }
     }
 
     /// First link top, link length, tail below the last one (points).
@@ -63,12 +76,18 @@ struct LibraryRibbonGeometry: Hashable {
     static let k: Float = 0.0076
     /// Mesh samples per point of spine.
     static let samplesPerPoint: Float = 1 / 1.2
-    /// Link widths (world units): pinch at the ends, started belly 0.18…0.54
-    /// (≈ 24…71 pt, 05's range), book-to-come belly 0.16.
-    static let pinch: Float = 0.04
-    static let startedBase: Float = 0.14
-    static let startedGain: Float = 0.36
-    static let toComeBelly: Float = 0.12
+    /// Link widths (world units): pinch at the ends, started belly 0.48…0.62
+    /// (≈ 63…82 pt), book-to-come belly 0.40 (≈ 53 pt).
+    static let pinch: Float = 0.03
+    static let startedBase: Float = 0.48
+    static let startedGain: Float = 0.14
+    static let toComeBelly: Float = 0.40
+    /// Fraction of a link spent opening from the pinch to the belly, and the
+    /// flat neck (points) either side of a boundary where the paper twists.
+    static let shoulder: Float = 0.2
+    static let neck: Float = 9
+    /// Half-length (points) of the 2π twist at a boundary.
+    static let twistHalf: Float = 18
 
     /// Content height the ribbon (and the shelf) occupy.
     var contentHeight: Float { Self.top(ofStretch: stretches.count) + Self.tail }
@@ -85,10 +104,11 @@ struct LibraryRibbonGeometry: Hashable {
 
     // MARK: Shape
 
-    /// A calm weave down the right side of the shelf (prototype `spine`).
+    /// A calm weave down the right side of the shelf (prototype `spine`) plus
+    /// a shorter drift so each link leans a little, like 05's links.
     func spine(_ py: Float) -> SIMD3<Float> {
         let d = py - Self.start
-        return SIMD3(wx(axisX + sin(d / 230) * 22), wy(py), sin(d / 170) * 0.3)
+        return SIMD3(wx(axisX + sin(d / 230) * 24 + sin(d / 64) * 9), wy(py), sin(d / 170) * 0.3)
     }
 
     private func stretchIndex(at py: Float) -> Int {
@@ -101,9 +121,9 @@ struct LibraryRibbonGeometry: Hashable {
         return x * x * (3 - 2 * x)
     }
 
-    /// Gaussian smoothing (σ = 2.5 days) so a link's outline stays soft.
+    /// Gaussian smoothing (σ = 3.5 days) so a link's outline stays soft.
     static func smooth(_ days: [Int]) -> [Float] {
-        let sigma: Float = 2.5
+        let sigma: Float = 3.5
         return days.indices.map { i in
             var sum: Float = 0, weight: Float = 0
             for (j, v) in days.enumerated() {
@@ -115,34 +135,66 @@ struct LibraryRibbonGeometry: Hashable {
         }
     }
 
-    /// Link envelope: 0 at both ends of a book (the pinch), 1 mid-link.
+    /// Link envelope: 0 through the flat neck at both ends of a book, round
+    /// shoulders (sin^0.8) over `shoulder` of the link, 1 across the belly.
     static func envelope(_ t: Float) -> Float {
-        pow(max(0, sin(.pi * min(1, max(0, t)))), 0.7)
+        let g = neck / step
+        func rise(_ x: Float) -> Float {
+            pow(sin(.pi / 2 * min(1, max(0, (x - g) / (shoulder - g)))), 0.8)
+        }
+        return rise(t) * rise(1 - t)
     }
 
-    /// Ribbon width (world units): pinch + envelope · belly, where a started
-    /// book's belly follows its smoothed days (base + gain · profile).
+    /// Smooth deterministic noise in about ±Σamps: a few sines whose phases
+    /// are seeded by `seed` (stable per book, never per frame).
+    static func wobble(seed: Int, _ t: Float, amps: [Float], freqs: [Float]) -> Float {
+        var r: Float = 0
+        for (k, (a, f)) in zip(amps, freqs).enumerated() {
+            let h = sin(Float(seed) * 12.9898 + Float(k) * 78.233) * 43758.5453
+            let phase = (h - h.rounded(.down)) * 2 * .pi
+            r += a * sin(2 * .pi * f * t + phase)
+        }
+        return r
+    }
+
+    private func linkT(_ py: Float) -> (b: Int, t: Float) {
+        let b = stretchIndex(at: py)
+        return (b, (py - Self.top(ofStretch: b)) / Self.step)
+    }
+
+    /// Ribbon width (world units): pinch + envelope · belly · tint · wobble.
+    /// A started book's smoothed days tint the belly by 0.82…1.04.
     func width(at py: Float) -> Float {
         guard !stretches.isEmpty else { return Self.pinch }
-        let b = stretchIndex(at: py)
-        let t = (py - Self.top(ofStretch: b)) / Self.step
-        let env = Self.envelope(t)
+        let (b, t) = linkT(py)
+        var tint: Float = 1
         let profile = profiles[b]
-        guard !profile.isEmpty else { return Self.pinch + env * Self.toComeBelly }
-        let d = min(1, max(0, t)) * Float(profile.count - 1)
-        let i = min(profile.count - 1, Int(d.rounded(.down)))
-        let j = min(profile.count - 1, i + 1)
-        let e = Self.ease(d - Float(i))
-        let v = profile[i] * (1 - e) + profile[j] * e
-        return Self.pinch + env * (Self.startedBase + Self.startedGain * v)
+        if !profile.isEmpty {
+            let d = min(1, max(0, t)) * Float(profile.count - 1)
+            let i = min(profile.count - 1, Int(d.rounded(.down)))
+            let j = min(profile.count - 1, i + 1)
+            let e = Self.ease(d - Float(i))
+            tint = 0.82 + 0.22 * (profile[i] * (1 - e) + profile[j] * e)
+        }
+        let wob = 1 + Self.wobble(seed: b + 1, t, amps: [0.10, 0.06, 0.035], freqs: [1.3, 2.4, 3.7])
+        return Self.pinch + Self.envelope(t) * bellies[b] * tint * wob
+    }
+
+    /// Sideways shift of the link's centre along its width direction (world
+    /// units), so the two edges wobble independently. 0 at the pinches.
+    func offset(at py: Float) -> Float {
+        guard !stretches.isEmpty else { return 0 }
+        let (b, t) = linkT(py)
+        return Self.envelope(t) * bellies[b] * Self.wobble(seed: b + 7, t, amps: [0.07, 0.04], freqs: [1.1, 2.2])
     }
 
     /// Accumulated twist: one full 2π at every boundary between books, centred
-    /// on the pinch. No twists inside a link.
+    /// on the pinch, plus a gentle ±0.35 rad roll so the paper catches the
+    /// light unevenly inside a link.
     func twist(at py: Float) -> Float {
-        var th: Float = 0
+        var th = 0.35 * sin((py - Self.start) / 95)
         for bi in 1..<max(1, stretches.count) {
-            th += 2 * .pi * Self.ease((py - Self.top(ofStretch: bi) + 22) / 44)
+            th += 2 * .pi * Self.ease((py - Self.top(ofStretch: bi) + Self.twistHalf) / (2 * Self.twistHalf))
         }
         return th
     }
@@ -167,7 +219,7 @@ struct LibraryRibbonGeometry: Hashable {
         let th = twist(at: py)
         let w = simd_normalize(xw * cos(th) + w0 * sin(th))
         let n = simd_normalize(simd_cross(w, tg))
-        return Sample(p: p, w: w, n: n, half: width(at: py) / 2)
+        return Sample(p: p + w * offset(at: py), w: w, n: n, half: width(at: py) / 2)
     }
 
     /// Samples for link `i` (overlapping the next link by 1 pt so the seam
@@ -340,16 +392,23 @@ extension LibraryRibbonGeometry {
         assert(abs(g.wx(g.axisX) - (268 - 180) * k) < 1e-5, "axis at 268 of 360")
         // Links pinch at every book boundary and bulge mid-book.
         for i in 0...3 {
-            assert(abs(g.width(at: top(ofStretch: i) + (i == 3 ? -1e-3 : 0)) - pinch) < 1e-3, "pinch at boundary \(i)")
+            let y = top(ofStretch: i) + (i == 3 ? -1e-3 : 0)
+            assert(abs(g.width(at: y) - pinch) < 1e-3, "pinch at boundary \(i)")
+            assert(abs(g.offset(at: y)) < 1e-4, "centred at boundary \(i)")
         }
-        assert(g.width(at: top(ofStretch: 0) + 100) > 0.4, "busy book bulges")
-        assert(abs(g.width(at: top(ofStretch: 1) + 100) - (pinch + startedBase)) < 1e-4, "idle book = base belly")
-        assert(abs(g.width(at: top(ofStretch: 2) + 100) - (pinch + toComeBelly)) < 1e-4, "book to come belly")
-        // Profiles share one scale: the busiest smoothed day is 1.
-        assert(abs((g.profiles.flatMap { $0 }.max() ?? 0) - 1) < 1e-5, "shared scale peaks at 1")
-        // Twists: exactly one per boundary, none inside a link.
-        assert(abs(g.twist(at: g.contentHeight) - 2 * 2 * .pi) < 1e-3, "2 boundaries = 4π")
-        assert(abs(g.twist(at: top(ofStretch: 1) - 30)) < 1e-3, "no twist inside the first link")
+        for i in 0...2 {
+            for dy in stride(from: Float(50), through: 150, by: 10) {
+                let w = g.width(at: top(ofStretch: i) + dy)
+                assert(w > pinch + 0.6 * g.bellies[i] && w < pinch + 1.25 * g.bellies[i], "soft belly \(i) \(dy)")
+            }
+        }
+        // Shared scale: busier total = wider belly; idle started > book to come.
+        assert(g.bellies[0] > g.bellies[1] && g.bellies[1] > g.bellies[2], "belly order")
+        assert(abs(g.bellies[0] - (startedBase + startedGain)) < 1e-5, "busiest book = full belly")
+        // Twists: exactly one per boundary (the roll is tiny, never a turn).
+        let end = g.twist(at: g.contentHeight) - 0.35 * sin((g.contentHeight - start) / 95)
+        assert(abs(end - 2 * 2 * .pi) < 1e-3, "2 boundaries = 4π")
+        assert(abs(g.twist(at: top(ofStretch: 1) - 30)) < 0.36, "no turn inside the first link")
     }
 }
 #endif
