@@ -41,6 +41,16 @@ struct LibraryRibbonGeometry: Hashable {
     let stretches: [Stretch]
     /// Width of the view in points (the phone width).
     let viewWidth: Float
+    /// Busiest single day across all started books (≥ 1): the shared width scale.
+    let busiestDay: Int
+
+    init(stretches: [Stretch], viewWidth: Float) {
+        self.stretches = stretches
+        self.viewWidth = viewWidth
+        self.busiestDay = max(1, stretches.compactMap { s -> Int? in
+            if case let .started(days) = s { return days.max() } else { return nil }
+        }.max() ?? 1)
+    }
 
     /// First stretch top, stretch length, tail below the last one (points).
     static let start: Float = 236
@@ -49,8 +59,7 @@ struct LibraryRibbonGeometry: Hashable {
     /// World units per point (orthographic).
     static let k: Float = 0.0076
     /// Started-book minimum width and book-to-come width (world units).
-    static let minWidth: Float = 0.16
-    static let toComeWidth: Float = 0.14
+    static let toComeWidth: Float = 0.12
     /// Mesh samples per point of spine.
     static let samplesPerPoint: Float = 1 / 1.2
 
@@ -85,10 +94,10 @@ struct LibraryRibbonGeometry: Hashable {
         return x * x * (3 - 2 * x)
     }
 
-    /// Ribbon width (world units). Started books share one scale so their
-    /// widths compare: 0.16 + 0.45 · √(v / 30), capped at 0.7 (≈ 92 pt). The
-    /// square root keeps light days (2–5 elements) readable instead of a
-    /// hairline. A started book with no activity yet sits at the 0.16 minimum.
+    /// Ribbon width (world units): 0.05 + 0.32 · v / busiestDay, one scale
+    /// shared by all started books so their widths compare. Same range as the
+    /// prototype (its sample days, 8–22 a day, gave 0.05 + 0.4 · v / 30), but
+    /// relative, so real days of 100+ elements can't balloon into discs.
     func width(at py: Float) -> Float {
         guard !stretches.isEmpty else { return Self.toComeWidth }
         let b = stretchIndex(at: py)
@@ -99,7 +108,7 @@ struct LibraryRibbonGeometry: Hashable {
         let j = min(n - 1, i + 1)
         let e = Self.ease(d - Float(i))
         let v = Float(days[i]) * (1 - e) + Float(days[j]) * e
-        return min(0.7, Self.minWidth + 0.45 * (v / 30).squareRoot())
+        return 0.05 + 0.32 * v / Float(busiestDay)
     }
 
     /// Accumulated twist: a full 2π at every book boundary, and one per PAUSE
@@ -331,13 +340,13 @@ extension LibraryRibbonGeometry {
                                       viewWidth: 360)
         assert(g.contentHeight == 236 + 3 * 200 + 110, "content height = start + n·step + tail")
         assert(abs(g.wx(g.axisX) - (268 - 180) * k) < 1e-5, "axis at 268 of 360")
-        // Width: shared √ scale (idle book = minimum); a book to come = toComeWidth.
-        assert(abs(g.width(at: top(ofStretch: 0)) - (minWidth + 0.45 * (5 / 30 as Float).squareRoot())) < 1e-4,
-               "first day width")
-        assert(abs(g.width(at: top(ofStretch: 1) + 100) - minWidth) < 1e-5, "idle started book = minimum")
+        // Width: relative to the busiest day across started books (7 here).
+        assert(g.busiestDay == 7, "busiest day = 7")
+        assert(abs(g.width(at: top(ofStretch: 0)) - (0.05 + 0.32 * 5 / 7)) < 1e-4, "first day width")
+        assert(abs(g.width(at: top(ofStretch: 1) + 100) - 0.05) < 1e-5, "idle started book = 0.05")
         assert(abs(g.width(at: top(ofStretch: 2) + 100) - toComeWidth) < 1e-5, "book to come")
         let heavy = LibraryRibbonGeometry(stretches: [.started(Array(repeating: 200, count: 30))], viewWidth: 360)
-        assert(heavy.width(at: top(ofStretch: 0) + 50) == 0.7, "width capped at 0.7")
+        assert(abs(heavy.width(at: top(ofStretch: 0) + 50) - 0.37) < 1e-5, "busiest day = 0.37 max")
         // Twist: one rest day (2π) inside book 0, plus 2π per boundary, none for the idle book.
         let end = g.twist(at: g.contentHeight)
         assert(abs(end - 3 * 2 * .pi) < 1e-3, "1 rest + 2 boundaries = 6π, got \(end)")
