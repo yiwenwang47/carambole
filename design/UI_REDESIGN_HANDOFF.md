@@ -47,11 +47,13 @@ the subagent reports summarized in git commit bodies.
 
 Build EXIT 0, launch self-tests pass, both screenshot-checked (temp `CB_SCREEN`
 harness, removed). Deviations from the spec below:
-- Ribbon formulas are the prototype's, EXACT (user decision): width
-  `0.05 + 0.4·v/30`, books to come 0.12, one 2π twist per rest day. A
-  per-pause twist + √ width were tried and rejected. With little real history
-  the started stretch is thin and tightly coiled — accepted; it fills out as
-  days accumulate.
+- **Pauses, not rest days, twist the ribbon**: a run of consecutive rest days =
+  one 2π twist, and days before the book's first activity in the window don't
+  twist (`LibraryRibbonGeometry.restRuns`). Per-day twists turned sparse real
+  data into a tight coil (dense repeated shape) on the sim.
+- Width = `0.16 + 0.45·√(v/30)`, cap 0.7; books to come 0.14 (user: first
+  linear 0.05-min version was "too thin" with real, light days).
+- A started book with no activity yet = 0.16 live strip, no twists.
 - The ribbon RealityView is REMOVED when a book is pushed (`ribbonLive`), and
   comes back on the shelf's `onAppear`. Left alive under the pushed book it
   delayed the 01 star's first frame by ~5 s on the sim (measured with a
