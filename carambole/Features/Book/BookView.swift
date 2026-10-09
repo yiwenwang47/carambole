@@ -229,7 +229,8 @@ struct BookView: View {
                 TodayView(viewModel: viewModel, startLearn: startLearn, startReview: startReview)
             } label: {
                 Text("fait : \(viewModel.learnedToday) appris · \(viewModel.reviewedToday) révisés →")
-                    .uppercaseLabel()
+                    .font(.label(wght: 650))   // inner font wins over uppercaseLabel's
+                    .uppercaseLabel(AppColor.ink)
                     .padding(.vertical, 6)
                     .contentShape(Rectangle())
             }

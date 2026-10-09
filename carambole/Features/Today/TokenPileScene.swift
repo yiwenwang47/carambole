@@ -41,7 +41,10 @@ final class TokenPileScene: SKScene {
     private static let minWidth: CGFloat = 64
     private static let maxWidth: CGFloat = 176
     /// Matter gravity 1.1 (×0.001 px/ms²) = 1100 pt/s²; SpriteKit is 150 pt/m.
-    private static let gravity: CGFloat = 1100 / 150
+    /// Doubled from the prototype: the user found the drop too slow.
+    private static let gravity: CGFloat = 2200 / 150
+    /// Initial downward speed of arriving tokens (pt/s).
+    private static let dropSpeed: CGFloat = 900
     /// More tokens than this would overflow the screen; the count still says all.
     private static let maxTokens = 48
 
@@ -184,6 +187,9 @@ final class TokenPileScene: SKScene {
                 let x = 40 + CGFloat.random(in: 0...max(1, size.width - 80))
                 node.position = CGPoint(x: x, y: size.height + 40 + CGFloat(i) * 46)
                 node.zRotation = CGFloat.random(in: -0.6...0.6)
+                // Thrown in, not dropped from rest: the whole column already
+                // falls at `dropSpeed`, so even a tall stack lands in about a second.
+                node.physicsBody?.velocity = CGVector(dx: 0, dy: -Self.dropSpeed)
             }
             addChild(node)
             nodes[spec.id] = node
