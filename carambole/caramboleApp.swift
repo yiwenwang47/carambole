@@ -15,6 +15,8 @@ struct caramboleApp: App {
         DrillEngine._selfTest()
         DrillView._selfTest()
         WaveText._selfTest()
+        LoopWaveText._selfTest()
+        TickerLine._selfTest()
         Exercise._selfTest()
         StudyScheduler._selfTest()
         StudySettingsStore._selfTest()
