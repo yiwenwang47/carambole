@@ -2,19 +2,16 @@
 
 > ## ▶ ACTIVE TASK — START HERE (next session, continue without re-asking)
 >
-> **▶ UI REDESIGN — IN PROGRESS (updated 2026-10-09, end of build session 1).**
+> **▶ UI REDESIGN — IN PROGRESS (updated 2026-10-09, end of session 2).**
 > Work lives on branch **`ui-redesign`** in the worktree
 > **`../carambole-ui-redesign`** (NOT merged to `main`, not pushed). READ
-> **`design/UI_REDESIGN_HANDOFF.md` in that worktree first** — it has the status
-> table, the specs for what to build next, how to launch the app for the user
-> (Xcode 27: DeviceHub, not Simulator.app; iPhone 16 sim
-> `7C7BA0A7-C367-4CD4-AAE5-462B1F754986`) and lessons learned. Built: tokens/fonts,
-> 07 drill magnets, 01 chrome-star book home, module list (06 Tranches dropped),
-> 02 Cinétique module page, 03 Gravité today, settings restyle. NEXT: build
-> **08 Ruban → library** (one scroll-synced ribbon for all books, ribbon inside the
-> scroll content) and **09 → minimal history list**, both mocked + approved in the
-> worktree's `design/motion.html`; then the user fine-tunes in the simulator; then
-> T9 cleanup + merge. View-layer only; every existing control must survive.
+> **`design/UI_REDESIGN_HANDOFF.md` in that worktree first.** Every screen is
+> built (incl. 08 library ribbon + 09 history list). **OPEN: the 08 library
+> ribbon SHAPE is rejected by the user** — the handoff's TL;DR has what they
+> want (one soft link per book, ≥3 books per screen, 05-ribbon paper look), the
+> five rejected attempts, their real phone data, and the iteration loop. User
+> now tests on an **iPhone 18 Pro** (`00008160-001A09920AA0000A`; install
+> commands in the handoff). Then fine-tune, then T9 cleanup + merge.
 > Everything below is older context.
 >
  Everything below is DONE, MERGED to `main`, and PUSHED to origin (2026-06-19).

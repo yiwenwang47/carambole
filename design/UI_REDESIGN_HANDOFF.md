@@ -1,17 +1,101 @@
 # Carambole UI redesign handoff
 
-*Updated 2026-10-09 (end of the first build session). Start here.*
+*Updated 2026-10-09, end of session 2. Start here.*
 
 ## TL;DR for the next session
 
-Branch **`ui-redesign`** (worktree `../carambole-ui-redesign`, NOT merged to
-`main`, not pushed) has the redesign built for every screen except two that the
-user re-designed at the end of the session. Next session:
+Branch **`ui-redesign`** (worktree `../carambole-ui-redesign`, NOT merged, not
+pushed; head `0c0bc40` + this doc). Every screen is built. **One open problem:
+the library ribbon's SHAPE (08). The user hates the current one.** Fix that
+first, with the user, on their phone. Then fine-tune the other screens, then T9
+cleanup and merge.
 
-1. ~~Build 08 · Ruban → the library~~ done (session 2).
-2. ~~Build 09 · Liste → History~~ done (session 2).
-3. Then the user fine-tunes screen by screen in the simulator.
-4. Then T9 cleanup + merge (see bottom).
+### ▶ The ribbon problem (read all of this before touching it)
+
+**What the user wants (their words, in order):**
+1. "the ruban look from the artifact": the soft, organic paper ribbon.
+2. A reference screenshot they sent: the **old 05 history ribbon**
+   (perspective camera, ~550 pt tall for 30 days, large soft blobs of paper
+   divided by small twisted pinches, a gentle S drift, one blob flashing its grey back).
+   Source: `git show main:design/motion.html` → `<!-- 05 · ribbon history -->`
+   script (line ~424), and the deleted Swift port:
+   `git show 48ee276:carambole/Features/History/RibbonView.swift`.
+3. **"One link per book! at least 3 books should fit in one page!"** Each
+   book = ONE link of the chain (like one 05 blob), and ≥ 3 books per screen.
+4. Verdict on the current build (`0c0bc40`, one link per book): "shape is
+   terrible". The user did not say why. **Ask, or show 2–3 options, before
+   coding.** Likely suspects: the `sin(πt)^0.7` envelope makes leaf or almond
+   shapes (pointed ends, see the sim screenshot); the books-to-come links are
+   long thin needles; there's no S drift and no grey-back flash, so it doesn't
+   read like 05's paper.
+
+**What was tried and rejected (don't repeat):**
+| Version | Commit | Why rejected |
+|---|---|---|
+| Prototype exact: 200 pt/book, width `0.05+0.4·v/30`, 2π twist per rest day | `4b27242`, `4bec50b` | Sim with sparse data: a tight coil. "too twisted" |
+| One twist per run of rest days + `0.16+0.45·√(v/30)` | `0822164` | On the phone with real data (days of 64 to 80): flat **discs**, "nowhere close" |
+| Relative width `0.05+0.32·v/max` | `f623437` | Edges jagged at ~7 pt/day. "creepy as fuck" |
+| 560 pt per started book + 05 width `0.04+0.5·v/max` | `d0a2611` | Soft, but only 1 book per screen. "NOOO" |
+| One link per book: 200 pt, Gaussian-smoothed days, `sin(πt)^0.7` envelope, twist only at boundaries | `0c0bc40` (current) | "shape is fucking terrible" |
+
+**Key insight:** at 200 pt per book, 30 days is about 7 pt per day, too short
+to show each day's width without jagged edges. 05 looked good at about 18 pt
+per day. Inside one link you can't show 30 separate days. Show a smooth,
+data-tinted shape, or drop per-day data from the shape entirely; ask the user.
+
+**Real data (use it, the sim is nearly empty):**
+`design/phone-data/real-30d.json` (git-ignored; also the raw DB
+`design/phone-data/carambole.sqlite`, pulled from the phone). Last 30 days total =
+`[0,0,0,0,0,0,10,11,0,8,30,0,0,0,0,0,0,0,64,0,0,0,8,0,76,0,45,73,80,0]`.
+Sparse, bursty, many rest days. Every candidate must be rendered with THIS
+data and shown to the user **before** installing.
+
+**How to iterate on it (fast loop that worked):**
+- Shape code: `carambole/Features/Library/LibraryRibbon.swift`
+  (`LibraryRibbonGeometry`: `width(at:)`, `twist(at:)`, `spine`, `envelope`,
+  `smooth`; + `_selfTest()` wired in `caramboleApp.swift`. Update it with the
+  shape, since a failing assert kills the app at launch). Layout: `LibraryView.swift`.
+- Temp harness: `carambole/Views/ZZHarness.swift` rendering
+  `LibraryRibbonScene(geometry: LibraryRibbonGeometry(stretches: [.started(REAL), .toCome, .toCome], viewWidth:))`
+  in a `ScrollView`, + `RootView` hook on env `CB_SCREEN`; launch with
+  `SIMCTL_CHILD_CB_SCREEN=x`; screenshot with `simctl io … screenshot`. Delete +
+  `git checkout RootView.swift` before committing.
+- Best: prototype shapes as an HTML/three.js mock first (the user prefers
+  judging HTML mocks before SwiftUI) and let them pick.
+- Mechanics that ARE right and should stay: ribbon RealityView inside the
+  scroll content; orthographic camera, `OrthographicCameraComponent.scale` =
+  HALF extent (`W·k/2`); k = 0.0076; two-sided paper + edge tubes; sway only.
+
+### Other session-2 facts
+- **Star load fix (keep):** the ribbon RealityView is removed while a book is
+  pushed (`ribbonLive` in `LibraryView`); left alive it delayed the 01 star's
+  first frame ~5 s. User said "star still fails to load" after the fix, but the
+  sim log showed the star built 0.2 s after their tap. Unconfirmed on the
+  phone; ask.
+- **Phone:** the user now tests on an **iPhone 18 Pro**,
+  UDID `00008160-001A09920AA0000A` (CLAUDE.md lists an old iPhone 16). Install:
+  ```bash
+  xcodebuild -project carambole.xcodeproj -scheme carambole \
+    -destination 'id=00008160-001A09920AA0000A' -allowProvisioningUpdates \
+    DEVELOPMENT_TEAM=QMV4SPL476 -derivedDataPath /tmp/cb-device-ui build -quiet
+  xcrun devicectl device install app --device 00008160-001A09920AA0000A \
+    /tmp/cb-device-ui/Build/Products/Debug-iphoneos/carambole.app
+  xcrun devicectl device process launch --terminate-existing \
+    --device 00008160-001A09920AA0000A wen.carambole   # fails if phone locked
+  ```
+  Pull the DB: `xcrun devicectl device copy from --device <udid>
+  --domain-type appDataContainer --domain-identifier wen.carambole
+  --source Documents/carambole.sqlite --destination <file>`.
+- 09 History list is built and was not complained about.
+
+### Lessons (session 2)
+- Never deviate from the approved mock silently: two of the rejections came
+  from "improvements" I made without asking.
+- The sim has almost no data, so it can't judge a data-driven shape. Use the
+  phone's real data.
+- When the user asks for a "look", show a side-by-side render against their
+  reference before shipping to the phone. Five round-trips to the phone burned
+  their patience.
 
 Design source of truth: **`design/motion.html`** in the `ui-redesign` worktree
 (the copy on `main` is older — it still has 05/06 and no 08/09). Open it in a
@@ -29,7 +113,7 @@ real browser. Concepts on the page now: **01 Objet, 02 Cinétique, 03 Gravité,
 | Module page | 02 Cinétique | `Features/Book/ModuleDetailView.swift` (signature `ModuleDetailView(module:viewModel:)` kept) | done |
 | Today | 03 Gravité | `Features/Today/TodayView.swift`, `TokenPileScene.swift` (SpriteKit) — opened from book home `fait : … →` | done |
 | History | 09 Liste | `Features/History/HistoryView.swift` (3D ribbon removed; `RibbonView.swift` deleted) | done (session 2) |
-| Library | 08 Ruban | `Features/Library/LibraryView.swift`, `LibraryRibbon.swift` (ortho RealityView inside the scroll content, self-tested geometry) | done (session 2) — see deviations below |
+| Library | 08 Ruban | `Features/Library/LibraryView.swift`, `LibraryRibbon.swift` (ortho RealityView inside the scroll content, self-tested geometry) | **built, ribbon SHAPE rejected — see TL;DR** |
 | Settings | — | `Features/Settings/SettingsView.swift` (edge-type restyle, `− 12 +` steppers) | done |
 
 Navigation now: Library → Fondations → book home (01).
@@ -45,27 +129,9 @@ the subagent reports summarized in git commit bodies.
 
 ## Session 2 (2026-10-09): 08 + 09 built
 
-Build EXIT 0, launch self-tests pass, both screenshot-checked (temp `CB_SCREEN`
-harness, removed). Deviations from the spec below:
-- **Pauses, not rest days, twist the ribbon**: a run of consecutive rest days =
-  one 2π twist, and days before the book's first activity in the window don't
-  twist (`LibraryRibbonGeometry.restRuns`). Per-day twists turned sparse real
-  data into a tight coil (dense repeated shape) on the sim.
-- **One link per book** (user, emphatic): every book is ONE soft paper blob,
-  200 pt tall (3 books per screen), pinched + one 2π twist at each book
-  boundary, no twists inside a book. A started book's 30 days only shape the
-  link's outline: Gaussian-smoothed (σ 2.5 d), shared scale across books,
-  width = 0.04 + sin(πt)^0.7 · (0.14 + 0.36·profile). Book to come = small
-  faint link (belly 0.12). Rejected on the way: per-day twists (coil),
-  per-pause twists + absolute widths (discs / jagged "creepy" edges), 560 pt
-  stretches (only one book per screen).
-- The ribbon RealityView is REMOVED when a book is pushed (`ribbonLive`), and
-  comes back on the shelf's `onAppear`. Left alive under the pushed book it
-  delayed the 01 star's first frame by ~5 s on the sim (measured with a
-  screenshot burst; star appears instantly once the ribbon is gone).
-- `OrthographicCameraComponent.scale` is the HALF extent (`W·k/2`).
-- History footnote keeps the old wording (2 lines at 393 pt); list bottom
-  inset 84 so it never overlaps.
+See the TL;DR above for the ribbon. Also: `OrthographicCameraComponent.scale`
+is the HALF extent. History footnote keeps the old wording (2 lines at
+393 pt); list bottom inset 84 so it never overlaps.
 
 ## 08 · Ruban (library) — spec for the build
 
