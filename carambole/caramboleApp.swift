@@ -10,6 +10,7 @@ import SwiftUI
 @main
 struct caramboleApp: App {
     init() {
+        AppFonts.register()
         #if DEBUG
         DrillEngine._selfTest()
         DrillView._selfTest()

@@ -2,19 +2,19 @@
 //  ProgressRing.swift
 //  carambole
 //
-//  Fresh circular progress view for the new drill UI: a saffron progress
-//  stroke over a hairline track ring. Animatable on `progress`.
+//  Circular progress ring: an ink arc over a g3 track (motion.html ring7).
+//  Animatable on `progress`.
 //
 
 import SwiftUI
 
-/// A circular progress ring — `saffron` arc over a `hairline` track.
+/// A circular progress ring — `ink` arc over a `g3` track.
 /// `progress` is clamped to 0...1.
 struct ProgressRing: View {
     /// A value between 0 and 1 representing progress.
     let progress: Double
-    var size: CGFloat = 40
-    var lineWidth: CGFloat = 5
+    var size: CGFloat = 30
+    var lineWidth: CGFloat = 3
 
     private var clamped: Double {
         min(max(progress, 0), 1)
@@ -24,13 +24,13 @@ struct ProgressRing: View {
         ZStack {
             // Track ring.
             Circle()
-                .stroke(AppColor.hairline, lineWidth: lineWidth)
+                .stroke(AppColor.g3, lineWidth: lineWidth)
 
             // Progress arc.
             Circle()
                 .trim(from: 0, to: clamped)
                 .stroke(
-                    AppColor.saffron,
+                    AppColor.ink,
                     style: StrokeStyle(lineWidth: lineWidth, lineCap: .round)
                 )
                 .rotationEffect(.degrees(-90)) // Start at top.

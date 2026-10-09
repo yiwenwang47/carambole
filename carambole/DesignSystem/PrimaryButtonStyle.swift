@@ -2,42 +2,37 @@
 //  PrimaryButtonStyle.swift
 //  carambole
 //
-//  "Le Cahier" primary button + tracked-uppercase section label.
-//  Composes the spring press-feel of the existing `ScaleButtonStyle`.
+//  Primary pill button + tracked-uppercase label (motion.html 07 / 03).
 //
 
 import SwiftUI
 
 // MARK: - PrimaryButtonStyle
 
-/// Ink fill, paper text, rounded corners. Pressed state tints the fill to
-/// `saffronDeep` and scales ~0.96 with the `ScaleButtonStyle` spring feel.
+/// The 07/03 fixed button: black 54pt pill, paper text, Manrope 400 16pt.
+/// Pressed state dims to graphite and scales ~0.97.
 struct PrimaryButtonStyle: ButtonStyle {
-    var cornerRadius: CGFloat = 14
+    var height: CGFloat = 54
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .font(.appLabel)
-            .fontWeight(.semibold)
-            .tracking(1)
-            .textCase(.uppercase)
+            .font(.display(size: 16, wght: 400))
             .foregroundColor(AppColor.paper)
-            .padding(.vertical, Spacing.md)
-            .padding(.horizontal, Spacing.lg)
-            .frame(maxWidth: .infinity)
+            .padding(.horizontal, 22)
+            .frame(maxWidth: .infinity, minHeight: height, maxHeight: height)
             .background(
-                RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
-                    .fill(configuration.isPressed ? AppColor.saffronDeep : AppColor.ink)
+                Capsule(style: .continuous)
+                    .fill(configuration.isPressed ? AppColor.graphite : AppColor.ink)
             )
-            .scaleEffect(configuration.isPressed ? 0.96 : 1.0)
-            .animation(.spring(response: 0.4, dampingFraction: 0.5), value: configuration.isPressed)
+            .scaleEffect(configuration.isPressed ? 0.97 : 1.0)
+            .animation(.spring(response: 0.35, dampingFraction: 0.6), value: configuration.isPressed)
     }
 }
 
 // MARK: - Section Label
 
-/// The tracked-uppercase label style used by section headers (e.g. "SEARCH").
-/// Small, kerning ≈2, `graphite`.
+/// The tracked-uppercase label (motion.html `.lab`): Familjen Grotesk 11pt,
+/// tracking 0.12em, `g2`.
 struct SectionLabel: View {
     let text: String
 
@@ -46,24 +41,20 @@ struct SectionLabel: View {
     }
 
     var body: some View {
-        Text(text)
-            .font(.appLabel)
-            .tracking(2)
-            .textCase(.uppercase)
-            .foregroundColor(AppColor.graphite)
+        Text(text).uppercaseLabel()
     }
 }
 
 // MARK: - View Extension
 
 extension View {
-    /// Applies the tracked-uppercase label treatment (kerning ≈2, `graphite`)
-    /// to any text-bearing view.
-    func uppercaseLabel() -> some View {
+    /// Applies the tracked-uppercase label treatment (Familjen 11pt, 0.12em,
+    /// `g2` by default; pass `AppColor.ink` for the `.lab.ink` variant).
+    func uppercaseLabel(_ color: Color = AppColor.g2) -> some View {
         self
             .font(.appLabel)
-            .tracking(2)
+            .tracking(labelTracking)
             .textCase(.uppercase)
-            .foregroundColor(AppColor.graphite)
+            .foregroundColor(color)
     }
 }
