@@ -2,12 +2,13 @@
 //  HistoryView.swift
 //  carambole
 //
-//  A separate "Progrès · Historique" page: per calendar day (newest first) how
-//  many grammar elements were learned vs genuinely reviewed that day, scoped to
-//  the current book. Self-contained + previewable; navigation is wired elsewhere.
-//  Built from "Le Cahier".
+//  "Historique" — motion.html 09 "Liste". Per calendar day, how many grammar
+//  elements were learned vs genuinely reviewed, scoped to the current book.
+//  No object: two big 30-day totals, the streak, then one quiet line per day
+//  (newest first, rest days kept and greyed) and the "approximatives"
+//  footnote. Nothing moves. Self-contained + previewable; navigation is wired
+//  elsewhere. (The 3D ribbon moved to the library — `LibraryRibbon.swift`.)
 //
-
 import SwiftUI
 import Combine
 
@@ -86,167 +87,226 @@ final class HistoryViewModel: ObservableObject {
     }
 }
 
+
+// MARK: - Read-only helpers (30-day window + streak)
+
+extension HistoryViewModel {
+    /// The last `count` calendar days ending `today`, OLDEST first, with
+    /// zero-activity entries for rest days. Pure; feeds the history list and
+    /// the library ribbon.
+    static func window(days: [DayActivity], today: Date, count: Int = 30,
+                       calendar: Calendar) -> [DayActivity] {
+        let todayStart = calendar.startOfDay(for: today)
+        var byDay: [Date: DayActivity] = [:]
+        for d in days { byDay[calendar.startOfDay(for: d.day)] = d }
+        return (0..<count).reversed().compactMap { back -> DayActivity? in
+            guard let day = calendar.date(byAdding: .day, value: -back, to: todayStart) else { return nil }
+            return byDay[day] ?? DayActivity(day: day, learned: 0, reviewed: 0)
+        }
+    }
+
+    /// Current streak: consecutive active days ending today. A not-yet-active
+    /// today doesn't break it (the streak then ends yesterday). Pure.
+    static func streak(days: [DayActivity], today: Date, calendar: Calendar) -> Int {
+        let active = Set(days.filter { $0.learned + $0.reviewed > 0 }
+            .map { calendar.startOfDay(for: $0.day) })
+        var cursor = calendar.startOfDay(for: today)
+        if !active.contains(cursor) {
+            guard let yesterday = calendar.date(byAdding: .day, value: -1, to: cursor) else { return 0 }
+            cursor = yesterday
+        }
+        var n = 0
+        while active.contains(cursor) {
+            n += 1
+            guard let prev = calendar.date(byAdding: .day, value: -1, to: cursor) else { break }
+            cursor = prev
+        }
+        return n
+    }
+}
+
 // MARK: - View
 
+/// Loads the history and shows it as the 09 "Liste" page.
 struct HistoryView: View {
     @StateObject private var viewModel = HistoryViewModel()
     @Environment(\.dismiss) private var dismiss
 
-    /// Largest combined (learned + reviewed) total — the bar-width denominator.
-    private var maxTotal: Int {
-        viewModel.days.map { $0.learned + $0.reviewed }.max() ?? 0
+    var body: some View {
+        HistoryContent(days: viewModel.days, today: Date()) { dismiss() }
+            .onAppear { viewModel.load() }
+            .toolbar(.hidden, for: .navigationBar)
+            .navigationBarBackButtonHidden(true)
+    }
+}
+
+/// motion.html 09: `‹ Historique` · `30 jours`, the two totals, `Série N j`,
+/// an ink rule, then the last 30 days newest first and the footnote pinned to
+/// the bottom. Data-in, so the layout is previewable with fixed days.
+struct HistoryContent: View {
+    static let windowDays = 30
+
+    /// All active days, newest first (`HistoryViewModel.days`).
+    let days: [HistoryViewModel.DayActivity]
+    let today: Date
+    let onBack: () -> Void
+
+    /// The 30-day window, NEWEST first, rest days included.
+    private var window: [HistoryViewModel.DayActivity] {
+        HistoryViewModel.window(days: days, today: today, count: Self.windowDays,
+                                calendar: .current).reversed()
     }
 
     var body: some View {
-        ZStack {
-            AppColor.paper.ignoresSafeArea()
+        let win = window
+        ZStack(alignment: .topLeading) {
+            AppColor.paper
 
-            ScrollView {
-                VStack(alignment: .leading, spacing: Spacing.lg) {
-                    header
+            HistoryHeader(learned: win.reduce(0) { $0 + $1.learned },
+                          reviewed: win.reduce(0) { $0 + $1.reviewed },
+                          onBack: onBack)
 
-                    if viewModel.days.isEmpty {
-                        emptyState
-                    } else {
-                        dayList
-                        footnote
-                    }
-                }
-                .padding(.horizontal, Spacing.screenH)
-                .padding(.top, 72)
-                .padding(.bottom, Spacing.xl)
-                .frame(maxWidth: .infinity, alignment: .leading)
+            if days.isEmpty {
+                Text("Pas encore d'activité.")
+                    .font(.display(size: 22, wght: 300))
+                    .tracking(-0.44)
+                    .foregroundColor(AppColor.graphite)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .allowsHitTesting(false)
+            } else {
+                Text("Série \(HistoryViewModel.streak(days: days, today: today, calendar: .current)) j")
+                    .uppercaseLabel(AppColor.ink)
+                    .padding(.leading, Spacing.screenH)
+                    .padding(.top, 214)
+                    .accessibilityLabel("Série de \(HistoryViewModel.streak(days: days, today: today, calendar: .current)) jours")
+
+                dayList(win)
+                    .padding(.top, 252)
+                    .padding(.bottom, 84)   // clears the two-line footnote
             }
+
+            Text("Les révisions d'avant cette mise à jour sont approximatives.")
+                .uppercaseLabel()
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.horizontal, Spacing.screenH)
+                .padding(.bottom, 30)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
+                .allowsHitTesting(false)
+                .opacity(days.isEmpty ? 0 : 1)
         }
-        .onAppear { viewModel.load() }
-        .toolbar(.hidden, for: .navigationBar)
-        .navigationBarBackButtonHidden(true)
-        .swipeToGoBack { dismiss() }
+        .ignoresSafeArea()
+        .contentShape(Rectangle())
+        .swipeToGoBack { onBack() }
     }
 
-    // MARK: Header
+    /// `.days`: ink top rule, then one hairline-separated row per day.
+    private func dayList(_ win: [HistoryViewModel.DayActivity]) -> some View {
+        VStack(spacing: 0) {
+            Rectangle().fill(AppColor.ink).frame(height: 1)
+            ScrollView {
+                LazyVStack(spacing: 0) {
+                    ForEach(Array(win.enumerated()), id: \.element.id) { index, day in
+                        DayRow(activity: day, isToday: index == 0)
+                    }
+                }
+            }
+            .scrollIndicators(.hidden)
+            .scrollBounceBehavior(.basedOnSize)
+        }
+        .padding(.horizontal, Spacing.screenH)
+    }
+}
 
-    private var header: some View {
-        HStack(alignment: .firstTextBaseline) {
-            Button { dismiss() } label: {
-                Image(systemName: "chevron.left")
-                    .font(.system(size: 16, weight: .semibold))
-                    .foregroundColor(AppColor.graphite)
+// MARK: - Header
+
+/// `‹ Historique` · `30 jours`, then the two big totals (motion.html 09).
+private struct HistoryHeader: View {
+    let learned: Int
+    let reviewed: Int
+    let onBack: () -> Void
+
+    var body: some View {
+        ZStack(alignment: .topLeading) {
+            Button(action: onBack) {
+                Text("‹ Historique")
+                    .uppercaseLabel(AppColor.ink)
+                    .padding(.vertical, 10)
+                    .padding(.trailing, 16)
                     .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
-            .padding(.trailing, Spacing.sm)
             .accessibilityLabel("Retour")
+            .padding(.leading, Spacing.screenH)
+            .padding(.top, 56)
 
-            VStack(alignment: .leading, spacing: Spacing.sm) {
-                SectionLabel("Progrès")
-                Text("Historique")
-                    .font(.appTitle)
-                    .foregroundColor(AppColor.ink)
-                    .fixedSize(horizontal: false, vertical: true)
+            Text("30 jours")
+                .uppercaseLabel()
+                .frame(maxWidth: .infinity, alignment: .trailing)
+                .padding(.horizontal, Spacing.screenH)
+                .padding(.top, 66)
+
+            HStack(alignment: .top) {
+                total(learned, "appris", alignment: .leading)
+                Spacer()
+                total(reviewed, "révisés", alignment: .trailing)
             }
-            Spacer()
-        }
-        .padding(.bottom, Spacing.sm)
-    }
-
-    // MARK: Day list
-
-    private var dayList: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            ForEach(Array(viewModel.days.enumerated()), id: \.element.id) { index, day in
-                DayRow(activity: day, maxTotal: maxTotal)
-                if index < viewModel.days.count - 1 {
-                    Rectangle().fill(AppColor.hairline).frame(height: 1)
-                }
-            }
+            .padding(.horizontal, Spacing.screenH)
+            .padding(.top, 100)
+            .allowsHitTesting(false)
         }
     }
 
-    // MARK: Footnote
-
-    private var footnote: some View {
-        Text("Les révisions d'avant cette mise à jour sont approximatives.")
-            .uppercaseLabel()
-            .foregroundColor(AppColor.graphite)
-            .fixedSize(horizontal: false, vertical: true)
-            .padding(.top, Spacing.sm)
-    }
-
-    // MARK: Empty state
-
-    private var emptyState: some View {
-        VStack(spacing: Spacing.md) {
-            Text("Pas encore d'activité.")
-                .font(.appExplain)
-                .foregroundColor(AppColor.graphite)
-                .multilineTextAlignment(.center)
+    private func total(_ n: Int, _ label: String, alignment: HorizontalAlignment) -> some View {
+        VStack(alignment: alignment, spacing: 8) {
+            Text("\(n)")
+                .font(.display(size: 64, wght: 200))
+                .tracking(-3.2)
+                .foregroundColor(AppColor.ink)
+                .frame(height: 58)   // CSS line-height .9
+            Text(label).uppercaseLabel()
         }
-        .frame(maxWidth: .infinity)
-        .padding(.top, Spacing.xl)
+        .accessibilityElement(children: .combine)
     }
 }
 
 // MARK: - Day row
 
-private struct DayRow: View {
+/// One line of the list: `Ven. 9 oct. · aujourd’hui` left (Manrope 15 / 400),
+/// `6 appris · 14 révisés` label right. A rest day reads `Pause`, all in g3.
+struct DayRow: View {
     let activity: HistoryViewModel.DayActivity
-    let maxTotal: Int
+    var isToday = false
 
-    private static let dateFormatter: DateFormatter = {
+    private var rest: Bool { activity.learned + activity.reviewed == 0 }
+
+    var body: some View {
+        HStack(alignment: .firstTextBaseline) {
+            Text(Self.longDate(activity.day) + (isToday ? " · aujourd’hui" : ""))
+                .font(.display(size: 15, wght: 400))
+                .foregroundColor(rest ? AppColor.g3 : AppColor.ink)
+            Spacer(minLength: 12)
+            Text(rest ? "Pause" : "\(activity.learned) appris · \(activity.reviewed) révisés")
+                .uppercaseLabel(rest ? AppColor.g3 : AppColor.ink)
+        }
+        .lineLimit(1)
+        .padding(.vertical, 11)
+        .overlay(alignment: .bottom) {
+            Rectangle().fill(AppColor.hairline).frame(height: 1)
+        }
+        .accessibilityElement(children: .combine)
+    }
+
+    private static let formatter: DateFormatter = {
         let f = DateFormatter()
         f.locale = Locale(identifier: "fr_FR")
-        f.dateFormat = "d MMMM"
+        f.dateFormat = "EEE d MMM"
         return f
     }()
 
-    private var dateLabel: String {
-        let raw = DayRow.dateFormatter.string(from: activity.day)
+    /// `Ven. 9 oct.`
+    static func longDate(_ d: Date) -> String {
+        let raw = formatter.string(from: d)
         return raw.prefix(1).capitalized + raw.dropFirst()
-    }
-
-    private var countsLabel: String {
-        "\(activity.learned) appris · \(activity.reviewed) révisés"
-    }
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: Spacing.sm) {
-            HStack(alignment: .firstTextBaseline) {
-                Text(dateLabel)
-                    .font(.appTitle)
-                    .foregroundColor(AppColor.ink)
-                Spacer()
-                Text(countsLabel)
-                    .uppercaseLabel()
-            }
-            bar
-        }
-        .padding(.vertical, Spacing.md)
-        .contentShape(Rectangle())
-    }
-
-    /// A subtle proportional bar: learned (saffron) + reviewed (hairline), the
-    /// whole bar's width proportional to this day's total vs the busiest day.
-    private var bar: some View {
-        GeometryReader { geo in
-            let total = activity.learned + activity.reviewed
-            let fraction = maxTotal > 0 ? CGFloat(total) / CGFloat(maxTotal) : 0
-            let fullWidth = geo.size.width * fraction
-            let learnedWidth = total > 0 ? fullWidth * CGFloat(activity.learned) / CGFloat(total) : 0
-            let reviewedWidth = max(0, fullWidth - learnedWidth)
-
-            HStack(spacing: 0) {
-                Rectangle()
-                    .fill(AppColor.saffron)
-                    .frame(width: learnedWidth)
-                Rectangle()
-                    .fill(AppColor.hairline)
-                    .frame(width: reviewedWidth)
-                Spacer(minLength: 0)
-            }
-            .clipShape(Capsule())
-        }
-        .frame(height: 5)
     }
 }
 
@@ -309,6 +369,39 @@ extension HistoryViewModel {
         let d2 = row(day2Start)
         assert(d2.learned == 0, "day2 learned=0, got \(d2.learned)")
         assert(d2.reviewed == 2, "day2 reviewed=2 (a,b), got \(d2.reviewed)")
+    }
+}
+#endif
+
+#if DEBUG
+extension HistoryViewModel {
+    /// Ribbon window + streak helpers (pure, deterministic UTC calendar).
+    static func _selfTestRibbon() {
+        var cal = Calendar(identifier: .gregorian)
+        cal.timeZone = TimeZone(identifier: "UTC")!
+        let today = Date(timeIntervalSince1970: 100 * 86_400 + 15 * 3600) // day 100, 15:00
+        func day(_ n: Int, _ l: Int, _ r: Int) -> DayActivity {
+            DayActivity(day: Date(timeIntervalSince1970: TimeInterval(n) * 86_400), learned: l, reviewed: r)
+        }
+
+        // Active 100, 99, 98, rest 97, active 96 → streak 3.
+        let days = [day(100, 2, 3), day(99, 1, 0), day(98, 0, 4), day(96, 5, 5)]
+        assert(streak(days: days, today: today, calendar: cal) == 3, "streak through today = 3")
+        // Today not active yet → the streak still counts up to yesterday.
+        assert(streak(days: Array(days.dropFirst()), today: today, calendar: cal) == 2,
+               "inactive today keeps yesterday's streak = 2")
+        // Yesterday AND today inactive → 0.
+        assert(streak(days: [day(96, 1, 1)], today: today, calendar: cal) == 0, "broken streak = 0")
+        assert(streak(days: [], today: today, calendar: cal) == 0, "empty = 0")
+
+        // Window: 30 entries, oldest first, today last, gaps filled with zeros.
+        let win = window(days: days, today: today, count: 30, calendar: cal)
+        assert(win.count == 30, "window has 30 days")
+        assert(win.last?.day == cal.startOfDay(for: today), "window ends today")
+        assert(win.first?.day == Date(timeIntervalSince1970: 71 * 86_400), "window starts 29 days back")
+        assert(win[26].learned + win[26].reviewed == 0, "day 97 is a rest day")
+        assert(win[29].learned == 2 && win[29].reviewed == 3, "today's counts carried")
+        assert(win.filter { $0.learned + $0.reviewed > 0 }.count == 4, "4 active days in window")
     }
 }
 #endif

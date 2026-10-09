@@ -2,15 +2,14 @@
 //  ChoiceView.swift
 //  carambole
 //
-//  "Le Cahier" multiple-choice input for `inputMode == .multipleChoice`.
-//  Each token-bank entry is a full-width serif choice row. One tap commits a
-//  selection; the chosen row highlights with saffron. The selected value is a
-//  single-element `[String]` bound to the parent.
+//  Multiple-choice input for `inputMode == .multipleChoice`, drawn as 07
+//  magnets: the choices are level tiles and the picked one springs onto the
+//  answer line (a new pick replaces it). The selected value is a single-element
+//  `[String]` bound to the parent.
 //
 
 import SwiftUI
 
-/// Full-width choice rows for a multiple-choice exercise.
 struct ChoiceView: View {
     let exercise: Exercise
     /// The committed selection as a single-element array (or empty). Parent-owned.
@@ -18,62 +17,27 @@ struct ChoiceView: View {
 
     /// Whether the input is locked (after the answer has been checked).
     var isLocked: Bool = false
+    /// nil until checked; then whether the answer was right.
+    var result: Bool? = nil
 
-    private var selected: String? { answer.first }
+    @State private var placedIndices: [Int] = []
 
     /// Choices in presentation order: a deterministic, stable-per-`id` shuffle so the
-    /// correct answer is not pinned to the first row (see `Exercise.displayBank`).
+    /// correct answer is not pinned to the first tile (see `Exercise.displayBank`).
     private var choices: [String] { exercise.displayBank }
 
     var body: some View {
-        VStack(spacing: 0) {
-            ForEach(Array(choices.enumerated()), id: \.offset) { index, choice in
-                choiceRow(choice: choice)
-
-                if index < choices.count - 1 {
-                    Rectangle()
-                        .fill(AppColor.hairline)
-                        .frame(height: 1)
+        MagnetBoard(bank: choices, placed: $placedIndices, maxPlaced: 1,
+                    isLocked: isLocked, result: result,
+                    answerTokens: exercise.answerTokens)
+            .onChange(of: placedIndices) { _, new in
+                answer = new.map { choices[$0] }
+            }
+            .onChange(of: answer) { _, newValue in
+                if newValue.isEmpty && !placedIndices.isEmpty {
+                    placedIndices = []
                 }
             }
-        }
-        .overlay(
-            RoundedRectangle(cornerRadius: 12, style: .continuous)
-                .stroke(AppColor.hairline, lineWidth: 1)
-        )
-        .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
-    }
-
-    private func choiceRow(choice: String) -> some View {
-        let isSelected = selected == choice
-        return Button {
-            guard !isLocked else { return }
-            withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
-                answer = [choice]
-            }
-        } label: {
-            HStack(spacing: Spacing.md) {
-                Text(choice)
-                    .font(.appToken)
-                    .foregroundColor(AppColor.ink)
-                    .multilineTextAlignment(.leading)
-                Spacer(minLength: 0)
-                if isSelected {
-                    Image(systemName: "circle.inset.filled")
-                        .foregroundColor(AppColor.ink)
-                } else {
-                    Image(systemName: "circle")
-                        .foregroundColor(AppColor.hairline)
-                }
-            }
-            .padding(.vertical, Spacing.md)
-            .padding(.horizontal, Spacing.md)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .background(isSelected ? AppColor.saffron.opacity(0.45) : Color.clear)
-            .contentShape(Rectangle())
-        }
-        .buttonStyle(ScaleButtonStyle())
-        .disabled(isLocked)
     }
 }
 

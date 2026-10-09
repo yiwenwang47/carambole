@@ -1,5 +1,10 @@
 # UI redesign — SwiftUI implementation plan
 
+> **Status (2026-10-09, end of session 1):** T0–T8 built on `ui-redesign`. Changed
+> since this plan: 06 Tranches dropped (plain `ModuleListView` instead), 05 Ruban
+> history to be replaced by **09 list**, library to become **08 Ruban**. See
+> `design/UI_REDESIGN_HANDOFF.md` for current status and next steps.
+
 *Written 2026-10-09. Read this first in the build session. The design source is
 `design/motion.html` (open it in a browser) and the design history is
 `design/UI_REDESIGN_HANDOFF.md`.*

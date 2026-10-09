@@ -2,10 +2,11 @@
 //  DrillView.swift
 //  carambole
 //
-//  "Le Cahier" single-exercise drill card. Renders the prompt framed by the
-//  corner-bracket brand motif, the appropriate input (token-build or
-//  multiple-choice), a Check button, and a result banner with the rule
-//  explanation. Built entirely from the design system — no FlashcardView symbols.
+//  Single-exercise drill card (07 · Aimants). Renders the prompt, the input
+//  (word magnets for build / multiple choice, or the typed baseline), the
+//  "Trop facile" gate, and the fixed Vérifier → Suivant pill. The session's top
+//  bar (✕, label, chevrons, ring) lives in `DrillSessionView` so it stays put
+//  while cards slide.
 //
 
 import SwiftUI
@@ -21,8 +22,6 @@ struct DrillView: View {
 
     /// The exercise to drill.
     let exercise: Exercise
-    /// Session progress (0...1) for the corner progress ring.
-    var progress: Double = 0
     /// Called once when the answer is checked, with the result + submitted tokens.
     var onResult: (Bool, [String]) -> Void = { _, _ in }
     /// Called instead of `onResult` when the user marked this drill "too easy"
@@ -32,18 +31,12 @@ struct DrillView: View {
     var onTooEasy: (Bool, [String]) -> Void = { _, _ in }
     /// Called when the user taps "Next" to advance to the following exercise.
     var onNext: () -> Void = {}
-    /// Whether a previous exercise exists to return to.
-    var canGoBack: Bool = false
-    /// Called when the user taps the back chevron to revisit the previous drill.
-    var onBack: () -> Void = {}
-    /// Whether a later exercise exists to move forward to.
-    var canGoForward: Bool = false
     /// Called to move forward (out of review, back toward the live drill).
     var onForward: () -> Void = {}
     /// Non-nil when revisiting an already-answered drill: show it read-only.
     var reviewData: ReviewData? = nil
 
-    /// How long the green "Correct" confirmation shows before auto-advancing.
+    /// How long the weld + `wght` wave shows before auto-advancing.
     private let correctAdvanceDelay: TimeInterval = 1.0
 
     /// Opt-in: read the model sentence aloud automatically on a correct answer.
@@ -64,6 +57,11 @@ struct DrillView: View {
     @State private var didRemove = false
 
     private var hasAnswer: Bool { !answer.isEmpty }
+
+    @AppStorage(AppPalette.storageKey) private var paletteID = AppPalette.fallback.rawValue
+    @AppStorage(DrillStyle.storageKey) private var drillStyleID = DrillStyle.fallback.rawValue
+    private var theme: AppTheme { AppPalette(stored: paletteID).theme }
+    private var drillStyle: DrillStyle { DrillStyle(stored: drillStyleID) }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -88,16 +86,13 @@ struct DrillView: View {
                 if !checked && reviewData == nil {
                     tooEasyControl
                 }
-                // Wrong LIVE answer: show ONLY the correct answer, just above the
-                // button. No banner, no explanation (that lives in review mode).
-                if checked && !isCorrect && reviewData == nil {
-                    correctAnswerHint
-                }
+                // (A wrong LIVE answer shows "Réponse : …" under the input's
+                // baseline — see DrillFeedbackLine — not here.)
                 actionButton
             }
             .padding(.horizontal, Spacing.screenH)
             .padding(.top, Spacing.sm)
-            .padding(.bottom, Spacing.md)
+            .padding(.bottom, Spacing.sm)
             .background(AppColor.paper)
         }
         .background(AppColor.paper.ignoresSafeArea())
@@ -108,8 +103,6 @@ struct DrillView: View {
     @ViewBuilder
     private func contentStack(spacing: CGFloat, compact: Bool) -> some View {
         VStack(alignment: .leading, spacing: spacing) {
-            header
-
             promptBlock(compact: compact)
 
             if let review = reviewData {
@@ -127,69 +120,35 @@ struct DrillView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
     }
 
-    // Navigation between drills is driven by the finger-tracked card stack in
-    // DrillSessionView (the carousel), which owns the horizontal drag gesture. The
-    // header chevrons (onBack/onForward) remain as an explicit fallback.
-
-    // MARK: - Header (label + progress ring)
-
-    private var header: some View {
-        HStack(alignment: .center) {
-            if canGoBack {
-                navChevron("chevron.left", label: "Exercice précédent", action: onBack)
-                    .padding(.trailing, Spacing.sm)
-            }
-            SectionLabel(reviewData != nil ? "Révision" : "Exercice")
-            Spacer()
-            if canGoForward {
-                navChevron("chevron.right", label: "Exercice suivant", action: onForward)
-                    .padding(.trailing, Spacing.sm)
-            }
-            ProgressRing(progress: progress, size: 36, lineWidth: 4)
-        }
-    }
-
-    private func navChevron(_ systemName: String, label: String,
-                            action: @escaping () -> Void) -> some View {
-        Button(action: action) {
-            Image(systemName: systemName)
-                .font(.system(size: 15, weight: .semibold))
-                .foregroundColor(AppColor.graphite)
-                .contentShape(Rectangle())
-        }
-        .buttonStyle(.plain)
-        .accessibilityLabel(label)
-    }
-
-    // MARK: - Prompt, framed by corner brackets
+    // MARK: - Prompt
 
     /// `compact` (tight height, e.g. keyboard up) hides the secondary chrome —
     /// cue, the always-on translation, and the Indice/Écouter assist row — so the
     /// prompt + input + footer fit without scrolling. The prompt itself always
     /// shows, shrinking via `minimumScaleFactor` before it would clip.
     private func promptBlock(compact: Bool) -> some View {
-        VStack(alignment: .leading, spacing: Spacing.sm) {
-            CornerBracketFrame {
-                Text(Self.blankedPrompt(exercise.prompt))
-                    .font(.appPrompt)
-                    .foregroundColor(AppColor.ink)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-            }
-
+        VStack(alignment: .leading, spacing: 10) {
+            // Cue: small label above the prompt (07 "Construis la phrase").
             if !compact, let cue = exercise.cue, !cue.isEmpty {
                 Text(cue)
                     .uppercaseLabel()
-                    .padding(.leading, Spacing.sm)
             }
+
+            Text(Self.blankedPrompt(exercise.prompt))
+                .font(.appPrompt)
+                .tracking(-0.7)
+                .lineSpacing(2)
+                .foregroundColor(AppColor.ink)
+                .minimumScaleFactor(0.7)
+                .fixedSize(horizontal: false, vertical: true)
+                .frame(maxWidth: .infinity, alignment: .leading)
 
             // Always-on, subtle English translation — one quiet line (hidden when compact).
             if !compact, let translation = exercise.translation, !translation.isEmpty {
                 Text("“\(translation)”")
-                    .font(.appExplain)
-                    .foregroundColor(AppColor.graphite)
+                    .font(.appBody)
+                    .foregroundColor(AppColor.g2)
                     .fixedSize(horizontal: false, vertical: true)
-                    .padding(.leading, Spacing.sm)
             }
 
             // Opt-in assists on one line: English "Indice" (left, when present) and
@@ -197,7 +156,7 @@ struct DrillView: View {
             // Hidden when compact to reclaim vertical space.
             if !compact {
                 assistRow
-                    .padding(.leading, Spacing.sm)
+                    .padding(.top, 4)
             }
         }
     }
@@ -213,7 +172,7 @@ struct DrillView: View {
 
     /// Renders the prompt with each underscore "blank" (`___`) drawn as ONE
     /// continuous underline instead of literal underscore glyphs, which render with
-    /// visible gaps in the serif prompt face.
+    /// visible gaps in the prompt face.
     ///
     /// Each slot is wrapped in WORD JOINERs so a blank that lands at the very start or
     /// end of the prompt (e.g. "des ___" / "___ tu as faim") still shows its underline:
@@ -278,13 +237,64 @@ struct DrillView: View {
                 listenButton
             }
             if showHint, let hint = exercise.hint, !hint.isEmpty {
-                Text(hint)
-                    .font(.appExplain)
-                    .foregroundColor(AppColor.graphite)
-                    .fixedSize(horizontal: false, vertical: true)
+                hintText(hint)
                     .transition(.opacity.combined(with: .move(edge: .top)))
             }
         }
+    }
+
+    /// The revealed hint. Plateau: on a pale card (palette tint); Cadres: a
+    /// thin bar in the palette's deep colour on its left.
+    @ViewBuilder
+    private func hintText(_ hint: String) -> some View {
+        let text = Text(hint)
+            .font(.appBody)
+            .foregroundColor(AppColor.graphite)
+            .fixedSize(horizontal: false, vertical: true)
+        switch drillStyle {
+        case .plateau:
+            text
+                .padding(.horizontal, 14).padding(.vertical, 11)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(RoundedRectangle(cornerRadius: 14, style: .continuous).fill(Color(hex: theme.tint)))
+        case .cadres:
+            text
+                .padding(.leading, 12)
+                .overlay(alignment: .leading) {
+                    Rectangle().fill(Color(hex: theme.fragile)).frame(width: 2)
+                }
+        }
+    }
+
+    /// The shared look of the two assists. Plateau: a round pale button (the
+    /// quiet colour, capped) beside its label. Cadres: label + glyph inside a
+    /// rounded frame in the palette's deep colour.
+    @ViewBuilder
+    private func assistLabel(_ title: String, glyph: AnyView, glyphLeading: Bool) -> some View {
+        switch drillStyle {
+        case .plateau:
+            HStack(spacing: 8) {
+                if glyphLeading { assistDisc(glyph) }
+                Text(title).uppercaseLabel(AppColor.ink)
+                if !glyphLeading { assistDisc(glyph) }
+            }
+        case .cadres:
+            HStack(spacing: 7) {
+                if glyphLeading { glyph.foregroundColor(Color(hex: theme.fragile)) }
+                Text(title).uppercaseLabel(AppColor.ink)
+                if !glyphLeading { glyph.foregroundColor(Color(hex: theme.fragile)) }
+            }
+            .padding(.horizontal, 13)
+            .frame(height: 34)
+            .overlay(Capsule().strokeBorder(Color(hex: theme.fragile), lineWidth: 1.5))
+        }
+    }
+
+    private func assistDisc(_ glyph: AnyView) -> some View {
+        glyph
+            .foregroundColor(AppColor.ink)
+            .frame(width: 38, height: 38)
+            .background(Circle().fill(Color(hex: theme.quietFill)))
     }
 
     /// Tap-to-reveal English grammar hint toggle.
@@ -294,21 +304,16 @@ struct DrillView: View {
                 showHint.toggle()
             }
         } label: {
-            HStack(spacing: 6) {
-                Image(systemName: "lightbulb")
-                    .font(.system(size: 13, weight: .semibold))
-                Text("Indice")
-                    .font(.appLabel)
-                    .textCase(.uppercase)
-                    .tracking(2)
-                Image(systemName: "chevron.down")
-                    .font(.system(size: 11, weight: .semibold))
-                    .rotationEffect(.degrees(showHint ? 180 : 0))
-            }
-            .foregroundColor(showHint ? AppColor.saffronDeep : AppColor.graphite)
+            assistLabel("Indice", glyph: AnyView(
+                Text(drillStyle == .plateau ? "?" : "↓")
+                    .font(drillStyle == .plateau ? .label(size: 15, wght: 500) : .appLabel)
+                    .rotationEffect(.degrees(drillStyle == .cadres && showHint ? 180 : 0))
+            ), glyphLeading: drillStyle == .plateau)
+            .padding(.vertical, 4)
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
+        .accessibilityLabel(showHint ? "Masquer l'indice" : "Indice")
     }
 
     /// Opt-in "hear the sentence" hint, available while solving. Plays the bundled
@@ -318,15 +323,11 @@ struct DrillView: View {
     /// Settings toggle).
     private var listenButton: some View {
         Button { Speaker.shared.speak(exercise.spokenFrench, key: exercise.audioKey) } label: {
-            HStack(spacing: 6) {
-                Image(systemName: "speaker.wave.2.fill")
-                    .font(.system(size: 13, weight: .semibold))
-                Text("Écouter")
-                    .font(.appLabel)
-                    .textCase(.uppercase)
-                    .tracking(2)
-            }
-            .foregroundColor(AppColor.saffronDeep)
+            assistLabel("Écouter", glyph: AnyView(
+                Image(systemName: "speaker.wave.2")
+                    .font(.system(size: drillStyle == .plateau ? 13 : 11, weight: .regular))
+            ), glyphLeading: drillStyle == .cadres)
+            .padding(.vertical, 4)
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
@@ -334,6 +335,9 @@ struct DrillView: View {
     }
 
     // MARK: - Input
+
+    /// nil until checked; then the live result (drives weld / shake / feedback).
+    private var liveResult: Bool? { checked ? isCorrect : nil }
 
     @ViewBuilder
     private var inputBlock: some View {
@@ -345,14 +349,19 @@ struct DrillView: View {
             // normal drills never scroll (locked feel holds), but a fully-built 10-slot
             // construis can always reach every chip. Prompt + footer stay fixed.
             ScrollView {
-                TokenBuilderView(exercise: exercise, answer: $answer, isLocked: checked)
+                TokenBuilderView(exercise: exercise, answer: $answer, isLocked: checked,
+                                 result: liveResult)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
             .scrollBounceBehavior(.basedOnSize)
+            // Leftover tiles drop off-screen on a correct weld — don't clip them.
+            .scrollClipDisabled()
         case .multipleChoice:
-            ChoiceView(exercise: exercise, answer: $answer, isLocked: checked)
+            ChoiceView(exercise: exercise, answer: $answer, isLocked: checked,
+                       result: liveResult)
         case .freeText:
-            TypeAnswerView(exercise: exercise, answer: $answer, isLocked: checked)
+            TypeAnswerView(exercise: exercise, answer: $answer, isLocked: checked,
+                           result: liveResult)
         }
     }
 
@@ -364,7 +373,8 @@ struct DrillView: View {
             Text("Votre réponse")
                 .uppercaseLabel()
             Text(tokens.isEmpty ? "—" : Exercise.displayJoin(tokens))
-                .font(.appToken)
+                .font(.display(size: 22, wght: 300))
+                .tracking(-0.4)
                 .foregroundColor(AppColor.ink)
                 .fixedSize(horizontal: false, vertical: true)
         }
@@ -377,27 +387,28 @@ struct DrillView: View {
     /// (`reviewData != nil`). Shows correctness, the correct answer if it was a
     /// miss, and the FULL bilingual rule explanation (French, then the subtler
     /// English line). Live drills never render this — a wrong live answer shows
-    /// only the compact `correctAnswerHint` in the footer instead.
+    /// only "Réponse : …" under the input baseline (`DrillFeedbackLine`).
     private func reviewResultBlock(correct: Bool) -> some View {
-        let tint = correct ? AppColor.success : AppColor.error
-        return VStack(alignment: .leading, spacing: Spacing.md) {
-            HStack(spacing: Spacing.sm) {
-                Image(systemName: correct ? "checkmark.circle.fill" : "xmark.circle.fill")
-                    .foregroundColor(tint)
-                Text(correct ? "Correct" : "Pas tout à fait")
-                    .font(.appTitle)
-                    .foregroundColor(tint)
-                Spacer()
-                // (Audio is on the prompt's "Écouter" assist row above, shown in both
-                // solving and review — no separate banner speaker needed here.)
-            }
+        VStack(alignment: .leading, spacing: Spacing.md) {
+            // State by form, not hue: solid rule = right, dashed rule = wrong.
+            Line()
+                .stroke(AppColor.ink, style: StrokeStyle(lineWidth: 1, dash: correct ? [] : [4, 3]))
+                .frame(height: 1)
+
+            Text(correct ? "Juste" : "Pas tout à fait")
+                .font(.display(size: 22, wght: 300))
+                .tracking(-0.4)
+                .foregroundColor(AppColor.ink)
+            // (Audio is on the prompt's "Écouter" assist row above, shown in both
+            // solving and review — no separate speaker needed here.)
 
             if !correct {
-                VStack(alignment: .leading, spacing: 2) {
+                VStack(alignment: .leading, spacing: 4) {
                     Text("Réponse")
                         .uppercaseLabel()
                     Text(Exercise.displayJoin(exercise.answerTokens))
-                        .font(.appToken)
+                        .font(.display(size: 22, wght: 300))
+                        .tracking(-0.4)
                         .foregroundColor(AppColor.ink)
                 }
             }
@@ -409,16 +420,16 @@ struct DrillView: View {
             // `.basedOnSize` keeps short explanations static (no scroll at all),
             // so the locked feel holds for the common case.
             ScrollView {
-                VStack(alignment: .leading, spacing: 4) {
+                VStack(alignment: .leading, spacing: 6) {
                     Text(exercise.explanation)
-                        .font(.appExplain)
+                        .font(.appBody)
                         .foregroundColor(AppColor.ink)
                         .fixedSize(horizontal: false, vertical: true)
 
                     if let english = exercise.displayExplanationEN {
                         Text(english)
-                            .font(.appExplain)
-                            .foregroundColor(AppColor.graphite)
+                            .font(.appBody)
+                            .foregroundColor(AppColor.g2)
                             .fixedSize(horizontal: false, vertical: true)
                     }
                 }
@@ -427,33 +438,7 @@ struct DrillView: View {
             .scrollBounceBehavior(.basedOnSize)
             .frame(maxHeight: 220)
         }
-        .padding(Spacing.md)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(
-            RoundedRectangle(cornerRadius: 12, style: .continuous)
-                .fill(tint.opacity(0.12))
-        )
-        .overlay(
-            RoundedRectangle(cornerRadius: 12, style: .continuous)
-                .stroke(tint.opacity(0.4), lineWidth: 1)
-        )
-    }
-
-    // MARK: - Wrong live answer (compact, footer)
-
-    /// Shown directly above "Suivant" on a WRONG live answer: just the correct
-    /// answer, compactly. No banner, no explanation — that's reserved for review.
-    private var correctAnswerHint: some View {
-        VStack(alignment: .leading, spacing: 2) {
-            Text("Réponse")
-                .uppercaseLabel()
-            Text(Exercise.displayJoin(exercise.answerTokens))
-                .font(.appToken)
-                .foregroundColor(AppColor.ink)
-                .fixedSize(horizontal: false, vertical: true)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .transition(.opacity)
     }
 
     // MARK: - "Too easy" gate control
@@ -465,27 +450,22 @@ struct DrillView: View {
     private var tooEasyControl: some View {
         if pendingTooEasy {
             HStack(spacing: Spacing.sm) {
-                Image(systemName: "checkmark.seal")
-                    .font(.system(size: 13, weight: .semibold))
                 Text("Réponds correctement pour le retirer")
-                    .font(.appLabel)
-                Spacer()
-                Button("Annuler") {
+                    .uppercaseLabel(AppColor.ink)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
+                Spacer(minLength: Spacing.sm)
+                Button {
                     withAnimation(.spring(response: 0.3, dampingFraction: 0.85)) {
                         pendingTooEasy = false
                     }
+                } label: {
+                    Text("Annuler").uppercaseLabel(AppColor.ink).underline()
                 }
-                .font(.appLabel)
                 .buttonStyle(.plain)
             }
-            .foregroundColor(AppColor.saffronDeep)
-            .padding(.horizontal, Spacing.md)
-            .padding(.vertical, Spacing.sm)
+            .padding(.vertical, 8)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .background(
-                RoundedRectangle(cornerRadius: 10, style: .continuous)
-                    .fill(AppColor.saffron.opacity(0.16))
-            )
             .transition(.opacity)
         } else {
             Button {
@@ -493,18 +473,13 @@ struct DrillView: View {
                     pendingTooEasy = true
                 }
             } label: {
-                HStack(spacing: 6) {
-                    Image(systemName: "checkmark.seal")
-                        .font(.system(size: 12, weight: .semibold))
-                    Text("Trop facile — retirer")
-                        .font(.appLabel)
-                        .textCase(.uppercase)
-                        .tracking(1.5)
-                }
-                .foregroundColor(AppColor.graphite)
-                .contentShape(Rectangle())
+                Text("Trop facile — retirer")
+                    .uppercaseLabel()
+                    .padding(.vertical, 8)
+                    .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
 
@@ -515,42 +490,30 @@ struct DrillView: View {
         if reviewData != nil {
             // Read-only revisit: the only action is to move forward again.
             Button("Suivant") { onForward() }
-                .buttonStyle(PrimaryButtonStyle())
+                .buttonStyle(DrillButtonStyle())
         } else if checked {
             if isCorrect {
                 // Non-interactive green confirmation; auto-advances after a beat.
                 correctConfirmation
             } else {
                 Button("Suivant") { onNext() }
-                    .buttonStyle(PrimaryButtonStyle())
+                    .buttonStyle(DrillButtonStyle())
             }
         } else {
             Button("Vérifier") { check() }
-                .buttonStyle(PrimaryButtonStyle())
+                .buttonStyle(DrillButtonStyle())
                 .disabled(!hasAnswer)
-                .opacity(hasAnswer ? 1.0 : 0.5)
+                .opacity(hasAnswer ? 1.0 : 0.25)
+                .animation(.easeOut(duration: 0.25), value: hasAnswer)
         }
     }
 
     /// Mirrors PrimaryButtonStyle's footprint so the footer doesn't jump when it
-    /// swaps from "Vérifier" to this confirmation.
+    /// swaps from "Vérifier" to this (non-interactive) confirmation.
+    /// "Juste" must read as a change, not a relabelled Vérifier: white pill
+    /// framed in the palette's deep colour, a ✓, and a small pop as it lands.
     private var correctConfirmation: some View {
-        HStack(spacing: Spacing.sm) {
-            Image(systemName: didRemove ? "checkmark.seal.fill" : "checkmark.circle.fill")
-            Text(didRemove ? "Retiré" : "Correct")
-                .font(.appLabel)
-                .fontWeight(.semibold)
-                .tracking(1)
-                .textCase(.uppercase)
-        }
-        .foregroundColor(AppColor.success)
-        .padding(.vertical, Spacing.md)
-        .padding(.horizontal, Spacing.lg)
-        .frame(maxWidth: .infinity)
-        .background(
-            RoundedRectangle(cornerRadius: 14, style: .continuous)
-                .fill(AppColor.success.opacity(0.14))
-        )
+        CorrectPill(text: didRemove ? "Retiré" : "Juste  ✓", stroke: Color(hex: theme.fragile))
     }
 
     // MARK: - Logic
@@ -589,60 +552,42 @@ struct DrillView: View {
     }
 }
 
-// MARK: - Corner bracket motif
+// MARK: - Correct pill
 
-/// Frames content with the brand's corner-bracket motif (recreated locally for
-/// T5 — does NOT depend on the soon-to-be-deleted FlashcardView `BracketView`).
-/// Draws an `ink` left top-bracket and right bottom-bracket around its content.
-struct CornerBracketFrame<Content: View>: View {
-    var armLength: CGFloat = 16
-    var lineWidth: CGFloat = 2.5
-    var color: Color = AppColor.ink
-    @ViewBuilder var content: () -> Content
+private struct CorrectPill: View {
+    let text: String
+    let stroke: Color
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @State private var landed = false
 
     var body: some View {
-        content()
-            .padding(Spacing.md)
-            .overlay(alignment: .topLeading) {
-                CornerBracket(corner: .topLeading, armLength: armLength, lineWidth: lineWidth)
-                    .stroke(color, style: StrokeStyle(lineWidth: lineWidth, lineCap: .round, lineJoin: .round))
-                    .frame(width: armLength, height: armLength)
-            }
-            .overlay(alignment: .bottomTrailing) {
-                CornerBracket(corner: .bottomTrailing, armLength: armLength, lineWidth: lineWidth)
-                    .stroke(color, style: StrokeStyle(lineWidth: lineWidth, lineCap: .round, lineJoin: .round))
-                    .frame(width: armLength, height: armLength)
+        Text(text)
+            .font(.display(size: 16, wght: 400))
+            .foregroundColor(AppColor.ink)
+            .frame(maxWidth: .infinity, minHeight: 54, maxHeight: 54)
+            .background(Capsule().fill(AppColor.white))
+            .overlay(Capsule().strokeBorder(stroke, lineWidth: 2))
+            .scaleEffect(landed || reduceMotion ? 1 : 0.92)
+            .onAppear {
+                withAnimation(.spring(response: 0.32, dampingFraction: 0.5)) { landed = true }
             }
     }
 }
 
-/// A single right-angle corner bracket (two arms meeting at one corner).
-private struct CornerBracket: Shape {
-    enum Corner { case topLeading, bottomTrailing }
-    let corner: Corner
-    var armLength: CGFloat
-    var lineWidth: CGFloat
+// MARK: - Line
 
+/// A horizontal line across the full width (for solid or dashed rules).
+struct Line: Shape {
     func path(in rect: CGRect) -> Path {
-        var path = Path()
-        switch corner {
-        case .topLeading:
-            // ┌ — vertical arm down, horizontal arm right, meeting at top-left.
-            path.move(to: CGPoint(x: rect.minX, y: rect.maxY))
-            path.addLine(to: CGPoint(x: rect.minX, y: rect.minY))
-            path.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
-        case .bottomTrailing:
-            // ┘ — horizontal arm left, vertical arm up, meeting at bottom-right.
-            path.move(to: CGPoint(x: rect.minX, y: rect.maxY))
-            path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
-            path.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
-        }
-        return path
+        var p = Path()
+        p.move(to: CGPoint(x: rect.minX, y: rect.midY))
+        p.addLine(to: CGPoint(x: rect.maxX, y: rect.midY))
+        return p
     }
 }
 
 // MARK: - Preview
 
 #Preview {
-    DrillView(exercise: .sample, progress: 0.4, onResult: { _, _ in }, onNext: {})
+    DrillView(exercise: .sample, onResult: { _, _ in }, onNext: {})
 }

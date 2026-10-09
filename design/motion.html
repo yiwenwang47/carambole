@@ -69,23 +69,6 @@ canvas { display: block; }
 .c3 .btn { position: absolute; left: 22px; right: 22px; bottom: 30px; height: 54px; border-radius: 27px; background: var(--ink); color: var(--paper); display: flex; align-items: center; justify-content: space-between; padding: 0 22px; font-size: 16px; font-weight: 400; z-index: 3; }
 .c3 .shake { position: absolute; right: 22px; top: 210px; z-index: 3; border-bottom: 1px solid var(--ink); }
 
-/* 05 · Ruban */
-.c5 canvas { position: absolute; inset: 0; cursor: grab; }
-.c5 .num { font-size: 64px; font-weight: 200; letter-spacing: -0.05em; line-height: .9; }
-.c5 .ribline { position: absolute; left: 22px; width: 54px; height: 1px; background: var(--ink); pointer-events: none; }
-.c5 .readout { position: absolute; left: 22px; bottom: 66px; }
-.c5 .readout .d { font-size: 22px; letter-spacing: -0.02em; margin-top: 6px; }
-
-/* 06 · Tranches */
-.c6 canvas { position: absolute; inset: 0; cursor: ns-resize; touch-action: none; }
-.c6 .num { font-size: 64px; font-weight: 200; letter-spacing: -0.05em; line-height: .9; }
-.c6 .readout { position: absolute; left: 22px; right: 22px; bottom: 64px; pointer-events: none; }
-.c6 .readout .t { font-size: 22px; letter-spacing: -0.02em; margin-top: 10px; }
-.c6 .readout .st { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
-.c6.opening .readout, .c6.opening .tick { opacity: 0; }
-.c6 .readout, .c6 .tick { transition: opacity .3s; }
-.c6 .tick { position: absolute; left: 22px; width: 54px; height: 1px; background: var(--ink); pointer-events: none; }
-
 /* 07 · Aimants */
 .c7 .prompt { position: absolute; left: 22px; right: 22px; top: 118px; font-size: 28px; font-weight: 250; letter-spacing: -0.025em; line-height: 1.15; }
 .c7 .base { position: absolute; left: 22px; right: 22px; top: 358px; height: 1px; background: var(--ink); }
@@ -101,6 +84,29 @@ canvas { display: block; }
 .c7 .btn { position: absolute; left: 22px; right: 22px; bottom: 30px; height: 54px; border-radius: 27px; background: var(--ink); color: var(--paper);
   display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 400; transition: opacity .25s; }
 .c7 .btn[disabled] { opacity: .25; cursor: default; }
+
+
+/* 08 · Ruban (library) */
+.c8 .shelf { position: absolute; inset: 0; overflow-y: auto; scrollbar-width: none; }
+.c8 .shelf::-webkit-scrollbar { display: none; }
+.c8 .shelf .in { position: relative; }
+.c8 .shelf canvas { position: absolute; left: 0; top: 0; pointer-events: none; }
+.c8 .big { position: absolute; left: 22px; top: 100px; font-size: 40px; font-weight: 250; letter-spacing: -0.03em; line-height: 1.05; }
+.c8 .big em { font-style: normal; color: var(--g2); }
+.c8 .bk { position: absolute; left: 22px; width: 200px; }
+.c8 .bk .t { font-size: 32px; font-weight: 250; letter-spacing: -0.03em; line-height: 1.04; margin-top: 6px; }
+.c8 .bk .m { margin-top: 8px; display: block; }
+.c8 .bk .go { border-bottom: 1px solid var(--ink); cursor: pointer; }
+.c8 .bk.off .t { color: var(--g3); }
+.c8 .hint { position: absolute; left: 0; right: 0; text-align: center; }
+
+/* 09 · Historique minimal */
+.c9 .num { font-size: 64px; font-weight: 200; letter-spacing: -0.05em; line-height: .9; }
+.c9 .days { position: absolute; left: 22px; right: 22px; top: 252px; bottom: 60px; overflow: hidden; border-top: 1px solid var(--ink); }
+.c9 .day { display: flex; justify-content: space-between; align-items: baseline; padding: 11px 0; border-bottom: 1px solid var(--g4); font-size: 15px; font-weight: 400; }
+.c9 .day .n { font-family: var(--label); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink); }
+.c9 .day.rest { color: var(--g3); }
+.c9 .day.rest .n { color: var(--g3); }
 
 @media (prefers-reduced-motion: reduce) { .c2 .ticker .col { transition: none; } }
 </style>
@@ -174,44 +180,6 @@ canvas { display: block; }
       <b>iOS route</b>SpriteKit <code>SpriteView</code> with physics bodies (gravity, plus the device tilt via CoreMotion as a bonus), embedded in a SwiftUI screen.</p>
   </section>
 
-  <!-- 05 -->
-  <section class="concept">
-    <div class="no">05 · Historique</div>
-    <h2>Ruban</h2>
-    <div class="phone c5" id="p5">
-      <canvas id="rib"></canvas>
-      <div class="ribline" id="ribline"></div>
-      <div class="sb"><span>9:41</span><i></i></div>
-      <div class="abs lab ink" style="left:22px;top:66px">‹ Historique</div>
-      <div class="abs lab" style="right:22px;top:66px">30 jours</div>
-      <div class="abs" style="left:22px;top:100px"><div class="num">61</div><div class="lab" style="margin-top:8px">appris</div></div>
-      <div class="abs" style="right:22px;top:100px;text-align:right"><div class="num">148</div><div class="lab" style="margin-top:8px">révisés</div></div>
-      <div class="abs lab" style="left:22px;top:214px">10 sept. ↓</div>
-      <div class="readout" id="ribday"></div>
-      <div class="abs lab" style="left:22px;right:22px;bottom:30px;display:flex;justify-content:space-between"><span class="ink">Série 12 j</span><span>Largeur = travail · torsion = pause</span></div>
-    </div>
-    <p class="cap">The ribbon is the history timeline: oldest day at the top, today at the bottom. <b style="display:inline;font-size:inherit;letter-spacing:0;text-transform:none;font-family:inherit;font-weight:500">Width</b> is how much you did that day, and a rest day pinches it into a half-twist that shows the grey back of the paper. Run a finger down it to read any day, and drag sideways to turn it. Big weeks look wide and generous, and broken streaks look like knots.
-      <b>iOS route</b>RealityKit procedural <code>MeshResource</code> (≈2k vertices), a <code>DragGesture</code> mapped to a day index with a selection haptic per day, and a SwiftUI overlay for the readout.</p>
-  </section>
-
-  <!-- 06 -->
-  <section class="concept">
-    <div class="no">06 · Livre · sommaire · nouveau</div>
-    <h2>Tranches</h2>
-    <div class="phone c6" id="p6">
-      <canvas id="slices"></canvas>
-      <div class="tick" id="tick6"></div>
-      <div class="sb"><span>9:41</span><i></i></div>
-      <div class="abs lab ink" style="left:22px;top:66px">‹ Fondations</div>
-      <div class="abs lab" style="right:22px;top:66px">25 modules</div>
-      <div class="abs lab" style="left:22px;top:100px">25 ↑</div>
-      <div class="readout" id="sel6"></div>
-      <div class="abs lab" style="left:22px;right:22px;bottom:30px;display:flex;justify-content:space-between"><button class="lab ink" id="open6">Ouvrir →</button><span>Glisser ↕ · toucher pour ouvrir</span></div>
-    </div>
-    <p class="cap">The table of contents is the fruit itself. Cut a carambole and every slice is a star, so the book is 25 star slices stacked on a skewer, module 01 at the bottom. Mastered modules are chrome (the same metal as the 01 object), modules in progress are white, and the ones still to come are faint glass outlines. The column literally grows as you learn. <b style="display:inline;font-size:inherit;letter-spacing:0;text-transform:none;font-family:inherit;font-weight:500">How to use it:</b> slide a finger up or down the stack and the slice under your finger fans out, with a haptic tick per module and its name at the bottom. Let go to keep it chosen, drag sideways to turn the stack, and tap (or “Ouvrir”) to open: the slice lifts out, turns to face you and grows into the module page. Same gesture as scrubbing the 05 ribbon. This could be what “swipe up” on the 01 book home reveals: the single chrome star splits into its 25 slices.
-      <b>iOS route</b>RealityKit (or SceneKit) with 25 instances of the same extruded star mesh and three materials. A vertical <code>DragGesture</code> maps to a module index with a selection haptic per slice; the fan-open gap is a spring on each slice’s y. SwiftUI overlay for the readout.</p>
-  </section>
-
   <!-- 07 -->
   <section class="concept">
     <div class="no">07 · Exercice · nouveau</div>
@@ -231,6 +199,42 @@ canvas { display: block; }
     <p class="cap">The drill keeps its standard layout (prompt, answer, fixed button), but the words become magnets. The bank is a level row of word tiles. Tap a word and it springs onto the line with a little overshoot; tap it again and it flies home. When the answer is right, the magnets weld into one sentence, the leftover words drop off the screen, and a single weight wave runs through it (the 02 motion). When it’s wrong, the line shakes and the wrong words turn dashed. Try both.
       <b>iOS route</b>SwiftUI only: each token is a view with <code>.position</code> driven by <code>withAnimation(.spring(duration: .35, bounce: .3))</code>, a <code>matchedGeometryEffect</code> between bank and line, <code>.phaseAnimator</code> for the shake, and the 02 <code>wght</code> wave on success. Light haptic per snap.</p>
   </section>
+
+  <!-- 08 -->
+  <section class="concept">
+    <div class="no">08 · Bibliothèque · nouveau</div>
+    <h2>Ruban</h2>
+    <div class="phone c8" id="p8">
+      <div class="shelf" id="shelf8"><div class="in" id="in8">
+        <canvas id="rib8"></canvas>
+        <div class="abs lab ink" style="left:22px;top:66px">Carambole</div>
+        <div class="abs lab" style="right:22px;top:66px">Bibliothèque</div>
+        <div class="big" id="big8"></div>
+      </div></div>
+      <div class="sb" style="background:var(--paper)"><span>9:41</span><i></i></div>
+    </div>
+    <p class="cap">One paper ribbon runs down the whole shelf, and each book is a stretch of it. The ribbon is drawn inside the scrolling page, so it moves exactly with the titles. A book you have started is drawn from its last 30 days (width = work, a full twist = a rest day); a full twist also marks where one book ends and the next begins. Books to come are a narrow, faint strip of tracing paper. With 10 books the shelf simply gets longer: each book takes the same short stretch (≈ 200 pt), started books first, so the live part of the ribbon is always on the first screen.
+      <b>iOS route</b>The ribbon mesh in a <code>RealityView</code> (orthographic camera) placed inside the <code>ScrollView</code> content, as tall as the list, so the system scroll moves it; only its gentle sway animates.</p>
+  </section>
+
+  <!-- 09 -->
+  <section class="concept">
+    <div class="no">09 · Historique · minimal</div>
+    <h2>Liste</h2>
+    <div class="phone c9" id="p9">
+      <div class="sb"><span>9:41</span><i></i></div>
+      <div class="abs lab ink" style="left:22px;top:66px">‹ Historique</div>
+      <div class="abs lab" style="right:22px;top:66px">30 jours</div>
+      <div class="abs" style="left:22px;top:100px"><div class="num">61</div><div class="lab" style="margin-top:8px">appris</div></div>
+      <div class="abs" style="right:22px;top:100px;text-align:right"><div class="num">148</div><div class="lab" style="margin-top:8px">révisés</div></div>
+      <div class="abs lab ink" style="left:22px;top:214px">Série 12 j</div>
+      <div class="days" id="days9"></div>
+      <div class="abs lab" style="left:22px;right:22px;bottom:30px">Chiffres approximatifs avant le 19 juin</div>
+    </div>
+    <p class="cap">History without an object: two big totals, the streak, then one quiet line per day, newest first. Rest days stay in the list, greyed, so gaps are still visible. Nothing moves.
+      <b>iOS route</b>Plain SwiftUI <code>ScrollView</code> over <code>HistoryViewModel.activities</code>.</p>
+  </section>
+
 
 </div>
 
@@ -421,223 +425,6 @@ frame();
 })();
 </script>
 
-<!-- 05 · ribbon history -->
-<script type="module">
-import * as THREE from "three";
-const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-const cv = document.getElementById("rib");
-const W = 360, H = 760;
-const renderer = new THREE.WebGLRenderer({ canvas: cv, antialias: true, alpha: true });
-renderer.setPixelRatio(Math.min(devicePixelRatio, 2)); renderer.setSize(W, H);
-const scene = new THREE.Scene();
-const cam = new THREE.PerspectiveCamera(34, W / H, .1, 100);
-cam.position.set(0, 0, 9.5); cam.lookAt(0, 0, 0);
-scene.add(new THREE.HemisphereLight(0xffffff, 0x9a9995, 2.2));
-const key = new THREE.DirectionalLight(0xffffff, 2.2); key.position.set(-2, 4, 5); scene.add(key);
-
-// 10 sept → 9 oct: [learned, reviewed]; 0/0 = rest day
-const L = [4,5,0,6,7,5,8,9,6,0,7,8,7,9,8,5,6,9,10,0,9,8,8,5,9,0,7,8,6,6];
-const R = [10,13,0,16,18,14,19,21,15,0,17,20,19,22,21,12,17,21,23,0,21,22,21,11,24,0,17,21,12,14];
-const N = L.length, tot = L.map((l, i) => l + R[i]), mx = Math.max(...tot);
-const DOW = ["Dim.","Lun.","Mar.","Mer.","Jeu.","Ven.","Sam."];
-const dateOf = i => { const d = new Date(2026, 8, 10 + i); return `${DOW[d.getDay()]} ${d.getDate()} ${d.getMonth() === 8 ? "sept." : "oct."}`; };
-
-// spine: a calm S from top (oldest) to bottom (today)
-const Y0 = 2.0, Y1 = -2.1;
-const spine = t => new THREE.Vector3(Math.sin(t * Math.PI * 1.1) * .55, Y0 + (Y1 - Y0) * t, Math.sin(t * Math.PI * 2) * .35);
-const S = 900;
-const widthAt = s => { // ribbon width follows the day's total, eased between days
-  const d = s * (N - 1), i = Math.floor(d), f = d - i, j = Math.min(N - 1, i + 1);
-  const e = f * f * (3 - 2 * f);
-  const v = tot[i] * (1 - e) + tot[j] * e;
-  return .04 + .5 * (v / mx);
-};
-const twistAt = s => {
-  let th = 0; const d = s * (N - 1);
-  tot.forEach((v, i) => { if (v === 0) { const x = Math.min(1, Math.max(0, (d - i + .5) / 1)); th += 2 * Math.PI * x * x * (3 - 2 * x); } });
-  return th;
-};
-const Z = new THREE.Vector3(0, 0, 1), pos = [], eA = [], eB = [];
-const dt = 1e-3;
-for (let i = 0; i <= S; i++) {
-  const s = i / S, p = spine(s), T = spine(Math.min(1, s + dt)).sub(spine(Math.max(0, s - dt))).normalize();
-  const w0 = Z.clone().sub(T.clone().multiplyScalar(T.dot(Z))).normalize();
-  const xw = new THREE.Vector3().crossVectors(T, w0);  // in-screen width direction
-  const th = twistAt(s);
-  const w = xw.multiplyScalar(Math.cos(th)).add(w0.clone().multiplyScalar(Math.sin(th))).multiplyScalar(widthAt(s) / 2);
-  const a = p.clone().add(w), b = p.clone().sub(w);
-  pos.push(a.x, a.y, a.z, b.x, b.y, b.z); eA.push(a); eB.push(b);
-}
-const idx = [];
-for (let i = 0; i < S; i++) { const k = i * 2; idx.push(k, k + 1, k + 2, k + 1, k + 3, k + 2); }
-const g = new THREE.BufferGeometry();
-g.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3)); g.setIndex(idx); g.computeVertexNormals();
-// two-sided paper: white front, grey back (the back only shows inside a rest-day twist)
-const front = new THREE.Mesh(g, new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: .6, side: THREE.BackSide }));
-const back = new THREE.Mesh(g, new THREE.MeshStandardMaterial({ color: 0x8d8d8a, roughness: .7, side: THREE.FrontSide }));
-const lm = new THREE.LineBasicMaterial({ color: 0x141414 });
-const grp = new THREE.Group();
-grp.add(front, back, new THREE.Line(new THREE.BufferGeometry().setFromPoints(eA), lm), new THREE.Line(new THREE.BufferGeometry().setFromPoints(eB), lm));
-// selection marker: a thin bar across the ribbon at the chosen day
-const mark = new THREE.Mesh(new THREE.BoxGeometry(1, .012, .012), new THREE.MeshBasicMaterial({ color: 0x141414 }));
-grp.add(mark);
-scene.add(grp);
-
-const readout = document.getElementById("ribday"), rl = document.getElementById("ribline");
-let sel = N - 1;
-function select(i) {
-  sel = i;
-  const s = i / (N - 1), p = spine(s);
-  mark.position.copy(p); mark.scale.x = Math.max(.5, widthAt(s) + .5);
-  readout.innerHTML = tot[i] === 0
-    ? `<span class="lab ink">${dateOf(i)}${i === N - 1 ? " · aujourd’hui" : ""}</span><div class="d">Pause</div>`
-    : `<span class="lab ink">${dateOf(i)}${i === N - 1 ? " · aujourd’hui" : ""}</span><div class="d">${L[i]} appris · ${R[i]} révisés</div>`;
-}
-select(N - 1);
-
-// pointer: vertical position scrubs the day, horizontal drag turns the ribbon
-const proj = v => { const q = v.clone().applyMatrix4(grp.matrixWorld).project(cam); return (1 - q.y) / 2 * H; };
-let rotTarget = 0, rot = 0, dragging = false, lx = 0;
-function scrub(clientY) {
-  const y = clientY - cv.getBoundingClientRect().top;
-  let best = 0, bd = 1e9;
-  for (let i = 0; i < N; i++) { const d = Math.abs(proj(spine(i / (N - 1))) - y); if (d < bd) { bd = d; best = i; } }
-  if (best !== sel) select(best);
-  rl.style.top = proj(spine(best / (N - 1))) + "px";
-}
-cv.addEventListener("pointerdown", e => { dragging = true; lx = e.clientX; cv.setPointerCapture(e.pointerId); scrub(e.clientY); });
-cv.addEventListener("pointermove", e => { scrub(e.clientY); if (dragging) { rotTarget = Math.max(-1.2, Math.min(1.2, rotTarget + (e.clientX - lx) * .01)); lx = e.clientX; } });
-cv.addEventListener("pointerup", () => { dragging = false; rotTarget = 0; });
-
-let t = 0;
-function frame() {
-  t += 1 / 60;
-  rot += (rotTarget - rot) * .06;
-  grp.rotation.y = rot + (reduce ? 0 : Math.sin(t * .5) * .25);
-  renderer.render(scene, cam);
-  rl.style.top = proj(spine(sel / (N - 1))) + "px";
-  if (!reduce) requestAnimationFrame(frame);
-}
-frame();
-</script>
-
-<!-- 06 · carambole slices table of contents -->
-<script type="module">
-import * as THREE from "three";
-import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
-
-const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-const cv = document.getElementById("slices");
-const W = 360, H = 760;
-const renderer = new THREE.WebGLRenderer({ canvas: cv, antialias: true, alpha: true });
-renderer.setPixelRatio(Math.min(devicePixelRatio, 2)); renderer.setSize(W, H);
-renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.4;
-const scene = new THREE.Scene();
-scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.04).texture;
-scene.add(new THREE.HemisphereLight(0xffffff, 0x8a8a86, 1.2));
-const key = new THREE.DirectionalLight(0xffffff, 1.8); key.position.set(3, 6, 5); scene.add(key);
-const cam = new THREE.PerspectiveCamera(30, W / H, .1, 100);
-cam.position.set(0, 2.2, 13.4); cam.lookAt(0, -.3, 0);
-
-const modules = ["Noms, articles et genre","Pronoms sujets et être","Avoir et il y a","Verbes en -ER (présent)","La négation (ne… pas)","Poser des questions","Les adjectifs : accord et place","Les adjectifs possessifs","Verbes en -IR et -RE (présent)","Prépositions et contractions","Pluriels et partitif","Le futur proche","Le passé composé avec avoir","Le passé composé avec être","Les verbes pronominaux","L’imparfait","Pronoms compléments","Les pronoms y et en","Comparatif et superlatif","L’impératif","Le futur simple","Le conditionnel présent","Les pronoms relatifs","Le subjonctif présent","Les phrases avec si"];
-const prog = modules.map((_, i) => i < 9 ? 1 : i === 9 ? .82 : i === 10 ? .64 : i === 11 ? .52 : i === 12 ? .1 : 0);
-const N = modules.length;
-
-// same logo geometry as 01, cut thin
-const shape = new THREE.Shape();
-const tip = k => { const a = Math.PI / 2 + k * 2 * Math.PI / 5; return [Math.cos(a), Math.sin(a)]; };
-const val = k => { const a = Math.PI / 2 + (k + .5) * 2 * Math.PI / 5; return [Math.cos(a) * .5, Math.sin(a) * .5]; };
-shape.moveTo(...tip(0));
-for (let k = 0; k < 5; k++) shape.quadraticCurveTo(...val(k), ...tip(k + 1));
-const geo = new THREE.ExtrudeGeometry(shape, { depth: .055, bevelEnabled: false, curveSegments: 40 });
-geo.rotateX(-Math.PI / 2); geo.center(); geo.scale(.55, 1, .55);
-// outline of the top face only: one clean line per slice, not a double contour
-const outline = new THREE.BufferGeometry().setFromPoints(shape.getPoints(40).map(p => new THREE.Vector3(p.x * .55, .028, -p.y * .55)));
-
-const mChrome = new THREE.MeshPhysicalMaterial({ color: 0xf2f2f2, metalness: .85, roughness: .2, envMapIntensity: 1.5, clearcoat: 1, clearcoatRoughness: .08 });
-const mPaper = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: .65 });
-const mGlass = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: .3, depthWrite: false });
-const lInk = new THREE.LineBasicMaterial({ color: 0x141414 });
-const lGrey = new THREE.LineBasicMaterial({ color: 0xbdbcb8 });
-
-const GAP = .17, Y0 = -GAP * (N - 1) / 2 - .2, OPEN = .36;
-const stack = new THREE.Group(); scene.add(stack);
-const rod = new THREE.Mesh(new THREE.CylinderGeometry(.014, .014, GAP * N + 1.3, 12), new THREE.MeshStandardMaterial({ color: 0x141414, roughness: .4 }));
-rod.position.y = Y0 + GAP * (N - 1) / 2 + .25; stack.add(rod);
-const slices = modules.map((_, i) => {
-  const p = prog[i], g = new THREE.Group();
-  const m = new THREE.Mesh(geo, p === 1 ? mChrome : p > 0 ? mPaper : mGlass);
-  const e = new THREE.LineLoop(outline, p === 1 ? lGrey : p > 0 ? lInk : lGrey);
-  e.visible = p < 1;
-  g.add(m, e); g.position.y = Y0 + i * GAP; g.rotation.y = i * .045; // a slight helical drift up the skewer
-  g.userData = { y: g.position.y, x: 0, spin: 0, edge: e, base: e.material };
-  stack.add(g); return g;
-});
-
-// --- selection
-const sel6 = document.getElementById("sel6"), tick = document.getElementById("tick6");
-const ringSvg = (p, s, w) => { const r = (s - w) / 2, c = 2 * Math.PI * r;
-  return `<svg width="${s}" height="${s}"><circle cx="${s/2}" cy="${s/2}" r="${r}" fill="none" stroke="#c8c7c3" stroke-width="${w}"/><circle cx="${s/2}" cy="${s/2}" r="${r}" fill="none" stroke="#141414" stroke-width="${w}" stroke-linecap="round" stroke-dasharray="${c * p} ${c}" transform="rotate(-90 ${s/2} ${s/2})"/></svg>`; };
-let sel = 11;
-function select(i) {
-  if (slices[sel]) slices[sel].userData.edge.material = slices[sel].userData.base;
-  sel = i;
-  slices[i].userData.edge.material = lInk; slices[i].userData.edge.visible = true;
-  slices.forEach((s, k) => { if (k !== i && prog[k] === 1) s.userData.edge.visible = false; });
-  const p = prog[i];
-  const st = p === 1 ? `<span class="lab ink">Maîtrisé</span>` : p > 0 ? `${ringSvg(p, 18, 2.5)}<span class="lab ink">En cours · ${Math.round(p * 100)} %</span>` : `<span class="lab">À venir</span>`;
-  sel6.innerHTML = `<div class="num">${String(i + 1).padStart(2, "0")}</div><div class="t">${modules[i]}</div><div class="st">${st}</div>`;
-}
-select(sel);
-
-// map pointer y onto the CLOSED stack's screen extent, so fanning open never makes the pick jitter
-const screenY = y => { const v = new THREE.Vector3(0, y, 0).project(cam); return (1 - v.y) / 2 * H; };
-const yTop = screenY(Y0 + (N - 1) * GAP + OPEN), yBot = screenY(Y0);
-let rotT = 0, rot = 0, drag = false, lx = 0;
-function pick(clientY) {
-  const y = clientY - cv.getBoundingClientRect().top;
-  const i = Math.max(0, Math.min(N - 1, Math.round((yBot - y) / (yBot - yTop) * (N - 1))));
-  if (i !== sel) select(i);
-}
-// Use: slide a finger up/down the stack to choose a module (one haptic tick per slice), sideways to turn it,
-// and tap (or "Ouvrir") to open the chosen slice: it lifts out, turns to face you and grows into the module page.
-let moved = 0, opening = 0, sy = 0;
-cv.addEventListener("pointerdown", e => { if (opening) return; drag = true; moved = 0; lx = e.clientX; sy = e.clientY; cv.setPointerCapture(e.pointerId); pick(e.clientY); });
-cv.addEventListener("pointermove", e => { if (!drag) return; moved = Math.max(moved, Math.abs(e.clientY - sy)); pick(e.clientY); rotT = Math.max(-1.4, Math.min(1.4, rotT + (e.clientX - lx) * .012)); moved = Math.max(moved, Math.abs(rotT) * 40); lx = e.clientX; });
-cv.addEventListener("pointerup", () => { if (drag && moved < 6) open(); drag = false; });
-function open() { if (opening) return; opening = performance.now(); p6.classList.add("opening"); setTimeout(() => { opening = 0; p6.classList.remove("opening"); }, 1900); }
-const p6 = document.getElementById("p6");
-document.getElementById("open6").onclick = open;
-
-let t = 0;
-const tmp = new THREE.Vector3();
-(function frame() {
-  t += 1 / 60;
-  const k = reduce ? 1 : .14;
-  slices.forEach((s, i) => {
-    const u = s.userData;
-    // fan open: everything above the selection lifts by OPEN; the selection itself lifts by half and slides out
-    const lift = opening && i === sel;
-    const ty = lift ? .6 : Y0 + i * GAP + (i > sel ? OPEN : i === sel ? OPEN / 2 : 0);
-    const tx = lift ? 0 : i === sel ? .4 : 0;
-    u.y += (ty - u.y) * k; u.x += (tx - u.x) * k;
-    u.z = (u.z || 0) + ((lift ? 3.2 : 0) - (u.z || 0)) * k;
-    u.tilt = (u.tilt || 0) + ((lift ? 1.05 : 0) - (u.tilt || 0)) * k;
-    s.position.set(u.x, u.y, u.z); s.rotation.x = u.tilt;
-    s.visible = !opening || i === sel || performance.now() - opening < 250;
-    if (i === sel && !reduce) u.spin += .012; else u.spin *= .9;
-    s.rotation.y = i * .045 + u.spin;
-  });
-  rod.visible = !opening;
-  rot += (rotT - rot) * .06;
-  stack.rotation.y = rot + (reduce ? 0 : Math.sin(t * .4) * .18);
-  renderer.render(scene, cam);
-  tmp.set(0, slices[sel].position.y, 0); stack.localToWorld(tmp);
-  tick.style.top = screenY(tmp.y) + "px";
-  requestAnimationFrame(frame);
-})();
-</script>
-
 <!-- 07 · word magnets -->
 <script>
 (() => {
@@ -742,6 +529,138 @@ const tmp = new THREE.Vector3();
     requestAnimationFrame(frame);
   })(last);
   document.fonts.ready.then(make);
+})();
+</script>
+
+
+<!-- 08 · library ribbon (inside the scroll content) -->
+<script type="module">
+import * as THREE from "three";
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const cv = document.getElementById("rib8"), shelf = document.getElementById("shelf8"), inner = document.getElementById("in8");
+
+// Ten books: started ones first, then the ones to come.
+const day = (seed, rests) => Array.from({ length: 30 }, (_, i) => rests.includes(i) ? 0 : 8 + Math.round(10 * Math.abs(Math.sin(i * 1.7 + seed)) + (i % 5)));
+const BOOKS = [
+  { t: "Fondations", k: "01 · Grammaire A1 → B1", m: "41 %", open: true, days: day(0, [2, 9, 19, 25]) },
+  { t: "Vocabulaire", k: "02 · Quotidien", m: "12 %", open: true, days: day(2, [0, 1, 4, 11, 12, 17, 18, 26]).map(v => Math.round(v * .5)) },
+  { t: "Conversation", k: "03 · Oral" },
+  { t: "Intermédiaire", k: "04 · B1 → B2" },
+  { t: "Subjonctif", k: "05 · Modes" },
+  { t: "Lecture", k: "06 · Textes courts" },
+  { t: "Écrit", k: "07 · Rédaction" },
+  { t: "Prononciation", k: "08 · Sons" },
+  { t: "Expressions", k: "09 · Idiomes" },
+  { t: "Littérature", k: "10 · B2 → C1" },
+];
+const nOpen = BOOKS.filter(b => b.open).length;
+document.getElementById("big8").innerHTML = `${BOOKS.length} livres<br><em>${nOpen} ouverts</em>`;
+
+const START = 236, STEP = 200, W = 360;
+const CH = START + BOOKS.length * STEP + 110;     // content height
+inner.style.height = CH + "px";
+BOOKS.forEach((b, i) => {
+  const el = document.createElement("div");
+  el.className = "bk" + (b.open ? "" : " off");
+  el.style.top = (START + i * STEP + 34) + "px";
+  el.innerHTML = `<span class="lab">${b.k}</span><div class="t">${b.t}</div>` +
+    (b.open ? `<span class="lab ink m"><span class="go">Ouvrir →</span>&nbsp;&nbsp;${b.m}</span>` : `<span class="lab m">Bientôt</span>`);
+  inner.appendChild(el);
+  if (b.open) el.querySelector(".go").onclick = e => e.target.animate([{ opacity: 1 }, { opacity: .3 }, { opacity: 1 }], { duration: 500 });
+});
+const end = document.createElement("div");
+end.className = "lab hint"; end.style.top = (CH - 60) + "px"; end.textContent = "Fin de la bibliothèque";
+inner.appendChild(end);
+
+// The canvas is as tall as the content and scrolls with it (no JS sync, no lag).
+const dpr = Math.min(devicePixelRatio, 2, 8000 / CH);
+const renderer = new THREE.WebGLRenderer({ canvas: cv, antialias: true, alpha: true });
+renderer.setPixelRatio(dpr); renderer.setSize(W, CH);
+const scene = new THREE.Scene();
+const k = .0076;                                   // world units per px
+const HW = W / 2 * k, HH = CH / 2 * k;
+const cam = new THREE.OrthographicCamera(-HW, HW, HH, -HH, .1, 50);
+cam.position.set(0, 0, 10); cam.lookAt(0, 0, 0);
+scene.add(new THREE.HemisphereLight(0xffffff, 0x9a9995, 2.2));
+const key = new THREE.DirectionalLight(0xffffff, 2.2); key.position.set(-2, 4, 5); scene.add(key);
+const wx = px => (px - W / 2) * k, wy = py => (CH / 2 - py) * k;
+
+const AX = 268, P0 = START, P1 = START + BOOKS.length * STEP;
+const ease = x => { x = Math.min(1, Math.max(0, x)); return x * x * (3 - 2 * x); };
+const bookAt = py => Math.min(BOOKS.length - 1, Math.max(0, Math.floor((py - START) / STEP)));
+const spine = py => new THREE.Vector3(wx(AX + Math.sin((py - P0) / 230) * 22), wy(py), Math.sin((py - P0) / 170) * .3);
+const widthAt = py => {
+  const b = BOOKS[bookAt(py)];
+  if (!b.open) return .12;
+  const N = b.days.length, mx = Math.max(...b.days);
+  const d = (py - START - bookAt(py) * STEP) / STEP * (N - 1), i = Math.max(0, Math.min(N - 1, Math.floor(d))), j = Math.min(N - 1, i + 1);
+  const v = b.days[i] * (1 - ease(d - i)) + b.days[j] * ease(d - i);
+  // started books share one scale so their widths compare
+  return .05 + .4 * v / 30;
+};
+const twistAt = py => {
+  let th = 0;
+  BOOKS.forEach((b, bi) => {
+    const s0 = START + bi * STEP;
+    if (bi > 0) th += 2 * Math.PI * ease((py - s0 + 22) / 44);          // boundary between books
+    if (b.open) b.days.forEach((v, i) => {
+      if (v === 0) { const c = s0 + (Math.min(28.5, Math.max(.5, i)) / 29) * STEP; th += 2 * Math.PI * ease((py - c) / (STEP / 29) + .5); }
+    });
+  });
+  return th;
+};
+
+function strip(a, b, live) {
+  const S = Math.round((b - a) / 1.2), Z = new THREE.Vector3(0, 0, 1), pos = [], eA = [], eB = [];
+  for (let i = 0; i <= S; i++) {
+    const py = a + (b - a) * i / S, p = spine(py);
+    const T = spine(py + .5).sub(spine(py - .5)).normalize();
+    const w0 = Z.clone().sub(T.clone().multiplyScalar(T.dot(Z))).normalize();
+    const xw = new THREE.Vector3().crossVectors(T, w0), th = twistAt(py);
+    const w = xw.multiplyScalar(Math.cos(th)).add(w0.clone().multiplyScalar(Math.sin(th))).multiplyScalar(widthAt(py) / 2);
+    const A = p.clone().add(w), B = p.clone().sub(w);
+    pos.push(A.x, A.y, A.z, B.x, B.y, B.z); eA.push(A); eB.push(B);
+  }
+  const idx = [];
+  for (let i = 0; i < S; i++) { const q = i * 2; idx.push(q, q + 1, q + 2, q + 1, q + 3, q + 2); }
+  const g = new THREE.BufferGeometry();
+  g.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3)); g.setIndex(idx); g.computeVertexNormals();
+  const front = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: .6, side: THREE.BackSide, transparent: !live, opacity: live ? 1 : .6 });
+  const back = new THREE.MeshStandardMaterial({ color: 0x8d8d8a, roughness: .7, side: THREE.FrontSide, transparent: !live, opacity: live ? 1 : .35 });
+  const lm = new THREE.LineBasicMaterial({ color: live ? 0x141414 : 0x8d8d8a });
+  return [new THREE.Mesh(g, front), new THREE.Mesh(g, back),
+    new THREE.Line(new THREE.BufferGeometry().setFromPoints(eA), lm), new THREE.Line(new THREE.BufferGeometry().setFromPoints(eB), lm)];
+}
+
+const grp = new THREE.Group();
+BOOKS.forEach((b, i) => grp.add(...strip(START + i * STEP, START + (i + 1) * STEP + (i < BOOKS.length - 1 ? 1 : 0), !!b.open)));
+const pivot = new THREE.Group(); pivot.position.x = wx(AX); grp.position.x = -wx(AX);
+pivot.add(grp); scene.add(pivot);
+
+// Only the sway animates; scrolling is the browser's own.
+let t = 0;
+function frame() {
+  t += 1 / 60;
+  pivot.rotation.y = reduce ? 0 : Math.sin(t * .5) * .2;
+  renderer.render(scene, cam);
+  if (!reduce) requestAnimationFrame(frame);
+}
+frame();
+</script>
+
+<!-- 09 · minimal history -->
+<script>
+(() => {
+  const L = [4,5,0,6,7,5,8,9,6,0,7,8,7,9,8,5,6,9,10,0,9,8,8,5,9,0,7,8,6,6];
+  const R = [10,13,0,16,18,14,19,21,15,0,17,20,19,22,21,12,17,21,23,0,21,22,21,11,24,0,17,21,12,14];
+  const DOW = ["Dim.","Lun.","Mar.","Mer.","Jeu.","Ven.","Sam."];
+  const dateOf = i => { const d = new Date(2026, 8, 10 + i); return `${DOW[d.getDay()]} ${d.getDate()} ${d.getMonth() === 8 ? "sept." : "oct."}`; };
+  const rows = [];
+  for (let i = L.length - 1; i >= 0; i--) {
+    const rest = L[i] + R[i] === 0;
+    rows.push(`<div class="day${rest ? " rest" : ""}"><span>${dateOf(i)}${i === L.length - 1 ? " · aujourd’hui" : ""}</span><span class="n">${rest ? "Pause" : `${L[i]} appris · ${R[i]} révisés`}</span></div>`);
+  }
+  document.getElementById("days9").innerHTML = rows.join("");
 })();
 </script>
 

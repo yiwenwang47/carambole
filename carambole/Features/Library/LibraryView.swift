@@ -2,131 +2,255 @@
 //  LibraryView.swift
 //  carambole
 //
-//  The shelf — the app's root. Lists the available books; tap one to enter its
-//  BookView. "Français — Fondations" is the first (and only live) book; the model
-//  supports many, so future books appear here as they ship. Built from "Le Cahier".
+//  The shelf — the app's root. motion.html 08 "Ruban": one paper ribbon runs
+//  down the right side of the shelf and each book is a stretch of it
+//  (`LibraryRibbon.swift`). Books sit on the left of their stretch: kicker
+//  label, light title, then `Ouvrir →` + % for open books or `Bientôt` for
+//  books to come. Open books sort first. The ribbon lives inside the scroll
+//  content, so it scrolls exactly with the titles; only its sway moves.
+//
+//  "Français — Fondations" is the first (and only live) book; the model
+//  supports many, so future books appear here as they ship.
 //
 
 import SwiftUI
 
 /// One entry on the shelf. `available` books open into `BookView`; others are
-/// locked placeholders that signal what's coming.
+/// placeholders that signal what's coming.
 private struct ShelfBook: Identifiable {
     let id: String
     let title: String
-    let subtitle: String
+    /// `.lab` kicker after the number, e.g. `Grammaire A1 → B1`.
+    let kicker: String
     let available: Bool
 }
 
 struct LibraryView: View {
-    private let books: [ShelfBook] = [
-        ShelfBook(id: "fr_fondations", title: "Français — Fondations",
-                  subtitle: "Grammaire · A1 → B1", available: true),
-        ShelfBook(id: "fr_conversation", title: "Français — Conversation",
-                  subtitle: "Bientôt", available: false),
-        ShelfBook(id: "fr_intermediaire", title: "Français — Intermédiaire",
-                  subtitle: "Bientôt", available: false),
+    /// Authored order; open books are moved to the front for display.
+    private let catalog: [ShelfBook] = [
+        ShelfBook(id: "fr_fondations", title: "Fondations",
+                  kicker: "Grammaire A1 → B1", available: true),
+        ShelfBook(id: "fr_conversation", title: "Conversation",
+                  kicker: "Oral", available: false),
+        ShelfBook(id: "fr_intermediaire", title: "Intermédiaire",
+                  kicker: "B1 → B2", available: false),
     ]
 
-    @State private var revealed = false
+    /// Fondations progress (%) — the only live book today.
+    @StateObject private var bookViewModel = BookViewModel()
+    /// Fondations per-day activity — feeds its ribbon stretch.
+    @StateObject private var historyViewModel = HistoryViewModel()
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @State private var motion = LibraryRibbonMotion()
+    @State private var loaded = false
+    /// Pushes Fondations' `BookView`.
+    @State private var openBook = false
+    /// The ribbon's RealityView only exists while the shelf is on screen: left
+    /// rendering under a pushed book it starves the book's star scene, which
+    /// then takes seconds to show its first frame.
+    @State private var ribbonLive = true
+    /// Pushes the colour page.
+    @State private var openColors = false
+    @AppStorage(AppPalette.storageKey) private var paletteID = AppPalette.fallback.rawValue
+
+    private var books: [ShelfBook] {
+        catalog.filter(\.available) + catalog.filter { !$0.available }
+    }
 
     var body: some View {
         NavigationStack {
-            ZStack {
-                AppColor.paper.ignoresSafeArea()
+            GeometryReader { geo in
                 ScrollView {
-                    VStack(alignment: .leading, spacing: Spacing.lg) {
-                        header
-                        divider
-                        shelf
-                    }
-                    .padding(.horizontal, Spacing.screenH)
-                    .padding(.top, 72)
-                    .padding(.bottom, Spacing.xl)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                    shelf(width: geo.size.width)
                 }
+                .scrollIndicators(.hidden)
+                .ignoresSafeArea(edges: .top)
             }
+            .background(AppColor.paper.ignoresSafeArea())
+            // Status-bar band: paper, so titles scroll under it cleanly.
+            .overlay(alignment: .top) {
+                Color.clear.frame(height: 0)
+                    .background(AppColor.paper.ignoresSafeArea(edges: .top))
+            }
+            .toolbar(.hidden, for: .navigationBar)
+            .navigationDestination(isPresented: $openBook) { BookView(showBack: true) }
+            .navigationDestination(isPresented: $openColors) { ColorSettingsView() }
             .onAppear {
-                withAnimation(.easeOut(duration: 0.45)) { revealed = true }
+                ribbonLive = true
+                motion.reduceMotion = reduceMotion
+                // First appearance loads content; returning from a book refreshes.
+                if loaded { bookViewModel.refresh() } else { bookViewModel.load(); loaded = true }
+                historyViewModel.load()
             }
+            .onChange(of: reduceMotion) { motion.reduceMotion = reduceMotion }
         }
-    }
-
-    // MARK: - Header
-
-    private var header: some View {
-        VStack(alignment: .leading, spacing: Spacing.sm) {
-            CaramboleLogo(color: AppColor.ink, size: 34)
-                .padding(.bottom, Spacing.sm)
-            SectionLabel("Bibliothèque")
-            Text("Mes livres")
-                .font(.appTitle)
-                .foregroundColor(AppColor.ink)
-                .fixedSize(horizontal: false, vertical: true)
-        }
-        .padding(.bottom, Spacing.sm)
     }
 
     // MARK: - Shelf
 
-    private var shelf: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            ForEach(Array(books.enumerated()), id: \.element.id) { index, book in
-                row(book, index: index)
-                if index < books.count - 1 {
-                    Rectangle().fill(AppColor.hairline).frame(height: 1)
+    private func shelf(width: CGFloat) -> some View {
+        let books = self.books
+        let geometry = LibraryRibbonGeometry(stretches: books.map(stretch(for:)),
+                                             viewWidth: Float(width))
+        let height = CGFloat(geometry.contentHeight)
+
+        return ZStack(alignment: .topLeading) {
+            Group {
+                if ribbonLive {
+                    LibraryRibbonScene(geometry: geometry, motion: motion,
+                                       palette: AppPalette(stored: paletteID))
+                        .id([AnyHashable(geometry), AnyHashable(paletteID)])
                 }
             }
+            .frame(width: width, height: height)
+            .allowsHitTesting(false)
+            .accessibilityHidden(true)
+
+            edgeLabels
+                .padding(.horizontal, Spacing.screenH)
+                .padding(.top, 66)
+
+            heading(books)
+                .padding(.leading, Spacing.screenH)
+                .padding(.top, 100)
+
+            ForEach(Array(books.enumerated()), id: \.element.id) { index, book in
+                block(book, number: catalogNumber(book))
+                    .frame(width: 220, alignment: .leading)
+                    .padding(.leading, Spacing.screenH)
+                    .padding(.top, CGFloat(LibraryRibbonGeometry.top(ofStretch: index)) + 34)
+            }
+
+            Text("Fin de la bibliothèque")
+                .uppercaseLabel()
+                .frame(width: width)
+                .padding(.top, height - 60)
+                .accessibilityHidden(true)
         }
+        .frame(width: width, height: height, alignment: .topLeading)
+    }
+
+    /// The ribbon stretch for a book: an open book's last 30 days, or a
+    /// faint strip for a book to come.
+    private func stretch(for book: ShelfBook) -> LibraryRibbonGeometry.Stretch {
+        guard book.available else { return .toCome }
+        let window = HistoryViewModel.window(days: historyViewModel.days, today: Date(),
+                                             count: 30, calendar: .current)
+        return .started(window.map { $0.learned + $0.reviewed })
+    }
+
+    private func catalogNumber(_ book: ShelfBook) -> Int {
+        (catalog.firstIndex { $0.id == book.id } ?? 0) + 1
+    }
+
+    // MARK: - Header
+
+    /// motion.html `.lab` pair pinned to the top edges; the right one opens the
+    /// colour page (a small strip of the current palette + `Couleurs →`).
+    private var edgeLabels: some View {
+        HStack(alignment: .firstTextBaseline) {
+            Text("Carambole").uppercaseLabel(AppColor.ink)
+            Spacer()
+            Button {
+                ribbonLive = false
+                openColors = true
+            } label: {
+                HStack(spacing: 8) {
+                    PaletteStrip(palette: AppPalette(stored: paletteID))
+                        .frame(width: 26, height: 8)
+                        .alignmentGuide(.firstTextBaseline) { d in d[.bottom] }
+                    Text("Couleurs →").uppercaseLabel(AppColor.ink)
+                }
+                .padding(.vertical, 10)
+                .padding(.leading, 12)
+                .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .padding(.vertical, -10)
+            .accessibilityLabel("Couleurs, \(AppPalette(stored: paletteID).name)")
+        }
+    }
+
+    /// 08 `.big`: Manrope 40 / 250, −0.03em; `N livres` then grey `M ouverts`.
+    private func heading(_ books: [ShelfBook]) -> some View {
+        let open = books.filter(\.available).count
+        // Manrope's natural line box is ~1.37em; 08 sets 1.05em → pull lines up.
+        return VStack(alignment: .leading, spacing: -12) {
+            Text("\(books.count) livres")
+                .foregroundColor(AppColor.ink)
+            Text(open == 1 ? "1 ouvert" : "\(open) ouverts")
+                .foregroundColor(AppColor.g2)
+        }
+        .font(.display(size: 40, wght: 250))
+        .tracking(-1.2)
+        .fixedSize(horizontal: false, vertical: true)
+        .accessibilityElement(children: .combine)
+        .accessibilityAddTraits(.isHeader)
+    }
+
+    // MARK: - Book block
+
+    /// Drop the ribbon scene first, then push the book.
+    private func open() {
+        ribbonLive = false
+        openBook = true
     }
 
     @ViewBuilder
-    private func row(_ book: ShelfBook, index: Int) -> some View {
+    private func block(_ book: ShelfBook, number: Int) -> some View {
         if book.available {
-            NavigationLink {
-                BookView(showBack: true)
-            } label: {
-                card(book)
+            Button(action: open) {
+                blockLabel(book, number: number)
             }
-            .buttonStyle(ScaleButtonStyle())
-            .opacity(revealed ? 1 : 0)
-            .offset(y: revealed ? 0 : 12)
-            .animation(.easeOut(duration: 0.4).delay(Double(index) * 0.06), value: revealed)
+            .buttonStyle(ShelfRowButtonStyle())
+            .accessibilityHint("Ouvrir le livre")
         } else {
-            card(book)
-                .opacity(revealed ? 0.45 : 0)
-                .offset(y: revealed ? 0 : 12)
-                .animation(.easeOut(duration: 0.4).delay(Double(index) * 0.06), value: revealed)
+            blockLabel(book, number: number)
+                .accessibilityHint("Bientôt disponible")
         }
     }
 
-    private func card(_ book: ShelfBook) -> some View {
-        HStack(alignment: .center, spacing: Spacing.md) {
-            VStack(alignment: .leading, spacing: 4) {
-                Text(book.title)
-                    .font(.appTitle)
-                    .foregroundColor(book.available ? AppColor.ink : AppColor.graphite)
-                    .fixedSize(horizontal: false, vertical: true)
-                Text(book.subtitle).uppercaseLabel()
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-
+    /// Kicker `.lab`, title 32 / 250, then `Ouvrir →` (underlined) + % or `Bientôt`.
+    private func blockLabel(_ book: ShelfBook, number: Int) -> some View {
+        VStack(alignment: .leading, spacing: 0) {
+            Text(String(format: "%02d · ", number) + book.kicker)
+                .uppercaseLabel()
+            Text(book.title)
+                .font(.display(size: 32, wght: 250))
+                .tracking(-0.96)
+                .foregroundColor(book.available ? AppColor.ink : AppColor.g3)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.top, 2)
             if book.available {
-                Image(systemName: "chevron.right")
-                    .font(.system(size: 14, weight: .semibold))
-                    .foregroundColor(AppColor.saffron)
+                HStack(spacing: 10) {
+                    Text("Ouvrir →")
+                        .uppercaseLabel(AppColor.ink)
+                        .padding(.bottom, 2)
+                        .overlay(alignment: .bottom) {
+                            Rectangle().fill(AppColor.ink).frame(height: 1)
+                        }
+                    Text("\(bookViewModel.estimate.percentComplete) %")
+                        .uppercaseLabel(AppColor.ink)
+                }
+                .padding(.top, 4)
             } else {
-                Image(systemName: "lock")
-                    .font(.system(size: 14, weight: .regular))
-                    .foregroundColor(AppColor.graphite)
+                Text("Bientôt")
+                    .uppercaseLabel()
+                    .padding(.top, 4)
             }
         }
-        .padding(.vertical, Spacing.lg)
         .contentShape(Rectangle())
+        .accessibilityElement(children: .combine)
     }
+}
 
-    private var divider: some View {
-        Rectangle().fill(AppColor.hairline).frame(height: 1)
+/// Block press feedback: a light dim + tiny scale (no colour, no bounce chrome).
+private struct ShelfRowButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .opacity(configuration.isPressed ? 0.55 : 1)
+            .scaleEffect(configuration.isPressed ? 0.985 : 1, anchor: .leading)
+            .animation(.easeOut(duration: 0.18), value: configuration.isPressed)
     }
 }
 

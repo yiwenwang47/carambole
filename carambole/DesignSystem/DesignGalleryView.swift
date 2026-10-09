@@ -2,7 +2,7 @@
 //  DesignGalleryView.swift
 //  carambole
 //
-//  Visual showcase of the "Le Cahier" design system for review.
+//  Visual showcase of the "objets + mouvement" tokens for review.
 //  Not wired into app navigation — screenshot in isolation.
 //
 
@@ -15,13 +15,13 @@ struct DesignGalleryView: View {
                 header
                 paletteSection
                 typeSection
-                labelSection
+                weightSection
+                tileSection
                 buttonSection
-                chipSection
                 ringSection
             }
             .padding(.horizontal, Spacing.screenH)
-            .padding(.top, 72) // Generous top whitespace.
+            .padding(.top, 72)
             .padding(.bottom, Spacing.xl)
             .frame(maxWidth: .infinity, alignment: .leading)
         }
@@ -32,9 +32,10 @@ struct DesignGalleryView: View {
 
     private var header: some View {
         VStack(alignment: .leading, spacing: Spacing.sm) {
-            SectionLabel("Le Cahier")
-            Text("Design System")
-                .font(.appPrompt)
+            SectionLabel("Carambole · objets et mouvement")
+            Text("Système")
+                .font(.display(size: 40, wght: 250))
+                .tracking(-0.8)
                 .foregroundColor(AppColor.ink)
         }
     }
@@ -44,176 +45,107 @@ struct DesignGalleryView: View {
     private var paletteSection: some View {
         VStack(alignment: .leading, spacing: Spacing.md) {
             SectionLabel("Palette")
-            VStack(spacing: Spacing.sm) {
+            HStack(spacing: Spacing.sm) {
                 ForEach(Self.swatches, id: \.name) { swatch in
-                    HStack(spacing: Spacing.md) {
-                        RoundedRectangle(cornerRadius: 8, style: .continuous)
+                    VStack(alignment: .leading, spacing: 6) {
+                        Rectangle()
                             .fill(swatch.color)
-                            .frame(width: 44, height: 44)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                    .stroke(AppColor.hairline, lineWidth: 1)
-                            )
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text(swatch.name)
-                                .font(.system(size: 15, weight: .medium))
-                                .foregroundColor(AppColor.ink)
-                            Text(swatch.hex)
-                                .font(.system(size: 12, design: .monospaced))
-                                .foregroundColor(AppColor.graphite)
-                        }
-                        Spacer()
+                            .frame(height: 44)
+                            .overlay(Rectangle().stroke(AppColor.hairline, lineWidth: 1))
+                        Text(swatch.name).uppercaseLabel(AppColor.ink)
                     }
+                    .frame(maxWidth: .infinity)
                 }
             }
         }
     }
 
-    private static let swatches: [(name: String, hex: String, color: Color)] = [
-        ("paper", "#FFFFFF", AppColor.paper),
-        ("ink", "#14110E", AppColor.ink),
-        ("graphite", "#6B655C", AppColor.graphite),
-        ("saffron", "#FFB879", AppColor.saffron),
-        ("saffronDeep", "#E8915C", AppColor.saffronDeep),
-        ("success", "#5B8C5A", AppColor.success),
-        ("error", "#C0563F", AppColor.error),
-        ("hairline", "#E2DBCD", AppColor.hairline),
+    private static let swatches: [(name: String, color: Color)] = [
+        ("paper", AppColor.paper),
+        ("ink", AppColor.ink),
+        ("g1", AppColor.graphite),
+        ("g2", AppColor.g2),
+        ("g3", AppColor.g3),
+        ("g4", AppColor.hairline),
     ]
 
-    // MARK: Typography
+    // MARK: Type
 
     private var typeSection: some View {
-        VStack(alignment: .leading, spacing: Spacing.lg) {
-            SectionLabel("Typography")
-
-            typeSample("appPrompt", font: .appPrompt) {
-                Text("Elle est arrivée")
-                    .font(.appPrompt)
-                    .foregroundColor(AppColor.ink)
-            }
-            typeSample("appTitle", font: .appTitle) {
-                Text("Le passé composé")
-                    .font(.appTitle)
-                    .foregroundColor(AppColor.ink)
-            }
-            typeSample("appToken", font: .appToken) {
-                Text("arrivée")
-                    .font(.appToken)
-                    .foregroundColor(AppColor.ink)
-            }
-            typeSample("appLabel", font: .appLabel) {
-                Text("conjugaison")
-                    .uppercaseLabel()
-            }
-            typeSample("appExplain", font: .appExplain) {
-                Text("Avec être, le participe s'accorde avec le sujet.")
-                    .font(.appExplain)
-                    .foregroundColor(AppColor.ink)
-            }
-        }
-    }
-
-    @ViewBuilder
-    private func typeSample<Content: View>(
-        _ name: String,
-        font: Font,
-        @ViewBuilder content: () -> Content
-    ) -> some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text(name)
-                .font(.system(size: 11, design: .monospaced))
-                .foregroundColor(AppColor.graphite)
-            content()
-        }
-    }
-
-    // MARK: Section Label
-
-    private var labelSection: some View {
         VStack(alignment: .leading, spacing: Spacing.md) {
-            SectionLabel("Section Label")
-            SectionLabel("Search")
+            SectionLabel("Typographie")
+            Text("41 %").font(.display(size: 44, wght: 200)).tracking(-1.8)
+            Text("« I’m going to leave tomorrow. »").font(.appPrompt).tracking(-0.7)
+            Text("Les articles définis").font(.appTitle).tracking(-0.5)
+            Text("Le, la, les devant un nom défini.").font(.appBody).foregroundColor(AppColor.graphite)
+            Text("128 / 312 maîtrisés").uppercaseLabel()
+            Text("Apprendre →").uppercaseLabel(AppColor.ink)
+        }
+        .foregroundColor(AppColor.ink)
+    }
+
+    private var weightSection: some View {
+        VStack(alignment: .leading, spacing: Spacing.sm) {
+            SectionLabel("Axe wght · 200 → 800")
+            HStack(spacing: 10) {
+                ForEach([200, 300, 400, 500, 600, 720, 800], id: \.self) { w in
+                    Text("a").font(.display(size: 30, wght: CGFloat(w)))
+                }
+            }
+            .foregroundColor(AppColor.ink)
         }
     }
 
-    // MARK: Buttons
+    // MARK: Tiles (07 magnets)
+
+    private var tileSection: some View {
+        VStack(alignment: .leading, spacing: Spacing.md) {
+            SectionLabel("Aimants")
+            HStack(spacing: 10) {
+                tile("Je", style: .bank)
+                tile("vais", style: .placed)
+                tile("va", style: .wrong)
+            }
+        }
+    }
+
+    private enum TileStyle { case bank, placed, wrong }
+
+    private func tile(_ text: String, style: TileStyle) -> some View {
+        Text(text)
+            .font(.appToken)
+            .foregroundColor(style == .placed ? AppColor.paper : AppColor.ink)
+            .padding(.horizontal, 15)
+            .frame(height: 40)
+            .background(Capsule().fill(style == .placed ? AppColor.ink : AppColor.white))
+            .overlay(
+                Capsule().strokeBorder(
+                    AppColor.ink,
+                    style: StrokeStyle(lineWidth: 1, dash: style == .wrong ? [4, 3] : [])
+                )
+            )
+    }
+
+    // MARK: Button
 
     private var buttonSection: some View {
         VStack(alignment: .leading, spacing: Spacing.md) {
-            SectionLabel("Primary Button")
-            Button("Commencer") {}
+            SectionLabel("Bouton")
+            Button("Vérifier") {}
                 .buttonStyle(PrimaryButtonStyle())
-            // Second button forced into its pressed appearance for review.
-            Button("Pressed") {}
-                .buttonStyle(PressedPreviewButtonStyle())
         }
     }
 
-    // MARK: Chips (gallery-local only — real TokenTile is built later)
-
-    private var chipSection: some View {
-        VStack(alignment: .leading, spacing: Spacing.md) {
-            SectionLabel("Tokens")
-            HStack(spacing: Spacing.sm) {
-                GalleryChip(text: "est")
-                GalleryChip(text: "arrivée")
-                GalleryChip(text: "hier")
-            }
-        }
-    }
-
-    // MARK: Progress Ring
+    // MARK: Ring
 
     private var ringSection: some View {
         VStack(alignment: .leading, spacing: Spacing.md) {
-            SectionLabel("Progress Ring")
-            ProgressRing(progress: 0.6)
+            SectionLabel("Anneau")
+            HStack(spacing: Spacing.lg) {
+                ProgressRing(progress: 0.35)
+                ProgressRing(progress: 0.6, size: 18, lineWidth: 2.5)
+            }
         }
-    }
-}
-
-// MARK: - Gallery-local helpers
-
-/// A simple rounded chip — LOCAL to the gallery only. The reusable `TokenTile`
-/// is built in a later task; this is just for visual review here.
-private struct GalleryChip: View {
-    let text: String
-
-    var body: some View {
-        Text(text)
-            .font(.appToken)
-            .foregroundColor(AppColor.ink)
-            .padding(.vertical, Spacing.sm)
-            .padding(.horizontal, Spacing.md)
-            .background(
-                RoundedRectangle(cornerRadius: 12, style: .continuous)
-                    .fill(AppColor.paper)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 12, style: .continuous)
-                            .stroke(AppColor.ink, lineWidth: 1)
-                    )
-            )
-    }
-}
-
-/// Renders `PrimaryButtonStyle` permanently in its pressed look so the gallery
-/// can show both states side by side. Gallery-local only.
-private struct PressedPreviewButtonStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .font(.appLabel)
-            .fontWeight(.semibold)
-            .tracking(1)
-            .textCase(.uppercase)
-            .foregroundColor(AppColor.paper)
-            .padding(.vertical, Spacing.md)
-            .padding(.horizontal, Spacing.lg)
-            .frame(maxWidth: .infinity)
-            .background(
-                RoundedRectangle(cornerRadius: 14, style: .continuous)
-                    .fill(AppColor.saffronDeep)
-            )
-            .scaleEffect(0.96)
     }
 }
 

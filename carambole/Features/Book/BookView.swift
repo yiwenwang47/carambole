@@ -2,9 +2,27 @@
 //  BookView.swift
 //  carambole
 //
-//  The book home — the app's root screen. A numbered editorial table of contents
-//  of the book's modules, with the daily "Aujourd'hui · X new · Y due" panel and
-//  the Apprendre / Réviser actions living INSIDE the book. Built from "Le Cahier".
+//  The book home — design/motion.html "01 · Objet". A chrome carambole star turns
+//  in the middle of the screen with the book's progress as a ring orbiting it
+//  (`ObjetStarView`); small type sits at the edges (after IMG_0943):
+//
+//    ‹ Fondations                      Réglages
+//    41 %                                   Fin
+//    128 / 312 maîtrisés               ~22 déc.
+//    3 fragiles · à réviser
+//                  (star + orbit ring)
+//    fait : 3 appris · 12 révisés →
+//    ───────────────────────────────────────────
+//    8                                       14
+//    Apprendre →                      ← Réviser
+//                                     Tour · 20
+//                  25 modules →
+//
+//  Tapping the bottom line (only) opens the module list (`ModuleListView`);
+//  a row there opens the module's 02 Cinétique page.
+//  Positions are motion.html's 360×760 px read as points: the top block hangs
+//  from the safe area (prototype status bar = 50 px), the bottom block from the
+//  screen bottom.
 //
 
 import SwiftUI
@@ -17,6 +35,7 @@ private struct ElementSession: Identifiable {
     let ruleNote: String
     let elements: [GrammarElement]
     let mode: DrillSessionView.Mode
+    var moduleNumber: Int? = nil
 }
 
 struct BookView: View {
@@ -25,216 +44,316 @@ struct BookView: View {
 
     @StateObject private var viewModel = BookViewModel()
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @State private var session: ElementSession?
     @State private var showingSettings = false
+    @State private var showingModules = false
+    @State private var showingToday = false
+    /// The star's RealityView only exists while the home is on screen: left
+    /// rendering under Today it competes with the token drop for frames (the
+    /// drop stuttered right after tapping `fait`). The controller keeps the
+    /// scene, so coming back re-attaches it without rebuilding meshes.
+    @State private var starLive = true
+    @State private var star = ObjetStarController()
+    @AppStorage(AppPalette.storageKey) private var paletteID = AppPalette.fallback.rawValue
+    @State private var lastDrag: CGSize = .zero
     @State private var revealed = false
 
-    private var modules: [CourseModule] {
-        viewModel.book.modules.sorted { $0.sortOrder < $1.sortOrder }
-    }
-
     var body: some View {
-        ZStack {
-            AppColor.paper.ignoresSafeArea()
+        GeometryReader { geo in
+            ZStack {
+                AppColor.paper.ignoresSafeArea()
 
-            ScrollView {
-                VStack(alignment: .leading, spacing: Spacing.lg) {
-                    header
-                    bookProgress
-                    todayPanel
-                    divider
-                    moduleList
+                if starLive {
+                    ObjetStarView(mastered: masteredFraction, inProgress: inProgressFraction,
+                                  controller: star, palette: AppPalette(stored: paletteID))
+                        .ignoresSafeArea()
+                }
+
+                VStack(spacing: 0) {
+                    topBlock
+                    Spacer(minLength: 0)
                 }
                 .padding(.horizontal, Spacing.screenH)
-                .padding(.top, 32)
-                .padding(.bottom, Spacing.xl)
-                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.top, 16)
+
+                VStack(spacing: 0) {
+                    Spacer(minLength: 0)
+                    bottomBlock
+                }
+                .padding(.horizontal, Spacing.screenH)
+                .padding(.bottom, 31)
+                .ignoresSafeArea(edges: .bottom)
             }
+            .opacity(revealed ? 1 : 0)
+            .contentShape(Rectangle())
+            .gesture(dragGesture)
         }
         .onAppear {
             viewModel.load()
-            withAnimation(.easeOut(duration: 0.45)) { revealed = true }
+            withAnimation(reduceMotion ? nil : .easeOut(duration: 0.45)) { revealed = true }
         }
         .fullScreenCover(item: $session, onDismiss: { viewModel.refresh() }) { s in
-            DrillSessionView(title: s.title, ruleNote: s.ruleNote, elements: s.elements, mode: s.mode) {
+            DrillSessionView(title: s.title, ruleNote: s.ruleNote, elements: s.elements, mode: s.mode,
+                             moduleNumber: s.moduleNumber) {
                 session = nil
             }
+        }
+        .navigationDestination(isPresented: $showingModules) {
+            ModuleListView(viewModel: viewModel)
+        }
+        .navigationDestination(isPresented: $showingToday) {
+            TodayView(viewModel: viewModel, startLearn: startLearn, startReview: startReview)
+        }
+        .onChange(of: showingToday) { _, shown in
+            if !shown { starLive = true }
         }
         .sheet(isPresented: $showingSettings, onDismiss: { viewModel.refresh() }) {
             SettingsView(store: viewModel.settingsStore)
         }
         .toolbar(.hidden, for: .navigationBar)
         .navigationBarBackButtonHidden(true)
-        .swipeToGoBack(enabled: showBack) { dismiss() }
     }
 
-    // MARK: - Header (book title)
+    // MARK: - Derived
 
-    private var header: some View {
-        HStack(alignment: .firstTextBaseline) {
-            if showBack {
-                Button { dismiss() } label: {
-                    Image(systemName: "chevron.left")
-                        .font(.system(size: 16, weight: .semibold))
-                        .foregroundColor(AppColor.graphite)
-                        .contentShape(Rectangle())
+    private var est: ProgressEstimate { viewModel.estimate }
+
+    private var masteredFraction: Double {
+        est.total > 0 ? Double(est.masteredCount) / Double(est.total) : 0
+    }
+
+    private var inProgressFraction: Double {
+        est.total > 0 ? Double(est.inProgressCount) / Double(est.total) : 0
+    }
+
+    /// "Français — Fondations" → "Fondations".
+    private var shortTitle: String {
+        let t = viewModel.book.title
+        if let r = t.range(of: "— ") { return String(t[r.upperBound...]) }
+        return t
+    }
+
+    // MARK: - Top block (back, settings, %, estimate, fragile)
+
+    private var topBlock: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            HStack(alignment: .firstTextBaseline) {
+                if showBack {
+                    Button { dismiss() } label: {
+                        Text("‹ \(shortTitle)").uppercaseLabel(AppColor.ink)
+                            .padding(.vertical, 8).contentShape(Rectangle())
+                    }
+                    .buttonStyle(.plain)
+                    .padding(.vertical, -8)
+                    .accessibilityLabel("Bibliothèque")
+                }
+                Spacer()
+                Button { showingSettings = true } label: {
+                    Text("Réglages").uppercaseLabel()
+                        .padding(.vertical, 8).contentShape(Rectangle())
                 }
                 .buttonStyle(.plain)
-                .padding(.trailing, Spacing.sm)
-                .accessibilityLabel("Bibliothèque")
+                .padding(.vertical, -8)
             }
-            VStack(alignment: .leading, spacing: Spacing.sm) {
-                SectionLabel("Grammaire")
-                Text(viewModel.book.title)
-                    .font(.appTitle)
-                    .foregroundColor(AppColor.ink)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
-            Spacer()
-            Button { showingSettings = true } label: {
-                Image(systemName: "gearshape")
-                    .font(.system(size: 18, weight: .regular))
-                    .foregroundColor(AppColor.graphite)
-                    .contentShape(Rectangle())
-            }
-            .buttonStyle(ScaleButtonStyle())
-            .accessibilityLabel("Réglages")
-        }
-        .padding(.bottom, Spacing.sm)
-    }
 
-    // MARK: - Book-completion bar + time-to-finish estimate
-
-    /// Lingvist-style segmented book bar (maîtrisé · en cours · à venir), a % and a
-    /// time-to-finish estimate. Hidden until the book is loaded (`total == 0`).
-    @ViewBuilder
-    private var bookProgress: some View {
-        let est = viewModel.estimate
-        if est.total > 0 {
-            VStack(alignment: .leading, spacing: Spacing.sm) {
-                HStack(alignment: .center, spacing: Spacing.md) {
-                    GeometryReader { geo in
-                        let w = geo.size.width
-                        // total is already > 0 inside this branch; max(1,…) is a
-                        // belt-and-braces div-by-zero guard for the segment widths.
-                        let t = max(1, est.total)
-                        HStack(spacing: 0) {
-                            Rectangle()
-                                .fill(AppColor.saffron)
-                                .frame(width: CGFloat(est.masteredCount) / CGFloat(t) * w)
-                            Rectangle()
-                                .fill(AppColor.saffron.opacity(0.28))
-                                .frame(width: CGFloat(est.inProgressCount) / CGFloat(t) * w)
-                            Rectangle()
-                                .fill(AppColor.hairline)
-                                .frame(width: CGFloat(est.toComeCount) / CGFloat(t) * w)
-                        }
-                        .clipShape(Capsule())
+            if est.total > 0 {
+                HStack(alignment: .top) {
+                    VStack(alignment: .leading, spacing: 0) {
+                        numeral("\(est.percentComplete) %")
+                        Text("\(est.masteredCount) / \(est.total) maîtrisés")
+                            .uppercaseLabel()
+                            .padding(.top, 6)
+                        fragileChip
+                            .padding(.top, 12)
                     }
-                    .frame(height: 12)
-
-                    Text("\(est.percentComplete) %")
-                        .font(.appLabel)
-                        .tracking(1)
-                        .foregroundColor(AppColor.saffronDeep)
-                        .fixedSize()
+                    .accessibilityElement(children: .contain)
+                    Spacer()
+                    estimateBlock
                 }
-
-                legend
-
-                Text("\(est.masteredCount) / \(est.total) maîtrisés")
-                    .font(.appExplain)
-                    .foregroundColor(AppColor.graphite)
-
-                fragileChip
-
-                estimateLine
-                    .font(.appExplain)
-                    .foregroundColor(AppColor.graphite)
-                    .fixedSize(horizontal: false, vertical: true)
+                .padding(.top, 25)
             }
-            .accessibilityElement(children: .combine)
-            .accessibilityLabel(progressAccessibilityLabel)
         }
     }
 
-    /// At-risk band: maîtrisés whose memory has decayed below the fragile floor
-    /// (`R < 0.80`). Shown ONLY when > 0; tapping it starts a Réviser round (which is
-    /// ordered fragiles-first, so these surface immediately). Singular/plural French.
+    /// The 44/200 edge numeral (motion.html `.c1 .num`: line-height 1).
+    private func numeral(_ s: String) -> some View {
+        Text(s)
+            .font(.display(size: 44, wght: 200))
+            .tracking(-1.76)
+            .foregroundColor(AppColor.ink)
+            .frame(height: 44)
+            .fixedSize()
+    }
+
+    /// Fragile maîtrisés (`R < 0.80`). Shown only when > 0; tapping starts a
+    /// Réviser round (ordered fragiles-first). Dashed underline = fragile form.
     @ViewBuilder
     private var fragileChip: some View {
-        let n = viewModel.estimate.fragileCount
+        let n = est.fragileCount
         if n > 0 {
-            Button {
-                session = ElementSession(title: "Réviser", ruleNote: "",
-                                         elements: viewModel.reviewSessionElements(), mode: .review)
-            } label: {
-                HStack(spacing: 5) {
-                    Image(systemName: "exclamationmark.triangle.fill")
-                        .font(.system(size: 10, weight: .semibold))
-                    // House label treatment (uppercase + tracking) but recolored to
-                    // `error` — `uppercaseLabel()` would force `graphite`, so apply the
-                    // pieces inline and let the HStack's `foregroundColor` win.
-                    Text("\(n) \(n == 1 ? "fragile" : "fragiles") · à réviser")
-                        .font(.appLabel)
-                        .tracking(2)
-                        .textCase(.uppercase)
-                }
-                .foregroundColor(AppColor.error)
-                .padding(.horizontal, Spacing.sm)
-                .padding(.vertical, 5)
-                .background(
-                    Capsule().fill(AppColor.error.opacity(0.10))
-                )
-                .contentShape(Capsule())
+            Button(action: startReview) {
+                Text("\(n) \(n == 1 ? "fragile" : "fragiles") · à réviser")
+                    .uppercaseLabel(AppColor.ink)
+                    .padding(.bottom, 4)
+                    .overlay(alignment: .bottom) {
+                        Line()
+                            .stroke(AppColor.ink, style: StrokeStyle(lineWidth: 1, dash: [3, 2.5]))
+                            .frame(height: 1)
+                    }
+                    .padding(.vertical, 6)
+                    .contentShape(Rectangle())
             }
-            .buttonStyle(ScaleButtonStyle())
+            .buttonStyle(.plain)
+            .padding(.vertical, -6)
             .accessibilityLabel("\(n) \(n == 1 ? "élément fragile" : "éléments fragiles") à réviser")
         }
     }
 
-    /// Three colored dots + bucket names.
-    private var legend: some View {
-        HStack(spacing: Spacing.md) {
-            legendItem(color: AppColor.saffron, label: "maîtrisé")
-            legendItem(color: AppColor.saffron.opacity(0.28), label: "en cours")
-            legendItem(color: AppColor.hairline, label: "à venir")
+    /// Top-right estimate, 3 states: done / `Fin ~22 déc.` / early `Fin —`.
+    private var estimateBlock: some View {
+        VStack(alignment: .trailing, spacing: 2) {
+            Text("Fin").uppercaseLabel()
+            Text(estimateValue)
+                .font(.display(size: 15, wght: 400))
+                .foregroundColor(AppColor.ink)
+        }
+        .multilineTextAlignment(.trailing)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(estimateAccessibility)
+    }
+
+    private var estimateValue: String {
+        if est.isComplete { return "Terminé" }
+        if let finish = est.projectedFinish { return "~\(shortDate(finish))" }
+        return "—"
+    }
+
+    private var estimateAccessibility: String {
+        if est.isComplete { return "Livre terminé" }
+        if let days = est.daysRemaining, let pace = est.pacePerDay, let finish = est.projectedFinish {
+            return "Fin prévue vers le \(longDate(finish)) · \(daysText(days)) restants · rythme \(paceText(pace)) par jour"
+        }
+        return "Continue quelques jours pour estimer la durée."
+    }
+
+    // MARK: - Bottom block (fait, divider, Apprendre / Réviser, round size, modules)
+
+    private var bottomBlock: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            Button {
+                starLive = false
+                showingToday = true
+            } label: {
+                Text("fait : \(viewModel.learnedToday) appris · \(viewModel.reviewedToday) révisés →")
+                    .font(.label(size: 14, wght: 650))   // inner font wins over uppercaseLabel's
+                    .uppercaseLabel(AppColor.ink)
+                    .padding(.vertical, 6)
+                    .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel("Aujourd'hui : \(viewModel.learnedToday) appris, \(viewModel.reviewedToday) révisés")
+
+            Rectangle().fill(AppColor.g3).frame(height: 1)
+                .padding(.top, 4)
+
+            HStack(alignment: .top) {
+                Button(action: startLearn) {
+                    VStack(alignment: .leading, spacing: 4) {
+                        numeral("\(viewModel.newAvailableToday)")
+                        Text("Apprendre →").uppercaseLabel(AppColor.ink)
+                    }
+                    .contentShape(Rectangle())
+                }
+                .buttonStyle(ScaleButtonStyle())
+                .disabled(viewModel.newestUnlockedModule() == nil)
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel("Apprendre, \(viewModel.newAvailableToday) nouveaux")
+                .accessibilityAddTraits(.isButton)
+
+                Spacer()
+
+                VStack(alignment: .trailing, spacing: 0) {
+                    Button(action: startReview) {
+                        VStack(alignment: .trailing, spacing: 4) {
+                            numeral("\(viewModel.dueCount)")
+                            Text("← Réviser").uppercaseLabel(AppColor.ink)
+                        }
+                        .contentShape(Rectangle())
+                    }
+                    .buttonStyle(ScaleButtonStyle())
+                    .accessibilityElement(children: .ignore)
+                    .accessibilityLabel("Réviser, \(viewModel.dueCount) à revoir")
+                    .accessibilityAddTraits(.isButton)
+
+                    RoundSizeToggle(store: viewModel.settingsStore)
+                        .padding(.top, 6)
+                }
+            }
+            .padding(.top, 15)
+            .frame(height: 100 + 15, alignment: .top)
+
+            Button { openModules() } label: {
+                Text("\(viewModel.book.modules.count) modules  →")
+                    .font(.display(size: 17, wght: 400))
+                    .tracking(-0.2)
+                    .foregroundColor(AppColor.ink)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 10)
+                    .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .padding(.vertical, -10)
+            .accessibilityLabel("Sommaire, \(viewModel.book.modules.count) modules")
         }
     }
 
-    private func legendItem(color: Color, label: String) -> some View {
-        HStack(spacing: 4) {
-            Circle().fill(color).frame(width: 6, height: 6)
-            Text(label).uppercaseLabel()
-        }
+    // MARK: - Actions
+
+    private func startLearn() {
+        guard let m = viewModel.newestUnlockedModule() else { return }
+        session = ElementSession(title: m.title, ruleNote: m.ruleNote,
+                                 elements: viewModel.moduleLearnElements(m), mode: .learn,
+                                 moduleNumber: m.sortOrder)
     }
 
-    /// Stat line 2: done / estimate / early-state, per `ProgressEstimate`.
-    @ViewBuilder
-    private var estimateLine: some View {
-        let est = viewModel.estimate
-        if est.isComplete {
-            Text("Terminé ! 🎉")
-        } else if est.hasEstimate, let days = est.daysRemaining,
-                  let pace = est.pacePerDay, let finish = est.projectedFinish {
-            Text("\(daysText(days)) restants · finir ~\(dateText(finish)) · rythme \(paceText(pace))/j")
-        } else {
-            Text("Continue quelques jours pour estimer la durée.")
-        }
+    private func startReview() {
+        session = ElementSession(title: "Réviser", ruleNote: "",
+                                 elements: viewModel.reviewSessionElements(), mode: .review)
     }
 
-    /// "{percent} % du livre maîtrisé[, environ {n} jours restants]".
-    private var progressAccessibilityLabel: String {
-        let est = viewModel.estimate
-        var label = "\(est.percentComplete) % du livre maîtrisé"
-        if !est.isComplete, let days = est.daysRemaining {
-            label += ", environ \(days) jours restants"
-        }
-        return label
+    private func openModules() {
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        showingModules = true
     }
 
-    // MARK: Estimate formatting (French)
+    // MARK: - Gesture: turn the star · edge swipe → back
+
+    /// One drag for the whole screen. From the left edge, a rightward swipe goes
+    /// back to the library (iOS back-swipe direction). Anything else turns the
+    /// star; swiping up no longer opens the module list (the user asked for the
+    /// bottom line only).
+    private var dragGesture: some Gesture {
+        DragGesture(minimumDistance: 6, coordinateSpace: .global)
+            .onChanged { v in
+                if v.startLocation.x < 24 { return }   // reserved for swipe-back
+                let d = CGSize(width: v.translation.width - lastDrag.width,
+                               height: v.translation.height - lastDrag.height)
+                lastDrag = v.translation
+                star.dragChanged(by: d)
+            }
+            .onEnded { v in
+                lastDrag = .zero
+                star.dragEnded()
+                let h = v.translation.width
+                if showBack, v.startLocation.x < 24, h > 60, abs(h) > abs(v.translation.height) {
+                    dismiss()
+                }
+            }
+    }
+
+    // MARK: - Estimate formatting (French)
 
     /// `< 90` → "≈ N j"; `>= 90` → "≈ N mois" (rounded from days/30).
     private func daysText(_ n: Int) -> String {
@@ -242,11 +361,14 @@ struct BookView: View {
         return "≈ \(Int((Double(n) / 30).rounded())) mois"
     }
 
-    /// Wide French month + day, e.g. "15 août". French is for DISPLAY only — the
-    /// projected date itself was computed with the device calendar/timezone (so the
-    /// learner's own day boundaries drive the estimate); don't force a UTC calendar
-    /// here just to match the locale, or the day math would shift under the user.
-    private func dateText(_ date: Date) -> String {
+    /// "22 déc." — French is for DISPLAY only; the date itself was computed with
+    /// the device calendar (the learner's own day boundaries).
+    private func shortDate(_ date: Date) -> String {
+        date.formatted(.dateTime.day().month(.abbreviated).locale(Locale(identifier: "fr_FR")))
+    }
+
+    /// "22 décembre" for VoiceOver.
+    private func longDate(_ date: Date) -> String {
         date.formatted(.dateTime.day().month(.wide).locale(Locale(identifier: "fr_FR")))
     }
 
@@ -254,211 +376,56 @@ struct BookView: View {
     private func paceText(_ pace: Double) -> String {
         pace.formatted(.number.precision(.fractionLength(1)).locale(Locale(identifier: "fr_FR")))
     }
-
-    // MARK: - "Aujourd'hui" panel (lives inside the book)
-
-    private var todayPanel: some View {
-        VStack(alignment: .leading, spacing: Spacing.md) {
-            SectionLabel("Aujourd'hui")
-
-            progressLine
-
-            HStack(spacing: Spacing.md) {
-                Button("Apprendre") {
-                    guard let m = viewModel.newestUnlockedModule() else { return }
-                    session = ElementSession(title: m.title, ruleNote: m.ruleNote,
-                                             elements: viewModel.moduleLearnElements(m), mode: .learn)
-                }
-                .buttonStyle(PrimaryButtonStyle())
-
-                Button("Réviser") {
-                    session = ElementSession(title: "Réviser", ruleNote: "",
-                                             elements: viewModel.reviewSessionElements(), mode: .review)
-                }
-                .buttonStyle(PrimaryButtonStyle())
-            }
-
-            RoundSizeSelector(store: viewModel.settingsStore)
-        }
-    }
-
-    /// Today's done-work, scoped to this book; taps through to the full history.
-    private var progressLine: some View {
-        NavigationLink {
-            HistoryView()
-        } label: {
-            HStack(spacing: Spacing.sm) {
-                Text("fait : \(viewModel.learnedToday) appris · \(viewModel.reviewedToday) révisés")
-                    .uppercaseLabel()
-                Image(systemName: "chevron.right")
-                    .font(.system(size: 10, weight: .semibold))
-                    .foregroundColor(AppColor.graphite)
-                Spacer()
-            }
-            .contentShape(Rectangle())
-        }
-        .buttonStyle(ScaleButtonStyle())
-        .accessibilityLabel("Historique de progression")
-    }
-
-    // MARK: - Module list
-
-    private var moduleList: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            ForEach(Array(modules.enumerated()), id: \.element.id) { index, module in
-                let state = viewModel.state(for: module)
-                let unlocked = state != .locked
-
-                // PRIMARY tap still starts the learn session; a SECONDARY trailing "ⓘ"
-                // detail link (unlocked rows only) opens the per-element bucket list —
-                // the durable un-graduate surface. They're HStack siblings so the
-                // detail tap never hijacks the row's learn tap.
-                HStack(spacing: 0) {
-                    Button {
-                        guard unlocked else { return }
-                        session = ElementSession(title: module.title, ruleNote: module.ruleNote,
-                                                 elements: viewModel.moduleLearnElements(module), mode: .learn)
-                    } label: {
-                        ModuleRow(number: index + 1,
-                                  title: module.title,
-                                  mastered: viewModel.masteredCount(in: module),
-                                  total: module.elements.count,
-                                  state: state)
-                    }
-                    .buttonStyle(ScaleButtonStyle())
-                    .disabled(!unlocked)
-
-                    if unlocked {
-                        NavigationLink {
-                            ModuleDetailView(module: module, viewModel: viewModel)
-                        } label: {
-                            Image(systemName: "info.circle")
-                                .font(.system(size: 17, weight: .regular))
-                                .foregroundColor(AppColor.graphite)
-                                .frame(width: 44, height: 44)
-                                .contentShape(Rectangle())
-                        }
-                        .buttonStyle(ScaleButtonStyle())
-                        .accessibilityLabel("Détails du module \(module.title)")
-                    }
-                }
-                .opacity(revealed ? 1 : 0)
-                .offset(y: revealed ? 0 : 12)
-                .animation(.easeOut(duration: 0.4).delay(Double(index) * 0.06), value: revealed)
-
-                if index < modules.count - 1 {
-                    Rectangle().fill(AppColor.hairline).frame(height: 1)
-                }
-            }
-        }
-    }
-
-    private var divider: some View {
-        Rectangle().fill(AppColor.hairline).frame(height: 1)
-    }
 }
 
-// MARK: - Réviser round-size selector
+// MARK: - Réviser round size
 
-/// Inline segmented control for how many problems one Réviser tap presents
-/// (`StudySettings.reviewRoundSizeOptions`). Writes straight to the settings store.
-private struct RoundSizeSelector: View {
+/// `Tour · 20` under Réviser: how many problems one Réviser tap presents
+/// (`StudySettings.reviewRoundSizeOptions`). Tap cycles 10 → 20 → 50 and writes
+/// straight to the settings store.
+private struct RoundSizeToggle: View {
     @ObservedObject var store: StudySettingsStore
 
+    private var options: [Int] { StudySettings.reviewRoundSizeOptions }
+    private var current: Int { store.settings.reviewRoundSize }
+
     var body: some View {
-        HStack(spacing: Spacing.sm) {
-            Text("Révision par tour").uppercaseLabel()
-            Spacer()
-            HStack(spacing: 0) {
-                ForEach(StudySettings.reviewRoundSizeOptions, id: \.self) { n in
-                    let selected = store.settings.reviewRoundSize == n
-                    Button { select(n) } label: {
-                        Text("\(n)")
-                            .font(.appLabel)
-                            .tracking(1)
-                            .foregroundColor(selected ? AppColor.paper : AppColor.graphite)
-                            .frame(minWidth: 38)
-                            .padding(.vertical, Spacing.sm)
-                            .background(
-                                RoundedRectangle(cornerRadius: 9, style: .continuous)
-                                    .fill(selected ? AppColor.ink : Color.clear)
-                            )
-                    }
-                    .buttonStyle(.plain)
-                    .accessibilityLabel("\(n) révisions par tour")
-                    .accessibilityAddTraits(selected ? [.isSelected] : [])
-                }
+        Button { step(1) } label: {
+            Text("Tour · \(current)")
+                .uppercaseLabel()
+                .padding(.vertical, 6)
+                .padding(.leading, 12)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .padding(.vertical, -6)
+        .accessibilityLabel("Révisions par tour : \(current)")
+        .accessibilityHint("Touchez pour passer à \(next(1))")
+        .accessibilityAdjustableAction { dir in
+            switch dir {
+            case .increment: step(1)
+            case .decrement: step(-1)
+            @unknown default: break
             }
-            .padding(3)
-            .background(
-                RoundedRectangle(cornerRadius: 12, style: .continuous)
-                    .fill(AppColor.hairline.opacity(0.5))
-            )
         }
     }
 
-    private func select(_ n: Int) {
+    private func next(_ dir: Int) -> Int {
+        let i = options.firstIndex(of: current) ?? 0
+        return options[(i + dir + options.count) % options.count]
+    }
+
+    private func step(_ dir: Int) {
         let s = store.settings
         store.settings = StudySettings(newPerDay: s.newPerDay,
                                        reviewTarget: s.reviewTarget,
-                                       reviewRoundSize: n)
-    }
-}
-
-// MARK: - Module row
-
-private struct ModuleRow: View {
-    let number: Int
-    let title: String
-    let mastered: Int
-    let total: Int
-    let state: ModuleState
-
-    private var isLocked: Bool { state == .locked }
-
-    var body: some View {
-        HStack(alignment: .center, spacing: Spacing.md) {
-            Text(String(format: "%02d", number))
-                .font(.system(size: 15, weight: .regular, design: .monospaced))
-                .foregroundColor(isLocked ? AppColor.hairline : AppColor.graphite)
-
-            VStack(alignment: .leading, spacing: 2) {
-                Text(title)
-                    .font(.appTitle)
-                    .foregroundColor(isLocked ? AppColor.graphite : AppColor.ink)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                if !isLocked {
-                    Text("\(mastered)/\(total) maîtrisés")
-                        .uppercaseLabel()
-                }
-            }
-
-            glyph
-        }
-        .padding(.vertical, Spacing.md)
-        .contentShape(Rectangle())
-    }
-
-    @ViewBuilder
-    private var glyph: some View {
-        switch state {
-        case .done:
-            Image(systemName: "checkmark")
-                .font(.system(size: 16, weight: .semibold))
-                .foregroundColor(AppColor.saffron)
-        case .current:
-            Circle().fill(AppColor.saffron).frame(width: 10, height: 10)
-        case .locked:
-            Image(systemName: "lock")
-                .font(.system(size: 14, weight: .regular))
-                .foregroundColor(AppColor.graphite)
-        }
+                                       reviewRoundSize: next(dir))
+        UISelectionFeedbackGenerator().selectionChanged()
     }
 }
 
 // MARK: - Preview
 
 #Preview {
-    BookView()
+    NavigationStack { BookView(showBack: true) }
 }

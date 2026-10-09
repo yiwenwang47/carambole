@@ -2,19 +2,16 @@
 
 > ## ▶ ACTIVE TASK — START HERE (next session, continue without re-asking)
 >
-> **▶ UI REDESIGN — IN PROGRESS (updated 2026-10-09, end of build session 1).**
-> Work lives on branch **`ui-redesign`** in the worktree
-> **`../carambole-ui-redesign`** (NOT merged to `main`, not pushed). READ
-> **`design/UI_REDESIGN_HANDOFF.md` in that worktree first** — it has the status
-> table, the specs for what to build next, how to launch the app for the user
-> (Xcode 27: DeviceHub, not Simulator.app; iPhone 16 sim
-> `7C7BA0A7-C367-4CD4-AAE5-462B1F754986`) and lessons learned. Built: tokens/fonts,
-> 07 drill magnets, 01 chrome-star book home, module list (06 Tranches dropped),
-> 02 Cinétique module page, 03 Gravité today, settings restyle. NEXT: build
-> **08 Ruban → library** (one scroll-synced ribbon for all books, ribbon inside the
-> scroll content) and **09 → minimal history list**, both mocked + approved in the
-> worktree's `design/motion.html`; then the user fine-tunes in the simulator; then
-> T9 cleanup + merge. View-layer only; every existing control must survive.
+> **▶ UI REDESIGN — DONE, MERGED to `main` + PUSHED (2026-10-09, session 4).**
+> READ **`design/UI_REDESIGN_HANDOFF.md`** first: what was built, the colour
+> rules (white ground, ink text, colour on objects, pale saturation-capped
+> buttons/fills, grey not black buttons), and the short "still open" list.
+> Colour lives in `carambole/DesignSystem/Theme.swift` (`AppPalette` Acide /
+> Iris / Surimpression, `DrillStyle` Plateau / Cadres, both in UserDefaults,
+> picked on `ColorSettingsView` from the library's `Couleurs →`). Design
+> references: `design/motion.html`, `design/palettes.html`,
+> `design/drill-colour.html`. User tests on an **iPhone 18 Pro**
+> (`00008160-001A09920AA0000A`; install commands in the handoff).
 > Everything below is older context.
 >
  Everything below is DONE, MERGED to `main`, and PUSHED to origin (2026-06-19).
@@ -313,7 +310,7 @@ multiple choice), an unlockable topic tree, and spaced-repetition review.
 
 Full design: `docs/plans/2026-06-18-french-grammar-pivot-design.md`
 Implementation plan: `docs/plans/2026-06-18-french-grammar-pivot.md`
-Design system ("Le Cahier"): `docs/plans/2026-06-18-design-system.md`
+Design system: "objets + mouvement" + palettes — `design/UI_REDESIGN_HANDOFF.md`, `carambole/DesignSystem/` (the old "Le Cahier" plan `docs/plans/2026-06-18-design-system.md` is superseded)
 Schedule / SRS design (next phase): `docs/plans/2026-06-19-schedule-design.md`
 
 ## Content pipeline (dev tooling)
