@@ -13,14 +13,24 @@ large fill uses pale, saturation-capped colour; dark buttons are grey
 (`AppColor.buttonDark`), never black. Design references:
 `design/motion.html` (objects), `design/palettes.html`, `design/drill-colour.html`.
 
-Still open (user did not ask for these yet): confirm on device that the Today
-drop no longer stutters after `fait`; Iris star has no true iridescence (needs
-the Metal toolchain for a CustomMaterial shader, ask before installing); Today
-pile with ~40 tokens covers the title (could cap lower); 3D star and the open
-book's ribbon link are still full-strength colour (user may want them paler);
-T9 cleanup (dead `CaramboleStarMesh` glass/paper slice materials,
-`DesignGalleryView`, unused `success`/`error` colours) and deleting the merged
-`ui-t*` branches.
+Decided by the user on 2026-10-09 (after the merge): the Today drop is fine on
+device (no stutter after `fait`); the Today pile covering the title is OK, keep
+it; the 3D star and the library ribbon are intentionally FULL-STRENGTH colour
+(not subject to the pale saturation cap, which is for buttons and large fills).
+
+T9 cleanup done (on `main`): deleted `DesignSystem/DesignGalleryView.swift`
+(nothing navigated to it); removed from `CaramboleStarMesh.swift` the dead
+06 Tranches leftovers `StarMaterial.paper()`, `CaramboleStarMesh.path(valley:)`,
+`outlinePoints`, `tubeLoop` and `StarCameraProjection`; removed unused
+`AppColor.success`, `AppColor.error`, `AppColor.saffron`. Kept
+`StarMaterial.flat(_:opacity:)` (initial track / en-cours arc in
+`ObjetStarView`) and `AppColor.saffronDeep` (still used by the
+`CaramboleLogo` preview). Merged `ui-t*` branches and the `ui-redesign`
+worktree removed.
+
+Still open (only item): Iris star has no true iridescence. It needs the Metal
+toolchain for a RealityKit `CustomMaterial` surface shader; ask the user before
+installing (`xcodebuild -downloadComponent MetalToolchain`).
 
 ## Session 4 (2026-10-09): colour palettes, drill styles, merge
 

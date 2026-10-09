@@ -2,12 +2,11 @@
 //  CaramboleStarMesh.swift
 //  carambole
 //
-//  RealityKit building blocks for the 01 Objet book home (one chunky chrome
-//  star): the logo
-//  geometry as an extrusion path, the extruded meshes, hand-built torus-arc and
-//  tube meshes, the chrome / paper / glass materials and a procedural neutral
-//  "studio" environment for image-based lighting (a stand-in for three.js'
-//  RoomEnvironment in design/motion.html).
+//  RealityKit building blocks for the 01 Objet book home (one chunky star):
+//  the hand-extruded star mesh, a hand-built torus-arc mesh for the ring, the
+//  palette materials and a procedural neutral "studio" environment for
+//  image-based lighting (a stand-in for three.js' RoomEnvironment in
+//  design/motion.html).
 //
 //  Logo geometry (design/logo/README.md): 5 rib tips, 5 concave valleys, one
 //  quadratic curve per lobe, point-up. Tips sit at radius 1 here; the caller
@@ -24,32 +23,6 @@ import UIKit
 enum CaramboleStarMesh {
     /// 01 valley radius: r/R = 17/42, opened by 1.25 as in motion.html's 01 script.
     static let objetValley: CGFloat = 17.0 / 42.0 * 1.25
-
-    /// Unit-tip star outline, y-up, centred on the origin, tip 0 straight up.
-    static func path(valley: CGFloat, scale: CGFloat = 1) -> Path {
-        var p = Path()
-        p.move(to: tip(0, scale))
-        for k in 0..<5 {
-            p.addQuadCurve(to: tip(k + 1, scale), control: valleyPoint(k, valley * scale))
-        }
-        p.closeSubpath()
-        return p
-    }
-
-    /// Points along the outline (`perLobe` samples per quadratic), y-up.
-    static func outlinePoints(valley: CGFloat, perLobe: Int = 16) -> [CGPoint] {
-        var pts: [CGPoint] = []
-        for k in 0..<5 {
-            let a = tip(k, 1), c = valleyPoint(k, valley), b = tip(k + 1, 1)
-            for s in 0..<perLobe {
-                let t = CGFloat(s) / CGFloat(perLobe)
-                let u = 1 - t
-                pts.append(CGPoint(x: u * u * a.x + 2 * u * t * c.x + t * t * b.x,
-                                   y: u * u * a.y + 2 * u * t * c.y + t * t * b.y))
-            }
-        }
-        return pts
-    }
 
     private static func tip(_ k: Int, _ r: CGFloat) -> CGPoint {
         let a = Double.pi / 2 + Double(k) * 2 * .pi / 5
@@ -210,42 +183,6 @@ enum CaramboleStarMesh {
         desc.primitives = .triangles(idx)
         return try MeshResource.generate(from: [desc])
     }
-
-    /// A thin closed tube through `points` — the stand-in for three.js' 1px
-    /// `LineLoop` outline (RealityKit has no line primitive).
-    /// `up` = the loop's plane normal.
-    static func tubeLoop(_ points: [SIMD3<Float>], radius: Float, sides: Int = 6,
-                         up: SIMD3<Float> = [0, 1, 0]) throws -> MeshResource {
-        let n = points.count
-        var pos: [SIMD3<Float>] = [], nrm: [SIMD3<Float>] = [], idx: [UInt32] = []
-        for i in 0..<n {
-            let t = simd_normalize(points[(i + 1) % n] - points[(i + n - 1) % n])
-            var side = simd_cross(t, up)
-            if simd_length(side) < 1e-4 { side = SIMD3<Float>(1, 0, 0) }
-            side = simd_normalize(side)
-            let normalUp = simd_normalize(simd_cross(side, t))
-            for s in 0..<sides {
-                let a = Float(s) / Float(sides) * 2 * .pi
-                let d = side * cos(a) + normalUp * sin(a)
-                pos.append(points[i] + d * radius)
-                nrm.append(d)
-            }
-        }
-        for i in 0..<n {
-            let i2 = (i + 1) % n
-            for s in 0..<sides {
-                let s2 = (s + 1) % sides
-                let a = UInt32(i * sides + s), b = UInt32(i2 * sides + s)
-                let c = UInt32(i2 * sides + s2), d = UInt32(i * sides + s2)
-                idx += [a, b, c, a, c, d]
-            }
-        }
-        var desc = MeshDescriptor(name: "tubeLoop")
-        desc.positions = MeshBuffers.Positions(pos)
-        desc.normals = MeshBuffers.Normals(nrm)
-        desc.primitives = .triangles(idx)
-        return try MeshResource.generate(from: [desc])
-    }
 }
 
 // MARK: - Materials
@@ -269,15 +206,6 @@ enum StarMaterial {
         m.baseColor = .init(tint: UIColor(white: 0.08, alpha: 1))
         m.metallic = .init(floatLiteral: metallic)
         m.roughness = .init(floatLiteral: roughness)
-        return m
-    }
-
-    /// White paper (06 in-progress slice).
-    static func paper() -> PhysicallyBasedMaterial {
-        var m = PhysicallyBasedMaterial()
-        m.baseColor = .init(tint: .white)
-        m.metallic = .init(floatLiteral: 0)
-        m.roughness = .init(floatLiteral: 0.65)
         return m
     }
 
@@ -339,7 +267,7 @@ enum StarMaterial {
         UnlitMaterial(color: UIColor(hex: hex))
     }
 
-    /// Unlit flat colour, optionally translucent (track, glass, outlines).
+    /// Unlit flat grey, optionally translucent (initial track / en-cours arc).
     static func flat(_ white: CGFloat, opacity: Float = 1) -> UnlitMaterial {
         var m = UnlitMaterial(color: UIColor(white: white, alpha: 1))
         if opacity < 1 { m.blending = .transparent(opacity: .init(floatLiteral: opacity)) }
@@ -410,34 +338,5 @@ enum StudioEnvironment {
             ctx.fill(rect)
         }
         return ctx.makeImage()
-    }
-}
-
-// MARK: - Camera projection helper
-
-/// Pin-hole projection matching a `PerspectiveCamera` with a vertical FOV, used
-/// to map world points to SwiftUI points (06 tick + pointer mapping) without
-/// round-tripping through the renderer.
-struct StarCameraProjection {
-    let eye: SIMD3<Float>
-    let target: SIMD3<Float>
-    let fovDegrees: Float
-
-    /// Screen y (points from the top) of a world point, in a view `height` tall.
-    func screenY(_ p: SIMD3<Float>, height: CGFloat) -> CGFloat {
-        let f = simd_normalize(target - eye)
-        let r = simd_normalize(simd_cross(f, SIMD3<Float>(0, 1, 0)))
-        let u = simd_cross(r, f)
-        let d = p - eye
-        let ndc = (simd_dot(d, u) / simd_dot(d, f)) / tan(fovDegrees * .pi / 360)
-        return (1 - CGFloat(ndc)) / 2 * height
-    }
-
-    /// Orientation that makes a camera at `eye` look at `target`.
-    var orientation: simd_quatf {
-        let f = simd_normalize(target - eye)
-        let r = simd_normalize(simd_cross(f, SIMD3<Float>(0, 1, 0)))
-        let u = simd_cross(r, f)
-        return simd_quatf(simd_float3x3(columns: (r, u, -f)))
     }
 }

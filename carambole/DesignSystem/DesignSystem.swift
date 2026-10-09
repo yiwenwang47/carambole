@@ -61,14 +61,8 @@ enum AppColor {
     static let buttonDarkPressed = Color(hex: "555555")
     /// Rules, dividers, faint tracks (g4).
     static let hairline = Color(hex: "E6E5E1")
-    /// Legacy accent → ink tone (grayscale for now; colour returns later).
-    static let saffron = Color(hex: "141414")
     /// Legacy pressed accent → graphite.
     static let saffronDeep = Color(hex: "4A4A4A")
-    /// Kept defined; redesigned screens carry state by form, not hue.
-    static let success = Color(hex: "5B8C5A")
-    /// Kept defined; redesigned screens carry state by form, not hue.
-    static let error = Color(hex: "C0563F")
 }
 
 // MARK: - Fonts

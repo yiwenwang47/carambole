@@ -12,6 +12,15 @@
 > references: `design/motion.html`, `design/palettes.html`,
 > `design/drill-colour.html`. User tests on an **iPhone 18 Pro**
 > (`00008160-001A09920AA0000A`; install commands in the handoff).
+> User decisions 2026-10-09: Today drop fine on device; Today pile covering the
+> title is OK (keep); 3D star + library ribbon are intentionally FULL-STRENGTH
+> colour (not under the pale cap). **T9 cleanup DONE** (removed
+> `DesignGalleryView`, 06 Tranches leftovers in `CaramboleStarMesh` — `paper()`,
+> `path`, `outlinePoints`, `tubeLoop`, `StarCameraProjection` — and unused
+> `AppColor.success/error/saffron`; merged `ui-t*` branches + `ui-redesign`
+> worktree deleted). **Only open item:** Iris star has no true iridescence
+> (needs the Metal toolchain for a RealityKit CustomMaterial surface shader;
+> ASK the user before installing).
 > Everything below is older context.
 >
  Everything below is DONE, MERGED to `main`, and PUSHED to origin (2026-06-19).
