@@ -103,16 +103,19 @@ canvas { display: block; }
 .c7 .btn[disabled] { opacity: .25; cursor: default; }
 
 
-/* 08 · Rubans (library) */
-.c8 canvas { position: absolute; inset: 0; cursor: grab; }
+/* 08 · Ruban (library) */
+.c8 canvas { position: absolute; inset: 0; pointer-events: none; }
+.c8 .shelf { position: absolute; inset: 0; overflow-y: auto; scrollbar-width: none; z-index: 2; }
+.c8 .shelf::-webkit-scrollbar { display: none; }
+.c8 .shelf .in { position: relative; height: 1700px; }
 .c8 .big { position: absolute; left: 22px; top: 100px; font-size: 40px; font-weight: 250; letter-spacing: -0.03em; line-height: 1.05; }
 .c8 .big em { font-style: normal; color: var(--g2); }
-.c8 .rail { position: absolute; left: 22px; right: 22px; top: 248px; height: 1px; background: var(--ink); }
-.c8 .book { position: absolute; top: 622px; width: 104px; margin-left: -52px; text-align: center; cursor: pointer; }
-.c8 .book .t { font-size: 14px; font-weight: 400; letter-spacing: -0.01em; }
-.c8 .book.off .t { color: var(--g3); }
-.c8 .book .lab { margin-top: 6px; display: block; }
-.c8 .readout { position: absolute; left: 22px; top: 214px; }
+.c8 .bk { position: absolute; left: 22px; width: 190px; }
+.c8 .bk .t { font-size: 40px; font-weight: 250; letter-spacing: -0.03em; line-height: 1.02; margin-top: 8px; }
+.c8 .bk .m { margin-top: 10px; display: block; }
+.c8 .bk .go { margin-top: 18px; display: inline-block; border-bottom: 1px solid var(--ink); cursor: pointer; }
+.c8 .bk.off .t { color: var(--g3); }
+.c8 .hint { position: absolute; left: 0; right: 0; text-align: center; }
 
 /* 09 · Historique minimal */
 .c9 .num { font-size: 64px; font-weight: 200; letter-spacing: -0.05em; line-height: .9; }
@@ -255,21 +258,22 @@ canvas { display: block; }
   <!-- 08 -->
   <section class="concept">
     <div class="no">08 · Bibliothèque · nouveau</div>
-    <h2>Rubans</h2>
+    <h2>Ruban</h2>
     <div class="phone c8" id="p8">
       <canvas id="rib8"></canvas>
-      <div class="sb"><span>9:41</span><i></i></div>
-      <div class="abs lab ink" style="left:22px;top:66px">Carambole</div>
-      <div class="abs lab" style="right:22px;top:66px">Bibliothèque</div>
-      <div class="big">3 livres<br><em>1 ouvert, 2 à venir.</em></div>
-      <div class="rail"></div>
-      <div class="book" style="left:70px" id="b8a"><div class="t">Fondations</div><span class="lab ink">41 % · Ouvrir →</span></div>
-      <div class="book off" style="left:180px"><div class="t">Conversation</div><span class="lab">Bientôt</span></div>
-      <div class="book off" style="left:290px"><div class="t">Intermédiaire</div><span class="lab">Bientôt</span></div>
-      <div class="abs lab" style="left:0;right:0;bottom:30px;text-align:center">Toucher un livre pour l’ouvrir</div>
+      <div class="shelf" id="shelf8"><div class="in">
+        <div class="abs lab ink" style="left:22px;top:66px">Carambole</div>
+        <div class="abs lab" style="right:22px;top:66px">Bibliothèque</div>
+        <div class="big">Mes livres<br><em>3 · 1 ouvert</em></div>
+        <div class="bk" style="top:300px"><span class="lab">01 · Grammaire A1 → B1</span><div class="t">Fondations</div><span class="lab m">41 % · 30 derniers jours</span><span class="lab ink go" id="go8">Ouvrir →</span></div>
+        <div class="bk off" style="top:740px"><span class="lab">02 · Oral</span><div class="t">Conver&shy;sation</div><span class="lab m">Bientôt</span></div>
+        <div class="bk off" style="top:1180px"><span class="lab">03 · B1 → B2</span><div class="t">Intermé&shy;diaire</div><span class="lab m">Bientôt</span></div>
+        <div class="lab hint" style="top:1600px">Fin de la bibliothèque</div>
+      </div></div>
+      <div class="sb" style="background:var(--paper)"><span>9:41</span><i></i></div>
     </div>
-    <p class="cap">The library reuses the ribbon. Each book hangs from one rail as a paper ribbon. The open book's ribbon is your real last 30 days: width is the work, a full twist is a rest day, so the shelf shows at a glance how alive each book is. Books to come hang as thin, untouched strips of tracing paper. Everything sways a little; drag a ribbon to turn it, tap it (or its title) to open the book. History itself becomes a quiet list (09).
-      <b>iOS route</b>The 05 <code>RibbonView</code> mesh code, instanced three times in one <code>RealityView</code> (narrower width scale), with a tap hit-test per ribbon.</p>
+    <p class="cap">One paper ribbon runs down the whole shelf, and each book is a stretch of it. Scroll the shelf and the ribbon travels with it, exactly in step, turning a little as it goes. The open book's stretch is drawn from your last 30 days (width = work, a full twist = a rest day); a full twist also marks where one book ends and the next begins. Books to come are a narrow, faint stretch of tracing paper. Each book keeps one plain link.
+      <b>iOS route</b>The 05 ribbon mesh in a <code>RealityView</code> with an orthographic camera behind a <code>ScrollView</code>; the scroll offset (<code>onScrollGeometryChange</code>) moves the ribbon 1:1.</p>
   </section>
 
   <!-- 09 -->
@@ -805,94 +809,92 @@ const tmp = new THREE.Vector3();
 </script>
 
 
-<!-- 08 · library ribbons -->
+<!-- 08 · library ribbon (scroll-synced) -->
 <script type="module">
 import * as THREE from "three";
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-const cv = document.getElementById("rib8");
+const cv = document.getElementById("rib8"), shelf = document.getElementById("shelf8");
 const W = 360, H = 760;
 const renderer = new THREE.WebGLRenderer({ canvas: cv, antialias: true, alpha: true });
 renderer.setPixelRatio(Math.min(devicePixelRatio, 2)); renderer.setSize(W, H);
 const scene = new THREE.Scene();
-const cam = new THREE.PerspectiveCamera(34, W / H, .1, 100);
-cam.position.set(0, 0, 9.5); cam.lookAt(0, 0, 0);
+// orthographic: 1 px of scroll = exactly k world units, so the ribbon stays locked to the text
+const HH = 2.9, HW = HH * W / H, k = 2 * HH / H;
+const cam = new THREE.OrthographicCamera(-HW, HW, HH, -HH, .1, 50);
+cam.position.set(0, 0, 10); cam.lookAt(0, 0, 0);
 scene.add(new THREE.HemisphereLight(0xffffff, 0x9a9995, 2.2));
 const key = new THREE.DirectionalLight(0xffffff, 2.2); key.position.set(-2, 4, 5); scene.add(key);
 
-// screen px → world at z = 0
-const HH = Math.tan(17 * Math.PI / 180) * 9.5, HW = HH * W / H;
+// content px (y down from the top of the shelf) → world, at scroll 0
 const wx = px => (px / W * 2 - 1) * HW, wy = py => (1 - py / H * 2) * HH;
-const TOP = wy(248), BOT = wy(600);
 
-// Fondations: the same 30 days as 05 (0 = rest day)
+// book stretches along the content: [start px, end px]
+const BOOKS = [[250, 690], [690, 1130], [1130, 1570]];
+const P0 = BOOKS[0][0], P1 = BOOKS[2][1];
 const L = [4,5,0,6,7,5,8,9,6,0,7,8,7,9,8,5,6,9,10,0,9,8,8,5,9,0,7,8,6,6];
 const R = [10,13,0,16,18,14,19,21,15,0,17,20,19,22,21,12,17,21,23,0,21,22,21,11,24,0,17,21,12,14];
-const live = L.map((l, i) => l + R[i]);
+const tot = L.map((l, i) => l + R[i]), mx = Math.max(...tot), N = tot.length;
 
-function ribbon(x, tot, opts) {
-  const N = tot.length, mx = Math.max(1, ...tot), S = 600;
-  const spine = t => new THREE.Vector3(x + Math.sin(t * Math.PI * 1.1) * opts.wave, TOP + (BOT - TOP) * t, Math.sin(t * Math.PI * 2) * opts.wave * .6);
-  const widthAt = s => {
-    if (!opts.data) return opts.flat;
-    const d = s * (N - 1), i = Math.floor(d), f = d - i, j = Math.min(N - 1, i + 1), e = f * f * (3 - 2 * f);
-    return .03 + .34 * ((tot[i] * (1 - e) + tot[j] * e) / mx);
-  };
-  const twistAt = s => {
-    if (!opts.data) return 0;
-    let th = 0; const d = s * (N - 1);
-    tot.forEach((v, i) => { if (v === 0) { const c = Math.min(N - 1.5, Math.max(.5, i)); const q = Math.min(1, Math.max(0, d - c + .5)); th += 2 * Math.PI * q * q * (3 - 2 * q); } });
-    return th;
-  };
-  const Z = new THREE.Vector3(0, 0, 1), pos = [], eA = [], eB = [], dt = 1e-3;
+const ease = x => { x = Math.min(1, Math.max(0, x)); return x * x * (3 - 2 * x); };
+const spinePx = py => [262 + Math.sin((py - P0) / 260) * 34, py];          // gentle weave on the right
+const spine = py => { const [x, y] = spinePx(py); return new THREE.Vector3(wx(x), wy(y), Math.sin((py - P0) / 180) * .35); };
+const widthAt = py => {
+  if (py < BOOKS[0][1]) {                      // Fondations: the 30 days, eased
+    const d = (py - BOOKS[0][0]) / (BOOKS[0][1] - BOOKS[0][0]) * (N - 1), i = Math.max(0, Math.floor(d)), j = Math.min(N - 1, i + 1);
+    const v = tot[i] * (1 - ease(d - i)) + tot[j] * ease(d - i);
+    return .06 + .5 * v / mx;
+  }
+  return .13;                                  // books to come: narrow tracing paper
+};
+const twistAt = py => {
+  let th = 0;
+  const d = (py - BOOKS[0][0]) / (BOOKS[0][1] - BOOKS[0][0]) * (N - 1);
+  tot.forEach((v, i) => { if (v === 0) th += 2 * Math.PI * ease(d - i + .5); });   // rest days
+  [BOOKS[1][0], BOOKS[2][0]].forEach(b => { th += 2 * Math.PI * ease((py - b + 40) / 80); }); // book boundaries
+  return th;
+};
+const opaque = py => py < BOOKS[0][1];
+
+function strip(a, b, live) {
+  const S = Math.round((b - a) / 1.2), Z = new THREE.Vector3(0, 0, 1), pos = [], eA = [], eB = [];
   for (let i = 0; i <= S; i++) {
-    const s = i / S, p = spine(s), T = spine(Math.min(1, s + dt)).sub(spine(Math.max(0, s - dt))).normalize();
+    const py = a + (b - a) * i / S, p = spine(py);
+    const T = spine(py + .5).sub(spine(py - .5)).normalize();
     const w0 = Z.clone().sub(T.clone().multiplyScalar(T.dot(Z))).normalize();
-    const xw = new THREE.Vector3().crossVectors(T, w0), th = twistAt(s);
-    const w = xw.multiplyScalar(Math.cos(th)).add(w0.clone().multiplyScalar(Math.sin(th))).multiplyScalar(widthAt(s) / 2);
-    const a = p.clone().add(w), b = p.clone().sub(w);
-    pos.push(a.x - x, a.y, a.z, b.x - x, b.y, b.z); eA.push(new THREE.Vector3(a.x - x, a.y, a.z)); eB.push(new THREE.Vector3(b.x - x, b.y, b.z));
+    const xw = new THREE.Vector3().crossVectors(T, w0), th = twistAt(py);
+    const w = xw.multiplyScalar(Math.cos(th)).add(w0.clone().multiplyScalar(Math.sin(th))).multiplyScalar(widthAt(py) / 2);
+    const A = p.clone().add(w), B = p.clone().sub(w);
+    pos.push(A.x, A.y, A.z, B.x, B.y, B.z); eA.push(A); eB.push(B);
   }
   const idx = [];
-  for (let i = 0; i < S; i++) { const k = i * 2; idx.push(k, k + 1, k + 2, k + 1, k + 3, k + 2); }
+  for (let i = 0; i < S; i++) { const q = i * 2; idx.push(q, q + 1, q + 2, q + 1, q + 3, q + 2); }
   const g = new THREE.BufferGeometry();
   g.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3)); g.setIndex(idx); g.computeVertexNormals();
-  const grp = new THREE.Group();
-  const front = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: .6, side: THREE.BackSide, transparent: !opts.data, opacity: opts.data ? 1 : .7 });
-  const back = new THREE.MeshStandardMaterial({ color: 0x8d8d8a, roughness: .7, side: THREE.FrontSide, transparent: !opts.data, opacity: opts.data ? 1 : .2 });
-  const lm = new THREE.LineBasicMaterial({ color: opts.data ? 0x141414 : 0x8d8d8a });
-  grp.add(new THREE.Mesh(g, front), new THREE.Mesh(g, back),
-    new THREE.Line(new THREE.BufferGeometry().setFromPoints(eA), lm), new THREE.Line(new THREE.BufferGeometry().setFromPoints(eB), lm));
-  grp.position.x = x;
-  scene.add(grp);
-  return grp;
+  const front = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: .6, side: THREE.BackSide, transparent: !live, opacity: live ? 1 : .6 });
+  const back = new THREE.MeshStandardMaterial({ color: 0x8d8d8a, roughness: .7, side: THREE.FrontSide, transparent: !live, opacity: live ? 1 : .35 });
+  const lm = new THREE.LineBasicMaterial({ color: live ? 0x141414 : 0x8d8d8a });
+  return [new THREE.Mesh(g, front), new THREE.Mesh(g, back),
+    new THREE.Line(new THREE.BufferGeometry().setFromPoints(eA), lm), new THREE.Line(new THREE.BufferGeometry().setFromPoints(eB), lm)];
 }
 
-const ribs = [
-  ribbon(wx(70), live, { data: true, wave: .1 }),
-  ribbon(wx(180), [1], { data: false, flat: .17, wave: .06 }),
-  ribbon(wx(290), [1], { data: false, flat: .17, wave: .06 }),
-];
+// one ribbon, drawn as three stretches so the books to come can be fainter
+const grp = new THREE.Group();
+BOOKS.forEach(([a, b], i) => grp.add(...strip(a, b + (i < 2 ? 1 : 0), i === 0)));
+// pivot the turn around the ribbon's own axis
+const pivot = new THREE.Group(); pivot.position.x = wx(262); grp.position.x = -wx(262);
+pivot.add(grp); scene.add(pivot);
 
-// drag sideways turns the ribbon under the finger; tap Fondations "opens" it
-let active = -1, lx = 0, moved = 0;
-const rot = [0, 0, 0], target = [0, 0, 0];
-const col = clientX => { const x = clientX - cv.getBoundingClientRect().left; return x < 125 ? 0 : x < 235 ? 1 : 2; };
-cv.addEventListener("pointerdown", e => { active = col(e.clientX); lx = e.clientX; moved = 0; cv.setPointerCapture(e.pointerId); });
-cv.addEventListener("pointermove", e => { if (active < 0) return; const d = e.clientX - lx; moved += Math.abs(d); target[active] = Math.max(-1.4, Math.min(1.4, target[active] + d * .012)); lx = e.clientX; });
-cv.addEventListener("pointerup", () => { if (active === 0 && moved < 6) openBook(); if (active >= 0) target[active] = 0; active = -1; });
-const b8a = document.getElementById("b8a");
-function openBook() { b8a.animate([{ opacity: 1 }, { opacity: .3 }, { opacity: 1 }], { duration: 500 }); }
-b8a.onclick = openBook;
+document.getElementById("go8").onclick = e => e.target.animate([{ opacity: 1 }, { opacity: .3 }, { opacity: 1 }], { duration: 500 });
 
-let t = 0;
+let t = 0, lastTop = 0, spin = 0;
 function frame() {
   t += 1 / 60;
-  ribs.forEach((r, i) => {
-    rot[i] += (target[i] - rot[i]) * .06;
-    r.rotation.y = rot[i] + (reduce ? 0 : Math.sin(t * .5 + i * 1.7) * .25);
-  });
+  const top = shelf.scrollTop, v = top - lastTop; lastTop = top;
+  pivot.position.y = top * k;                                // exact sync with the shelf
+  spin += (v * .004 - spin) * .15;                           // scrolling turns it a little
+  pivot.rotation.y = reduce ? 0 : Math.sin(t * .5) * .2 + spin * 6;
   renderer.render(scene, cam);
-  if (!reduce) requestAnimationFrame(frame);
+  requestAnimationFrame(frame);
 }
 frame();
 </script>
