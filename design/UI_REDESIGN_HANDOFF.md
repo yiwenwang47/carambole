@@ -8,9 +8,8 @@ Branch **`ui-redesign`** (worktree `../carambole-ui-redesign`, NOT merged to
 `main`, not pushed) has the redesign built for every screen except two that the
 user re-designed at the end of the session. Next session:
 
-1. **Build 08 · Ruban → the library** (`Features/Library/LibraryView.swift`).
-2. **Build 09 · Liste → History** (`Features/History/HistoryView.swift`, replacing
-   the 3D ribbon page with a minimal list).
+1. ~~Build 08 · Ruban → the library~~ done (session 2).
+2. ~~Build 09 · Liste → History~~ done (session 2).
 3. Then the user fine-tunes screen by screen in the simulator.
 4. Then T9 cleanup + merge (see bottom).
 
@@ -29,8 +28,8 @@ real browser. Concepts on the page now: **01 Objet, 02 Cinétique, 03 Gravité,
 | Module list | (replaces dropped 06 Tranches) | `Features/Book/ModuleListView.swift` — numbered rows, status `x / 20` · `Maîtrisé` · `Verrouillé`; pushed from book-home bottom line / swipe up | done |
 | Module page | 02 Cinétique | `Features/Book/ModuleDetailView.swift` (signature `ModuleDetailView(module:viewModel:)` kept) | done |
 | Today | 03 Gravité | `Features/Today/TodayView.swift`, `TokenPileScene.swift` (SpriteKit) — opened from book home `fait : … →` | done |
-| History | 05 Ruban (3D) | `Features/History/HistoryView.swift`, `RibbonView.swift` | **built but to be replaced by 09** — reuse `RibbonView`'s mesh code for 08 |
-| Library | — | `Features/Library/LibraryView.swift` (edge-type restyle) | **to be replaced by 08** |
+| History | 09 Liste | `Features/History/HistoryView.swift` (3D ribbon removed; `RibbonView.swift` deleted) | done (session 2) |
+| Library | 08 Ruban | `Features/Library/LibraryView.swift`, `LibraryRibbon.swift` (ortho RealityView inside the scroll content, self-tested geometry) | done (session 2) — see deviations below |
 | Settings | — | `Features/Settings/SettingsView.swift` (edge-type restyle, `− 12 +` steppers) | done |
 
 Navigation now: Library → Fondations → book home (01).
@@ -43,6 +42,19 @@ Indice, Écouter, auto-speak, chevrons, carousel swipe, compact mode, review mod
 undo toast, intro/completion, round size `Tour · 20`, fragile chip,
 swipe-to-demote, export, steppers, toggle). Per-screen deviations are listed in
 the subagent reports summarized in git commit bodies.
+
+## Session 2 (2026-10-09): 08 + 09 built
+
+Build EXIT 0, launch self-tests pass, both screenshot-checked (temp `CB_SCREEN`
+harness, removed). Deviations from the spec below:
+- **Pauses, not rest days, twist the ribbon**: a run of consecutive rest days =
+  one 2π twist, and days before the book's first activity in the window don't
+  twist (`LibraryRibbonGeometry.restRuns`). Per-day twists turned sparse real
+  data into a tight coil (dense repeated shape) on the sim.
+- A started book with no activity yet = thin 0.05 live strip, no twists.
+- `OrthographicCameraComponent.scale` is the HALF extent (`W·k/2`).
+- History footnote keeps the old wording (2 lines at 393 pt); list bottom
+  inset 84 so it never overlaps.
 
 ## 08 · Ruban (library) — spec for the build
 

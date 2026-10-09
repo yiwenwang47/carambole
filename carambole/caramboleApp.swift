@@ -22,6 +22,7 @@ struct caramboleApp: App {
         StudySettingsStore._selfTest()
         HistoryViewModel._selfTest()
         HistoryViewModel._selfTestRibbon()
+        LibraryRibbonGeometry._selfTest()
         ProgressEstimate._selfTest()
         FSRS._selfTest()
         CalendarDays._selfTest()
