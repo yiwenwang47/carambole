@@ -78,6 +78,9 @@ struct DrillSessionView: View {
 
     @State private var finished = false
     @State private var showingIntro = true
+    /// Start of the completion score's one `wght` wave.
+    @State private var summaryWaveStart: Date?
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     /// Element id just marked "Trop facile" (correct → instant graduate). Set so the
     /// undo toast's "Annuler" can `demote` exactly that element even though the session
@@ -131,7 +134,7 @@ struct DrillSessionView: View {
                 // bar is hidden there. Progress is already durable — every answer
                 // upserts review_status as it happens — so leaving simply dismisses.
                 if !finished && !elements.isEmpty {
-                    exitBar
+                    topBar
                 }
 
                 ZStack {
@@ -228,13 +231,9 @@ struct DrillSessionView: View {
     private func cardView(at i: Int) -> some View {
         DrillView(
             exercise: history[i],
-            progress: progress,
             onResult: { correct, tokens in handleResult(correct: correct, answer: tokens) },
             onTooEasy: { correct, tokens in handleTooEasy(correct: correct, answer: tokens) },
             onNext: advance,
-            canGoBack: i > 0,
-            onBack: goBack,
-            canGoForward: i < frontier,
             onForward: goForward,
             // An answered card behind the frontier is a read-only review — EXCEPT
             // the one we just advanced past (`hideExplanationAt`), which keeps its
@@ -334,24 +333,58 @@ struct DrillSessionView: View {
             #selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 
-    /// Thin top bar with a leading close button. Tapping leaves the session; the
+    /// The 07 top row: ✕ (left), `‹ Exercice · 3 / 10 ›` (centre), progress ring
+    /// (right). Static while cards slide. Tapping ✕ leaves the session; the
     /// learner's progress is already saved (per-answer upsert), so nothing extra
-    /// to flush.
-    private var exitBar: some View {
-        HStack {
-            Button(action: onFinish) {
-                Image(systemName: "xmark")
-                    .font(.system(size: 16, weight: .semibold))
-                    .foregroundColor(AppColor.graphite)
-                    .frame(width: 40, height: 40, alignment: .leading)
-                    .contentShape(Rectangle())
+    /// to flush. During the intro card only ✕ shows.
+    private var topBar: some View {
+        let drilling = !shouldShowIntro && history.indices.contains(cursor)
+        return ZStack {
+            HStack {
+                Button(action: onFinish) {
+                    Text("✕")
+                        .font(.label(size: 13))
+                        .foregroundColor(AppColor.ink)
+                        .frame(width: 40, height: 40, alignment: .leading)
+                        .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel("Quitter")
+                Spacer()
+                if drilling {
+                    ProgressRing(progress: progress)
+                }
             }
-            .buttonStyle(.plain)
-            .accessibilityLabel("Quitter")
-            Spacer()
+            if drilling {
+                HStack(spacing: 10) {
+                    navChevron("‹", label: "Exercice précédent", enabled: cursor > 0, action: goBack)
+                    Text("\(cursor < frontier ? "Révision" : "Exercice") · \(min(elementIndex + 1, elements.count)) / \(elements.count)")
+                        .uppercaseLabel()
+                        .monospacedDigit()
+                    navChevron("›", label: "Exercice suivant", enabled: cursor < frontier, action: goForward)
+                }
+            }
         }
         .padding(.horizontal, Spacing.screenH)
         .padding(.top, Spacing.sm)
+    }
+
+    /// Back / forward through answered drills (read-only revisit). Hidden (but
+    /// layout-stable) when there is nowhere to go.
+    private func navChevron(_ glyph: String, label: String, enabled: Bool,
+                            action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Text(glyph)
+                .font(.display(size: 20, wght: 300))
+                .foregroundColor(AppColor.ink)
+                .frame(width: 28, height: 40)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .opacity(enabled ? 1 : 0)
+        .disabled(!enabled)
+        .accessibilityLabel(label)
+        .accessibilityHidden(!enabled)
     }
 
     // MARK: - "Trop facile" undo toast
@@ -362,7 +395,7 @@ struct DrillSessionView: View {
     private var tooEasyUndoToast: some View {
         HStack(spacing: Spacing.md) {
             Text("Marqué trop facile")
-                .font(.appLabel)
+                .font(.display(size: 15, wght: 400))
                 .foregroundColor(AppColor.paper)
                 .lineLimit(1)
 
@@ -372,22 +405,16 @@ struct DrillSessionView: View {
 
             Button(action: undoTooEasy) {
                 Text("Annuler")
-                    .font(.appLabel)
-                    .fontWeight(.semibold)
-                    .tracking(1)
-                    .textCase(.uppercase)
-                    .foregroundColor(AppColor.saffron)
+                    .uppercaseLabel(AppColor.paper)
+                    .underline()
                     .contentShape(Rectangle())
             }
             .buttonStyle(ScaleButtonStyle())
             .accessibilityLabel("Annuler · remettre en cours")
         }
-        .padding(.horizontal, Spacing.lg)
-        .padding(.vertical, Spacing.md)
-        .background(
-            Capsule().fill(AppColor.ink)
-                .shadow(color: AppColor.ink.opacity(0.18), radius: 14, y: 6)
-        )
+        .padding(.horizontal, 22)
+        .frame(height: 48)
+        .background(Capsule().fill(AppColor.ink))
     }
 
     /// Surface the undo toast for `elementID` (called on the too-easy-correct path).
@@ -592,12 +619,15 @@ struct DrillSessionView: View {
             Spacer(minLength: Spacing.xl)
             SectionLabel("Leçon")
             Text(title)
-                .font(.appTitle)
+                .font(.display(size: 40, wght: 250))
+                .tracking(-1.2)
+                .lineSpacing(0)
                 .foregroundColor(AppColor.ink)
                 .fixedSize(horizontal: false, vertical: true)
-            Rectangle().fill(AppColor.hairline).frame(height: 1).padding(.vertical, Spacing.sm)
+            Rectangle().fill(AppColor.ink).frame(height: 1).padding(.vertical, Spacing.sm)
             Text(ruleNote)
-                .font(.appExplain)
+                .font(.appBody)
+                .lineSpacing(4)
                 .foregroundColor(AppColor.graphite)
                 .fixedSize(horizontal: false, vertical: true)
             Spacer()
@@ -607,7 +637,7 @@ struct DrillSessionView: View {
             .buttonStyle(PrimaryButtonStyle())
         }
         .padding(.horizontal, Spacing.screenH)
-        .padding(.bottom, Spacing.xl)
+        .padding(.bottom, Spacing.sm)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
     }
 
@@ -620,35 +650,37 @@ struct DrillSessionView: View {
 
             if elements.isEmpty {
                 Text(mode == .review ? "Rien à réviser" : "Rien à apprendre")
-                    .font(.appDisplay)
+                    .font(.display(size: 40, wght: 250))
+                    .tracking(-1.2)
                     .foregroundColor(AppColor.ink)
                 Text(mode == .review
                      ? "Aucun élément à réviser pour le moment. Reviens plus tard."
                      : "Tu as parcouru tout le contenu disponible.")
-                    .font(.appExplain)
+                    .font(.appBody)
                     .foregroundColor(AppColor.graphite)
                     .fixedSize(horizontal: false, vertical: true)
             } else {
                 Text("Terminé")
-                    .font(.appDisplay)
+                    .font(.display(size: 40, wght: 250))
+                    .tracking(-1.2)
                     .foregroundColor(AppColor.ink)
-                HStack(alignment: .firstTextBaseline, spacing: Spacing.sm) {
-                    Text("\(correctCount)")
-                        .font(.appPrompt)
+                VStack(alignment: .leading, spacing: 6) {
+                    WaveText(text: "\(correctCount) / \(answeredCount)", size: 64, base: 200,
+                             tracking: -2.5, start: reduceMotion ? nil : summaryWaveStart,
+                             duration: 0.9)
                         .foregroundColor(AppColor.ink)
-                    Text("/ \(answeredCount) correct")
-                        .font(.appTitle)
-                        .foregroundColor(AppColor.graphite)
+                    Text("correctes").uppercaseLabel()
                 }
+                .onAppear { summaryWaveStart = Date().addingTimeInterval(0.35) }
             }
 
-            Rectangle().fill(AppColor.hairline).frame(height: 1).padding(.vertical, Spacing.sm)
+            Rectangle().fill(AppColor.ink).frame(height: 1).padding(.vertical, Spacing.sm)
             Spacer()
             Button("Terminer") { onFinish() }
                 .buttonStyle(PrimaryButtonStyle())
         }
         .padding(.horizontal, Spacing.screenH)
-        .padding(.bottom, Spacing.xl)
+        .padding(.bottom, Spacing.sm)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
     }
 }

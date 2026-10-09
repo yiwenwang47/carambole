@@ -2,9 +2,8 @@
 //  TypeAnswerView.swift
 //  carambole
 //
-//  Free-text typing input for `resolvedInputMode == .freeText`. A "Le Cahier"
-//  writing line: the learner's rounded serif-ish answer sits on a single ink
-//  underline. The field PREFERS the French keyboard (so accents are a long-press
+//  Free-text typing input for `resolvedInputMode == .freeText`. The learner's
+//  answer sits on the 07 baseline (one 1pt ink rule), in light Manrope. The field PREFERS the French keyboard (so accents are a long-press
 //  away — é/è/ê via holding e, etc.) — the learner is expected to use the system
 //  keyboard, so there is no accent shortcut bar. Answers are graded accent-strict
 //  (see DrillEngine.normalize). Backed by a UITextField for caret-accurate editing.
@@ -24,6 +23,8 @@ struct TypeAnswerView: View {
     @Binding var answer: [String]
     /// Locked after the answer is checked.
     var isLocked: Bool = false
+    /// nil until checked; then whether the answer was right.
+    var result: Bool? = nil
 
     /// Bridges `[String]` ⇄ the field's `String`. Stores the raw text (so mid-word
     /// spaces survive) but reports "no answer" when it is only whitespace.
@@ -38,13 +39,17 @@ struct TypeAnswerView: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: Spacing.sm) {
+        VStack(alignment: .leading, spacing: 0) {
             TypingTextField(text: text, isLocked: isLocked,
                             placeholder: "Écris ta réponse…")
                 .frame(height: 40)
             Rectangle()
-                .fill(isLocked ? AppColor.hairline : AppColor.ink)
-                .frame(height: 1.5)
+                .fill(AppColor.ink)
+                .frame(height: 1)
+                .padding(.top, 10)
+            DrillFeedbackLine(result: result,
+                              answer: Exercise.displayJoin(exercise.answerTokens))
+                .padding(.top, 12)
         }
     }
 }
@@ -68,9 +73,12 @@ private struct TypingTextField: UIViewRepresentable {
         tf.smartInsertDeleteType = .no
         tf.returnKeyType = .done
         tf.clearButtonMode = .whileEditing
-        tf.font = Self.roundedFont
+        tf.font = Self.fieldFont
         tf.textColor = UIColor(AppColor.ink)
-        tf.tintColor = UIColor(AppColor.saffronDeep)
+        tf.tintColor = UIColor(AppColor.ink)
+        tf.attributedPlaceholder = NSAttributedString(
+            string: placeholder,
+            attributes: [.foregroundColor: UIColor(AppColor.g3), .font: Self.fieldFont])
         tf.inputAccessoryView = context.coordinator.makeKeyboardBar()
         tf.addTarget(context.coordinator,
                      action: #selector(Coordinator.editingChanged(_:)),
@@ -98,11 +106,9 @@ private struct TypingTextField: UIViewRepresentable {
 
     func makeCoordinator() -> Coordinator { Coordinator(text: $text) }
 
-    /// ≈24pt rounded — matches the token / choice input family (`.appToken`).
-    static var roundedFont: UIFont {
-        let base = UIFont.systemFont(ofSize: 24, weight: .medium)
-        guard let d = base.fontDescriptor.withDesign(.rounded) else { return base }
-        return UIFont(descriptor: d, size: 24)
+    /// 26pt Manrope 300 — the welded-sentence face from 07.
+    static var fieldFont: UIFont {
+        AppFonts.uiFont(AppFonts.manrope, size: 26, wght: 300)
     }
 
     final class Coordinator: NSObject, UITextFieldDelegate {

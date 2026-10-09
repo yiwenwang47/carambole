@@ -14,6 +14,7 @@ struct caramboleApp: App {
         #if DEBUG
         DrillEngine._selfTest()
         DrillView._selfTest()
+        WaveText._selfTest()
         Exercise._selfTest()
         StudyScheduler._selfTest()
         StudySettingsStore._selfTest()
