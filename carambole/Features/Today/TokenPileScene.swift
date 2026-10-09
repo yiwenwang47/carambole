@@ -4,13 +4,19 @@
 //
 //  The 03 Gravité pile (design/motion.html `.c3` + its Matter.js script): today's
 //  elements as pill-shaped physics tokens that fall into a pile above the bottom
-//  buttons. White + ink outline = new, black = review, dashed outline = fragile.
+//  buttons. Palette fills for new and review, dashed outline = fragile.
 //  Tokens can be dragged and thrown; `shake()` tosses them (Secouer); device tilt
 //  (CoreMotion) leans the gravity. `sync(_:)` diffs the set: tokens whose element
 //  left the queue fall through the floor and fade, new ones drop in from the top —
 //  the pile is never rebuilt. Reduce motion: tokens sit settled in rows, static.
 //
-//  Shapes are always capsules (pills), never dots.
+//  Shapes are always capsules (pills), never dots. Colours come from the
+//  learner's palette (`AppPalette.current`): new / review fills, a dashed
+//  fragile outline, and in Surimpression the fills multiply where they overlap.
+//
+//  Smooth drop: tokens are spawned one per ~30 ms (not all in one frame), pill
+//  textures are cached, the walls are only rebuilt when the size really
+//  changes, and a long frame never turns into one big physics step.
 //
 
 import CoreMotion
@@ -47,6 +53,10 @@ final class TokenPileScene: SKScene {
     private static let dropSpeed: CGFloat = 900
     /// More tokens than this would overflow the screen; the count still says all.
     private static let maxTokens = 48
+    /// Gap between two arriving tokens.
+    private static let spawnGap: TimeInterval = 0.03
+    /// Longest physics step allowed (a hitch is simulated slower, not further).
+    private static let maxStep: TimeInterval = 1.0 / 40
 
     // MARK: Configuration (set by TodayView before / while presented)
 
@@ -81,13 +91,17 @@ final class TokenPileScene: SKScene {
     }
     private var grab: Grab?
     private var lastRelease: CFTimeInterval = 0
+    private var lastUpdate: TimeInterval?
+    private var wallSize: CGSize = .zero
+    private var wallInset: CGFloat = -1
+    private static var textureCache: [String: SKTexture] = [:]
 
     // MARK: Lifecycle
 
     override init(size: CGSize) {
         super.init(size: size)
         scaleMode = .resizeFill
-        backgroundColor = .clear
+        backgroundColor = .white
     }
 
     convenience override init() {
@@ -99,8 +113,8 @@ final class TokenPileScene: SKScene {
     }
 
     override func didMove(to view: SKView) {
-        view.allowsTransparency = true
-        backgroundColor = .clear
+        backgroundColor = .white
+        lastUpdate = nil
         physicsWorld.gravity = CGVector(dx: 0, dy: -Self.gravity)
         layoutBounds()
         startTilt()
@@ -130,7 +144,9 @@ final class TokenPileScene: SKScene {
     /// Floor + side walls as one edge chain. The walls run far above the screen so
     /// tokens spawned (or tossed) above the top stay in the column.
     private func layoutBounds() {
-        guard size.width > 1 else { return }
+        guard size.width > 1, size != wallSize || floorInset != wallInset else { return }
+        wallSize = size
+        wallInset = floorInset
         walls?.removeFromParent()
         let top = size.height * 4
         let path = CGMutablePath()
@@ -170,8 +186,8 @@ final class TokenPileScene: SKScene {
         // Restyle kept tokens whose kind changed.
         for spec in capped {
             if let node = nodes[spec.id], specs[spec.id] != spec {
-                let image = Self.pillImage(spec)
-                node.texture = SKTexture(image: image)
+                node.texture = Self.texture(spec)
+                node.blendMode = Self.blend(spec)
                 specs[spec.id] = spec
             }
         }
@@ -181,26 +197,46 @@ final class TokenPileScene: SKScene {
         let arriving = capped.filter { nodes[$0.id] == nil }
         for (i, spec) in arriving.enumerated() {
             let node = makeToken(spec)
-            if reduceMotion {
-                node.physicsBody?.isDynamic = false
-            } else {
-                let x = 40 + CGFloat.random(in: 0...max(1, size.width - 80))
-                node.position = CGPoint(x: x, y: size.height + 40 + CGFloat(i) * 46)
-                node.zRotation = CGFloat.random(in: -0.6...0.6)
-                // Thrown in, not dropped from rest: the whole column already
-                // falls at `dropSpeed`, so even a tall stack lands in about a second.
-                node.physicsBody?.velocity = CGVector(dx: 0, dy: -Self.dropSpeed)
-            }
-            addChild(node)
             nodes[spec.id] = node
             specs[spec.id] = spec
+            if reduceMotion {
+                node.physicsBody?.isDynamic = false
+                addChild(node)
+            } else {
+                // One token per `spawnGap`, each entering just above the top edge
+                // already moving at `dropSpeed`: the work (and the contacts) are
+                // spread over frames instead of one tall column at once.
+                node.position = CGPoint(x: 40 + CGFloat.random(in: 0...max(1, size.width - 80)),
+                                        y: size.height + 40)
+                node.zRotation = CGFloat.random(in: -0.6...0.6)
+                run(.sequence([.wait(forDuration: Self.spawnGap * Double(i)), .run { [weak self, weak node] in
+                    guard let self, let node, self.nodes[spec.id] === node else { return }
+                    node.position.y = self.size.height + 40
+                    node.physicsBody?.velocity = CGVector(dx: 0, dy: -Self.dropSpeed)
+                    self.addChild(node)
+                }]))
+            }
         }
         order = capped.map(\.id)
         if reduceMotion { layoutSettled() }
     }
 
+    // MARK: Frame
+
+    /// Caps the simulated time per frame: after a hitch the pile moves a normal
+    /// step instead of one huge one (huge steps push pills into each other and
+    /// they burst apart).
+    override func update(_ currentTime: TimeInterval) {
+        defer { lastUpdate = currentTime }
+        guard let last = lastUpdate else { return }
+        let dt = currentTime - last
+        physicsWorld.speed = dt > Self.maxStep ? CGFloat(Self.maxStep / dt) : 1
+    }
+
     private func leave(_ node: SKSpriteNode) {
         node.name = nil
+        // Not yet dropped in: just forget it.
+        guard node.parent != nil else { return }
         if let body = node.physicsBody {
             body.categoryBitMask = 0
             body.collisionBitMask = 0
@@ -223,6 +259,7 @@ final class TokenPileScene: SKScene {
         var row = 0
         for id in order {
             guard let node = nodes[id] else { continue }
+            if node.parent == nil { addChild(node) }
             let w = node.size.width
             if x + w > size.width - inset, x > inset + 1 {
                 row += 1
@@ -238,10 +275,11 @@ final class TokenPileScene: SKScene {
     // MARK: Token nodes
 
     private func makeToken(_ spec: TokenSpec) -> SKSpriteNode {
-        let image = Self.pillImage(spec)
-        let node = SKSpriteNode(texture: SKTexture(image: image), size: image.size)
+        let texture = Self.texture(spec)
+        let node = SKSpriteNode(texture: texture, size: texture.size())
         node.name = "token"
-        let w = image.size.width, h = image.size.height, r = h / 2
+        node.blendMode = Self.blend(spec)
+        let w = node.size.width, h = node.size.height, r = h / 2
         // Capsule body: a box between two end circles (all convex, all pills).
         let body = SKPhysicsBody(bodies: [
             SKPhysicsBody(rectangleOf: CGSize(width: max(1, w - h), height: h)),
@@ -257,12 +295,27 @@ final class TokenPileScene: SKScene {
         return node
     }
 
+    /// Cached texture for a pill (label + kind + palette).
+    private static func texture(_ spec: TokenSpec) -> SKTexture {
+        let palette = AppPalette.current
+        let key = "\(palette.rawValue)|\(spec.kind)|\(spec.label)"
+        if let t = textureCache[key] { return t }
+        let t = SKTexture(image: pillImage(spec, theme: palette.theme))
+        textureCache[key] = t
+        return t
+    }
+
+    /// Surimpression: coloured pills multiply where they overlap.
+    private static func blend(_ spec: TokenSpec) -> SKBlendMode {
+        AppPalette.current.theme.overprint && spec.kind != .fragile ? .multiply : .alpha
+    }
+
     /// Renders one pill (motion.html `pill()` + fill/stroke rules) with its label in
-    /// Manrope 400 13pt, centered 1pt low as in the prototype.
-    static func pillImage(_ spec: TokenSpec) -> UIImage {
+    /// Manrope 400 13pt, centered 1pt low as in the prototype. Fills come from the
+    /// palette; text is always ink.
+    static func pillImage(_ spec: TokenSpec, theme: AppTheme) -> UIImage {
         let font = AppFonts.uiFont(AppFonts.manrope, size: 13, wght: 400)
         let ink = UIColor(AppColor.ink)
-        let paper = UIColor(AppColor.paper)
         let text = shortLabel(spec.label)
         let textW = (text as NSString).size(withAttributes: [.font: font]).width
         let w = min(maxWidth, max(minWidth, ceil(textW) + 30))
@@ -271,27 +324,32 @@ final class TokenPileScene: SKScene {
         let format = UIGraphicsImageRendererFormat.default()
         format.opaque = false
         return UIGraphicsImageRenderer(size: size, format: format).image { _ in
+            // Multiply pills sit on opaque white: white × what's below = no
+            // change, while transparent corners would multiply to black.
+            if theme.overprint && spec.kind != .fragile {
+                UIColor.white.setFill(); UIRectFill(CGRect(origin: .zero, size: size))
+            }
             let rect = CGRect(origin: .zero, size: size).insetBy(dx: 0.5, dy: 0.5)
             let pill = UIBezierPath(roundedRect: rect, cornerRadius: rect.height / 2)
             pill.lineWidth = 1
             switch spec.kind {
             case .review:
-                ink.setFill(); pill.fill()
+                UIColor(hex: theme.tokenReview).setFill(); pill.fill()
             case .new:
-                UIColor.white.setFill(); pill.fill()
-                ink.setStroke(); pill.stroke()
+                UIColor(hex: theme.tokenNew).setFill(); pill.fill()
             case .fragile:
-                // Paper fill so overlapping pills don't show through the dashes.
-                paper.setFill(); pill.fill()
+                // White fill so overlapping pills don't show through the dashes.
+                UIColor.white.setFill(); pill.fill()
+                pill.lineWidth = 1.5
                 pill.setLineDash([3, 3], count: 2, phase: 0)
-                ink.setStroke(); pill.stroke()
+                UIColor(hex: theme.fragile).setStroke(); pill.stroke()
             }
             let style = NSMutableParagraphStyle()
             style.alignment = .center
             style.lineBreakMode = .byTruncatingTail
             let attrs: [NSAttributedString.Key: Any] = [
                 .font: font,
-                .foregroundColor: spec.kind == .review ? paper : ink,
+                .foregroundColor: ink,
                 .paragraphStyle: style,
             ]
             let lineH = font.lineHeight

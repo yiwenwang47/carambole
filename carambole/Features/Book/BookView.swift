@@ -35,6 +35,7 @@ private struct ElementSession: Identifiable {
     let ruleNote: String
     let elements: [GrammarElement]
     let mode: DrillSessionView.Mode
+    var moduleNumber: Int? = nil
 }
 
 struct BookView: View {
@@ -48,7 +49,14 @@ struct BookView: View {
     @State private var session: ElementSession?
     @State private var showingSettings = false
     @State private var showingModules = false
+    @State private var showingToday = false
+    /// The star's RealityView only exists while the home is on screen: left
+    /// rendering under Today it competes with the token drop for frames (the
+    /// drop stuttered right after tapping `fait`). The controller keeps the
+    /// scene, so coming back re-attaches it without rebuilding meshes.
+    @State private var starLive = true
     @State private var star = ObjetStarController()
+    @AppStorage(AppPalette.storageKey) private var paletteID = AppPalette.fallback.rawValue
     @State private var lastDrag: CGSize = .zero
     @State private var revealed = false
 
@@ -57,8 +65,11 @@ struct BookView: View {
             ZStack {
                 AppColor.paper.ignoresSafeArea()
 
-                ObjetStarView(mastered: masteredFraction, inProgress: inProgressFraction, controller: star)
-                    .ignoresSafeArea()
+                if starLive {
+                    ObjetStarView(mastered: masteredFraction, inProgress: inProgressFraction,
+                                  controller: star, palette: AppPalette(stored: paletteID))
+                        .ignoresSafeArea()
+                }
 
                 VStack(spacing: 0) {
                     topBlock
@@ -84,12 +95,19 @@ struct BookView: View {
             withAnimation(reduceMotion ? nil : .easeOut(duration: 0.45)) { revealed = true }
         }
         .fullScreenCover(item: $session, onDismiss: { viewModel.refresh() }) { s in
-            DrillSessionView(title: s.title, ruleNote: s.ruleNote, elements: s.elements, mode: s.mode) {
+            DrillSessionView(title: s.title, ruleNote: s.ruleNote, elements: s.elements, mode: s.mode,
+                             moduleNumber: s.moduleNumber) {
                 session = nil
             }
         }
         .navigationDestination(isPresented: $showingModules) {
             ModuleListView(viewModel: viewModel)
+        }
+        .navigationDestination(isPresented: $showingToday) {
+            TodayView(viewModel: viewModel, startLearn: startLearn, startReview: startReview)
+        }
+        .onChange(of: showingToday) { _, shown in
+            if !shown { starLive = true }
         }
         .sheet(isPresented: $showingSettings, onDismiss: { viewModel.refresh() }) {
             SettingsView(store: viewModel.settingsStore)
@@ -224,8 +242,9 @@ struct BookView: View {
 
     private var bottomBlock: some View {
         VStack(alignment: .leading, spacing: 0) {
-            NavigationLink {
-                TodayView(viewModel: viewModel, startLearn: startLearn, startReview: startReview)
+            Button {
+                starLive = false
+                showingToday = true
             } label: {
                 Text("fait : \(viewModel.learnedToday) appris · \(viewModel.reviewedToday) révisés →")
                     .font(.label(size: 14, wght: 650))   // inner font wins over uppercaseLabel's
@@ -295,7 +314,8 @@ struct BookView: View {
     private func startLearn() {
         guard let m = viewModel.newestUnlockedModule() else { return }
         session = ElementSession(title: m.title, ruleNote: m.ruleNote,
-                                 elements: viewModel.moduleLearnElements(m), mode: .learn)
+                                 elements: viewModel.moduleLearnElements(m), mode: .learn,
+                                 moduleNumber: m.sortOrder)
     }
 
     private func startReview() {

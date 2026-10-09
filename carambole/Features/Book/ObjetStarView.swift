@@ -25,15 +25,19 @@ struct ObjetStarView: View {
     let inProgress: Double
     /// Owned by the parent so its drag gesture can steer the star.
     let controller: ObjetStarController
+    /// Colour palette for the star body, ring and bead.
+    var palette: AppPalette = .current
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         RealityView { content in
             controller.build(into: &content)
+            controller.setPalette(palette)
             controller.setProgress(mastered: mastered, inProgress: inProgress)
         } update: { _ in
             controller.reduceMotion = reduceMotion
+            controller.setPalette(palette)
             controller.setProgress(mastered: mastered, inProgress: inProgress)
         }
         .onAppear { controller.reduceMotion = reduceMotion }
@@ -60,8 +64,14 @@ final class ObjetStarController {
     private let arc = ModelEntity()
     private let enCours = ModelEntity()
     private let bead = ModelEntity()
+    private let track = ModelEntity()
+    private var starModel: ModelEntity?
+    /// Camera, lights and `group`: re-added when a new RealityView takes the
+    /// scene over (the book removes the view while Today is pushed).
+    private var roots: [Entity] = []
     private var subscription: EventSubscription?
     private var built = false
+    private var shownPalette: AppPalette?
 
     // Turn state (per-frame units, as in the prototype).
     private var rotX: Float = 0.35
@@ -77,26 +87,34 @@ final class ObjetStarController {
     // MARK: Build
 
     func build(into content: inout RealityViewCameraContent) {
-        guard !built else { return }
+        if !built { makeScene() }
+        for e in roots { content.add(e) }
+        subscription = content.subscribe(to: SceneEvents.Update.self) { [weak self] event in
+            MainActor.assumeIsolated { self?.tick(Float(event.deltaTime)) }
+        }
+    }
+
+    private func makeScene() {
         built = true
 
         let camera = PerspectiveCamera()
         camera.camera.fieldOfViewInDegrees = 30
         camera.position = [0, 0, 11.5]
-        content.add(camera)
+        roots.append(camera)
 
         let light = StudioEnvironment.lightEntity(intensityExponent: 1.1)
-        if let light { content.add(light) }
+        if let light { roots.append(light) }
 
         let key = DirectionalLight()
         key.light.intensity = 2600
         key.look(at: .zero, from: [3, 4, 6], relativeTo: nil)
-        content.add(key)
+        roots.append(key)
 
         // Star: centred extrusion, scale .78, tilted by `rotX`.
         if let mesh = try? CaramboleStarMesh.objetMesh() {
             let star = CaramboleStarMesh.centred(mesh, materials: [StarMaterial.chrome()])
             starPivot.addChild(star.holder)
+            starModel = star.model
         }
         starPivot.scale = SIMD3(repeating: 0.78)
         group.addChild(starPivot)
@@ -104,8 +122,9 @@ final class ObjetStarController {
         // Orbit ring: faint full track + arcs + bead.
         if let trackMesh = try? CaramboleStarMesh.torusArc(radius: Self.ringRadius, tube: 0.012,
                                                            start: 0, sweep: 2 * .pi, radialSegments: 8) {
-            ring.addChild(ModelEntity(mesh: trackMesh, materials: [StarMaterial.flat(0.60, opacity: 0.55)]))
+            track.model = ModelComponent(mesh: trackMesh, materials: [StarMaterial.flat(0.60, opacity: 0.55)])
         }
+        ring.addChild(track)
         arc.model = ModelComponent(mesh: .generateBox(size: 0.001), materials: [StarMaterial.ink()])
         enCours.model = ModelComponent(mesh: .generateBox(size: 0.001), materials: [StarMaterial.flat(0.74)])
         bead.model = ModelComponent(mesh: .generateSphere(radius: 0.09), materials: [StarMaterial.ink()])
@@ -114,14 +133,23 @@ final class ObjetStarController {
         ring.addChild(bead)
         group.addChild(ring)
         group.position.y = 0.1
-        content.add(group)
+        roots.append(group)
 
         if let light { StudioEnvironment.receive(group, from: light) }
 
         applyTransforms()
-        subscription = content.subscribe(to: SceneEvents.Update.self) { [weak self] event in
-            MainActor.assumeIsolated { self?.tick(Float(event.deltaTime)) }
-        }
+    }
+
+    /// Swaps the star body, ring and bead materials to `palette`'s.
+    func setPalette(_ palette: AppPalette) {
+        guard built, shownPalette != palette else { return }
+        shownPalette = palette
+        let t = palette.theme
+        starModel?.model?.materials = [StarMaterial.finish(t.star)]
+        track.model?.materials = [StarMaterial.flat(hex: t.starTrack)]
+        arc.model?.materials = [StarMaterial.lacquer(t.starArc)]
+        enCours.model?.materials = [StarMaterial.flat(hex: t.starArcSoft)]
+        bead.model?.materials = [StarMaterial.lacquer(t.starBead)]
     }
 
     /// Rebuilds the arc meshes when the bucket fractions change.

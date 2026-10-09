@@ -2,16 +2,16 @@
 
 > ## ▶ ACTIVE TASK — START HERE (next session, continue without re-asking)
 >
-> **▶ UI REDESIGN — IN PROGRESS (updated 2026-10-09, end of session 3).**
-> Work lives on branch **`ui-redesign`** in the worktree
-> **`../carambole-ui-redesign`** (NOT merged to `main`, not pushed). READ
-> **`design/UI_REDESIGN_HANDOFF.md` in that worktree first.** Every screen is
-> built; the 08 library ribbon was accepted in session 3 (also: smooth star
-> mesh, faster Today drop, module list from the bottom line only). **NEXT:
-> colour palettes** — the user will choose one in a new session; show 2–3 HTML
-> mock options first. User tests on an **iPhone 18 Pro**
-> (`00008160-001A09920AA0000A`; install commands in the handoff). Then
-> fine-tune, then T9 cleanup + merge.
+> **▶ UI REDESIGN — DONE, MERGED to `main` + PUSHED (2026-10-09, session 4).**
+> READ **`design/UI_REDESIGN_HANDOFF.md`** first: what was built, the colour
+> rules (white ground, ink text, colour on objects, pale saturation-capped
+> buttons/fills, grey not black buttons), and the short "still open" list.
+> Colour lives in `carambole/DesignSystem/Theme.swift` (`AppPalette` Acide /
+> Iris / Surimpression, `DrillStyle` Plateau / Cadres, both in UserDefaults,
+> picked on `ColorSettingsView` from the library's `Couleurs →`). Design
+> references: `design/motion.html`, `design/palettes.html`,
+> `design/drill-colour.html`. User tests on an **iPhone 18 Pro**
+> (`00008160-001A09920AA0000A`; install commands in the handoff).
 > Everything below is older context.
 >
  Everything below is DONE, MERGED to `main`, and PUSHED to origin (2026-06-19).
@@ -310,7 +310,7 @@ multiple choice), an unlockable topic tree, and spaced-repetition review.
 
 Full design: `docs/plans/2026-06-18-french-grammar-pivot-design.md`
 Implementation plan: `docs/plans/2026-06-18-french-grammar-pivot.md`
-Design system ("Le Cahier"): `docs/plans/2026-06-18-design-system.md`
+Design system: "objets + mouvement" + palettes — `design/UI_REDESIGN_HANDOFF.md`, `carambole/DesignSystem/` (the old "Le Cahier" plan `docs/plans/2026-06-18-design-system.md` is superseded)
 Schedule / SRS design (next phase): `docs/plans/2026-06-19-schedule-design.md`
 
 ## Content pipeline (dev tooling)

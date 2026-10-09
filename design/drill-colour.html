@@ -1,0 +1,252 @@
+<title>Drill Colour Ideas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Familjen+Grotesk:wght@400..700&display=swap">
+<style>
+/* Layout: one row per idea (lesson / drill with a placed tile / correct), a palette switch on top recolours every phone. */
+:root {
+  --page: #ecebe8; --fg: #141414; --muted: #6d6c68; --rule: #d6d5d0; --frame: #111; --frame-ring: transparent;
+  --display: "Manrope", "Helvetica Neue", system-ui, sans-serif;
+  --label: "Familjen Grotesk", "Helvetica Neue", system-ui, sans-serif;
+  --ease: cubic-bezier(.32,.72,0,1);
+  --s: .62;
+  /* palette (overwritten by the switch) */
+  --loud: #c6ee34; --soft: #e5f2bc; --btn: #dde6bc; --btnQ: #bccfe6; --quiet: #9cc2ef; --deep: #4f8dd6; --tint: #e8f1fc; --blend: normal;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --page: #141414; --fg: #ecebe8; --muted: #9a9994; --rule: #2c2c2a; --frame: #050505; --frame-ring: rgba(255,255,255,.14); color-scheme: dark; } }
+:root[data-theme="dark"] { --page: #141414; --fg: #ecebe8; --muted: #9a9994; --rule: #2c2c2a; --frame: #050505; --frame-ring: rgba(255,255,255,.14); color-scheme: dark; }
+body { background: var(--page); color: var(--fg); font-family: var(--display); -webkit-font-smoothing: antialiased; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-inline: 24px; padding-block: 56px 96px; }
+@media (max-width: 600px) { .wrap { padding-inline: 16px; padding-block: 32px 64px; } }
+h1 { font-weight: 250; font-size: clamp(34px, 5vw, 54px); letter-spacing: -.03em; line-height: 1.02; margin: 0; }
+.intro { font-size: 15px; line-height: 1.6; color: var(--muted); margin: 16px 0 0; max-width: 64ch; }
+.intro b { color: var(--fg); font-weight: 600; }
+.switch { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; display: flex; flex-wrap: wrap; gap: 8px; padding-block: 14px; margin-top: 18px; background: var(--page); }
+.switch button { font: 500 13px var(--label); color: var(--fg); background: color-mix(in srgb, var(--fg) 6%, transparent); border: 0; border-radius: 999px; padding: 8px 14px; display: inline-flex; gap: 8px; align-items: center; cursor: pointer; transition: background .4s var(--ease), transform .4s var(--ease); }
+.switch button i { width: 22px; height: 8px; border-radius: 2px; display: inline-block; }
+.switch button[aria-pressed="true"] { background: var(--fg); color: var(--page); }
+.switch button:active { transform: scale(.97); }
+button:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
+
+section.idea { margin-top: 64px; display: grid; gap: 22px; }
+.head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 28px; border-top: 1px solid var(--rule); padding-top: 22px; align-items: end; }
+@media (max-width: 820px) { .head { grid-template-columns: 1fr; gap: 10px; } }
+.head h2 { font-weight: 300; font-size: clamp(28px, 3.6vw, 40px); letter-spacing: -.025em; margin: 0; line-height: 1; }
+.head .k { font-family: var(--label); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-top: 8px; }
+.head p { margin: 0; font-size: 14.5px; line-height: 1.6; color: var(--muted); max-width: 60ch; }
+.head p b { color: var(--fg); font-weight: 600; }
+.row { display: grid; grid-template-columns: repeat(3, calc(393px * var(--s))); gap: 28px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 6px; }
+.cell { display: grid; gap: 10px; scroll-snap-align: start; }
+.pw { width: calc(393px * var(--s)); height: calc(852px * var(--s)); position: relative; }
+.cap { font-family: var(--label); font-size: 12px; color: var(--muted); }
+.cap b { color: var(--fg); font-weight: 600; }
+
+/* ---------- phone 393 x 852 ---------- */
+.ph { position: absolute; inset: 0 auto auto 0; width: 393px; height: 852px; transform: scale(var(--s)); transform-origin: 0 0; background: #fff; border-radius: 56px; overflow: hidden; color: #111; box-shadow: 0 0 0 9px var(--frame), 0 0 0 10px var(--frame-ring), 0 30px 60px -30px rgba(20,20,18,.35); }
+.ph * { box-sizing: border-box; }
+.a { position: absolute; }
+.sb { left: 0; right: 0; top: 0; height: 54px; display: flex; align-items: center; justify-content: space-between; padding: 6px 34px 0 50px; font: 600 16px var(--display); }
+.sb i { width: 70px; height: 11px; border-radius: 6px; background: #111; }
+.lab { font: 400 11px var(--label); letter-spacing: .12em; text-transform: uppercase; color: #8d8d8a; }
+.lab.ink { color: #111; }
+.x { left: 22px; top: 76px; font: 400 15px var(--label); }
+.body { font: 400 16px/1.55 var(--display); color: #4a4a4a; }
+.pill { left: 22px; right: 22px; bottom: 42px; height: 54px; border-radius: 27px; display: flex; align-items: center; justify-content: center; font: 400 16px var(--display); background: #111; color: #fff; }
+.prompt { font: 300 29px/1.2 var(--display); letter-spacing: -.025em; }
+.blank { display: inline-block; width: 74px; border-bottom: 1.5px solid #111; height: 1em; vertical-align: -3px; }
+.tile { height: 40px; padding: 0 15px; border-radius: 20px; display: inline-flex; align-items: center; font: 400 19px var(--display); background: #fff; box-shadow: inset 0 0 0 1px #111; letter-spacing: -.01em; }
+.tile.on { background: var(--soft); box-shadow: none; mix-blend-mode: var(--blend); }
+.ring { right: 22px; top: 66px; width: 30px; height: 30px; }
+.chip { display: inline-flex; align-items: center; gap: 7px; }
+.spk { width: 12px; height: 12px; }
+
+/* ---------- motion ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  .play .tile.on { animation: weld .7s cubic-bezier(.34,1.5,.5,1) both .3s; }
+  @keyframes weld { from { translate: 0 64px; scale: .9; } to { translate: 0 0; scale: 1; } }
+  .play .grow { animation: grow 1s var(--ease) both .2s; transform-origin: left center; }
+  @keyframes grow { from { scale: 0 1; } to { scale: 1 1; } }
+  .play .rise { animation: rise .9s var(--ease) both .15s; }
+  @keyframes rise { from { translate: 0 40px; opacity: 0; } to { translate: 0 0; opacity: 1; } }
+}
+</style>
+
+<div class="wrap">
+  <h1>Colour on the lesson and drill pages</h1>
+  <p class="intro">Every coloured button and large fill is now capped (saturation at most 45 %, lightness at least 82 %); full-strength colour stays on lines, outlines and small marks. Placed magnets use a paler version too. Today these two pages are all black and grey (current version first, for reference). Below are <b>three directions</b>, each shown on three moments: the Leçon card with <b>Commencer</b>, a drill with one magnet placed and <b>Indice</b> open, and the moment after a correct answer. Text stays black in every idea. The switch recolours every phone, so you can judge each idea in all three palettes.</p>
+  <div class="switch" id="sw"></div>
+  <div id="ideas"></div>
+</div>
+
+<script>
+const PAL = {
+  acide: { name: "Acide", loud: "#c6ee34", soft: "#e5f2bc", quiet: "#9cc2ef", deep: "#4f8dd6", tint: "#e9f2fd", blend: "normal" },
+  iris: { name: "Iris", loud: "#d7eba8", soft: "#eaf2d6", quiet: "#cfc3ff", deep: "#6e56e8", tint: "#f2efff", blend: "normal" },
+  surimpression: { name: "Surimpression", loud: "#7e98d8", soft: "#d3dcf0", quiet: "#ec93b5", deep: "#d0668f", tint: "#fbe7ef", blend: "multiply" },
+};
+/* Buttons and large fills never use full-strength colour: HSL saturation <= 45 %, lightness >= 82 %. */
+function cap(hex, sMax = .45, lMin = .82) {
+  let r = parseInt(hex.slice(1, 3), 16) / 255, g = parseInt(hex.slice(3, 5), 16) / 255, b = parseInt(hex.slice(5, 7), 16) / 255;
+  const mx = Math.max(r, g, b), mn = Math.min(r, g, b); let h = 0, l = (mx + mn) / 2, s = 0;
+  if (mx !== mn) { const d = mx - mn; s = l > .5 ? d / (2 - mx - mn) : d / (mx + mn);
+    h = mx === r ? (g - b) / d + (g < b ? 6 : 0) : mx === g ? (b - r) / d + 2 : (r - g) / d + 4; h /= 6; }
+  s = Math.min(s, sMax); l = Math.max(l, lMin);
+  const q = l < .5 ? l * (1 + s) : l + s - l * s, p = 2 * l - q;
+  const f = t => { t = (t + 1) % 1; return t < 1 / 6 ? p + (q - p) * 6 * t : t < .5 ? q : t < 2 / 3 ? p + (q - p) * (2 / 3 - t) * 6 : p; };
+  return "#" + [h + 1 / 3, h, h - 1 / 3].map(t => Math.round(f(t) * 255).toString(16).padStart(2, "0")).join("");
+}
+const sw = document.getElementById("sw");
+function setPal(id) {
+  const p = PAL[id], r = document.documentElement.style;
+  r.setProperty("--loud", p.loud); r.setProperty("--soft", p.soft); r.setProperty("--btn", cap(p.loud)); r.setProperty("--btnQ", cap(p.quiet)); r.setProperty("--quiet", p.quiet); r.setProperty("--deep", p.deep); r.setProperty("--tint", p.tint); r.setProperty("--blend", p.blend);
+  sw.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", b.dataset.id === id));
+  try { localStorage.setItem("pal", id); } catch (_) {}
+  document.querySelectorAll("section.idea").forEach(s => { s.classList.remove("play"); void s.offsetWidth; s.classList.add("play"); });
+}
+Object.entries(PAL).forEach(([id, p]) => sw.insertAdjacentHTML("beforeend", `<button type="button" data-id="${id}"><i style="background:linear-gradient(90deg, ${p.loud} 50%, ${p.quiet} 50%)"></i>${p.name}</button>`));
+sw.addEventListener("click", e => { const b = e.target.closest("button"); if (b) setPal(b.dataset.id); });
+
+const SB = `<div class="a sb"><span>9:41</span><i></i></div>`;
+const SPK = c => `<svg class="spk" viewBox="0 0 24 24" fill="none" stroke="${c}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/><path d="M19 6a8.5 8.5 0 0 1 0 12"/></svg>`;
+const RULE = "The near future (le futur proche) is the easy, everyday way to talk about what’s about to happen: use the present tense of ‘aller’ plus a verb in the infinitive, exactly like English ‘going to’.";
+const HINT = "aller + infinitive: the second verb never changes.";
+const ring = (arc, track = "#e6e5e1", p = 20) => `<svg class="a ring" viewBox="0 0 30 30"><circle cx="15" cy="15" r="13" fill="none" stroke="${track}" stroke-width="3"/><circle cx="15" cy="15" r="13" fill="none" stroke="${arc}" stroke-width="3" stroke-linecap="round" pathLength="100" stroke-dasharray="${p} 100" transform="rotate(-90 15 15)"/></svg>`;
+const topBar = (arcC, trackC) => `<div class="a x">✕</div><div class="a lab" style="left:0;right:0;top:80px;text-align:center">Exercice · 1 / 5</div>${ring(arcC, trackC)}`;
+
+/* each idea returns [lesson, drill, correct] */
+const IDEAS = [
+  {
+    id: "now", name: "Today", k: "Current build, for reference",
+    note: "Black pill, grey labels, colour only on the placed magnet.",
+    screens: () => [
+      `${SB}<div class="a x">✕</div>
+       <div class="a lab" style="left:22px;top:250px">Leçon</div>
+       <div class="a" style="left:22px;top:278px;font:250 42px var(--display);letter-spacing:-.03em">Le futur proche</div>
+       <div class="a" style="left:22px;right:22px;top:352px;height:1px;background:#111"></div>
+       <div class="a body" style="left:22px;right:22px;top:378px">${RULE}</div>
+       <div class="a pill">Commencer</div>`,
+      `${SB}${topBar("#111")}
+       <div class="a lab" style="left:22px;top:128px">Infinitif</div>
+       <div class="a prompt" style="left:22px;right:22px;top:150px">Complète : « Tu vas <span class="blank"></span> . »</div>
+       <div class="a body" style="left:22px;top:200px;color:#8d8d8a">“You’re going to sing.”</div>
+       <div class="a" style="left:22px;right:22px;top:238px;display:flex;justify-content:space-between"><span class="lab ink">Indice ↑</span><span class="chip">${SPK("#111")}<span class="lab ink">Écouter</span></span></div>
+       <div class="a body" style="left:22px;right:22px;top:266px">${HINT}</div>
+       <div class="a" style="left:22px;right:22px;top:310px;height:56px;border-bottom:1px solid #111;display:flex;align-items:flex-end;padding-bottom:8px"><span class="tile on">chanter</span></div>
+       <div class="a" style="left:22px;top:388px;display:flex;gap:10px"><span class="tile">chantes</span><span class="tile">chante</span></div>
+       <div class="a lab" style="left:22px;bottom:112px">Trop facile — retirer</div>
+       <div class="a pill">Vérifier</div>`,
+      `${SB}${topBar("#111")}
+       <div class="a lab" style="left:22px;top:128px">Infinitif</div>
+       <div class="a prompt" style="left:22px;right:22px;top:150px">Complète : « Tu vas <span class="blank"></span> . »</div>
+       <div class="a body" style="left:22px;top:200px;color:#8d8d8a">“You’re going to sing.”</div>
+       <div class="a" style="left:22px;right:22px;top:310px;height:56px;border-bottom:1px solid #111;display:flex;align-items:flex-end;padding-bottom:8px"><span class="tile on">chanter</span></div>
+       <div class="a pill" style="background:#fff;color:#111;box-shadow:inset 0 0 0 1px #111">Juste</div>`
+    ]
+  },
+  {
+    id: "pastilles", name: "Pastilles", k: "Filled chips",
+    note: "<b>Every control becomes a coloured object.</b> Commencer and an enabled Vérifier are filled with a pale, capped version of the loud colour. Indice and Écouter turn into pale chips of the quiet colour; the opened hint sits on a pale card of the same colour. Correct fills the pill.",
+    screens: () => [
+      `${SB}<div class="a x">✕</div>
+       <div class="a" style="left:22px;top:244px"><span class="lab ink" style="background:var(--btnQ);padding:5px 10px;border-radius:12px;mix-blend-mode:var(--blend)">Leçon</span></div>
+       <div class="a" style="left:22px;top:282px;font:250 42px var(--display);letter-spacing:-.03em">Le futur proche</div>
+       <div class="a" style="left:22px;right:22px;top:356px;height:1px;background:#111"></div>
+       <div class="a body" style="left:22px;right:22px;top:382px">${RULE}</div>
+       <div class="a pill rise" style="background:var(--btn);color:#111">Commencer</div>`,
+      `${SB}${topBar("var(--deep)")}
+       <div class="a lab" style="left:22px;top:128px">Infinitif</div>
+       <div class="a prompt" style="left:22px;right:22px;top:150px">Complète : « Tu vas <span class="blank"></span> . »</div>
+       <div class="a body" style="left:22px;top:200px;color:#8d8d8a">“You’re going to sing.”</div>
+       <div class="a" style="left:22px;right:22px;top:236px;display:flex;justify-content:space-between">
+         <span class="chip lab ink" style="background:var(--btnQ);padding:8px 13px;border-radius:16px">Indice ↑</span>
+         <span class="chip lab ink" style="background:var(--btnQ);padding:8px 13px;border-radius:16px">${SPK("#111")}Écouter</span></div>
+       <div class="a body rise" style="left:22px;right:22px;top:282px;background:var(--tint);border-radius:14px;padding:12px 14px;color:#333">${HINT}</div>
+       <div class="a" style="left:22px;right:22px;top:352px;height:56px;border-bottom:1px solid #111;display:flex;align-items:flex-end;padding-bottom:8px"><span class="tile on">chanter</span></div>
+       <div class="a" style="left:22px;top:430px;display:flex;gap:10px"><span class="tile">chantes</span><span class="tile">chante</span></div>
+       <div class="a lab" style="left:22px;bottom:112px">Trop facile — retirer</div>
+       <div class="a pill" style="background:var(--btn);color:#111">Vérifier</div>`,
+      `${SB}${topBar("var(--deep)", "#e6e5e1")}
+       <div class="a lab" style="left:22px;top:128px">Infinitif</div>
+       <div class="a prompt" style="left:22px;right:22px;top:150px">Complète : « Tu vas <span class="blank"></span> . »</div>
+       <div class="a body" style="left:22px;top:200px;color:#8d8d8a">“You’re going to sing.”</div>
+       <div class="a" style="left:22px;right:22px;top:310px;height:56px;border-bottom:1px solid #111;display:flex;align-items:flex-end;padding-bottom:8px"><span class="tile on">chanter</span></div>
+       <div class="a pill rise" style="background:var(--btn);color:#111;gap:10px">Juste <span style="font-size:18px">✓</span></div>`
+    ]
+  },
+  {
+    id: "cadres", name: "Cadres", k: "Coloured rounded frames",
+    note: "<b>Colour as an outline, the lightest touch.</b> Indice and Écouter get a rounded frame in the deep quiet colour; the answer line becomes a framed well where magnets land. Commencer and Vérifier stay black but carry a pale colour disc with the arrow, like the Today pill counts.",
+    screens: () => [
+      `${SB}<div class="a x">✕</div>
+       <div class="a lab" style="left:22px;top:250px">Leçon</div>
+       <div class="a" style="left:22px;top:278px;font:250 42px var(--display);letter-spacing:-.03em">Le futur proche</div>
+       <div class="a" style="left:22px;right:22px;top:352px;height:1px;background:#111"></div>
+       <div class="a body" style="left:22px;right:22px;top:378px">${RULE}</div>
+       <div class="a pill" style="justify-content:space-between;padding:0 8px 0 26px">Commencer <span style="width:40px;height:40px;border-radius:20px;background:var(--btn);color:#111;display:grid;place-items:center;font-size:18px">→</span></div>`,
+      `${SB}${topBar("var(--deep)")}
+       <div class="a lab" style="left:22px;top:128px">Infinitif</div>
+       <div class="a prompt" style="left:22px;right:22px;top:150px">Complète : « Tu vas <span class="blank"></span> . »</div>
+       <div class="a body" style="left:22px;top:200px;color:#8d8d8a">“You’re going to sing.”</div>
+       <div class="a" style="left:22px;right:22px;top:236px;display:flex;justify-content:space-between">
+         <span class="chip lab ink" style="box-shadow:inset 0 0 0 1.5px var(--deep);padding:8px 13px;border-radius:16px">Indice <span style="color:var(--deep)">↑</span></span>
+         <span class="chip lab ink" style="box-shadow:inset 0 0 0 1.5px var(--deep);padding:8px 13px;border-radius:16px">${SPK("var(--deep)")}Écouter</span></div>
+       <div class="a body" style="left:22px;right:22px;top:282px;border-left:2px solid var(--deep);padding-left:12px">${HINT}</div>
+       <div class="a" style="left:22px;right:22px;top:340px;height:66px;border-radius:18px;box-shadow:inset 0 0 0 1.5px var(--quiet);display:flex;align-items:center;padding:0 12px"><span class="tile on">chanter</span></div>
+       <div class="a" style="left:22px;top:428px;display:flex;gap:10px"><span class="tile">chantes</span><span class="tile">chante</span></div>
+       <div class="a lab" style="left:22px;bottom:112px">Trop facile — retirer</div>
+       <div class="a pill" style="justify-content:space-between;padding:0 8px 0 26px">Vérifier <span style="width:40px;height:40px;border-radius:20px;background:var(--btn);color:#111;display:grid;place-items:center;font-size:18px">→</span></div>`,
+      `${SB}${topBar("var(--deep)")}
+       <div class="a lab" style="left:22px;top:128px">Infinitif</div>
+       <div class="a prompt" style="left:22px;right:22px;top:150px">Complète : « Tu vas <span class="blank"></span> . »</div>
+       <div class="a body" style="left:22px;top:200px;color:#8d8d8a">“You’re going to sing.”</div>
+       <div class="a" style="left:22px;right:22px;top:298px;height:66px;border-radius:18px;background:var(--tint);box-shadow:inset 0 0 0 1.5px var(--loud);display:flex;align-items:center;padding:0 12px"><span class="tile on">chanter</span></div>
+       <div class="a pill" style="background:#fff;color:#111;box-shadow:inset 0 0 0 1.5px var(--deep)">Juste</div>`
+    ]
+  },
+  {
+    id: "plateau", name: "Plateau", k: "A coloured board under the magnets",
+    note: "<b>One big coloured object per page.</b> The lesson opens on a large pale slab carrying the module number. In the drill the word bank sits on a pale tray like a real magnet board, and Indice / Écouter are round buttons on it. Vérifier is pale colour; a correct answer turns the tray a pale version of the loud colour.",
+    screens: () => [
+      `${SB}<div class="a x">✕</div>
+       <div class="a rise" style="left:22px;right:22px;top:118px;height:200px;border-radius:28px;background:var(--btnQ);overflow:hidden">
+         <div style="position:absolute;right:-6px;bottom:-34px;font:200 190px var(--display);letter-spacing:-.06em;color:#111;mix-blend-mode:multiply;opacity:.9">12</div>
+         <div class="lab ink" style="position:absolute;left:18px;top:18px">Leçon · module 12</div></div>
+       <div class="a" style="left:22px;top:340px;font:250 42px var(--display);letter-spacing:-.03em">Le futur proche</div>
+       <div class="a body" style="left:22px;right:22px;top:410px">${RULE}</div>
+       <div class="a pill" style="background:var(--btn);color:#111">Commencer</div>`,
+      `${SB}${topBar("var(--deep)")}
+       <div class="a lab" style="left:22px;top:128px">Infinitif</div>
+       <div class="a prompt" style="left:22px;right:22px;top:150px">Complète : « Tu vas <span class="blank"></span> . »</div>
+       <div class="a body" style="left:22px;top:200px;color:#8d8d8a">“You’re going to sing.”</div>
+       <div class="a" style="left:22px;right:22px;top:250px;height:56px;border-bottom:1px solid #111;display:flex;align-items:flex-end;padding-bottom:8px"><span class="tile on">chanter</span></div>
+       <div class="a" style="left:14px;right:14px;top:330px;height:250px;border-radius:30px;background:var(--tint)">
+         <div style="position:absolute;left:16px;top:18px;display:flex;gap:10px"><span class="tile">chantes</span><span class="tile">chante</span></div>
+         <div class="body" style="position:absolute;left:18px;right:18px;top:84px;color:#333">${HINT}</div>
+         <div style="position:absolute;left:16px;right:16px;bottom:16px;display:flex;justify-content:space-between">
+           <span class="chip"><span style="width:42px;height:42px;border-radius:21px;background:var(--btnQ);display:grid;place-items:center;font:500 15px var(--label)">?</span><span class="lab ink">Indice</span></span>
+           <span class="chip"><span class="lab ink">Écouter</span><span style="width:42px;height:42px;border-radius:21px;background:var(--btnQ);display:grid;place-items:center">${SPK("#111")}</span></span></div></div>
+       <div class="a lab" style="left:22px;bottom:112px">Trop facile — retirer</div>
+       <div class="a pill" style="background:var(--btn);color:#111">Vérifier</div>`,
+      `${SB}${topBar("var(--deep)")}
+       <div class="a lab" style="left:22px;top:128px">Infinitif</div>
+       <div class="a prompt" style="left:22px;right:22px;top:150px">Complète : « Tu vas <span class="blank"></span> . »</div>
+       <div class="a body" style="left:22px;top:200px;color:#8d8d8a">“You’re going to sing.”</div>
+       <div class="a" style="left:22px;right:22px;top:250px;height:56px;border-bottom:1px solid #111;display:flex;align-items:flex-end;padding-bottom:8px"><span class="tile on">chanter</span></div>
+       <div class="a rise" style="left:14px;right:14px;top:330px;height:250px;border-radius:30px;background:var(--btn);display:grid;place-items:center"><span style="font:250 44px var(--display);letter-spacing:-.03em">Juste</span></div>
+       <div class="a pill">Suivant</div>`
+    ]
+  }
+];
+
+const host = document.getElementById("ideas");
+const caps = ["Leçon · Commencer", "Drill · magnet placed, Indice open", "After a correct answer"];
+IDEAS.forEach(idea => {
+  const sc = idea.screens();
+  host.insertAdjacentHTML("beforeend", `<section class="idea" id="${idea.id}">
+    <div class="head"><div><h2>${idea.name}</h2><div class="k">${idea.k}</div></div><p>${idea.note}</p></div>
+    <div class="row">${sc.map((h, i) => `<div class="cell"><div class="pw"><div class="ph">${h}</div></div><div class="cap"><b>${caps[i]}</b></div></div>`).join("")}</div>
+  </section>`);
+});
+let start = "acide"; try { start = localStorage.getItem("pal") || start; } catch (_) {}
+setPal(PAL[start] ? start : "acide");
+</script>

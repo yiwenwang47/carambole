@@ -3,7 +3,7 @@
 //  carambole
 //
 //  "Aujourd'hui" — motion.html 03 Gravité. Today's work as a pile of physical
-//  tokens (white = new, black = review, dashed = fragile) falling into a
+//  tokens (palette fills for new / review, dashed = fragile) falling into a
 //  SpriteKit pile; drag and throw them, `Secouer` tosses them. Opened from the
 //  book home's `fait :` line; links on to History. The bottom pills start the
 //  same Apprendre / Réviser sessions as the home (the parent presents them).
@@ -29,6 +29,12 @@ struct TodaySnapshot: Equatable {
 
 // MARK: - View
 
+/// Holds the scene so it is created once per screen (a `@State` initial value
+/// is re-evaluated on every parent render, building throwaway scenes).
+private final class PileHolder: ObservableObject {
+    let scene = TokenPileScene()
+}
+
 struct TodayView: View {
     @ObservedObject private var viewModel: BookViewModel
     private let startLearn: () -> Void
@@ -39,8 +45,14 @@ struct TodayView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    @State private var scene = TokenPileScene()
+    @StateObject private var holder = PileHolder()
     @State private var snapshot: TodaySnapshot = .empty
+    /// False until the push has settled: the first drop waits for it, so the
+    /// tokens fall on a still screen with its final size.
+    @State private var settled = false
+    @AppStorage(AppPalette.storageKey) private var paletteID = AppPalette.fallback.rawValue
+
+    private var scene: TokenPileScene { holder.scene }
 
     init(viewModel: BookViewModel, startLearn: @escaping () -> Void, startReview: @escaping () -> Void) {
         self.init(viewModel: viewModel, snapshot: nil, startLearn: startLearn, startReview: startReview)
@@ -71,7 +83,7 @@ struct TodayView: View {
             ZStack(alignment: .topLeading) {
                 AppColor.paper
 
-                SpriteView(scene: scene, options: [.allowsTransparency])
+                SpriteView(scene: scene)
                     .accessibilityHidden(true)
 
                 header
@@ -93,10 +105,19 @@ struct TodayView: View {
         .onAppear {
             scene.reduceMotion = reduceMotion
             scene.floorInset = Self.buttonBottom + Self.buttonHeight + Self.floorGap
-            rebuild()
+            if settled {
+                rebuild()
+            } else {
+                snapshot = override ?? Self.liveSnapshot(viewModel)
+                // Navigation push ≈ 0.35 s; drop once it has landed.
+                DispatchQueue.main.asyncAfter(deadline: .now() + (reduceMotion ? 0 : 0.4)) {
+                    settled = true
+                    rebuild()
+                }
+            }
         }
-        .onChange(of: refreshKey) { rebuild() }
-        .onChange(of: override) { rebuild() }
+        .onChange(of: refreshKey) { if settled { rebuild() } }
+        .onChange(of: override) { if settled { rebuild() } }
         .toolbar(.hidden, for: .navigationBar)
         .navigationBarBackButtonHidden(true)
         .swipeToGoBack {
@@ -239,7 +260,7 @@ struct TodayView: View {
                 Text("\(count)")
                     .font(.appLabel)
                     .tracking(labelTracking)
-                    .foregroundColor(Color(hex: "9B9A96"))
+                    .foregroundColor(Color(hex: AppPalette(stored: paletteID).theme.buttonCount))
             }
         }
         .buttonStyle(PrimaryButtonStyle(height: Self.buttonHeight))

@@ -2,12 +2,15 @@
 //  DesignSystem.swift
 //  carambole
 //
-//  "Objets + mouvement" design system — grayscale palette, grotesk type,
-//  spacing. Design source: design/motion.html; build plan:
+//  "Objets + mouvement" design system — neutrals, grotesk type, spacing.
+//  Design source: design/motion.html; build plan:
 //  docs/plans/2026-10-09-ui-redesign-implementation.md.
 //
-//  Light mode only. State is carried by FORM, not hue: solid = mastered /
-//  review, white + outline = new / in progress, dashed = fragile or wrong.
+//  Light mode only, white ground, ink text. Colour comes from the learner's
+//  palette (`Theme.swift`: Acide / Iris / Surimpression) and goes to objects,
+//  never to running text; buttons and large fills use pale, saturation-capped
+//  colour, dark buttons are grey (`buttonDark`), never black. State still also
+//  reads by form: filled, outline, dashed = fragile or wrong.
 //
 
 import CoreText
@@ -40,8 +43,8 @@ extension Color {
 /// Grayscale palette (motion.html `:root`). Old "Le Cahier" names are kept
 /// and remapped so untouched screens move with the redesign.
 enum AppColor {
-    /// App background — warm paper.
-    static let paper = Color(hex: "F8F7F4")
+    /// App background — pure white (every palette keeps a white ground).
+    static let paper = Color(hex: "FFFFFF")
     /// Pure white — tile / token faces that sit on `paper`.
     static let white = Color(hex: "FFFFFF")
     /// Primary text, borders, primary button fill.
@@ -52,6 +55,10 @@ enum AppColor {
     static let g2 = Color(hex: "8D8D8A")
     /// Tracks, disabled, locked (g3).
     static let g3 = Color(hex: "C8C7C3")
+    /// Fill of any dark button: a dark grey, never full black.
+    static let buttonDark = Color(hex: "3A3A3A")
+    /// Pressed dark button.
+    static let buttonDarkPressed = Color(hex: "555555")
     /// Rules, dividers, faint tracks (g4).
     static let hairline = Color(hex: "E6E5E1")
     /// Legacy accent → ink tone (grayscale for now; colour returns later).

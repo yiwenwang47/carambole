@@ -58,6 +58,11 @@ struct DrillView: View {
 
     private var hasAnswer: Bool { !answer.isEmpty }
 
+    @AppStorage(AppPalette.storageKey) private var paletteID = AppPalette.fallback.rawValue
+    @AppStorage(DrillStyle.storageKey) private var drillStyleID = DrillStyle.fallback.rawValue
+    private var theme: AppTheme { AppPalette(stored: paletteID).theme }
+    private var drillStyle: DrillStyle { DrillStyle(stored: drillStyleID) }
+
     var body: some View {
         VStack(spacing: 0) {
             // Vertical is LOCKED — no ScrollView. The card content is sized to the
@@ -232,13 +237,64 @@ struct DrillView: View {
                 listenButton
             }
             if showHint, let hint = exercise.hint, !hint.isEmpty {
-                Text(hint)
-                    .font(.appBody)
-                    .foregroundColor(AppColor.graphite)
-                    .fixedSize(horizontal: false, vertical: true)
+                hintText(hint)
                     .transition(.opacity.combined(with: .move(edge: .top)))
             }
         }
+    }
+
+    /// The revealed hint. Plateau: on a pale card (palette tint); Cadres: a
+    /// thin bar in the palette's deep colour on its left.
+    @ViewBuilder
+    private func hintText(_ hint: String) -> some View {
+        let text = Text(hint)
+            .font(.appBody)
+            .foregroundColor(AppColor.graphite)
+            .fixedSize(horizontal: false, vertical: true)
+        switch drillStyle {
+        case .plateau:
+            text
+                .padding(.horizontal, 14).padding(.vertical, 11)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(RoundedRectangle(cornerRadius: 14, style: .continuous).fill(Color(hex: theme.tint)))
+        case .cadres:
+            text
+                .padding(.leading, 12)
+                .overlay(alignment: .leading) {
+                    Rectangle().fill(Color(hex: theme.fragile)).frame(width: 2)
+                }
+        }
+    }
+
+    /// The shared look of the two assists. Plateau: a round pale button (the
+    /// quiet colour, capped) beside its label. Cadres: label + glyph inside a
+    /// rounded frame in the palette's deep colour.
+    @ViewBuilder
+    private func assistLabel(_ title: String, glyph: AnyView, glyphLeading: Bool) -> some View {
+        switch drillStyle {
+        case .plateau:
+            HStack(spacing: 8) {
+                if glyphLeading { assistDisc(glyph) }
+                Text(title).uppercaseLabel(AppColor.ink)
+                if !glyphLeading { assistDisc(glyph) }
+            }
+        case .cadres:
+            HStack(spacing: 7) {
+                if glyphLeading { glyph.foregroundColor(Color(hex: theme.fragile)) }
+                Text(title).uppercaseLabel(AppColor.ink)
+                if !glyphLeading { glyph.foregroundColor(Color(hex: theme.fragile)) }
+            }
+            .padding(.horizontal, 13)
+            .frame(height: 34)
+            .overlay(Capsule().strokeBorder(Color(hex: theme.fragile), lineWidth: 1.5))
+        }
+    }
+
+    private func assistDisc(_ glyph: AnyView) -> some View {
+        glyph
+            .foregroundColor(AppColor.ink)
+            .frame(width: 38, height: 38)
+            .background(Circle().fill(Color(hex: theme.quietFill)))
     }
 
     /// Tap-to-reveal English grammar hint toggle.
@@ -248,17 +304,16 @@ struct DrillView: View {
                 showHint.toggle()
             }
         } label: {
-            HStack(spacing: 6) {
-                Text("Indice").uppercaseLabel(AppColor.ink)
-                Text("↓")
-                    .font(.appLabel)
-                    .foregroundColor(AppColor.ink)
-                    .rotationEffect(.degrees(showHint ? 180 : 0))
-            }
-            .padding(.vertical, 6)
+            assistLabel("Indice", glyph: AnyView(
+                Text(drillStyle == .plateau ? "?" : "↓")
+                    .font(drillStyle == .plateau ? .label(size: 15, wght: 500) : .appLabel)
+                    .rotationEffect(.degrees(drillStyle == .cadres && showHint ? 180 : 0))
+            ), glyphLeading: drillStyle == .plateau)
+            .padding(.vertical, 4)
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
+        .accessibilityLabel(showHint ? "Masquer l'indice" : "Indice")
     }
 
     /// Opt-in "hear the sentence" hint, available while solving. Plays the bundled
@@ -268,13 +323,11 @@ struct DrillView: View {
     /// Settings toggle).
     private var listenButton: some View {
         Button { Speaker.shared.speak(exercise.spokenFrench, key: exercise.audioKey) } label: {
-            HStack(spacing: 6) {
+            assistLabel("Écouter", glyph: AnyView(
                 Image(systemName: "speaker.wave.2")
-                    .font(.system(size: 11, weight: .regular))
-                    .foregroundColor(AppColor.ink)
-                Text("Écouter").uppercaseLabel(AppColor.ink)
-            }
-            .padding(.vertical, 6)
+                    .font(.system(size: drillStyle == .plateau ? 13 : 11, weight: .regular))
+            ), glyphLeading: drillStyle == .cadres)
+            .padding(.vertical, 4)
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
@@ -437,18 +490,18 @@ struct DrillView: View {
         if reviewData != nil {
             // Read-only revisit: the only action is to move forward again.
             Button("Suivant") { onForward() }
-                .buttonStyle(PrimaryButtonStyle())
+                .buttonStyle(DrillButtonStyle())
         } else if checked {
             if isCorrect {
                 // Non-interactive green confirmation; auto-advances after a beat.
                 correctConfirmation
             } else {
                 Button("Suivant") { onNext() }
-                    .buttonStyle(PrimaryButtonStyle())
+                    .buttonStyle(DrillButtonStyle())
             }
         } else {
             Button("Vérifier") { check() }
-                .buttonStyle(PrimaryButtonStyle())
+                .buttonStyle(DrillButtonStyle())
                 .disabled(!hasAnswer)
                 .opacity(hasAnswer ? 1.0 : 0.25)
                 .animation(.easeOut(duration: 0.25), value: hasAnswer)
@@ -457,12 +510,10 @@ struct DrillView: View {
 
     /// Mirrors PrimaryButtonStyle's footprint so the footer doesn't jump when it
     /// swaps from "Vérifier" to this (non-interactive) confirmation.
+    /// "Juste" must read as a change, not a relabelled Vérifier: white pill
+    /// framed in the palette's deep colour, a ✓, and a small pop as it lands.
     private var correctConfirmation: some View {
-        Text(didRemove ? "Retiré" : "Juste")
-            .font(.display(size: 16, wght: 400))
-            .foregroundColor(AppColor.ink)
-            .frame(maxWidth: .infinity, minHeight: 54, maxHeight: 54)
-            .overlay(Capsule().strokeBorder(AppColor.ink, lineWidth: 1))
+        CorrectPill(text: didRemove ? "Retiré" : "Juste  ✓", stroke: Color(hex: theme.fragile))
     }
 
     // MARK: - Logic
@@ -498,6 +549,28 @@ struct DrillView: View {
                 onNext()
             }
         }
+    }
+}
+
+// MARK: - Correct pill
+
+private struct CorrectPill: View {
+    let text: String
+    let stroke: Color
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @State private var landed = false
+
+    var body: some View {
+        Text(text)
+            .font(.display(size: 16, wght: 400))
+            .foregroundColor(AppColor.ink)
+            .frame(maxWidth: .infinity, minHeight: 54, maxHeight: 54)
+            .background(Capsule().fill(AppColor.white))
+            .overlay(Capsule().strokeBorder(stroke, lineWidth: 2))
+            .scaleEffect(landed || reduceMotion ? 1 : 0.92)
+            .onAppear {
+                withAnimation(.spring(response: 0.32, dampingFraction: 0.5)) { landed = true }
+            }
     }
 }
 

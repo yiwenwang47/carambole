@@ -325,6 +325,8 @@ final class LibraryRibbonMotion {
 struct LibraryRibbonScene: View {
     let geometry: LibraryRibbonGeometry
     let motion: LibraryRibbonMotion
+    /// Paper colours (front / back, started / to come). Rebuild via `.id` on change.
+    var palette: AppPalette = .current
 
     var body: some View {
         RealityView { content in
@@ -364,14 +366,17 @@ struct LibraryRibbonScene: View {
             group.position.x = -geometry.wx(geometry.axisX)
             pivot.addChild(group)
 
+            let theme = palette.theme
             for (i, stretch) in geometry.stretches.enumerated() {
                 let samples = geometry.samples(forStretch: i)
                 let live = stretch.isLive
                 if let front = try? LibraryRibbonGeometry.paperMesh(samples, front: true),
                    let back = try? LibraryRibbonGeometry.paperMesh(samples, front: false),
                    let edges = try? LibraryRibbonGeometry.edgeMesh(samples) {
-                    group.addChild(ModelEntity(mesh: front, materials: [Self.paper(white: true, live: live)]))
-                    group.addChild(ModelEntity(mesh: back, materials: [Self.paper(white: false, live: live)]))
+                    let frontHex = live ? theme.ribbonFront : theme.soonFront
+                    let backHex = live ? theme.ribbonBack : theme.soonBack
+                    group.addChild(ModelEntity(mesh: front, materials: [Self.paper(UIColor(hex: frontHex), live: live)]))
+                    group.addChild(ModelEntity(mesh: back, materials: [Self.paper(UIColor(hex: backHex), live: live)]))
                     var line = UnlitMaterial(color: UIColor(live ? AppColor.ink : AppColor.g2))
                     line.faceCulling = .none
                     group.addChild(ModelEntity(mesh: edges, materials: [line]))
@@ -387,16 +392,15 @@ struct LibraryRibbonScene: View {
         }
     }
 
-    /// Two-sided paper: white front, grey back, lit by a soft key + fill so it
-    /// shades like the 05 ribbon (no self-light on a started book, so the
-    /// folds read strongly). Books to come get a little self-light, so they
-    /// read paler.
-    private static func paper(white: Bool, live: Bool) -> PhysicallyBasedMaterial {
+    /// Two-sided paper in the palette's colours (front = the loud colour, back =
+    /// the quiet one, seen where the paper twists), lit by a soft key + fill so
+    /// it shades like the 05 ribbon (no self-light on a started book, so the
+    /// folds read strongly). Books to come use paler colours and a little
+    /// self-light.
+    private static func paper(_ base: UIColor, live: Bool) -> PhysicallyBasedMaterial {
         var m = PhysicallyBasedMaterial()
-        // Back = the 05 prototype's 0x8d8d8a paper grey.
-        let base = white ? UIColor.white : UIColor(red: 0x8d / 255, green: 0x8d / 255, blue: 0x8a / 255, alpha: 1)
         m.baseColor = .init(tint: base)
-        m.roughness = .init(floatLiteral: white ? 0.6 : 0.7)
+        m.roughness = .init(floatLiteral: 0.62)
         m.metallic = .init(floatLiteral: 0)
         m.specular = .init(floatLiteral: 0.1)
         m.emissiveColor = .init(color: base)

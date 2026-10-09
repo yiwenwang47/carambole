@@ -1,17 +1,69 @@
 # Carambole UI redesign handoff
 
-*Updated 2026-10-09, end of session 3. Start here.*
+*Updated 2026-10-09, end of session 4. Start here.*
 
 ## TL;DR for the next session
 
-Branch **`ui-redesign`** (worktree `../carambole-ui-redesign`, NOT merged, not
-pushed; head = the commit that updated this doc). Every screen is built and the
-user accepted the library ribbon in session 3. **NEXT: colour palettes.** The
-user wants to choose a palette in a new session. Everything is still grayscale
-(`AppColor` in `DesignSystem/DesignSystem.swift`; state is shown by form:
-solid / outline / dashed). Show them 2 or 3 palette options as HTML mocks
-before you change any Swift, then apply the palette, then fine-tune, then do T9
-cleanup and merge (see "Still open").
+The redesign is **merged to `main` and pushed** (session 4). Every screen is
+built in the "objets + mouvement" language, with **colour**: three palettes the
+learner picks under the library's `Couleurs →` page (Acide default, Iris,
+Surimpression) and two drill styles (Plateau default, Cadres). Hard colour
+rules from the user: white ground, ink text, colour on objects; any button or
+large fill uses pale, saturation-capped colour; dark buttons are grey
+(`AppColor.buttonDark`), never black. Design references:
+`design/motion.html` (objects), `design/palettes.html`, `design/drill-colour.html`.
+
+Still open (user did not ask for these yet): confirm on device that the Today
+drop no longer stutters after `fait`; Iris star has no true iridescence (needs
+the Metal toolchain for a CustomMaterial shader, ask before installing); Today
+pile with ~40 tokens covers the title (could cap lower); 3D star and the open
+book's ribbon link are still full-strength colour (user may want them paler);
+T9 cleanup (dead `CaramboleStarMesh` glass/paper slice materials,
+`DesignGalleryView`, unused `success`/`error` colours) and deleting the merged
+`ui-t*` branches.
+
+## Session 4 (2026-10-09): colour palettes, drill styles, merge
+
+- Palette study: `design/palettes.html` (artifact https://claude.ai/artifact/RLB68X8GYpdZgQErLeaFCZ).
+  Round 1 copied moodboard hexes onto flat SVG objects: rejected ("followed the
+  examples too strictly"; star "looks weird"). Round 2+ derived palettes from
+  lessons (colour as material, one loud + one quiet, black does the drawing,
+  overprint) on the real three.js star + a line-for-line port of
+  `LibraryRibbon.swift` with real data. Kept: **Acide** (lime + more sky),
+  **Iris** (pearl star + lilac + more pistachio, star made lighter),
+  **Surimpression** (softened pink/blue, multiply overlaps). Outremer dropped.
+- Built in Swift, user picks: `DesignSystem/Theme.swift` (`AppPalette`,
+  `AppTheme`, UserDefaults `carambole.palette`, default Acide);
+  `Features/Settings/ColorSettingsView.swift` (live star preview + 3 rows),
+  opened from the library's `Couleurs →` label (top right). Colour reaches: star
+  body/ring/bead (`ObjetStarController.setPalette`), ribbon paper (front/back,
+  to-come), Today pills (+ multiply in Surimpression), placed/wrong magnets,
+  `ProgressRing`, Today start-pill counts. `AppColor.paper` is now pure white.
+- Iris has no real iridescence: RealityKit PBR has none, `sheen` tinted it olive,
+  and a CustomMaterial shader needs the Metal toolchain (not installed; ask the
+  user before `xcodebuild -downloadComponent MetalToolchain`).
+- Today drop glitch after tapping `fait`: star RealityView now detaches while
+  Today is pushed (`starLive`, controller re-attaches entities); drop waits
+  0.4 s for the push; tokens spawn one per 30 ms; pill textures cached; walls
+  rebuilt only on real size change; physics step capped at 1/40 s.
+  Sim log check: no runaway tokens. User to confirm on device.
+- Later in session 4: Surimpression roles swapped (blue loud, pink quiet);
+  placed magnets use a much paler colour; RULE from the user: any coloured
+  button or large fill is saturation-capped (`AppTheme.buttonFill/quietFill/
+  tint`, HSL S ≤ 45 %, L ≥ 82 %) and dark buttons are grey `AppColor.buttonDark`
+  (#3A3A3A), never black. Drill colour (`design/drill-colour.html`): user chose
+  to build **Plateau (default)** and **Cadres**, picked under Couleurs →
+  Exercices (`DrillStyle`, UserDefaults `carambole.drillStyle`). Plateau = pale
+  lesson slab with the module number, pale tray under the word bank, round
+  Indice/Écouter, pale filled buttons. Cadres = framed Indice/Écouter + answer
+  well in the deep colour, dark buttons with a pale arrow disc
+  (`DrillButtonStyle`). Deviation from mock: Plateau's Indice/Écouter stay in
+  the prompt's assist row (not inside the tray). Installed on the phone.
+- "Juste" after a correct answer was there but read as a relabelled Vérifier
+  (same pale fill, 1 s). Now a white pill with a 2 pt deep-colour outline + ✓
+  and a small pop (`CorrectPill` in DrillView); the Plateau tray no longer
+  changes colour on a correct answer.
+- Merged `ui-redesign` → `main` and pushed at the end of the session.
 
 ## Session 3 (2026-10-09): ribbon, star, Today, book home
 

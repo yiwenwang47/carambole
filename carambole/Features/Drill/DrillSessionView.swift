@@ -29,16 +29,22 @@ struct DrillSessionView: View {
     let ruleNote: String
     let elements: [GrammarElement]
     let mode: Mode
+    /// The module's number, shown large on the Plateau lesson slab (nil = none).
+    let moduleNumber: Int?
     var onFinish: () -> Void = {}
 
     init(title: String, ruleNote: String, elements: [GrammarElement], mode: Mode,
-         onFinish: @escaping () -> Void = {}) {
+         moduleNumber: Int? = nil, onFinish: @escaping () -> Void = {}) {
         self.title = title
         self.ruleNote = ruleNote
         self.elements = elements
         self.mode = mode
+        self.moduleNumber = moduleNumber
         self.onFinish = onFinish
     }
+
+    @AppStorage(AppPalette.storageKey) private var paletteID = AppPalette.fallback.rawValue
+    @AppStorage(DrillStyle.storageKey) private var drillStyleID = DrillStyle.fallback.rawValue
 
     @State private var elementIndex = 0
     /// Pending examples for the current element (learn mode queue).
@@ -414,7 +420,7 @@ struct DrillSessionView: View {
         }
         .padding(.horizontal, 22)
         .frame(height: 48)
-        .background(Capsule().fill(AppColor.ink))
+        .background(Capsule().fill(AppColor.buttonDark))
     }
 
     /// Surface the undo toast for `elementID` (called on the too-easy-correct path).
@@ -615,16 +621,24 @@ struct DrillSessionView: View {
     // MARK: - Intro card (one-time English ease-in)
 
     private var introCard: some View {
-        VStack(alignment: .leading, spacing: Spacing.lg) {
-            Spacer(minLength: Spacing.xl)
-            SectionLabel("Leçon")
+        let plateau = DrillStyle(stored: drillStyleID) == .plateau
+        return VStack(alignment: .leading, spacing: Spacing.lg) {
+            if plateau {
+                lessonSlab
+                    .padding(.top, Spacing.md)
+            } else {
+                Spacer(minLength: Spacing.xl)
+                SectionLabel("Leçon")
+            }
             Text(title)
                 .font(.display(size: 40, wght: 250))
                 .tracking(-1.2)
                 .lineSpacing(0)
                 .foregroundColor(AppColor.ink)
                 .fixedSize(horizontal: false, vertical: true)
-            Rectangle().fill(AppColor.ink).frame(height: 1).padding(.vertical, Spacing.sm)
+            if !plateau {
+                Rectangle().fill(AppColor.ink).frame(height: 1).padding(.vertical, Spacing.sm)
+            }
             Text(ruleNote)
                 .font(.appBody)
                 .lineSpacing(4)
@@ -634,11 +648,38 @@ struct DrillSessionView: View {
             Button("Commencer") {
                 withAnimation(.spring(response: 0.5, dampingFraction: 0.85)) { showingIntro = false }
             }
-            .buttonStyle(PrimaryButtonStyle())
+            .buttonStyle(DrillButtonStyle())
         }
         .padding(.horizontal, Spacing.screenH)
         .padding(.bottom, Spacing.sm)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+    }
+
+    /// Plateau: a large pale slab (the palette's quiet colour, capped) carrying
+    /// `Leçon · module N` and the module number set huge, cropped by the slab.
+    private var lessonSlab: some View {
+        let theme = AppPalette(stored: paletteID).theme
+        return RoundedRectangle(cornerRadius: 28, style: .continuous)
+            .fill(Color(hex: theme.quietFill))
+            .overlay(alignment: .bottomTrailing) {
+                if let n = moduleNumber {
+                    Text("\(n)")
+                        .font(.display(size: 190, wght: 200))
+                        .tracking(-11)
+                        .foregroundColor(AppColor.ink.opacity(0.9))
+                        .lineLimit(1)
+                        .fixedSize()
+                        .offset(x: 6, y: 52)
+                }
+            }
+            .overlay(alignment: .topLeading) {
+                Text(moduleNumber.map { "Leçon · module \($0)" } ?? "Leçon")
+                    .uppercaseLabel(AppColor.ink)
+                    .padding(18)
+            }
+        .frame(height: 190)
+        .clipShape(RoundedRectangle(cornerRadius: 28, style: .continuous))
+        .accessibilityElement(children: .combine)
     }
 
     // MARK: - Completion / empty state
@@ -677,7 +718,7 @@ struct DrillSessionView: View {
             Rectangle().fill(AppColor.ink).frame(height: 1).padding(.vertical, Spacing.sm)
             Spacer()
             Button("Terminer") { onFinish() }
-                .buttonStyle(PrimaryButtonStyle())
+                .buttonStyle(DrillButtonStyle())
         }
         .padding(.horizontal, Spacing.screenH)
         .padding(.bottom, Spacing.sm)

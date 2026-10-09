@@ -69,7 +69,7 @@ struct ModuleDetailView: View {
         .onAppear { viewModel.refresh() }
         .fullScreenCover(item: $session, onDismiss: { viewModel.refresh() }) { s in
             DrillSessionView(title: module.title, ruleNote: module.ruleNote,
-                             elements: s.elements, mode: .learn) {
+                             elements: s.elements, mode: .learn, moduleNumber: module.sortOrder) {
                 session = nil
             }
         }
@@ -424,7 +424,7 @@ private struct ElementRow: View {
                     .multilineTextAlignment(.center)
                     .frame(width: actionWidth)
                     .frame(maxHeight: .infinity)
-                    .background(AppColor.ink)
+                    .background(AppColor.buttonDark)
                     .contentShape(Rectangle())
             }
             .buttonStyle(.plain)

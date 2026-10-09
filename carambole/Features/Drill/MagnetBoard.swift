@@ -3,7 +3,7 @@
 //  carambole
 //
 //  07 · Aimants — the drill's word magnets. Level tiles sit in a wrapping bank;
-//  a tap springs one onto the answer line (black fill, one overshoot), a tap on
+//  a tap springs one onto the answer line (palette fill, one overshoot), a tap on
 //  a placed tile flies it back to its fixed home slot (homes never reflow).
 //  Correct → the placed tiles weld into plain text, leftovers drop away, and a
 //  `wght` wave runs through the sentence. Wrong → the line shakes, mismatched
@@ -38,22 +38,52 @@ struct MagnetBoard: View {
     @State private var welded = false
     @State private var weldStart: Date?
     @State private var waveDone = false
+    @AppStorage(AppPalette.storageKey) private var paletteID = AppPalette.fallback.rawValue
+    @AppStorage(DrillStyle.storageKey) private var drillStyleID = DrillStyle.fallback.rawValue
 
     static let tileHeight: CGFloat = 40
     private static let snap = Animation.spring(duration: 0.35, bounce: 0.3)
     private static let waveDuration = 0.75
 
     var body: some View {
+        let theme = AppPalette(stored: paletteID).theme
+        let style = DrillStyle(stored: drillStyleID)
         VStack(alignment: .leading, spacing: 0) {
-            answerLine
-            Rectangle()
-                .fill(AppColor.ink)
-                .frame(height: 1)
-                .padding(.top, 10)
+            switch style {
+            case .plateau:
+                answerLine
+                Rectangle()
+                    .fill(AppColor.ink)
+                    .frame(height: 1)
+                    .padding(.top, 10)
+            case .cadres:
+                // The answer line becomes a framed well in the palette's deep line
+                // colour; it fills pale and the outline firms up once right.
+                answerLine
+                    .padding(12)
+                    .background(RoundedRectangle(cornerRadius: 18, style: .continuous)
+                        .fill(welded ? Color(hex: theme.tint) : .clear))
+                    .overlay(RoundedRectangle(cornerRadius: 18, style: .continuous)
+                        .strokeBorder(Color(hex: theme.fragile).opacity(welded ? 1 : 0.55), lineWidth: 1.5))
+                    .animation(.easeOut(duration: 0.35), value: welded)
+            }
             DrillFeedbackLine(result: result, answer: Exercise.displayJoin(answerTokens))
                 .padding(.top, 12)
-            bankArea
-                .padding(.top, 22)
+            switch style {
+            case .plateau:
+                // The bank sits on a pale tray, like a magnet board (its colour
+                // never changes; "Juste" in the footer confirms an answer).
+                bankArea
+                    .padding(16)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(RoundedRectangle(cornerRadius: 28, style: .continuous)
+                        .fill(Color(hex: theme.tint)))
+                    .padding(.horizontal, -8)
+                    .padding(.top, 16)
+            case .cadres:
+                bankArea
+                    .padding(.top, 22)
+            }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .onChange(of: result) { _, new in
@@ -209,20 +239,33 @@ struct MagnetTile: View {
     enum Style { case bank, placed, wrong }
     let text: String
     var style: Style = .bank
+    @AppStorage(AppPalette.storageKey) private var paletteID = AppPalette.fallback.rawValue
+
+    private var theme: AppTheme { AppPalette(stored: paletteID).theme }
+
+    /// Placed = palette fill, no outline; bank = white + ink outline; wrong =
+    /// white + dashed outline in the palette's fragile colour. Text is ink.
+    private var stroke: Color {
+        switch style {
+        case .bank: return AppColor.ink
+        case .placed: return .clear
+        case .wrong: return Color(hex: theme.fragile)
+        }
+    }
 
     var body: some View {
         Text(text)
             .font(.appToken)
             .tracking(-0.2)
             .lineLimit(1)
-            .foregroundColor(style == .placed ? AppColor.paper : AppColor.ink)
+            .foregroundColor(AppColor.ink)
             .padding(.horizontal, 15)
             .frame(height: MagnetBoard.tileHeight)
-            .background(Capsule().fill(style == .placed ? AppColor.ink : AppColor.white))
+            .background(Capsule().fill(style == .placed ? Color(hex: theme.tileOn) : AppColor.white))
             .overlay(
                 Capsule().strokeBorder(
-                    AppColor.ink,
-                    style: StrokeStyle(lineWidth: 1, dash: style == .wrong ? [4, 3] : [])
+                    stroke,
+                    style: StrokeStyle(lineWidth: style == .wrong ? 1.5 : 1, dash: style == .wrong ? [4, 3] : [])
                 )
             )
             .contentShape(Capsule())

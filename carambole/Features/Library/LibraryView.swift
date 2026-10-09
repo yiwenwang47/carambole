@@ -49,6 +49,9 @@ struct LibraryView: View {
     /// rendering under a pushed book it starves the book's star scene, which
     /// then takes seconds to show its first frame.
     @State private var ribbonLive = true
+    /// Pushes the colour page.
+    @State private var openColors = false
+    @AppStorage(AppPalette.storageKey) private var paletteID = AppPalette.fallback.rawValue
 
     private var books: [ShelfBook] {
         catalog.filter(\.available) + catalog.filter { !$0.available }
@@ -71,6 +74,7 @@ struct LibraryView: View {
             }
             .toolbar(.hidden, for: .navigationBar)
             .navigationDestination(isPresented: $openBook) { BookView(showBack: true) }
+            .navigationDestination(isPresented: $openColors) { ColorSettingsView() }
             .onAppear {
                 ribbonLive = true
                 motion.reduceMotion = reduceMotion
@@ -93,8 +97,9 @@ struct LibraryView: View {
         return ZStack(alignment: .topLeading) {
             Group {
                 if ribbonLive {
-                    LibraryRibbonScene(geometry: geometry, motion: motion)
-                        .id(geometry)
+                    LibraryRibbonScene(geometry: geometry, motion: motion,
+                                       palette: AppPalette(stored: paletteID))
+                        .id([AnyHashable(geometry), AnyHashable(paletteID)])
                 }
             }
             .frame(width: width, height: height)
@@ -140,12 +145,29 @@ struct LibraryView: View {
 
     // MARK: - Header
 
-    /// motion.html `.lab` pair pinned to the top edges.
+    /// motion.html `.lab` pair pinned to the top edges; the right one opens the
+    /// colour page (a small strip of the current palette + `Couleurs →`).
     private var edgeLabels: some View {
         HStack(alignment: .firstTextBaseline) {
             Text("Carambole").uppercaseLabel(AppColor.ink)
             Spacer()
-            Text("Bibliothèque").uppercaseLabel()
+            Button {
+                ribbonLive = false
+                openColors = true
+            } label: {
+                HStack(spacing: 8) {
+                    PaletteStrip(palette: AppPalette(stored: paletteID))
+                        .frame(width: 26, height: 8)
+                        .alignmentGuide(.firstTextBaseline) { d in d[.bottom] }
+                    Text("Couleurs →").uppercaseLabel(AppColor.ink)
+                }
+                .padding(.vertical, 10)
+                .padding(.leading, 12)
+                .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .padding(.vertical, -10)
+            .accessibilityLabel("Couleurs, \(AppPalette(stored: paletteID).name)")
         }
     }
 

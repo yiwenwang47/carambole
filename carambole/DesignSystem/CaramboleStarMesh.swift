@@ -281,6 +281,64 @@ enum StarMaterial {
         return m
     }
 
+    /// The palette's star body (`AppTheme.StarFinish`).
+    static func finish(_ f: AppTheme.StarFinish) -> RealityKit.Material {
+        switch f {
+        case .acrylic(let hex):
+            return acrylic(UIColor(hex: hex))
+        case .iris:
+            return iris()
+        }
+    }
+
+    /// Tinted acrylic: glossy clearcoat over the colour, plus a little emissive
+    /// so it reads lit from inside. Opaque on purpose (RealityKit's transparent
+    /// blending flattens the lighting).
+    static func acrylic(_ color: UIColor) -> PhysicallyBasedMaterial {
+        var m = PhysicallyBasedMaterial()
+        m.baseColor = .init(tint: color)
+        m.metallic = .init(floatLiteral: 0)
+        m.roughness = .init(floatLiteral: 0.14)
+        m.specular = .init(floatLiteral: 0.9)
+        m.clearcoat = .init(floatLiteral: 1)
+        m.clearcoatRoughness = .init(floatLiteral: 0.04)
+        m.emissiveColor = .init(color: color)
+        m.emissiveIntensity = 0.3
+        return m
+    }
+
+    /// Iris: light pearly metal with a faint lilac glow. (PhysicallyBasedMaterial
+    /// has no iridescence and its `sheen` tinted the star olive; a custom
+    /// shader would need the Metal toolchain.)
+    private static func iris() -> PhysicallyBasedMaterial {
+        var m = PhysicallyBasedMaterial()
+        m.baseColor = .init(tint: UIColor(hex: "F3F1F8"))
+        m.metallic = .init(floatLiteral: 0.35)
+        m.roughness = .init(floatLiteral: 0.2)
+        m.specular = .init(floatLiteral: 0.8)
+        m.clearcoat = .init(floatLiteral: 1)
+        m.clearcoatRoughness = .init(floatLiteral: 0.05)
+        m.emissiveColor = .init(color: UIColor(hex: "F1EDFF"))
+        m.emissiveIntensity = 0.18
+        return m
+    }
+
+    /// Glossy coloured lacquer for the orbit arc / bead.
+    static func lacquer(_ hex: String) -> PhysicallyBasedMaterial {
+        var m = PhysicallyBasedMaterial()
+        m.baseColor = .init(tint: UIColor(hex: hex))
+        m.metallic = .init(floatLiteral: 0.2)
+        m.roughness = .init(floatLiteral: 0.22)
+        m.clearcoat = .init(floatLiteral: 1)
+        m.clearcoatRoughness = .init(floatLiteral: 0.1)
+        return m
+    }
+
+    /// Unlit flat palette colour.
+    static func flat(hex: String) -> UnlitMaterial {
+        UnlitMaterial(color: UIColor(hex: hex))
+    }
+
     /// Unlit flat colour, optionally translucent (track, glass, outlines).
     static func flat(_ white: CGFloat, opacity: Float = 1) -> UnlitMaterial {
         var m = UnlitMaterial(color: UIColor(white: white, alpha: 1))
