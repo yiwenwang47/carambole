@@ -276,14 +276,16 @@ struct BookView: View {
             .frame(height: 100 + 15, alignment: .top)
 
             Button { openModules() } label: {
-                Text("Glisser vers le haut · \(viewModel.book.modules.count) modules")
-                    .uppercaseLabel()
+                Text("Glisser vers le haut · \(viewModel.book.modules.count) modules  ↑")
+                    .font(.display(size: 17, wght: 400))
+                    .tracking(-0.2)
+                    .foregroundColor(AppColor.ink)
                     .frame(maxWidth: .infinity)
-                    .padding(.vertical, 6)
+                    .padding(.vertical, 10)
                     .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
-            .padding(.vertical, -6)
+            .padding(.vertical, -10)
             .accessibilityLabel("Sommaire, \(viewModel.book.modules.count) modules")
         }
     }
