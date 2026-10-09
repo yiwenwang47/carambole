@@ -2,16 +2,16 @@
 
 > ## ▶ ACTIVE TASK — START HERE (next session, continue without re-asking)
 >
-> **▶ UI REDESIGN — IN PROGRESS (updated 2026-10-09, end of session 2).**
+> **▶ UI REDESIGN — IN PROGRESS (updated 2026-10-09, end of session 3).**
 > Work lives on branch **`ui-redesign`** in the worktree
 > **`../carambole-ui-redesign`** (NOT merged to `main`, not pushed). READ
 > **`design/UI_REDESIGN_HANDOFF.md` in that worktree first.** Every screen is
-> built (incl. 08 library ribbon + 09 history list). **OPEN: the 08 library
-> ribbon SHAPE is rejected by the user** — the handoff's TL;DR has what they
-> want (one soft link per book, ≥3 books per screen, 05-ribbon paper look), the
-> five rejected attempts, their real phone data, and the iteration loop. User
-> now tests on an **iPhone 18 Pro** (`00008160-001A09920AA0000A`; install
-> commands in the handoff). Then fine-tune, then T9 cleanup + merge.
+> built; the 08 library ribbon was accepted in session 3 (also: smooth star
+> mesh, faster Today drop, module list from the bottom line only). **NEXT:
+> colour palettes** — the user will choose one in a new session; show 2–3 HTML
+> mock options first. User tests on an **iPhone 18 Pro**
+> (`00008160-001A09920AA0000A`; install commands in the handoff). Then
+> fine-tune, then T9 cleanup + merge.
 > Everything below is older context.
 >
  Everything below is DONE, MERGED to `main`, and PUSHED to origin (2026-06-19).

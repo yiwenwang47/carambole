@@ -1,70 +1,56 @@
 # Carambole UI redesign handoff
 
-*Updated 2026-10-09, end of session 2. Start here.*
+*Updated 2026-10-09, end of session 3. Start here.*
 
 ## TL;DR for the next session
 
 Branch **`ui-redesign`** (worktree `../carambole-ui-redesign`, NOT merged, not
-pushed; head `0c0bc40` + this doc). Every screen is built. **One open problem:
-the library ribbon's SHAPE (08). The user hates the current one.** Fix that
-first, with the user, on their phone. Then fine-tune the other screens, then T9
-cleanup and merge.
+pushed; head = the commit that updated this doc). Every screen is built and the
+user accepted the library ribbon in session 3. **NEXT: colour palettes.** The
+user wants to choose a palette in a new session. Everything is still grayscale
+(`AppColor` in `DesignSystem/DesignSystem.swift`; state is shown by form:
+solid / outline / dashed). Show them 2 or 3 palette options as HTML mocks
+before you change any Swift, then apply the palette, then fine-tune, then do T9
+cleanup and merge (see "Still open").
 
-### ▶ The ribbon problem (read all of this before touching it)
+## Session 3 (2026-10-09): ribbon, star, Today, book home
 
-**What the user wants (their words, in order):**
-1. "the ruban look from the artifact": the soft, organic paper ribbon.
-2. A reference screenshot they sent: the **old 05 history ribbon**
-   (perspective camera, ~550 pt tall for 30 days, large soft blobs of paper
-   divided by small twisted pinches, a gentle S drift, one blob flashing its grey back).
-   Source: `git show main:design/motion.html` → `<!-- 05 · ribbon history -->`
-   script (line ~424), and the deleted Swift port:
-   `git show 48ee276:carambole/Features/History/RibbonView.swift`.
-3. **"One link per book! at least 3 books should fit in one page!"** Each
-   book = ONE link of the chain (like one 05 blob), and ≥ 3 books per screen.
-4. Verdict on the current build (`0c0bc40`, one link per book): "shape is
-   terrible". The user did not say why. **Ask, or show 2–3 options, before
-   coding.** Likely suspects: the `sin(πt)^0.7` envelope makes leaf or almond
-   shapes (pointed ends, see the sim screenshot); the books-to-come links are
-   long thin needles; there's no S drift and no grey-back flash, so it doesn't
-   read like 05's paper.
+Everything here is on the phone (iPhone 18 Pro) and committed.
 
-**What was tried and rejected (don't repeat):**
-| Version | Commit | Why rejected |
+| Commit | Change | User verdict |
 |---|---|---|
-| Prototype exact: 200 pt/book, width `0.05+0.4·v/30`, 2π twist per rest day | `4b27242`, `4bec50b` | Sim with sparse data: a tight coil. "too twisted" |
-| One twist per run of rest days + `0.16+0.45·√(v/30)` | `0822164` | On the phone with real data (days of 64 to 80): flat **discs**, "nowhere close" |
-| Relative width `0.05+0.32·v/max` | `f623437` | Edges jagged at ~7 pt/day. "creepy as fuck" |
-| 560 pt per started book + 05 width `0.04+0.5·v/max` | `d0a2611` | Soft, but only 1 book per screen. "NOOO" |
-| One link per book: 200 pt, Gaussian-smoothed days, `sin(πt)^0.7` envelope, twist only at boundaries | `0c0bc40` (current) | "shape is fucking terrible" |
+| `ae3032e` | Ribbon link shape: 9 pt flat neck at the pinch, round `sin^0.8` shoulders over 20 % of the link, wide belly, two edges that wobble independently (seeded sines per book), spine drift so links lean. A book's 30-day total sets its belly on a scale shared by all books; daily data only changes the outline by about ±12 %. | "shape is ok now" |
+| `9c32023` | Ribbon shading: 10-column mesh bowed across its width, analytic normals, key + fill lights, back paper `#8d8d8a`, roll inside each link, ±28 pt twist at each boundary. Books to come are opaque with more self-light (RealityKit's transparent blending rendered them unlit). | "good" |
+| `311d343` | Wider links (started 82–103 pt, to come 68 pt; axis 84 pt from the right) and stronger shading (curl 0.6, roll 0.7, key 1000 / fill 120, no self-light on started books). | accepted |
+| `7ae834c` | 01 star: hand-built `objetMesh` (three.js ExtrudeGeometry numbers: depth .34, bevel .14 × .1, 96 samples per lobe, 12 bevel rings, mitred sharp tips). RealityKit's chamfer had left sawtooth notches at the tips. About 10 % bigger than before, like the prototype. | not yet judged |
+| `d2369a6` | Today (03) token drop: gravity 2200 pt/s² (was 1100), tokens enter at 900 pt/s downward; 20 tokens settle in about 1 s. `fait :` line bold ink. | not yet judged |
+| `5be680b` | Book home: swipe-up removed; only the bottom line `25 modules →` opens the module list. `fait :` line Familjen 14/650 ink. | not yet judged |
 
-**Key insight:** at 200 pt per book, 30 days is about 7 pt per day, too short
-to show each day's width without jagged edges. 05 looked good at about 18 pt
-per day. Inside one link you can't show 30 separate days. Show a smooth,
-data-tinted shape, or drop per-day data from the shape entirely; ask the user.
+Ribbon tuning knobs, all in `LibraryRibbon.swift`: `startedBase`/`startedGain`/
+`toComeBelly` (width), `shoulder`/`neck`/`twistHalf` (pinch), `wobble` amps
+(edge roughness), `roll`/`curl` + light intensities + `emissiveIntensity`
+(shading). `_selfTest()` asserts the pinch, belly range, belly order and twist
+count, so update it when you change the shape.
 
-**Real data (use it, the sim is nearly empty):**
-`design/phone-data/real-30d.json` (git-ignored; also the raw DB
-`design/phone-data/carambole.sqlite`, pulled from the phone). Last 30 days total =
-`[0,0,0,0,0,0,10,11,0,8,30,0,0,0,0,0,0,0,64,0,0,0,8,0,76,0,45,73,80,0]`.
-Sparse, bursty, many rest days. Every candidate must be rendered with THIS
-data and shown to the user **before** installing.
+What the user did NOT want: grey-back "flipped" links (offered, not taken:
+a whole grey link could look like a state); ribbons whose per-day data makes
+jagged edges. Rejected ribbon attempts from session 2: tight coil
+(`4b27242`), flat discs (`0822164`), jagged relative width (`f623437`), one
+book per screen (`d0a2611`), almond links (`0c0bc40`).
 
-**How to iterate on it (fast loop that worked):**
-- Shape code: `carambole/Features/Library/LibraryRibbon.swift`
-  (`LibraryRibbonGeometry`: `width(at:)`, `twist(at:)`, `spine`, `envelope`,
-  `smooth`; + `_selfTest()` wired in `caramboleApp.swift`. Update it with the
-  shape, since a failing assert kills the app at launch). Layout: `LibraryView.swift`.
-- Temp harness: `carambole/Views/ZZHarness.swift` rendering
-  `LibraryRibbonScene(geometry: LibraryRibbonGeometry(stretches: [.started(REAL), .toCome, .toCome], viewWidth:))`
-  in a `ScrollView`, + `RootView` hook on env `CB_SCREEN`; launch with
-  `SIMCTL_CHILD_CB_SCREEN=x`; screenshot with `simctl io … screenshot`. Delete +
-  `git checkout RootView.swift` before committing.
-- Best: prototype shapes as an HTML/three.js mock first (the user prefers
-  judging HTML mocks before SwiftUI) and let them pick.
-- Mechanics that ARE right and should stay: ribbon RealityView inside the
-  scroll content; orthographic camera, `OrthographicCameraComponent.scale` =
-  HALF extent (`W·k/2`); k = 0.0076; two-sided paper + edge tubes; sway only.
+**How to iterate on a 3D look (worked well in session 3):**
+1. Prototype the shape in a small Python/matplotlib script with the same math
+   and the user's real data (`design/phone-data/real-30d.json`); compare with
+   the user's reference image side by side.
+2. Port to Swift; render in the sim through a temporary `#if DEBUG`
+   `Views/ZZHarness.swift` + a `RootView` hook on env `CB_SCREEN`
+   (`SIMCTL_CHILD_CB_SCREEN=…`); tune lighting values in a loop (template file +
+   `sed` + build + screenshot); crop and zoom screenshots to check edges.
+3. Check the real screen (text overlap), delete the harness,
+   `git checkout RootView.swift`, install on the phone, commit.
+Mechanics to keep: ribbon RealityView inside the scroll content; orthographic
+camera, `OrthographicCameraComponent.scale` = HALF extent (`W·k/2`);
+k = 0.0076; sway only.
 
 ### Other session-2 facts
 - **Star load fix (keep):** the ribbon RealityView is removed while a book is
@@ -129,7 +115,7 @@ the subagent reports summarized in git commit bodies.
 
 ## Session 2 (2026-10-09): 08 + 09 built
 
-See the TL;DR above for the ribbon. Also: `OrthographicCameraComponent.scale`
+The ribbon was finished in session 3 (above). Also: `OrthographicCameraComponent.scale`
 is the HALF extent. History footnote keeps the old wording (2 lines at
 393 pt); list bottom inset 84 so it never overlaps.
 
@@ -185,9 +171,9 @@ code to the library).
   moved to the library (08).
 - Gravité stays behind the `fait :` line; History reached from Gravité's
   `Historique →`.
-- Grayscale only; state by form (solid / outline / dashed). Colour later.
-- Simulator, not device, for now: user tests on the **iPhone 16 (iOS 18.5)**
-  simulator `7C7BA0A7-C367-4CD4-AAE5-462B1F754986`.
+- Grayscale only; state by form (solid / outline / dashed). Colour = next session.
+- The user tests on the **iPhone 18 Pro** (install every accepted change; see
+  "Phone" above). The simulator (`7C7BA0A7-…`) is for screenshots before that.
 
 ## How to run for the user (they asked for this repeatedly)
 
@@ -234,6 +220,8 @@ rAF loops).
   ticker, edge swipe-backs. The user is testing these by hand.
 - Chrome star looks flat mid-grey in the simulator (`intensityExponent` in
   `ObjetStarView`); judge on a real device later.
+- Session 3 changes not yet judged on the phone: star mesh, faster token drop
+  (gravity also affects tilt/throw/Secouer), `25 modules →` tap only.
 - **T9 cleanup** (after 08/09 + fine-tuning): remove dead code —
   `RibbonView` from History once moved, `CaramboleStarMesh` glass/paper slice
   materials left from Tranches, `DesignGalleryView` sanity, any `success`/`error`
