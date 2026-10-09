@@ -113,7 +113,7 @@ struct LibraryView: View {
                 block(book, number: catalogNumber(book))
                     .frame(width: 220, alignment: .leading)
                     .padding(.leading, Spacing.screenH)
-                    .padding(.top, CGFloat(geometry.top(ofStretch: index)) + 34)
+                    .padding(.top, CGFloat(LibraryRibbonGeometry.top(ofStretch: index)) + 34)
             }
 
             Text("Fin de la bibliothèque")

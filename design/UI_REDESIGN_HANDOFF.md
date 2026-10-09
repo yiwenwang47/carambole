@@ -51,13 +51,14 @@ harness, removed). Deviations from the spec below:
   one 2π twist, and days before the book's first activity in the window don't
   twist (`LibraryRibbonGeometry.restRuns`). Per-day twists turned sparse real
   data into a tight coil (dense repeated shape) on the sim.
-- Started book = the old 05 history ribbon's look (user's reference): its
-  stretch is **560 pt** (≈18 pt a day, soft edges) and width is 05's
-  `0.04 + 0.5·v/busiestDay` (busiest day across started books). At 200 pt a
-  stretch, any width formula gave jagged 7 pt wiggles ("creepy" edges) or,
-  with absolute `v/30`, flat discs on real 100+ element days. Books to come
-  stay 200 pt / 0.12 wide.
-- A started book with no activity yet = 0.04 live strip, no twists.
+- **One link per book** (user, emphatic): every book is ONE soft paper blob,
+  200 pt tall (3 books per screen), pinched + one 2π twist at each book
+  boundary, no twists inside a book. A started book's 30 days only shape the
+  link's outline: Gaussian-smoothed (σ 2.5 d), shared scale across books,
+  width = 0.04 + sin(πt)^0.7 · (0.14 + 0.36·profile). Book to come = small
+  faint link (belly 0.12). Rejected on the way: per-day twists (coil),
+  per-pause twists + absolute widths (discs / jagged "creepy" edges), 560 pt
+  stretches (only one book per screen).
 - The ribbon RealityView is REMOVED when a book is pushed (`ribbonLive`), and
   comes back on the shelf's `onAppear`. Left alive under the pushed book it
   delayed the 01 star's first frame by ~5 s on the sim (measured with a

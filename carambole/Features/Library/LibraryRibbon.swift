@@ -3,20 +3,20 @@
 //  carambole
 //
 //  motion.html 08 "Ruban": one twisted paper ribbon running down the whole
-//  shelf, one stretch per book. A started book's stretch is its last
-//  30 days over ≈ 560 pt (width = learned + reviewed on a scale SHARED across books, eased
-//  between days; a rest day = one full 2π twist that flashes the grey back).
-//  A book to come is a narrow, faint strip of tracing paper. A full twist also
-//  marks every boundary between books.
+//  shelf, ONE LINK PER BOOK. Each book is a single soft blob of paper, 200 pt
+//  tall, pinched and given a full 2π twist where it meets the next book (the
+//  old 05 history ribbon's chain-of-links look), so three books fit on a
+//  screen. A started book's last 30 days shape its link's outline (learned +
+//  reviewed, smoothed, on a scale SHARED across books); a book to come is a
+//  small, faint link of tracing paper.
 //
 //  The RealityView is laid out INSIDE the scroll content, as tall as the list,
 //  so the system scroll moves it with the titles (no offset syncing). It uses
 //  an orthographic camera at k = 0.0076 world units per point, so content
 //  points map 1:1 onto the mesh. Only the gentle sway animates.
 //
-//  Geometry mirrors the prototype's `<!-- 08 · library ribbon -->` script:
-//  same spine, width and twist functions. The two-sided paper + edge-tube mesh
-//  construction comes from the earlier 05 history ribbon.
+//  Spine and boundary twist follow the prototype's `<!-- 08 · library ribbon -->`
+//  script; the two-sided paper + edge-tube mesh comes from the 05 ribbon.
 //
 
 import RealityKit
@@ -28,11 +28,11 @@ import UIKit
 /// The library ribbon's shape as pure functions of content-space y (points
 /// from the top of the scroll content).
 struct LibraryRibbonGeometry: Hashable {
-    /// One book's stretch of ribbon.
+    /// One book's link of ribbon.
     enum Stretch: Hashable {
         /// learned + reviewed per day, oldest first (the last 30 days).
         case started([Int])
-        /// A book that isn't open yet: narrow, faint, no days.
+        /// A book that isn't open yet: small, faint, no days.
         case toCome
 
         var isLive: Bool { if case .started = self { return true } else { return false } }
@@ -41,47 +41,42 @@ struct LibraryRibbonGeometry: Hashable {
     let stretches: [Stretch]
     /// Width of the view in points (the phone width).
     let viewWidth: Float
-    /// Busiest single day across all started books (≥ 1): the shared width scale.
-    let busiestDay: Int
+    /// Per stretch: the smoothed 30-day profile, 0…1 against the busiest
+    /// smoothed day across ALL started books (empty for a book to come).
+    let profiles: [[Float]]
 
     init(stretches: [Stretch], viewWidth: Float) {
         self.stretches = stretches
         self.viewWidth = viewWidth
-        self.busiestDay = max(1, stretches.compactMap { s -> Int? in
-            if case let .started(days) = s { return days.max() } else { return nil }
-        }.max() ?? 1)
+        let smoothed = stretches.map { s -> [Float] in
+            if case let .started(days) = s { return Self.smooth(days) } else { return [] }
+        }
+        let peak = max(1e-6, smoothed.flatMap { $0 }.max() ?? 0)
+        self.profiles = smoothed.map { $0.map { $0 / peak } }
     }
 
-    /// First stretch top, stretch length, tail below the last one (points).
+    /// First link top, link length, tail below the last one (points).
     static let start: Float = 236
-    /// Stretch length (points): a started book gets the old 05 history
-    /// ribbon's proportions (30 days over ≈ 560 pt, ≈ 18 pt a day) so its
-    /// edges stay soft; a book to come is a short 200 pt strip.
-    static let startedStep: Float = 560
-    static let toComeStep: Float = 200
+    static let step: Float = 200
     static let tail: Float = 110
     /// World units per point (orthographic).
     static let k: Float = 0.0076
-    /// Started-book minimum width and book-to-come width (world units).
-    static let toComeWidth: Float = 0.12
     /// Mesh samples per point of spine.
     static let samplesPerPoint: Float = 1 / 1.2
+    /// Link widths (world units): pinch at the ends, started belly 0.18…0.54
+    /// (≈ 24…71 pt, 05's range), book-to-come belly 0.16.
+    static let pinch: Float = 0.04
+    static let startedBase: Float = 0.14
+    static let startedGain: Float = 0.36
+    static let toComeBelly: Float = 0.12
 
     /// Content height the ribbon (and the shelf) occupy.
-    var contentHeight: Float { top(ofStretch: stretches.count) + Self.tail }
+    var contentHeight: Float { Self.top(ofStretch: stretches.count) + Self.tail }
     /// Ribbon axis x: 268 of the prototype's 360, kept as a right margin.
     var axisX: Float { viewWidth - 92 }
 
-    /// Top y of stretch `i` (points).
-    /// Length of stretch `i` (points).
-    func length(ofStretch i: Int) -> Float {
-        stretches[i].isLive ? Self.startedStep : Self.toComeStep
-    }
-
-    /// Top y of stretch `i` (points); `i == count` is the end of the ribbon.
-    func top(ofStretch i: Int) -> Float {
-        Self.start + (0..<min(i, stretches.count)).reduce(0) { $0 + length(ofStretch: $1) }
-    }
+    /// Top y of link `i` (points); `i == count` is the end of the ribbon.
+    static func top(ofStretch i: Int) -> Float { start + Float(i) * step }
 
     // MARK: Point → world
 
@@ -97,12 +92,8 @@ struct LibraryRibbonGeometry: Hashable {
     }
 
     private func stretchIndex(at py: Float) -> Int {
-        var end = Self.start
-        for i in stretches.indices {
-            end += length(ofStretch: i)
-            if py < end { return i }
-        }
-        return max(0, stretches.count - 1)
+        let i = Int(((py - Self.start) / Self.step).rounded(.down))
+        return min(stretches.count - 1, max(0, i))
     }
 
     private static func ease(_ x: Float) -> Float {
@@ -110,58 +101,50 @@ struct LibraryRibbonGeometry: Hashable {
         return x * x * (3 - 2 * x)
     }
 
-    /// Ribbon width (world units): 0.04 + 0.5 · v / busiestDay — the old 05
-    /// history ribbon's formula, one scale shared by all started books.
-    func width(at py: Float) -> Float {
-        guard !stretches.isEmpty else { return Self.toComeWidth }
-        let b = stretchIndex(at: py)
-        guard case let .started(days) = stretches[b], !days.isEmpty else { return Self.toComeWidth }
-        let n = days.count
-        let d = (py - top(ofStretch: b)) / length(ofStretch: b) * Float(n - 1)
-        let i = max(0, min(n - 1, Int(d.rounded(.down))))
-        let j = min(n - 1, i + 1)
-        let e = Self.ease(d - Float(i))
-        let v = Float(days[i]) * (1 - e) + Float(days[j]) * e
-        return 0.04 + 0.5 * v / Float(busiestDay)
+    /// Gaussian smoothing (σ = 2.5 days) so a link's outline stays soft.
+    static func smooth(_ days: [Int]) -> [Float] {
+        let sigma: Float = 2.5
+        return days.indices.map { i in
+            var sum: Float = 0, weight: Float = 0
+            for (j, v) in days.enumerated() {
+                let w = exp(-Float((i - j) * (i - j)) / (2 * sigma * sigma))
+                sum += w * Float(v)
+                weight += w
+            }
+            return sum / weight
+        }
     }
 
-    /// Accumulated twist: a full 2π at every book boundary, and one per PAUSE
-    /// inside a started book (centres clamped so an end pause's twist
-    /// completes). A pause = a run of consecutive rest days (`restRuns`), so
-    /// sparse activity never coils the strip into dozens of tight twists.
+    /// Link envelope: 0 at both ends of a book (the pinch), 1 mid-link.
+    static func envelope(_ t: Float) -> Float {
+        pow(max(0, sin(.pi * min(1, max(0, t)))), 0.7)
+    }
+
+    /// Ribbon width (world units): pinch + envelope · belly, where a started
+    /// book's belly follows its smoothed days (base + gain · profile).
+    func width(at py: Float) -> Float {
+        guard !stretches.isEmpty else { return Self.pinch }
+        let b = stretchIndex(at: py)
+        let t = (py - Self.top(ofStretch: b)) / Self.step
+        let env = Self.envelope(t)
+        let profile = profiles[b]
+        guard !profile.isEmpty else { return Self.pinch + env * Self.toComeBelly }
+        let d = min(1, max(0, t)) * Float(profile.count - 1)
+        let i = min(profile.count - 1, Int(d.rounded(.down)))
+        let j = min(profile.count - 1, i + 1)
+        let e = Self.ease(d - Float(i))
+        let v = profile[i] * (1 - e) + profile[j] * e
+        return Self.pinch + env * (Self.startedBase + Self.startedGain * v)
+    }
+
+    /// Accumulated twist: one full 2π at every boundary between books, centred
+    /// on the pinch. No twists inside a link.
     func twist(at py: Float) -> Float {
         var th: Float = 0
-        for (bi, stretch) in stretches.enumerated() {
-            let s0 = top(ofStretch: bi)
-            let len = length(ofStretch: bi)
-            if bi > 0 { th += 2 * .pi * Self.ease((py - s0 + 22) / 44) }
-            guard case let .started(days) = stretch else { continue }
-            let span = Float(max(1, days.count - 1))
-            for centre in Self.restRuns(days) {
-                let c = s0 + min(span - 0.5, max(0.5, centre)) / span * len
-                th += 2 * .pi * Self.ease((py - c) / (len / span) + 0.5)
-            }
+        for bi in 1..<max(1, stretches.count) {
+            th += 2 * .pi * Self.ease((py - Self.top(ofStretch: bi) + 22) / 44)
         }
         return th
-    }
-
-    /// Centre day index of each pause: a run of consecutive rest days after
-    /// the book's first active day in the window (days before it aren't
-    /// pauses — the book wasn't started yet). Pure.
-    static func restRuns(_ days: [Int]) -> [Float] {
-        guard let first = days.firstIndex(where: { $0 > 0 }) else { return [] }
-        var centres: [Float] = []
-        var runStart: Int?
-        for i in first..<days.count {
-            if days[i] == 0 {
-                if runStart == nil { runStart = i }
-            } else if let r = runStart {
-                centres.append(Float(r + i - 1) / 2)
-                runStart = nil
-            }
-        }
-        if let r = runStart { centres.append(Float(r + days.count - 1) / 2) }
-        return centres
     }
 
     /// One sample along the ribbon: centre, unit width direction, unit
@@ -187,11 +170,11 @@ struct LibraryRibbonGeometry: Hashable {
         return Sample(p: p, w: w, n: n, half: width(at: py) / 2)
     }
 
-    /// Samples for stretch `i` (overlapping the next stretch by 1 pt so the
-    /// seam never opens).
+    /// Samples for link `i` (overlapping the next link by 1 pt so the seam
+    /// never opens).
     func samples(forStretch i: Int) -> [Sample] {
-        let a = top(ofStretch: i)
-        let b = a + length(ofStretch: i) + (i < stretches.count - 1 ? 1 : 0)
+        let a = Self.top(ofStretch: i)
+        let b = a + Self.step + (i < stretches.count - 1 ? 1 : 0)
         let count = max(2, Int(((b - a) * Self.samplesPerPoint).rounded()))
         return (0...count).map { sample(a + (b - a) * Float($0) / Float(count)) }
     }
@@ -350,25 +333,23 @@ struct LibraryRibbonScene: View {
 #if DEBUG
 extension LibraryRibbonGeometry {
     static func _selfTest() {
-        let rest = [5, 0, 7] + Array(repeating: 6, count: 27)
-        let g = LibraryRibbonGeometry(stretches: [.started(rest), .started(Array(repeating: 0, count: 30)), .toCome],
+        let busy = [5, 0, 7] + Array(repeating: 6, count: 27)
+        let g = LibraryRibbonGeometry(stretches: [.started(busy), .started(Array(repeating: 0, count: 30)), .toCome],
                                       viewWidth: 360)
-        assert(g.top(ofStretch: 1) == 236 + 560 && g.top(ofStretch: 2) == 236 + 1120, "started stretches are 560 pt")
-        assert(g.contentHeight == 236 + 560 * 2 + 200 + 110, "content height = start + lengths + tail")
+        assert(g.contentHeight == 236 + 3 * 200 + 110, "one 200 pt link per book")
         assert(abs(g.wx(g.axisX) - (268 - 180) * k) < 1e-5, "axis at 268 of 360")
-        // Width: 05 formula relative to the busiest day across started books (7 here).
-        assert(g.busiestDay == 7, "busiest day = 7")
-        assert(abs(g.width(at: g.top(ofStretch: 0)) - (0.04 + 0.5 * 5 / 7)) < 1e-4, "first day width")
-        assert(abs(g.width(at: g.top(ofStretch: 1) + 100) - 0.04) < 1e-5, "idle started book = 0.04")
-        assert(abs(g.width(at: g.top(ofStretch: 2) + 100) - toComeWidth) < 1e-5, "book to come")
-        // Twist: one rest day (2π) inside book 0, plus 2π per boundary, none for the idle book.
-        let end = g.twist(at: g.contentHeight)
-        assert(abs(end - 3 * 2 * .pi) < 1e-3, "1 rest + 2 boundaries = 6π, got \(end)")
-        assert(abs(g.twist(at: g.top(ofStretch: 0))) < 1e-3, "no twist at the start")
-        // Pauses: leading rest days aren't pauses; a run of rest days is one pause.
-        assert(restRuns([0, 0, 3, 0, 0, 0, 4, 0, 5]) == [4, 7], "runs centred at 4 and 7")
-        assert(restRuns([2, 0, 0]) == [1.5], "trailing run counts")
-        assert(restRuns([0, 0, 0]).isEmpty, "never-started book has no pauses")
+        // Links pinch at every book boundary and bulge mid-book.
+        for i in 0...3 {
+            assert(abs(g.width(at: top(ofStretch: i) + (i == 3 ? -1e-3 : 0)) - pinch) < 1e-3, "pinch at boundary \(i)")
+        }
+        assert(g.width(at: top(ofStretch: 0) + 100) > 0.4, "busy book bulges")
+        assert(abs(g.width(at: top(ofStretch: 1) + 100) - (pinch + startedBase)) < 1e-4, "idle book = base belly")
+        assert(abs(g.width(at: top(ofStretch: 2) + 100) - (pinch + toComeBelly)) < 1e-4, "book to come belly")
+        // Profiles share one scale: the busiest smoothed day is 1.
+        assert(abs((g.profiles.flatMap { $0 }.max() ?? 0) - 1) < 1e-5, "shared scale peaks at 1")
+        // Twists: exactly one per boundary, none inside a link.
+        assert(abs(g.twist(at: g.contentHeight) - 2 * 2 * .pi) < 1e-3, "2 boundaries = 4π")
+        assert(abs(g.twist(at: top(ofStretch: 1) - 30)) < 1e-3, "no twist inside the first link")
     }
 }
 #endif
