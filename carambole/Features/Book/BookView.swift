@@ -18,7 +18,8 @@
 //                                     Tour · 20
 //          Glisser vers le haut · 25 modules
 //
-//  Swipe up (or tap the bottom line) opens the 06 Tranches table of contents.
+//  Swipe up (or tap the bottom line) opens the module list (`ModuleListView`);
+//  a row there opens the module's 02 Cinétique page.
 //  Positions are motion.html's 360×760 px read as points: the top block hangs
 //  from the safe area (prototype status bar = 50 px), the bottom block from the
 //  screen bottom.
@@ -46,7 +47,7 @@ struct BookView: View {
 
     @State private var session: ElementSession?
     @State private var showingSettings = false
-    @State private var showingTranches = false
+    @State private var showingModules = false
     @State private var star = ObjetStarController()
     @State private var lastDrag: CGSize = .zero
     @State private var revealed = false
@@ -88,10 +89,8 @@ struct BookView: View {
                 session = nil
             }
         }
-        .fullScreenCover(isPresented: $showingTranches, onDismiss: { viewModel.refresh() }) {
-            NavigationStack {
-                SliceStackView(viewModel: viewModel)
-            }
+        .navigationDestination(isPresented: $showingModules) {
+            ModuleListView(viewModel: viewModel)
         }
         .sheet(isPresented: $showingSettings, onDismiss: { viewModel.refresh() }) {
             SettingsView(store: viewModel.settingsStore)
@@ -276,7 +275,7 @@ struct BookView: View {
             .padding(.top, 15)
             .frame(height: 100 + 15, alignment: .top)
 
-            Button { openTranches() } label: {
+            Button { openModules() } label: {
                 Text("Glisser vers le haut · \(viewModel.book.modules.count) modules")
                     .uppercaseLabel()
                     .frame(maxWidth: .infinity)
@@ -302,16 +301,16 @@ struct BookView: View {
                                  elements: viewModel.reviewSessionElements(), mode: .review)
     }
 
-    private func openTranches() {
+    private func openModules() {
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
-        showingTranches = true
+        showingModules = true
     }
 
-    // MARK: - Gesture: turn the star · swipe up → Tranches · edge swipe → back
+    // MARK: - Gesture: turn the star · swipe up → modules · edge swipe → back
 
     /// One drag for the whole screen. From the left edge, a rightward swipe goes
     /// back to the library (iOS back-swipe direction). A vertical upward flick —
-    /// or any upward swipe that starts below the divider — opens Tranches.
+    /// or any upward swipe that starts below the divider — opens the module list.
     /// Anything else turns the star.
     private func dragGesture(height: CGFloat, safeTop: CGFloat) -> some Gesture {
         DragGesture(minimumDistance: 6, coordinateSpace: .global)
@@ -334,7 +333,7 @@ struct BookView: View {
                 let fromBottom = v.startLocation.y > height - 170
                 let flick = -v.predictedEndTranslation.height > 260
                 if vertical, up > 40, fromBottom || (up > 70 && flick) {
-                    openTranches()
+                    openModules()
                 }
             }
     }

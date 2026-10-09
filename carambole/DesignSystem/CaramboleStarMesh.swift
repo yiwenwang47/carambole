@@ -2,8 +2,8 @@
 //  CaramboleStarMesh.swift
 //  carambole
 //
-//  RealityKit building blocks shared by the 01 Objet book home (one chunky chrome
-//  star) and the 06 Tranches table of contents (25 thin star slices): the logo
+//  RealityKit building blocks for the 01 Objet book home (one chunky chrome
+//  star): the logo
 //  geometry as an extrusion path, the extruded meshes, hand-built torus-arc and
 //  tube meshes, the chrome / paper / glass materials and a procedural neutral
 //  "studio" environment for image-based lighting (a stand-in for three.js'
@@ -24,8 +24,6 @@ import UIKit
 enum CaramboleStarMesh {
     /// 01 valley radius: r/R = 17/42, opened by 1.25 as in motion.html's 01 script.
     static let objetValley: CGFloat = 17.0 / 42.0 * 1.25
-    /// 06 slice valley radius (motion.html 06 script).
-    static let sliceValley: CGFloat = 0.5
 
     /// Unit-tip star outline, y-up, centred on the origin, tip 0 straight up.
     static func path(valley: CGFloat, scale: CGFloat = 1) -> Path {
@@ -77,15 +75,6 @@ enum CaramboleStarMesh {
         o.boundaryResolution = .uniformSegmentsPerSpan(segmentCount: 48)
         o.chamferResolution = .uniformSegmentsPerSpan(segmentCount: 10)
         return try MeshResource(extruding: path(valley: objetValley, scale: 1.08), extrusionOptions: o)
-    }
-
-    /// 06 slice: a thin unbevelled extrusion (depth .055).
-    @MainActor
-    static func sliceMesh() throws -> MeshResource {
-        var o = MeshResource.ShapeExtrusionOptions()
-        o.extrusionMethod = .linear(depth: 0.055)
-        o.boundaryResolution = .uniformSegmentsPerSpan(segmentCount: 40)
-        return try MeshResource(extruding: path(valley: sliceValley), extrusionOptions: o)
     }
 
     /// Wraps `mesh` so its bounding box is centred on the returned entity's origin

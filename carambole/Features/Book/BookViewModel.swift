@@ -225,12 +225,6 @@ final class BookViewModel: ObservableObject {
         module.elements.filter { satisfiedIDs.contains($0.id) }.count
     }
 
-    /// Elements of `module` ever introduced (en cours or better). Read-only; drives
-    /// the 06 Tranches "en cours" vs "à venir" slice form.
-    func seenCount(in module: CourseModule) -> Int {
-        module.elements.filter { seenIDs.contains($0.id) }.count
-    }
-
     func isUnlocked(_ module: CourseModule) -> Bool {
         unlockedIDs.contains(module.id)
     }
