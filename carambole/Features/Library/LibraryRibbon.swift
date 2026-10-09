@@ -10,7 +10,7 @@
 //  near-constant belly whose two edges wobble independently (seeded per book),
 //  like hand-cut paper. A started book's belly grows with its 30-day total
 //  (scale SHARED across books) and its last 30 days tint the outline gently
-//  (±12 %, never jagged); a book to come is a slimmer link of tracing paper.
+//  (±12 %, never jagged); a book to come is a slimmer, paler link with grey edges.
 //
 //  The RealityView is laid out INSIDE the scroll content, as tall as the list,
 //  so the system scroll moves it with the titles (no offset syncing). It uses
@@ -86,8 +86,16 @@ struct LibraryRibbonGeometry: Hashable {
     /// flat neck (points) either side of a boundary where the paper twists.
     static let shoulder: Float = 0.2
     static let neck: Float = 9
-    /// Half-length (points) of the 2π twist at a boundary.
-    static let twistHalf: Float = 18
+    /// Half-length (points) of the 2π twist at a boundary: long enough that
+    /// the paper starts turning on the shoulders and catches grey light there.
+    static let twistHalf: Float = 28
+    /// Roll (radians) inside a link, so links tilt toward or away from the key.
+    static let roll: Float = 0.55
+    /// Cross-width curl: the paper bows by `curl · half` mid-width, so light
+    /// grades from edge to edge instead of shading one flat colour.
+    static let curl: Float = 0.2
+    /// Mesh columns across the width (curl needs more than the 2 edges).
+    static let columns = 10
 
     /// Content height the ribbon (and the shelf) occupy.
     var contentHeight: Float { Self.top(ofStretch: stretches.count) + Self.tail }
@@ -189,10 +197,10 @@ struct LibraryRibbonGeometry: Hashable {
     }
 
     /// Accumulated twist: one full 2π at every boundary between books, centred
-    /// on the pinch, plus a gentle ±0.35 rad roll so the paper catches the
-    /// light unevenly inside a link.
+    /// on the pinch, plus a ±`roll` rad roll so the paper catches the light
+    /// unevenly inside a link.
     func twist(at py: Float) -> Float {
-        var th = 0.35 * sin((py - Self.start) / 95)
+        var th = Self.roll * sin((py - Self.start) / 110 + 0.7)
         for bi in 1..<max(1, stretches.count) {
             th += 2 * .pi * Self.ease((py - Self.top(ofStretch: bi) + Self.twistHalf) / (2 * Self.twistHalf))
         }
@@ -233,24 +241,32 @@ struct LibraryRibbonGeometry: Hashable {
 
     // MARK: Meshes
 
-    /// The paper strip, one side. `front` = white side (normals +n, CCW seen
-    /// from +n); the back is the same strip with flipped winding + normals.
+    /// The paper strip, one side, `columns` wide and bowed by `curl` across
+    /// its width (normals follow the bow). `front` = white side (normals +n,
+    /// CCW seen from +n); the back is the same strip with flipped winding +
+    /// normals.
     static func paperMesh(_ samples: [Sample], front: Bool) throws -> MeshResource {
+        let cols = columns
         var positions: [SIMD3<Float>] = []
         var normals: [SIMD3<Float>] = []
-        positions.reserveCapacity(samples.count * 2)
-        normals.reserveCapacity(samples.count * 2)
+        positions.reserveCapacity(samples.count * (cols + 1))
+        normals.reserveCapacity(samples.count * (cols + 1))
         for sm in samples {
-            let n = front ? sm.n : -sm.n
-            positions.append(sm.p + sm.w * sm.half)
-            positions.append(sm.p - sm.w * sm.half)
-            normals.append(n); normals.append(n)
+            for c in 0...cols {
+                let s = 1 - 2 * Float(c) / Float(cols)  // +1 … -1 across the width
+                positions.append(sm.p + sm.w * (s * sm.half) + sm.n * (curl * sm.half * (1 - s * s)))
+                let n = simd_normalize(sm.n + sm.w * (2 * curl * s))
+                normals.append(front ? n : -n)
+            }
         }
+        let stride = UInt32(cols + 1)
         var indices: [UInt32] = []
-        indices.reserveCapacity((samples.count - 1) * 6)
-        for i in 0..<(samples.count - 1) {
-            let a0 = UInt32(i * 2), b0 = a0 + 1, a1 = a0 + 2, b1 = a0 + 3
-            indices += front ? [a0, a1, b0, b0, a1, b1] : [a0, b0, a1, b0, b1, a1]
+        indices.reserveCapacity((samples.count - 1) * cols * 6)
+        for i in 0..<UInt32(samples.count - 1) {
+            for c in 0..<UInt32(cols) {
+                let a0 = i * stride + c, b0 = a0 + 1, a1 = a0 + stride, b1 = a1 + 1
+                indices += front ? [a0, a1, b0, b0, a1, b1] : [a0, b0, a1, b0, b1, a1]
+            }
         }
         var desc = MeshDescriptor(name: front ? "shelfRibbonFront" : "shelfRibbonBack")
         desc.positions = MeshBuffers.Positions(positions)
@@ -260,7 +276,7 @@ struct LibraryRibbonGeometry: Hashable {
     }
 
     /// The two edge lines (prototype `THREE.Line`s) as thin square tubes.
-    static func edgeMesh(_ samples: [Sample], radius r: Float = 0.004) throws -> MeshResource {
+    static func edgeMesh(_ samples: [Sample], radius r: Float = 0.0025) throws -> MeshResource {
         var positions: [SIMD3<Float>] = []
         var indices: [UInt32] = []
         for side: Float in [1, -1] {
@@ -326,11 +342,19 @@ struct LibraryRibbonScene: View {
             camera.position = [0, 0, 10]
             content.add(camera)
 
-            // Key light (prototype DirectionalLight at (-2, 4, 5)).
+            // Key light (prototype DirectionalLight at (-2, 4, 5)), soft enough that
+            // white paper facing the camera stays just under full white.
             let key = DirectionalLight()
-            key.light.intensity = 2600
+            key.light.intensity = 650
             key.look(at: .zero, from: [-2, 4, 5], relativeTo: nil)
             content.add(key)
+
+            // Soft fill from below-front (stands in for the prototype's
+            // hemisphere ground colour) so turned paper greys, never blacks.
+            let fill = DirectionalLight()
+            fill.light.intensity = 250
+            fill.look(at: .zero, from: [1, -3, 4], relativeTo: nil)
+            content.add(fill)
 
             // Sway about the ribbon's own axis: pivot at the axis, group offset back.
             let pivot = Entity()
@@ -362,20 +386,22 @@ struct LibraryRibbonScene: View {
         }
     }
 
-    /// Two-sided paper: white front, grey (g2) back. Books to come are tracing
-    /// paper (front 0.6, back 0.35 opacity). Faint self-light stands in for the
-    /// prototype's hemisphere fill so shadowed folds stay paper, not black.
+    /// Two-sided paper: white front, grey back, lit by a soft key + fill so it
+    /// shades like the 05 ribbon. A little self-light keeps shadowed folds
+    /// paper, not black; books to come get more of it, so they read paler.
     private static func paper(white: Bool, live: Bool) -> PhysicallyBasedMaterial {
         var m = PhysicallyBasedMaterial()
-        let base = white ? UIColor.white : UIColor(AppColor.g2)
+        // Back = the 05 prototype's 0x8d8d8a paper grey.
+        let base = white ? UIColor.white : UIColor(red: 0x8d / 255, green: 0x8d / 255, blue: 0x8a / 255, alpha: 1)
         m.baseColor = .init(tint: base)
         m.roughness = .init(floatLiteral: white ? 0.6 : 0.7)
         m.metallic = .init(floatLiteral: 0)
+        m.specular = .init(floatLiteral: 0.1)
         m.emissiveColor = .init(color: base)
-        m.emissiveIntensity = white ? 0.45 : 0.35
-        if !live {
-            m.blending = .transparent(opacity: .init(floatLiteral: white ? 0.6 : 0.35))
-        }
+        // Books to come: same paper, lit more by itself, so their shading
+        // (and grey back) is fainter. Opaque on purpose: RealityKit's
+        // transparent blending flattened the lighting to plain white.
+        m.emissiveIntensity = live ? 0.15 : 0.35
         return m
     }
 }
@@ -406,9 +432,9 @@ extension LibraryRibbonGeometry {
         assert(g.bellies[0] > g.bellies[1] && g.bellies[1] > g.bellies[2], "belly order")
         assert(abs(g.bellies[0] - (startedBase + startedGain)) < 1e-5, "busiest book = full belly")
         // Twists: exactly one per boundary (the roll is tiny, never a turn).
-        let end = g.twist(at: g.contentHeight) - 0.35 * sin((g.contentHeight - start) / 95)
+        let end = g.twist(at: g.contentHeight) - roll * sin((g.contentHeight - start) / 110 + 0.7)
         assert(abs(end - 2 * 2 * .pi) < 1e-3, "2 boundaries = 4π")
-        assert(abs(g.twist(at: top(ofStretch: 1) - 30)) < 0.36, "no turn inside the first link")
+        assert(abs(g.twist(at: top(ofStretch: 1) - twistHalf - 1)) <= roll + 1e-4, "no turn inside the first link")
     }
 }
 #endif
