@@ -99,6 +99,22 @@ private struct OrbitRing {
         return (CGPoint(x: size.width / 2 + Double(p.x) * s, y: size.height / 2 - Double(p.y) * s), s)
     }
 
+    /// One sample of a tube on screen, with the ring's direction there.
+    private struct TubePoint {
+        let point: CGPoint
+        let width: Double
+        let z: Float
+        let dir: CGVector
+    }
+
+    /// The two ring angles where the ring passes through z = 0 (the star's
+    /// plane), i.e. where it goes behind or in front of the star.
+    private var crossings: [Float] {
+        let a = orientation.act([1, 0, 0]).z, b = orientation.act([0, 1, 0]).z
+        let u0 = atan2(-a, b)
+        return [u0, u0 + .pi]
+    }
+
     /// World position of ring angle `u` (radians, local to the ring).
     private func ringPoint(_ u: Float) -> SIMD3<Float> {
         let local = SIMD3<Float>(G.ringRadius * cos(u), G.ringRadius * sin(u), 0)
@@ -115,8 +131,12 @@ private struct OrbitRing {
         let m = min(max(mastered, 0), 1), p = min(max(inProgress, 0), 1 - m)
         let top = Float.pi / 2
         let sweep = 2 * Float.pi * Float(m)
+        // The track's front overlap at a crossing is shorter than the arcs',
+        // so its seam edge sits inside the arc above, not on the arc's own
+        // seam edge (two stacked antialiased edges let the pale track leak
+        // through as a hairline).
         tube(&tubeContext, from: 0, sweep: 2 * .pi, radius: G.trackTube, color: Color(hex: theme.starTrack),
-             gloss: false, front: front)
+             gloss: false, front: front, seamPad: 0.01)
         if p > 0.002 {
             tube(&tubeContext, from: top + sweep, sweep: 2 * .pi * Float(p), radius: G.enCoursTube,
                  color: Color(hex: theme.starArcSoft), gloss: false, front: front)
@@ -146,41 +166,62 @@ private struct OrbitRing {
     /// single filled band whose width follows perspective, so it reads as one
     /// smooth tube; the arc's true ends get round caps.
     private func tube(_ ctx: inout GraphicsContext, from start: Float, sweep: Float, radius: Float,
-                      color: Color, gloss: Bool, front: Bool) {
-        let steps = max(8, Int(180 * sweep / (2 * .pi)))
-        let points = (0...steps).map { i -> (point: CGPoint, width: Double, z: Float) in
-            let w = ringPoint(start + sweep * Float(i) / Float(steps))
+                      color: Color, gloss: Bool, front: Bool, seamPad: Float = 0.02) {
+        let grid = max(8, Int(180 * sweep / (2 * .pi)))
+        // Samples: an even grid plus the exact angles where the ring crosses
+        // z = 0, so every tube (track, en cours, maîtrisé) splits front from
+        // back on the same line. Cut at their own nearest grid step, a lower
+        // tube's front piece started early and showed through the one above.
+        // Each crossing also gets samples exactly `seamPad` either side (grid
+        // samples in between dropped): the one-step front overlap below.
+        let cuts = crossings.flatMap { c in (-2...2).map { c + Float($0) * 2 * .pi } }
+        var angles = (0...grid).map { start + sweep * Float($0) / Float(grid) }
+            .filter { u in cuts.allSatisfy { abs(u - $0) >= seamPad } || u == start || u == start + sweep }
+        for c in cuts {
+            for u in [c - seamPad, c, c + seamPad] where u > start + 1e-4 && u < start + sweep - 1e-4 {
+                angles.append(u)
+            }
+        }
+        angles.sort()
+        let steps = angles.count - 1
+        let points = angles.map { u -> TubePoint in
+            let w = ringPoint(u)
             let pr = project(w)
-            return (pr.point, Double(radius) * 2 * pr.scale, w.z)
+            let a = project(ringPoint(u - 1e-3)).point, b = project(ringPoint(u + 1e-3)).point
+            let len = max(hypot(b.x - a.x, b.y - a.y), 1e-9)
+            return TubePoint(point: pr.point, width: Double(radius) * 2 * pr.scale, z: w.z,
+                             dir: CGVector(dx: (b.x - a.x) / len, dy: (b.y - a.y) / len))
         }
         let closed = sweep >= 2 * .pi - 1e-4
-        var run: [(point: CGPoint, width: Double, z: Float)] = []
-        func flush() {
-            guard run.count >= 2 else { run = []; return }
-            ctx.fill(band(run, offset: 0, scale: 1), with: .color(color))
+        /// Point index `j`, wrapped round a closed ring, clamped on an arc.
+        func at(_ j: Int) -> Int { closed ? (j % steps + steps) % steps : min(steps, max(0, j)) }
+        /// Points `lo…hi`, padded by one step past each end (clamped on an
+        /// arc), wrapped round a closed ring.
+        func padded(_ lo: Int, _ hi: Int) -> [Int] {
+            (closed ? Array(lo - 1...hi + 1) : Array(max(0, lo - 1)...min(steps, hi + 1))).map(at)
+        }
+        /// Draws the points `lo…hi` this side owns. At a crossing the front
+        /// piece, body and gloss, runs one step over the back piece (the
+        /// ring's sides are clear of the star), so the halves meet as an edge
+        /// over matching paint: no gap, and the gloss is never doubled.
+        func flush(_ lo: Int, _ hi: Int) {
+            let run = front ? padded(lo, hi) : Array(lo...hi).map(at)
+            ctx.fill(band(run, points, offset: 0, scale: 1), with: .color(color))
             if gloss {
                 // Lacquer: a soft lighter streak along the upper edge.
-                ctx.fill(band(run, offset: -0.16, scale: 0.45), with: .color(.white.opacity(0.09)))
+                ctx.fill(band(run, points, offset: -0.16, scale: 0.45), with: .color(.white.opacity(0.09)))
             }
-            run = []
         }
-        // Runs overlap the other side by one step, so the halves meet without
-        // a seam (the overlap sits outside the star, where both halves agree).
+        var lo: Int?
         for i in 0..<steps {
-            let a = points[i], b = points[i + 1]
-            if ((a.z + b.z) / 2 >= 0) == front {
-                if run.isEmpty {
-                    if i > 0 { run.append(points[i - 1]) } else if closed { run.append(points[steps - 1]) }
-                    run.append(a)
-                }
-                run.append(b)
-            } else if !run.isEmpty {
-                run.append(b)
-                flush()
+            if ((points[i].z + points[i + 1].z) / 2 >= 0) == front {
+                if lo == nil { lo = i }
+            } else if let l = lo {
+                flush(l, i)
+                lo = nil
             }
         }
-        if closed, !run.isEmpty { run.append(points[1]) }
-        flush()
+        if let l = lo { flush(l, steps) }
         if !closed {
             for end in [points[0], points[steps]] where (end.z >= 0) == front {
                 let r = end.width / 2
@@ -190,17 +231,23 @@ private struct OrbitRing {
         }
     }
 
-    /// A filled band along `run`: half-width `scale · width / 2` either side of
-    /// the centre line, shifted by `offset · width` in screen y.
-    private func band(_ run: [(point: CGPoint, width: Double, z: Float)], offset: Double, scale: Double) -> Path {
+    /// A filled band through the point indices `run`: half-width
+    /// `scale · width / 2` either side of the centre line, shifted toward
+    /// screen up by up to `offset · width` (see below). Each point carries the
+    /// ring's exact tangent, so two bands that share an end point cut it
+    /// along the same line and meet edge to edge.
+    private func band(_ run: [Int], _ points: [TubePoint], offset: Double, scale: Double) -> Path {
         var left: [CGPoint] = [], right: [CGPoint] = []
-        for i in run.indices {
-            let prev = run[max(0, i - 1)].point, next = run[min(run.count - 1, i + 1)].point
-            var dx = next.x - prev.x, dy = next.y - prev.y
-            let len = max(hypot(dx, dy), 1e-6)
-            dx /= len; dy /= len
-            let h = run[i].width * scale / 2
-            let c = CGPoint(x: run[i].point.x, y: run[i].point.y + offset * run[i].width)
+        for j in run {
+            let p = points[j]
+            let dx = p.dir.dx, dy = p.dir.dy
+            let h = p.width * scale / 2
+            // Shift across the tube by the part of `offset · width` (screen y)
+            // that lies across it: full on a flat stretch, none where the tube
+            // runs vertical. A plain y shift slid along a vertical tube and
+            // folded the streak over itself at the ring's sides.
+            let across = offset * p.width * dx
+            let c = CGPoint(x: p.point.x - dy * across, y: p.point.y + dx * across)
             left.append(CGPoint(x: c.x - dy * h, y: c.y + dx * h))
             right.append(CGPoint(x: c.x + dy * h, y: c.y - dx * h))
         }
