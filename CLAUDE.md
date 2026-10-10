@@ -8,6 +8,10 @@
 > sideways drag never cancels a row `Button` in a vertical ScrollView). Fix:
 > `SwipeBackGuard` in `Core/SwipeBackModifier.swift`; pass it via
 > `swipeToGoBack(guard:)` on any swipe-back screen with tappable rows.
+> Also: a fast back-swipe held the star still for a moment on the phone (the
+> paused AVPlayer restarting; the sim never showed it). Fix: `StarLoopPlayers.release`
+> prerolls the player after pausing, so `play()` on pop moves at once. User OK'd
+> on phone. Not yet guarded: Today rows, colour options, module-detail buttons.
 >
 > **▶ SIM HARNESS + INDICE TRAY + STAR BOB — DONE (2026-10-10).** READ
 > **`tools/sim/README.md`** before any visual check: `tools/sim/sim.sh`
