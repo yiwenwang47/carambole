@@ -24,6 +24,7 @@ struct TokenBuilderView: View {
     var lockedCount: Int = 0
     var retryTrigger: Int = 0
     var retryNote: String? = nil
+    var explainOnMiss = false
 
     /// Bank indices consumed into the answer, in placement order. Indices (not
     /// values) so duplicate tokens in the bank map to exactly one tile each.
@@ -37,7 +38,8 @@ struct TokenBuilderView: View {
     var body: some View {
         MagnetBoard(bank: bank, placed: $placedIndices, isLocked: isLocked,
                     result: result, answerTokens: exercise.answerTokens,
-                    lockedCount: lockedCount, retryTrigger: retryTrigger, retryNote: retryNote)
+                    lockedCount: lockedCount, retryTrigger: retryTrigger, retryNote: retryNote,
+                    explainOnMiss: explainOnMiss ? exercise : nil)
             .onChange(of: placedIndices) { _, new in
                 answer = new.map { bank[$0] }
             }

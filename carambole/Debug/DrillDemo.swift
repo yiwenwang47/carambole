@@ -28,6 +28,16 @@ enum DrillDemo {
     private static var env: [String: String] { ProcessInfo.processInfo.environment }
 
     static let testBookBundleID = "wen.carambole.testbook"
+    static var isTestBook: Bool {
+        env["CB_TEST_BOOK"] == "1" || Bundle.main.bundleIdentifier == testBookBundleID
+    }
+
+    /// Prototype items stored in the app's own `Exercise` shape.
+    static func bundled(_ name: String) -> [Exercise] {
+        guard let url = Bundle.main.url(forResource: name, withExtension: "json"),
+              let data = try? Data(contentsOf: url) else { return [] }
+        return (try? JSONDecoder().decode([Exercise].self, from: data)) ?? []
+    }
 
     static var placeCount: Int { Int(env["CB_DRILL_PLACE"] ?? "") ?? 0 }
     static var hintOpen: Bool { env["CB_DRILL_HINT_OPEN"] == "1" }
@@ -41,7 +51,7 @@ enum DrillDemo {
     /// normal library.
     @MainActor
     static func rootView() -> AnyView? {
-        if env["CB_TEST_BOOK"] == "1" || Bundle.main.bundleIdentifier == testBookBundleID {
+        if isTestBook {
             return AnyView(TestBookView())
         }
         guard env["CB_DRILL_DEMO"] != nil, let session = makeSession(testBook: false) else { return nil }
@@ -123,13 +133,15 @@ enum DrillDemo {
 /// One page: a button per test session; each relaunches as often as wanted.
 private struct TestBookView: View {
     private enum Kind: Int, Identifiable {
-        case spot, build, demo
+        case spot, build, transform, interp, demo
         var id: Int { rawValue }
     }
     @State private var running: Kind?
     @State private var runID = 0
     private let spot = DrillDemo.spotExercises()
     private let builds = DrillDemo.longBuilds()
+    private let transforms = DrillDemo.bundled("testbook_transform")
+    private let interps = DrillDemo.bundled("testbook_interp")
 
     var body: some View {
         VStack(alignment: .leading, spacing: 24) {
@@ -138,6 +150,10 @@ private struct TestBookView: View {
                 "Tap the wrong word, then pick its fix. A wrong tap counts as a miss.", .spot)
             row("Construire · deuxième essai",
                 "Long sentences. A first wrong check keeps the right start and gives one more try.", .build)
+            row("Transformer · \(transforms.count)",
+                "Change one thing in a sentence; build only the part that changes.", .transform)
+            row("Comprendre · \(interps.count)",
+                "Read a sentence, answer what only its grammar tells you. No English shown.", .interp)
             if ProcessInfo.processInfo.environment["CB_DRILL_DEMO"] != nil {
                 row("Lancer le drill", "Tap Indice, place words, scroll the word tray, check.", .demo)
             }
@@ -151,6 +167,8 @@ private struct TestBookView: View {
             switch ProcessInfo.processInfo.environment["CB_TB_OPEN"] {
             case "spot": running = .spot
             case "build": running = .build
+            case "transform": running = .transform
+            case "interp": running = .interp
             default: break
             }
         }
@@ -159,6 +177,8 @@ private struct TestBookView: View {
                 switch kind {
                 case .spot: DrillDemo.session("Repérer l'erreur", spot) { running = nil }
                 case .build: DrillDemo.session("Deuxième essai", builds) { running = nil }
+                case .transform: DrillDemo.session("Transformer", transforms) { running = nil }
+                case .interp: DrillDemo.session("Comprendre", interps) { running = nil }
                 case .demo: DrillDemo.makeSession(testBook: true)
                 }
             }

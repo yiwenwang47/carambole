@@ -65,7 +65,7 @@ struct SpotErrorView: View {
 
                 // Wrong answer: the rule, French then English, under "Réponse".
                 if result == false {
-                    explanation
+                    DrillMissExplanation(exercise: exercise)
                         .padding(.top, 10)
                         .transition(.opacity)
                 }
@@ -89,21 +89,6 @@ struct SpotErrorView: View {
             }
         }
         #endif
-    }
-
-    private var explanation: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text(exercise.explanation)
-                .font(.appBody)
-                .foregroundColor(AppColor.ink)
-            if let english = exercise.displayExplanationEN {
-                Text(english)
-                    .font(.appBody)
-                    .foregroundColor(AppColor.g2)
-            }
-        }
-        .fixedSize(horizontal: false, vertical: true)
-        .frame(maxWidth: .infinity, alignment: .leading)
     }
 
     private var status: String {

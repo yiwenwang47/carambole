@@ -36,6 +36,8 @@ struct MagnetBoard: View {
     var retryTrigger: Int = 0
     /// Shown under the baseline while the second try is open.
     var retryNote: String? = nil
+    /// When set, a wrong answer also shows this drill's rule under "Réponse".
+    var explainOnMiss: Exercise? = nil
 
     @Namespace private var ns
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -80,6 +82,11 @@ struct MagnetBoard: View {
             DrillFeedbackLine(result: result, answer: Exercise.displayJoin(answerTokens),
                               note: retryNote)
                 .padding(.top, 12)
+            if result == false, let explainOnMiss {
+                DrillMissExplanation(exercise: explainOnMiss)
+                    .padding(.top, 8)
+                    .transition(.opacity)
+            }
             switch style {
             case .plateau:
                 // The bank sits on a pale tray, like a magnet board (its colour
@@ -356,6 +363,28 @@ struct DrillFeedbackLine: View {
                     .transition(.opacity)
             }
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+}
+
+// MARK: - Explanation on a miss
+
+/// The drill's rule after a wrong answer: French, then the English beneath it.
+struct DrillMissExplanation: View {
+    let exercise: Exercise
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(exercise.explanation)
+                .font(.appBody)
+                .foregroundColor(AppColor.ink)
+            if let english = exercise.displayExplanationEN {
+                Text(english)
+                    .font(.appBody)
+                    .foregroundColor(AppColor.g2)
+            }
+        }
+        .fixedSize(horizontal: false, vertical: true)
         .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
