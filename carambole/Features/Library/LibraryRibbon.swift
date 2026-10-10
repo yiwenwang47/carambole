@@ -400,6 +400,7 @@ enum LibraryRibbonRenderer {
             pixels.withUnsafeMutableBytes { buf in
                 texture.getBytes(buf.baseAddress!, bytesPerRow: bytesPerRow,
                                  from: MTLRegionMake2D(0, 0, width, height), mipmapLevel: 0)
+                SRGBPremultiply.fix(buf.baseAddress!, width: width, height: height, bytesPerRow: bytesPerRow)
             }
             guard let provider = CGDataProvider(data: pixels as CFData),
                   let image = CGImage(width: width, height: height, bitsPerComponent: 8, bitsPerPixel: 32,

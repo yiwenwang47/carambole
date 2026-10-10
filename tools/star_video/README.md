@@ -33,3 +33,19 @@ seamlessly), 900 px square covering 2 world units around the star.
 Note: the committed loops were rendered on the iPhone 18 Pro GPU. A
 simulator render uses the Mac GPU; compare a frame against the old ones
 before replacing them.
+
+## Alpha fix (2026-10-10)
+
+RealityKit's `.bgra8Unorm_srgb` output is premultiplied in **linear** light,
+then sRGB-encoded. HEVC-with-alpha and Core Animation read it as premultiplied
+in sRGB space, so soft edge pixels came out too light: a thin glow round the
+star (edge at α 0.5 read as (218, 238, 160) instead of ≈ (150, 163, 111)).
+`SRGBPremultiply.fix` (`carambole/DesignSystem/`) rewrites the bytes; the
+renderer now calls it on every frame, and the library ribbon still does too.
+
+The committed loops were fixed in place on the Mac with
+`fix_premultiply/main.swift` (decode → fix → re-encode, same settings;
+524 frames, 8.73 s, opaque pixels within ~1/255 on average). **Do not run it on
+loops that are already fixed** (the correction would apply twice). A fresh
+render from `StarVideoRenderer` needs no extra step.
+Check: on a correct loop no edge pixel has a colour channel above its alpha.

@@ -126,6 +126,8 @@ enum StarVideoRenderer {
             texture.getBytes(CVPixelBufferGetBaseAddress(buffer)!,
                              bytesPerRow: CVPixelBufferGetBytesPerRow(buffer),
                              from: MTLRegionMake2D(0, 0, size, size), mipmapLevel: 0)
+            SRGBPremultiply.fix(CVPixelBufferGetBaseAddress(buffer)!, width: size, height: size,
+                                bytesPerRow: CVPixelBufferGetBytesPerRow(buffer))
             CVPixelBufferUnlockBaseAddress(buffer, [])
             adaptor.append(buffer, withPresentationTime: CMTime(value: CMTimeValue(frame),
                                                                 timescale: CMTimeScale(g.fps)))
