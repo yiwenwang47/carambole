@@ -6,10 +6,13 @@
 //  Nothing here compiles into Release. See tools/sim/README.md.
 //
 //  Launch environment (simulator: prefix each with SIMCTL_CHILD_):
-//  - CB_TEST_BOOK=1          root becomes a one-page "Test book" whose button
-//                            opens a session of the CB_DRILL_DEMO drill (default
-//                            el_si_synthese_01): its own hint, then the same
-//                            card with CB_DRILL_HINT (if set). For hand testing.
+//  - CB_TEST_BOOK=1          root becomes a one-page "Test book" (also automatic
+//                            in a build with bundle id wen.carambole.testbook, so
+//                            it opens from the icon on the phone). Sessions:
+//                            spot-the-error items (testbook_spot.json), long build
+//                            drills for the second try, and — if CB_DRILL_DEMO is
+//                            set — that drill, then the same card with
+//                            CB_DRILL_HINT. For hand testing.
 //  - CB_DRILL_DEMO=<id>      without CB_TEST_BOOK: open straight into that drill.
 //  - CB_DRILL_HINT=<text>    override hint (on the 2nd card in the test book).
 //  - CB_DRILL_PLACE=<n>      pre-place the first n answer tokens on the line.
@@ -24,15 +27,23 @@ import SwiftUI
 enum DrillDemo {
     private static var env: [String: String] { ProcessInfo.processInfo.environment }
 
+    static let testBookBundleID = "wen.carambole.testbook"
+
     static var placeCount: Int { Int(env["CB_DRILL_PLACE"] ?? "") ?? 0 }
     static var hintOpen: Bool { env["CB_DRILL_HINT_OPEN"] == "1" }
     static var hintCycle: Bool { env["CB_DRILL_HINT_CYCLE"] == "1" }
+    /// Build drill: after pre-placing, add one wrong tile and check (second-try state).
+    static var autoRetry: Bool { env["CB_DRILL_RETRY"] == "1" }
+    /// Spot drill states: "miss" (one wrong tap), "found", or an option index to pick.
+    static var spotState: String? { env["CB_SPOT_STATE"] }
 
     /// The root replacement requested by the environment, or nil for the
     /// normal library.
     @MainActor
     static func rootView() -> AnyView? {
-        if env["CB_TEST_BOOK"] == "1" { return AnyView(TestBookView()) }
+        if env["CB_TEST_BOOK"] == "1" || Bundle.main.bundleIdentifier == testBookBundleID {
+            return AnyView(TestBookView())
+        }
         guard env["CB_DRILL_DEMO"] != nil, let session = makeSession(testBook: false) else { return nil }
         return AnyView(session)
     }
@@ -58,31 +69,113 @@ enum DrillDemo {
         // Review mode, no rule note → no Leçon card; straight into the drill.
         return DrillSessionView(title: element.label, ruleNote: "", elements: [element], mode: .review)
     }
+
+    /// One element per drill, so a review session serves every one of them.
+    static func session(_ title: String, _ exercises: [Exercise],
+                        onFinish: @escaping () -> Void) -> DrillSessionView {
+        let elements = exercises.enumerated().map { i, ex in
+            GrammarElement(id: "tb_\(i)_\(ex.id)", moduleID: "tb", sortOrder: i,
+                           label: title, ruleNote: "", examples: [ex])
+        }
+        return DrillSessionView(title: title, ruleNote: "", elements: elements, mode: .review,
+                                onFinish: onFinish)
+    }
+
+    /// Spot-the-error items vetted offline (see docs/plans/2026-10-10-drill-types-design.md).
+    static func spotExercises() -> [Exercise] {
+        struct Item: Decodable {
+            let exampleId: String
+            let sentenceTokens: [String]
+            let wrongIndex: Int
+            let correctToken: String
+            let options: [String]
+            let translation: String?
+            let explanation: String
+            let explanationEN: String?
+        }
+        guard let url = Bundle.main.url(forResource: "testbook_spot", withExtension: "json"),
+              let data = try? Data(contentsOf: url),
+              let items = try? JSONDecoder().decode([Item].self, from: data) else { return [] }
+        return items.map { item in
+            var answer = item.sentenceTokens
+            answer[item.wrongIndex] = item.correctToken
+            return Exercise(id: "spot_" + item.exampleId, elementID: item.exampleId, type: .fillBlank,
+                            prompt: "Trouve l'erreur.", cue: nil, answerTokens: answer,
+                            tokenBank: item.options, inputMode: .spotError,
+                            explanation: item.explanation, translation: item.translation,
+                            explanationEN: item.explanationEN,
+                            spot: SpotError(tokens: item.sentenceTokens, wrongIndex: item.wrongIndex,
+                                            options: item.options))
+        }
+    }
+
+    /// Long build drills (≥ 7 words) spread over the book, for the second try.
+    static func longBuilds(count: Int = 10) -> [Exercise] {
+        let builds = ContentLoader.loadBook().allElements.flatMap(\.examples).filter {
+            $0.resolvedInputMode == .buildFromTokens && $0.producibleAnswerTokens.count >= 7
+        }
+        guard !builds.isEmpty else { return [] }
+        let step = max(1, builds.count / count)
+        return stride(from: 0, to: builds.count, by: step).prefix(count).map { builds[$0] }
+    }
 }
 
-/// One page, one button: relaunch the demo drill as often as wanted.
+/// One page: a button per test session; each relaunches as often as wanted.
 private struct TestBookView: View {
-    @State private var running = false
+    private enum Kind: Int, Identifiable {
+        case spot, build, demo
+        var id: Int { rawValue }
+    }
+    @State private var running: Kind?
     @State private var runID = 0
+    private let spot = DrillDemo.spotExercises()
+    private let builds = DrillDemo.longBuilds()
 
     var body: some View {
         VStack(alignment: .leading, spacing: 24) {
             Text("Test book").font(.appPrompt).foregroundColor(AppColor.ink)
-            Text("Tap Indice, place words, scroll the word tray, check.")
-                .font(.appBody).foregroundColor(AppColor.g2)
-            Button { runID += 1; running = true } label: {
-                Text("Lancer le drill").font(.appBody).foregroundColor(AppColor.ink)
-                    .frame(maxWidth: .infinity).padding(.vertical, 16)
-                    .background(Capsule().fill(AppColor.hairline))
+            row("Repérer l'erreur · \(spot.count)",
+                "Tap the wrong word, then pick its fix. A wrong tap counts as a miss.", .spot)
+            row("Construire · deuxième essai",
+                "Long sentences. A first wrong check keeps the right start and gives one more try.", .build)
+            if ProcessInfo.processInfo.environment["CB_DRILL_DEMO"] != nil {
+                row("Lancer le drill", "Tap Indice, place words, scroll the word tray, check.", .demo)
             }
-            .buttonStyle(.plain)
             Spacer()
         }
         .padding(24)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(AppColor.paper.ignoresSafeArea())
-        .fullScreenCover(isPresented: $running) {
-            DrillDemo.makeSession(testBook: true).id(runID)
+        .onAppear {
+            // Simulator harness: open a session straight away (CB_TB_OPEN=spot|build).
+            switch ProcessInfo.processInfo.environment["CB_TB_OPEN"] {
+            case "spot": running = .spot
+            case "build": running = .build
+            default: break
+            }
+        }
+        .fullScreenCover(item: $running) { kind in
+            Group {
+                switch kind {
+                case .spot: DrillDemo.session("Repérer l'erreur", spot) { running = nil }
+                case .build: DrillDemo.session("Deuxième essai", builds) { running = nil }
+                case .demo: DrillDemo.makeSession(testBook: true)
+                }
+            }
+            .id(runID)
+        }
+    }
+
+    private func row(_ title: String, _ note: String, _ kind: Kind) -> some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Button { runID += 1; running = kind } label: {
+                Text(title).font(.appBody).foregroundColor(AppColor.ink)
+                    .frame(maxWidth: .infinity).padding(.vertical, 16)
+                    .background(Capsule().fill(AppColor.hairline))
+            }
+            .buttonStyle(.plain)
+            Text(note).font(.appBody).foregroundColor(AppColor.g2)
+                .fixedSize(horizontal: false, vertical: true)
         }
     }
 }

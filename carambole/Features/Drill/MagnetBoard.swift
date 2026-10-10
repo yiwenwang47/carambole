@@ -28,6 +28,14 @@ struct MagnetBoard: View {
     /// nil until checked; then whether the answer was right.
     var result: Bool? = nil
     let answerTokens: [String]
+    /// Second try: the leading tiles that were right stay on the line and can't
+    /// be sent home. 0 outside a retry.
+    var lockedCount: Int = 0
+    /// Bumped by the parent on a first wrong check that earns a second try: the
+    /// line shakes, tiles past `lockedCount` flash dashed, then fly home.
+    var retryTrigger: Int = 0
+    /// Shown under the baseline while the second try is open.
+    var retryNote: String? = nil
 
     @Namespace private var ns
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -38,6 +46,8 @@ struct MagnetBoard: View {
     @State private var welded = false
     @State private var weldStart: Date?
     @State private var waveDone = false
+    /// During the retry flash: tiles from this line position on show dashed.
+    @State private var flashFrom: Int?
     @AppStorage(AppPalette.storageKey) private var paletteID = AppPalette.fallback.rawValue
     @AppStorage(DrillStyle.storageKey) private var drillStyleID = DrillStyle.fallback.rawValue
 
@@ -67,7 +77,8 @@ struct MagnetBoard: View {
                         .strokeBorder(Color(hex: theme.fragile).opacity(welded ? 1 : 0.55), lineWidth: 1.5))
                     .animation(.easeOut(duration: 0.35), value: welded)
             }
-            DrillFeedbackLine(result: result, answer: Exercise.displayJoin(answerTokens))
+            DrillFeedbackLine(result: result, answer: Exercise.displayJoin(answerTokens),
+                              note: retryNote)
                 .padding(.top, 12)
             switch style {
             case .plateau:
@@ -87,6 +98,7 @@ struct MagnetBoard: View {
             guard let new else { return }
             if new { weld() } else { shakeTrigger += 1 }
         }
+        .onChange(of: retryTrigger) { _, _ in startRetry() }
         .onAppear {
             // Revisited live card that is already welded (e.g. sliding back in).
             if result == true && !welded { welded = true; waveDone = true }
@@ -119,12 +131,13 @@ struct MagnetBoard: View {
                 .frame(height: Self.tileHeight)
                 .matchedGeometryEffect(id: index, in: ns)
         } else {
-            let wrong = result == false && !matchesAnswer(position: position, index: index)
+            let wrong = (result == false && !matchesAnswer(position: position, index: index))
+                || (flashFrom.map { position >= $0 } ?? false)
             Button { tapPlaced(index) } label: {
                 MagnetTile(text: token, style: wrong ? .wrong : .placed)
             }
             .buttonStyle(.plain)
-            .allowsHitTesting(!isLocked)
+            .allowsHitTesting(!isLocked && position >= lockedCount && flashFrom == nil)
             .scaleEffect(popping == index ? 1.1 : 1)
             .matchedGeometryEffect(id: index, in: ns)
             .accessibilityLabel(token)
@@ -218,6 +231,17 @@ struct MagnetBoard: View {
         }
     }
 
+    private func startRetry() {
+        flashFrom = lockedCount
+        shakeTrigger += 1
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+            withAnimation(reduceMotion ? nil : Self.snap) {
+                placed = Array(placed.prefix(lockedCount))
+                flashFrom = nil
+            }
+        }
+    }
+
     private func weld() {
         weldStart = Date()
         withAnimation(reduceMotion ? nil : .spring(duration: 0.4, bounce: 0.15)) {
@@ -308,6 +332,8 @@ struct MagnetTile: View {
 struct DrillFeedbackLine: View {
     let result: Bool?
     let answer: String
+    /// Shown before the final result (e.g. the second-try line); nil = nothing.
+    var note: String? = nil
 
     @State private var shown = false
 
@@ -322,6 +348,12 @@ struct DrillFeedbackLine: View {
                     .onAppear {
                         withAnimation(.easeOut(duration: 0.4).delay(0.35)) { shown = true }
                     }
+            } else if result == nil, let note {
+                Text(note)
+                    .font(.appBody)
+                    .foregroundColor(AppColor.graphite)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .transition(.opacity)
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)

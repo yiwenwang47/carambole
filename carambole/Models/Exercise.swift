@@ -14,6 +14,21 @@ enum InputMode: String, Codable {
     /// set this explicitly; short answers are also shuffled into it at runtime — see
     /// `Exercise.resolvedInputMode`.
     case freeText
+    /// Spot the error: a full sentence with ONE wrong word (`Exercise.spot`). The
+    /// learner taps the wrong word, then picks its fix. `answerTokens` holds the
+    /// corrected sentence. Never shuffled into typing.
+    case spotError
+}
+
+/// The corrupted sentence behind a `.spotError` drill. Authored offline and
+/// gated for correctness (ungrammatical, exactly one error, unique fix) — see
+/// docs/plans/2026-10-10-drill-types-design.md.
+struct SpotError: Codable, Equatable {
+    /// The sentence as shown, with the one wrong word at `wrongIndex`.
+    let tokens: [String]
+    let wrongIndex: Int
+    /// The correct token plus wrong fixes, offered once the error is found.
+    let options: [String]
 }
 
 /// One drillable example sentence — the leaf of Book → Module → Element → Example.
@@ -38,6 +53,8 @@ struct Exercise: Identifiable, Codable, Equatable {
     /// post-answer banner (a full bilingual explanation, distinct from the terse
     /// pre-answer `hint`). Optional so JSON lacking the key still decodes.
     let explanationEN: String?
+    /// Corrupted sentence for a `.spotError` drill; nil for every other mode.
+    let spot: SpotError?
 
     /// Memberwise initializer with `translation`/`hint`/`explanationEN` defaulted
     /// last so existing call sites keep compiling. Codable's synthesized
@@ -54,7 +71,8 @@ struct Exercise: Identifiable, Codable, Equatable {
         explanation: String,
         translation: String? = nil,
         hint: String? = nil,
-        explanationEN: String? = nil
+        explanationEN: String? = nil,
+        spot: SpotError? = nil
     ) {
         self.id = id
         self.elementID = elementID
@@ -68,6 +86,7 @@ struct Exercise: Identifiable, Codable, Equatable {
         self.translation = translation
         self.hint = hint
         self.explanationEN = explanationEN
+        self.spot = spot
     }
 
     /// The English explanation line actually shown beneath the French one — `nil`
@@ -102,7 +121,7 @@ struct Exercise: Identifiable, Codable, Equatable {
     /// in pick mode you assemble the whole answer, but typed they'd show a complete
     /// sentence with no cue for what one word to type where. Those stay in pick mode.
     var resolvedInputMode: InputMode {
-        if inputMode == .freeText { return .freeText }
+        if inputMode == .freeText || inputMode == .spotError { return inputMode }
         guard answerTokens.count <= 2,
               Exercise.isTypeable(answerTokens),
               Exercise.promptHasBlank(prompt) else {

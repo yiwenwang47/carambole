@@ -22,8 +22,10 @@ struct DrillView: View {
 
     /// The exercise to drill.
     let exercise: Exercise
-    /// Called once when the answer is checked, with the result + submitted tokens.
-    var onResult: (Bool, [String]) -> Void = { _, _ in }
+    /// Called once when the answer is final, with its FSRS grade + submitted
+    /// tokens: right first time → `.good`; right after a second try or a missed
+    /// tap (spot the error) → `.hard`; wrong → `.again`.
+    var onResult: (FSRS.Rating, [String]) -> Void = { _, _ in }
     /// Called instead of `onResult` when the user marked this drill "too easy"
     /// before answering (the answer-once gate). The parent suspends the exercise
     /// on a correct answer, or cleans its records on a wrong one. Same payload as
@@ -56,7 +58,18 @@ struct DrillView: View {
     /// True once a too-easy gate is passed, so the green footer reads "Retiré".
     @State private var didRemove = false
 
-    private var hasAnswer: Bool { !answer.isEmpty }
+    /// Build drills: the first wrong check earns one more try (see `startRetry`).
+    @State private var attempts = 0
+    /// Leading tiles kept (locked) on the line during the second try.
+    @State private var lockedPrefix = 0
+    @State private var retryTrigger = 0
+    /// The answer the first check rejected; Vérifier waits for a change.
+    @State private var rejected: [String]?
+    /// Spot the error: wrong words tapped before finding the right one.
+    @State private var misses = 0
+
+    private var hasAnswer: Bool { answer.count > lockedPrefix && answer != rejected }
+    private var isSpot: Bool { exercise.resolvedInputMode == .spotError }
 
     @AppStorage(AppPalette.storageKey) private var paletteID = AppPalette.fallback.rawValue
     @AppStorage(DrillStyle.storageKey) private var drillStyleID = DrillStyle.fallback.rawValue
@@ -103,6 +116,10 @@ struct DrillView: View {
         .task {
             // Simulator harness (DrillDemo, tools/sim): open the hint, or cycle it.
             if DrillDemo.hintOpen { showHint = true }
+            if DrillDemo.autoRetry {
+                try? await Task.sleep(nanoseconds: 800_000_000)
+                if !answer.isEmpty { check() }
+            }
             guard DrillDemo.hintCycle else { return }
             try? await Task.sleep(nanoseconds: 1_500_000_000)
             while !Task.isCancelled {
@@ -249,7 +266,14 @@ struct DrillView: View {
                     indiceButton
                 }
                 Spacer(minLength: Spacing.sm)
+                // Spot the error: the audio reads the CORRECTED sentence, so it
+                // would give the answer away before checking.
+                // Hidden, not removed, so the sentence doesn't jump on check.
+                let hideListen = isSpot && !checked && reviewData == nil
                 listenButton
+                    .opacity(hideListen ? 0 : 1)
+                    .allowsHitTesting(!hideListen)
+                    .accessibilityHidden(hideListen)
             }
             if let hint = exercise.hint, !hint.isEmpty {
                 // A drawer, not an insert/remove transition: the panel always
@@ -373,7 +397,9 @@ struct DrillView: View {
             // gives way. When an expanded hint or a long answer leaves too little
             // room, the bank scrolls inside its own tray (see MagnetBoard).
             TokenBuilderView(exercise: exercise, answer: $answer, isLocked: checked,
-                             result: liveResult)
+                             result: liveResult, lockedCount: lockedPrefix,
+                             retryTrigger: retryTrigger,
+                             retryNote: attempts > 0 ? retryNote : nil)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         case .multipleChoice:
             ChoiceView(exercise: exercise, answer: $answer, isLocked: checked,
@@ -381,7 +407,31 @@ struct DrillView: View {
         case .freeText:
             TypeAnswerView(exercise: exercise, answer: $answer, isLocked: checked,
                            result: liveResult)
+        case .spotError:
+            SpotErrorView(exercise: exercise, answer: $answer, misses: $misses,
+                          isLocked: checked, result: liveResult)
         }
+    }
+
+    private var retryNote: String {
+        lockedPrefix > 0 ? "Encore un essai — le début est juste." : "Encore un essai."
+    }
+
+    /// First wrong check on a build: keep the right leading tiles, send the rest
+    /// home, and let the learner try once more. Not under the "Trop facile" gate,
+    /// which is answer-once by design.
+    private var canRetry: Bool {
+        exercise.resolvedInputMode == .buildFromTokens && attempts == 0 && !pendingTooEasy
+    }
+
+    private func startRetry() {
+        UINotificationFeedbackGenerator().notificationOccurred(.warning)
+        withAnimation(.easeOut(duration: 0.25)) {
+            attempts = 1
+            lockedPrefix = DrillEngine.correctPrefixCount(answer, exercise)
+            rejected = answer
+        }
+        retryTrigger += 1
     }
 
     // MARK: - Submitted answer (review mode)
@@ -539,6 +589,12 @@ struct DrillView: View {
 
     private func check() {
         let correct = DrillEngine.check(answer, exercise)
+        if !correct && canRetry {
+            startRetry()
+            return
+        }
+        let rating: FSRS.Rating = !correct ? .again
+            : (attempts > 0 || misses > 0 ? .hard : .good)
         UINotificationFeedbackGenerator().notificationOccurred(correct ? .success : .error)
         withAnimation(.spring(response: 0.4, dampingFraction: 0.85)) {
             isCorrect = correct
@@ -548,10 +604,11 @@ struct DrillView: View {
             // Gate: correct removes the drill for good; wrong cleans its records
             // and leaves it in the stack (re-markable next time). Either way the
             // parent owns the persistence — see DrillSessionView.onTooEasy.
-            didRemove = correct
-            onTooEasy(correct, answer)
+            // Removal needs a clean first answer (no missed tap on spot drills).
+            didRemove = correct && misses == 0
+            onTooEasy(didRemove, answer)
         } else {
-            onResult(correct, answer)
+            onResult(rating, answer)
         }
 
         // Correct → linger on the green confirmation briefly, then auto-advance.

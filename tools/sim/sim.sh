@@ -21,6 +21,7 @@ case $cmd in
   build)   xcrun simctl boot $SIM 2>/dev/null || true
            xcodebuild -project $ROOT/carambole.xcodeproj -scheme carambole \
              -destination "id=$SIM" -derivedDataPath $DD ${CB_BUNDLE:+PRODUCT_BUNDLE_IDENTIFIER=$CB_BUNDLE} \
+             ${CB_BUNDLE:+"INFOPLIST_KEY_CFBundleDisplayName=Test book"} \
              build -quiet ;;
   install) xcrun simctl install $SIM $APP ;;
   load-db) xcrun simctl terminate $SIM $BID 2>/dev/null || true

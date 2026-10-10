@@ -33,9 +33,9 @@ enum FSRS {
 
     // MARK: Ratings
 
-    /// FSRS rating (1–4). Carambole maps a binary drill outcome onto these in T3:
-    /// wrong → `.again`, correct → `.good`, "Trop facile" + correct → `.easy`.
-    /// `.hard` is unused by the current grading but kept for spec completeness.
+    /// FSRS rating (1–4). Carambole maps a drill outcome onto these: wrong →
+    /// `.again`, right after a second try or a missed tap → `.hard`, right first
+    /// time → `.good`, "Trop facile" + correct → `.easy`.
     enum Rating: Int {
         case again = 1
         case hard  = 2
