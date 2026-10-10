@@ -28,24 +28,34 @@ final class HistoryViewModel: ObservableObject {
 
     // MARK: Loading
 
+    /// `loadImmediately` fetches on the calling thread so the first frame has
+    /// real days. The library needs this: its ribbon is a still drawn from
+    /// these days, and starting from `[]` drew a second, different picture
+    /// once the async load landed (a visible twist on launch).
+    init(loadImmediately: Bool = false) {
+        if loadImmediately { days = Self.fetch() }
+    }
+
     /// Fetch the facts off-main, bucket them, then publish on main. Mirrors
     /// `BookViewModel.load()` / `refresh()`.
     func load() {
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-            let book = ContentLoader.loadBook()
-            let bookIDs = Set(book.allElements.map(\.id))
-            let firstSeen = DataManager.shared.fetchFirstSeenByElement()
-            let reviewLog = DataManager.shared.fetchReviewLog()
-            let result = HistoryViewModel.activities(
-                bookIDs: bookIDs,
-                firstSeen: firstSeen,
-                reviewLog: reviewLog,
-                calendar: .current
-            )
+            let result = HistoryViewModel.fetch()
             DispatchQueue.main.async {
                 self?.days = result
             }
         }
+    }
+
+    private static func fetch() -> [DayActivity] {
+        let book = ContentLoader.loadBook()
+        let bookIDs = Set(book.allElements.map(\.id))
+        return activities(
+            bookIDs: bookIDs,
+            firstSeen: DataManager.shared.fetchFirstSeenByElement(),
+            reviewLog: DataManager.shared.fetchReviewLog(),
+            calendar: .current
+        )
     }
 
     // MARK: Pure bucketing

@@ -36,8 +36,9 @@ struct LibraryView: View {
 
     /// Fondations progress (%) — the only live book today.
     @StateObject private var bookViewModel = BookViewModel()
-    /// Fondations per-day activity — feeds its ribbon stretch.
-    @StateObject private var historyViewModel = HistoryViewModel()
+    /// Fondations per-day activity — feeds its ribbon stretch. Loaded before
+    /// the first frame so the ribbon is drawn once, from real days.
+    @StateObject private var historyViewModel = HistoryViewModel(loadImmediately: true)
     @State private var loaded = false
     /// Pushes Fondations' `BookView`.
     @State private var openBook = false
