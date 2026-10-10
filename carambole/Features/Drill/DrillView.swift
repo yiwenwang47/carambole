@@ -65,17 +65,20 @@ struct DrillView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            // Vertical is LOCKED — no ScrollView. The card content is sized to the
-            // available height by `GeometryReader`: when space is tight (typing, with
-            // the keyboard up, shrinks this region — see DrillSessionView.keyboardInset)
-            // it collapses to a `compact` layout that drops the secondary chrome
-            // (translation, cue, Indice/Écouter) so the prompt + input + footer always
-            // fit without scrolling. Text additionally shrinks via minimumScaleFactor.
+            // Vertical is LOCKED — no card-level ScrollView. The card content is sized
+            // to the available height by `GeometryReader`: when space is tight (typing,
+            // with the keyboard up, shrinks this region — see
+            // DrillSessionView.keyboardInset) it collapses to a `compact` layout that
+            // drops the secondary chrome (translation, cue, Indice/Écouter) so the
+            // prompt + input + footer always fit. Text additionally shrinks via
+            // minimumScaleFactor. The height is CAPPED, not just a minimum, so the
+            // word bank is told how much room is left and can scroll inside its own
+            // tray (see MagnetBoard.bankTray) instead of running under the footer.
             GeometryReader { geo in
                 let compact = geo.size.height < 540
                 contentStack(spacing: compact ? Spacing.md : Spacing.lg, compact: compact)
                     .frame(maxWidth: .infinity, minHeight: geo.size.height,
-                           alignment: .top)
+                           maxHeight: geo.size.height, alignment: .top)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
 
@@ -228,7 +231,7 @@ struct DrillView: View {
     /// taps — nothing is shown or played automatically. The revealed hint text drops
     /// in below the row.
     private var assistRow: some View {
-        VStack(alignment: .leading, spacing: Spacing.sm) {
+        VStack(alignment: .leading, spacing: 0) {
             HStack(alignment: .center) {
                 if let hint = exercise.hint, !hint.isEmpty {
                     indiceButton
@@ -236,9 +239,20 @@ struct DrillView: View {
                 Spacer(minLength: Spacing.sm)
                 listenButton
             }
-            if showHint, let hint = exercise.hint, !hint.isEmpty {
+            if let hint = exercise.hint, !hint.isEmpty {
+                // A drawer, not an insert/remove transition: the panel always
+                // holds its place in the flow and its HEIGHT animates 0 ↔ full,
+                // clipped to its own rounded shape. Its lower edge therefore
+                // travels with the answer line below it — on open the chips are
+                // pushed down, on close they follow the edge up — so no chip ever
+                // passes through (or over) the panel, and the rounded bottom edge
+                // stays visible throughout.
                 hintText(hint)
-                    .transition(.opacity.combined(with: .move(edge: .top)))
+                    .padding(.top, Spacing.sm)
+                    .frame(height: showHint ? nil : 0, alignment: .top)
+                    .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
+                    .opacity(showHint ? 1 : 0)
+                    .accessibilityHidden(!showHint)
             }
         }
     }
@@ -343,19 +357,12 @@ struct DrillView: View {
     private var inputBlock: some View {
         switch exercise.resolvedInputMode {
         case .buildFromTokens:
-            // Slots GROW as chips are placed (a placed chip stays faded in the bank
-            // AND shows in the slots), so a long answer can outgrow the locked card.
-            // Give just the slots+bank their own bounded scroll — `.basedOnSize` means
-            // normal drills never scroll (locked feel holds), but a fully-built 10-slot
-            // construis can always reach every chip. Prompt + footer stay fixed.
-            ScrollView {
-                TokenBuilderView(exercise: exercise, answer: $answer, isLocked: checked,
-                                 result: liveResult)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-            }
-            .scrollBounceBehavior(.basedOnSize)
-            // Leftover tiles drop off-screen on a correct weld — don't clip them.
-            .scrollClipDisabled()
+            // The prompt, hint and answer line never move; only the word bank
+            // gives way. When an expanded hint or a long answer leaves too little
+            // room, the bank scrolls inside its own tray (see MagnetBoard).
+            TokenBuilderView(exercise: exercise, answer: $answer, isLocked: checked,
+                             result: liveResult)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         case .multipleChoice:
             ChoiceView(exercise: exercise, answer: $answer, isLocked: checked,
                        result: liveResult)
