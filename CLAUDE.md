@@ -2,6 +2,13 @@
 
 > ## ▶ RECENT HANDOFFS
 >
+> **▶ RING SEAM + STAR GLOW + LAUNCH TWIST + PUSH OVERLAP — DONE, user OK'd on
+> phone (2026-10-10).** Causes + fixes: **`docs/plans/2026-10-10-ring-star-glow-handoff.md`**.
+> Same day: back-swipe on the module list opened a Leçon for a frame (a
+> sideways drag never cancels a row `Button` in a vertical ScrollView). Fix:
+> `SwipeBackGuard` in `Core/SwipeBackModifier.swift`; pass it via
+> `swipeToGoBack(guard:)` on any swipe-back screen with tappable rows.
+>
 > **▶ SIM HARNESS + INDICE TRAY + STAR BOB — DONE (2026-10-10).** READ
 > **`tools/sim/README.md`** before any visual check: `tools/sim/sim.sh`
 > (build / install / `load-db` a real exported .sqlite / launch with `CB_*`
