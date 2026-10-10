@@ -15,7 +15,6 @@
 //    ───────────────────────────────────────────
 //    8                                       14
 //    Apprendre →                      ← Réviser
-//                               Par tour  10 20 50
 //                  25 modules →
 //
 //  Tapping the bottom line (only) opens the module list (`ModuleListView`);
@@ -268,7 +267,7 @@ struct BookView: View {
         return "Continue quelques jours pour estimer la durée."
     }
 
-    // MARK: - Bottom block (fait, divider, Apprendre / Réviser, round size, modules)
+    // MARK: - Bottom block (fait, divider, Apprendre / Réviser, modules)
 
     private var bottomBlock: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -304,25 +303,20 @@ struct BookView: View {
 
                 Spacer()
 
-                VStack(alignment: .trailing, spacing: 0) {
-                    Button(action: startReview) {
-                        VStack(alignment: .trailing, spacing: 4) {
-                            numeral("\(viewModel.dueCount)")
-                            Text("← Réviser").uppercaseLabel(AppColor.ink)
-                        }
-                        .contentShape(Rectangle())
+                Button(action: startReview) {
+                    VStack(alignment: .trailing, spacing: 4) {
+                        numeral("\(viewModel.dueCount)")
+                        Text("← Réviser").uppercaseLabel(AppColor.ink)
                     }
-                    .buttonStyle(ScaleButtonStyle())
-                    .accessibilityElement(children: .ignore)
-                    .accessibilityLabel("Réviser, \(viewModel.dueCount) à revoir")
-                    .accessibilityAddTraits(.isButton)
-
-                    RoundSizePicker(store: viewModel.settingsStore)
-                        .padding(.top, 6)
+                    .contentShape(Rectangle())
                 }
+                .buttonStyle(ScaleButtonStyle())
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel("Réviser, \(viewModel.dueCount) à revoir")
+                .accessibilityAddTraits(.isButton)
             }
             .padding(.top, 15)
-            .frame(height: 115 + 15, alignment: .top)
+            .frame(height: 100 + 15, alignment: .top)
 
             Button { openModules() } label: {
                 Text("\(viewModel.book.modules.count) modules  →")
@@ -395,49 +389,6 @@ struct BookView: View {
     /// One-decimal pace with a French comma, e.g. "8,5".
     private func paceText(_ pace: Double) -> String {
         pace.formatted(.number.precision(.fractionLength(1)).locale(Locale(identifier: "fr_FR")))
-    }
-}
-
-// MARK: - Réviser round size
-
-/// Visible choices for the number of problems in one review round.
-private struct RoundSizePicker: View {
-    @ObservedObject var store: StudySettingsStore
-
-    private var options: [Int] { StudySettings.reviewRoundSizeOptions }
-    private var current: Int { store.settings.reviewRoundSize }
-
-    var body: some View {
-        HStack(spacing: 3) {
-            Text("Par tour")
-                .uppercaseLabel()
-                .padding(.trailing, 3)
-
-            ForEach(options, id: \.self) { size in
-                Button {
-                    select(size)
-                } label: {
-                    Text("\(size)")
-                        .font(.label(size: 12, wght: 650))
-                        .foregroundColor(current == size ? AppColor.paper : AppColor.ink)
-                        .frame(width: 31, height: 28)
-                        .background(Capsule().fill(current == size ? AppColor.ink : AppColor.paper))
-                        .overlay(Capsule().strokeBorder(AppColor.hairline, lineWidth: current == size ? 0 : 1))
-                }
-                .buttonStyle(.plain)
-                .accessibilityLabel("\(size) révisions par tour")
-                .accessibilityValue(current == size ? "Sélectionné" : "")
-            }
-        }
-    }
-
-    private func select(_ size: Int) {
-        guard size != current else { return }
-        let s = store.settings
-        store.settings = StudySettings(newPerDay: s.newPerDay,
-                                       reviewTarget: s.reviewTarget,
-                                       reviewRoundSize: size)
-        UISelectionFeedbackGenerator().selectionChanged()
     }
 }
 

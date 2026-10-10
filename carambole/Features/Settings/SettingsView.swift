@@ -2,10 +2,10 @@
 //  SettingsView.swift
 //  carambole
 //
-//  "Réglages" — study pacing settings. Two steppers backed by the SHARED
-//  `StudySettingsStore` (single source of truth): the `newPerDay` HARD cap and
-//  the `reviewTarget` SOFT goal. Writes go through the store, which clamps and
-//  persists immediately.
+//  "Réglages" — study pacing settings backed by the SHARED
+//  `StudySettingsStore` (single source of truth): the `newPerDay` HARD cap,
+//  the `reviewTarget` SOFT goal, and the review round size. Writes persist
+//  immediately.
 //
 //  Edge-type layout from design/motion.html (01 / 03 / 05 headers): tracked
 //  labels pinned to the top edges, one big light heading, hairline rules, big
@@ -41,6 +41,8 @@ struct SettingsView: View {
                         newPerDaySection
                         rule(AppColor.hairline)
                         reviewTargetSection
+                        rule(AppColor.hairline)
+                        reviewRoundSection
                         rule(AppColor.hairline)
                         audioSection
                         rule(AppColor.hairline)
@@ -118,6 +120,40 @@ struct SettingsView: View {
             range: StudySettings.reviewTargetRange,
             step: StudySettings.reviewTargetStep
         )
+    }
+
+    // MARK: - Review round size
+
+    private var reviewRoundSection: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text("Révisions par tour").uppercaseLabel(AppColor.ink)
+
+            HStack(spacing: 20) {
+                ForEach(StudySettings.reviewRoundSizeOptions, id: \.self) { size in
+                    Button {
+                        store.settings.reviewRoundSize = size
+                        UISelectionFeedbackGenerator().selectionChanged()
+                    } label: {
+                        Text("\(size)")
+                            .font(.display(size: 36, wght: 250))
+                            .foregroundColor(store.settings.reviewRoundSize == size ? AppColor.ink : AppColor.g3)
+                            .frame(minWidth: 60, minHeight: 54)
+                            .overlay(alignment: .bottom) {
+                                if store.settings.reviewRoundSize == size {
+                                    Rectangle().fill(AppColor.ink).frame(height: 1)
+                                }
+                            }
+                            .contentShape(Rectangle())
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel("\(size) révisions par tour")
+                    .accessibilityValue(store.settings.reviewRoundSize == size ? "Sélectionné" : "")
+                }
+            }
+
+            note("Number of exercises in each review round.")
+        }
+        .padding(.vertical, 18)
     }
 
     // MARK: - Audio (auto-play toggle)
