@@ -20,6 +20,11 @@ struct TokenBuilderView: View {
     var isLocked: Bool = false
     /// nil until checked; then whether the answer was right.
     var result: Bool? = nil
+    /// Second try (see `MagnetBoard`): locked leading tiles, flash trigger, note.
+    var lockedCount: Int = 0
+    var retryTrigger: Int = 0
+    var retryNote: String? = nil
+    var explainOnMiss = false
 
     /// Bank indices consumed into the answer, in placement order. Indices (not
     /// values) so duplicate tokens in the bank map to exactly one tile each.
@@ -32,7 +37,9 @@ struct TokenBuilderView: View {
 
     var body: some View {
         MagnetBoard(bank: bank, placed: $placedIndices, isLocked: isLocked,
-                    result: result, answerTokens: exercise.answerTokens)
+                    result: result, answerTokens: exercise.answerTokens,
+                    lockedCount: lockedCount, retryTrigger: retryTrigger, retryNote: retryNote,
+                    explainOnMiss: explainOnMiss ? exercise : nil)
             .onChange(of: placedIndices) { _, new in
                 answer = new.map { bank[$0] }
             }
@@ -52,6 +59,12 @@ struct TokenBuilderView: View {
                     if let i = bank.indices.first(where: { bank[$0] == token && !used.contains($0) }) {
                         used.insert(i); placedIndices.append(i)
                     }
+                }
+                // Second-try harness: one wrong tile after the right start.
+                if DrillDemo.autoRetry,
+                   let i = bank.indices.first(where: { !used.contains($0)
+                       && !exercise.answerTokens.contains(bank[$0]) }) {
+                    placedIndices.append(i)
                 }
             }
             #endif

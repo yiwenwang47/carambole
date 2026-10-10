@@ -2,6 +2,17 @@
 
 > ## ▶ RECENT HANDOFFS
 >
+> **▶ NEW DRILL TYPES — on branch `drill-types`, NOT merged (2026-10-10).**
+> Spot the error (`InputMode.spotError`, `SpotErrorView`) + second try on build
+> (first wrong check keeps the right leading tiles locked; `DrillEngine.
+> correctPrefixCount`). `onResult` now carries an `FSRS.Rating` (`.hard` = right
+> after a retry or missed tap). Test book app `wen.carambole.testbook` ("Test
+> book" on the phone) serves 24 hand-checked spot items
+> (`Debug/testbook_spot.json`) + 10 long builds. Design + authoring findings:
+> **`docs/plans/2026-10-10-drill-types-design.md`**. Spot items are NOT in the
+> real topics yet — correctness pipeline (Grammalecte flag + one-fix probe +
+> LLM judge + human spot check) still to be built as `tools/`.
+>
 > **▶ RING SEAM + STAR GLOW + LAUNCH TWIST + PUSH OVERLAP — DONE, user OK'd on
 > phone (2026-10-10).** Causes + fixes: **`docs/plans/2026-10-10-ring-star-glow-handoff.md`**.
 > Same day: back-swipe on the module list opened a Leçon for a frame (a

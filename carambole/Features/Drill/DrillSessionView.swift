@@ -256,7 +256,7 @@ struct DrillSessionView: View {
     private func cardView(at i: Int) -> some View {
         DrillView(
             exercise: history[i],
-            onResult: { correct, tokens in handleResult(correct: correct, answer: tokens) },
+            onResult: { rating, tokens in handleResult(rating: rating, answer: tokens) },
             onTooEasy: { correct, tokens in handleTooEasy(correct: correct, answer: tokens) },
             onNext: advance,
             onForward: goForward,
@@ -558,12 +558,14 @@ struct DrillSessionView: View {
     // `reviewData == nil`, i.e. cursor == frontier), so `currentElement`
     // (driven by `elementIndex`) is guaranteed to be the element that produced
     // `history[cursor]`. Keep that gating intact or grading targets the wrong element.
-    private func handleResult(correct: Bool, answer: [String]) {
+    private func handleResult(rating: FSRS.Rating, answer: [String]) {
+        let correct = rating != .again
         submittedAnswers[cursor] = answer
         resultByIndex[cursor] = correct
         guard let element = currentElement, history.indices.contains(cursor) else { return }
-        // FSRS rating: correct → .good (S grows), wrong → .again (S collapses).
-        gradeElement(element, exampleID: history[cursor].id, rating: correct ? .good : .again)
+        // FSRS rating from the drill: .good first time, .hard after a second try or
+        // a missed tap, .again when wrong (S collapses).
+        gradeElement(element, exampleID: history[cursor].id, rating: rating)
         nextAction = LearnLoop.nextAction(mode: mode, correct: correct)
     }
 

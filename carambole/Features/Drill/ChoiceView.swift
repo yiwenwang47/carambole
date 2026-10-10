@@ -19,6 +19,7 @@ struct ChoiceView: View {
     var isLocked: Bool = false
     /// nil until checked; then whether the answer was right.
     var result: Bool? = nil
+    var explainOnMiss = false
 
     @State private var placedIndices: [Int] = []
 
@@ -29,7 +30,8 @@ struct ChoiceView: View {
     var body: some View {
         MagnetBoard(bank: choices, placed: $placedIndices, maxPlaced: 1,
                     isLocked: isLocked, result: result,
-                    answerTokens: exercise.answerTokens)
+                    answerTokens: exercise.answerTokens,
+                    explainOnMiss: explainOnMiss ? exercise : nil)
             .onChange(of: placedIndices) { _, new in
                 answer = new.map { choices[$0] }
             }
@@ -38,6 +40,15 @@ struct ChoiceView: View {
                     placedIndices = []
                 }
             }
+            #if DEBUG
+            .onAppear {
+                // Simulator harness: pre-pick choice n (CB_DRILL_PICK=n).
+                if let n = Int(ProcessInfo.processInfo.environment["CB_DRILL_PICK"] ?? ""),
+                   choices.indices.contains(n), placedIndices.isEmpty {
+                    placedIndices = [n]
+                }
+            }
+            #endif
     }
 }
 

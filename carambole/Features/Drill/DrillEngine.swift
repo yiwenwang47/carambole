@@ -12,6 +12,10 @@ struct DrillEngine {
                 == normalize(exercise.answerTokens.joined(separator: " "))
         case .multipleChoice:
             return submitted == exercise.answerTokens
+        case .spotError:
+            // The submitted tokens are the shown sentence with the learner's one
+            // replacement applied; right only when that restores the sentence.
+            return submitted == exercise.answerTokens
         case .buildFromTokens:
             // The learner builds words only — bare-punctuation chips are never
             // offered, so grade against the punctuation-stripped answer. Compare
@@ -23,6 +27,22 @@ struct DrillEngine {
             return buildSurface(submitted)
                 == buildSurface(exercise.producibleAnswerTokens)
         }
+    }
+
+    /// Second try on a build: how many leading placed tiles are right. The largest
+    /// `k` whose first `k` chips spell, by surface, the first words of the answer —
+    /// so a multi-word chip ("à la") or a split elision ("N'" + "es-tu") counts the
+    /// same as it grades. These tiles stay on the line, locked; the rest go home.
+    static func correctPrefixCount(_ submitted: [String], _ exercise: Exercise) -> Int {
+        let target = buildSurface(exercise.producibleAnswerTokens).split(separator: " ")
+        var best = 0
+        for k in 0...submitted.count {
+            let words = buildSurface(Array(submitted.prefix(k))).split(separator: " ")
+            if words.count <= target.count && Array(target.prefix(words.count)) == words {
+                best = k
+            }
+        }
+        return best
     }
 
     /// Surface form for build-mode grading: unify apostrophe shape, split every chip
@@ -123,6 +143,29 @@ extension DrillEngine {
                "the separate-parts elision build still passes")
         assert(!check(["es-tu", "N'", "pas", "content"], elision),
                "wrong elision order still fails on surface")
+
+        // second try: the leading run of right tiles, by surface.
+        let pre = Exercise(id: "pre", elementID: "t", type: .wordOrder, prompt: "p",
+                           cue: nil,
+                           answerTokens: ["Elle", "n'", "est", "pas", "à", "la", "maison", "."],
+                           tokenBank: ["Elle", "n'", "est", "pas", "à", "la", "maison", "à la", "."],
+                           inputMode: .buildFromTokens, explanation: "e")
+        assert(correctPrefixCount(["Elle", "est", "n'", "pas"], pre) == 1, "stops at first wrong tile")
+        assert(correctPrefixCount(["Elle", "n'", "est", "pas", "à la", "chez"], pre) == 5,
+               "a multi-word chip counts as its parts")
+        assert(correctPrefixCount(["est", "Elle"], pre) == 0, "wrong first tile keeps nothing")
+        assert(correctPrefixCount([], pre) == 0, "empty keeps nothing")
+        assert(correctPrefixCount(["N'", "es-tu"], elision) == 2, "split elision counts once glued")
+
+        // spot the error: right only when the replacement restores the sentence.
+        let spot = Exercise(id: "spot", elementID: "t", type: .fillBlank, prompt: "p",
+                            cue: nil, answerTokens: ["Je", "la", "vois"], tokenBank: [],
+                            inputMode: .spotError, explanation: "e",
+                            spot: SpotError(tokens: ["Je", "lui", "vois"], wrongIndex: 1,
+                                            options: ["la", "leur", "les"]))
+        assert(spot.resolvedInputMode == .spotError, "spot drills never shuffle into typing")
+        assert(check(["Je", "la", "vois"], spot), "right fix passes")
+        assert(!check(["Je", "les", "vois"], spot), "wrong fix fails")
 
         // free-text: accent-strict, but case / whitespace / apostrophe lenient.
         let ft = Exercise(id: "ft", elementID: "t", type: .fillBlank, prompt: "p",
