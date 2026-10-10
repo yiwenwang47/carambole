@@ -212,11 +212,18 @@ final class BookViewModel: ObservableObject {
         return FSRS.retrievability(stability: stability, elapsedDays: elapsed)
     }
 
-    /// Elements to drill when a module is tapped: its not-yet-mastered elements
-    /// (so the learner can finish the module); the full set if already complete.
+    /// Resume Apprendre at elements not yet answered correctly. A wrong answer
+    /// creates review state but does not complete that element's introduction.
+    /// Once all elements have a correct answer, a new tap practises the full module.
     func moduleLearnElements(_ module: CourseModule) -> [GrammarElement] {
-        let remaining = module.elements.filter { !satisfiedIDs.contains($0.id) }
-        return remaining.isEmpty ? module.elements : remaining
+        let completed = Set(module.elements.compactMap { element -> String? in
+            guard let status = DataManager.shared.fetchReviewStatus(elementID: element.id),
+                  status.distinctCorrect > 0 || status.graduatedDate != nil || status.suspended
+            else { return nil }
+            return element.id
+        })
+        let pending = Set(LearnLoop.pendingElementIDs(module.elements.map(\.id), completedIDs: completed))
+        return module.elements.filter { pending.contains($0.id) }
     }
 
     // MARK: - Module row state

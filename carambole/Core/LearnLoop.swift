@@ -23,6 +23,13 @@ enum LearnLoop {
     /// - `.nextElement` — advance to the next element (or finish).
     enum NextAction { case nextExample, nextElement }
 
+    /// Resume an introduction at elements without a correct answer. Once all are
+    /// introduced, allow the learner to practise the full module again.
+    static func pendingElementIDs(_ orderedIDs: [String], completedIDs: Set<String>) -> [String] {
+        let pending = orderedIDs.filter { !completedIDs.contains($0) }
+        return pending.isEmpty ? orderedIDs : pending
+    }
+
     /// Decide the next step.
     /// - In `.review`: always advance — one fresh example per due element.
     /// - In `.learn`:
@@ -46,6 +53,16 @@ enum LearnLoop {
 #if DEBUG
 extension LearnLoop {
     static func _selfTest() {
+        // Resuming a module skips completed introductions but keeps an element
+        // whose only answer was wrong. Once complete, it may be practised again.
+        let ordered = ["one", "two", "three", "four"]
+        assert(pendingElementIDs(ordered, completedIDs: ["one", "two"]) == ["three", "four"],
+               "resume after completed introductions")
+        assert(pendingElementIDs(ordered, completedIDs: ["one", "three"]) == ["two", "four"],
+               "an incorrectly answered element remains in the queue")
+        assert(pendingElementIDs(ordered, completedIDs: Set(ordered)) == ordered,
+               "a completed module can be practised again")
+
         // Review: always advance, regardless of correctness.
         assert(nextAction(mode: .review, correct: true)  == .nextElement, "review correct → next element")
         assert(nextAction(mode: .review, correct: false) == .nextElement, "review wrong → next element")
