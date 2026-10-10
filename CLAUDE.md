@@ -2,6 +2,10 @@
 
 > ## ▶ RECENT HANDOFFS
 >
+> **▶ OPEN: ~1,055 French `explanation` fields are English** — handoff
+> `docs/handoffs/2026-10-10-french-explanations-in-english.md`, finder
+> `tools/explanation_lang.py`.
+>
 > **▶ BOOK 1: BANK LINT + SPOT ITEMS + LADDER (2026-10-10).** Bank lint on
 > main (`tools/bank_lint.py` — run after any bank/prompt edit). 437 `spot`
 > items + `Core/DrillLadder.swift` on branch `spot-ladder`. Details + open
