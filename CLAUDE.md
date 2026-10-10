@@ -1,8 +1,15 @@
 # Carambole — French Grammar Trainer
 
-> ## ▶ ACTIVE TASK — START HERE (next session, continue without re-asking)
+> ## ▶ RECENT HANDOFFS
 >
-> **▶ STUTTER / HITCHES — OPEN (branch `perf-stutter-fixes`, 2026-10-09).** User
+> **▶ STAR VIDEO — DONE (2026-10-10).** READ
+> **`docs/plans/2026-10-09-star-video-handoff.md`**: the star is a
+> pre-rendered video + 2D ring, and the library ribbon is a still image. The
+> duplicate star, blank loop frame, book-entry timing, and sphere/tube depth
+> glitches are resolved. The user checked the signed build on their iPhone 18
+> Pro and said it looks good. Use the phone again only if the user asks.
+>
+> **▶ STUTTER / HITCHES — background (branch `perf-stutter-fixes`, 2026-10-09).** User
 > still sees stutter on page switches + scroll. READ
 > **`docs/plans/2026-10-09-stutter-handoff.md`**: measured data, what's committed
 > (star pauses under covering pages; 120 Hz via `carambole-Info.plist`), what the

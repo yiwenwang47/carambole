@@ -33,6 +33,7 @@ struct StarLoopView: View {
     var active = true
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @State private var visiblePalette: AppPalette?
 
     var body: some View {
         GeometryReader { geo in
@@ -43,11 +44,15 @@ struct StarLoopView: View {
                                      size: size, time: t)
                 ZStack(alignment: .topLeading) {
                     Canvas { ctx, _ in ring.draw(in: &ctx, front: false) }
-                    StarVideoLayer(palette: palette, playing: active && !reduceMotion)
+                    StarVideoLayer(palette: palette, playing: active && !reduceMotion) {
+                        visiblePalette = palette
+                    }
                         .frame(width: ring.videoSide, height: ring.videoSide)
                         .position(ring.starCentre)
                     Canvas { ctx, _ in ring.draw(in: &ctx, front: true) }
                 }
+                // Keep the orbit and video together while the first image loads.
+                .opacity(visiblePalette == palette ? 1 : 0)
             }
         }
         .accessibilityHidden(true)
@@ -91,20 +96,39 @@ private struct OrbitRing {
     }
 
     func draw(in ctx: inout GraphicsContext, front: Bool) {
+        var tubeContext = ctx
+        if front && !beadIsFront {
+            // A rear bead stays behind the star, but the front tube cannot
+            // paint over its projected sphere.
+            tubeContext.clip(to: Path(ellipseIn: beadRect), options: .inverse)
+        }
         let m = min(max(mastered, 0), 1), p = min(max(inProgress, 0), 1 - m)
         let top = Float.pi / 2
         let sweep = 2 * Float.pi * Float(m)
-        tube(&ctx, from: 0, sweep: 2 * .pi, radius: G.trackTube, color: Color(hex: theme.starTrack),
+        tube(&tubeContext, from: 0, sweep: 2 * .pi, radius: G.trackTube, color: Color(hex: theme.starTrack),
              gloss: false, front: front)
         if p > 0.002 {
-            tube(&ctx, from: top + sweep, sweep: 2 * .pi * Float(p), radius: G.enCoursTube,
+            tube(&tubeContext, from: top + sweep, sweep: 2 * .pi * Float(p), radius: G.enCoursTube,
                  color: Color(hex: theme.starArcSoft), gloss: false, front: front)
         }
         if m > 0.002 {
-            tube(&ctx, from: top, sweep: sweep, radius: G.arcTube, color: Color(hex: theme.starArc),
+            tube(&tubeContext, from: top, sweep: sweep, radius: G.arcTube, color: Color(hex: theme.starArc),
                  gloss: true, front: front)
         }
-        bead(&ctx, at: top + sweep, front: front)
+        if beadIsFront == front { bead(&ctx) }
+    }
+
+    private var beadPosition: SIMD3<Float> {
+        let m = min(max(mastered, 0), 1)
+        return ringPoint(Float.pi / 2 + 2 * Float.pi * Float(m))
+    }
+
+    private var beadIsFront: Bool { beadPosition.z >= 0 }
+
+    private var beadRect: CGRect {
+        let pr = project(beadPosition)
+        let r = Double(G.beadRadius) * pr.scale
+        return CGRect(x: pr.point.x - r, y: pr.point.y - r, width: 2 * r, height: 2 * r)
     }
 
     /// One arc of tube, only the parts on the requested side of the star (a
@@ -176,15 +200,12 @@ private struct OrbitRing {
         return path
     }
 
-    private func bead(_ ctx: inout GraphicsContext, at u: Float, front: Bool) {
-        let w = ringPoint(u)
-        guard (w.z >= 0) == front else { return }
-        let pr = project(w)
-        let r = Double(G.beadRadius) * pr.scale
-        let rect = CGRect(x: pr.point.x - r, y: pr.point.y - r, width: 2 * r, height: 2 * r)
+    private func bead(_ ctx: inout GraphicsContext) {
+        let rect = beadRect
+        let r = rect.width / 2
         ctx.fill(Path(ellipseIn: rect), with: .color(Color(hex: theme.starBead)))
         // Glossy highlight, upper left of centre.
-        let hl = CGPoint(x: pr.point.x - r * 0.25, y: pr.point.y - r * 0.4)
+        let hl = CGPoint(x: rect.midX - r * 0.25, y: rect.midY - r * 0.4)
         ctx.fill(Path(ellipseIn: rect), with: .radialGradient(
             Gradient(colors: [.white.opacity(0.55), .white.opacity(0)]),
             center: hl, startRadius: 0, endRadius: r * 0.55))
@@ -193,29 +214,39 @@ private struct OrbitRing {
 
 // MARK: - Video layer
 
-/// The shared looping player for `palette`, over a still of the loop's first
-/// frame. The looper shows one empty frame where the loop wraps; the still
-/// fills it with the right picture (the wrap lands on frame 0), and it covers
-/// the moment before a fresh layer's first frame, which also starts at 0.
+/// A single player item whose final frame remains visible during the seek
+/// back to frame zero. A first-frame cover sits above the video only until
+/// the player layer can display its own first frame.
 private struct StarVideoLayer: UIViewRepresentable {
     let palette: AppPalette
     let playing: Bool
+    let onVisibleFrame: () -> Void
 
     final class LayerView: UIView {
-        let poster = CALayer()
         let playerLayer = AVPlayerLayer()
+        let firstFrame = CALayer()
+        var readyObservation: NSKeyValueObservation?
         var palette: AppPalette?
         var holdsPlay = false
+        var onVisibleFrame: (() -> Void)?
+        var reportedVisibleFrame = false
+
+        func reportVisibleFrame() {
+            guard !reportedVisibleFrame else { return }
+            reportedVisibleFrame = true
+            let notify = onVisibleFrame
+            DispatchQueue.main.async { notify?() }
+        }
 
         override init(frame: CGRect) {
             super.init(frame: frame)
             isOpaque = false
             backgroundColor = .clear
             isUserInteractionEnabled = false
-            poster.contentsGravity = .resizeAspect
             playerLayer.videoGravity = .resizeAspect
-            layer.addSublayer(poster)
+            firstFrame.contentsGravity = .resizeAspect
             layer.addSublayer(playerLayer)
+            layer.addSublayer(firstFrame)
         }
 
         required init?(coder: NSCoder) { fatalError("init(coder:) is not used") }
@@ -224,8 +255,8 @@ private struct StarVideoLayer: UIViewRepresentable {
             super.layoutSubviews()
             CATransaction.begin()
             CATransaction.setDisableActions(true)
-            poster.frame = bounds
             playerLayer.frame = bounds
+            firstFrame.frame = bounds
             CATransaction.commit()
         }
     }
@@ -234,15 +265,29 @@ private struct StarVideoLayer: UIViewRepresentable {
 
     func updateUIView(_ v: LayerView, context: Context) {
         let players = StarLoopPlayers.shared
+        v.onVisibleFrame = onVisibleFrame
         if v.palette != palette {
             if v.holdsPlay, let old = v.palette { players.release(old) }
             v.holdsPlay = false
             v.palette = palette
-            v.poster.contents = nil
-            players.poster(palette) { [weak v] image in
-                if v?.palette == palette { v?.poster.contents = image }
-            }
+            v.readyObservation?.invalidate()
+            v.firstFrame.contents = nil
+            v.firstFrame.isHidden = false
+            v.reportedVisibleFrame = false
             v.playerLayer.player = players.player(palette, fromStart: true)
+            v.readyObservation = v.playerLayer.observe(\.isReadyForDisplay, options: [.initial, .new]) {
+                [weak v] layer, _ in
+                Task { @MainActor [weak v] in
+                    guard v?.palette == palette else { return }
+                    v?.firstFrame.isHidden = layer.isReadyForDisplay
+                    if layer.isReadyForDisplay { v?.reportVisibleFrame() }
+                }
+            }
+            players.poster(palette) { [weak v] image in
+                guard v?.palette == palette else { return }
+                v?.firstFrame.contents = image
+                v?.reportVisibleFrame()
+            }
         }
         if playing != v.holdsPlay {
             if playing { players.acquire(palette) } else { players.release(palette) }
@@ -253,22 +298,22 @@ private struct StarVideoLayer: UIViewRepresentable {
     static func dismantleUIView(_ v: LayerView, coordinator: ()) {
         if v.holdsPlay, let p = v.palette { StarLoopPlayers.shared.release(p) }
         v.holdsPlay = false
+        v.readyObservation?.invalidate()
         v.playerLayer.player = nil
     }
 }
 
 // MARK: - Shared players
 
-/// One looping player per palette, made once (call `prewarm` at launch) and
-/// shared by every star view, plus a still of each loop's first frame. Plays
-/// while at least one visible view holds it.
+/// One persistent player item per palette. Rewind the item itself rather than
+/// replacing queue items at each wrap.
 @MainActor
 final class StarLoopPlayers {
     static let shared = StarLoopPlayers()
 
     private struct Entry {
-        let player: AVQueuePlayer
-        let looper: AVPlayerLooper
+        let player: AVPlayer
+        let observer: NSObjectProtocol
         var holders = 0
     }
     private var entries: [AppPalette: Entry] = [:]
@@ -276,35 +321,41 @@ final class StarLoopPlayers {
     private var decoding: Set<AppPalette> = []
     private var waiting: [AppPalette: [@MainActor (CGImage) -> Void]] = [:]
 
-    /// Loads the current palette's loop, and every palette's first-frame
-    /// still (~3 MB each), so the first star shows at once and the colour
-    /// page can switch palettes without a gap.
     func prewarm(_ palette: AppPalette = .current) {
         _ = player(palette, fromStart: false)
         for p in AppPalette.allCases { loadPoster(p) }
     }
 
-    /// Hands `apply` the palette's first-frame still: now if it is decoded,
-    /// otherwise when the decode lands.
     func poster(_ palette: AppPalette, _ apply: @escaping @MainActor (CGImage) -> Void) {
         if let image = posters[palette] { apply(image); return }
         loadPoster(palette, then: apply)
     }
 
-    /// The palette's player. `fromStart` rewinds it to frame 0 when no view
-    /// is playing it, so a new star starts where its still is.
-    func player(_ palette: AppPalette, fromStart: Bool) -> AVQueuePlayer? {
+    func player(_ palette: AppPalette, fromStart: Bool) -> AVPlayer? {
         if let e = entries[palette] {
             if fromStart, e.holders == 0 { e.player.seek(to: .zero, toleranceBefore: .zero, toleranceAfter: .zero) }
             return e.player
         }
         guard let url = Self.url(palette) else { return nil }
-        let player = AVQueuePlayer()
+        let item = AVPlayerItem(url: url)
+        let player = AVPlayer(playerItem: item)
         player.isMuted = true
         player.preventsDisplaySleepDuringVideoPlayback = false
         player.allowsExternalPlayback = false
-        let looper = AVPlayerLooper(player: player, templateItem: AVPlayerItem(url: url))
-        entries[palette] = Entry(player: player, looper: looper)
+        let observer = NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime,
+                                                               object: item, queue: .main) { [weak self] _ in
+            Task { @MainActor [weak self] in
+                guard let self, let entry = self.entries[palette] else { return }
+                entry.player.seek(to: .zero, toleranceBefore: .zero, toleranceAfter: .zero) { [weak self] finished in
+                    Task { @MainActor [weak self] in
+                        if finished, let entry = self?.entries[palette], entry.holders > 0 {
+                            entry.player.play()
+                        }
+                    }
+                }
+            }
+        }
+        entries[palette] = Entry(player: player, observer: observer)
         return player
     }
 
@@ -326,7 +377,6 @@ final class StarLoopPlayers {
         return Bundle.main.url(forResource: name, withExtension: "mov")
     }
 
-    /// Decodes frame 0 off the main thread.
     private func loadPoster(_ palette: AppPalette, then apply: (@MainActor (CGImage) -> Void)? = nil) {
         if let apply { waiting[palette, default: []].append(apply) }
         guard posters[palette] == nil, !decoding.contains(palette), let url = Self.url(palette) else { return }
