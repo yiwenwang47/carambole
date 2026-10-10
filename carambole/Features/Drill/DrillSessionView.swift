@@ -25,26 +25,35 @@ struct DrillSessionView: View {
     typealias Mode = SessionMode
 
     let title: String
-    /// English module intro shown once on the "Leçon" card. Empty → no card.
+    /// English intro shown on the "Leçon" card; a module always shows the card.
     let ruleNote: String
-    let elements: [GrammarElement]
+    @State private var sessionElements: [GrammarElement]
+    private var elements: [GrammarElement] { sessionElements }
     let mode: Mode
-    /// The module's number, shown large on the Plateau lesson slab (nil = none).
+    /// The module's number, shown large on the colored lesson slab (nil = none).
     let moduleNumber: Int?
+    /// Full module list for the optional Éléments page. `elements` remains the drill queue.
+    let module: CourseModule?
+    let viewModel: BookViewModel?
+    let canStart: Bool
     var onFinish: () -> Void = {}
 
     init(title: String, ruleNote: String, elements: [GrammarElement], mode: Mode,
-         moduleNumber: Int? = nil, onFinish: @escaping () -> Void = {}) {
+         moduleNumber: Int? = nil, module: CourseModule? = nil,
+         viewModel: BookViewModel? = nil, canStart: Bool = true,
+         onFinish: @escaping () -> Void = {}) {
         self.title = title
         self.ruleNote = ruleNote
-        self.elements = elements
+        self._sessionElements = State(initialValue: elements)
         self.mode = mode
         self.moduleNumber = moduleNumber
+        self.module = module
+        self.viewModel = viewModel
+        self.canStart = canStart
         self.onFinish = onFinish
     }
 
     @AppStorage(AppPalette.storageKey) private var paletteID = AppPalette.fallback.rawValue
-    @AppStorage(DrillStyle.storageKey) private var drillStyleID = DrillStyle.fallback.rawValue
 
     @State private var elementIndex = 0
     /// Pending examples for the current element (learn mode queue).
@@ -84,6 +93,7 @@ struct DrillSessionView: View {
 
     @State private var finished = false
     @State private var showingIntro = true
+    @State private var showingElements = false
     /// Start of the completion score's one `wght` wave.
     @State private var summaryWaveStart: Date?
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
@@ -122,7 +132,7 @@ struct DrillSessionView: View {
     }
 
     private var shouldShowIntro: Bool {
-        showingIntro && !ruleNote.isEmpty && !elements.isEmpty
+        showingIntro && (module != nil || (!ruleNote.isEmpty && !elements.isEmpty))
     }
 
     private var progress: Double {
@@ -139,13 +149,20 @@ struct DrillSessionView: View {
                 // completion/empty states have their own "Terminer" button, so the
                 // bar is hidden there. Progress is already durable — every answer
                 // upserts review_status as it happens — so leaving simply dismisses.
-                if !finished && !elements.isEmpty {
+                if !finished && (shouldShowIntro || !elements.isEmpty) {
                     topBar
                 }
 
                 ZStack {
                     if shouldShowIntro {
-                        introCard.transition(.opacity)
+                        Group {
+                            if showingElements, let module {
+                                moduleElementsCard(module)
+                            } else {
+                                introCard
+                            }
+                        }
+                        .transition(.opacity)
                     } else if finished || elements.isEmpty {
                         completionSummary
                             .transition(.move(edge: .trailing).combined(with: .opacity))
@@ -187,7 +204,9 @@ struct DrillSessionView: View {
             if !Task.isCancelled { dismissTooEasyUndo() }
         }
         .onAppear {
-            if history.isEmpty && !elements.isEmpty { startElement(0, animated: false) }
+            if !shouldShowIntro && history.isEmpty && !elements.isEmpty {
+                startElement(0, animated: false)
+            }
         }
         .onReceive(NotificationCenter.default.publisher(
             for: UIResponder.keyboardWillShowNotification)) { updateKeyboardInset($0) }
@@ -621,41 +640,109 @@ struct DrillSessionView: View {
     // MARK: - Intro card (one-time English ease-in)
 
     private var introCard: some View {
-        let plateau = DrillStyle(stored: drillStyleID) == .plateau
         return VStack(alignment: .leading, spacing: Spacing.lg) {
-            if plateau {
-                lessonSlab
-                    .padding(.top, Spacing.md)
-            } else {
-                Spacer(minLength: Spacing.xl)
-                SectionLabel("Leçon")
-            }
+            lessonSlab
+                .padding(.top, Spacing.md)
             Text(title)
                 .font(.display(size: 40, wght: 250))
                 .tracking(-1.2)
                 .lineSpacing(0)
                 .foregroundColor(AppColor.ink)
                 .fixedSize(horizontal: false, vertical: true)
-            if !plateau {
-                Rectangle().fill(AppColor.ink).frame(height: 1).padding(.vertical, Spacing.sm)
-            }
             Text(ruleNote)
                 .font(.appBody)
                 .lineSpacing(4)
                 .foregroundColor(AppColor.graphite)
                 .fixedSize(horizontal: false, vertical: true)
             Spacer()
-            Button("Commencer") {
-                withAnimation(.spring(response: 0.5, dampingFraction: 0.85)) { showingIntro = false }
+            if module != nil {
+                Button {
+                    withAnimation(.easeInOut(duration: 0.2)) { showingElements = true }
+                } label: {
+                    Text("Éléments →").uppercaseLabel(AppColor.ink)
+                        .padding(.vertical, 12)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .accessibilityHint("Voir la liste des éléments du module")
             }
-            .buttonStyle(DrillButtonStyle())
+            startButton
         }
         .padding(.horizontal, Spacing.screenH)
         .padding(.bottom, Spacing.sm)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
     }
 
-    /// Plateau: a large pale slab (the palette's quiet colour, capped) carrying
+    /// Optional module contents. The start action follows the final row, so it
+    /// appears when the learner reaches the bottom of the list.
+    private func moduleElementsCard(_ module: CourseModule) -> some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 0) {
+                Button {
+                    withAnimation(.easeInOut(duration: 0.2)) { showingElements = false }
+                } label: {
+                    Text("‹ Leçon").uppercaseLabel(AppColor.ink)
+                        .padding(.vertical, 12)
+                        .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+
+                Text("Éléments")
+                    .font(.display(size: 40, wght: 250))
+                    .tracking(-1.2)
+                    .foregroundColor(AppColor.ink)
+                    .padding(.top, 24)
+                    .padding(.bottom, 18)
+
+                if let viewModel {
+                    ModuleElementRows(module: module, viewModel: viewModel) { element in
+                        viewModel.demoteElement(element.id)
+                        // The learner can start immediately from this page. Include
+                        // the newly unmastered element in that same session.
+                        sessionElements = viewModel.moduleLearnElements(module)
+                    }
+                } else {
+                    ForEach(module.elements.sorted { $0.sortOrder < $1.sortOrder }) { element in
+                        Text(element.label)
+                            .font(.display(size: 15, wght: 400))
+                            .foregroundColor(AppColor.ink)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.vertical, 12)
+                            .overlay(alignment: .bottom) {
+                                Rectangle().fill(AppColor.hairline).frame(height: 1)
+                            }
+                    }
+                }
+
+                Text("Glisse un élément maîtrisé vers la gauche pour le remettre en cours.")
+                    .uppercaseLabel()
+                    .lineSpacing(3)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding(.top, 14)
+
+                startButton
+                    .padding(.top, Spacing.xl)
+                    .padding(.bottom, Spacing.sm)
+            }
+            .padding(.horizontal, Spacing.screenH)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+
+    private var startButton: some View {
+        Button(!canStart ? "Verrouillé" : (elements.isEmpty ? "Aucun exercice" : "Commencer")) {
+            if history.isEmpty { startElement(0, animated: false) }
+            withAnimation(.spring(response: 0.5, dampingFraction: 0.85)) { showingIntro = false }
+        }
+        .buttonStyle(DrillButtonStyle())
+        .disabled(!canStart || elements.isEmpty)
+        .opacity(canStart && !elements.isEmpty ? 1 : 0.4)
+        .accessibilityHint(!canStart ? "Termine le module précédent" :
+                           (elements.isEmpty ? "Ce module ne contient aucun exercice" : "Commence la leçon"))
+    }
+
+    /// A large pale slab (the palette's quiet colour, capped) carrying
     /// `Leçon · module N` and the module number set huge, cropped by the slab.
     private var lessonSlab: some View {
         let theme = AppPalette(stored: paletteID).theme

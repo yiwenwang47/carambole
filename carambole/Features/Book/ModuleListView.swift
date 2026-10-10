@@ -3,8 +3,8 @@
 //  carambole
 //
 //  The book's table of contents: the 25 modules as quiet numbered rows in the
-//  motion.html edge-type language. Tapping a row opens that module's 02
-//  Cinétique page (`ModuleDetailView`). Reached from the book home's bottom
+//  motion.html edge-type language. Tapping a row opens that module's Leçon
+//  page (`DrillSessionView`). Reached from the book home's bottom
 //  line (`25 modules →`). (Replaces the dropped 06 Tranches stack.)
 //
 
@@ -12,6 +12,7 @@ import SwiftUI
 
 struct ModuleListView: View {
     @ObservedObject var viewModel: BookViewModel
+    @State private var selectedModule: CourseModule?
 
     @Environment(\.dismiss) private var dismiss
 
@@ -33,8 +34,8 @@ struct ModuleListView: View {
                         .padding(.top, 30)
                     Rectangle().fill(AppColor.ink).frame(height: 1).padding(.top, 22)
                     ForEach(Array(modules.enumerated()), id: \.element.id) { index, module in
-                        NavigationLink {
-                            ModuleDetailView(module: module, viewModel: viewModel)
+                        Button {
+                            selectedModule = module
                         } label: {
                             row(number: index + 1, module: module)
                         }
@@ -44,6 +45,14 @@ struct ModuleListView: View {
                 .padding(.horizontal, Spacing.screenH)
                 .padding(.top, 16)
                 .padding(.bottom, Spacing.xl)
+            }
+        }
+        .fullScreenCover(item: $selectedModule, onDismiss: { viewModel.refresh() }) { module in
+            DrillSessionView(title: module.title, ruleNote: module.ruleNote,
+                             elements: viewModel.moduleLearnElements(module), mode: .learn,
+                             moduleNumber: module.sortOrder, module: module,
+                             viewModel: viewModel, canStart: viewModel.isUnlocked(module)) {
+                selectedModule = nil
             }
         }
         .toolbar(.hidden, for: .navigationBar)

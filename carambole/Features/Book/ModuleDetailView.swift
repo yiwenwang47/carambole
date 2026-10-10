@@ -180,15 +180,7 @@ struct ModuleDetailView: View {
     // MARK: Element list
 
     private var elementList: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            ForEach(elements) { element in
-                ElementRow(
-                    element: element,
-                    bucket: viewModel.bucket(for: element),
-                    onDemote: { viewModel.demoteElement(element.id) }
-                )
-            }
-        }
+        ModuleElementRows(module: module, viewModel: viewModel)
     }
 
     private var footnote: some View {
@@ -326,7 +318,25 @@ struct TickerLine {
 /// À-venir rows read g3. A graduated element (maîtrisé / fragile) reveals a
 /// "Remettre en cours" action on a leftward swipe — hand-rolled (no system List).
 /// En-cours / à-venir rows don't swipe (nothing to un-graduate).
-private struct ElementRow: View {
+struct ModuleElementRows: View {
+    let module: CourseModule
+    @ObservedObject var viewModel: BookViewModel
+    var onDemote: ((GrammarElement) -> Void)? = nil
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            ForEach(module.elements.sorted { $0.sortOrder < $1.sortOrder }) { element in
+                ElementRow(element: element, bucket: viewModel.bucket(for: element),
+                           onDemote: {
+                    if let onDemote { onDemote(element) }
+                    else { viewModel.demoteElement(element.id) }
+                })
+            }
+        }
+    }
+}
+
+struct ElementRow: View {
     let element: GrammarElement
     let bucket: BookViewModel.ElementBucket
     let onDemote: () -> Void

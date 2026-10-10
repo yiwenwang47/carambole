@@ -104,7 +104,8 @@ struct MagnetBoard: View {
                 lineTile(position: position, index: index)
             }
         }
-        .frame(maxWidth: .infinity, minHeight: reservedLineHeight, alignment: .bottomLeading)
+        .frame(maxWidth: .infinity, minHeight: reservedLineHeight,
+               alignment: DrillStyle(stored: drillStyleID) == .cadres ? .topLeading : .bottomLeading)
         .phaseAnimator([0.0, -10, 10, -7, 7, -3, 0], trigger: shakeTrigger) { content, x in
             content.offset(x: reduceMotion ? 0 : x)
         } animation: { _ in .linear(duration: 0.06) }

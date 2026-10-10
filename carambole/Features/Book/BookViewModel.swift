@@ -258,7 +258,7 @@ final class BookViewModel: ObservableObject {
         return .aVenir
     }
 
-    /// Un-graduate ("remettre en cours") an element from the module detail list, then
+    /// Un-graduate ("remettre en cours") an element from a module's list, then
     /// refresh so the bar + buckets re-rate. Only meaningful on a graduated element;
     /// `demote` is harmless on others. `demote` and every reader in `refresh()` run on
     /// the same serial `dbQueue`, so the write is guaranteed to land before the refresh

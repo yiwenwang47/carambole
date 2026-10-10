@@ -1,6 +1,6 @@
 # Carambole UI redesign handoff
 
-*Updated 2026-10-09, end of session 4. Start here.*
+*Updated 2026-10-10. Start here.*
 
 ## TL;DR for the next session
 
@@ -31,6 +31,20 @@ worktree removed.
 Still open (only item): Iris star has no true iridescence. It needs the Metal
 toolchain for a RealityKit `CustomMaterial` surface shader; ask the user before
 installing (`xcodebuild -downloadComponent MetalToolchain`).
+
+## Leçon navigation and Cadres answer well (2026-10-10)
+
+`Apprendre` and a module row now open the same colored Leçon card. `Éléments →`
+on that card opens an optional scrolling list of the module's elements and
+status labels. The list retains swipe-to-demote and its accessibility action;
+`Commencer` appears after the final row. Locked modules can be inspected but
+cannot start. A module with no pending exercise still opens Leçon and shows a
+disabled `Aucun exercice` control. The old Cinétique page remains in source for
+its shared element rows but is no longer a navigation destination.
+
+Cadres places selected tiles in the top row of the answer frame. The welded
+correct-answer animation uses the same alignment. Plateau stays bottom aligned.
+The user confirmed the simulator flow works.
 
 ## Session 4 (2026-10-09): colour palettes, drill styles, merge
 
@@ -158,7 +172,7 @@ real browser. Concepts on the page now: **01 Objet, 02 Cinétique, 03 Gravité,
 | Drill | 07 Aimants | `Features/Drill/MagnetBoard.swift` (tiles, matchedGeometry by bank index, weld + wave, shake + dashed, `FlowLayout`), `TokenBuilderView`/`ChoiceView` (thin wrappers), `TypeAnswerView`, `DrillView`, `DrillSessionView` (top bar ✕ · ‹ label › · ring) | done, user has seen it |
 | Book home | 01 Objet | `Features/Book/BookView.swift`, `ObjetStarView.swift`, `DesignSystem/CaramboleStarMesh.swift` (RealityKit extruded star, orbit-ring meshes, studio IBL) | done; bottom line `25 modules →` (17pt) is the ONLY way to the module list — swipe-up removed at user request (2026-10-09); `fait :` line Familjen 14/650 ink |
 | Module list | (replaces dropped 06 Tranches) | `Features/Book/ModuleListView.swift` — numbered rows, status `x / 20` · `Maîtrisé` · `Verrouillé`; pushed from the book-home bottom line only | done |
-| Module page | 02 Cinétique | `Features/Book/ModuleDetailView.swift` (signature `ModuleDetailView(module:viewModel:)` kept) | done |
+| Module lesson | Leçon | `Features/Drill/DrillSessionView.swift` (shared intro and optional Éléments list); `Features/Book/ModuleDetailView.swift` supplies shared status rows | module rows open Leçon directly; Cinétique remains in source but is not navigated to |
 | Today | 03 Gravité | `Features/Today/TodayView.swift`, `TokenPileScene.swift` (SpriteKit) — opened from book home `fait : … →` | done |
 | History | 09 Liste | `Features/History/HistoryView.swift` (3D ribbon removed; `RibbonView.swift` deleted) | done (session 2) |
 | Library | 08 Ruban | `Features/Library/LibraryView.swift`, `LibraryRibbon.swift` (ortho RealityView inside the scroll content, self-tested geometry) | **built, ribbon SHAPE rejected — see TL;DR** |
@@ -167,7 +181,7 @@ real browser. Concepts on the page now: **01 Objet, 02 Cinétique, 03 Gravité,
 Navigation now: Library → Fondations → book home (01).
 From 01: `Apprendre →` / `← Réviser` start sessions · `Réglages` sheet ·
 `fait : … →` → Aujourd'hui (03) → `Historique →` → History · bottom line
-`25 modules →` → module list → row → Cinétique (02) → `Apprendre` pill.
+`25 modules →` → module list → row → Leçon → optional `Éléments` → `Commencer`.
 
 Every control in the plan's inventory survived (Trop facile + pending/Annuler,
 Indice, Écouter, auto-speak, chevrons, carousel swipe, compact mode, review mode,

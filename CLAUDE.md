@@ -2,6 +2,15 @@
 
 > ## ▶ RECENT HANDOFFS
 >
+> **▶ LEÇON FLOW + CADRES ANSWER WELL — DONE (2026-10-10).** The user confirmed
+> the simulator flow works and requested a signed phone install. `Apprendre`
+> and a module row both open the same colored Leçon card. Its optional
+> `Éléments` page retains status rows and swipe-to-demote; `Commencer` follows
+> the list. A module with no pending exercise keeps Leçon visible and disables
+> start. In Cadres, selected tiles and their correct-answer weld start in the
+> top row of the answer well (`MagnetBoard`). Source: `BookView`,
+> `ModuleListView`, `DrillSessionView`, `ModuleDetailView` (shared rows).
+>
 > **▶ STAR VIDEO — DONE (2026-10-10).** READ
 > **`docs/plans/2026-10-09-star-video-handoff.md`**: the star is a
 > pre-rendered video + 2D ring, and the library ribbon is a still image. The

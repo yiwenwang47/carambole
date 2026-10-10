@@ -19,7 +19,7 @@
 //                  25 modules →
 //
 //  Tapping the bottom line (only) opens the module list (`ModuleListView`);
-//  a row there opens the module's 02 Cinétique page.
+//  a row there opens the same Leçon introduction as Apprendre.
 //  Positions are motion.html's 360×760 px read as points: the top block hangs
 //  from the safe area (prototype status bar = 50 px), the bottom block from the
 //  screen bottom.
@@ -36,6 +36,7 @@ private struct ElementSession: Identifiable {
     let elements: [GrammarElement]
     let mode: DrillSessionView.Mode
     var moduleNumber: Int? = nil
+    var module: CourseModule? = nil
 }
 
 struct BookView: View {
@@ -91,7 +92,7 @@ struct BookView: View {
         }
         .fullScreenCover(item: $session, onDismiss: { viewModel.refresh() }) { s in
             DrillSessionView(title: s.title, ruleNote: s.ruleNote, elements: s.elements, mode: s.mode,
-                             moduleNumber: s.moduleNumber) {
+                             moduleNumber: s.moduleNumber, module: s.module, viewModel: viewModel) {
                 session = nil
             }
         }
@@ -316,7 +317,7 @@ struct BookView: View {
         guard let m = viewModel.newestUnlockedModule() else { return }
         session = ElementSession(title: m.title, ruleNote: m.ruleNote,
                                  elements: viewModel.moduleLearnElements(m), mode: .learn,
-                                 moduleNumber: m.sortOrder)
+                                 moduleNumber: m.sortOrder, module: m)
     }
 
     private func startReview() {
