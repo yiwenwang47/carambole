@@ -27,6 +27,7 @@ struct caramboleApp: App {
         FSRS._selfTest()
         CalendarDays._selfTest()
         LearnLoop._selfTest()
+        DrillLadder._selfTest()
         DataManager._selfTest()
         StarVideoRenderer.runIfRequested()
         DemoSeed.runIfRequested()

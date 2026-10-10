@@ -81,7 +81,9 @@ struct SpotErrorView: View {
         #if DEBUG
         .onAppear {
             guard let state = DrillDemo.spotState, let spot else { return }
-            if state == "miss", let i = spot.tokens.indices.first(where: { $0 != spot.wrongIndex }) {
+            if state == "miss", let i = spot.tokens.indices.first(where: {
+                $0 != spot.wrongIndex && !(spot.locked ?? []).contains($0)
+            }) {
                 tapWord(i, isError: false)
             } else if state == "found" || Int(state) != nil {
                 found = true
@@ -126,7 +128,8 @@ struct SpotErrorView: View {
                 .padding(.leading, Self.hugsPrevious(shown) ? -10 : 0)
         }
         .buttonStyle(.plain)
-        .allowsHitTesting(!isLocked && !found && !Self.hugsPrevious(shown))
+        .allowsHitTesting(!isLocked && !found && !Self.hugsPrevious(shown)
+                          && !(spot?.locked ?? []).contains(i))
         .phaseAnimator([0.0, -6, 6, -4, 4, 0], trigger: shakes[i] ?? 0) { content, x in
             content.offset(x: reduceMotion ? 0 : x)
         } animation: { _ in .linear(duration: 0.05) }
@@ -174,7 +177,7 @@ struct SpotErrorView: View {
     // MARK: - Interaction
 
     private func tapWord(_ i: Int, isError: Bool) {
-        guard !isLocked, !found else { return }
+        guard !isLocked, !found, !(spot?.locked ?? []).contains(i) else { return }
         if isError {
             UIImpactFeedbackGenerator(style: .light).impactOccurred()
             withAnimation(.spring(duration: 0.35, bounce: 0.2)) { found = true }
