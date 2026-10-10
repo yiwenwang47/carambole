@@ -51,9 +51,9 @@ struct BookView: View {
     @State private var showingModules = false
     @State private var showingToday = false
     /// The star's RealityView only exists while the home is on screen: left
-    /// rendering under Today it competes with the token drop for frames (the
-    /// drop stuttered right after tapping `fait`). The controller keeps the
-    /// scene, so coming back re-attaches it without rebuilding meshes.
+    /// rendering under a pushed page or a drill it competes for frames (the
+    /// Today drop and the module page's wave title stuttered). The controller
+    /// keeps the scene, so coming back re-attaches it without rebuilding meshes.
     @State private var starLive = true
     @State private var star = ObjetStarController()
     @AppStorage(AppPalette.storageKey) private var paletteID = AppPalette.fallback.rawValue
@@ -108,6 +108,12 @@ struct BookView: View {
         }
         .onChange(of: showingToday) { _, shown in
             if !shown { starLive = true }
+        }
+        .onChange(of: showingModules) { _, shown in
+            if !shown { starLive = true }
+        }
+        .onChange(of: session == nil) { _, closed in
+            starLive = closed
         }
         .sheet(isPresented: $showingSettings, onDismiss: { viewModel.refresh() }) {
             SettingsView(store: viewModel.settingsStore)
@@ -325,6 +331,7 @@ struct BookView: View {
 
     private func openModules() {
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        starLive = false
         showingModules = true
     }
 

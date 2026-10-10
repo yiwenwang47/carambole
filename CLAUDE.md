@@ -2,6 +2,14 @@
 
 > ## ▶ ACTIVE TASK — START HERE (next session, continue without re-asking)
 >
+> **▶ STUTTER / HITCHES — OPEN (branch `perf-stutter-fixes`, 2026-10-09).** User
+> still sees stutter on page switches + scroll. READ
+> **`docs/plans/2026-10-09-stutter-handoff.md`**: measured data, what's committed
+> (star pauses under covering pages; 120 Hz via `carambole-Info.plist`), what the
+> user REJECTED (delaying/fading in the star or ribbon), open leads (75–155 ms
+> main-thread freeze at every push/pop; ribbon rebuilds meshes on every attach;
+> 120 Hz A/B untested), and the reusable device harness in `tools/perf/`.
+>
 > **▶ UI REDESIGN — DONE, MERGED to `main` + PUSHED (2026-10-09, session 4).**
 > READ **`design/UI_REDESIGN_HANDOFF.md`** first: what was built, the colour
 > rules (white ground, ink text, colour on objects, pale saturation-capped
