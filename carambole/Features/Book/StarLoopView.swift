@@ -429,7 +429,12 @@ final class StarLoopPlayers {
     func release(_ palette: AppPalette) {
         guard var e = entries[palette] else { return }
         e.holders = max(0, e.holders - 1)
-        if e.holders == 0 { e.player.pause() }
+        if e.holders == 0 {
+            e.player.pause()
+            // Keep the decoder primed while a page covers the star, so `play()`
+            // on the way back shows motion at once instead of holding a frame.
+            if e.player.status == .readyToPlay { e.player.preroll(atRate: 1) }
+        }
         entries[palette] = e
     }
 
