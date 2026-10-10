@@ -32,8 +32,6 @@ struct LibraryView: View {
                   kicker: "Grammaire A1 → B1", available: true),
         ShelfBook(id: "fr_conversation", title: "Conversation",
                   kicker: "Oral", available: false),
-        ShelfBook(id: "fr_intermediaire", title: "Intermédiaire",
-                  kicker: "B1 → B2", available: false),
     ]
 
     /// Fondations progress (%) — the only live book today.
@@ -75,6 +73,14 @@ struct LibraryView: View {
                 if loaded { bookViewModel.refresh() } else { bookViewModel.load(); loaded = true }
                 historyViewModel.load()
             }
+            #if DEBUG
+            .onReceive(NotificationCenter.default.publisher(for: DemoRemote.Action.openBook.notification)) { _ in
+                openBook = true
+            }
+            .onReceive(NotificationCenter.default.publisher(for: DemoRemote.Action.closeBook.notification)) { _ in
+                openBook = false
+            }
+            #endif
         }
     }
 

@@ -42,6 +42,19 @@ struct TokenBuilderView: View {
                     placedIndices = []
                 }
             }
+            #if DEBUG
+            .onAppear {
+                // Simulator harness (DrillDemo): pre-place the first n answer tokens.
+                let n = DrillDemo.placeCount
+                guard n > 0, placedIndices.isEmpty else { return }
+                var used = Set<Int>()
+                for token in exercise.answerTokens.prefix(n) {
+                    if let i = bank.indices.first(where: { bank[$0] == token && !used.contains($0) }) {
+                        used.insert(i); placedIndices.append(i)
+                    }
+                }
+            }
+            #endif
     }
 }
 

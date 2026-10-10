@@ -73,15 +73,12 @@ struct MagnetBoard: View {
             case .plateau:
                 // The bank sits on a pale tray, like a magnet board (its colour
                 // never changes; "Juste" in the footer confirms an answer).
-                bankArea
-                    .padding(16)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .background(RoundedRectangle(cornerRadius: 28, style: .continuous)
-                        .fill(Color(hex: theme.tint)))
+                bankTray(inset: 16, shape: RoundedRectangle(cornerRadius: 28, style: .continuous),
+                         fill: Color(hex: theme.tint))
                     .padding(.horizontal, -8)
                     .padding(.top, 16)
             case .cadres:
-                bankArea
+                bankTray(inset: 0, shape: Rectangle(), fill: .clear)
                     .padding(.top, 22)
             }
         }
@@ -136,6 +133,32 @@ struct MagnetBoard: View {
     }
 
     // MARK: - Bank
+
+    /// The bank on its tray. The tray hugs the tiles when they fit; when the
+    /// space left above the footer is too small (an expanded hint, a long
+    /// answer, a small screen) the tray takes exactly that space and the tiles
+    /// scroll INSIDE it, clipped to the tray's own shape — so the visible tray
+    /// edge is the boundary and nothing above it (answer line, hint) ever moves
+    /// or gets covered. On a correct weld the clip lifts so leftovers can fall
+    /// away off-screen.
+    private func bankTray<S: Shape>(inset: CGFloat, shape: S, fill: Color) -> some View {
+        ViewThatFits(in: .vertical) {
+            bankArea
+                .padding(inset)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(shape.fill(fill))
+            ScrollView {
+                bankArea
+                    .padding(inset)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            .scrollBounceBehavior(.basedOnSize)
+            .scrollIndicators(.hidden)
+            .scrollClipDisabled()
+            .background(shape.fill(fill))
+            .clipShape(welded ? AnyShape(Rectangle().inset(by: -2000)) : AnyShape(shape))
+        }
+    }
 
     private var bankArea: some View {
         FlowLayout(spacing: 14, lineSpacing: 16) {

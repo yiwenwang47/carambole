@@ -2,6 +2,23 @@
 
 > ## ▶ RECENT HANDOFFS
 >
+> **▶ SIM HARNESS + INDICE TRAY + STAR BOB — DONE (2026-10-10).** READ
+> **`tools/sim/README.md`** before any visual check: `tools/sim/sim.sh`
+> (build / install / `load-db` a real exported .sqlite / launch with `CB_*`
+> flags / `remote` navigation / record / frames / clean) + the DEBUG-only app
+> side in `carambole/Debug/` (`DemoSeed` 76 % learner, `DrillDemo` single-drill
+> + "Test book", `DemoRemote` Darwin-notification navigation). Fixes: (1) star
+> bob used `Float(time)` on seconds-since-2001 → froze 64 s then jumped ~17 pt,
+> splitting the ring (`StarLoopView`); (2) expanded Indice was covered by
+> scrolled answer chips. The card stays **vertically locked**; only the word
+> bank gives way — its tray shrinks and the tiles scroll inside it, clipped to
+> the tray edge (`MagnetBoard.bankTray`); the hint opens as a drawer
+> (`DrillView.assistRow`). A whole-card ScrollView was tried and REJECTED by
+> the user. Sims: only the iOS 27.0 runtime is installed now; use the iPhone 18
+> Pro sim `48420336-…` (the old iPhone 16 / 18.5 sim `7C7BA0A7-…` is
+> unavailable). Never use xctrace casually: its `$TMPDIR/instruments*.ktrace`
+> leftovers filled the disk (83 GB).
+>
 > **▶ LEÇON FLOW + CADRES ANSWER WELL — DONE (2026-10-10).** The user confirmed
 > the simulator flow works and requested a signed phone install. `Apprendre`
 > and a module row both open the same colored Leçon card. Its optional
@@ -131,7 +148,7 @@
 >   `tools/lint_topics.py` (rewritten for the module schema: 20 elements/module, ≥5
 >   examples/element, multiset banks, unique ids) passes.
 > - **UI:** **Library shelf** is the root (`LibraryView`) — pick a book; "Français —
->   Fondations" live, "Conversation"/"Intermédiaire" locked "Bientôt". Then
+>   Fondations" live, "Conversation" locked "Bientôt". Then
 >   `BookView` (module ToC + Apprendre/Réviser). Drill UI unchanged (token-build /
 >   MC, translation, Indice, "Trop facile" gate now per element).
 > - **Branding:** carambole star mark (`CaramboleMark.swift` → `CaramboleLogo`),
@@ -263,8 +280,9 @@
 >   keeps progress; Settings "Exporter" shares the .sqlite; **back/forward chevrons
 >   (`‹`/`›`) navigate to prior drills read-only** (restored — see DRILL BACK/FORWARD
 >   NAV; real-view screenshot-verified, literal tap still TODO on-device).
-> - (b) **More books** — Conversation / Intermédiaire are locked placeholders in
->   `LibraryView`; the `Book` model already supports many. Wire real content +
+> - (b) **More books** — Conversation is a locked placeholder in
+>   `LibraryView`; the `Book` model already supports many. See
+>   `docs/decisions/2026-10-10-next-book.md` for the Book 2 direction. Wire real content +
 >   per-book selection into `BookView` (currently loads the single `ContentLoader`
 >   book).
 > - (c) Expose `masteryThreshold` in Settings (today a constant).
