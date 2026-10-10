@@ -73,6 +73,14 @@ struct LibraryView: View {
                 if loaded { bookViewModel.refresh() } else { bookViewModel.load(); loaded = true }
                 historyViewModel.load()
             }
+            #if DEBUG
+            .onReceive(NotificationCenter.default.publisher(for: DemoRemote.Action.openBook.notification)) { _ in
+                openBook = true
+            }
+            .onReceive(NotificationCenter.default.publisher(for: DemoRemote.Action.closeBook.notification)) { _ in
+                openBook = false
+            }
+            #endif
         }
     }
 

@@ -99,6 +99,18 @@ struct DrillView: View {
             .background(AppColor.paper)
         }
         .background(AppColor.paper.ignoresSafeArea())
+        #if DEBUG
+        .task {
+            // Simulator harness (DrillDemo, tools/sim): open the hint, or cycle it.
+            if DrillDemo.hintOpen { showHint = true }
+            guard DrillDemo.hintCycle else { return }
+            try? await Task.sleep(nanoseconds: 1_500_000_000)
+            while !Task.isCancelled {
+                withAnimation(.spring(response: 0.35, dampingFraction: 0.85)) { showHint.toggle() }
+                try? await Task.sleep(nanoseconds: 1_600_000_000)
+            }
+        }
+        #endif
     }
 
     /// The card body, laid out top-down. `compact` drops the secondary chrome to

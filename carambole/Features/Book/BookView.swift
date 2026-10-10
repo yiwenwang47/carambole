@@ -116,6 +116,34 @@ struct BookView: View {
         }
         .toolbar(.hidden, for: .navigationBar)
         .navigationBarBackButtonHidden(true)
+        #if DEBUG
+        .onReceive(NotificationCenter.default.publisher(for: DemoRemote.Action.openModules.notification)) { _ in
+            starLive = false
+            showingModules = true
+        }
+        .onReceive(NotificationCenter.default.publisher(for: DemoRemote.Action.closeModules.notification)) { _ in
+            showingModules = false
+        }
+        .onReceive(NotificationCenter.default.publisher(for: DemoRemote.Action.openToday.notification)) { _ in
+            starLive = false
+            showingToday = true
+        }
+        .onReceive(NotificationCenter.default.publisher(for: DemoRemote.Action.closeToday.notification)) { _ in
+            showingToday = false
+        }
+        .onReceive(NotificationCenter.default.publisher(for: DemoRemote.Action.openSettings.notification)) { _ in
+            showingSettings = true
+        }
+        .onReceive(NotificationCenter.default.publisher(for: DemoRemote.Action.closeSettings.notification)) { _ in
+            showingSettings = false
+        }
+        .onReceive(NotificationCenter.default.publisher(for: DemoRemote.Action.startReview.notification)) { _ in
+            startReview()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: DemoRemote.Action.closeSession.notification)) { _ in
+            session = nil
+        }
+        #endif
     }
 
     // MARK: - Derived

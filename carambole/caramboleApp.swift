@@ -29,6 +29,8 @@ struct caramboleApp: App {
         LearnLoop._selfTest()
         DataManager._selfTest()
         StarVideoRenderer.runIfRequested()
+        DemoSeed.runIfRequested()
+        DemoRemote.start()
         #endif
     }
 
