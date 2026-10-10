@@ -74,8 +74,18 @@ private struct OrbitRing {
     private typealias G = StarVideoGeometry
 
     private var focal: Double { G.focal(height: size.height) }
-    private var bob: Float { sin(Float(time) * G.bobRate) * G.bobAmplitude }
-    private var spin: Float { Float(time.truncatingRemainder(dividingBy: 2 * .pi / Double(G.ringSpinRate))) * G.ringSpinRate }
+    /// `time` is seconds since 2001 (~8 × 10⁸). A Float holds that only to the
+    /// nearest 64 s, so each phase is reduced to one period in Double before it
+    /// becomes a Float. `Float(time)` here froze the bob for 64 s and then
+    /// jumped the star and ring together by up to 17 pt.
+    private var bob: Float {
+        let period = 2 * Double.pi / Double(G.bobRate)
+        return sin(Float(time.truncatingRemainder(dividingBy: period)) * G.bobRate) * G.bobAmplitude
+    }
+    private var spin: Float {
+        let period = 2 * Double.pi / Double(G.ringSpinRate)
+        return Float(time.truncatingRemainder(dividingBy: period)) * G.ringSpinRate
+    }
     private var orientation: simd_quatf { G.ringTilt * simd_quatf(angle: spin, axis: [0, 0, 1]) }
 
     /// Screen side of the square star video.
