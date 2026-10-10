@@ -4,7 +4,7 @@
 //
 //  "Historique" — motion.html 09 "Liste". Per calendar day, how many grammar
 //  elements were learned vs genuinely reviewed, scoped to the current book.
-//  No object: two big 30-day totals, the streak, then one quiet line per day
+//  No object: two all-time totals, the streak, then one quiet line per day
 //  (newest first, rest days kept and greyed) and the "approximatives"
 //  footnote. Nothing moves. Self-contained + previewable; navigation is wired
 //  elsewhere. (The 3D ribbon moved to the library — `LibraryRibbon.swift`.)
@@ -98,12 +98,26 @@ final class HistoryViewModel: ObservableObject {
 }
 
 
-// MARK: - Read-only helpers (30-day window + streak)
+// MARK: - Read-only helpers (history, ribbon window + streak)
 
 extension HistoryViewModel {
+    /// Every calendar day from the first recorded activity through today,
+    /// oldest first, including rest days. The library ribbon keeps its own
+    /// fixed 30-day window below.
+    static func allHistory(days: [DayActivity], today: Date,
+                           calendar: Calendar) -> [DayActivity] {
+        let todayStart = calendar.startOfDay(for: today)
+        guard let first = days.map({ calendar.startOfDay(for: $0.day) }).min(),
+              first <= todayStart,
+              let elapsed = calendar.dateComponents([.day], from: first, to: todayStart).day else {
+            return []
+        }
+        return window(days: days, today: today, count: elapsed + 1, calendar: calendar)
+    }
+
     /// The last `count` calendar days ending `today`, OLDEST first, with
-    /// zero-activity entries for rest days. Pure; feeds the history list and
-    /// the library ribbon.
+    /// zero-activity entries for rest days. Pure; used by full history and
+    /// the library's fixed 30-day ribbon.
     static func window(days: [DayActivity], today: Date, count: Int = 30,
                        calendar: Calendar) -> [DayActivity] {
         let todayStart = calendar.startOfDay(for: today)
@@ -150,30 +164,28 @@ struct HistoryView: View {
     }
 }
 
-/// motion.html 09: `‹ Historique` · `30 jours`, the two totals, `Série N j`,
-/// an ink rule, then the last 30 days newest first and the footnote pinned to
+/// motion.html 09: `‹ Historique` · `Depuis le début`, the two totals, `Série N j`,
+/// an ink rule, then all recorded days newest first and the footnote pinned to
 /// the bottom. Data-in, so the layout is previewable with fixed days.
 struct HistoryContent: View {
-    static let windowDays = 30
-
     /// All active days, newest first (`HistoryViewModel.days`).
     let days: [HistoryViewModel.DayActivity]
     let today: Date
     let onBack: () -> Void
 
-    /// The 30-day window, NEWEST first, rest days included.
-    private var window: [HistoryViewModel.DayActivity] {
-        HistoryViewModel.window(days: days, today: today, count: Self.windowDays,
-                                calendar: .current).reversed()
+    /// Full recorded span, NEWEST first, rest days included.
+    private var history: [HistoryViewModel.DayActivity] {
+        HistoryViewModel.allHistory(days: days, today: today,
+                                    calendar: .current).reversed()
     }
 
     var body: some View {
-        let win = window
+        let rows = history
         ZStack(alignment: .topLeading) {
             AppColor.paper
 
-            HistoryHeader(learned: win.reduce(0) { $0 + $1.learned },
-                          reviewed: win.reduce(0) { $0 + $1.reviewed },
+            HistoryHeader(learned: rows.reduce(0) { $0 + $1.learned },
+                          reviewed: rows.reduce(0) { $0 + $1.reviewed },
                           onBack: onBack)
 
             if days.isEmpty {
@@ -190,7 +202,7 @@ struct HistoryContent: View {
                     .padding(.top, 214)
                     .accessibilityLabel("Série de \(HistoryViewModel.streak(days: days, today: today, calendar: .current)) jours")
 
-                dayList(win)
+                dayList(rows)
                     .padding(.top, 252)
                     .padding(.bottom, 84)   // clears the two-line footnote
             }
@@ -210,12 +222,12 @@ struct HistoryContent: View {
     }
 
     /// `.days`: ink top rule, then one hairline-separated row per day.
-    private func dayList(_ win: [HistoryViewModel.DayActivity]) -> some View {
+    private func dayList(_ rows: [HistoryViewModel.DayActivity]) -> some View {
         VStack(spacing: 0) {
             Rectangle().fill(AppColor.ink).frame(height: 1)
             ScrollView {
                 LazyVStack(spacing: 0) {
-                    ForEach(Array(win.enumerated()), id: \.element.id) { index, day in
+                    ForEach(Array(rows.enumerated()), id: \.element.id) { index, day in
                         DayRow(activity: day, isToday: index == 0)
                     }
                 }
@@ -229,7 +241,7 @@ struct HistoryContent: View {
 
 // MARK: - Header
 
-/// `‹ Historique` · `30 jours`, then the two big totals (motion.html 09).
+/// `‹ Historique` · `Depuis le début`, then the two big totals (motion.html 09).
 private struct HistoryHeader: View {
     let learned: Int
     let reviewed: Int
@@ -249,7 +261,7 @@ private struct HistoryHeader: View {
             .padding(.leading, Spacing.screenH)
             .padding(.top, 56)
 
-            Text("30 jours")
+            Text("Depuis le début")
                 .uppercaseLabel()
                 .frame(maxWidth: .infinity, alignment: .trailing)
                 .padding(.horizontal, Spacing.screenH)
@@ -412,6 +424,14 @@ extension HistoryViewModel {
         assert(win[26].learned + win[26].reviewed == 0, "day 97 is a rest day")
         assert(win[29].learned == 2 && win[29].reviewed == 3, "today's counts carried")
         assert(win.filter { $0.learned + $0.reviewed > 0 }.count == 4, "4 active days in window")
+
+        // Historique reaches activity older than the ribbon's 30-day window.
+        let full = allHistory(days: days + [day(50, 7, 8)], today: today, calendar: cal)
+        assert(full.count == 51, "history spans first activity through today")
+        assert(full.first?.learned == 7 && full.first?.reviewed == 8, "oldest activity retained")
+        assert(full[1].learned + full[1].reviewed == 0, "rest days retained")
+        assert(full.last?.day == cal.startOfDay(for: today), "history ends today")
+        assert(allHistory(days: [], today: today, calendar: cal).isEmpty, "empty history has no rows")
     }
 }
 #endif

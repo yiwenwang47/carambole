@@ -15,7 +15,7 @@
 //    ───────────────────────────────────────────
 //    8                                       14
 //    Apprendre →                      ← Réviser
-//                                     Tour · 20
+//                               Par tour  10 20 50
 //                  25 modules →
 //
 //  Tapping the bottom line (only) opens the module list (`ModuleListView`);
@@ -317,12 +317,12 @@ struct BookView: View {
                     .accessibilityLabel("Réviser, \(viewModel.dueCount) à revoir")
                     .accessibilityAddTraits(.isButton)
 
-                    RoundSizeToggle(store: viewModel.settingsStore)
+                    RoundSizePicker(store: viewModel.settingsStore)
                         .padding(.top, 6)
                 }
             }
             .padding(.top, 15)
-            .frame(height: 100 + 15, alignment: .top)
+            .frame(height: 115 + 15, alignment: .top)
 
             Button { openModules() } label: {
                 Text("\(viewModel.book.modules.count) modules  →")
@@ -400,46 +400,43 @@ struct BookView: View {
 
 // MARK: - Réviser round size
 
-/// `Tour · 20` under Réviser: how many problems one Réviser tap presents
-/// (`StudySettings.reviewRoundSizeOptions`). Tap cycles 10 → 20 → 50 and writes
-/// straight to the settings store.
-private struct RoundSizeToggle: View {
+/// Visible choices for the number of problems in one review round.
+private struct RoundSizePicker: View {
     @ObservedObject var store: StudySettingsStore
 
     private var options: [Int] { StudySettings.reviewRoundSizeOptions }
     private var current: Int { store.settings.reviewRoundSize }
 
     var body: some View {
-        Button { step(1) } label: {
-            Text("Tour · \(current)")
+        HStack(spacing: 3) {
+            Text("Par tour")
                 .uppercaseLabel()
-                .padding(.vertical, 6)
-                .padding(.leading, 12)
-                .contentShape(Rectangle())
-        }
-        .buttonStyle(.plain)
-        .padding(.vertical, -6)
-        .accessibilityLabel("Révisions par tour : \(current)")
-        .accessibilityHint("Touchez pour passer à \(next(1))")
-        .accessibilityAdjustableAction { dir in
-            switch dir {
-            case .increment: step(1)
-            case .decrement: step(-1)
-            @unknown default: break
+                .padding(.trailing, 3)
+
+            ForEach(options, id: \.self) { size in
+                Button {
+                    select(size)
+                } label: {
+                    Text("\(size)")
+                        .font(.label(size: 12, wght: 650))
+                        .foregroundColor(current == size ? AppColor.paper : AppColor.ink)
+                        .frame(width: 31, height: 28)
+                        .background(Capsule().fill(current == size ? AppColor.ink : AppColor.paper))
+                        .overlay(Capsule().strokeBorder(AppColor.hairline, lineWidth: current == size ? 0 : 1))
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel("\(size) révisions par tour")
+                .accessibilityValue(current == size ? "Sélectionné" : "")
             }
         }
     }
 
-    private func next(_ dir: Int) -> Int {
-        let i = options.firstIndex(of: current) ?? 0
-        return options[(i + dir + options.count) % options.count]
-    }
-
-    private func step(_ dir: Int) {
+    private func select(_ size: Int) {
+        guard size != current else { return }
         let s = store.settings
         store.settings = StudySettings(newPerDay: s.newPerDay,
                                        reviewTarget: s.reviewTarget,
-                                       reviewRoundSize: next(dir))
+                                       reviewRoundSize: size)
         UISelectionFeedbackGenerator().selectionChanged()
     }
 }
