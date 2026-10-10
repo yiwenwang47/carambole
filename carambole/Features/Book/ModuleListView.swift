@@ -13,6 +13,7 @@ import SwiftUI
 struct ModuleListView: View {
     @ObservedObject var viewModel: BookViewModel
     @State private var selectedModule: CourseModule?
+    @State private var swipeGuard = SwipeBackGuard()
 
     @Environment(\.dismiss) private var dismiss
 
@@ -35,6 +36,7 @@ struct ModuleListView: View {
                     Rectangle().fill(AppColor.ink).frame(height: 1).padding(.top, 22)
                     ForEach(Array(modules.enumerated()), id: \.element.id) { index, module in
                         Button {
+                            guard !swipeGuard.dragging else { return }
                             selectedModule = module
                         } label: {
                             row(number: index + 1, module: module)
@@ -57,7 +59,7 @@ struct ModuleListView: View {
         }
         .toolbar(.hidden, for: .navigationBar)
         .navigationBarBackButtonHidden(true)
-        .swipeToGoBack { dismiss() }
+        .swipeToGoBack(guard: swipeGuard) { dismiss() }
     }
 
     private var header: some View {
