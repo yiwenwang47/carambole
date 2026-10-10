@@ -30,13 +30,11 @@ else:
 
 sub("Views/RootView.swift", "        LibraryView()\n",
     "        LibraryView()\n            #if PERF_HARNESS\n            .task { PerfHarness.startIfRequested() }\n            #endif\n")
-sub("Features/Library/LibraryView.swift", "                if ribbonLive {\n",
-    "                if ribbonLive && !PerfFlags.noRibbon {\n")
 sub("Features/Library/LibraryView.swift",
-    "            .onChange(of: reduceMotion) { motion.reduceMotion = reduceMotion }\n",
-    "            .onChange(of: reduceMotion) { motion.reduceMotion = reduceMotion }\n"
+    "            .navigationDestination(isPresented: $openColors) { ColorSettingsView() }\n",
+    "            .navigationDestination(isPresented: $openColors) { ColorSettingsView() }\n"
     "            .perfCommand(\"openBook\") { open() }\n"
-    "            .perfCommand(\"openColors\") { ribbonLive = false; openColors = true }\n")
+    "            .perfCommand(\"openColors\") { openColors = true }\n")
 sub("DesignSystem/LoopWaveText.swift", "            if reduceMotion {\n                lines(fit, t: nil)",
     "            if reduceMotion || PerfFlags.staticWave {\n                lines(fit, t: nil)")
 sub("Features/Settings/ColorSettingsView.swift",

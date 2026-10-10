@@ -17,12 +17,10 @@ import UIKit
 enum PerfFlags {
     #if PERF_HARNESS
     private static let env = ProcessInfo.processInfo.environment
-    static let noRibbon = env["CB_PERF_NO_RIBBON"] == "1"
     static let staticWave = env["CB_PERF_STATIC_WAVE"] == "1"
     static let pauseStar = env["CB_PERF_PAUSE_STAR"] == "1"
     static let noColorStar = env["CB_PERF_NO_COLOR_STAR"] == "1"
     #else
-    static let noRibbon = false
     static let staticWave = false
     static let pauseStar = false
     static let noColorStar = false

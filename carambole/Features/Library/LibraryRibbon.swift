@@ -12,15 +12,17 @@
 //  (scale SHARED across books) and its last 30 days tint the outline gently
 //  (±12 %, never jagged); a book to come is a slimmer, paler link with grey edges.
 //
-//  The RealityView is laid out INSIDE the scroll content, as tall as the list,
-//  so the system scroll moves it with the titles (no offset syncing). It uses
-//  an orthographic camera at k = 0.0076 world units per point, so content
-//  points map 1:1 onto the mesh. Only the gentle sway animates.
+//  The ribbon is rendered once to a still image (`LibraryRibbonImage`) laid
+//  out INSIDE the scroll content, as tall as the list, so the system scroll
+//  moves it with the titles (no offset syncing). The render uses an
+//  orthographic camera at k = 0.0076 world units per point, so content points
+//  map 1:1 onto the mesh. Nothing animates (the old sway is gone).
 //
 //  Spine and boundary twist follow the prototype's `<!-- 08 · library ribbon -->`
 //  script; the two-sided paper + edge-tube mesh comes from the 05 ribbon.
 //
 
+import Metal
 import RealityKit
 import SwiftUI
 import UIKit
@@ -301,95 +303,162 @@ struct LibraryRibbonGeometry: Hashable {
     }
 }
 
-// MARK: - Motion
+// MARK: - Still image
 
-/// Per-frame sway state for the RealityKit update loop (not SwiftUI state).
-final class LibraryRibbonMotion {
-    var reduceMotion = false
-    private var time: Float = 0
-    weak var pivot: Entity?
-    var subscription: EventSubscription?
+/// The shelf ribbon as a still picture, sized to `geometry.viewWidth ×
+/// contentHeight` points. It used to be a live RealityView that swayed; a
+/// RealityView costs ~100 ms on the main thread every time it is created, and
+/// the library re-created it on every return from a book. Now the scene is
+/// rendered once per (geometry, palette, screen scale) with `RealityRenderer`
+/// and shown as an image, so going back to the shelf is free.
+struct LibraryRibbonImage: View {
+    let geometry: LibraryRibbonGeometry
+    var palette: AppPalette = .current
 
-    /// Prototype: `pivot.rotation.y = sin(t · .5) · .2`, none with Reduce Motion.
-    func tick(_ dt: Float) {
-        time += dt
-        let angle = reduceMotion ? 0 : sin(time * 0.5) * 0.2
-        pivot?.orientation = simd_quatf(angle: angle, axis: [0, 1, 0])
+    @Environment(\.displayScale) private var displayScale
+    @State private var image: CGImage?
+
+    var body: some View {
+        let key = LibraryRibbonRenderer.Key(geometry: geometry, palette: palette, scale: displayScale)
+        Group {
+            if let image = LibraryRibbonRenderer.cached(key) ?? image {
+                Image(decorative: image, scale: displayScale)
+                    .resizable()
+            } else {
+                Color.clear
+            }
+        }
+        .task(id: key) {
+            if LibraryRibbonRenderer.cached(key) != nil { return }
+            // A new picture replaces one already on screen: wait for the
+            // push / pop to settle first, so the render never lands mid-slide.
+            if image != nil { try? await Task.sleep(for: .milliseconds(450)) }
+            if Task.isCancelled { return }
+            if let rendered = await LibraryRibbonRenderer.render(key) { image = rendered }
+        }
     }
 }
 
-// MARK: - RealityView
+/// Renders the ribbon scene offscreen and keeps the latest picture.
+@MainActor
+enum LibraryRibbonRenderer {
+    struct Key: Hashable {
+        let geometry: LibraryRibbonGeometry
+        let palette: AppPalette
+        let scale: CGFloat
+    }
 
-/// The shelf ribbon, sized to `geometry.viewWidth × contentHeight`. Rebuild by
-/// changing `.id` when the geometry changes.
-struct LibraryRibbonScene: View {
-    let geometry: LibraryRibbonGeometry
-    let motion: LibraryRibbonMotion
-    /// Paper colours (front / back, started / to come). Rebuild via `.id` on change.
-    var palette: AppPalette = .current
+    private static var last: (key: Key, image: CGImage)?
+    private static var renderer: RealityRenderer?
 
-    var body: some View {
-        RealityView { content in
-            content.camera = .virtual
+    static func cached(_ key: Key) -> CGImage? {
+        last?.key == key ? last?.image : nil
+    }
 
-            // Orthographic: the view's full width spans viewWidth · k world units, so
-            // content points map 1:1 onto the mesh.
-            let camera = Entity()
-            var ortho = OrthographicCameraComponent()
-            // `scale` is the HALF extent along `scaleDirection`.
-            ortho.scaleDirection = .horizontal
-            ortho.scale = geometry.viewWidth * LibraryRibbonGeometry.k / 2
-            ortho.near = 0.1
-            ortho.far = 50
-            camera.components.set(ortho)
-            camera.position = [0, 0, 10]
-            content.add(camera)
+    static func render(_ key: Key) async -> CGImage? {
+        if let hit = cached(key) { return hit }
+        let g = key.geometry
+        let width = Int((CGFloat(g.viewWidth) * key.scale).rounded())
+        let height = Int((CGFloat(g.contentHeight) * key.scale).rounded())
+        guard width > 0, height > 0, let device = MTLCreateSystemDefaultDevice() else { return nil }
+        do {
+            if renderer == nil {
+                let r = try RealityRenderer()
+                r.cameraSettings.colorBackground = .color(CGColor(gray: 0, alpha: 0))
+                r.cameraSettings.antialiasing = .multisample4X
+                // RealityView adds soft environment light on top of the two
+                // lights; the offscreen renderer has none, so give it the
+                // studio room at the strength that matched the live view's
+                // brightness (sim screenshots, 2026-10-09).
+                r.lighting.resource = StudioEnvironment.resource()
+                r.lighting.intensityExponent = 1.4
+                renderer = r
+            }
+            guard let renderer else { return nil }
+            let desc = MTLTextureDescriptor.texture2DDescriptor(pixelFormat: .bgra8Unorm_srgb, width: width,
+                                                                height: height, mipmapped: false)
+            desc.usage = [.renderTarget, .shaderRead]
+            desc.storageMode = .shared
+            guard let texture = device.makeTexture(descriptor: desc) else { return nil }
+            let output = try RealityRenderer.CameraOutput(.singleProjection(colorTexture: texture))
 
-            // Key light (prototype DirectionalLight at (-2, 4, 5)): paper facing
-            // the camera stays near white, paper turned away greys strongly.
-            let key = DirectionalLight()
-            key.light.intensity = 1000
-            key.look(at: .zero, from: [-2, 4, 5], relativeTo: nil)
-            content.add(key)
-
-            // Soft fill from below-front (stands in for the prototype's
-            // hemisphere ground colour) so turned paper greys, never blacks.
-            let fill = DirectionalLight()
-            fill.light.intensity = 120
-            fill.look(at: .zero, from: [1, -3, 4], relativeTo: nil)
-            content.add(fill)
-
-            // Sway about the ribbon's own axis: pivot at the axis, group offset back.
-            let pivot = Entity()
-            pivot.position.x = geometry.wx(geometry.axisX)
-            let group = Entity()
-            group.position.x = -geometry.wx(geometry.axisX)
-            pivot.addChild(group)
-
-            let theme = palette.theme
-            for (i, stretch) in geometry.stretches.enumerated() {
-                let samples = geometry.samples(forStretch: i)
-                let live = stretch.isLive
-                if let front = try? LibraryRibbonGeometry.paperMesh(samples, front: true),
-                   let back = try? LibraryRibbonGeometry.paperMesh(samples, front: false),
-                   let edges = try? LibraryRibbonGeometry.edgeMesh(samples) {
-                    let frontHex = live ? theme.ribbonFront : theme.soonFront
-                    let backHex = live ? theme.ribbonBack : theme.soonBack
-                    group.addChild(ModelEntity(mesh: front, materials: [Self.paper(UIColor(hex: frontHex), live: live)]))
-                    group.addChild(ModelEntity(mesh: back, materials: [Self.paper(UIColor(hex: backHex), live: live)]))
-                    var line = UnlitMaterial(color: UIColor(live ? AppColor.ink : AppColor.g2))
-                    line.faceCulling = .none
-                    group.addChild(ModelEntity(mesh: edges, materials: [line]))
+            let (camera, roots) = scene(g, palette: key.palette)
+            renderer.entities.removeAll()
+            renderer.entities.append(contentsOf: [camera] + roots)
+            renderer.activeCamera = camera
+            await withCheckedContinuation { (done: CheckedContinuation<Void, Never>) in
+                do {
+                    try renderer.updateAndRender(deltaTime: 0, cameraOutput: output, onComplete: { _ in done.resume() })
+                } catch {
+                    done.resume()
                 }
             }
-            content.add(pivot)
+            renderer.entities.removeAll()
 
-            motion.pivot = pivot
-            motion.tick(0)
-            motion.subscription = content.subscribe(to: SceneEvents.Update.self) { event in
-                motion.tick(Float(event.deltaTime))
+            let bytesPerRow = width * 4
+            var pixels = Data(count: bytesPerRow * height)
+            pixels.withUnsafeMutableBytes { buf in
+                texture.getBytes(buf.baseAddress!, bytesPerRow: bytesPerRow,
+                                 from: MTLRegionMake2D(0, 0, width, height), mipmapLevel: 0)
+            }
+            guard let provider = CGDataProvider(data: pixels as CFData),
+                  let image = CGImage(width: width, height: height, bitsPerComponent: 8, bitsPerPixel: 32,
+                                      bytesPerRow: bytesPerRow, space: CGColorSpace(name: CGColorSpace.sRGB)!,
+                                      bitmapInfo: CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedFirst.rawValue
+                                                               | CGBitmapInfo.byteOrder32Little.rawValue),
+                                      provider: provider, decode: nil, shouldInterpolate: true,
+                                      intent: .defaultIntent)
+            else { return nil }
+            last = (key, image)
+            return image
+        } catch {
+            return nil
+        }
+    }
+
+    /// The old RealityView scene at rest: orthographic camera mapping content
+    /// points 1:1 onto the mesh, key + fill lights, one paper link per book.
+    private static func scene(_ geometry: LibraryRibbonGeometry, palette: AppPalette) -> (Entity, [Entity]) {
+        // `scale` is the HALF extent along `scaleDirection`.
+        let camera = Entity()
+        var ortho = OrthographicCameraComponent()
+        ortho.scaleDirection = .horizontal
+        ortho.scale = geometry.viewWidth * LibraryRibbonGeometry.k / 2
+        ortho.near = 0.1
+        ortho.far = 50
+        camera.components.set(ortho)
+        camera.position = [0, 0, 10]
+
+        // Key light (prototype DirectionalLight at (-2, 4, 5)): paper facing
+        // the camera stays near white, paper turned away greys strongly.
+        let key = DirectionalLight()
+        key.light.intensity = 1000
+        key.look(at: .zero, from: [-2, 4, 5], relativeTo: nil)
+
+        // Soft fill from below-front (stands in for the prototype's
+        // hemisphere ground colour) so turned paper greys, never blacks.
+        let fill = DirectionalLight()
+        fill.light.intensity = 120
+        fill.look(at: .zero, from: [1, -3, 4], relativeTo: nil)
+
+        let group = Entity()
+        let theme = palette.theme
+        for (i, stretch) in geometry.stretches.enumerated() {
+            let samples = geometry.samples(forStretch: i)
+            let live = stretch.isLive
+            if let front = try? LibraryRibbonGeometry.paperMesh(samples, front: true),
+               let back = try? LibraryRibbonGeometry.paperMesh(samples, front: false),
+               let edges = try? LibraryRibbonGeometry.edgeMesh(samples) {
+                let frontHex = live ? theme.ribbonFront : theme.soonFront
+                let backHex = live ? theme.ribbonBack : theme.soonBack
+                group.addChild(ModelEntity(mesh: front, materials: [paper(UIColor(hex: frontHex), live: live)]))
+                group.addChild(ModelEntity(mesh: back, materials: [paper(UIColor(hex: backHex), live: live)]))
+                var line = UnlitMaterial(color: UIColor(live ? AppColor.ink : AppColor.g2))
+                line.faceCulling = .none
+                group.addChild(ModelEntity(mesh: edges, materials: [line]))
             }
         }
+        return (camera, [key, fill, group])
     }
 
     /// Two-sided paper in the palette's colours (front = the loud colour, back =

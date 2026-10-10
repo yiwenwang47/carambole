@@ -160,8 +160,15 @@ Done (user agreed: video star, 2D ring, drag doesn't matter):
 - Phone run before the stop: push_book 170→81, push_book2 109→53,
   push_colors 116→71 ms. Pops back to the library NOT improved (ribbon rebuild).
 
-Open:
-1. Pops to the library (~75–150 ms): keep the ribbon's RealityView mounted
-   (measured ~34 ms before) — but a hidden RealityView keeps rendering; needs a
-   way to verify without the phone.
-2. Harness `apply_hooks.py` now has `--revert` (keeps other uncommitted work).
+Then (user: "drop the ribbon animation, make it still"):
+- The library ribbon is a still image now (`LibraryRibbonImage`), rendered
+  once per (geometry, palette, scale) by `LibraryRibbonRenderer` with
+  `RealityRenderer` + studio IBL at 1.4 (matched to the live view's brightness
+  on sim). No RealityView is left on the library, book home or colour page, so
+  pops back to the library no longer create one. A re-render (new data or
+  palette) waits 450 ms when a picture is already shown, so it never lands
+  mid-slide. NOT measured on the phone (user rule: simulators only).
+- Harness `apply_hooks.py` has `--revert` (keeps other uncommitted work); the
+  `CB_PERF_NO_RIBBON` switch is gone with the live ribbon.
+
+Still live RealityKit: Today's token pile (`TokenPileScene`).

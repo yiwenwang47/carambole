@@ -7,7 +7,7 @@
 //  (`LibraryRibbon.swift`). Books sit on the left of their stretch: kicker
 //  label, light title, then `Ouvrir →` + % for open books or `Bientôt` for
 //  books to come. Open books sort first. The ribbon lives inside the scroll
-//  content, so it scrolls exactly with the titles; only its sway moves.
+//  content, so it scrolls exactly with the titles. It is a still picture.
 //
 //  "Français — Fondations" is the first (and only live) book; the model
 //  supports many, so future books appear here as they ship.
@@ -40,15 +40,9 @@ struct LibraryView: View {
     @StateObject private var bookViewModel = BookViewModel()
     /// Fondations per-day activity — feeds its ribbon stretch.
     @StateObject private var historyViewModel = HistoryViewModel()
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @State private var motion = LibraryRibbonMotion()
     @State private var loaded = false
     /// Pushes Fondations' `BookView`.
     @State private var openBook = false
-    /// The ribbon's RealityView only exists while the shelf is on screen: left
-    /// rendering under a pushed book it starves the book's star scene, which
-    /// then takes seconds to show its first frame.
-    @State private var ribbonLive = true
     /// Pushes the colour page.
     @State private var openColors = false
     @AppStorage(AppPalette.storageKey) private var paletteID = AppPalette.fallback.rawValue
@@ -76,14 +70,11 @@ struct LibraryView: View {
             .navigationDestination(isPresented: $openBook) { BookView(showBack: true) }
             .navigationDestination(isPresented: $openColors) { ColorSettingsView() }
             .onAppear {
-                ribbonLive = true
                 StarLoopPlayers.shared.prewarm()
-                motion.reduceMotion = reduceMotion
                 // First appearance loads content; returning from a book refreshes.
                 if loaded { bookViewModel.refresh() } else { bookViewModel.load(); loaded = true }
                 historyViewModel.load()
             }
-            .onChange(of: reduceMotion) { motion.reduceMotion = reduceMotion }
         }
     }
 
@@ -96,13 +87,7 @@ struct LibraryView: View {
         let height = CGFloat(geometry.contentHeight)
 
         return ZStack(alignment: .topLeading) {
-            Group {
-                if ribbonLive {
-                    LibraryRibbonScene(geometry: geometry, motion: motion,
-                                       palette: AppPalette(stored: paletteID))
-                        .id([AnyHashable(geometry), AnyHashable(paletteID)])
-                }
-            }
+            LibraryRibbonImage(geometry: geometry, palette: AppPalette(stored: paletteID))
             .frame(width: width, height: height)
             .allowsHitTesting(false)
             .accessibilityHidden(true)
@@ -153,7 +138,6 @@ struct LibraryView: View {
             Text("Carambole").uppercaseLabel(AppColor.ink)
             Spacer()
             Button {
-                ribbonLive = false
                 openColors = true
             } label: {
                 HStack(spacing: 8) {
@@ -191,9 +175,7 @@ struct LibraryView: View {
 
     // MARK: - Book block
 
-    /// Drop the ribbon scene first, then push the book.
     private func open() {
-        ribbonLive = false
         openBook = true
     }
 
