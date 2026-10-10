@@ -923,7 +923,12 @@
           "explanation": "Devant « aime », on écrit « j' ».",
           "translation": "I like the cat.",
           "hint": "Vowel after → j'.",
-          "explanationEN": "Before \"aime\", you write \"j'\"."
+          "explanationEN": "Before \"aime\", you write \"j'\".",
+          "spot": {
+            "tokens": ["Je", "aime", "le", "chat", "."],
+            "wrongIndex": 0,
+            "options": ["J'", "Tu", "Ils"]
+          }
         },
         {
           "id": "el_er_elision_je_04",
@@ -1009,7 +1014,12 @@
           "explanation": "« pain » est masculin → « le ».",
           "translation": "He eats the bread.",
           "hint": "pain is masculine → le.",
-          "explanationEN": "\"pain\" is masculine, so it takes \"le\"."
+          "explanationEN": "\"pain\" is masculine, so it takes \"le\".",
+          "spot": {
+            "tokens": ["Il", "mange", "la", "pain", "."],
+            "wrongIndex": 2,
+            "options": ["le", "les", "une"]
+          }
         },
         {
           "id": "el_er_verbe_nom_05",
@@ -1228,7 +1238,12 @@
           "explanation": "Devant « aime » (voyelle), « ne » devient « n' ».",
           "translation": "He doesn't like it.",
           "hint": "Vowel after → n'.",
-          "explanationEN": "Before \"aime\" (a vowel), \"ne\" becomes \"n'\"."
+          "explanationEN": "Before \"aime\" (a vowel), \"ne\" becomes \"n'\".",
+          "spot": {
+            "tokens": ["Il", "ne", "aime", "pas", "."],
+            "wrongIndex": 1,
+            "options": ["n'", "pas", "jamais"]
+          }
         },
         {
           "id": "el_er_negation_05",
@@ -1434,7 +1449,15 @@
           "explanation": "« ils n'aiment pas » : négation + nom.",
           "translation": "They don't like the coffee.",
           "hint": "ne → n' before aiment; wrap with pas.",
-          "explanationEN": "\"ils n'aiment pas\": negation + noun."
+          "explanationEN": "\"ils n'aiment pas\": negation + noun.",
+          "spot": {
+            "tokens": ["Ils", "n'", "aime", "pas", "le", "café"],
+            "wrongIndex": 2,
+            "options": ["aiment", "aimes", "aimez"],
+            "locked": [0],
+            "explanation": "Avec « ils », le verbe prend « -ent » : « aiment ».",
+            "explanationEN": "With \"ils\", the verb takes \"-ent\": \"aiment\"."
+          }
         },
         {
           "id": "el_er_synthese_04",

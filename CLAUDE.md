@@ -2,7 +2,12 @@
 
 > ## ▶ RECENT HANDOFFS
 >
-> **▶ NEW DRILL TYPES — on branch `drill-types`, NOT merged (2026-10-10).**
+> **▶ BOOK 1: BANK LINT + SPOT ITEMS + LADDER (2026-10-10).** Bank lint on
+> main (`tools/bank_lint.py` — run after any bank/prompt edit). 437 `spot`
+> items + `Core/DrillLadder.swift` on branch `spot-ladder`. Details + open
+> items: `docs/plans/2026-10-10-drill-types-design.md` (Book 1 rollout).
+>
+> **▶ NEW DRILL TYPES — merged to main (2026-10-10).**
 > Spot the error (`InputMode.spotError`, `SpotErrorView`) + second try on build
 > (first wrong check keeps the right leading tiles locked; `DrillEngine.
 > correctPrefixCount`). `onResult` now carries an `FSRS.Rating` (`.hard` = right

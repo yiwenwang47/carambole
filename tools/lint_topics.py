@@ -23,6 +23,8 @@ solvability rules so a bad token bank or malformed module can't reach the app:
   - each element has at least 5 examples
   - a freeText (typed) answer carries no punctuation the learner would type
     (`. , ? ! ; : « » … " ( )`) — see Exercise.isTypeable
+  - an optional `spot` (spot-the-error form, tools/spot/) is well formed and,
+    with its fix applied, renders exactly the drill's own sentence
   - a build drill whose English prompt ends in object "it" must disambiguate
     gender in the prompt/cue (English "it" is genderless): if the answer uses
     le/la and the bank offers the opposite gender too, the learner can build a
@@ -150,6 +152,41 @@ MODULE_KEYS = {"id", "sortOrder", "title", "ruleNote", "elements"}
 ELEMENT_KEYS = {"id", "sortOrder", "label", "ruleNote", "examples"}
 EXAMPLE_KEYS = {"id", "type", "prompt", "answerTokens", "tokenBank",
                 "inputMode", "explanation"}
+
+sys.path.insert(0, str(Path(__file__).resolve().parent / "tts"))
+from extract import ELISION_GLUE, display_join, spoken_for_example  # noqa: E402
+
+
+def _render_words(tokens: list[str]) -> str:
+    text = re.sub(ELISION_GLUE, r"\1\2", display_join(tokens))
+    text = re.sub(r"\s+", " ", text).strip()
+    return text[:1].lower() + text[1:]
+
+
+def spot_errors(ex: dict) -> list[str]:
+    spot = ex.get("spot")
+    if spot is None:
+        return []
+    toks, wi, opts = spot.get("tokens"), spot.get("wrongIndex"), spot.get("options")
+    if not (isinstance(toks, list) and toks and isinstance(wi, int)
+            and 0 <= wi < len(toks) and isinstance(opts, list) and len(opts) >= 2):
+        return ["malformed spot (tokens / wrongIndex / options)"]
+    out = []
+    if len(set(opts)) != len(opts):
+        out.append(f"spot options repeat: {opts}")
+    if toks[wi] in opts:
+        out.append(f"spot wrong word '{toks[wi]}' is offered as a fix")
+    locked = spot.get("locked") or []
+    if any(not (0 <= i < len(toks)) or i == wi for i in locked):
+        out.append(f"spot locked {locked} invalid for wrongIndex {wi}")
+    fixed = list(toks)
+    fixed[wi] = opts[0]
+    want = _render_words(spoken_for_example(ex).split())
+    got = _render_words(fixed)
+    if got != want:
+        out.append(f"spot fix gives « {got} », drill sentence is « {want} »")
+    return out
+
 
 ELEMENTS_PER_MODULE = 20
 MIN_EXAMPLES_PER_ELEMENT = 5
@@ -283,6 +320,9 @@ def lint(content_dir: Path) -> list[str]:
                     for msg in gender_ambiguity_errors(
                             ex.get("prompt"), ex.get("cue"), ans, bank):
                         err(f"{tag}: gender-ambiguous — {msg}")
+
+                for msg in spot_errors(ex):
+                    err(f"{tag}: {msg}")
 
                 for field in ("translation", "hint"):
                     val = ex.get(field)

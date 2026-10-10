@@ -80,3 +80,31 @@ flip the answer; human reviews every item. Watch: l' hides gender, lui/leur
 hide gender, fait + infinitive never agrees, si = "whether"/habit, vu/vue sound
 identical (agreement items are text-only). Partial build + morpheme build:
 fully programmatic.
+
+## Book 1 rollout (2026-10-10, session 2)
+
+**1. Bank lint** (`tools/bank_lint.py`, on main as `a1fb133`). Every distractor
+goes into its slot (`tools/swaps/`); each swap Grammalecte leaves clean needs a
+reviewed verdict in `tools/bank_lint_reviewed.json`. 3,327 swaps judged by 8 LLM
+judges + hand review: 100 second answers. 77 were prompts that never said who
+speaks — fixed with a **cue** («Un homme parle», «À un ami (tu)», «Un groupe
+mixte», «Poli (vous)»), keeping the contrast the drill teaches in the bank; 20
+were true alternatives (là/ici, dans la ville, la médecin…) — distractor
+replaced. Run it after any bank or prompt edit; `--export` feeds judges,
+`tools/bank_fix.py` applies fixes + verdicts, `--prune` drops stale entries.
+
+**2. Spot pipeline** (`tools/spot/candidates.py` → judges → `tools/spot/apply.py`).
+715 candidates (one per drill) → 437 accepted and written as `spot` on the
+example. Judges rejected mostly off-topic errors (an article slip in a verb
+drill). Every one of the 264 judge-written explanations and all 175 kept ones
+were read by hand (2 errors fixed, 2 items rejected, 47 English lines added).
+Tier 2 items lock the subject pronoun (`spot.locked`). `lint_topics` checks the
+fix restores the drill's own sentence.
+
+**3. Ladder** (`Core/DrillLadder.swift`). Retry after a miss in this session →
+spot; stability < 1 day → spot; < 3 days → spot 1 in 3; else the authored drill.
+The spot form keeps the drill's cue and bracketed prompt notes ("(une femme
+parle)"). Harness: `CB_LADDER_SPOT=1` serves the spot form.
+
+**Open:** many drills' French `explanation` field is written in English (futur
+simple, possessifs, subjonctif, si — judges found ~150). Worth a pass.

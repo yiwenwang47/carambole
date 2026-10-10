@@ -29,6 +29,12 @@ struct SpotError: Codable, Equatable {
     let wrongIndex: Int
     /// The correct token plus wrong fixes, offered once the error is found.
     let options: [String]
+    /// Words that can't be tapped — a subject pronoun that would otherwise be a
+    /// second place to fix ("Je lui parlent": lock « Je », fix the verb).
+    var locked: [Int]? = nil
+    /// Overrides the drill's own explanation when it explains a different point.
+    var explanation: String? = nil
+    var explanationEN: String? = nil
 }
 
 /// One drillable example sentence — the leaf of Book → Module → Element → Example.
@@ -107,6 +113,33 @@ struct Exercise: Identifiable, Codable, Equatable {
             ["\"", "'", "\u{2018}", "\u{2019}", "\u{201C}", "\u{201D}",
              "«", "»", " ", "\u{00A0}", "\u{202F}"]
         return String(s.lowercased().filter { !ignored.contains($0) })
+    }
+
+    /// This drill as spot the error (`spot` data required): the corrupted sentence
+    /// to fix. Id `<id>~spot`, so its grade still lands on the same element. It
+    /// keeps what the drill tells the learner beyond the sentence — the cue and any
+    /// bracketed note in the prompt (« (une femme parle) », « (poli) ») — since a
+    /// gender or tu/vous fix can hinge on it.
+    var spotVariant: Exercise? {
+        guard let spot, spot.tokens.indices.contains(spot.wrongIndex),
+              let fix = spot.options.first else { return nil }
+        var corrected = spot.tokens
+        corrected[spot.wrongIndex] = fix
+        return Exercise(id: id + "~spot", elementID: elementID, type: type,
+                        prompt: "Trouve l'erreur.", cue: spotCue, answerTokens: corrected,
+                        tokenBank: spot.options, inputMode: .spotError,
+                        explanation: spot.explanation ?? explanation,
+                        translation: translation, hint: hint,
+                        explanationEN: spot.explanation != nil ? spot.explanationEN : explanationEN,
+                        spot: spot)
+    }
+
+    /// The drill's cue plus the bracketed notes of its prompt, joined with « · ».
+    var spotCue: String? {
+        var notes = [cue].compactMap { $0 }.filter { !$0.isEmpty }
+        let pattern = /\(([^)]+)\)/
+        notes += prompt.matches(of: pattern).map { String($0.output.1) }
+        return notes.isEmpty ? nil : notes.joined(separator: " · ")
     }
 
     /// The input actually presented to the learner. Long answers (≥3 tokens) keep

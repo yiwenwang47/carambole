@@ -68,7 +68,8 @@ enum DrillDemo {
             Exercise(id: ex.id + suffix, elementID: ex.elementID, type: ex.type, prompt: ex.prompt,
                      cue: ex.cue, answerTokens: ex.answerTokens, tokenBank: ex.tokenBank,
                      inputMode: ex.inputMode, explanation: ex.explanation,
-                     translation: ex.translation, hint: hint, explanationEN: ex.explanationEN)
+                     translation: ex.translation, hint: hint, explanationEN: ex.explanationEN,
+                     spot: ex.spot)
         }
         let override = env["CB_DRILL_HINT"].map { $0.replacingOccurrences(of: "\\n", with: "\n") }
         if testBook {

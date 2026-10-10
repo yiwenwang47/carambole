@@ -58,6 +58,9 @@ struct DrillSessionView: View {
     @State private var elementIndex = 0
     /// Pending examples for the current element (learn mode queue).
     @State private var pending: [Exercise] = []
+    /// A wrong answer on the current element: its next example steps down to
+    /// spot the error (`DrillLadder`).
+    @State private var missedThisElement = false
     @State private var lastExampleID: String?
     /// What `advance()` does next — set by grading via `LearnLoop.nextAction`.
     @State private var nextAction: LearnLoop.NextAction = .nextElement
@@ -469,6 +472,7 @@ struct DrillSessionView: View {
     /// advances during a session slide the new card in.
     private func startElement(_ index: Int, animated: Bool) {
         elementIndex = index
+        missedThisElement = false
         pending = buildQueue()
         presentNextExample(animated: animated)
     }
@@ -502,8 +506,19 @@ struct DrillSessionView: View {
     private func presentNextExample(animated: Bool) {
         if pending.isEmpty { pending = buildQueue() }
         guard !pending.isEmpty else { goToNextElement(animated: animated); return }
-        let next = pending.removeFirst()
-        lastExampleID = next.id
+        let authored = pending.removeFirst()
+        let stability = currentElement.flatMap {
+            DataManager.shared.fetchReviewStatus(elementID: $0.id)?.stability
+        }
+        var next = DrillLadder.present(authored, stability: stability,
+                                       missedInSession: missedThisElement)
+        #if DEBUG
+        // Simulator harness (tools/sim): always serve the spot form when there is one.
+        if ProcessInfo.processInfo.environment["CB_LADDER_SPOT"] == "1" {
+            next = authored.spotVariant ?? next
+        }
+        #endif
+        lastExampleID = authored.id
         history.append(next)
         if animated {
             // New card was appended at frontier (cursor + 1), parked off-screen right;
@@ -560,6 +575,7 @@ struct DrillSessionView: View {
     // `history[cursor]`. Keep that gating intact or grading targets the wrong element.
     private func handleResult(rating: FSRS.Rating, answer: [String]) {
         let correct = rating != .again
+        if !correct { missedThisElement = true }
         submittedAnswers[cursor] = answer
         resultByIndex[cursor] = correct
         guard let element = currentElement, history.indices.contains(cursor) else { return }
