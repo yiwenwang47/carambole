@@ -131,7 +131,7 @@
 >   `tools/lint_topics.py` (rewritten for the module schema: 20 elements/module, ≥5
 >   examples/element, multiset banks, unique ids) passes.
 > - **UI:** **Library shelf** is the root (`LibraryView`) — pick a book; "Français —
->   Fondations" live, "Conversation"/"Intermédiaire" locked "Bientôt". Then
+>   Fondations" live, "Conversation" locked "Bientôt". Then
 >   `BookView` (module ToC + Apprendre/Réviser). Drill UI unchanged (token-build /
 >   MC, translation, Indice, "Trop facile" gate now per element).
 > - **Branding:** carambole star mark (`CaramboleMark.swift` → `CaramboleLogo`),
@@ -263,8 +263,9 @@
 >   keeps progress; Settings "Exporter" shares the .sqlite; **back/forward chevrons
 >   (`‹`/`›`) navigate to prior drills read-only** (restored — see DRILL BACK/FORWARD
 >   NAV; real-view screenshot-verified, literal tap still TODO on-device).
-> - (b) **More books** — Conversation / Intermédiaire are locked placeholders in
->   `LibraryView`; the `Book` model already supports many. Wire real content +
+> - (b) **More books** — Conversation is a locked placeholder in
+>   `LibraryView`; the `Book` model already supports many. See
+>   `docs/decisions/2026-10-10-next-book.md` for the Book 2 direction. Wire real content +
 >   per-book selection into `BookView` (currently loads the single `ContentLoader`
 >   book).
 > - (c) Expose `masteryThreshold` in Settings (today a constant).
