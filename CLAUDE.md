@@ -1,6 +1,21 @@
 # Carambole — French Grammar Trainer
 
-> ## ▶ ACTIVE TASK — START HERE (next session, continue without re-asking)
+> ## ▶ RECENT HANDOFFS
+>
+> **▶ STAR VIDEO — DONE (2026-10-10).** READ
+> **`docs/plans/2026-10-09-star-video-handoff.md`**: the star is a
+> pre-rendered video + 2D ring, and the library ribbon is a still image. The
+> duplicate star, blank loop frame, book-entry timing, and sphere/tube depth
+> glitches are resolved. The user checked the signed build on their iPhone 18
+> Pro and said it looks good. Use the phone again only if the user asks.
+>
+> **▶ STUTTER / HITCHES — background (branch `perf-stutter-fixes`, 2026-10-09).** User
+> still sees stutter on page switches + scroll. READ
+> **`docs/plans/2026-10-09-stutter-handoff.md`**: measured data, what's committed
+> (star pauses under covering pages; 120 Hz via `carambole-Info.plist`), what the
+> user REJECTED (delaying/fading in the star or ribbon), open leads (75–155 ms
+> main-thread freeze at every push/pop; ribbon rebuilds meshes on every attach;
+> 120 Hz A/B untested), and the reusable device harness in `tools/perf/`.
 >
 > **▶ UI REDESIGN — DONE, MERGED to `main` + PUSHED (2026-10-09, session 4).**
 > READ **`design/UI_REDESIGN_HANDOFF.md`** first: what was built, the colour

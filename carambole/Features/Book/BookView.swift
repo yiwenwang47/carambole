@@ -4,7 +4,7 @@
 //
 //  The book home — design/motion.html "01 · Objet". A chrome carambole star turns
 //  in the middle of the screen with the book's progress as a ring orbiting it
-//  (`ObjetStarView`); small type sits at the edges (after IMG_0943):
+//  (`StarLoopView`); small type sits at the edges (after IMG_0943):
 //
 //    ‹ Fondations                      Réglages
 //    41 %                                   Fin
@@ -50,14 +50,11 @@ struct BookView: View {
     @State private var showingSettings = false
     @State private var showingModules = false
     @State private var showingToday = false
-    /// The star's RealityView only exists while the home is on screen: left
-    /// rendering under Today it competes with the token drop for frames (the
-    /// drop stuttered right after tapping `fait`). The controller keeps the
-    /// scene, so coming back re-attaches it without rebuilding meshes.
+    /// The star loop plays only while the home is on screen: under a pushed
+    /// page or a drill it pauses (the view stays mounted, so coming back is
+    /// instant).
     @State private var starLive = true
-    @State private var star = ObjetStarController()
     @AppStorage(AppPalette.storageKey) private var paletteID = AppPalette.fallback.rawValue
-    @State private var lastDrag: CGSize = .zero
     @State private var revealed = false
 
     var body: some View {
@@ -65,11 +62,9 @@ struct BookView: View {
             ZStack {
                 AppColor.paper.ignoresSafeArea()
 
-                if starLive {
-                    ObjetStarView(mastered: masteredFraction, inProgress: inProgressFraction,
-                                  controller: star, palette: AppPalette(stored: paletteID))
-                        .ignoresSafeArea()
-                }
+                StarLoopView(mastered: masteredFraction, inProgress: inProgressFraction,
+                             palette: AppPalette(stored: paletteID), active: starLive)
+                    .ignoresSafeArea()
 
                 VStack(spacing: 0) {
                     topBlock
@@ -108,6 +103,12 @@ struct BookView: View {
         }
         .onChange(of: showingToday) { _, shown in
             if !shown { starLive = true }
+        }
+        .onChange(of: showingModules) { _, shown in
+            if !shown { starLive = true }
+        }
+        .onChange(of: session == nil) { _, closed in
+            starLive = closed
         }
         .sheet(isPresented: $showingSettings, onDismiss: { viewModel.refresh() }) {
             SettingsView(store: viewModel.settingsStore)
@@ -325,27 +326,17 @@ struct BookView: View {
 
     private func openModules() {
         UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        starLive = false
         showingModules = true
     }
 
-    // MARK: - Gesture: turn the star · edge swipe → back
+    // MARK: - Gesture: edge swipe → back
 
-    /// One drag for the whole screen. From the left edge, a rightward swipe goes
-    /// back to the library (iOS back-swipe direction). Anything else turns the
-    /// star; swiping up no longer opens the module list (the user asked for the
-    /// bottom line only).
+    /// From the left edge, a rightward swipe goes back to the library (iOS
+    /// back-swipe direction).
     private var dragGesture: some Gesture {
         DragGesture(minimumDistance: 6, coordinateSpace: .global)
-            .onChanged { v in
-                if v.startLocation.x < 24 { return }   // reserved for swipe-back
-                let d = CGSize(width: v.translation.width - lastDrag.width,
-                               height: v.translation.height - lastDrag.height)
-                lastDrag = v.translation
-                star.dragChanged(by: d)
-            }
             .onEnded { v in
-                lastDrag = .zero
-                star.dragEnded()
                 let h = v.translation.width
                 if showBack, v.startLocation.x < 24, h > 60, abs(h) > abs(v.translation.height) {
                     dismiss()

@@ -4,7 +4,7 @@
 //
 //  "Couleurs" — pick one of the three palettes (design/palettes.html v4) and
 //  how colour reaches the drills (Plateau or Cadres, design/drill-colour.html).
-//  Opened from the library's `Couleurs →` label. The live 3D star at the top
+//  Opened from the library's `Couleurs →` label. The star at the top
 //  takes the chosen palette's material and ring at once; each row shows the
 //  palette's name, one line, and its three token states (new / review /
 //  fragile) as real pills. The choice persists (`AppPalette.storageKey`) and
@@ -17,7 +17,6 @@ struct ColorSettingsView: View {
     @Environment(\.dismiss) private var dismiss
     @AppStorage(AppPalette.storageKey) private var paletteID = AppPalette.fallback.rawValue
     @AppStorage(DrillStyle.storageKey) private var drillStyleID = DrillStyle.fallback.rawValue
-    @State private var star = ObjetStarController()
 
     private var selected: AppPalette { AppPalette(stored: paletteID) }
 
@@ -35,7 +34,7 @@ struct ColorSettingsView: View {
                         .accessibilityAddTraits(.isHeader)
 
                     // Preview: a sample ring (41 % maîtrisé, 12 % en cours).
-                    ObjetStarView(mastered: 0.41, inProgress: 0.12, controller: star, palette: selected)
+                    StarLoopView(mastered: 0.41, inProgress: 0.12, palette: selected)
                         .frame(height: 300)
                         .padding(.horizontal, -Spacing.screenH)
                         .accessibilityHidden(true)

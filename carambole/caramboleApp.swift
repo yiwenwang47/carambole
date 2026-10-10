@@ -28,6 +28,7 @@ struct caramboleApp: App {
         CalendarDays._selfTest()
         LearnLoop._selfTest()
         DataManager._selfTest()
+        StarVideoRenderer.runIfRequested()
         #endif
     }
 
