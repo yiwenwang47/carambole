@@ -34,7 +34,7 @@ case $cmd in
   record)  xcrun simctl io $SIM recordVideo -f "$1" & p=$!; sleep $2; kill -INT $p; wait $p ;;
   frames)  mkdir -p $OUT; [[ -x $OUT/frames ]] || swiftc -O ${0:A:h}/frames.swift -o $OUT/frames
            $OUT/frames "$@" ;;
-  clean)   rm -rf $DD $OUT; ls ${TMPDIR%/}/instruments*.ktrace 2>/dev/null && rm -f ${TMPDIR%/}/instruments*.ktrace || true
+  clean)   rm -rf $DD $OUT ${TMPDIR%/}/instruments*.ktrace(N)
            df -h /System/Volumes/Data | tail -1 ;;
   *)       sed -n 2,12p $0 ;;
 esac
