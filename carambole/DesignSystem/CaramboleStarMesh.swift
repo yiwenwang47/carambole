@@ -2,8 +2,8 @@
 //  CaramboleStarMesh.swift
 //  carambole
 //
-//  RealityKit building blocks for the 01 Objet book home (one chunky star):
-//  the hand-extruded star mesh, a hand-built torus-arc mesh for the ring, the
+//  RealityKit building blocks for the 01 Objet star (rendered offline into
+//  the star loops by `StarVideoRenderer`): the hand-extruded star mesh, the
 //  palette materials and a procedural neutral "studio" environment for
 //  image-based lighting (a stand-in for three.js' RoomEnvironment in
 //  design/motion.html).
@@ -148,67 +148,11 @@ enum CaramboleStarMesh {
         holder.addChild(model)
         return (holder, model)
     }
-
-    /// A torus segment in the XY plane (axis Z), like three.js `TorusGeometry`,
-    /// from angle `start` sweeping `sweep` radians counter-clockwise.
-    static func torusArc(radius: Float, tube: Float, start: Float, sweep: Float,
-                         radialSegments: Int = 12, tubularSegments: Int = 220) throws -> MeshResource {
-        let segs = max(2, Int(Float(tubularSegments) * abs(sweep) / (2 * .pi)))
-        var pos: [SIMD3<Float>] = [], nrm: [SIMD3<Float>] = [], idx: [UInt32] = []
-        for j in 0...radialSegments {
-            for i in 0...segs {
-                let u = start + Float(i) / Float(segs) * sweep
-                let v = Float(j) / Float(radialSegments) * 2 * .pi
-                let centre = SIMD3<Float>(radius * cos(u), radius * sin(u), 0)
-                let p = SIMD3<Float>((radius + tube * cos(v)) * cos(u),
-                                     (radius + tube * cos(v)) * sin(u),
-                                     tube * sin(v))
-                pos.append(p)
-                nrm.append(simd_normalize(p - centre))
-            }
-        }
-        let row = UInt32(segs + 1)
-        for j in 1...radialSegments {
-            for i in 1...segs {
-                let a = row * UInt32(j) + UInt32(i - 1)
-                let b = row * UInt32(j - 1) + UInt32(i - 1)
-                let c = row * UInt32(j - 1) + UInt32(i)
-                let d = row * UInt32(j) + UInt32(i)
-                idx += [a, b, d, b, c, d]
-            }
-        }
-        var desc = MeshDescriptor(name: "torusArc")
-        desc.positions = MeshBuffers.Positions(pos)
-        desc.normals = MeshBuffers.Normals(nrm)
-        desc.primitives = .triangles(idx)
-        return try MeshResource.generate(from: [desc])
-    }
 }
 
 // MARK: - Materials
 
 enum StarMaterial {
-    /// three.js `MeshPhysicalMaterial` chrome: metalness .85, roughness ~.22,
-    /// clearcoat 1 / .08.
-    static func chrome(roughness: Float = 0.22) -> PhysicallyBasedMaterial {
-        var m = PhysicallyBasedMaterial()
-        m.baseColor = .init(tint: UIColor(white: 0.95, alpha: 1))
-        m.metallic = .init(floatLiteral: 0.85)
-        m.roughness = .init(floatLiteral: roughness)
-        m.clearcoat = .init(floatLiteral: 1)
-        m.clearcoatRoughness = .init(floatLiteral: 0.08)
-        return m
-    }
-
-    /// Dark lacquered metal for the orbit arc / bead / skewer.
-    static func ink(metallic: Float = 0.6, roughness: Float = 0.25) -> PhysicallyBasedMaterial {
-        var m = PhysicallyBasedMaterial()
-        m.baseColor = .init(tint: UIColor(white: 0.08, alpha: 1))
-        m.metallic = .init(floatLiteral: metallic)
-        m.roughness = .init(floatLiteral: roughness)
-        return m
-    }
-
     /// The palette's star body (`AppTheme.StarFinish`).
     static func finish(_ f: AppTheme.StarFinish) -> RealityKit.Material {
         switch f {
@@ -248,29 +192,6 @@ enum StarMaterial {
         m.clearcoatRoughness = .init(floatLiteral: 0.05)
         m.emissiveColor = .init(color: UIColor(hex: "F1EDFF"))
         m.emissiveIntensity = 0.18
-        return m
-    }
-
-    /// Glossy coloured lacquer for the orbit arc / bead.
-    static func lacquer(_ hex: String) -> PhysicallyBasedMaterial {
-        var m = PhysicallyBasedMaterial()
-        m.baseColor = .init(tint: UIColor(hex: hex))
-        m.metallic = .init(floatLiteral: 0.2)
-        m.roughness = .init(floatLiteral: 0.22)
-        m.clearcoat = .init(floatLiteral: 1)
-        m.clearcoatRoughness = .init(floatLiteral: 0.1)
-        return m
-    }
-
-    /// Unlit flat palette colour.
-    static func flat(hex: String) -> UnlitMaterial {
-        UnlitMaterial(color: UIColor(hex: hex))
-    }
-
-    /// Unlit flat grey, optionally translucent (initial track / en-cours arc).
-    static func flat(_ white: CGFloat, opacity: Float = 1) -> UnlitMaterial {
-        var m = UnlitMaterial(color: UIColor(white: white, alpha: 1))
-        if opacity < 1 { m.blending = .transparent(opacity: .init(floatLiteral: opacity)) }
         return m
     }
 }

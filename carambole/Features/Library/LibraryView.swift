@@ -77,6 +77,7 @@ struct LibraryView: View {
             .navigationDestination(isPresented: $openColors) { ColorSettingsView() }
             .onAppear {
                 ribbonLive = true
+                StarLoopPlayers.shared.prewarm()
                 motion.reduceMotion = reduceMotion
                 // First appearance loads content; returning from a book refreshes.
                 if loaded { bookViewModel.refresh() } else { bookViewModel.load(); loaded = true }

@@ -135,3 +135,33 @@ Gotchas learned:
   Apprendre/Réviser.
 - Afterwards, reinstall the normal Debug build (commands in memory
   `phone-device-install`).
+
+## Session 2 (2026-10-09 night) — star is now a video (UNCOMMITTED)
+
+**User rule: never test on the iPhone again — simulators only** (phone storage
+filled up after the device runs). Memory `no-phone-testing`.
+
+Findings (Time Profiler, `tools/perf/profile.py` + `gap.py`):
+- The push freeze is RealityKit's first frame for a NEW RealityView: render
+  target / render-graph setup, then main blocks in
+  `RenderThread::waitForFramePacing`. Our Swift (star build) is ~20 ms of it.
+- Warm second push still ~107 ms → cost is per view, not just shader warm-up.
+- RealityKit has no pause API (Apple DTS); keeping views alive fixed POPS
+  (75–94 → ~34 ms) but not pushes, and costs frames while hidden.
+
+Done (user agreed: video star, 2D ring, drag doesn't matter):
+- `StarLoopView` replaces `ObjetStarView` (deleted) on the book home and the
+  colour page: HEVC-alpha loop per palette (`Resources/StarVideos/`, made by
+  DEBUG `StarVideoRenderer`, see `tools/star_video/README.md`), ring drawn 2D
+  in two layers (back under, front over), bob 2D. Players shared + prewarmed
+  in `LibraryView.onAppear`; paused while covered; first-frame still under the
+  layer hides AVPlayerLooper's blank frame at each loop wrap (sim-verified:
+  per-frame scan of 30 s, 0 anomalies).
+- Phone run before the stop: push_book 170→81, push_book2 109→53,
+  push_colors 116→71 ms. Pops back to the library NOT improved (ribbon rebuild).
+
+Open:
+1. Pops to the library (~75–150 ms): keep the ribbon's RealityView mounted
+   (measured ~34 ms before) — but a hidden RealityView keeps rendering; needs a
+   way to verify without the phone.
+2. Harness `apply_hooks.py` now has `--revert` (keeps other uncommitted work).

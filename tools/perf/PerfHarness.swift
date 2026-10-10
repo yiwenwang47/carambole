@@ -144,6 +144,13 @@ final class PerfHarness: NSObject {
         await scrollSegment("colors_scroll", seconds: 5)
         await segment("pop_colors", seconds: 2) { pop() }
 
+        // Second round: warm (shaders compiled) vs cold first push above.
+        await segment("push_book2", seconds: 2) { post("openBook") }
+        await segment("book_idle2", seconds: 2)
+        await segment("pop_book2", seconds: 2) { pop() }
+        await segment("push_colors2", seconds: 2) { post("openColors") }
+        await segment("pop_colors2", seconds: 2) { pop() }
+
         write()
         link?.invalidate()
         Self.log.log("PERF DONE")
