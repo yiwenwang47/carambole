@@ -52,6 +52,10 @@ struct StarLoopView: View {
                     Canvas { ctx, _ in ring.draw(in: &ctx, front: true) }
                 }
                 // Keep the orbit and video together while the first image loads.
+                // Flattened first: an opacity on the bare ZStack fades each
+                // layer on its own, so mid-fade the star was see-through and
+                // the back of the orbit showed through it.
+                .compositingGroup()
                 .opacity(visiblePalette == palette ? 1 : 0)
             }
         }
