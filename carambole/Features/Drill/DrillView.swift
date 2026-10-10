@@ -70,14 +70,6 @@ struct DrillView: View {
 
     private var hasAnswer: Bool { answer.count > lockedPrefix && answer != rejected }
     private var isSpot: Bool { exercise.resolvedInputMode == .spotError }
-    /// Multiple choice with no blank: the "sentence" Écouter would read is just the
-    /// picked option, so there is nothing to hear.
-    /// Transformation ("source → target ___"): the audio would read the arrow and
-    /// the finished target, i.e. the answer.
-    private var nothingToHear: Bool {
-        (exercise.resolvedInputMode == .multipleChoice && !Exercise.promptHasBlank(exercise.prompt))
-            || exercise.prompt.contains("→")
-    }
     /// The rule under "Réponse" on a wrong build / MC answer. Test book only for
     /// now; spot-the-error always shows it.
     private var explainOnMiss: Bool {
@@ -286,7 +278,7 @@ struct DrillView: View {
                 // Spot the error: the audio reads the CORRECTED sentence, so it
                 // would give the answer away before checking.
                 // Hidden, not removed, so the sentence doesn't jump on check.
-                let hideListen = nothingToHear || (isSpot && !checked && reviewData == nil)
+                let hideListen = isSpot && !checked && reviewData == nil
                 listenButton
                     .opacity(hideListen ? 0 : 1)
                     .allowsHitTesting(!hideListen)
