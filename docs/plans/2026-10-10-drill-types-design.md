@@ -55,3 +55,28 @@ First wrong Vérifier no longer ends the drill:
 DEBUG only. A build with bundle id `wen.carambole.testbook` (own database,
 named "Test book") opens a one-page test book: one session of spot-the-error
 items, one session of long build drills to try the second-try flow.
+
+## Authoring probe results (2026-10-10, two subagents)
+
+**Spot the error from existing banks.** 6,738 candidate swaps → 328 pass every
+automatic gate (~13/module; 07/13/24/01/08 high, 16/18/21/22 near zero).
+Grammalecte: 62/62 flagged were truly wrong (high precision) but ~70% recall,
+so only flagged items are kept. Biggest reject class (~75%): two places to fix
+("Je lui parlent" → fix the verb OR the subject). Making the subject pronoun
+untappable would recover ~1,256 subject–verb items. Pipeline: candidates →
+surface filter (elision/contraction) → Grammalecte flag whose suggestion is the
+original word → one-fix probe → LLM judge → ~10 % human check.
+
+**Baseline of past LLM authoring.** 80 random drills: no conjugation /
+agreement / translation errors; 2 had a distractor that is also correct
+(`amis`/`amies`, `là`/`ici`). Add a lint: fill each blank with each distractor,
+send Grammalecte-clean ones to a judge.
+
+**New types.** Transformation: code computes answer + distractors, LLM writes
+only noun phrases/prose (≤0.5 % error; ~35 % of distractors need a judge —
+word order and valency are invisible to Grammalecte). Interpretation: code
+flips the one cue to make a "twin" that must differ visibly, be grammatical and
+flip the answer; human reviews every item. Watch: l' hides gender, lui/leur
+hide gender, fait + infinitive never agrees, si = "whether"/habit, vu/vue sound
+identical (agreement items are text-only). Partial build + morpheme build:
+fully programmatic.
