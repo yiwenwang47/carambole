@@ -97,15 +97,17 @@ Mixing rules:
 - Never two items of the same type back to back.
 - A standalone drill reuses the module's situation and words, so the session still feels like one scene.
 - Standalone drills use the same card, button, colours, motion and mistake log as dialogues. Wrong attempts go to the same attempt log and summary.
-- Ratio is open (proposal: about 1 standalone per 2 dialogues).
+- **Ratio: 1 standalone drill per 2 dialogues** (user decision, 2026-10-11).
+- A standalone drill uses only words already taught before it in the session or module.
 
-**Proposed new ideas (not approved yet):**
+**Approved new types (2026-10-11):**
 
 1. **Transformer.** Rewrite a line one step: tu → vous, present → passé composé, affirmative → negative. Code computes the answer; build or type it.
-2. **Remettre en ordre.** Put 3–4 shuffled chat bubbles of a short exchange in order. Tests understanding of the whole dialogue, not one line.
-3. **Écouter puis choisir.** Hear a server line, pick what it means. Conflicts with "French text always visible"; needs the user's yes before building.
-4. **Mot en retour.** Reverse of Mot: English shown, pick or type the French word taught earlier in the module.
-5. **Réplique libre limitée.** Type the learner's reply with a word bank shown but no tiles; graded against listed accepted replies only.
+2. **Mot en retour.** Reverse of Mot: English shown, pick or type the French word taught earlier in the module.
+
+**Dropped ideas:** Remettre en ordre, Écouter puis choisir, Réplique libre limitée.
+
+**Next:** mockup first, in the style of the reference mock, before any Swift work. Drill-mix mock v1 (private artifact, playable): `https://claude.ai/artifact/8A6hQgxpcQo1Ud9hyQnvGv`. Séance 1 has 8 dialogues and 4 standalone drills (Construire, Écrire, Choisir le ton, Corriger). Séance 2 shows Transformer and Mot en retour. Waiting for the user's review.
 
 ## Pilot behaviour (as built)
 
