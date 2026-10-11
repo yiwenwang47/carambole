@@ -2,7 +2,7 @@
 
 > **For agentic workers:** Implement task by task with an independent review after each milestone. Track the checkboxes here and update this file as decisions change.
 
-**Status:** Full-book plan revised 2026-10-11. The separate Test book difficulty pilot is installed and launched on the connected iPhone 18 Pro; human difficulty and listening feedback is pending. Full-book implementation has not started.
+**Status:** Full-book plan revised 2026-10-11. User feedback: a hidden transcript makes the drills too hard. The pilot now shows the French exchange from the start; the revised Test book was installed and launched on the connected iPhone 18 Pro. Further difficulty feedback is pending. Full-book implementation has not started.
 
 ## Difficulty pilot checkpoint (2026-10-11)
 
@@ -14,6 +14,7 @@ The user worries the planned conversation book may be too easy and requested a p
 - Content gate: `tools/pilot/test_content.py`; five tests pass, including shorter valid replies. The Swift scenario test also passes. Independent review found and we fixed a hidden listening correction and over-strict reply alternatives.
 - Audio: `tools/pilot/generate_audio.py` generated 12 bundled MP3 files: two-voice dialogue plus model and follow-up for each scene. File format and bundle coverage pass; a human still needs to judge pronunciation, voice contrast, and loudness on the phone.
 - Build and handoff: Debug simulator and signed device builds pass. The iPhone 18 Pro installed and launched bundle ID `wen.carambole.testbook` on 2026-10-11. Simulator screenshots show the reply and feedback screens with the footer action visible. Open **Test book → En situation · essai** to play all four scenes.
+- Feedback-driven change: show the exchange text from the start on every scene, with audio as replay. Reading is normal use, not a graded hint. Keep this default for Book 2 unless later testing changes the decision. This revision was rebuilt, simulator checked, and reinstalled on the phone.
 - Next: collect difficulty and audio feedback before expanding to the eight-element, 32-exchange content pilot or deciding how hard the complete book should be.
 
 **Goal:** Build a second French book that trains learners to understand a short everyday exchange and form a useful response, applying grammar from *Fondations*.
@@ -77,15 +78,15 @@ Pilot **Au café** (module 06) first because a service exchange makes understand
 
 ## Interaction and content contract
 
-1. Show a short situation cue and play a **two-speaker French exchange**. Allow replay. Hide answer text initially, with a visible transcript control available at any time for accessibility and study. Opening the transcript marks the attempt assisted but never blocks progress.
-2. Ask one listening question about a fact or intent needed for the reply: quantity, time, place, request, or problem. A miss permits replay and a second try, with feedback about the missed cue. The question must require understanding, not just spotting a repeated word.
+1. Show a short situation cue and the text of a **two-speaker French exchange** from the start. Allow audio playback and replay. Reading the exchange is normal use and does not lower the rating.
+2. Ask one comprehension question about a fact or intent needed for the reply: quantity, time, place, request, or problem. A miss permits rereading or replay and a second try, with feedback about the missed cue. The question must require understanding, not just spotting a repeated word.
 3. Ask the learner to **form a short French reply**, using existing token/build interaction adapted for a conversational goal. The authored bank has an explicit set of accepted replies; every valid reply buildable from it must grade correctly. No open-ended speech recognition or LLM grading in this release.
-4. Apply the current rating pattern: first-try unassisted success `.good`; success after listening error, transcript reveal, or response retry at most `.hard`; no valid reply after two tries `.again`. Show a model reply, concise form/meaning feedback, and a follow-up turn showing the outcome.
+4. Apply the current rating pattern: first-try success `.good`; success after a comprehension error or response retry at most `.hard`; no valid reply after two tries `.again`. Show a model reply, concise form/meaning feedback, and a follow-up turn showing the outcome.
 5. Offer an optional, ungraded speak-aloud prompt and model audio. Save review under the communicative element ID; later sessions rotate its dialogue variants like existing examples.
 
 Each variant needs stable ID, situation cue, ordered speaker turns and audio keys, listening question/choices/correct answer, response goal and bank, accepted replies, model reply, follow-up, French explanation, English support, and transcript. A listener must have enough visible/audio information to choose number, gender, person, and formality. Audit the **rendered full exchange** and every distractor, not isolated fields.
 
-Audio is required content. Bundle the turns, model, and follow-up; fail validation if a reference is missing. Reuse `Speaker` and the current key convention where possible. The [Google French voice list](https://docs.cloud.google.com/text-to-speech/docs/list-voices-and-types) includes Neural2 F and G, but audition both on device for pronunciation, turn separation, and loudness before choosing. The transcript remains a text fallback. Tune length from pilot use; CEFR gives no seconds target.
+Audio is required content. Bundle the turns, model, and follow-up; fail validation if a reference is missing. Reuse `Speaker` and the current key convention where possible. The [Google French voice list](https://docs.cloud.google.com/text-to-speech/docs/list-voices-and-types) includes Neural2 F and G, but audition both on device for pronunciation, turn separation, and loudness before choosing. Keep the French exchange text visible, including when offline. Tune length from pilot use; CEFR gives no seconds target.
 
 ## Implementation tasks
 
@@ -117,7 +118,7 @@ Audio is required content. Bundle the turns, model, and follow-up; fail validati
 **Files:** `Models/Exercise.swift`, `ContentLoader.swift`, `Core/Speaker.swift`, `Features/Drill/DrillView.swift`, `DrillEngine.swift`, `DrillSessionView.swift`; add one focused dialogue view if needed.
 
 - [ ] Decode optional dialogue data and one new input mode without changing old exercise behavior.
-- [ ] Implement ordered turn playback, replay, speaker labels, transcript reveal, VoiceOver, and text fallback. Stop old playback on interrupt, exit, and rapid replay.
+- [ ] Implement visible ordered turns, audio playback and replay, speaker labels, and VoiceOver. Stop old playback on interrupt, exit, and rapid replay.
 - [ ] Use the current choice/token components for listening and reply where practical. Grade all accepted replies and preserve second-try/FSRS behavior.
 - [ ] Show model reply and follow-up after grading. Test assistance, retries, valid alternatives, missing audio, and exit/re-entry.
 
@@ -171,7 +172,7 @@ Audio is required content. Bundle the turns, model, and follow-up; fail validati
 3. A setting or review event in one book changes the other book → settings, history, unlocks, progress, and estimate stay separate (Task 2).
 4. A second valid reply is buildable → it grades correct (Tasks 1 and 3).
 5. Audio is missing/interrupted or replay is rapid → transcript remains and playback resets (Tasks 3–4).
-6. Transcript reveal or missed listening followed by a correct reply → saved rating is at most `.hard` (Task 3).
+6. Missed comprehension or a retried reply followed by a correct reply → saved rating is at most `.hard`; reading the visible exchange does not lower it (Task 3).
 
 ## Choices for review after this plan
 

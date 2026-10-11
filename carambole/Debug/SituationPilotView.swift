@@ -12,8 +12,6 @@ struct SituationPilotView: View {
     @State private var phase: Phase = .listen
     @State private var selectedChoice: Int?
     @State private var listeningMisses = 0
-    @State private var transcriptShown = false
-    @State private var assisted = false
     @State private var chosenBankIndices: [Int] = []
     @State private var bankOrder: [Int] = []
     @State private var replyAttempts = 0
@@ -103,7 +101,7 @@ struct SituationPilotView: View {
 
     private var audioBlock: some View {
         VStack(alignment: .leading, spacing: Spacing.sm) {
-            Text("01 · ÉCOUTER").uppercaseLabel()
+            Text("01 · LIRE ET ÉCOUTER").uppercaseLabel()
             Button {
                 Speaker.shared.speak(item.turns.map(\.text).joined(separator: " … "),
                                      key: "pilot_" + item.id)
@@ -120,30 +118,20 @@ struct SituationPilotView: View {
             .buttonStyle(.plain)
             .accessibilityHint("Lance ou relance les deux voix en français")
 
-            Button(transcriptShown ? "Masquer le texte" : "Afficher le texte") {
-                transcriptShown.toggle()
-                if transcriptShown && phase != .feedback { assisted = true }
-            }
-            .font(.appBody)
-            .foregroundColor(AppColor.graphite)
-            .accessibilityHint("Le texte peut aider à comprendre l'audio")
-
-            if transcriptShown {
-                VStack(alignment: .leading, spacing: Spacing.sm) {
-                    ForEach(Array(item.turns.enumerated()), id: \.offset) { _, turn in
-                        HStack(alignment: .top, spacing: 12) {
-                            Text(turn.speaker).uppercaseLabel()
-                                .frame(width: 74, alignment: .leading)
-                            Text(turn.text).font(.appBody)
-                                .foregroundColor(AppColor.ink)
-                                .fixedSize(horizontal: false, vertical: true)
-                        }
+            VStack(alignment: .leading, spacing: Spacing.sm) {
+                ForEach(Array(item.turns.enumerated()), id: \.offset) { _, turn in
+                    HStack(alignment: .top, spacing: 12) {
+                        Text(turn.speaker).uppercaseLabel()
+                            .frame(width: 74, alignment: .leading)
+                        Text(turn.text).font(.appBody)
+                            .foregroundColor(AppColor.ink)
+                            .fixedSize(horizontal: false, vertical: true)
                     }
                 }
-                .padding(Spacing.md)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .overlay(RoundedRectangle(cornerRadius: 16).stroke(AppColor.hairline))
             }
+            .padding(Spacing.md)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .overlay(RoundedRectangle(cornerRadius: 16).stroke(AppColor.hairline))
         }
     }
 
@@ -262,8 +250,8 @@ struct SituationPilotView: View {
                 Speaker.shared.speak(item.followUp, key: "pilot_" + item.id + "_followup")
             }
             .font(.appBody).foregroundColor(AppColor.ink)
-            if assisted || listeningMisses > 0 || replyAttempts > 1 {
-                Text("Cet essai a utilisé une aide ou un deuxième essai.")
+            if listeningMisses > 0 || replyAttempts > 1 {
+                Text("Cet essai a demandé un deuxième essai.")
                     .font(.appBody).foregroundColor(AppColor.g2)
             }
         }
@@ -318,8 +306,6 @@ struct SituationPilotView: View {
         phase = .listen
         selectedChoice = nil
         listeningMisses = 0
-        transcriptShown = false
-        assisted = false
         chosenBankIndices = []
         replyAttempts = 0
         replyCorrect = false
