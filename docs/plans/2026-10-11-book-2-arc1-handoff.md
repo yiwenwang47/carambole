@@ -24,7 +24,7 @@ It covers all six engines and the three new voices. Phone install happens only i
 
 ## 3. User decisions (2026-10-11, after v5)
 
-1. **The learner is Robin from Eugene, Oregon** (was Alex / Boston). In French the hometown is « Eugene, dans l'Oregon » on first mention. Later mentions use « Eugene » or « l'Oregon ». 45 items were reworked and 39 clips re-recorded.
+1. **The learner is Robin from Eugene, Oregon, and Robin is female** (user, 2026-10-11; was Alex / Boston). The content still follows the content handoff's rule: it accepts both gender forms in learner lines and never genders Robin. Whether to switch the model answers to feminine (*enchantée, désolée*) and allow *madame* is an open question for the user. In French the hometown is « Eugene, dans l'Oregon » on first mention. Later mentions use « Eugene » or « l'Oregon ». 45 items were reworked and 39 clips re-recorded.
 2. The partners who suggest *tu* in module 03 stay unnamed. There is no seventh cast voice.
 3. **Café underlines dropped** for the ten words now taught in 01–05. An underline means "new word here" only.
 4. *ah, oh, tout le monde, pas de problème, bonne journée, ça me va* stay glossed on tap only. They are not taught.
