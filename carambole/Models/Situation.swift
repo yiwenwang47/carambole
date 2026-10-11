@@ -271,10 +271,14 @@ enum SituationText {
 
     /// Longest word-list phrase first, so « comme d'habitude » wins over
     /// « comme ». French spaced punctuation rides on the word before it.
-    static func segments(_ text: String, keys: Set<String>) -> [Segment] {
+    /// `keepApart` is a Corriger error word: no multi-word phrase may swallow
+    /// it, so the learner can tap it on its own (« moi aussi » → « moi » « aussi »).
+    static func segments(_ text: String, keys: Set<String>, keepApart: String? = nil) -> [Segment] {
         let toks = tokens(text)
+        let apart = keepApart.map(norm)
         let phrases = keys
             .map { $0.split(separator: " ").map(String.init) }
+            .filter { p in p.count == 1 || apart == nil || !p.contains(apart!) }
             .sorted { $0.count > $1.count }
         var out: [Segment] = []
         var i = 0

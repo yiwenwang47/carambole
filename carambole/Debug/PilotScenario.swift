@@ -215,10 +215,13 @@ enum PilotText {
     }
 
     /// Longest glossary phrase first, so « un quart d'heure » wins over « un ».
-    static func segments(_ text: String, glossary: [String: String]) -> [Segment] {
+    /// `keepApart` is a Corriger error word that no multi-word phrase may swallow.
+    static func segments(_ text: String, glossary: [String: String], keepApart: String? = nil) -> [Segment] {
         let toks = tokens(text)
+        let apart = keepApart.map(norm)
         let phrases = glossary.keys
             .map { $0.split(separator: " ").map(String.init) }
+            .filter { p in p.count == 1 || apart == nil || !p.contains(apart!) }
             .sorted { $0.count > $1.count }
         var out: [Segment] = []
         var i = 0

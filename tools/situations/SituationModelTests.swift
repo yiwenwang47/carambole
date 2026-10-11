@@ -126,6 +126,15 @@ struct SituationModelTests {
         let segs = SituationText.segments("Bonjour ! Comme d'habitude ?", keys: Set(words.keys))
         check(segs.first?.key == "bonjour" && segs.first?.trailing == "\u{00A0}!", "spaced ! rides on the word")
         check(segs.contains { $0.key == "comme d'habitude" }, "set phrase is one tappable segment")
+        // A Corriger error word inside a set phrase stays tappable on its own.
+        let apart = SituationText.segments("Moi aussi, j'adore !", keys: ["moi aussi", "moi", "aussi"], keepApart: "aussi")
+        check(apart.map(\.key) == ["moi", "aussi", nil] || apart.contains { $0.key == "aussi" }, "error word split out of its phrase")
+        for item in items {
+            guard let i = item.errorTurnIndex, let mark = item.errorMark else { continue }
+            let segs = SituationText.segments(item.turns[i].text, keys: Set(words.keys), keepApart: mark.word)
+            check(segs.contains { SituationText.norm($0.display) == SituationText.norm(mark.word) },
+                  "\(item.id): error word « \(mark.word) » is one tappable segment")
+        }
         // Every new word and Mot target has a gloss.
         for item in items {
             for word in item.newWords { check(words[SituationText.norm(word)] != nil, "\(item.id): gloss for \(word)") }

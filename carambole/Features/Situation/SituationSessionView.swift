@@ -536,8 +536,9 @@ struct SituationSessionView: View {
     // MARK: - Words
 
     private func lineText(id: String, text: String, turnIndex: Int?) -> some View {
-        let segments = SituationText.segments(text, keys: wordKeys)
         let fixLine = turnIndex != nil && turnIndex == item.errorTurnIndex
+        let segments = SituationText.segments(text, keys: wordKeys,
+                                              keepApart: fixLine ? item.errorMark?.word : nil)
         return FlowLayout(spacing: 5, lineSpacing: 4) {
             ForEach(segments, id: \.index) { seg in
                 segmentView(seg, lineID: id, fixLine: fixLine)
