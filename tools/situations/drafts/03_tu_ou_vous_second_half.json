@@ -249,7 +249,7 @@
         },
         {
           "id": "sit_03_quartier_s02",
-          "place": "Au café · phrase seule",
+          "place": "Sur le palier · phrase seule",
           "standalone": "Choisir le ton",
           "cue": "M. Ferrand, your older neighbour, says vous to you. Tell him you like the neighbourhood.",
           "turns": [],
@@ -258,7 +258,7 @@
               "type": "pick",
               "prompt": "Which one fits M. Ferrand?",
               "choices": [
-                "Ouais, le quartier, j'aime bien, carrément !",
+                "Ouais, carrément, j'aime bien le quartier !",
                 "Calme, le quartier.",
                 "J'aime bien le quartier, c'est très calme."
               ],
@@ -370,7 +370,7 @@
         },
         {
           "id": "sit_03_quartier_s03",
-          "place": "Au café · phrase seule",
+          "place": "Sur le palier · phrase seule",
           "standalone": "Corriger",
           "cue": "You tell M. Ferrand, who says vous to you, where Karim's café is. Fix the mistake.",
           "turns": [
@@ -487,7 +487,7 @@
               "prompt": "What does Théo ask?",
               "choices": [
                 "If Karim's café is across from your place",
-                "If Karim's café is open today"
+                "If Karim's café is far from your place"
               ],
               "correct": 0,
               "miss": "Reread: « c'est en face de chez toi ? »"
@@ -608,7 +608,7 @@
                 "There's a park across the street"
               ],
               "correct": 1,
-              "miss": "Reread: « il y a un parc en face »."
+              "miss": "Reread: « Il y a aussi un parc en face. »"
             },
             {
               "type": "reply",
@@ -748,13 +748,13 @@
           "drills": [
             {
               "type": "comprehend",
-              "prompt": "How does your colleague answer your question?",
+              "prompt": "What does your colleague offer you?",
               "choices": [
-                "He prefers to keep vous",
-                "He agrees, gladly"
+                "A coffee",
+                "A lunch"
               ],
-              "correct": 1,
-              "miss": "Reread: « Bien sûr ! »"
+              "correct": 0,
+              "miss": "Reread: « Tu ___ un café ? »"
             },
             {
               "type": "complete",
@@ -813,6 +813,14 @@
                   "C'est",
                   "plus",
                   "simple."
+                ],
+                [
+                  "Oui,",
+                  "très bien !",
+                  "C'est",
+                  "plus",
+                  "simple.",
+                  "On peut se tutoyer ?"
                 ]
               ],
               "model": "Oui, très bien ! On peut se tutoyer ? C'est plus simple."
@@ -828,7 +836,7 @@
             {
               "speaker": "server",
               "name": "Inès",
-              "text": "Au bureau, tout le monde dit tu. D'accord ?"
+              "text": "Au bureau, tout le monde se dit tu. D'accord ?"
             },
             {
               "speaker": "learner",
@@ -859,7 +867,7 @@
                 "Everyone says tu there"
               ],
               "correct": 1,
-              "miss": "Reread: « tout le monde dit tu »."
+              "miss": "Reread: « tout le monde se dit tu »."
             }
           ],
           "followUp": "Parfait ! À demain au bureau.",
@@ -923,7 +931,7 @@
         },
         {
           "id": "sit_03_tutoyer_s02",
-          "place": "Dans l'escalier · phrase seule",
+          "place": "Au bureau · phrase seule",
           "standalone": "Choisir le ton",
           "cue": "A colleague from another team switched to tu with you yesterday. Ask him for help.",
           "turns": [],
@@ -1046,7 +1054,7 @@
               "miss": "Reread: « Non, bien sûr ! Pas avec M. Ferrand. »"
             }
           ],
-          "followUp": "Voilà ! Et tu dis « monsieur », aussi.",
+          "followUp": "Voilà ! Et tu lui dis « monsieur », aussi.",
           "newWords": []
         },
         {
@@ -1081,7 +1089,7 @@
         {
           "id": "sit_03_tutoyer_d07",
           "place": "Dans l'escalier",
-          "cue": "Your neighbour your age from the third floor just switched to tu with you.",
+          "cue": "A neighbour your age from the third floor has just switched to tu with you.",
           "turns": [
             {
               "speaker": "server",
@@ -1167,7 +1175,7 @@
               "prompt": "What reason does he give?",
               "choices": [
                 "You're the same age",
-                "You work on the same team"
+                "You live in the same building"
               ],
               "correct": 0,
               "miss": "Reread: « On a le même âge »."
@@ -1222,6 +1230,22 @@
                   "Tu",
                   "vas",
                   "bien ?"
+                ],
+                [
+                  "Tu",
+                  "vas",
+                  "bien ?",
+                  "Tu",
+                  "vas",
+                  "au marché ?"
+                ],
+                [
+                  "Tu",
+                  "vas",
+                  "au marché ?",
+                  "Tu",
+                  "vas",
+                  "bien ?"
                 ]
               ],
               "model": "Salut ! Tu vas bien ? Tu vas au marché ?"
@@ -1253,7 +1277,7 @@
               "type": "comprehend",
               "prompt": "What does Inès say?",
               "choices": [
-                "She can't help today",
+                "She can't help, but you should say tu",
                 "She can help, and you should say tu"
               ],
               "correct": 1,
@@ -1337,7 +1361,7 @@
             {
               "speaker": "server",
               "voice": "female",
-              "text": "Bonjour ! On est voisins et on a le même âge : ___ ?"
+              "text": "Bonjour ! On habite ici et on a le même âge : ___ ?"
             }
           ],
           "drills": [
@@ -1390,7 +1414,7 @@
             },
             {
               "type": "reply",
-              "prompt": "Greet her and say nice to meet you.",
+              "prompt": "Greet her with madame and say nice to meet you.",
               "bank": [
                 "Bonjour,",
                 "madame.",
@@ -1487,7 +1511,7 @@
                 "madame.",
                 "D'accord",
                 "pour demain,",
-                "dix heures.",
+                "à dix heures.",
                 "Merci,",
                 "bonne journée.",
                 "Salut,",
@@ -1500,12 +1524,12 @@
                   "madame.",
                   "D'accord",
                   "pour demain,",
-                  "dix heures.",
+                  "à dix heures.",
                   "Merci,",
                   "bonne journée."
                 ]
               ],
-              "model": "Bonjour, madame. D'accord pour demain, dix heures. Merci, bonne journée."
+              "model": "Bonjour, madame. D'accord pour demain, à dix heures. Merci, bonne journée."
             }
           ],
           "newWords": []
@@ -1614,13 +1638,13 @@
               "type": "pick",
               "prompt": "Which one fits Mme Dumas?",
               "choices": [
-                "Merci ! C'est sympa !",
+                "Merci, tu es très gentille !",
                 "Merci, salut !",
                 "Je vous remercie, madame. Bonne journée."
               ],
               "correct": 2,
               "why": [
-                "Good French with a friend, but too casual for your landlady.",
+                "Good French with a friend, but « tu » is too familiar: Mme Dumas says vous to you.",
                 "Good French with a friend, but « salut » is too casual for Mme Dumas.",
                 ""
               ]
@@ -1631,7 +1655,7 @@
         {
           "id": "sit_03_dumas_d05",
           "place": "Messagerie · Mme Dumas",
-          "cue": "Clarify: Mme Dumas leaves you a voice message. She says vous to you. The line is bad.",
+          "cue": "Clarify: Mme Dumas leaves you a voice message. She says vous to you. The sound is bad.",
           "turns": [
             {
               "speaker": "server",
@@ -1657,6 +1681,11 @@
                   "Bonjour,",
                   "madame.",
                   "Pardon,",
+                  "vous pouvez",
+                  "répéter ?"
+                ],
+                [
+                  "Bonjour,",
                   "vous pouvez",
                   "répéter ?"
                 ]
@@ -2132,7 +2161,7 @@
               ]
             }
           ],
-          "followUp": "Et pour vous, avec du sucre ?",
+          "followUp": "Et avec du sucre ?",
           "newWords": [
             "je voulais dire"
           ]
@@ -2151,7 +2180,7 @@
           "drills": [
             {
               "type": "reply",
-              "prompt": "Oops, you said tu. Apologise and ask again with vous.",
+              "prompt": "Oops, you said tu. Apologise, say what you meant, and ask again how he is, with vous.",
               "bank": [
                 "Pardon,",
                 "monsieur,",
@@ -2293,6 +2322,21 @@
                   "Vous",
                   "êtes",
                   "gentille."
+                ],
+                [
+                  "Vous",
+                  "êtes",
+                  "très",
+                  "gentille.",
+                  "Merci,",
+                  "madame."
+                ],
+                [
+                  "Vous",
+                  "êtes",
+                  "gentille.",
+                  "Merci,",
+                  "madame."
                 ]
               ],
               "model": "Merci, madame. Vous êtes très gentille."
@@ -2313,14 +2357,14 @@
               "prompt": "Which one fits?",
               "choices": [
                 "Pardon, monsieur, je voulais dire « vous ».",
-                "Pas grave !",
-                "Pardon, je voulais dire « tu » !"
+                "Excuse-moi ! Je voulais dire « vous ».",
+                "Pardon ! Tu vas bien ?"
               ],
               "correct": 0,
               "why": [
                 "",
-                "Good French, but that's what he says to you, not your apology.",
-                "Good French, but backwards: you meant vous, not tu."
+                "Good French, but « excuse-moi » is the tu form: you'd slip again.",
+                "Good French, but you're still saying tu to M. Ferrand."
               ]
             }
           ],
@@ -2329,11 +2373,10 @@
         {
           "id": "sit_03_slip_d05",
           "place": "Au café",
-          "cue": "Clarify: Karim, the barista, says vous to you. He corrects himself, but too fast for you.",
+          "cue": "Clarify: a new waiter at the café says vous to you. He corrects himself, but too fast for you.",
           "turns": [
             {
               "speaker": "server",
-              "name": "Karim",
               "text": "Tu… pardon, je voulais dire : vous voulez du sucre ?"
             }
           ],
@@ -2368,7 +2411,7 @@
               ],
               "correct": 2,
               "why": [
-                "I don't know is « je sais pas ».",
+                "I don't know is « je ne sais pas ».",
                 "I forgot would be « j'ai oublié ».",
                 ""
               ]
@@ -2592,6 +2635,13 @@
                   "m'aider",
                   "avec mon vélo",
                   "ce soir ?"
+                ],
+                [
+                  "Vous",
+                  "pouvez",
+                  "m'aider",
+                  "avec mon vélo",
+                  "ce soir ?"
                 ]
               ],
               "model": "Bonjour ! Vous pouvez m'aider avec mon vélo ce soir ?"
@@ -2651,7 +2701,7 @@
         {
           "id": "sit_03_slip_d10",
           "place": "Dans l'escalier",
-          "cue": "Your neighbour your age from the third floor switched to tu with you last week. You slip and say vous.",
+          "cue": "Your neighbour from the third floor, who is your age, switched to tu with you last week. You slip and say vous.",
           "turns": [
             {
               "speaker": "learner",

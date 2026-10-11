@@ -25,7 +25,7 @@ STANDALONE = {"Construire": "reply", "Choisir le ton": "pick",
               "Corriger": "fix", "Transformer": "reply", "Mot en retour": "complete"}
 SPOKEN = {"je sais pas", "t'as", "t'es", "y a", "y a encore", "ouais", "du coup",
           "carrément", "bref", "pas de souci", "top", "ça marche", "on",
-          "dispo", "boulot"}
+          "dispo", "dispos", "boulot"}
 # Canonical cast `name` strings; the audio CAST map uses the same keys.
 SOCIAL_CAST = {"Léa", "Théo", "Inès", "M. Ferrand", "Mme Dumas"}
 CAST_ALIASES = {"Monsieur Ferrand": "M. Ferrand", "Madame Dumas": "Mme Dumas",

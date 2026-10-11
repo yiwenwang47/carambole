@@ -196,13 +196,13 @@
               "prompt": "What does « peut-être » mean here?",
               "target": "peut-être",
               "choices": [
-                "for sure",
+                "of course",
                 "late",
                 "maybe"
               ],
               "correct": 2,
               "why": [
-                "For sure would be « bien sûr ».",
+                "Of course would be « bien sûr ».",
                 "Late would be « en retard ».",
                 ""
               ]
@@ -247,7 +247,7 @@
               "choices": [
                 "Je sais pas, peut-être.",
                 "Peut-être, je te dis demain !",
-                "Peut-être, je vous dis demain. C'est gentil !"
+                "C'est gentil ! Peut-être, je vous dis demain."
               ],
               "correct": 2,
               "why": [
@@ -443,7 +443,7 @@
             {
               "speaker": "server",
               "name": "Théo",
-              "text": "Samedi, tu viens, normalement ? Léa, elle vient peut-être."
+              "text": "Samedi, tu viens ? Léa, elle vient peut-être."
             }
           ],
           "drills": [
@@ -508,12 +508,6 @@
               "accepted": [
                 [
                   "Samedi ?",
-                  "Peut-être,",
-                  "je vous dis",
-                  "demain,",
-                  "après le travail."
-                ],
-                [
                   "Peut-être,",
                   "je vous dis",
                   "demain,",
@@ -599,7 +593,7 @@
             },
             {
               "type": "reply",
-              "prompt": "Tell Théo OK, and that you're coming, normally.",
+              "prompt": "Tell Théo OK, and that you should be coming.",
               "bank": [
                 "D'accord,",
                 "normalement",
@@ -623,7 +617,7 @@
         },
         {
           "id": "sit_04_maybe_s05",
-          "place": "Texto · Théo · phrase seule",
+          "place": "Texto · Léa · phrase seule",
           "standalone": "Mot en retour",
           "cue": "Which French word means “maybe”?",
           "turns": [
@@ -718,7 +712,7 @@
             {
               "speaker": "server",
               "name": "Léa",
-              "text": "Pour Théo, j'apporte des chips. Et toi ?"
+              "text": "Samedi chez Théo, j'apporte des chips. Et toi ?"
             },
             {
               "speaker": "learner",
@@ -747,7 +741,7 @@
               "correct": 0,
               "why": [
                 "",
-                "One cheese, so not « des ».",
+                "« Des » needs a plural noun; « fromage » is singular here: « du ».",
                 "« Fromage » is masculine: « du »."
               ]
             }
@@ -887,6 +881,12 @@
                   "bien sûr !",
                   "J'apporte",
                   "des chips."
+                ],
+                [
+                  "J'apporte",
+                  "des chips.",
+                  "Oui,",
+                  "bien sûr !"
                 ]
               ],
               "model": "Oui, bien sûr ! J'apporte des chips."
@@ -913,7 +913,7 @@
               "prompt": "Which answer fits M. Ferrand?",
               "choices": [
                 "Top ! Tu veux que j'apporte quelque chose ?",
-                "Avec plaisir ! Je vous apporte quelque chose ?",
+                "Avec plaisir ! Je peux apporter quelque chose ?",
                 "J'apporte quoi ?"
               ],
               "correct": 1,
@@ -1031,7 +1031,7 @@
           "id": "sit_04_bring_s03",
           "place": "Les copains · groupe · phrase seule",
           "standalone": "Corriger",
-          "cue": "You're texting Théo, a friend, about what you'll bring. He says tu to you. Fix the mistake.",
+          "cue": "You're writing in the group chat « Les copains », where everyone says tu to you. Fix the mistake.",
           "turns": [
             {
               "speaker": "learner",
@@ -1059,7 +1059,7 @@
         {
           "id": "sit_04_bring_d07",
           "place": "À l'appart",
-          "cue": "Léa, your flatmate, says tu to you. You're shopping for Théo's apéro. You want crisps and a cake.",
+          "cue": "Léa, your flatmate, says tu to you. You're planning what to buy for Théo's apéro. You want crisps and a cake.",
           "turns": [
             {
               "speaker": "server",
@@ -1156,7 +1156,7 @@
           "id": "sit_04_bring_s04",
           "place": "Les copains · groupe · phrase seule",
           "standalone": "Transformer",
-          "cue": "You wrote this to Théo, who says tu to you. Rewrite it in the near future (aller + infinitive).",
+          "cue": "You wrote this in the group chat « Les copains », where everyone says tu to you. Rewrite it in the near future (aller + infinitive).",
           "turns": [
             {
               "speaker": "learner",
@@ -1439,7 +1439,7 @@
               "type": "reply",
               "prompt": "Greet him, then give him the crisps and the wine.",
               "bank": [
-                "Salut !",
+                "Salut, Théo !",
                 "Voilà",
                 "des chips",
                 "et du vin.",
@@ -1449,13 +1449,13 @@
               ],
               "accepted": [
                 [
-                  "Salut !",
+                  "Salut, Théo !",
                   "Voilà",
                   "des chips",
                   "et du vin."
                 ]
               ],
-              "model": "Salut ! Voilà des chips et du vin."
+              "model": "Salut, Théo ! Voilà des chips et du vin."
             }
           ],
           "newWords": []
@@ -1472,7 +1472,7 @@
             },
             {
               "speaker": "learner",
-              "text": "Oui ! Il ___ de Lyon ?"
+              "text": "Oui ! Il vient ___ Lyon ?"
             }
           ],
           "drills": [
@@ -1480,15 +1480,15 @@
               "type": "complete",
               "prompt": "Ask if it's from Lyon.",
               "choices": [
-                "a",
-                "es",
-                "est"
+                "à",
+                "de",
+                "en"
               ],
-              "correct": 2,
+              "correct": 1,
               "why": [
-                "« A » is avoir. To say where it's from, use être: « est ».",
-                "« Es » goes with tu. With il: « est ».",
-                ""
+                "« Venir à » gives the destination; where it's from is « de ».",
+                "",
+                "« En » is for feminine countries, not cities."
               ]
             },
             {
@@ -1510,7 +1510,7 @@
         {
           "id": "sit_04_arrive_d04",
           "place": "Texto · Inès",
-          "cue": "Inès, a colleague, texts you before Théo's apéro. She says tu to you. She's never been to Théo's.",
+          "cue": "Inès, a colleague, texts you before Théo's apéro. She says tu to you. She's new in Lyon too.",
           "turns": [
             {
               "speaker": "server",
@@ -1562,7 +1562,7 @@
           "id": "sit_04_arrive_s02",
           "place": "Sur le palier · phrase seule",
           "standalone": "Choisir le ton",
-          "cue": "M. Ferrand, your neighbour, offers you some of his cake. He says vous to you. Compliment it.",
+          "cue": "M. Ferrand, your neighbour, gives you some of his cake on the landing. You taste it. He says vous to you. Compliment it.",
           "turns": [
             {
               "speaker": "server",
@@ -1576,14 +1576,14 @@
               "prompt": "Which compliment fits M. Ferrand?",
               "choices": [
                 "Merci beaucoup ! Il est délicieux, votre gâteau.",
-                "Trop bon, ton gâteau !",
-                "Délicieux."
+                "Merci ! Il est délicieux, ton gâteau.",
+                "Ouais, il est top, votre gâteau !"
               ],
               "correct": 0,
               "why": [
                 "",
-                "Good French with a friend, but « ton » and « trop bon » are too casual: M. Ferrand says vous.",
-                "Good French, but too short and curt for M. Ferrand."
+                "Good French with a friend, but M. Ferrand says vous: « votre gâteau ».",
+                "« Ouais » and « top » are spoken forms: too casual for M. Ferrand."
               ]
             }
           ],
@@ -1637,7 +1637,7 @@
               ]
             }
           ],
-          "followUp": "Je dis : fais comme chez toi !",
+          "followUp": "J'ai dit : fais comme chez toi !",
           "newWords": []
         },
         {
@@ -1762,7 +1762,7 @@
               ]
             }
           ],
-          "followUp": "Merci ! Le fromage, c'est Léa.",
+          "followUp": "Merci ! Fais comme chez toi, alors !",
           "newWords": []
         },
         {
@@ -1861,7 +1861,7 @@
             {
               "speaker": "server",
               "name": "Théo",
-              "text": "Ce soir, fais comme chez toi ! Tu connais Inès ?"
+              "text": "Inès vient ce soir. Tu la connais ?"
             },
             {
               "speaker": "learner",
@@ -1945,7 +1945,7 @@
               "model": "Salut, Inès ! Oui, bien sûr !"
             }
           ],
-          "followUp": "Deux, alors, comme à Lyon !",
+          "followUp": "Super ! Deux bises, alors !",
           "newWords": []
         },
         {
@@ -1988,7 +1988,7 @@
         {
           "id": "sit_04_thank_d01",
           "place": "Texto · Théo",
-          "cue": "The day after Théo's apéro, you text him. Théo, a friend, says tu to you.",
+          "cue": "The day after Théo's apéro, you text him. You brought wine. Théo, a friend, says tu to you.",
           "turns": [
             {
               "speaker": "learner",
@@ -2053,7 +2053,7 @@
             {
               "speaker": "server",
               "name": "Théo",
-              "text": "Avec ___ ! Merci pour le vin, aussi."
+              "text": "Avec ___ ! Et merci pour le vin !"
             }
           ],
           "drills": [
@@ -2097,7 +2097,7 @@
             {
               "speaker": "server",
               "name": "Théo",
-              "text": "Salut ! Alors, c'était bien, hier soir, chez moi ?"
+              "text": "Salut ! Alors, c'était bien, mon apéro, hier soir ?"
             }
           ],
           "drills": [
@@ -2230,7 +2230,7 @@
             {
               "speaker": "server",
               "name": "M. Ferrand",
-              "text": "Bonjour ! Alors, c'était bien, hier soir, chez moi ?"
+              "text": "Bonjour ! Alors, c'était bien, mon apéro, hier soir ?"
             }
           ],
           "drills": [
@@ -2255,7 +2255,7 @@
         {
           "id": "sit_04_thank_d05",
           "place": "Texto · Théo",
-          "cue": "Clarify: you text Théo, a friend, the day after his apéro. He says tu to you. You don't know his answer.",
+          "cue": "Clarify: you text Théo, a friend, the day after his apéro. He says tu to you. You don't know the phrase he answers with.",
           "turns": [
             {
               "speaker": "learner",
@@ -2435,12 +2435,12 @@
         {
           "id": "sit_04_thank_d08",
           "place": "Les copains · groupe",
-          "cue": "Théo writes to the group chat (vous = you all). He says tu to you. You'd love to come again.",
+          "cue": "Théo writes to the group chat (vous = you all). He says tu to you. You'd love to go.",
           "turns": [
             {
               "speaker": "server",
               "name": "Théo",
-              "text": "À refaire samedi prochain ? Chez moi !"
+              "text": "Un autre apéro samedi prochain ? Chez moi !"
             }
           ],
           "drills": [
@@ -2450,11 +2450,22 @@
               "bank": [
                 "Oui,",
                 "carrément !",
+                "bien sûr !",
                 "Avec plaisir.",
                 "malheureusement !",
                 "Avec plaisirs."
               ],
               "accepted": [
+                [
+                  "Oui,",
+                  "bien sûr !",
+                  "Avec plaisir."
+                ],
+                [
+                  "Avec plaisir.",
+                  "Oui,",
+                  "bien sûr !"
+                ],
                 [
                   "Oui,",
                   "carrément !",
@@ -2466,7 +2477,7 @@
                   "carrément !"
                 ]
               ],
-              "model": "Oui, carrément ! Avec plaisir."
+              "model": "Oui, bien sûr ! Avec plaisir."
             },
             {
               "type": "comprehend",
@@ -2592,20 +2603,20 @@
             },
             {
               "type": "reply",
-              "prompt": "Tell her: next time, it's your turn.",
+              "prompt": "Tell her that next time, you'll help her.",
               "bank": [
                 "La prochaine fois,",
-                "c'est moi !",
-                "c'est toi !",
+                "je t'aide !",
+                "tu m'aides !",
                 "La prochain fois,"
               ],
               "accepted": [
                 [
                   "La prochaine fois,",
-                  "c'est moi !"
+                  "je t'aide !"
                 ]
               ],
-              "model": "La prochaine fois, c'est moi !"
+              "model": "La prochaine fois, je t'aide !"
             }
           ],
           "followUp": "D'accord ! À refaire, alors.",

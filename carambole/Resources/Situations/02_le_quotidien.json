@@ -274,6 +274,11 @@
                 [
                   "vers",
                   "huit heures."
+                ],
+                [
+                  "Moi,",
+                  "vers",
+                  "huit heures."
                 ]
               ],
               "model": "Moi, je me lève vers huit heures."
@@ -284,7 +289,7 @@
         },
         {
           "id": "sit_02_morning_s02",
-          "place": "Texto · Léa · phrase seule",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
           "standalone": "Choisir le ton",
           "cue": "Mme Dumas, your landlady, says vous to you. She'll come by tomorrow. Ask her what time on WhatsApp.",
           "turns": [],
@@ -342,6 +347,13 @@
                   "Tu",
                   "pars",
                   "à quelle heure ?"
+                ],
+                [
+                  "Pardon ?",
+                  "à quelle heure ?"
+                ],
+                [
+                  "à quelle heure ?"
                 ]
               ],
               "model": "Pardon ? Tu pars à quelle heure ?"
@@ -374,7 +386,7 @@
             {
               "speaker": "server",
               "name": "Théo",
-              "text": "Question : vous vous levez à quelle heure, le matin ?"
+              "text": "Petite question : vous vous levez à quelle heure, le matin ?"
             },
             {
               "speaker": "learner",
@@ -561,7 +573,7 @@
         },
         {
           "id": "sit_02_morning_s04",
-          "place": "Texto · Léa · phrase seule",
+          "place": "Sur le palier · phrase seule",
           "standalone": "Transformer",
           "cue": "A parcel is coming tomorrow evening. You asked Léa, your flatmate. Now ask M. Ferrand, your neighbour. He says vous to you.",
           "turns": [
@@ -635,7 +647,7 @@
               ],
               "correct": 2,
               "why": [
-                "« Midi » is masculine, so no -e: « midi et demi ».",
+                "« Midi » is masculine, so the rule is « midi et demi ». (You will often see « midi et demie » too.)",
                 "It's one half hour, and « midi » is masculine: « midi et demi ».",
                 ""
               ]
@@ -980,14 +992,14 @@
               "model": "Et à pied, c'est vingt minutes."
             }
           ],
-          "followUp": "Vingt minutes ? Ce n'est pas loin !",
+          "followUp": "Oui, vingt minutes. Ce n'est pas loin !",
           "newWords": [
             "minutes"
           ]
         },
         {
           "id": "sit_02_commute_s02",
-          "place": "Au bureau · phrase seule",
+          "place": "Sur le palier · phrase seule",
           "standalone": "Choisir le ton",
           "cue": "M. Ferrand, your neighbour, says vous to you. He asks how you get to work. You walk; it's close.",
           "turns": [],
@@ -998,7 +1010,7 @@
               "choices": [
                 "À pied ! Et toi ?",
                 "À pied.",
-                "Je viens à pied, c'est à côté. Et vous ?"
+                "Je vais au bureau à pied, c'est à côté. Et vous ?"
               ],
               "correct": 2,
               "why": [
@@ -1121,7 +1133,7 @@
         },
         {
           "id": "sit_02_commute_s03",
-          "place": "Au bureau · phrase seule",
+          "place": "Texto · Léa · phrase seule",
           "standalone": "Corriger",
           "cue": "Your text to Léa, your flatmate, has one mistake.",
           "turns": [
@@ -1225,6 +1237,13 @@
                 [
                   "Non,",
                   "à pied."
+                ],
+                [
+                  "je viens",
+                  "à pied."
+                ],
+                [
+                  "à pied."
                 ]
               ],
               "model": "Non, je viens à pied."
@@ -1251,13 +1270,13 @@
         },
         {
           "id": "sit_02_commute_s04",
-          "place": "Au bureau · phrase seule",
+          "place": "Sur le palier · phrase seule",
           "standalone": "Transformer",
           "cue": "You're both heading out. You asked Léa, your flatmate. Now ask M. Ferrand, your neighbour. He says vous to you.",
           "turns": [
             {
               "speaker": "learner",
-              "text": "Léa, tu viens à pied ou en métro, ce matin ?",
+              "text": "Léa, tu pars à pied ou en métro, ce matin ?",
               "source": true
             }
           ],
@@ -1267,26 +1286,26 @@
               "prompt": "Ask M. Ferrand the same question.",
               "bank": [
                 "Vous",
-                "venez",
+                "partez",
                 "à pied",
                 "ou",
                 "en métro,",
                 "ce matin ?",
-                "viens",
+                "pars",
                 "Tu",
-                "venir"
+                "partir"
               ],
               "accepted": [
                 [
                   "Vous",
-                  "venez",
+                  "partez",
                   "à pied",
                   "ou",
                   "en métro,",
                   "ce matin ?"
                 ]
               ],
-              "model": "Vous venez à pied ou en métro, ce matin ?"
+              "model": "Vous partez à pied ou en métro, ce matin ?"
             }
           ],
           "newWords": []
@@ -1299,11 +1318,11 @@
             {
               "speaker": "server",
               "name": "Inès",
-              "text": "Tu viens à vélo ? C'est combien de minutes ?"
+              "text": "Tu viens à vélo ? Ça prend combien de temps ?"
             },
             {
               "speaker": "learner",
-              "text": "___ minutes. C'est à côté."
+              "text": "Dix ___. C'est à côté."
             }
           ],
           "drills": [
@@ -1315,21 +1334,21 @@
                 "How long your ride takes"
               ],
               "correct": 1,
-              "miss": "Reread: « c'est combien de minutes ? » asks how many minutes."
+              "miss": "Reread: « ça prend combien de temps ? » asks how long it takes."
             },
             {
               "type": "complete",
               "prompt": "Fill the gap.",
               "choices": [
-                "Dix",
-                "Dis",
-                "Des"
+                "heures",
+                "minutes",
+                "jours"
               ],
-              "correct": 0,
+              "correct": 1,
               "why": [
+                "Ten hours by bike is far, not « à côté ».",
                 "",
-                "« Dis » is the verb say. The number ten is « dix ».",
-                "« Des minutes » gives no number."
+                "Ten days by bike is far, not « à côté »."
               ]
             }
           ],
@@ -1344,7 +1363,7 @@
             {
               "speaker": "server",
               "name": "Léa",
-              "text": "Tu prends le métro ou tu viens à pied ?"
+              "text": "Tu prends le métro ou tu y vas à pied ?"
             }
           ],
           "drills": [
@@ -1384,7 +1403,7 @@
         },
         {
           "id": "sit_02_commute_s05",
-          "place": "Au bureau · phrase seule",
+          "place": "Texto · Léa · phrase seule",
           "standalone": "Mot en retour",
           "cue": "Which French word means “subway, underground”?",
           "turns": [
@@ -1463,6 +1482,15 @@
                 [
                   "j'aime bien",
                   "le cinéma",
+                  "aussi."
+                ],
+                [
+                  "Oui,",
+                  "j'aime bien",
+                  "aussi."
+                ],
+                [
+                  "j'aime bien",
                   "aussi."
                 ]
               ],
@@ -1616,7 +1644,7 @@
             {
               "speaker": "server",
               "name": "Inès",
-              "text": "Le sport à la télé ? Pas trop. Et toi ?"
+              "text": "Le sport à la télé ? Moi, pas trop. Et toi ?"
             }
           ],
           "drills": [
@@ -1669,7 +1697,7 @@
         },
         {
           "id": "sit_02_likes_s02",
-          "place": "Texto · Inès · phrase seule",
+          "place": "Sur le palier · phrase seule",
           "standalone": "Choisir le ton",
           "cue": "M. Ferrand, your neighbour, says vous to you. He asks if you like Lyon. You like it a lot.",
           "turns": [],
@@ -1786,7 +1814,7 @@
               "correct": 0,
               "why": [
                 "",
-                "« Pas très » needs an adjective after it, as in « pas très bien ».",
+                "« Très » means very. « Pas très » can't end the phrase: it needs another word after it.",
                 "« Pas bien » means not well. It doesn't say how much you like it."
               ]
             },
@@ -1877,7 +1905,7 @@
               ]
             }
           ],
-          "followUp": "Ah, bien ! Moi, j'adore le foot.",
+          "followUp": "Ah, c'est bien ! Moi, j'adore le foot.",
           "newWords": []
         },
         {
@@ -1945,7 +1973,7 @@
         },
         {
           "id": "sit_02_likes_s04",
-          "place": "Texto · Inès · phrase seule",
+          "place": "Sur le palier · phrase seule",
           "standalone": "Transformer",
           "cue": "You texted this to Léa, your flatmate. Now say it to M. Ferrand, your neighbour, in standard French. He says vous to you.",
           "turns": [
@@ -2144,7 +2172,7 @@
             {
               "speaker": "server",
               "name": "Léa",
-              "text": "Moi aussi ! On écoute quoi, ce soir ?"
+              "text": "Moi aussi ! Ce soir, on écoute ta musique !"
             }
           ],
           "drills": [
@@ -2174,7 +2202,7 @@
               ]
             }
           ],
-          "followUp": "Ta musique, alors ! Je fais le dîner.",
+          "followUp": "Et moi, je fais le dîner.",
           "newWords": [
             "moi aussi"
           ]
@@ -2276,7 +2304,7 @@
         {
           "id": "sit_02_react_d03",
           "place": "Texto · Théo",
-          "cue": "You told Théo, a friend, that you walk to work. He says tu to you.",
+          "cue": "You told Théo, a friend, how you get to work. He says tu to you.",
           "turns": [
             {
               "speaker": "server",
@@ -2309,7 +2337,7 @@
               "prompt": "What surprises Théo?",
               "choices": [
                 "Your twenty-minute walk",
-                "Your ten-minute bike ride"
+                "Your twenty-minute bike ride"
               ],
               "correct": 0,
               "miss": "Reread: « vingt minutes à pied ? »."
@@ -2370,6 +2398,11 @@
                   "Je",
                   "fais",
                   "le café."
+                ],
+                [
+                  "Je",
+                  "fais",
+                  "le café."
                 ]
               ],
               "model": "Oui ! Je fais le café."
@@ -2380,7 +2413,7 @@
         },
         {
           "id": "sit_02_react_s02",
-          "place": "Texto · Léa · phrase seule",
+          "place": "Sur le palier · phrase seule",
           "standalone": "Choisir le ton",
           "cue": "M. Ferrand, your neighbour, says vous to you. He tells you he loves the market. Agree with him.",
           "turns": [],
@@ -2391,13 +2424,13 @@
               "choices": [
                 "Ouais, moi aussi !",
                 "Moi aussi, j'aime beaucoup le marché.",
-                "Moi non plus."
+                "Moi aussi."
               ],
               "correct": 1,
               "why": [
                 "Good French, but « ouais » is too casual with M. Ferrand.",
                 "",
-                "« Moi non plus » agrees with a negative sentence, and he said he loves it."
+                "Correct, but too curt when a neighbour makes conversation."
               ]
             }
           ],
@@ -2417,12 +2450,12 @@
           "drills": [
             {
               "type": "reply",
-              "prompt": "You think you missed the time. Ask her to repeat it.",
+              "prompt": "You missed the time. Ask what time.",
               "bank": [
                 "Pardon ?",
                 "À quelle heure ?",
                 "À quel heure ?",
-                "Quelle heure ?",
+                "Il est quelle heure ?",
                 "Bref ?"
               ],
               "accepted": [
@@ -2505,7 +2538,7 @@
         },
         {
           "id": "sit_02_react_s03",
-          "place": "Texto · Léa · phrase seule",
+          "place": "Texto · Inès · phrase seule",
           "standalone": "Corriger",
           "cue": "Inès, your colleague, said she doesn't like football on TV. Your reply has one mistake.",
           "turns": [
@@ -2535,7 +2568,7 @@
         {
           "id": "sit_02_react_d07",
           "place": "Les copains · groupe",
-          "cue": "Théo writes to the group chat. He says tu to you. You don't like the subway either.",
+          "cue": "Théo writes to the group chat. He says tu to you. You feel the same about the subway.",
           "turns": [
             {
               "speaker": "server",
@@ -2580,12 +2613,12 @@
         {
           "id": "sit_02_react_d08",
           "place": "Texto · Inès",
-          "cue": "Inès, your colleague, texts you. She says tu to you. You love music.",
+          "cue": "Léa told Inès, your colleague, that you don't like music. Inès texts you. She says tu to you. You love music.",
           "turns": [
             {
               "speaker": "server",
               "name": "Inès",
-              "text": "Léa dit que tu n'aimes pas la musique. C'est vrai ?"
+              "text": "C'est vrai ? Tu n'aimes pas la musique ?"
             }
           ],
           "drills": [
@@ -2656,7 +2689,7 @@
                 "à la télé,",
                 "le soir.",
                 "Moi aussi,",
-                "j'aime",
+                "n'aimes",
                 "ne"
               ],
               "accepted": [
@@ -2683,7 +2716,7 @@
             {
               "speaker": "server",
               "name": "Léa",
-              "text": "Quelle journée ! Bref, je suis fatiguée. Et toi ?"
+              "text": "Bref, je suis fatiguée, moi. Et toi ?"
             },
             {
               "speaker": "learner",
@@ -2783,18 +2816,18 @@
         },
         {
           "id": "sit_02_react_s05",
-          "place": "Texto · Léa · phrase seule",
+          "place": "Texto · Inès · phrase seule",
           "standalone": "Mot en retour",
           "cue": "Which French words mean “me neither”?",
           "turns": [
             {
               "speaker": "server",
               "name": "Inès",
-              "text": "Je n'aime pas le métro le matin, il y a trop de monde."
+              "text": "Je n'aime pas trop le café du bureau, moi."
             },
             {
               "speaker": "learner",
-              "text": "___ ! Le matin, je viens au bureau à pied."
+              "text": "___ ! Au bureau, je prends un thé le matin."
             }
           ],
           "drills": [
@@ -2810,7 +2843,7 @@
               "why": [
                 "« Moi aussi » means me too.",
                 "",
-                "« Moi si » means I do, so you'd like the subway."
+                "« Moi si » means I do, so you'd like the office coffee."
               ]
             }
           ],
@@ -2955,6 +2988,14 @@
                   "cuisine",
                   "et",
                   "je",
+                  "regarde",
+                  "une série."
+                ],
+                [
+                  "Ce soir,",
+                  "je",
+                  "cuisine",
+                  "et",
                   "regarde",
                   "une série."
                 ]
@@ -3107,7 +3148,7 @@
           "drills": [
             {
               "type": "reply",
-              "prompt": "You didn't catch it. Ask her to repeat.",
+              "prompt": "You didn't catch it. Ask her if she can repeat.",
               "bank": [
                 "Pardon ?",
                 "Tu",
@@ -3119,6 +3160,11 @@
               "accepted": [
                 [
                   "Pardon ?",
+                  "Tu",
+                  "peux",
+                  "répéter ?"
+                ],
+                [
                   "Tu",
                   "peux",
                   "répéter ?"
@@ -3197,7 +3243,7 @@
         },
         {
           "id": "sit_02_evening_s03",
-          "place": "À l'appart · phrase seule",
+          "place": "Au bureau · phrase seule",
           "standalone": "Corriger",
           "cue": "You tell Inès, your colleague, about your evening. One word is wrong.",
           "turns": [
@@ -3499,7 +3545,7 @@
               "why": [
                 "« Tard » means late.",
                 "",
-                "« Parfait » means perfect."
+                "« Parfait » means perfect, not quiet."
               ]
             }
           ],
@@ -3764,8 +3810,8 @@
               "prompt": "Which one fits?",
               "choices": [
                 "Ouais, la piscine, en ce moment !",
-                "Oui, je vais à la piscine en ce moment. Et vous ?",
-                "Oui, je vais à la piscine en ce moment. Et toi ?"
+                "Oui, en ce moment, je vais à la piscine. Et vous ?",
+                "Oui, en ce moment, je vais à la piscine. Et toi ?"
               ],
               "correct": 1,
               "why": [
@@ -3804,6 +3850,10 @@
                   "Pardon ?",
                   "À quelle heure,",
                   "demain ?"
+                ],
+                [
+                  "À quelle heure,",
+                  "demain ?"
                 ]
               ],
               "model": "Pardon ? À quelle heure, demain ?"
@@ -3833,7 +3883,7 @@
         {
           "id": "sit_02_hobbies_d06",
           "place": "Au bureau",
-          "cue": "Inès, your colleague, says tu to you. You run too, in the evening.",
+          "cue": "Inès, your colleague, says tu to you. You run in the evening.",
           "turns": [
             {
               "speaker": "server",
@@ -4035,7 +4085,7 @@
                 "ce matin ?",
                 "tu vas",
                 "Tu vas",
-                "aller"
+                "allons"
               ],
               "accepted": [
                 [
@@ -4053,6 +4103,20 @@
                   "vous allez",
                   "à la piscine",
                   "ce matin ?"
+                ],
+                [
+                  "Vous allez",
+                  "à la piscine",
+                  "ou",
+                  "courir",
+                  "ce matin ?"
+                ],
+                [
+                  "Vous allez",
+                  "courir",
+                  "ou",
+                  "à la piscine",
+                  "ce matin ?"
                 ]
               ],
               "model": "Vous allez à la piscine ou vous allez courir ce matin ?"
@@ -4068,7 +4132,7 @@
             {
               "speaker": "server",
               "name": "Théo",
-              "text": "Qui veut courir avec moi demain ?"
+              "text": "Qui veut courir avec moi ce soir ?"
             },
             {
               "speaker": "learner",
@@ -4080,11 +4144,11 @@
               "type": "comprehend",
               "prompt": "What does Théo want?",
               "choices": [
-                "Someone to swim with tomorrow",
-                "Someone to run with tomorrow"
+                "Someone to swim with tonight",
+                "Someone to run with tonight"
               ],
               "correct": 1,
-              "miss": "Reread: « courir avec moi demain »."
+              "miss": "Reread: « courir avec moi ce soir »."
             },
             {
               "type": "complete",
@@ -4115,7 +4179,7 @@
             {
               "speaker": "server",
               "name": "Léa",
-              "text": "Piscine ou courir, demain ?"
+              "text": "Demain, tu vas à la piscine ou tu cours ?"
             }
           ],
           "drills": [
@@ -4127,7 +4191,7 @@
                 "Whether you swam or ran today"
               ],
               "correct": 0,
-              "miss": "Reread: « Piscine ou courir, demain ? »"
+              "miss": "Reread: « Demain, tu vas à la piscine ou tu cours ? »"
             },
             {
               "type": "reply",
@@ -4156,8 +4220,7 @@
           ],
           "followUp": "Bonne idée ! Demain, piscine, alors.",
           "newWords": [
-            "piscine",
-            "courir"
+            "piscine"
           ]
         },
         {
@@ -4250,7 +4313,7 @@
         {
           "id": "sit_02_frequency_d02",
           "place": "Texto · Léa",
-          "cue": "Léa, your flatmate, texts you. She says tu to you.",
+          "cue": "Léa, your flatmate, texts you about sport. She says tu to you.",
           "turns": [
             {
               "speaker": "server",
@@ -4320,7 +4383,7 @@
                 "le matin.",
                 "court",
                 "une",
-                "à la semaine,"
+                "par semaines,"
               ],
               "accepted": [
                 [
@@ -4349,7 +4412,7 @@
             },
             {
               "speaker": "learner",
-              "text": "Je sais pas… Vous courez combien de ___ ?"
+              "text": "Je sais pas… vous courez combien de ___ par semaine ?"
             }
           ],
           "drills": [
@@ -4364,7 +4427,7 @@
               "correct": 2,
               "why": [
                 "Before « heures », « de » becomes « d' ». And you're asking how often, not how long.",
-                "« Combien de semaine » isn't French here. Ask how often: « combien de fois ».",
+                "« Combien de semaine par semaine » makes no sense. Ask how often: « combien de fois ».",
                 ""
               ]
             },
@@ -4421,7 +4484,7 @@
                 "fois",
                 "par semaine.",
                 "une",
-                "à la semaine.",
+                "par semaines.",
                 "Non,"
               ],
               "accepted": [
@@ -4435,7 +4498,7 @@
               "model": "Oui, deux fois par semaine."
             }
           ],
-          "followUp": "Parfait ! Alors, ce soir, c'est toi !",
+          "followUp": "Parfait ! Alors ce soir, c'est toi qui cuisines !",
           "newWords": [
             "parfois"
           ]
@@ -4444,7 +4507,7 @@
           "id": "sit_02_frequency_s02",
           "place": "Sur le palier · phrase seule",
           "standalone": "Choisir le ton",
-          "cue": "M. Ferrand, your neighbour, says vous to you. He asks how often you go to the market. You go once a week.",
+          "cue": "M. Ferrand, your neighbour, says vous to you. He asks how often you go to the market. You go once a week. You go in the morning.",
           "turns": [],
           "drills": [
             {
@@ -4491,6 +4554,11 @@
               "accepted": [
                 [
                   "Pardon ?",
+                  "Une",
+                  "fois",
+                  "par semaine ?"
+                ],
+                [
                   "Une",
                   "fois",
                   "par semaine ?"
@@ -4576,7 +4644,7 @@
           "turns": [
             {
               "speaker": "learner",
-              "text": "Le matin, je cours deux fois par semaines avec Inès.",
+              "text": "Le matin, je cours deux fois par semaines avec Léa.",
               "error": {
                 "word": "semaines",
                 "fix": "semaine",
@@ -5022,7 +5090,7 @@
             {
               "speaker": "server",
               "name": "Léa",
-              "text": "Et toi, tu fais quoi le week-end ? Moi, je dors."
+              "text": "Moi, le week-end, je dors. Et toi, tu fais quoi ?"
             }
           ],
           "drills": [
@@ -5141,7 +5209,7 @@
                 "À samedi !",
                 "À dimanche !",
                 "Non,",
-                "parfaite !"
+                "parfois !"
               ],
               "accepted": [
                 [
@@ -5171,13 +5239,13 @@
               "type": "pick",
               "prompt": "Which one fits?",
               "choices": [
-                "Le week-end ? Tranquille ! Marché dimanche, carrément.",
+                "Le week-end ? Ouais, tranquille ! Dimanche, marché !",
                 "Dimanche, je vais au marché. Et vous, vous y allez aussi ?",
                 "Dimanche, je vais au marché. Et toi, tu y vas aussi ?"
               ],
               "correct": 1,
               "why": [
-                "Good spoken French, but « carrément » and the clipped style are too casual for M. Ferrand.",
+                "Good spoken French, but « ouais », « tranquille » and the clipped style are too casual for M. Ferrand.",
                 "",
                 "Good French, but M. Ferrand says vous, so « toi » is too familiar."
               ]
@@ -5211,6 +5279,11 @@
               "accepted": [
                 [
                   "Pardon ?",
+                  "Samedi",
+                  "ou",
+                  "dimanche ?"
+                ],
+                [
                   "Samedi",
                   "ou",
                   "dimanche ?"
@@ -5291,7 +5364,7 @@
           "id": "sit_02_weekend_s03",
           "place": "Les copains · groupe · phrase seule",
           "standalone": "Corriger",
-          "cue": "You write to the group chat « Les copains ». Everyone says tu. One word is wrong.",
+          "cue": "You write to the group chat « Les copains » about your plans with them (on = we). Everyone says tu. One word is wrong.",
           "turns": [
             {
               "speaker": "learner",
@@ -5404,6 +5477,12 @@
                 [
                   "Oui,",
                   "mais",
+                  "dimanche,",
+                  "je vais",
+                  "à la piscine."
+                ],
+                [
+                  "Oui,",
                   "dimanche,",
                   "je vais",
                   "à la piscine."
@@ -5540,7 +5619,7 @@
                 "Which day you'd play football"
               ],
               "correct": 1,
-              "miss": "Reread: « Samedi ou dimanche ? »"
+              "miss": "Reread: « Samedi ou dimanche, le foot ? »"
             },
             {
               "type": "reply",

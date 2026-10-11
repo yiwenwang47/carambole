@@ -114,7 +114,7 @@
             {
               "speaker": "server",
               "name": "Théo",
-              "text": "Alors, on se voit vendredi à huit heures, devant le cinéma ?"
+              "text": "Alors, on se voit vendredi à huit heures ? On se retrouve où ?"
             }
           ],
           "drills": [
@@ -185,13 +185,13 @@
             },
             {
               "type": "comprehend",
-              "prompt": "When is the appointment?",
+              "prompt": "What time is the appointment?",
               "choices": [
-                "Saturday at ten",
-                "Friday at ten"
+                "At two",
+                "At ten"
               ],
               "correct": 1,
-              "miss": "Reread: « vendredi à dix heures »."
+              "miss": "Reread: « dix heures » means ten o'clock."
             }
           ],
           "followUp": "Merci. Bonne journée.",
@@ -215,9 +215,9 @@
               "type": "word",
               "prompt": "What does « ça marche » mean here?",
               "choices": [
-                "does that still work",
-                "is it still open",
-                "is it still far"
+                "does that work",
+                "is it open",
+                "is it far"
               ],
               "correct": 0,
               "why": [
@@ -255,7 +255,7 @@
         },
         {
           "id": "sit_05_confirm_s02",
-          "place": "Texto · Théo · phrase seule",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
           "standalone": "Choisir le ton",
           "cue": "Mme Dumas, your landlady, says vous to you. Confirm her visit.",
           "turns": [
@@ -270,9 +270,9 @@
               "type": "pick",
               "prompt": "Which one fits?",
               "choices": [
-                "Ça marche, top ! À vendredi !",
+                "Top, ça marche ! À vendredi !",
                 "Noté.",
-                "C'est noté, madame. À vendredi, dix heures."
+                "Oui, c'est noté, madame. À vendredi, dix heures."
               ],
               "correct": 2,
               "why": [
@@ -292,13 +292,13 @@
             {
               "speaker": "server",
               "name": "Théo",
-              "text": "C'est noté ? Rendez-vous à huit heures et quart !"
+              "text": "Rendez-vous à huit heures et quart, c'est noté ?"
             }
           ],
           "drills": [
             {
               "type": "reply",
-              "prompt": "Check: eight fifteen, not half past?",
+              "prompt": "Say sorry, and check: eight fifteen, not half past?",
               "bank": [
                 "Pardon,",
                 "huit heures",
@@ -387,7 +387,7 @@
         },
         {
           "id": "sit_05_confirm_s03",
-          "place": "Texto · Théo · phrase seule",
+          "place": "Texto · Inès · phrase seule",
           "standalone": "Corriger",
           "cue": "Inès, your colleague, says tu to you. You confirm your plan with her.",
           "turns": [
@@ -518,7 +518,7 @@
         },
         {
           "id": "sit_05_confirm_s04",
-          "place": "Texto · Théo · phrase seule",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
           "standalone": "Transformer",
           "cue": "You wrote this to Théo, your friend. Say the same to Mme Dumas, your landlady, who says vous to you.",
           "turns": [
@@ -606,7 +606,7 @@
         {
           "id": "sit_05_confirm_d10",
           "place": "WhatsApp · Mme Dumas",
-          "cue": "Mme Dumas, your landlady, says vous to you. You've just confirmed Friday's meeting.",
+          "cue": "Mme Dumas, your landlady, says vous to you. She answers your message about Friday.",
           "turns": [
             {
               "speaker": "server",
@@ -641,6 +641,11 @@
                   "Merci,",
                   "madame !",
                   "À vendredi."
+                ],
+                [
+                  "À vendredi.",
+                  "Merci,",
+                  "madame !"
                 ]
               ],
               "model": "Merci, madame ! À vendredi."
@@ -842,6 +847,16 @@
           ],
           "drills": [
             {
+              "type": "comprehend",
+              "prompt": "When will Inès call back?",
+              "choices": [
+                "Tonight",
+                "In five minutes"
+              ],
+              "correct": 1,
+              "miss": "Reread: « dans cinq minutes » means in five minutes."
+            },
+            {
               "type": "complete",
               "prompt": "Fill the gap.",
               "choices": [
@@ -855,19 +870,9 @@
                 "",
                 "« À samedi » means see you Saturday, but she's calling back in five minutes."
               ]
-            },
-            {
-              "type": "comprehend",
-              "prompt": "When will Inès call back?",
-              "choices": [
-                "Tonight",
-                "In five minutes"
-              ],
-              "correct": 1,
-              "miss": "Reread: « dans cinq minutes » means in five minutes."
             }
           ],
-          "followUp": "Merci ! C'est pour le cinéma vendredi.",
+          "followUp": "Merci ! C'est pour le cinéma vendredi ?",
           "newWords": [
             "je te rappelle"
           ]
@@ -926,7 +931,7 @@
         },
         {
           "id": "sit_05_call_s02",
-          "place": "Appel · Théo · phrase seule",
+          "place": "Appel · Mme Dumas · phrase seule",
           "standalone": "Choisir le ton",
           "cue": "You call Mme Dumas, your landlady. She says vous to you. She picks up.",
           "turns": [],
@@ -937,13 +942,13 @@
               "choices": [
                 "Allô ? Salut, c'est Alex ! T'as deux minutes ?",
                 "Bonjour, madame, c'est Alex. Vous avez deux minutes ?",
-                "Allô ? C'est Alex. Je te rappelle, d'accord ?"
+                "Bonjour, madame, c'est Alex. Tu as deux minutes ?"
               ],
               "correct": 1,
               "why": [
                 "Good French, but « salut » and « t'as » are for friends, not your landlady.",
                 "",
-                "Good French, but « je te rappelle » uses tu; Mme Dumas gets « je vous rappelle »."
+                "Good French, but « tu as » is for friends; Mme Dumas gets « vous avez »."
               ]
             }
           ],
@@ -1051,7 +1056,7 @@
         },
         {
           "id": "sit_05_call_s03",
-          "place": "Appel · Théo · phrase seule",
+          "place": "Appel · Inès · phrase seule",
           "standalone": "Corriger",
           "cue": "Inès, your colleague, says tu to you. You call her from a noisy street.",
           "turns": [
@@ -1137,7 +1142,7 @@
             {
               "speaker": "server",
               "name": "Léa",
-              "text": "Allô ? Tu es où ?"
+              "text": "Allô ? Tu es où ? Moi, je suis dans le métro."
             }
           ],
           "drills": [
@@ -1165,13 +1170,13 @@
             },
             {
               "type": "comprehend",
-              "prompt": "What does Léa want to know?",
+              "prompt": "Where is Léa?",
               "choices": [
-                "When you're coming home",
-                "Where you are"
+                "At the café",
+                "On the metro"
               ],
               "correct": 1,
-              "miss": "Reread: « Tu es où ? » means where are you?"
+              "miss": "Reread: « je suis dans le métro »."
             }
           ],
           "followUp": "Super, je viens dans dix minutes !",
@@ -1179,7 +1184,7 @@
         },
         {
           "id": "sit_05_call_s04",
-          "place": "Appel · Théo · phrase seule",
+          "place": "Appel · Mme Dumas · phrase seule",
           "standalone": "Transformer",
           "cue": "You said this to Inès, your colleague (tu). Now Mme Dumas calls, and she says vous to you.",
           "turns": [
@@ -1257,7 +1262,7 @@
               ]
             }
           ],
-          "followUp": "Top, à ce soir alors !",
+          "followUp": "Top, à tout à l'heure alors !",
           "newWords": []
         },
         {
@@ -1320,13 +1325,13 @@
               "type": "complete",
               "prompt": "hello? (on the phone)",
               "choices": [
-                "Pardon",
+                "Merci",
                 "Super",
                 "Allô"
               ],
               "correct": 2,
               "why": [
-                "« Pardon » means sorry.",
+                "« Merci » means thank you.",
                 "« Super » means great.",
                 ""
               ]
@@ -1438,7 +1443,7 @@
         },
         {
           "id": "sit_05_move_s01",
-          "place": "Texto · Inès · phrase seule",
+          "place": "Texto · Théo · phrase seule",
           "standalone": "Construire",
           "cue": "Théo, your friend, says tu to you. Friday doesn't work for you any more. Ask to move it to Saturday.",
           "turns": [
@@ -1490,7 +1495,7 @@
             },
             {
               "speaker": "learner",
-              "text": "Oui, madame, lundi, ça me ___ très bien."
+              "text": "D'accord, madame, lundi, ça me ___ très bien."
             }
           ],
           "drills": [
@@ -1588,7 +1593,7 @@
         },
         {
           "id": "sit_05_move_s02",
-          "place": "Texto · Inès · phrase seule",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
           "standalone": "Choisir le ton",
           "cue": "Mme Dumas, your landlady, says vous to you. You can't make Friday. Ask her to move her visit to Monday.",
           "turns": [],
@@ -1598,13 +1603,13 @@
               "prompt": "Which one fits?",
               "choices": [
                 "On décale à lundi ? Ça te va ?",
-                "Plutôt lundi, ouais ?",
+                "Salut ! On peut décaler à lundi ?",
                 "Pardon, madame, on peut décaler à lundi ?"
               ],
               "correct": 2,
               "why": [
                 "Good French, but « ça te va » uses tu; Mme Dumas gets vous.",
-                "Good French, but « ouais » is far too casual for your landlady.",
+                "Good French, but « salut » is far too casual for your landlady.",
                 ""
               ]
             }
@@ -1717,7 +1722,7 @@
         },
         {
           "id": "sit_05_move_s03",
-          "place": "Texto · Inès · phrase seule",
+          "place": "Texto · Théo · phrase seule",
           "standalone": "Corriger",
           "cue": "Théo, your friend, says tu to you. You text him to move your plan.",
           "turns": [
@@ -1857,7 +1862,7 @@
         },
         {
           "id": "sit_05_move_s04",
-          "place": "Texto · Inès · phrase seule",
+          "place": "Texto · Théo · phrase seule",
           "standalone": "Transformer",
           "cue": "Théo, your friend, says tu to you. You wrote this, but now you need Sunday instead.",
           "turns": [
@@ -1900,12 +1905,12 @@
         },
         {
           "id": "sit_05_move_d09",
-          "place": "Texto · Léa",
-          "cue": "Léa, your flatmate, says tu to you. You'd planned a film night tonight.",
+          "place": "Texto · Théo",
+          "cue": "Théo, your friend, says tu to you. You'd planned a film night tonight.",
           "turns": [
             {
               "speaker": "server",
-              "name": "Léa",
+              "name": "Théo",
               "text": "Ce soir, je ne peux pas. Lundi, plutôt ?"
             },
             {
@@ -1946,7 +1951,7 @@
               "target": "lundi"
             }
           ],
-          "followUp": "Super ! Lundi soir, série et chips !",
+          "followUp": "Super ! Lundi soir, film et chips !",
           "newWords": []
         },
         {
@@ -1973,12 +1978,12 @@
             },
             {
               "type": "reply",
-              "prompt": "Say no problem, and suggest Monday instead.",
+              "prompt": "Say no problem, and suggest tomorrow instead.",
               "bank": [
                 "Pas de problème !",
                 "Pas de souci !",
                 "Plutôt",
-                "lundi,",
+                "demain,",
                 "alors ?",
                 "samedi,"
               ],
@@ -1986,25 +1991,25 @@
                 [
                   "Pas de problème !",
                   "Plutôt",
-                  "lundi,",
+                  "demain,",
                   "alors ?"
                 ],
                 [
                   "Pas de souci !",
                   "Plutôt",
-                  "lundi,",
+                  "demain,",
                   "alors ?"
                 ]
               ],
-              "model": "Pas de problème ! Plutôt lundi, alors ?"
+              "model": "Pas de problème ! Plutôt demain, alors ?"
             }
           ],
-          "followUp": "Oui, lundi, c'est mieux. Merci !",
+          "followUp": "Oui, demain, c'est mieux. Merci !",
           "newWords": []
         },
         {
           "id": "sit_05_move_s05",
-          "place": "Texto · Inès · phrase seule",
+          "place": "Texto · Théo · phrase seule",
           "standalone": "Mot en retour",
           "cue": "Théo, your friend, says tu to you. Which word means “to move, push back” (a plan)?",
           "turns": [
@@ -2174,6 +2179,20 @@
                   "Je suis",
                   "devant",
                   "la gare."
+                ],
+                [
+                  "Je suis",
+                  "devant",
+                  "la gare.",
+                  "Tu es",
+                  "où ?"
+                ],
+                [
+                  "Je suis",
+                  "devant",
+                  "la gare.",
+                  "T'es",
+                  "où ?"
                 ]
               ],
               "model": "Tu es où ? Je suis devant la gare."
@@ -2281,7 +2300,7 @@
         },
         {
           "id": "sit_05_meet_s02",
-          "place": "Texto · Théo · phrase seule",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
           "standalone": "Choisir le ton",
           "cue": "Mme Dumas, your landlady, says vous to you. You're late to meet her. Text that you're on your way.",
           "turns": [
@@ -2296,14 +2315,14 @@
               "type": "pick",
               "prompt": "Which one fits?",
               "choices": [
-                "Ouais, j'arrive dans cinq minutes !",
-                "Cinq minutes !",
+                "Salut ! J'arrive dans cinq minutes !",
+                "Pardon, j'arrive dans cinq minutes, tu peux attendre ?",
                 "Pardon, madame, j'arrive dans cinq minutes."
               ],
               "correct": 2,
               "why": [
-                "Good French, but « ouais » is too casual for your landlady.",
-                "Good French, but far too short for your landlady.",
+                "Good French, but « salut » is too casual for your landlady.",
+                "Good French, but « tu peux » uses tu; Mme Dumas gets vous.",
                 ""
               ]
             }
@@ -2416,19 +2435,19 @@
         },
         {
           "id": "sit_05_meet_s03",
-          "place": "Texto · Théo · phrase seule",
+          "place": "Texto · Inès · phrase seule",
           "standalone": "Corriger",
           "cue": "Inès, your colleague, says tu to you. You got to the café early.",
           "turns": [
             {
               "speaker": "learner",
-              "text": "Pardon, Inès, je suis en avant, je t'attends devant l'entrée.",
+              "text": "Inès, je suis en avant, je t'attends devant l'entrée du café.",
               "error": {
                 "word": "avant",
                 "fix": "avance",
                 "choices": [
                   "avancé",
-                  "retard",
+                  "arrive",
                   "avance"
                 ],
                 "why": "« En avant » means forward; early is « en avance »."
@@ -2578,6 +2597,14 @@
                   "je suis",
                   "en avance,",
                   "devant la gare."
+                ],
+                [
+                  "Moi,",
+                  "je suis",
+                  "en avance,",
+                  "devant la gare.",
+                  "Tu es",
+                  "où ?"
                 ]
               ],
               "model": "Tu es où ? Moi, je suis en avance, devant la gare."

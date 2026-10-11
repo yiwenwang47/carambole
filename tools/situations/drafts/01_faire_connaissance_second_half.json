@@ -48,6 +48,13 @@
                   "à Lyon.",
                   "Et",
                   "toi ?"
+                ],
+                [
+                  "Je",
+                  "travaille",
+                  "à Lyon.",
+                  "Et",
+                  "toi ?"
                 ]
               ],
               "model": "Je travaille ici, à Lyon. Et toi ?"
@@ -127,9 +134,9 @@
                 "travaille",
                 "dans",
                 "une",
-                "entreprise,",
+                "entreprise",
                 "à Lyon.",
-                "en",
+                "de",
                 "un",
                 "travailles"
               ],
@@ -139,11 +146,11 @@
                   "travaille",
                   "dans",
                   "une",
-                  "entreprise,",
+                  "entreprise",
                   "à Lyon."
                 ]
               ],
-              "model": "Je travaille dans une entreprise, à Lyon."
+              "model": "Je travaille dans une entreprise à Lyon."
             }
           ],
           "newWords": []
@@ -209,31 +216,27 @@
           "drills": [
             {
               "type": "reply",
-              "prompt": "Say you work on a project, with her.",
+              "prompt": "Say you work on her project.",
               "bank": [
                 "Je",
                 "travaille",
                 "sur",
-                "un",
-                "projet,",
-                "avec",
-                "toi !",
-                "une",
+                "ton",
+                "projet !",
+                "ta",
                 "travailles",
-                "tu !"
+                "un"
               ],
               "accepted": [
                 [
                   "Je",
                   "travaille",
                   "sur",
-                  "un",
-                  "projet,",
-                  "avec",
-                  "toi !"
+                  "ton",
+                  "projet !"
                 ]
               ],
-              "model": "Je travaille sur un projet, avec toi !"
+              "model": "Je travaille sur ton projet !"
             },
             {
               "type": "word",
@@ -252,14 +255,14 @@
               "target": "quoi"
             }
           ],
-          "followUp": "Avec moi ? Très bien !",
+          "followUp": "Sur mon projet ? Très bien !",
           "newWords": [
             "quoi"
           ]
         },
         {
           "id": "sit_01_work_s02",
-          "place": "À l'appart · phrase seule",
+          "place": "Sur le palier · phrase seule",
           "standalone": "Choisir le ton",
           "cue": "M. Ferrand, the neighbour, says vous to you. Answer his question.",
           "turns": [
@@ -274,13 +277,13 @@
               "type": "pick",
               "prompt": "Which one fits?",
               "choices": [
-                "Le boulot ? Ça va, ça va.",
-                "Oui, je travaille dans une entreprise, ici à Lyon.",
+                "Oui, le boulot, ça va !",
+                "Oui, dans une petite entreprise.",
                 "Oui ! Et toi, tu fais quoi dans la vie ?"
               ],
               "correct": 1,
               "why": [
-                "Good French, but casual and it doesn't answer him.",
+                "Good French, but « boulot » is casual for M. Ferrand, who says vous.",
                 "",
                 "Good French, but M. Ferrand says vous: « toi » and « tu » sound rude."
               ]
@@ -395,7 +398,7 @@
         },
         {
           "id": "sit_01_work_s03",
-          "place": "À l'appart · phrase seule",
+          "place": "Sur le palier · phrase seule",
           "standalone": "Corriger",
           "cue": "M. Ferrand, the neighbour, says vous to you. Fix the mistake in your answer.",
           "turns": [
@@ -524,7 +527,7 @@
         },
         {
           "id": "sit_01_work_s04",
-          "place": "À l'appart · phrase seule",
+          "place": "Sur le palier · phrase seule",
           "standalone": "Transformer",
           "cue": "You texted this to Léa. Say the same to M. Ferrand (vous), without the casual word « boulot ».",
           "turns": [
@@ -573,7 +576,7 @@
         {
           "id": "sit_01_work_d09",
           "place": "Au bureau",
-          "cue": "Your first day at the office. Inès, a colleague, says tu to you.",
+          "cue": "Your first day at the office. Inès, a colleague, says tu to you. She shows you around.",
           "turns": [
             {
               "speaker": "server",
@@ -674,7 +677,7 @@
           "turns": [
             {
               "speaker": "learner",
-              "text": "Et toi, Théo, tu fais quoi ___ ? Tu travailles ici ?"
+              "text": "Et toi, Théo, tu fais quoi ___ ? Tu travailles à Lyon ?"
             }
           ],
           "drills": [
@@ -803,7 +806,7 @@
         },
         {
           "id": "sit_01_askback_s01",
-          "place": "À l'appart · phrase seule",
+          "place": "Au bureau · phrase seule",
           "standalone": "Construire",
           "cue": "Inès, a colleague, says tu to you. Ask her since when she's lived here.",
           "turns": [
@@ -883,7 +886,7 @@
               ]
             }
           ],
-          "followUp": "Oui ! Et toi aussi, tu es sympa !",
+          "followUp": "Bien ! Et toi aussi, tu es sympa !",
           "newWords": [
             "sympa"
           ]
@@ -946,23 +949,29 @@
         },
         {
           "id": "sit_01_askback_s02",
-          "place": "À l'appart · phrase seule",
+          "place": "Sur le palier · phrase seule",
           "standalone": "Choisir le ton",
-          "cue": "M. Ferrand, the neighbour, says vous to you. Ask him back how long he's lived here.",
-          "turns": [],
+          "cue": "M. Ferrand, the neighbour, says vous to you. You're from Boston. Say yes, then ask him back how long he's lived here.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Moi, j'habite ici. Et vous, vous êtes de Boston ?"
+            }
+          ],
           "drills": [
             {
               "type": "pick",
               "prompt": "Which one fits?",
               "choices": [
-                "Et toi, tu habites ici depuis quand ?",
-                "Depuis quand ?",
-                "Et vous, vous habitez ici depuis quand ?"
+                "Oui ! Et toi, tu habites ici depuis quand ?",
+                "Oui ! Et vous, vous êtes de Lyon, alors ?",
+                "Oui ! Et vous, vous habitez ici depuis quand ?"
               ],
               "correct": 2,
               "why": [
                 "Good French, but M. Ferrand says vous: « toi » and « tu » sound rude.",
-                "Good French, but very curt on its own; a full question is warmer.",
+                "Good French, but he just said he lives here; ask how long, not where he's from.",
                 ""
               ]
             }
@@ -1061,14 +1070,14 @@
               "miss": "Reread: « c'est comment ? » asks what it's like."
             }
           ],
-          "followUp": "Merci pour Lyon, alors !",
+          "followUp": "Oui, Lyon, c'est vraiment beau !",
           "newWords": [
             "vraiment"
           ]
         },
         {
           "id": "sit_01_askback_s03",
-          "place": "À l'appart · phrase seule",
+          "place": "Texto · Léa · phrase seule",
           "standalone": "Corriger",
           "cue": "You're texting Léa, your flatmate (tu). Fix the mistake.",
           "turns": [
@@ -1184,6 +1193,15 @@
                   "travailles",
                   "ici",
                   "depuis quand ?"
+                ],
+                [
+                  "Oui,",
+                  "vraiment !",
+                  "Et",
+                  "tu",
+                  "travailles",
+                  "ici",
+                  "depuis quand ?"
                 ]
               ],
               "model": "Oui, vraiment ! Et toi, tu travailles ici depuis quand ?"
@@ -1205,12 +1223,12 @@
               "target": "pas mal"
             }
           ],
-          "followUp": "Moi ? Depuis deux ans.",
+          "followUp": "Moi ? Depuis trois ans.",
           "newWords": []
         },
         {
           "id": "sit_01_askback_s04",
-          "place": "À l'appart · phrase seule",
+          "place": "Sur le palier · phrase seule",
           "standalone": "Transformer",
           "cue": "You asked Léa this (tu). Ask M. Ferrand the same, with vous.",
           "turns": [
@@ -1249,6 +1267,28 @@
                   "Vous",
                   "êtes",
                   "de Lyon ?"
+                ],
+                [
+                  "Et",
+                  "vous,",
+                  "vous",
+                  "êtes",
+                  "de Lyon ?",
+                  "Vous",
+                  "habitez",
+                  "ici",
+                  "depuis quand ?"
+                ],
+                [
+                  "Vous",
+                  "êtes",
+                  "de Lyon ?",
+                  "Et",
+                  "vous,",
+                  "vous",
+                  "habitez",
+                  "ici",
+                  "depuis quand ?"
                 ]
               ],
               "model": "Et vous, vous habitez ici depuis quand ? Vous êtes de Lyon ?"
@@ -1442,6 +1482,13 @@
                   "est",
                   "très",
                   "grande !"
+                ],
+                [
+                  "Elle",
+                  "est",
+                  "très",
+                  "grande !",
+                  "Merci !"
                 ]
               ],
               "model": "Merci ! Elle est très grande !"
@@ -1637,20 +1684,20 @@
               "model": "Oui, merci ! J'ai très faim."
             }
           ],
-          "followUp": "Et il y a du fromage, aussi !",
+          "followUp": "Et il y a du fromage aussi !",
           "newWords": [
             "t'as"
           ]
         },
         {
           "id": "sit_01_flat_s02",
-          "place": "À l'appart · phrase seule",
+          "place": "Sur le palier · phrase seule",
           "standalone": "Choisir le ton",
           "cue": "Move-in day. M. Ferrand, the neighbour, says vous to you. Answer him.",
           "turns": [
             {
               "speaker": "server",
-              "text": "Vous habitez à côté, chez Léa ? Alors, bienvenue !",
+              "text": "Bonjour ! Alors, vous habitez ici, chez Léa ? Bienvenue !",
               "name": "M. Ferrand"
             }
           ],
@@ -1661,7 +1708,7 @@
               "choices": [
                 "Merci ! Et toi, tu habites ici ?",
                 "Salut ! Merci, c'est sympa !",
-                "Merci beaucoup, c'est très gentil !"
+                "Oui ! Merci beaucoup, c'est très gentil !"
               ],
               "correct": 2,
               "why": [
@@ -1687,7 +1734,7 @@
           "drills": [
             {
               "type": "reply",
-              "prompt": "You didn't catch it all. Rather than make her repeat, ask: next to what?",
+              "prompt": "You didn't catch it all. Say sorry, then clarify: next to what?",
               "bank": [
                 "Pardon ?",
                 "À côté",
@@ -1952,6 +1999,17 @@
                   "pain",
                   "dans",
                   "la cuisine."
+                ],
+                [
+                  "Il y a",
+                  "du",
+                  "pain",
+                  "dans",
+                  "la cuisine.",
+                  "Léa,",
+                  "tu",
+                  "as",
+                  "faim ?"
                 ]
               ],
               "model": "Léa, tu as faim ? Il y a du pain dans la cuisine."
@@ -2342,7 +2400,7 @@
         },
         {
           "id": "sit_01_bye_s02",
-          "place": "À l'appart · phrase seule",
+          "place": "Sur le palier · phrase seule",
           "standalone": "Choisir le ton",
           "cue": "Evening on the landing. M. Ferrand, the neighbour, says vous to you. He's going home. Say goodbye.",
           "turns": [],
@@ -2368,7 +2426,7 @@
         {
           "id": "sit_01_bye_d05",
           "place": "À l'appart",
-          "cue": "Léa, your flatmate, says tu to you. She calls out fast from the door; you'd rather check than ask her to repeat.",
+          "cue": "Léa, your flatmate, says tu to you. She calls out fast from the door; you're not sure you heard right, so you clarify.",
           "turns": [
             {
               "speaker": "server",
@@ -2423,7 +2481,7 @@
         {
           "id": "sit_01_bye_d06",
           "place": "Texto · Théo",
-          "cue": "Théo, Léa's friend, says tu to you. You left him some bread this morning.",
+          "cue": "Théo, Léa's friend, says tu to you. He texts you.",
           "turns": [
             {
               "speaker": "server",
@@ -2467,7 +2525,7 @@
         },
         {
           "id": "sit_01_bye_s03",
-          "place": "À l'appart · phrase seule",
+          "place": "Texto · Léa · phrase seule",
           "standalone": "Corriger",
           "cue": "Léa, your flatmate, says tu to you. Fix the mistake in your message.",
           "turns": [
@@ -2603,25 +2661,25 @@
         },
         {
           "id": "sit_01_bye_s04",
-          "place": "À l'appart · phrase seule",
+          "place": "Sur le palier · phrase seule",
           "standalone": "Transformer",
           "cue": "You said this to Léa (tu). M. Ferrand (vous) also gave you a coffee. Rewrite it for him: he's going home for the evening.",
           "turns": [
             {
               "speaker": "learner",
-              "text": "Salut, Léa ! Merci pour le café, et à tout à l'heure !",
+              "text": "Salut, Léa ! Merci pour le café et à tout à l'heure !",
               "source": true
             }
           ],
           "drills": [
             {
               "type": "reply",
-              "prompt": "Rewrite it for M. Ferrand.",
+              "prompt": "Rewrite it for M. Ferrand: say goodbye, thank him, and wish him a good evening.",
               "bank": [
                 "Au revoir !",
                 "Merci",
                 "pour",
-                "le café,",
+                "le café",
                 "et",
                 "bonne soirée !",
                 "Salut !",
@@ -2633,12 +2691,20 @@
                   "Au revoir !",
                   "Merci",
                   "pour",
-                  "le café,",
+                  "le café",
                   "et",
                   "bonne soirée !"
+                ],
+                [
+                  "Merci",
+                  "pour",
+                  "le café",
+                  "et",
+                  "bonne soirée !",
+                  "Au revoir !"
                 ]
               ],
-              "model": "Au revoir ! Merci pour le café, et bonne soirée !"
+              "model": "Au revoir ! Merci pour le café et bonne soirée !"
             }
           ],
           "newWords": []
@@ -2691,13 +2757,13 @@
               "target": "à bientôt"
             }
           ],
-          "followUp": "Bon, à demain, alors !",
+          "followUp": "Merci, Alex !",
           "newWords": []
         },
         {
           "id": "sit_01_bye_d10",
           "place": "Sur le palier",
-          "cue": "Evening on the landing. M. Ferrand, the neighbour, says vous to you. You brought him a coffee.",
+          "cue": "Evening on the landing. M. Ferrand, the neighbour, says vous to you. He's going home.",
           "turns": [
             {
               "speaker": "server",
