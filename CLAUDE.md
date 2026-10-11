@@ -2,6 +2,14 @@
 
 > ## ▶ RECENT HANDOFFS
 >
+> **▶ BOOK 2 DIALOGUE PILOT v2 (2026-10-11, branch `book2-dialogue-pilot`).**
+> Read **`docs/plans/2026-10-11-book-2-pilot-v2-handoff.md`**. The Test book
+> runs short café dialogues on one locked chat card with six drill types. The
+> English for a word shows only when tapped. Wrong answers are logged and
+> summarised. It was installed on the iPhone 18 Pro. User rules: never show
+> English automatically, never strike through words, keep the current
+> (slightly slower) transition timing.
+>
 > **▶ OPEN: ~1,055 French `explanation` fields are English** — handoff
 > `docs/handoffs/2026-10-10-french-explanations-in-english.md`, finder
 > `tools/explanation_lang.py`.

@@ -1,72 +1,234 @@
 #if DEBUG
 import Foundation
 
-/// A deliberately small Test book content contract. It is not loaded by the
-/// production book loader and does not write review status.
-struct PilotScenario: Decodable, Identifiable {
+/// Test book content contract for the Book 2 dialogue pilot (design rework,
+/// 2026-10-11). Short café dialogues, 1–2 drills each, six drill types. Not
+/// loaded by the production book loader and never writes review status.
+struct PilotContent: Decodable {
+    /// Normalised French word or set phrase → English. Tap-to-show only.
+    let glossary: [String: String]
+    let dialogues: [PilotDialogue]
+
+    /// Content mistakes that would make a dialogue unfair or unplayable.
+    var validationErrors: [String] {
+        var errors: [String] = []
+        if Set(dialogues.map(\.id)).count != dialogues.count { errors.append("duplicate dialogue id") }
+        for dialogue in dialogues {
+            errors += dialogue.validationErrors.map { "\(dialogue.id): \($0)" }
+            for word in dialogue.newWords where glossary[word] == nil {
+                errors.append("\(dialogue.id): new word '\(word)' has no gloss")
+            }
+        }
+        return errors
+    }
+}
+
+struct PilotDialogue: Decodable, Identifiable {
     struct Turn: Decodable {
+        struct ErrorMark: Decodable {
+            let word: String
+            let fix: String
+            let choices: [String]
+            /// English reason shown after a wrong fix.
+            let why: String?
+        }
+        /// "server" or "learner".
         let speaker: String
+        /// Learner lines may hold one `___` gap (Compléter).
         let text: String
+        /// Learner line with one wrong word (Corriger).
+        let error: ErrorMark?
+
+        var isLearner: Bool { speaker == "learner" }
     }
 
     let id: String
-    let context: String
+    let element: String
+    let cue: String
     let turns: [Turn]
-    let question: String
-    let choices: [String]
-    let correctChoice: Int
-    let responsePrompt: String
-    let replyTokens: [String]
-    let tokenBank: [String]
-    let acceptedReplies: [[String]]
-    let modelReply: String
+    let drills: [PilotDrill]
     let followUp: String
-    let explanationEN: String
+    let newWords: [String]
 
-    func accepts(_ chunks: [String]) -> Bool {
-        acceptedReplies.contains(chunks)
-    }
+    var gapTurnIndex: Int? { turns.firstIndex { $0.text.contains("___") } }
+    var errorTurnIndex: Int? { turns.firstIndex { $0.error != nil } }
 
-    func replyText(_ chunks: [String]) -> String {
-        chunks.joined(separator: " ")
-    }
-
-    /// Check content mistakes before a pilot reaches a device. In particular,
-    /// every accepted reply must be buildable from the offered chip multiset.
     var validationErrors: [String] {
         var errors: [String] = []
-        if id.isEmpty || context.isEmpty || question.isEmpty || responsePrompt.isEmpty
-            || modelReply.isEmpty || followUp.isEmpty || explanationEN.isEmpty {
-            errors.append("missing required text")
+        if id.isEmpty || element.isEmpty || cue.isEmpty || followUp.isEmpty { errors.append("missing required text") }
+        if turns.isEmpty || turns.count > 3 { errors.append("dialogue needs 1–3 lines") }
+        if turns.contains(where: { !["server", "learner"].contains($0.speaker) || $0.text.isEmpty }) {
+            errors.append("bad turn")
         }
-        if turns.count < 2 || turns.contains(where: { $0.speaker.isEmpty || $0.text.isEmpty }) {
-            errors.append("dialogue needs at least two complete turns")
+        if turns.contains(where: { PilotText.wordCount($0.text) > 10 }) { errors.append("line over 10 words") }
+        if drills.isEmpty || drills.count > 2 { errors.append("dialogue needs 1–2 drills") }
+        let types = drills.map(\.type)
+        if Set(types).count != types.count { errors.append("repeated drill type") }
+        if types.contains(.reply) && types.contains(.pick) { errors.append("reply and pick both fill the reply bubble") }
+        if types.contains(.complete) != (gapTurnIndex != nil) { errors.append("complete drill needs exactly one gap line") }
+        if types.contains(.fix) != (errorTurnIndex != nil) { errors.append("fix drill needs exactly one error line") }
+        if let i = errorTurnIndex, let mark = turns[i].error {
+            if !turns[i].isLearner { errors.append("error must sit in a learner line") }
+            if !PilotText.tokens(turns[i].text).map(PilotText.norm).contains(PilotText.norm(mark.word)) {
+                errors.append("error word not in its line")
+            }
+            if !mark.choices.contains(mark.fix) { errors.append("fix missing from its choices") }
         }
-        if Set(turns.map(\.speaker)).count < 2 {
-            errors.append("dialogue needs two speakers")
+        for drill in drills { errors += drill.validationErrors }
+        return errors
+    }
+}
+
+struct PilotDrill: Decodable {
+    enum Kind: String, Decodable {
+        case comprehend, reply, pick, complete, fix, word
+
+        /// Learner-facing French name.
+        var title: String {
+            switch self {
+            case .comprehend: return "Comprendre"
+            case .reply: return "Répondre"
+            case .pick: return "Choisir"
+            case .complete: return "Compléter"
+            case .fix: return "Corriger"
+            case .word: return "Mot"
+            }
         }
-        if choices.count != 3 || choices.contains(where: \.isEmpty) {
-            errors.append("listening question needs three choices")
-        }
-        if !choices.indices.contains(correctChoice) {
-            errors.append("correctChoice out of range")
-        }
-        if replyTokens.isEmpty || acceptedReplies.isEmpty || !acceptedReplies.contains(replyTokens) {
-            errors.append("canonical reply missing from acceptedReplies")
-        }
-        if acceptedReplies.contains(where: { $0.isEmpty || !Self.isSubset($0, of: tokenBank) }) {
-            errors.append("accepted reply cannot be built from tokenBank")
+    }
+
+    let type: Kind
+    /// English question or goal.
+    let prompt: String
+    let choices: [String]?
+    let correct: Int?
+    /// English why-line per wrong choice ("" for the right one).
+    let why: [String]?
+    /// English note after a first miss.
+    let miss: String?
+    let bank: [String]?
+    let accepted: [[String]]?
+    let model: String?
+    /// Mot: the normalised glossary key to highlight.
+    let target: String?
+
+    func accepts(_ tiles: [String]) -> Bool {
+        accepted?.contains(tiles) ?? false
+    }
+
+    /// Longest start of `tiles` that also starts some accepted reply. A wrong
+    /// reply keeps this part placed for the second try (Book 1 pattern).
+    func correctPrefixCount(_ tiles: [String]) -> Int {
+        (accepted ?? []).map { reply in
+            zip(tiles, reply).prefix { $0 == $1 }.count
+        }.max() ?? 0
+    }
+
+    var validationErrors: [String] {
+        var errors: [String] = []
+        if prompt.isEmpty { errors.append("\(type.rawValue): missing prompt") }
+        switch type {
+        case .comprehend, .word, .pick, .complete:
+            let need = type == .comprehend ? 2 : 3
+            guard let choices, choices.count == need, Set(choices).count == need else {
+                errors.append("\(type.rawValue): needs \(need) distinct choices"); break
+            }
+            if !(correct.map(choices.indices.contains) ?? false) { errors.append("\(type.rawValue): correct out of range") }
+            if type == .pick || type == .complete {
+                if why?.count != need { errors.append("\(type.rawValue): needs a why-line per choice") }
+            }
+            if type == .word && (target ?? "").isEmpty { errors.append("word: missing target") }
+        case .reply:
+            guard let bank, let accepted, !accepted.isEmpty, let model, !model.isEmpty else {
+                errors.append("reply: missing bank, accepted, or model"); break
+            }
+            if accepted.contains(where: { $0.isEmpty || !Self.isSubset($0, of: bank) }) {
+                errors.append("reply: accepted reply cannot be built from bank")
+            }
+            if !accepted.map({ $0.joined(separator: " ") }).contains(model) {
+                errors.append("reply: model is not an accepted reply")
+            }
+        case .fix:
+            break
         }
         return errors
     }
 
-    private static func isSubset(_ answer: [String], of bank: [String]) -> Bool {
+    static func isSubset(_ answer: [String], of bank: [String]) -> Bool {
         var remaining = bank
         for chunk in answer {
             guard let index = remaining.firstIndex(of: chunk) else { return false }
             remaining.remove(at: index)
         }
         return true
+    }
+}
+
+/// Splits a line into tappable words and set phrases.
+enum PilotText {
+    struct Segment: Equatable {
+        enum Kind: Equatable { case word, gap }
+        let index: Int
+        /// Text as shown (without trailing punctuation for glossed words).
+        let display: String
+        /// Trailing punctuation shown after the word.
+        let trailing: String
+        /// Glossary key, if any.
+        let key: String?
+        let kind: Kind
+    }
+
+    static func tokens(_ text: String) -> [String] {
+        text.split(separator: " ").map(String.init)
+    }
+
+    static func wordCount(_ text: String) -> Int {
+        tokens(text).filter { !norm($0).isEmpty }.count
+    }
+
+    /// Lowercased, typographic apostrophe → straight, punctuation stripped.
+    static func norm(_ word: String) -> String {
+        word.lowercased()
+            .replacingOccurrences(of: "’", with: "'")
+            .trimmingCharacters(in: CharacterSet(charactersIn: ".,!?;:«»… "))
+    }
+
+    /// Longest glossary phrase first, so « un quart d'heure » wins over « un ».
+    static func segments(_ text: String, glossary: [String: String]) -> [Segment] {
+        let toks = tokens(text)
+        let phrases = glossary.keys
+            .map { $0.split(separator: " ").map(String.init) }
+            .sorted { $0.count > $1.count }
+        var out: [Segment] = []
+        var i = 0
+        while i < toks.count {
+            if toks[i].hasPrefix("___") {
+                out.append(Segment(index: out.count, display: "", trailing: String(toks[i].dropFirst(3)),
+                                   key: nil, kind: .gap))
+                i += 1
+                continue
+            }
+            let hit = phrases.first { p in
+                i + p.count <= toks.count && p.enumerated().allSatisfy { norm(toks[i + $0.offset]) == $0.element }
+            }
+            let len = hit?.count ?? 1
+            let raw = toks[i..<(i + len)].joined(separator: " ")
+            let (body, trail) = splitTrailing(raw)
+            let key = hit?.joined(separator: " ")
+            out.append(Segment(index: out.count, display: key == nil ? raw : body,
+                               trailing: key == nil ? "" : trail, key: key, kind: .word))
+            i += len
+        }
+        return out
+    }
+
+    private static func splitTrailing(_ raw: String) -> (String, String) {
+        var body = raw
+        var trail = ""
+        while let last = body.last, ".,!?;:".contains(last) {
+            trail = String(last) + trail
+            body.removeLast()
+        }
+        return (body, trail)
     }
 }
 #endif

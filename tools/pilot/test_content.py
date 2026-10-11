@@ -1,88 +1,110 @@
-"""Content contract for the connected café listening pilot."""
+"""Content contract for the Book 2 dialogue pilot (design rework, 2026-10-11)."""
 
 import json
 from pathlib import Path
+import re
 import unittest
 
 
-PILOT = Path(__file__).resolve().parents[2] / "carambole/Debug/testbook_situation.json"
-REQUIRED = {
-    "id", "context", "turns", "question", "choices", "correctChoice",
-    "responsePrompt", "replyTokens", "tokenBank", "acceptedReplies",
-    "modelReply", "followUp", "explanationEN",
-}
+ROOT = Path(__file__).resolve().parents[2]
+PILOT = ROOT / "carambole/Debug/testbook_situation.json"
+AUDIO = ROOT / "carambole/Resources/Audio"
+KINDS = {"comprehend", "reply", "pick", "complete", "fix", "word"}
 
 
-def render(chunks):
-    return " ".join(chunks).replace(" ,", ",").replace(" .", ".")
+def norm(word):
+    return word.lower().replace("’", "'").strip(".,!?;:«»… ")
 
 
-class CafePilotContentTests(unittest.TestCase):
+def words(text):
+    return [w for w in text.split() if norm(w)]
+
+
+class DialoguePilotContentTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.items = json.loads(PILOT.read_text(encoding="utf-8"))
+        data = json.loads(PILOT.read_text(encoding="utf-8"))
+        cls.glossary = data["glossary"]
+        cls.items = data["dialogues"]
 
-    def test_four_connected_scenes_have_complete_listening_and_reply_contracts(self):
-        self.assertEqual(len(self.items), 4)
-        self.assertEqual(len({item["id"] for item in self.items}), 4)
-        self.assertEqual(len({item["context"] for item in self.items}), 1)
-        for item in self.items:
-            with self.subTest(item=item["id"]):
-                self.assertEqual(set(item), REQUIRED)
-                self.assertTrue(item["id"].startswith("sit_06_cafe_"))
-                self.assertEqual([turn["speaker"] for turn in item["turns"]], ["customer", "server"])
-                self.assertTrue(all(turn["text"].strip() for turn in item["turns"]))
-                self.assertEqual(len(item["choices"]), 3)
-                self.assertEqual(len(set(item["choices"])), 3)
-                self.assertIn(item["correctChoice"], range(3))
-                self.assertTrue(item["responsePrompt"].strip())
-                self.assertTrue(item["explanationEN"].strip())
-                self.assertTrue(item["followUp"].strip())
+    def test_short_dialogues_with_one_or_two_drills(self):
+        self.assertEqual(len(self.items), 8)
+        self.assertEqual(len({d["id"] for d in self.items}), 8)
+        for d in self.items:
+            with self.subTest(d["id"]):
+                self.assertTrue(d["id"].startswith("sit_06_cafe_"))
+                self.assertTrue(1 <= len(d["turns"]) <= 3)
+                self.assertTrue(all(len(words(t["text"])) <= 10 for t in d["turns"]))
+                types = [x["type"] for x in d["drills"]]
+                self.assertTrue(1 <= len(types) <= 2)
+                self.assertEqual(len(types), len(set(types)))
+                self.assertFalse({"reply", "pick"} <= set(types))
 
-    def test_answer_keys_require_inference_across_audio_and_context(self):
-        self.assertEqual(
-            [item["choices"][item["correctChoice"]] for item in self.items],
-            [
-                "Coffee with soy milk",
-                "The lentil salad",
-                "You will eat in the café",
-                "Scan the code with your phone",
-            ],
-        )
-        self.assertIn("ten minutes", self.items[1]["context"])
-        self.assertIn("un quart d’heure", self.items[1]["turns"][1]["text"])
-        self.assertIn("doit passer au four", self.items[1]["turns"][1]["text"])
+    def test_all_six_drill_types_are_used(self):
+        self.assertEqual({x["type"] for d in self.items for x in d["drills"]}, KINDS)
 
-    def test_every_accepted_reply_is_buildable_and_model_is_accepted(self):
-        for item in self.items:
-            with self.subTest(item=item["id"]):
-                self.assertGreaterEqual(len(item["acceptedReplies"]), 2)
-                bank = item["tokenBank"]
-                self.assertEqual(len(bank), len(set(bank)))
-                self.assertIn(item["replyTokens"], item["acceptedReplies"])
-                self.assertEqual(render(item["replyTokens"]), item["modelReply"])
-                for reply in item["acceptedReplies"]:
-                    self.assertTrue(reply)
-                    self.assertEqual(len(reply), len(set(reply)))
-                    self.assertTrue(all(token in bank for token in reply))
-                self.assertGreater(len(bank), len(item["replyTokens"]))
+    def test_choice_drills_have_one_valid_answer_and_reasons(self):
+        for d in self.items:
+            for x in d["drills"]:
+                if x["type"] in {"comprehend", "word", "pick", "complete"}:
+                    with self.subTest(d["id"], kind=x["type"]):
+                        need = 2 if x["type"] == "comprehend" else 3
+                        self.assertEqual(len(set(x["choices"])), need)
+                        self.assertIn(x["correct"], range(need))
+                        if x["type"] in {"pick", "complete"}:
+                            self.assertEqual(len(x["why"]), need)
+                            self.assertTrue(all(x["why"][i] for i in range(need) if i != x["correct"]))
 
-    def test_repair_reply_corrects_takeaway_and_requests_a_box(self):
-        repair = self.items[2]
-        for reply in repair["acceptedReplies"]:
-            spoken = render(reply).lower()
-            self.assertIn("à emporter", spoken)
-            self.assertIn("boîte", spoken)
+    def test_replies_are_buildable_and_model_is_accepted(self):
+        for d in self.items:
+            for x in d["drills"]:
+                if x["type"] == "reply":
+                    with self.subTest(d["id"]):
+                        self.assertIn(x["model"], [" ".join(a) for a in x["accepted"]])
+                        for reply in x["accepted"]:
+                            bank = list(x["bank"])
+                            for tile in reply:
+                                self.assertIn(tile, bank)
+                                bank.remove(tile)
+                        self.assertGreater(len(x["bank"]), max(len(a) for a in x["accepted"]))
 
-    def test_shorter_valid_replies_are_accepted(self):
-        self.assertIn(
-            ["la salade de lentilles,", "s’il vous plaît."],
-            self.items[1]["acceptedReplies"],
-        )
-        self.assertIn(
-            ["je vais scanner le code", "avec mon téléphone."],
-            self.items[3]["acceptedReplies"],
-        )
+    def test_gap_and_error_lines_match_their_drills(self):
+        for d in self.items:
+            types = {x["type"] for x in d["drills"]}
+            gaps = [t for t in d["turns"] if "___" in t["text"]]
+            errors = [t for t in d["turns"] if "error" in t]
+            with self.subTest(d["id"]):
+                self.assertEqual(len(gaps), 1 if "complete" in types else 0)
+                self.assertEqual(len(errors), 1 if "fix" in types else 0)
+                for t in gaps + errors:
+                    self.assertEqual(t["speaker"], "learner")
+                for t in errors:
+                    self.assertIn(norm(t["error"]["word"]), [norm(w) for w in t["text"].split()])
+                    self.assertIn(t["error"]["fix"], t["error"]["choices"])
+
+    def test_new_words_are_glossed_and_present(self):
+        for d in self.items:
+            text = " ".join([t["text"] for t in d["turns"]] + [d["followUp"]]
+                            + [a for x in d["drills"] for a in x.get("choices", []) if x["type"] in {"pick", "reply", "complete"}]
+                            + [" ".join(x.get("bank", [])) for x in d["drills"]])
+            flat = " ".join(norm(w) for w in text.split())
+            for word in d["newWords"]:
+                with self.subTest(d["id"], word=word):
+                    self.assertIn(word, self.glossary)
+                    self.assertTrue(re.search(r"(^| )" + re.escape(word) + r"( |$)", flat), word)
+            for x in d["drills"]:
+                if x["type"] == "word":
+                    self.assertIn(x["target"], d["newWords"])
+
+    def test_server_lines_and_follow_ups_have_audio(self):
+        for d in self.items:
+            keys = [f"pilot2_{d['id']}_t{i}" for i, t in enumerate(d["turns"]) if t["speaker"] == "server"]
+            keys.append(f"pilot2_{d['id']}_f")
+            for key in keys:
+                with self.subTest(key):
+                    path = AUDIO / f"{key}.mp3"
+                    self.assertTrue(path.exists())
+                    self.assertGreater(path.stat().st_size, 2000)
 
 
 if __name__ == "__main__":

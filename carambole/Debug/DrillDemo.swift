@@ -156,7 +156,7 @@ private struct TestBookView: View {
             row("Comprendre · \(interps.count)",
                 "Read a sentence, answer what only its grammar tells you. No English shown.", .interp)
             row("En situation · essai",
-                "Hear a changing café exchange, work out the problem, and form a useful reply.", .situation)
+                "Eight short café dialogues, six drill types. Tap any word for its English.", .situation)
             if ProcessInfo.processInfo.environment["CB_DRILL_DEMO"] != nil {
                 row("Lancer le drill", "Tap Indice, place words, scroll the word tray, check.", .demo)
             }

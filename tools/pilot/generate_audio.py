@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Bundle two-voice audio for the DEBUG-only Test book situation pilot.
+"""Bundle server-voice audio for the DEBUG-only Test book dialogue pilot.
 
 Uses the same Google French Neural2 voice family as Book 1. Credentials stay
 inside this process; no token or response body is printed. Existing files are
@@ -10,7 +10,6 @@ from __future__ import annotations
 
 import argparse
 import base64
-import html
 import json
 from pathlib import Path
 import ssl
@@ -28,18 +27,15 @@ MALE = "fr-FR-Neural2-G"
 
 
 def clip_rows(item: dict) -> list[tuple[str, str, str]]:
-    turns = item["turns"]
-    dialogue = "<speak>" + "".join(
-        f'<voice name="{FEMALE if turn["speaker"] == "customer" else MALE}">'
-        f'{html.escape(turn["text"])}</voice><break time="400ms"/>'
-        for turn in turns
-    ) + "</speak>"
-    stem = "pilot_" + item["id"]
-    return [
-        (stem, dialogue, FEMALE),
-        (stem + "_model", item["modelReply"], FEMALE),
-        (stem + "_followup", item["followUp"], MALE),
+    """Server lines and the follow-up, one clip each, in the server's voice."""
+    stem = "pilot2_" + item["id"]
+    rows = [
+        (f"{stem}_t{i}", turn["text"], MALE)
+        for i, turn in enumerate(item["turns"])
+        if turn["speaker"] == "server"
     ]
+    rows.append((f"{stem}_f", item["followUp"], MALE))
+    return rows
 
 
 def access_token() -> str:
@@ -83,7 +79,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--limit", type=int, default=None, help="Maximum number of clips")
     args = parser.parse_args()
-    items = json.loads(CONTENT.read_text(encoding="utf-8"))
+    items = json.loads(CONTENT.read_text(encoding="utf-8"))["dialogues"]
     rows = [row for item in items for row in clip_rows(item)]
     if args.limit is not None:
         rows = rows[: args.limit]
