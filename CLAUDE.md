@@ -2,8 +2,15 @@
 
 > ## ▶ RECENT HANDOFFS
 >
-> **▶ BOOK 2 — PRODUCTION VIEW + PER-BOOK PROGRESS (Tasks 2–3, 2026-10-11, branch
-> `worktree-agent-af444cbcb1f2e58cc`, NOT merged).** *En situation* is on the shelf
+> **▶ BOOK 2 — ARC 1 AUTHORED (modules 01–05) + REVIEW SET v5 (2026-10-11, `main`).**
+> START at **`docs/plans/2026-10-11-book-2-arc1-handoff.md`**. 600 items authored,
+> judged (20 judges) and fixed; café audio complete; tooling book-wide; Corriger
+> error words now split out of set phrases. Review set v5 (9 cards, new voices
+> M. Ferrand / Inès / Mme Dumas) is in the Test book on the simulator; awaiting the
+> user's review before production audio for 01–05.
+>
+> **▶ BOOK 2 — PRODUCTION VIEW + PER-BOOK PROGRESS (Tasks 2–3, 2026-10-11, merged
+> to `main`).** *En situation* is on the shelf
 > with its own progress, history, due queue, overflow and settings
 > (`settings.book_fr_en_situation.*`). `Features/Situation/SituationSessionView.swift`
 > is the production dialogue card (ported pilot); `Models/Situation.swift` holds the

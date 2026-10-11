@@ -363,7 +363,7 @@ struct SituationPilotView: View {
     private func lineText(id: String, text: String, turnIndex: Int?) -> some View {
         let fixLine = turnIndex != nil && turnIndex == dialogue.errorTurnIndex
         let segments = PilotText.segments(text, glossary: glossary,
-                                          keepApart: fixLine ? dialogue.errorMark?.word : nil)
+                                          keepApart: fixLine ? dialogue.errorTurnIndex.flatMap { dialogue.turns[$0].error?.word } : nil)
         return FlowLayout(spacing: 5, lineSpacing: 4) {
             ForEach(segments, id: \.index) { seg in
                 segmentView(seg, lineID: id, fixLine: fixLine)

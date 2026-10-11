@@ -82,7 +82,9 @@ struct PilotDialogue: Decodable, Identifiable {
         if turns.contains(where: { !["server", "learner"].contains($0.speaker) || $0.text.isEmpty }) {
             errors.append("bad turn")
         }
-        if turns.contains(where: { PilotText.wordCount($0.text) > 10 }) { errors.append("line over 10 words") }
+        // Dialogue lines stay short; a standalone line may run to 14 words.
+        let maxWords = isStandalone ? 14 : 10
+        if turns.contains(where: { PilotText.wordCount($0.text) > maxWords }) { errors.append("line over \(maxWords) words") }
         if drills.isEmpty || drills.count > 2 { errors.append("dialogue needs 1–2 drills") }
         let types = drills.map(\.type)
         if Set(types).count != types.count { errors.append("repeated drill type") }
