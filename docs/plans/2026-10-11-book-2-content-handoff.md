@@ -70,10 +70,12 @@
   - Each spoken form is a glossary entry marked spoken. The tooltip shows `* English`.
   - Learner replies accept both the standard and the spoken form. The model answer is standard.
 - **No texting abbreviations** (*mdr*, *stp*, *jsp*, *slt*…). Text messages use normal spelling.
-- **Learner gender:**
-  - Both forms are accepted in the learner's own lines (*prêt/prête*, *allé/allée*).
-  - Corriger never targets the learner's own gender.
-  - Prefer gender-free wording (*Pardon* rather than *Désolé·e*), especially in Choisir options, where only one text can be shown.
+- **Learner gender (changed 2026-10-11):** the learner is **Robin, a woman** from Eugene, Oregon.
+  - Her own lines use feminine agreement only (*prête*, *allée*, *enchantée*, *désolée*). Masculine forms are wrong answers and may serve as decoys.
+  - Corriger may target her agreement (*Je suis prêt* → *prête*).
+  - Others may address her as *madame*.
+  - When an answer hinges on her gender, the cue says "You're a woman." (prompt self-sufficiency).
+  - `lint.py` flags masculine first-person forms in learner lines, accepted replies and correct picks.
 - **Variety:**
   - Textbook service scenes stay, but they must not dominate.
   - About 2–3 of each move's 10 dialogues use another channel or a social move.
@@ -258,7 +260,7 @@ Work in this order. Show the user small review sets only. They said: "i dont wan
    - standalone items use no untaught word;
    - spoken entries are in the spoken list;
    - no texting abbreviations (block-list);
-   - no gendered first-person adjective or participle in learner models or correct Choisir options unless both forms are accepted;
+   - no masculine first-person adjective or participle in learner lines, accepted replies or correct Choisir options (Robin is a woman);
    - audio exists for every server turn and follow-up.
 3. **Author move by move.** For each move write all 15 items, then run the lint.
 4. **Rendered-surface grammar.** Fill each gap with each choice, apply each fix, and build each accepted reply. Run the rendered French through Grammalecte (`tools/deep_lint.py` and the vendored engine; adapt its input to the situations files). Every distractor must be wrong for a stated reason (wrong French, or good French that doesn't fit), and no second reply buildable from the bank may be valid unless it is listed in `accepted`. Book 1's bank lint found 77 hidden ambiguities this way. Expect the same here.
@@ -290,7 +292,7 @@ Work in this order. Show the user small review sets only. They said: "i dont wan
   - Choisir le ton: all three good French, only one fits the register.
   - Write a why-line for each wrong option.
 - **Compléter / Mot en retour:** exactly one gap; 3 choices from the same word class; each wrong one fails for a stated reason; pre-elide around the gap when needed.
-- **Corriger:** one real learner error with a unique fix. Never the learner's gender, never a second possible fix (lock the subject if needed). Write a why-line.
+- **Corriger:** one real learner error with a unique fix. It may target Robin's feminine agreement. Never a second possible fix (lock the subject if needed). Write a why-line.
 - **Mot:** the target is a new word from this or an earlier item; 3 English meanings, all plausible in context.
 - **Follow-up:** short, natural, and may carry a light twist. Its new words are glossed.
 - **Typography:**

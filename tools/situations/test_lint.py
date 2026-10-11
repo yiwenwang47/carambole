@@ -280,10 +280,22 @@ class SituationLintTests(unittest.TestCase):
         self.assertIn("clarification", errors)
         self.assertIn("other-channel or social", errors)
 
-    def test_gendered_self_guard_catches_arrived(self):
+    def test_masculine_self_guard_catches_arrived(self):
         item = self.module["elements"][0]["items"][2]
-        item["drills"][0]["model"] = "Je suis arrivée."
-        self.assert_bad("gendered first-person")
+        item["drills"][0]["model"] = "Je suis arrivé."
+        item["drills"][0]["accepted"] = [["Je suis arrivé."]]
+        self.assert_bad("masculine first-person")
+
+    def test_masculine_self_guard_catches_bare_enchante(self):
+        item = self.module["elements"][0]["items"][2]
+        item["turns"].append({"speaker": "learner", "text": "Bonjour ! Enchanté."})
+        self.assert_bad("masculine first-person")
+
+    def test_feminine_self_forms_pass(self):
+        from tools.situations.lint import MASC_SELF
+        for line in ("Je suis arrivée.", "Bonjour ! Enchantée.", "Désolée, je suis en retard.",
+                     "Il est content.", "Je suis prête !"):
+            self.assertIsNone(MASC_SELF.search(line), line)
 
 
     # Book-wide word order across modules.

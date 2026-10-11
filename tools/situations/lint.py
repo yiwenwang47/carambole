@@ -32,10 +32,13 @@ CAST_ALIASES = {"Monsieur Ferrand": "M. Ferrand", "Madame Dumas": "Mme Dumas",
                 "Ines": "Inès", "Lea": "Léa", "Theo": "Théo"}
 VOICES = {"male", "female"}
 TEXTING = re.compile(r"(?i)(?<!\w)(?:mdr|stp|jsp|slt|svp|ptdr|bjr)(?!\w)")
-GENDERED_SELF = re.compile(r"\b(?:je\s+(?:suis|me sens|serai)|j['’](?:étais|ai))\s+"
-                          r"(?:\w+\s+){0,3}(?:désolé(?:e)?s?|prêt(?:e)?s?|"
-                          r"allé(?:e)?s?|arrivé(?:e)?s?|passé(?:e)?s?|parti(?:e)?s?|"
-                          r"venu(?:e)?s?|content(?:e)?s?|fatigué(?:e)?s?)\b", re.I)
+# Robin, the learner, is a woman (user decision 2026-10-11): her own lines use
+# feminine agreement only. Flags a masculine first-person form in a learner
+# line, an accepted reply, or a correct pick.
+MASC_SELF = re.compile(r"(?:\b(?:je\s+(?:suis|me sens|serai)|j['’](?:étais|ai été))\s+"
+                       r"(?:\w+\s+){0,3}(?:désolé|prêt|allé|arrivé|passé|parti|venu|"
+                       r"content|fatigué|sorti|rentré|resté|occupé|ravi|américain)s?"
+                       r"|(?:^|[.!?,]\s*)(?:enchanté|désolé|ravi)s?)(?![\wé])", re.I)
 
 
 def norm(value: str) -> str:
@@ -312,8 +315,6 @@ def lint_content(module: dict, word_data: dict, audio_dir: Path = AUDIO,
                     errors.append(f"{iid}: fix needs 3 distinct choices")
                 if not isinstance(mark.get("why"), str) or not mark["why"].strip():
                     errors.append(f"{iid}: fix why must be one line")
-                if norm(mark.get("word", "")) in {"prêt", "prête", "allé", "allée", "désolé", "désolée"}:
-                    errors.append(f"{iid}: fix targets learner gender")
             for drill in drills:
                 _drill(errors, iid, drill)
                 if drill.get("type") == "word" and not any(
@@ -323,12 +324,12 @@ def lint_content(module: dict, word_data: dict, audio_dir: Path = AUDIO,
             if TEXTING.search(surface):
                 errors.append(f"{iid}: texting abbreviation")
             for line in [t.get("text", "") for t in turns if t.get("speaker") == "learner"] + [
-                d.get("model", "") for d in drills if d.get("type") == "reply"] + [
+                " ".join(a) for d in drills if d.get("type") == "reply" for a in d.get("accepted", [])] + [
                 d.get("choices", [""])[d["correct"]] for d in drills
                 if d.get("type") == "pick" and isinstance(d.get("correct"), int)
                 and 0 <= d["correct"] < len(d.get("choices", []))]:
-                if GENDERED_SELF.search(line):
-                    errors.append(f"{iid}: gendered first-person model needs both forms accepted")
+                if MASC_SELF.search(line):
+                    errors.append(f"{iid}: masculine first-person form (Robin is a woman)")
             for word in item.get("newWords", []):
                 key = norm(word)
                 if key not in keys:
