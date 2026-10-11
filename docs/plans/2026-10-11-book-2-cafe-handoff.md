@@ -15,11 +15,12 @@
 ## 2. Where things stand
 
 - **Module 06 *Au café* is authored.** 8 moves × (10 dialogues + 5 standalone) = 120 items, in `carambole/Resources/Situations/06_au_cafe.json`. `words.json` has 204 entries: 31 taught words with a `firstSeen` item, 4 spoken forms, the rest base (*Fondations*) words.
-- **Review set v4 played on the iPhone 18 Pro.** The user said "looks fine" after the two UI fixes below. Treat this as café approval only if the user confirms; ask at the start of the next session.
+- **Café content approved by the user (2026-10-11),** after playing review set v4 on the iPhone 18 Pro with the two UI fixes below.
 - **User decisions this session:**
   - The Karim, Léa and Théo voices are fine.
   - Karim switches to *tu* inside the `usual` move (d04 is « On peut se tutoyer, non ? »). He uses *vous* in every other module-06 move. Every `usual` cue states which form he uses, so cards stand alone in any review order.
-- **Not done:** production audio (379 clips, 0 present), production loader / shelf / per-book progress (Tasks 2–3 of the action plan), the other 24 modules, the Écrire typing drill.
+- **Production audio partly generated, not committed:** a run was stopped at the user's request after 145 of 379 clips (`carambole/Resources/Audio/sit_06_*.mp3`, untracked; all complete files, smallest 4.6 KB). The user will finish it in a new session.
+- **Not done:** the remaining 234 audio clips, production loader / shelf / per-book progress (Tasks 2–3 of the action plan), the other 24 modules, the Écrire typing drill.
 
 ## 3. What was done this session
 
@@ -63,12 +64,17 @@
 | `0a419c7` | Independent-review fixes, line-limit lint check |
 | `7287113` | Review set v4, cast audio, pilot tests accept production IDs |
 | `518e539` | Pilot screen: answer stays in view, tray not squashed |
-| (this) | Handoff and doc updates |
+| `e7e4c2b` | Handoff and doc updates |
+| (next) | Café approval and audio status in this handoff |
 
 ## 5. Next steps, in order
 
-1. **Ask the user** whether "looks fine" approves the café content, or whether they want another small review set (about 9 cards, never the whole module).
-2. **Production audio** for café: `rtk python3 tools/situations/generate_audio.py --dry-run` (expect 379 missing), then the default mode. Needs `gcloud auth application-default` credentials. Then strict `rtk python3 tools/situations/lint.py` (with audio) must pass. Record the API characters used.
+1. **Finish production audio** for café (user-approved; start it in the new session). 379 clips, about 6,980 API characters in total.
+   - `rtk python3 tools/situations/generate_audio.py --dry-run`: expect 145 present, 234 missing. The script skips existing files.
+   - Then run it without flags. Needs `gcloud auth application-default` credentials. Run it in the background or with a long timeout; it calls the API once per clip.
+   - Strict `rtk python3 tools/situations/lint.py` (with audio) must then pass.
+   - Commit the MP3s and record the characters used here.
+2. Spot-listen to a few clips per cast voice (Karim, Léa, Théo, word audio) before committing.
 3. **Tasks 2–3 of the [action plan](2026-10-11-book-2-action-plan.md):** per-book progress and the production Book 2 view, loader and shelf entry. Port the pilot view, with choice shuffling and the two scroll/tray fixes.
 4. **Other 24 modules** in batches of 5–6 (one arc). Per batch: plan matrix → author (two agents per module, split by moves; each edits only its own draft) → `assemble.py` → lint/tests/Grammalecte → four judges (two moves each) → fixes → *Fondations* vocabulary audit → small review set for the user.
 5. Open questions from the content handoff §10 still unanswered: is the module 06 move list right (§10.3; it was built as planned); should Écrire be built in Swift now (§10.4); should the main app get the swipe-up "trop facile" change (§10.5).
