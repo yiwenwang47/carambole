@@ -4,11 +4,18 @@ import Foundation
 struct PilotScenarioTests {
     static func main() throws {
         let path = CommandLine.arguments.dropFirst().first ?? "carambole/Debug/testbook_situation.json"
-        let data = try Data(contentsOf: URL(fileURLWithPath: path))
+        let reviewData = try Data(contentsOf: URL(fileURLWithPath: path))
+        let review = try JSONDecoder().decode(PilotContent.self, from: reviewData)
+        assert(review.validationErrors.isEmpty, review.validationErrors.joined(separator: "; "))
+        assert(review.dialogues.count == 9)
+        assert(review.dialogues.filter(\.isStandalone).count == 3)
+
+        // The checks below use the approved v2 pilot cards as a fixed fixture,
+        // so any review set can be validated above without matching their IDs.
+        let fixturePath = CommandLine.arguments.dropFirst(2).first ?? "tools/pilot/fixtures/testbook_situation_v2.json"
+        let data = try Data(contentsOf: URL(fileURLWithPath: fixturePath))
         let content = try JSONDecoder().decode(PilotContent.self, from: data)
         assert(content.validationErrors.isEmpty, content.validationErrors.joined(separator: "; "))
-        assert(content.dialogues.count == 9)
-        assert(content.dialogues.filter(\.isStandalone).count == 3)
 
         // Longest phrase wins, typographic apostrophes match straight keys,
         // trailing punctuation stays outside the tappable word.

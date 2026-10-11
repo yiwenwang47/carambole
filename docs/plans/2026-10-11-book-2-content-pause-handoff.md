@@ -49,3 +49,12 @@ The first-half author received these findings just before interruption. The seco
 **Answered 2026-10-11 (resume):** the Karim/Léa/Théo voices are fine, and Karim switches to *tu* inside café move `usual`, using *vous* everywhere else in module 06.
 
 Two questions were sent asynchronously but no answer had arrived at pause: whether Karim/Léa/Théo sound right on the phone, and whether Karim changes to *tu* in café move `usual`. The current draft assumes the handoff's recommendation: the switch happens inside `usual`; Karim otherwise uses *vous* in module 06.
+
+## Resumed 2026-10-11 — status
+
+- Both halves were reworked, then reviewed by four independent judges (two moves each); all findings applied (`ed2f09f`, `0a419c7`). Full lint, 48 Python tests, Swift pilot contract test and Grammalecte (310 lines, 0 flags) pass.
+- Choice order is now spread across slots in the content, because the pilot view does not shuffle choices. The production view should shuffle choices at render time (as Book 1's `displayBank` does) before this matters.
+- New lint check: a dialogue's turns plus its built reply must not exceed 3 lines.
+- Words wrongly treated as *Fondations* (bonjour, merci, pardon, s'il te plaît, encore, euros, erreur, espèces…) are now taught or avoided. Compositional forms of taught words (*donné*, *m'a*, *me faire*, *au lait*) stay base.
+- Review set v4 (9 cards, D D S, all six engines): order_d02, takeaway_d07, size_s03, usual_d04, mixup_d08, available_s02, pay_d04, substitute_d06, usual_s05. Written to `carambole/Debug/testbook_situation.json` with `pilot2_*` audio; built and installed on the iPhone 18 Pro simulator. The old v2 pilot is kept as `tools/pilot/fixtures/testbook_situation_v2.json` for the Swift segmentation tests.
+- **Next:** user reviews the 9 cards. Production audio (`generate_audio.py` default mode) only after approval; then the café gate opens Tasks 2–3 and the other 24 modules.
