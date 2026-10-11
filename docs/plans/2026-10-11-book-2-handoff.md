@@ -3,7 +3,7 @@
 **Date:** 2026-10-11  
 **Repo:** `/Users/yiwenwang/Documents/CMU/research/personal/carambole/carambole`  
 **Branch:** `book2-dialogue-pilot`  
-**Latest commit:** `8aafdad` (`Show situation text by default in Test book`)
+**Pilot UI commit:** `8aafdad` (`Show situation text by default in Test book`)
 
 ## Read first
 
