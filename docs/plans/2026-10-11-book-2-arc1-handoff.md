@@ -22,14 +22,15 @@ D D S order: `01_name_d02` (M. Ferrand) · `03_tutoyer_d01` (« on peut se tutoy
 
 It covers all six engines and the three new voices. Phone install happens only if the user asks.
 
-## 3. Decisions taken without the user (confirm or overrule)
+## 3. User decisions (2026-10-11, after v5)
 
-1. The learner is called **Alex**, from **Boston**, in every module.
-2. The partners who suggest *tu* in module 03 are unnamed (neighbour = anonymous female voice, colleague from another team). There is no seventh cast voice.
-3. Café items keep their underline on the ten words that are now taught earlier (*bonjour, merci, pardon, désolé, pas de souci…*).
-4. *ah, oh, tout le monde, pas de problème, bonne journée, ça me va* are not in *Fondations*. They stay as glossed base words rather than taught words.
-5. Channel share is far above "2–3 of 10 dialogues per move" in 02, 04 and 05: 42, 51 and 66 of 80 dialogues are not face to face. The syllabus sets 04 in the group chat and 05 in texts and calls, so this was kept.
-6. Module 03 teaches 24 words (one under the ~25 floor).
+1. **The learner is Robin from Eugene, Oregon** (was Alex / Boston). In French the hometown is « Eugene, dans l'Oregon » on first mention. Later mentions use « Eugene » or « l'Oregon ». 45 items were reworked and 39 clips re-recorded.
+2. The partners who suggest *tu* in module 03 stay unnamed. There is no seventh cast voice.
+3. **Café underlines dropped** for the ten words now taught in 01–05. An underline means "new word here" only.
+4. *ah, oh, tout le monde, pas de problème, bonne journée, ça me va* stay glossed on tap only. They are not taught.
+5. The channel mix stays as authored: 02, 04 and 05 are channel-heavy by design.
+6. M. Ferrand's voice is **Orus** (Algenib paused for about 1 s between sentences). The user confirmed it works.
+7. Still open: module 03 teaches 24 words, one under the ~25 floor (minor).
 
 ## 4. What changed in code this session
 
