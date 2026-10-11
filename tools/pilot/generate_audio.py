@@ -30,7 +30,7 @@ CAST = {
     "Théo": "fr-FR-Chirp3-HD-Achird",
     "Léa": "fr-FR-Chirp3-HD-Aoede",
     # Book 2 cast; canonical turn `name` strings (see tools/situations/README.md).
-    "M. Ferrand": "fr-FR-Chirp3-HD-Algenib",  # older neighbour, fussy (gravelly male)
+    "M. Ferrand": "fr-FR-Chirp3-HD-Orus",  # older neighbour, fussy (Algenib paused ~1 s between sentences)
     "Inès": "fr-FR-Chirp3-HD-Despina",  # young colleague (smooth female)
     "Mme Dumas": "fr-FR-Chirp3-HD-Gacrux",  # older landlady (mature female)
 }

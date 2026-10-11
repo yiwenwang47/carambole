@@ -81,7 +81,7 @@ class ReviewAdapterTests(unittest.TestCase):
         item["turns"] = [{"speaker": "server", "name": "Pharmacien", "text": "Oui ?"}]
         self.assertEqual([v for _, _, v in item_clips(item)], [MALE, MALE])
         item["followUpBy"] = "M. Ferrand"
-        self.assertEqual(item_clips(item)[-1][2], "fr-FR-Chirp3-HD-Algenib")
+        self.assertEqual(item_clips(item)[-1][2], "fr-FR-Chirp3-HD-Orus")
 
     def test_export_takes_items_from_several_modules(self):
         other = {"elements": [{"id": "sit_01_hello", "title": "Saluer", "items": self.items[3:]}]}

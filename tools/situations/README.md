@@ -76,7 +76,7 @@ the long forms (« Monsieur Ferrand », « Madame Dumas »). The voice map is
 | `Karim` | barista | *vous* in 06 (except `usual`), *tu* later | `fr-FR-Chirp3-HD-Charon` |
 | `Léa` | flatmate | *tu* | `fr-FR-Chirp3-HD-Aoede` |
 | `Théo` | friend, group chat | *tu* | `fr-FR-Chirp3-HD-Achird` |
-| `M. Ferrand` | older neighbour, fussy | *vous* | `fr-FR-Chirp3-HD-Algenib` |
+| `M. Ferrand` | older neighbour, fussy | *vous* | `fr-FR-Chirp3-HD-Orus` |
 | `Inès` | young colleague | *tu* | `fr-FR-Chirp3-HD-Despina` |
 | `Mme Dumas` | older landlady, WhatsApp | *vous* | `fr-FR-Chirp3-HD-Gacrux` |
 | (no name or a role) | one-off staff | *vous* | `fr-FR-Neural2-G`; `voice: "female"` → `fr-FR-Neural2-F` |

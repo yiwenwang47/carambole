@@ -10,7 +10,7 @@
 |---|---|
 | Café audio | All 379 clips generated and committed (`f7b36ac`). The strict lint (with audio) passes. The user has not spot-listened yet. |
 | Tasks 2–3 (production view) | Merged. *En situation* sits on the shelf. Each book has its own progress, settings, history and overflow. `SituationSessionView` shuffles choices and keeps both café scroll/tray fixes. Schema v5 is additive. See `CLAUDE.md` and the action plan for details. |
-| Tooling | Book-wide. `modules.json` holds module metadata; drafts are named `NN_<slug>_<half>.json`; `assemble.py [NN…]`; lint, deep lint, audio and review set run across all modules. New cast voices: M. Ferrand = Chirp3-HD Algenib, Inès = Despina, Mme Dumas = Gacrux, anonymous female = Neural2-F (`voice: "female"`). |
+| Tooling | Book-wide. `modules.json` holds module metadata; drafts are named `NN_<slug>_<half>.json`; `assemble.py [NN…]`; lint, deep lint, audio and review set run across all modules. New cast voices: M. Ferrand = Chirp3-HD Orus, Inès = Despina, Mme Dumas = Gacrux, anonymous female = Neural2-F (`voice: "female"`). |
 | Arc 1 content | Modules 01–05 are authored: 600 items, 137 newly taught words. All reviewed by 20 judges and fixed by 10 fixers. Lint, 68 Python tests, Grammalecte (1,927 lines, 0 flags) and the Swift model test (720 items) pass. |
 | Review set v5 | 9 cards in `carambole/Debug/testbook_situation.json`, with `pilot2_*` audio. Installed in the Test book on the iPhone 18 Pro **simulator** only. |
 | Not done | Production audio for 01–05: waits for the user to approve v5 and the new voices. The other 19 modules (arcs 3–5, then 07–10). The Écrire drill. |
