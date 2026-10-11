@@ -27,6 +27,9 @@ struct SituationPilotView: View {
     @State private var rightChoice: Int?
     @State private var placed: [Int] = []
     @State private var bankOrder: [Int] = []
+    /// Répondre answers already refused this drill: Vérifier stays off until
+    /// the placed tiles change (`SituationRetry`).
+    @State private var rejectedReplies: [[String]] = []
     @State private var note = ""
     @State private var slot: Slot = .hidden
     @State private var gapText: String?
@@ -357,6 +360,9 @@ struct SituationPilotView: View {
     }
 
     private var bank: [String] { drill?.bank ?? [] }
+    private var canCheckReply: Bool {
+        SituationRetry.canCheck(placed.map { bank[$0] }, rejected: rejectedReplies)
+    }
 
     // MARK: - Words
 
@@ -657,7 +663,7 @@ struct SituationPilotView: View {
             switch drill.type {
             case .comprehend, .word: return ("Choisissez une réponse", false)
             case .fix where fixPhase == .find: return ("Touchez le mot", false)
-            case .reply: return ("Vérifier", !placed.isEmpty)
+            case .reply: return ("Vérifier", canCheckReply)
             default: return ("Vérifier", selected != nil)
             }
         }()
@@ -675,7 +681,7 @@ struct SituationPilotView: View {
 
     private func startDrill() {
         tries = 0; selected = nil; wrongChoices = []; rightChoice = nil
-        placed = []; note = ""; fixPhase = .find; flashedWord = nil
+        placed = []; rejectedReplies = []; note = ""; fixPhase = .find; flashedWord = nil
         guard let drill else { return }
         if drill.type == .reply || drill.type == .pick { slot = .building }
         if drill.type == .reply { bankOrder = Array((drill.bank ?? []).indices).shuffled() }
@@ -711,6 +717,8 @@ struct SituationPilotView: View {
         guard !locked, let drill else { return }
         switch drill.type {
         case .reply:
+            // An answer already refused (unchanged since the miss) never spends a try.
+            guard canCheckReply else { return }
             let tiles = placed.map { bank[$0] }
             tries += 1
             if drill.accepts(tiles) {
@@ -722,6 +730,7 @@ struct SituationPilotView: View {
                     why: keep > 0 ? "The start « \(tiles.prefix(keep).joined(separator: " ")) » was right." : nil)
                 if tries < 2 {
                     placed = Array(placed.prefix(keep))
+                    rejectedReplies += SituationRetry.rejected(after: tiles, keep: keep)
                     note = "Pas encore : « \(tiles.joined(separator: " ")) »"
                         + (keep > 0 ? ". The start is kept; fix the rest." : ". Try again.")
                 } else {

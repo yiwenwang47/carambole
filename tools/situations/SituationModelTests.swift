@@ -71,6 +71,38 @@ struct SituationModelTests {
         check(!s01.accepts(["Bonjour,", "je voudras", "un café", "et", "un thé,", "s'il vous plaît."]), "distractor rejected")
         check(s01.correctPrefixCount(["Bonjour,", "je voudrais", "une thé,"]) == 2, "prefix kept on retry")
 
+        // Retry gate: after a wrong reply, Vérifier stays off until the answer
+        // changes, so pressing it again unchanged never spends the second try.
+        let wrongReply = ["Bonjour,", "je voudrais", "une thé,"]
+        let keep = s01.correctPrefixCount(wrongReply)
+        let refused = SituationRetry.rejected(after: wrongReply, keep: keep)
+        let kept = Array(wrongReply.prefix(keep))
+        check(SituationRetry.canCheck(wrongReply, rejected: []), "first check is allowed")
+        check(!SituationRetry.canCheck([], rejected: []), "nothing placed → no check")
+        check(!SituationRetry.canCheck(kept, rejected: refused), "kept start alone, unchanged → Vérifier stays off")
+        check(!SituationRetry.canCheck(wrongReply, rejected: refused), "same wrong reply rebuilt → Vérifier stays off")
+        check(SituationRetry.canCheck(kept + ["un café"], rejected: refused), "a changed answer can be checked")
+        check(SituationRetry.canCheck(Array(kept.prefix(1)), rejected: refused), "removing a tile is a change")
+        check(!SituationRetry.canCheck([], rejected: SituationRetry.rejected(after: ["x"], keep: 0)),
+              "nothing kept → nothing to check")
+        // Every reply drill: one wrong attempt leaves an answer that cannot be
+        // re-checked as is, and finishing a valid reply from it is allowed.
+        for item in items {
+            for drill in item.drills where drill.type == .reply {
+                guard let reply = drill.accepted?.first, reply.count > 1,
+                      let odd = (drill.bank ?? []).first(where: { !reply.contains($0) }) else { continue }
+                let wrong = Array(reply.dropLast()) + [odd]
+                guard !drill.accepts(wrong) else { continue }
+                let k = drill.correctPrefixCount(wrong)
+                let blocked = SituationRetry.rejected(after: wrong, keep: k)
+                let left = Array(wrong.prefix(k))
+                check(!SituationRetry.canCheck(left, rejected: blocked), "\(item.id): unchanged retry blocked")
+                if let fix = drill.accepted?.first(where: { Array($0.prefix(k)) == left }) {
+                    check(SituationRetry.canCheck(fix, rejected: blocked), "\(item.id): corrected reply can be checked")
+                }
+            }
+        }
+
         // Choice shuffling: a permutation, deterministic per seed, every slot used,
         // and grading follows the choice TEXT whatever its screen position.
         var slotHits = [0, 0, 0]
