@@ -4,6 +4,8 @@ Rewritten 2026-10-11 after the independent review and the Fondations vocabulary 
 
 `New` lists words first taught in that item (`firstSeen`). Every new word recurs in at least two later dialogues and has a later Mot or Mot en retour drill (checked by `lint.py` on the assembled module). All other glossed words are Fondations grammar forms or base A1 words; café and payment terms are taught, not assumed. The payment move avoids *payer* (untaught) and uses *par carte*, *en espèces*, *ça fait*, *monnaie* (= change, one sense throughout).
 
+Second review pass (2026-10-11): bare *erreur*, *espèces* and *euros* are taught words with their own Mot drills (mixup d05, pay d08, pay d10), since they show outside their set phrases. The half avoids *il vous faut*, *je vous dois*, *minutes*, *j'arrive* and bare *carte*. Karim's tu reminder in usual d06 is « On se dit tu, maintenant ! », so *tutoyer* only appears inside « on peut se tutoyer ».
+
 | Item | Channel · cast | Drills | New |
 |---|---|---|---|
 | takeaway d01 | Au café · Karim | comprendre, répondre | sur place; à emporter |
@@ -36,7 +38,7 @@ Rewritten 2026-10-11 after the independent review and the Fondations vocabulary 
 | usual d09 | Les copains · groupe · Théo | comprendre, répondre | — |
 | usual d10 | Au café · Karim | mot, répondre | — |
 | usual s05 | Au café · Karim | Mot en retour | — |
-| mixup d01 | Au café · Karim | comprendre, répondre | je crois; une erreur |
+| mixup d01 | Au café · Karim | comprendre, répondre | je crois; une erreur; erreur |
 | mixup d02 | Au café · Karim | comprendre, compléter | — |
 | mixup s01 | Au café · Karim | Construire | — |
 | mixup d03 | Au café · Karim | mot, répondre | — |
@@ -51,14 +53,14 @@ Rewritten 2026-10-11 after the independent review and the Fondations vocabulary 
 | mixup d09 | Les copains · groupe · Théo | mot, répondre | — |
 | mixup d10 | Au café · Karim | comprendre, répondre | — |
 | mixup s05 | Au café · Karim | Mot en retour | — |
-| pay d01 | Au café · Karim | comprendre, répondre | par carte; ça fait |
+| pay d01 | Au café · Karim | comprendre, répondre | par carte; ça fait; euros |
 | pay d02 | Au café · Karim | compléter, comprendre | en panne; monnaie; terminal |
 | pay s01 | Au café · Karim | Construire | — |
 | pay d03 | Au café · Karim | mot, répondre | — |
-| pay d04 | Au café · Karim | mot, compléter | en espèces |
+| pay d04 | Au café · Karim | mot, compléter | en espèces; espèces |
 | pay s02 | Au café · — | Choisir le ton | — |
 | pay d05 | Au café · Karim | mot, répondre | — |
-| pay d06 | Au café · Karim | comprendre, répondre | — |
+| pay d06 | Au café · Karim | mot, répondre | — |
 | pay s03 | Au café · — | Corriger | — |
 | pay d07 | Texto · Léa · Léa | compléter, comprendre | — |
 | pay d08 | Texto · Léa · Léa | compléter, mot | — |

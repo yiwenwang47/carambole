@@ -90,6 +90,13 @@ class SituationLintTests(unittest.TestCase):
         self.assert_bad("over 10 words")
         self.assert_bad("repeated drill type")
 
+    def test_reply_line_counts_toward_dialogue_limit(self):
+        items = self.module["elements"][0]["items"]
+        item = items[0]
+        item["turns"] = [copy.deepcopy(item["turns"][0]) for _ in range(3)]
+        item["drills"].append(copy.deepcopy(items[2]["drills"][0]))
+        self.assert_bad("over 3 lines with the built reply")
+
     def test_reply_requires_buildable_accepted_and_model(self):
         drill = self.module["elements"][0]["items"][2]["drills"][0]
         drill["accepted"] = [["Oui,", "thé."]]

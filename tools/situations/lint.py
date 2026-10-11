@@ -231,6 +231,8 @@ def lint_content(module: dict, word_data: dict, audio_dir: Path = AUDIO,
             else:
                 if not 1 <= len(turns) <= 3 or not 1 <= len(drills) <= 2 or not item.get("followUp"):
                     errors.append(f"{iid}: dialogue needs 1–3 lines, 1–2 drills and follow-up")
+                if len(turns) + any(d.get("type") == "reply" for d in drills) > 3:
+                    errors.append(f"{iid}: dialogue has over 3 lines with the built reply")
             kinds = [d.get("type") for d in drills]
             if kinds:
                 boundary_types.append((kinds[0], kinds[-1]))

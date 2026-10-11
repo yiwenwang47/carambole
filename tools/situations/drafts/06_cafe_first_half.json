@@ -29,20 +29,20 @@
                 "What you would like"
               ],
               "correct": 1,
-              "miss": "Reread: « Qu'est-ce que vous prenez ? »."
+              "miss": "Reread: « Qu'est-ce que vous prenez ? »"
             },
             {
               "type": "complete",
               "prompt": "Complete your polite order.",
               "choices": [
                 "si vous",
-                "s'il te",
+                "il vous",
                 "s'il vous"
               ],
               "correct": 2,
               "why": [
                 "Not French: the phrase is « s'il vous plaît ».",
-                "« S'il te plaît » is for a friend. Karim says vous to you.",
+                "« Il vous plaît » means it pleases you. To ask politely, say « s'il vous plaît ».",
                 ""
               ]
             }
@@ -76,7 +76,7 @@
                 "Un café,",
                 "s'il vous plaît.",
                 "Une café,",
-                "s'il te plaît."
+                "vite."
               ],
               "accepted": [
                 [
@@ -118,7 +118,7 @@
             {
               "speaker": "server",
               "name": "Karim",
-              "text": "Bonjour ! Qu'est-ce que vous prenez ce matin, vous deux ?"
+              "text": "Bonjour ! Qu'est-ce que vous prenez ce matin, Léa et vous ?"
             }
           ],
           "drills": [
@@ -160,7 +160,7 @@
         {
           "id": "sit_06_order_d03",
           "place": "Au café",
-          "cue": "Karim, the barista, says vous to you. He suggests a coffee, but you'd like a tea.",
+          "cue": "Karim, the barista, says vous to you. You'd like a tea.",
           "turns": [
             {
               "speaker": "server",
@@ -177,33 +177,36 @@
                 "A tea"
               ],
               "correct": 0,
-              "miss": "Reread: « Vous voulez un café ? »."
+              "miss": "Reread: « Vous voulez un café ? »"
             },
             {
               "type": "reply",
-              "prompt": "Say no, then politely ask for a tea.",
+              "prompt": "Greet him back, say no, then politely ask for a tea.",
               "bank": [
+                "Bonjour !",
                 "Non,",
                 "je voudrais",
                 "un thé,",
                 "s'il vous plaît.",
                 "je voudras",
-                "s'il te plaît."
+                "Oui,"
               ],
               "accepted": [
                 [
+                  "Bonjour !",
                   "Non,",
                   "je voudrais",
                   "un thé,",
                   "s'il vous plaît."
                 ],
                 [
+                  "Bonjour !",
                   "Non,",
                   "un thé,",
                   "s'il vous plaît."
                 ]
               ],
-              "model": "Non, je voudrais un thé, s'il vous plaît."
+              "model": "Bonjour ! Non, je voudrais un thé, s'il vous plaît."
             }
           ],
           "followUp": "Un thé ? Très bien.",
@@ -233,7 +236,7 @@
                 "If you are at the café"
               ],
               "correct": 0,
-              "miss": "Reread: « Tu veux un café ? »."
+              "miss": "Reread: « Tu veux un café ? »"
             },
             {
               "type": "complete",
@@ -285,13 +288,8 @@
         {
           "id": "sit_06_order_d05",
           "place": "Au café",
-          "cue": "It's noisy, and Karim talks fast. Karim, the barista, says vous to you.",
+          "cue": "It's noisy, and you didn't catch Karim's question. Karim, the barista, says vous to you.",
           "turns": [
-            {
-              "speaker": "server",
-              "name": "Karim",
-              "text": "Bonjour ! Qu'est-ce que vous prenez, café ou thé ?"
-            },
             {
               "speaker": "learner",
               "text": "Pardon, vous pouvez répéter ?"
@@ -359,9 +357,9 @@
               "type": "pick",
               "prompt": "Which reply works?",
               "choices": [
-                "Je voudrais un café, s'il vous plaît.",
-                "Je voudrais une café, s'il vous plaît.",
-                "Je voudrais un café, s'il te plaît."
+                "Bonjour ! Je voudrais un café, s'il vous plaît.",
+                "Bonjour ! Je voudrais une café, s'il vous plaît.",
+                "Bonjour ! Je voudrais un café, s'il te plaît."
               ],
               "correct": 0,
               "why": [
@@ -495,7 +493,7 @@
                 "A coffee or a cake"
               ],
               "correct": 0,
-              "miss": "Reread: « Tu veux un café ou un thé ? »."
+              "miss": "Reread: « Tu veux un café ou un thé ? »"
             }
           ],
           "followUp": "Un thé pour toi !",
@@ -558,11 +556,11 @@
             {
               "speaker": "server",
               "name": "Karim",
-              "text": "Bonjour ! Qu'est-ce que vous prenez, vous deux ?"
+              "text": "Bonjour ! Qu'est-ce que vous prenez, Léa et vous ?"
             },
             {
               "speaker": "learner",
-              "text": "Un café pour moi, ___ thé pour Léa."
+              "text": "Bonjour ! Un café pour moi, ___ thé pour Léa."
             }
           ],
           "drills": [
@@ -601,22 +599,27 @@
               "type": "reply",
               "prompt": "Greet him back, then ask for a coffee, politely.",
               "bank": [
-                "Bonjour !",
-                "Je voudrais",
+                "Bonjour,",
+                "je voudrais",
                 "un café,",
                 "s'il vous plaît.",
-                "Je voudras",
+                "je voudras",
                 "une café,"
               ],
               "accepted": [
                 [
-                  "Bonjour !",
-                  "Je voudrais",
+                  "Bonjour,",
+                  "je voudrais",
+                  "un café,",
+                  "s'il vous plaît."
+                ],
+                [
+                  "Bonjour,",
                   "un café,",
                   "s'il vous plaît."
                 ]
               ],
-              "model": "Bonjour ! Je voudrais un café, s'il vous plaît."
+              "model": "Bonjour, je voudrais un café, s'il vous plaît."
             },
             {
               "type": "word",
@@ -646,7 +649,7 @@
           "turns": [
             {
               "speaker": "learner",
-              "text": "___, vous pouvez répéter ? Un café ou un thé ?"
+              "text": "___ ? Vous avez dit un café ou un thé ?"
             }
           ],
           "drills": [
@@ -695,12 +698,13 @@
                 "If you want two coffees"
               ],
               "correct": 0,
-              "miss": "Reread: « Une table pour deux ? »."
+              "miss": "Reread: « Une table pour deux ? »"
             },
             {
               "type": "reply",
-              "prompt": "Say yes, and order two coffees politely.",
+              "prompt": "Greet him back, say yes, and order two coffees politely.",
               "bank": [
+                "Bonjour !",
                 "Oui,",
                 "deux cafés,",
                 "s'il vous plaît.",
@@ -709,12 +713,13 @@
               ],
               "accepted": [
                 [
+                  "Bonjour !",
                   "Oui,",
                   "deux cafés,",
                   "s'il vous plaît."
                 ]
               ],
-              "model": "Oui, deux cafés, s'il vous plaît."
+              "model": "Bonjour ! Oui, deux cafés, s'il vous plaît."
             }
           ],
           "followUp": "Très bien, deux cafés.",
@@ -746,7 +751,7 @@
                 "A small table"
               ],
               "correct": 1,
-              "miss": "Reread: « Une petite table, ici ? »."
+              "miss": "Reread: « Une petite table, ici ? »"
             },
             {
               "type": "complete",
@@ -776,15 +781,16 @@
             {
               "speaker": "server",
               "name": "Karim",
-              "text": "Bonjour ! Une table pour deux, et qu'est-ce que vous prenez ?"
+              "text": "Bonjour ! Vous êtes deux ? Qu'est-ce que vous prenez ?"
             }
           ],
           "drills": [
             {
               "type": "reply",
-              "prompt": "Greet him, then order two small coffees politely.",
+              "prompt": "Greet him, say yes, then order two small coffees politely.",
               "bank": [
                 "Bonjour,",
+                "oui,",
                 "je voudrais",
                 "deux petits cafés,",
                 "s'il vous plaît.",
@@ -794,17 +800,19 @@
               "accepted": [
                 [
                   "Bonjour,",
+                  "oui,",
                   "je voudrais",
                   "deux petits cafés,",
                   "s'il vous plaît."
                 ],
                 [
                   "Bonjour,",
+                  "oui,",
                   "deux petits cafés,",
                   "s'il vous plaît."
                 ]
               ],
-              "model": "Bonjour, je voudrais deux petits cafés, s'il vous plaît."
+              "model": "Bonjour, oui, je voudrais deux petits cafés, s'il vous plaît."
             }
           ],
           "newWords": []
@@ -812,7 +820,7 @@
         {
           "id": "sit_06_size_d03",
           "place": "Au café",
-          "cue": "You and Léa want one coffee each, but Karim seems to have misheard. Karim, the barista, says vous to you.",
+          "cue": "You and Léa want one coffee each. Karim, the barista, says vous to you.",
           "turns": [
             {
               "speaker": "server",
@@ -829,7 +837,7 @@
                 "Two coffees"
               ],
               "correct": 0,
-              "miss": "Reread: « Un café pour deux ? »."
+              "miss": "Reread: « Un café pour deux ? »"
             },
             {
               "type": "reply",
@@ -913,7 +921,7 @@
               "choices": [
                 "Deux petits cafés. Vite.",
                 "Bonjour, je voudrais deux petits cafés, s'il vous plaît.",
-                "Bonjour ! Deux petits cafés pour moi, s'il te plaît."
+                "Bonjour ! Deux petits cafés, s'il te plaît."
               ],
               "correct": 1,
               "why": [
@@ -928,13 +936,8 @@
         {
           "id": "sit_06_size_d05",
           "place": "Au café",
-          "cue": "Karim talks fast about sizes. Karim, the barista, says vous to you. You'd like a large coffee.",
+          "cue": "Karim talks fast, and you didn't catch his question. Karim, the barista, says vous to you. You'd like a large coffee.",
           "turns": [
-            {
-              "speaker": "server",
-              "name": "Karim",
-              "text": "Bonjour ! Un café ? Petit ou grand ?"
-            },
             {
               "speaker": "learner",
               "text": "Pardon, vous pouvez répéter ?"
@@ -942,7 +945,7 @@
             {
               "speaker": "server",
               "name": "Karim",
-              "text": "Petit ou grand ?"
+              "text": "Un café, petit ou grand ?"
             }
           ],
           "drills": [
@@ -1015,9 +1018,9 @@
               "type": "pick",
               "prompt": "Which reply works?",
               "choices": [
-                "Oui, et deux grands cafés, s'il vous plaît.",
-                "Oui, et deux grandes cafés, s'il vous plaît.",
-                "Oui, et deux grands cafés, s'il te plaît."
+                "Bonjour ! Oui, et deux grands cafés, s'il vous plaît.",
+                "Bonjour ! Oui, et deux grandes cafés, s'il vous plaît.",
+                "Bonjour ! Oui, et deux grands cafés, s'il te plaît."
               ],
               "correct": 0,
               "why": [
@@ -1071,7 +1074,7 @@
             },
             {
               "speaker": "learner",
-              "text": "Non, une ___ table pour deux, s'il vous plaît."
+              "text": "Bonjour ! Non, une ___ table pour deux, s'il vous plaît."
             }
           ],
           "drills": [
@@ -1199,11 +1202,11 @@
             {
               "speaker": "server",
               "name": "Karim",
-              "text": "Bonjour ! Qu'est-ce que vous prenez, vous deux ?"
+              "text": "Bonjour ! Qu'est-ce que vous prenez, Léa et vous ?"
             },
             {
               "speaker": "learner",
-              "text": "Un petit café pour moi, un ___ thé pour Léa."
+              "text": "Bonjour ! Un petit café pour moi, un ___ thé pour Léa."
             }
           ],
           "drills": [
@@ -1229,43 +1232,43 @@
         {
           "id": "sit_06_size_d10",
           "place": "Au café",
-          "cue": "You and Léa both want a large tea. Karim, the barista, says vous to you.",
+          "cue": "You're with Léa, and you both want a large tea. Karim, the barista, says vous to you.",
           "turns": [
             {
               "speaker": "server",
               "name": "Karim",
-              "text": "Bonjour ! Deux thés pour deux ?"
+              "text": "Bonjour ! Deux thés ? Petits ou grands ?"
             }
           ],
           "drills": [
             {
+              "type": "comprehend",
+              "prompt": "What does Karim ask about?",
+              "choices": [
+                "The price",
+                "The size"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Petits ou grands ? »"
+            },
+            {
               "type": "reply",
-              "prompt": "Say yes: two large ones, please.",
+              "prompt": "Greet him back, then ask for two large ones, politely.",
               "bank": [
-                "Oui,",
-                "deux grands,",
+                "Bonjour !",
+                "Deux grands,",
                 "s'il vous plaît.",
-                "deux grandes,",
-                "deux grand,"
+                "Deux grandes,",
+                "Deux grand,"
               ],
               "accepted": [
                 [
-                  "Oui,",
-                  "deux grands,",
+                  "Bonjour !",
+                  "Deux grands,",
                   "s'il vous plaît."
                 ]
               ],
-              "model": "Oui, deux grands, s'il vous plaît."
-            },
-            {
-              "type": "comprehend",
-              "prompt": "How many teas does Karim mention?",
-              "choices": [
-                "One",
-                "Two"
-              ],
-              "correct": 1,
-              "miss": "Reread: « Deux thés pour deux ? »."
+              "model": "Bonjour ! Deux grands, s'il vous plaît."
             }
           ],
           "followUp": "Deux grands thés, voilà.",
@@ -1367,7 +1370,7 @@
             },
             {
               "speaker": "learner",
-              "text": "Non. Il reste ___ soupe."
+              "text": "Non, mais il reste ___ soupe."
             }
           ],
           "drills": [
@@ -1390,7 +1393,8 @@
           "followUp": "De la soupe ? Pas pour moi !",
           "followUpBy": "Léa",
           "newWords": [
-            "y a encore"
+            "y a encore",
+            "encore"
           ]
         },
         {
@@ -1402,7 +1406,7 @@
             {
               "speaker": "server",
               "name": "Karim",
-              "text": "Bonjour ! Il reste des gâteaux ce matin, si vous voulez."
+              "text": "Bonjour ! Il reste encore des gâteaux, si vous voulez."
             }
           ],
           "drills": [
@@ -1437,44 +1441,44 @@
         {
           "id": "sit_06_available_d03",
           "place": "Au café",
-          "cue": "Karim, the barista, says vous to you. It's the end of the day, and he tells you how many teas are left.",
+          "cue": "Karim, the barista, says vous to you. It's the end of the day.",
           "turns": [
             {
               "speaker": "server",
               "name": "Karim",
-              "text": "Il reste deux thés."
+              "text": "Il reste deux gâteaux."
             }
           ],
           "drills": [
             {
               "type": "comprehend",
-              "prompt": "How many teas are left?",
+              "prompt": "How many cakes are left?",
               "choices": [
                 "Three",
                 "Two"
               ],
               "correct": 1,
-              "miss": "Reread: « Il reste deux thés. »."
+              "miss": "Reread: « Il reste deux gâteaux. »"
             },
             {
               "type": "reply",
-              "prompt": "Ask whether there are any cakes left.",
+              "prompt": "Ask whether there's any soup left.",
               "bank": [
                 "Il reste",
-                "des gâteaux ?",
-                "du gâteaux ?",
-                "de la gâteaux ?"
+                "de la soupe ?",
+                "du soupe ?",
+                "des soupe ?"
               ],
               "accepted": [
                 [
                   "Il reste",
-                  "des gâteaux ?"
+                  "de la soupe ?"
                 ]
               ],
-              "model": "Il reste des gâteaux ?"
+              "model": "Il reste de la soupe ?"
             }
           ],
-          "followUp": "Non, pas de gâteaux ce soir.",
+          "followUp": "Non, pas de soupe ce soir.",
           "newWords": []
         },
         {
@@ -1494,14 +1498,20 @@
           ],
           "drills": [
             {
-              "type": "comprehend",
-              "prompt": "What does Léa ask about?",
+              "type": "word",
+              "prompt": "What does « encore » mean here?",
+              "target": "encore",
               "choices": [
-                "Soup",
-                "Cakes"
+                "already",
+                "still",
+                "never"
               ],
               "correct": 1,
-              "miss": "Reread: « Y a encore des gâteaux ? »."
+              "why": [
+                "Already would be « déjà ».",
+                "",
+                "Never would be « jamais »."
+              ]
             },
             {
               "type": "complete",
@@ -1561,22 +1571,6 @@
           ],
           "drills": [
             {
-              "type": "word",
-              "prompt": "What does « il reste » mean here?",
-              "target": "il reste",
-              "choices": [
-                "it is cold",
-                "there is ... left",
-                "he stays"
-              ],
-              "correct": 1,
-              "why": [
-                "Cold would be « il fait froid ».",
-                "",
-                "Here « il » is impersonal: something is left, nobody stays."
-              ]
-            },
-            {
               "type": "reply",
               "prompt": "You didn't catch it. Ask him to repeat, politely.",
               "bank": [
@@ -1594,6 +1588,22 @@
                 ]
               ],
               "model": "Pardon, vous pouvez répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « il reste » mean here?",
+              "target": "il reste",
+              "choices": [
+                "it is cold",
+                "there is ... left",
+                "he stays"
+              ],
+              "correct": 1,
+              "why": [
+                "Cold would be « il fait froid ».",
+                "",
+                "Here « il » is impersonal: something is left, nobody stays."
+              ]
             }
           ],
           "followUp": "Du thé et un peu de soupe !",
@@ -1615,9 +1625,9 @@
               "type": "pick",
               "prompt": "Which question works?",
               "choices": [
-                "Il reste des gâteaux ?",
-                "Il reste du soupe ?",
-                "Il reste de la soupe ?"
+                "Bonjour, il reste des gâteaux ?",
+                "Bonjour, il reste du soupe ?",
+                "Bonjour, il reste de la soupe ?"
               ],
               "correct": 2,
               "why": [
@@ -1662,12 +1672,12 @@
         {
           "id": "sit_06_available_d07",
           "place": "Au café",
-          "cue": "Karim, the barista, says vous to you. He speaks casually today.",
+          "cue": "Karim, the barista, says vous to you. It's late in the day.",
           "turns": [
             {
               "speaker": "server",
               "name": "Karim",
-              "text": "Y a encore du café, si vous voulez."
+              "text": "Il reste du café, si vous voulez."
             },
             {
               "speaker": "learner",
@@ -1676,20 +1686,14 @@
           ],
           "drills": [
             {
-              "type": "word",
-              "prompt": "What does « y a encore » mean here?",
-              "target": "y a encore",
+              "type": "comprehend",
+              "prompt": "What does Karim say is left?",
               "choices": [
-                "there is never",
-                "there is still",
-                "there was"
+                "Tea",
+                "Coffee"
               ],
               "correct": 1,
-              "why": [
-                "Never would be « jamais ».",
-                "",
-                "Was would be « il y avait »."
-              ]
+              "miss": "Reread: « Il reste du café »."
             },
             {
               "type": "complete",
@@ -1718,41 +1722,50 @@
             {
               "speaker": "server",
               "name": "Théo",
-              "text": "Je suis chez Karim. Je prends du thé."
+              "text": "Je suis chez Karim. Y a encore du café !"
             }
           ],
           "drills": [
             {
               "type": "reply",
-              "prompt": "Ask Théo whether there's still milk.",
+              "prompt": "Ask Théo whether there's any soup left too.",
               "bank": [
                 "Il reste",
                 "Y a encore",
-                "du lait ?",
-                "de la lait ?",
-                "des lait ?"
+                "de la soupe",
+                "aussi ?",
+                "du soupe",
+                "des soupe"
               ],
               "accepted": [
                 [
                   "Il reste",
-                  "du lait ?"
+                  "de la soupe",
+                  "aussi ?"
                 ],
                 [
                   "Y a encore",
-                  "du lait ?"
+                  "de la soupe",
+                  "aussi ?"
                 ]
               ],
-              "model": "Il reste du lait ?"
+              "model": "Il reste de la soupe aussi ?"
             },
             {
-              "type": "comprehend",
-              "prompt": "What is Théo having?",
+              "type": "word",
+              "prompt": "What does « y a encore » mean here?",
+              "target": "y a encore",
               "choices": [
-                "Coffee",
-                "Tea"
+                "there is still",
+                "there was",
+                "there is never"
               ],
-              "correct": 1,
-              "miss": "Reread: « Je prends du thé. »."
+              "correct": 0,
+              "why": [
+                "",
+                "Was would be « il y avait ».",
+                "Never would be « jamais »."
+              ]
             }
           ],
           "followUp": "Oui, un peu !",
@@ -1767,7 +1780,7 @@
           "turns": [
             {
               "speaker": "learner",
-              "text": "Y a encore du café et de la soupe aujourd'hui ?",
+              "text": "Y a encore du café et de la soupe ?",
               "source": true
             }
           ],
@@ -1859,25 +1872,28 @@
           "drills": [
             {
               "type": "reply",
-              "prompt": "Ask whether there's still tea.",
+              "prompt": "Greet him back, then ask whether there's still tea.",
               "bank": [
-                "Il reste",
-                "Y a encore",
+                "Bonjour,",
+                "il reste",
+                "y a encore",
                 "du thé ?",
                 "de la thé ?",
                 "des thé ?"
               ],
               "accepted": [
                 [
-                  "Il reste",
+                  "Bonjour,",
+                  "il reste",
                   "du thé ?"
                 ],
                 [
-                  "Y a encore",
+                  "Bonjour,",
+                  "y a encore",
                   "du thé ?"
                 ]
               ],
-              "model": "Il reste du thé ?"
+              "model": "Bonjour, il reste du thé ?"
             },
             {
               "type": "comprehend",
@@ -1887,7 +1903,7 @@
                 "A tea"
               ],
               "correct": 0,
-              "miss": "Reread: « Pour vous, un café ? »."
+              "miss": "Reread: « Pour vous, un café ? »"
             }
           ],
           "followUp": "Oui, il reste du thé. Voilà !",
@@ -1950,7 +1966,7 @@
                 "Tea"
               ],
               "correct": 0,
-              "miss": "Reread: « Plus de café ce matin. »."
+              "miss": "Reread: « Plus de café ce matin. »"
             },
             {
               "type": "reply",
@@ -1989,7 +2005,7 @@
             },
             {
               "speaker": "learner",
-              "text": "Oui, un ___ thé, s'il vous plaît."
+              "text": "Oui, merci ! Un ___ thé, s'il vous plaît."
             }
           ],
           "drills": [
@@ -2011,7 +2027,8 @@
           ],
           "followUp": "Un grand thé, voilà.",
           "newWords": [
-            "à la place"
+            "à la place",
+            "merci"
           ]
         },
         {
@@ -2044,6 +2061,12 @@
                   "un thé",
                   "à la place,",
                   "s'il vous plaît."
+                ],
+                [
+                  "Bonjour,",
+                  "à la place,",
+                  "un thé",
+                  "s'il vous plaît."
                 ]
               ],
               "model": "Bonjour, un thé à la place, s'il vous plaît."
@@ -2071,7 +2094,7 @@
                 "Coming back later"
               ],
               "correct": 0,
-              "miss": "Reread: « Un thé, quand même ? »."
+              "miss": "Reread: « Un thé, quand même ? »"
             },
             {
               "type": "reply",
@@ -2099,7 +2122,7 @@
         {
           "id": "sit_06_substitute_d04",
           "place": "Texto · Léa",
-          "cue": "Léa, your flatmate, texts you. She says tu to you. Karim has no coffee, and you said no to tea.",
+          "cue": "Léa, your flatmate, texts you. She says tu to you. You've just been to Karim's café.",
           "turns": [
             {
               "speaker": "server",
@@ -2108,7 +2131,7 @@
             },
             {
               "speaker": "learner",
-              "text": "Non. Un thé à la ___ ? Non merci !"
+              "text": "Plus de café ! J'ai pris un thé à la ___."
             }
           ],
           "drills": [
@@ -2120,11 +2143,11 @@
                 "If there's still coffee at Karim's"
               ],
               "correct": 1,
-              "miss": "Reread: « Il reste du café chez Karim ? »."
+              "miss": "Reread: « Il reste du café chez Karim ? »"
             },
             {
               "type": "complete",
-              "prompt": "Tell her what Karim offered.",
+              "prompt": "Tell her what you had instead.",
               "choices": [
                 "plage",
                 "table",
@@ -2140,9 +2163,7 @@
           ],
           "followUp": "Pas de café ? Je reste à la maison !",
           "followUpBy": "Léa",
-          "newWords": [
-            "merci"
-          ]
+          "newWords": []
         },
         {
           "id": "sit_06_substitute_s02",
@@ -2182,22 +2203,6 @@
           ],
           "drills": [
             {
-              "type": "word",
-              "prompt": "What does « à la place » mean here?",
-              "target": "à la place",
-              "choices": [
-                "right here",
-                "at the beach",
-                "instead"
-              ],
-              "correct": 2,
-              "why": [
-                "Right here would be « ici ».",
-                "At the beach would be « à la plage ».",
-                ""
-              ]
-            },
-            {
               "type": "reply",
               "prompt": "You didn't catch it. Ask him to repeat, politely.",
               "bank": [
@@ -2215,6 +2220,22 @@
                 ]
               ],
               "model": "Pardon, vous pouvez répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « à la place » mean here?",
+              "target": "à la place",
+              "choices": [
+                "right here",
+                "at the beach",
+                "instead"
+              ],
+              "correct": 2,
+              "why": [
+                "Right here would be « ici ».",
+                "At the beach would be « à la plage ».",
+                ""
+              ]
             }
           ],
           "followUp": "Plus de thé. Un café à la place ?",
@@ -2223,15 +2244,30 @@
         {
           "id": "sit_06_substitute_d06",
           "place": "Au café",
-          "cue": "Karim, the barista, says vous to you. You wanted a coffee with milk.",
+          "cue": "Karim, the barista, says vous to you. You'd like a tea with milk.",
           "turns": [
             {
               "speaker": "server",
               "name": "Karim",
-              "text": "Pardon, plus de lait ce matin."
+              "text": "Désolé, plus de lait ce matin."
             }
           ],
           "drills": [
+            {
+              "type": "pick",
+              "prompt": "Order a tea without milk. Which reply works?",
+              "choices": [
+                "Très bien, un thé au lait, s'il vous plaît.",
+                "Très bien, un thé sans de lait, s'il vous plaît.",
+                "Très bien, un thé sans lait, s'il vous plaît."
+              ],
+              "correct": 2,
+              "why": [
+                "Good French, but there's no milk left.",
+                "After « sans », no article: « sans lait ».",
+                ""
+              ]
+            },
             {
               "type": "word",
               "prompt": "What does « plus de » mean here?",
@@ -2247,25 +2283,12 @@
                 "",
                 "Only a little would be « un peu de »."
               ]
-            },
-            {
-              "type": "pick",
-              "prompt": "Order a coffee without milk. Which reply works?",
-              "choices": [
-                "Très bien, un café au lait, s'il vous plaît.",
-                "Très bien, un café sans de lait, s'il vous plaît.",
-                "Très bien, un café sans lait, s'il vous plaît."
-              ],
-              "correct": 2,
-              "why": [
-                "Good French, but there's no milk left.",
-                "After « sans », no article: « sans lait ».",
-                ""
-              ]
             }
           ],
-          "followUp": "Un café sans lait, voilà.",
-          "newWords": []
+          "followUp": "Un thé sans lait, voilà.",
+          "newWords": [
+            "désolé"
+          ]
         },
         {
           "id": "sit_06_substitute_s03",
@@ -2384,7 +2407,7 @@
                 "Coffee"
               ],
               "correct": 0,
-              "miss": "Reread: « Plus de thé chez Karim ! »."
+              "miss": "Reread: « Plus de thé chez Karim ! »"
             }
           ],
           "followUp": "Un café pour toi !",
@@ -2395,35 +2418,35 @@
           "id": "sit_06_substitute_s04",
           "place": "Au café · phrase seule",
           "standalone": "Transformer",
-          "cue": "Karim, the barista, says vous to you. He offers you a tea instead. You change your mind and accept.",
+          "cue": "Léa, who says tu to you, is ordering for you, and you asked her for a tea instead. Now ask Karim, the barista, yourself. He says vous to you.",
           "turns": [
             {
               "speaker": "learner",
-              "text": "Non merci, pas de thé pour moi aujourd'hui.",
+              "text": "Plus de café ? Un thé à la place, s'il te plaît.",
               "source": true
             }
           ],
           "drills": [
             {
               "type": "reply",
-              "prompt": "Accept the tea instead, politely.",
+              "prompt": "Ask Karim for the same thing, politely.",
               "bank": [
-                "Oui,",
-                "un thé",
+                "Plus de café ?",
+                "Un thé",
                 "à la place,",
                 "s'il vous plaît.",
-                "à le place,",
+                "s'il te plaît.",
                 "à la plage,"
               ],
               "accepted": [
                 [
-                  "Oui,",
-                  "un thé",
+                  "Plus de café ?",
+                  "Un thé",
                   "à la place,",
                   "s'il vous plaît."
                 ]
               ],
-              "model": "Oui, un thé à la place, s'il vous plaît."
+              "model": "Plus de café ? Un thé à la place, s'il vous plaît."
             }
           ],
           "newWords": []
@@ -2436,7 +2459,7 @@
             {
               "speaker": "server",
               "name": "Karim",
-              "text": "Plus de café, pardon ! Un thé ?"
+              "text": "Plus de café, désolé ! Un thé ?"
             },
             {
               "speaker": "learner",
@@ -2455,8 +2478,8 @@
               "correct": 0,
               "why": [
                 "",
-                "« Place » is feminine: « à la place ».",
-                "« Au » means « à + le », for masculine nouns."
+                "Not French: « à le » always contracts to « au ».",
+                "« Au » (à + le) goes with masculine nouns; « place » is feminine."
               ]
             }
           ],
@@ -2475,7 +2498,7 @@
             {
               "speaker": "server",
               "name": "Karim",
-              "text": "Plus de thé, pardon ! Un café ?"
+              "text": "Plus de thé, désolé ! Un café ?"
             }
           ],
           "drills": [
@@ -2499,17 +2522,23 @@
               "model": "Non, merci quand même !"
             },
             {
-              "type": "comprehend",
-              "prompt": "What does Karim offer?",
+              "type": "word",
+              "prompt": "What does « désolé » mean here?",
+              "target": "désolé",
               "choices": [
-                "A coffee",
-                "A tea"
+                "ready",
+                "sure",
+                "sorry"
               ],
-              "correct": 0,
-              "miss": "Reread: « Un café ? »."
+              "correct": 2,
+              "why": [
+                "Ready would be « prêt ».",
+                "Sure would be « sûr ».",
+                ""
+              ]
             }
           ],
-          "followUp": "Très bien. À demain !",
+          "followUp": "Très bien, pas de problème !",
           "newWords": []
         },
         {
