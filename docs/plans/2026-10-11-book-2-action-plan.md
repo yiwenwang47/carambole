@@ -4,6 +4,8 @@
 
 **Status:** Full-book plan revised 2026-10-11. User feedback: a hidden transcript makes the drills too hard. The pilot now shows the French exchange from the start; the revised Test book was installed and launched on the connected iPhone 18 Pro. Further difficulty feedback is pending. Full-book implementation has not started.
 
+**New-session handoff:** [Book 2 handoff](2026-10-11-book-2-handoff.md).
+
 ## Difficulty pilot checkpoint (2026-10-11)
 
 The user worries the planned conversation book may be too easy and requested a phone pilot in the existing `wen.carambole.testbook` app. This probe stays in `carambole/Debug/` and does not change either production book's content, schedule, or data. It is a connected four-scene café story: an unavailable ingredient, a food wait longer than the train window, a takeaway misunderstanding, and a broken card terminal. Each scene requires listening inference followed by a constructed French reply; the third requires both correcting the assumption and asking for a box.
