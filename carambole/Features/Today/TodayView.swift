@@ -147,7 +147,7 @@ struct TodayView: View {
                 Text(Self.dateText(Date()))
                     .uppercaseLabel()
                 NavigationLink {
-                    HistoryView()
+                    HistoryView(book: viewModel.descriptor)
                 } label: {
                     Text("Historique →")
                         .uppercaseLabel(AppColor.ink)

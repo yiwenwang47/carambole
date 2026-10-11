@@ -46,47 +46,67 @@ private extension Int {
     }
 }
 
-/// Observable store backing `StudySettings` in `UserDefaults`. The `UserDefaults`
-/// instance is injected so tests (and the self-test) can run against an isolated
-/// suite. Writes are clamped via `StudySettings.init`, so persisted values are
-/// always in range.
+/// Observable store backing `StudySettings` in `UserDefaults`, scoped to ONE
+/// book. *Fondations* keeps the original `settings.*` keys; another book reads
+/// and writes `settings.<scope>.*` (e.g. `settings.book_fr_en_situation.newPerDay`),
+/// so changing one book's pacing or audio never changes the other's. The
+/// `UserDefaults` instance is injected so tests (and the self-test) can run
+/// against an isolated suite. Writes are clamped via `StudySettings.init`, so
+/// persisted values are always in range.
 final class StudySettingsStore: ObservableObject {
-    private enum Key {
-        static let newPerDay = "settings.newPerDay"
-        static let reviewTarget = "settings.reviewTarget"
-        static let reviewRoundSize = "settings.reviewRoundSize"
-        /// Also read by `DrillView` via `@AppStorage` under this exact literal — keep
-        /// the two in sync if it ever changes.
-        static let autoSpeak = "settings.autoSpeak"
+    /// Setting names; `key(_:)` adds the book scope.
+    private enum Name {
+        static let newPerDay = "newPerDay"
+        static let reviewTarget = "reviewTarget"
+        static let reviewRoundSize = "reviewRoundSize"
+        static let autoSpeak = "autoSpeak"
     }
 
     private let defaults: UserDefaults
+    /// nil → `settings.<name>` (Book 1); else `settings.<scope>.<name>`.
+    let scope: String?
+
+    /// The full UserDefaults key for a setting in this book's scope.
+    func key(_ name: String) -> String {
+        Self.key(name, scope: scope)
+    }
+
+    private static func key(_ name: String, scope: String?) -> String {
+        if let scope { return "settings.\(scope).\(name)" }
+        return "settings.\(name)"
+    }
 
     @Published var settings: StudySettings {
         didSet {
-            defaults.set(settings.newPerDay, forKey: Key.newPerDay)
-            defaults.set(settings.reviewTarget, forKey: Key.reviewTarget)
-            defaults.set(settings.reviewRoundSize, forKey: Key.reviewRoundSize)
+            defaults.set(settings.newPerDay, forKey: key(Name.newPerDay))
+            defaults.set(settings.reviewTarget, forKey: key(Name.reviewTarget))
+            defaults.set(settings.reviewRoundSize, forKey: key(Name.reviewRoundSize))
         }
     }
 
-    /// Read aloud the model French sentence automatically on a correct answer.
-    /// Default OFF — the learner opts in. The drill always offers a manual 🔊
-    /// regardless. Persisted under `Key.autoSpeak` (shared with `DrillView`).
+    /// Read aloud automatically on a correct answer (Book 1: the model sentence;
+    /// Book 2: the server's follow-up line). Default OFF — the learner opts in;
+    /// the manual play buttons are always there. Drill views receive this value
+    /// from the selected book's store; nothing reads the key directly.
     @Published var autoSpeak: Bool {
-        didSet { defaults.set(autoSpeak, forKey: Key.autoSpeak) }
+        didSet { defaults.set(autoSpeak, forKey: key(Name.autoSpeak)) }
     }
 
-    init(defaults: UserDefaults = .standard) {
+    convenience init(book: BookDescriptor, defaults: UserDefaults = .standard) {
+        self.init(defaults: defaults, scope: book.settingsScope)
+    }
+
+    init(defaults: UserDefaults = .standard, scope: String? = nil) {
         self.defaults = defaults
-        let newPerDay = defaults.object(forKey: Key.newPerDay) as? Int
+        self.scope = scope
+        let newPerDay = defaults.object(forKey: Self.key(Name.newPerDay, scope: scope)) as? Int
             ?? StudySettings.default.newPerDay
-        let reviewTarget = defaults.object(forKey: Key.reviewTarget) as? Int
+        let reviewTarget = defaults.object(forKey: Self.key(Name.reviewTarget, scope: scope)) as? Int
             ?? StudySettings.default.reviewTarget
-        let reviewRoundSize = defaults.object(forKey: Key.reviewRoundSize) as? Int
+        let reviewRoundSize = defaults.object(forKey: Self.key(Name.reviewRoundSize, scope: scope)) as? Int
             ?? StudySettings.default.reviewRoundSize
         // Absent key → OFF by default; opt-in only.
-        self.autoSpeak = defaults.object(forKey: Key.autoSpeak) as? Bool ?? false
+        self.autoSpeak = defaults.object(forKey: Self.key(Name.autoSpeak, scope: scope)) as? Bool ?? false
         // Clamps via init; persists clamped values back through didSet.
         self.settings = StudySettings(newPerDay: newPerDay, reviewTarget: reviewTarget, reviewRoundSize: reviewRoundSize)
     }
@@ -134,6 +154,28 @@ extension StudySettingsStore {
         store.settings = StudySettings(newPerDay: 99, reviewTarget: 0, reviewRoundSize: 7)
         let reloadedClamped = StudySettingsStore(defaults: suite)
         assert(reloadedClamped.settings == StudySettings(newPerDay: 20, reviewTarget: 40, reviewRoundSize: 10), "persisted values stay clamped/snapped")
+
+        // Book scope: Book 1 keeps the legacy `settings.*` keys; Book 2 writes
+        // `settings.book_fr_en_situation.*` and never touches Book 1's values.
+        suite.removePersistentDomain(forName: suiteName)
+        let book1 = StudySettingsStore(book: BookCatalog.fondations, defaults: suite)
+        let book2 = StudySettingsStore(book: BookCatalog.enSituation, defaults: suite)
+        assert(book1.key("newPerDay") == "settings.newPerDay", "Book 1 keys unchanged")
+        assert(book2.key("autoSpeak") == "settings.book_fr_en_situation.autoSpeak", "Book 2 scoped key")
+        book1.settings = StudySettings(newPerDay: 12, reviewTarget: 100, reviewRoundSize: 20)
+        book2.settings = StudySettings(newPerDay: 5, reviewTarget: 300, reviewRoundSize: 10)
+        book2.autoSpeak = true
+        let book1Again = StudySettingsStore(book: BookCatalog.fondations, defaults: suite)
+        let book2Again = StudySettingsStore(book: BookCatalog.enSituation, defaults: suite)
+        assert(book1Again.settings == StudySettings(newPerDay: 12, reviewTarget: 100, reviewRoundSize: 20),
+               "Book 2 writes leave Book 1 settings alone")
+        assert(book1Again.autoSpeak == false, "Book 2 auto-speak leaves Book 1 off")
+        assert(book2Again.settings == StudySettings(newPerDay: 5, reviewTarget: 300, reviewRoundSize: 10),
+               "Book 2 settings round-trip")
+        assert(book2Again.autoSpeak == true, "Book 2 auto-speak round-trips")
+        assert(suite.object(forKey: "settings.book_fr_en_situation.reviewRoundSize") as? Int == 10,
+               "Book 2 uses the documented key")
+        assert(suite.object(forKey: "settings.autoSpeak") == nil, "Book 2 never writes Book 1's key")
 
         suite.removePersistentDomain(forName: suiteName)
     }

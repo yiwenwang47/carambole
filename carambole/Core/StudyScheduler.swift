@@ -31,6 +31,14 @@ struct StudyScheduler {
         return due + overflow.prefix(target - due.count)
     }
 
+    /// Overflow candidates for ONE book: keep the soonest-due order, drop other
+    /// books' IDs, THEN cap. Filtering after a cap let another book's rows use up
+    /// the limit and starve the selected book (action plan, review focus 1).
+    static func scopedOverflow(_ orderedIDs: [String], bookIDs: Set<String>, limit: Int) -> [String] {
+        guard limit > 0 else { return [] }
+        return Array(orderedIDs.lazy.filter { bookIDs.contains($0) }.prefix(limit))
+    }
+
     /// A module is complete when every one of its elements is in the `satisfied` set
     /// the caller passes (under FSRS that's the graduated set, `fetchGraduatedElementIDs`).
     static func isModuleComplete(_ module: CourseModule, satisfied: Set<String>) -> Bool {
@@ -102,6 +110,19 @@ extension StudyScheduler {
         // A fresh module with no progress still waits for its predecessor to complete.
         assert(!unlockedModuleIDs(book, satisfied: ["a"]).contains("m2"),
                "an untouched module stays locked until its predecessor is complete")
+
+        // Overflow is scoped BEFORE the cap: 300 soonest-due Book 1 rows ahead of
+        // Book 2's rows must not use up a limit of 5 for Book 2.
+        let book1Rows = (0..<300).map { "el_\($0)" }
+        let mixed = book1Rows + ["sit_06_order", "el_x", "sit_06_size", "sit_06_pay"]
+        let book2 = Set(["sit_06_order", "sit_06_size", "sit_06_pay", "sit_06_usual"])
+        assert(scopedOverflow(mixed, bookIDs: book2, limit: 5) == ["sit_06_order", "sit_06_size", "sit_06_pay"],
+               "other book's IDs never consume the overflow limit")
+        assert(scopedOverflow(mixed, bookIDs: book2, limit: 2) == ["sit_06_order", "sit_06_size"],
+               "cap applies after the filter, order kept")
+        assert(scopedOverflow(mixed, bookIDs: Set(book1Rows), limit: 3) == ["el_0", "el_1", "el_2"],
+               "Book 1 overflow unchanged")
+        assert(scopedOverflow(mixed, bookIDs: book2, limit: 0).isEmpty, "limit 0 → empty")
     }
 }
 #endif

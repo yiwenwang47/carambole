@@ -10,7 +10,8 @@
 //  Actions: `openBook` / `closeBook` (library ⇄ book), `openModules` /
 //  `closeModules` and `openToday` / `closeToday` (push / pop a page over the
 //  book), `openSettings` / `closeSettings` (sheet), `startReview` /
-//  `closeSession` (full-screen drill), `nextPalette`.
+//  `closeSession` (full-screen drill), `nextPalette`, `openSituationBook`
+//  (push *En situation*), `startLearn` (Apprendre on the open book).
 //
 
 #if DEBUG
@@ -20,10 +21,24 @@ enum DemoRemote {
     enum Action: String, CaseIterable {
         case openBook, closeBook, openModules, closeModules, openToday, closeToday
         case openSettings, closeSettings, startReview, closeSession, nextPalette
+        /// Book 2: push *En situation* from the shelf; start an Apprendre session.
+        case openSituationBook, startLearn
         var notification: Notification.Name { Notification.Name("cb.demo.\(rawValue)") }
     }
 
     private static var started = false
+    private static var launchStartTaken = false
+
+    /// Launch flags `CB_OPEN_BOOK=<book id>` (push that book from the shelf) and
+    /// `CB_START=learn|review` (open a session once it has loaded). True once,
+    /// for the book that `CB_OPEN_BOOK` names (default *Fondations*).
+    static func takeLaunchStart(bookID: String) -> Bool {
+        let env = ProcessInfo.processInfo.environment
+        guard env["CB_START"] != nil, !launchStartTaken,
+              (env["CB_OPEN_BOOK"] ?? BookCatalog.fondations.id) == bookID else { return false }
+        launchStartTaken = true
+        return true
+    }
 
     /// Forwards each Darwin notification to the in-process `NotificationCenter`
     /// on the main queue, where the views listen.

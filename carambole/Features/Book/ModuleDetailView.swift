@@ -68,7 +68,7 @@ struct ModuleDetailView: View {
         // buckets, ring and lock state are current.
         .onAppear { viewModel.refresh() }
         .fullScreenCover(item: $session, onDismiss: { viewModel.refresh() }) { s in
-            DrillSessionView(title: module.title, ruleNote: module.ruleNote,
+            StudySessionView(viewModel: viewModel, title: module.title, ruleNote: module.ruleNote,
                              elements: s.elements, mode: .learn, moduleNumber: module.sortOrder) {
                 session = nil
             }

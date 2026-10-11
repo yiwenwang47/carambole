@@ -24,8 +24,12 @@ struct GrammarElement: Identifiable, Equatable {
     let label: String
     /// One-to-two sentence English rule note shown when learning this element.
     let ruleNote: String
-    /// ≥5 interchangeable example sentences.
+    /// ≥5 interchangeable example sentences (*Fondations*). Empty for a
+    /// situation element.
     var examples: [Exercise]
+    /// *En situation*: the move's short dialogues and standalone drills, in
+    /// authored order (`d01 d02 s01 …`). Empty for a grammar element.
+    var items: [SituationItem] = []
 }
 
 /// The unlock unit. 20 elements. Module N+1 unlocks when module N is complete
@@ -49,6 +53,11 @@ struct Book: Identifiable, Equatable {
     let title: String
     let sortOrder: Int
     var modules: [CourseModule]
+    /// Which drill loop serves this book.
+    var kind: BookKind = .grammar
+    /// *En situation* word list: normalised French word or set phrase → gloss.
+    /// Empty for *Fondations*.
+    var words: [String: SituationWord] = [:]
 
     /// All elements across every module, in module → element order.
     var allElements: [GrammarElement] { modules.flatMap(\.elements) }

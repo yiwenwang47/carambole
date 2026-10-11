@@ -18,7 +18,10 @@ enum ModuleState {
 }
 
 final class BookViewModel: ObservableObject {
-    @Published var book: Book = .sample
+    /// Which book this model drives. Every count, queue and setting below is
+    /// scoped to this book's element IDs and settings store.
+    let descriptor: BookDescriptor
+    @Published var book: Book
 
     /// Elements due for review right now — drives "Y due".
     @Published var dueCount: Int = 0
@@ -48,16 +51,21 @@ final class BookViewModel: ObservableObject {
 
     let settingsStore: StudySettingsStore
 
-    init(settingsStore: StudySettingsStore = StudySettingsStore()) {
-        self.settingsStore = settingsStore
+    init(book descriptor: BookDescriptor = BookCatalog.fondations,
+         settingsStore: StudySettingsStore? = nil) {
+        self.descriptor = descriptor
+        self.book = Book(id: descriptor.id, title: descriptor.title, sortOrder: 0, modules: [],
+                         kind: descriptor.kind)
+        self.settingsStore = settingsStore ?? StudySettingsStore(book: descriptor)
     }
 
     // MARK: - Loading
 
     /// Load content from the bundle (off-main) then publish + refresh on main.
     func load() {
+        let descriptor = self.descriptor
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-            let book = ContentLoader.loadBook()
+            let book = ContentLoader.loadBook(descriptor)
             DispatchQueue.main.async {
                 self?.book = book
                 self?.refresh()
@@ -171,7 +179,9 @@ final class BookViewModel: ObservableObject {
         let dueIDs = Set(DataManager.shared.fetchDueElementIDs(asOf: now))
         let due = book.allElements.filter { dueIDs.contains($0.id) }
         let target = settingsStore.settings.reviewTarget
-        let overflowIDs = DataManager.shared.fetchOverflowElementIDs(asOf: now, limit: max(0, target - due.count))
+        // Scoped to this book BEFORE the cap — another book's rows can't use it up.
+        let overflowIDs = DataManager.shared.fetchOverflowElementIDs(
+            asOf: now, limit: max(0, target - due.count), within: Set(byID.keys))
         let overflow = overflowIDs.compactMap { byID[$0] }
         let queue = StudyScheduler.reviewQueue(due: due, overflow: overflow, target: target)
 
