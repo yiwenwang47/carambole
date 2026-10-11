@@ -3,7 +3,7 @@
 
 from __future__ import annotations
 
-import json
+import argparse
 from pathlib import Path
 import sys
 
@@ -12,7 +12,8 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools"))
 from deep_lint import build_checker, canary, flags_for  # noqa: E402
 
-MODULE = ROOT / "carambole/Resources/Situations/06_au_cafe.json"
+sys.path.append(str(ROOT / "tools/situations"))
+from sitbook import load_manifest_modules, module_number  # noqa: E402
 
 
 def correct_surfaces(item: dict) -> list[str]:
@@ -46,23 +47,30 @@ def correct_surfaces(item: dict) -> list[str]:
 
 
 def main() -> int:
-    module = json.loads(MODULE.read_text(encoding="utf-8"))
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--module", type=int, metavar="NN", help="check one manifest module; default: all")
+    args = parser.parse_args()
+    modules = [m for m in load_manifest_modules()
+               if args.module is None or module_number(m.get("id")) == args.module]
+    if not modules:
+        print(f"module {args.module:02} is not in situations_manifest.json", file=sys.stderr)
+        return 2
     gc, opts = build_checker()
     if not canary(gc, opts):
         print("Grammalecte canary failed", file=sys.stderr)
         return 2
     errors = []
     count = 0
-    for element in module["elements"]:
-        for item in element["items"]:
-            for line in correct_surfaces(item):
-                count += 1
-                for flag in flags_for(gc, opts, line):
-                    if flag["kind"] == "grammar":
-                        errors.append(f"{item['id']}: {flag['rule_id']}: « {line} » — {flag['message']}")
+    items = [x for module in modules for element in module["elements"] for x in element["items"]]
+    for item in items:
+        for line in correct_surfaces(item):
+            count += 1
+            for flag in flags_for(gc, opts, line):
+                if flag["kind"] == "grammar":
+                    errors.append(f"{item['id']}: {flag['rule_id']}: « {line} » — {flag['message']}")
     for error in errors:
         print(error)
-    print(f"situation deep lint: {count} rendered lines, {len(errors)} grammar flags")
+    print(f"situation deep lint: {len(modules)} module(s), {count} rendered lines, {len(errors)} grammar flags")
     return 1 if errors else 0
 
 

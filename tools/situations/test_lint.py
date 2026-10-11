@@ -6,6 +6,7 @@ import unittest
 from pathlib import Path
 
 from tools.situations.lint import global_id_errors, lint_content, rendered_surfaces
+from tools.situations.sitbook import item_ranks
 
 
 def fixture():
@@ -283,6 +284,98 @@ class SituationLintTests(unittest.TestCase):
         item = self.module["elements"][0]["items"][2]
         item["drills"][0]["model"] = "Je suis arrivée."
         self.assert_bad("gendered first-person")
+
+
+    # Book-wide word order across modules.
+
+    def renumber(self, number):
+        """Return a copy of the fixture module as module `number`."""
+        module = copy.deepcopy(self.module)
+        module["id"] = f"sit_{number:02}"
+        for element in module["elements"]:
+            element["id"] = element["id"].replace("sit_06", module["id"])
+            for item in element["items"]:
+                item["id"] = item["id"].replace("sit_06", module["id"])
+        return module
+
+    def test_earlier_module_cannot_use_word_taught_in_later_module(self):
+        later = self.renumber(5)
+        self.words["words"][3]["firstSeen"] = "sit_05_order_d01"
+        module_03 = self.renumber(3)
+        ranks = item_ranks([module_03, later])
+        errors = "\n".join(lint_content(module_03, self.words, self.audio, draft=True,
+                                         check_audio=False, book_ranks=ranks))
+        self.assertIn("sit_03_order_d01: 'comme d'habitude' used before firstSeen 'sit_05_order_d01'", errors)
+        # Without ranks the module number alone orders it.
+        errors = "\n".join(lint_content(module_03, self.words, self.audio, draft=True, check_audio=False))
+        self.assertIn("used before firstSeen 'sit_05_order_d01'", errors)
+
+    def test_later_module_may_use_and_relist_earlier_word(self):
+        self.words["words"][3]["firstSeen"] = "sit_01_order_d01"
+        earlier = self.renumber(1)
+        ranks = item_ranks([earlier, self.module])
+        self.assertEqual([], lint_content(self.module, self.words, self.audio, draft=True,
+                                          book_ranks=ranks))
+
+    def test_standalone_cannot_use_word_from_later_module(self):
+        self.module["elements"][0]["items"][2]["drills"][0]["bank"].append("tard")
+        self.words["words"].append({"fr": "tard", "en": "late", "spoken": False,
+                                    "audio": "sitw_tard", "firstSeen": "sit_09_order_d01"})
+        errors = "\n".join(lint_content(self.module, self.words, self.audio, draft=True, check_audio=False))
+        self.assertIn("sit_06_order_s01: standalone uses 'tard' before it is taught", errors)
+
+    def test_recurrence_gate_only_in_teaching_module(self):
+        self.words["words"][3]["firstSeen"] = "sit_02_order_d01"
+        for item in self.module["elements"][0]["items"][1:]:
+            if "standalone" not in item:
+                item["turns"][0]["text"] = "Bonjour, café ?"
+        errors = "\n".join(lint_content(self.module, self.words, self.audio, check_audio=False))
+        self.assertNotIn("needs two later dialogues", errors)
+        self.assertNotIn("needs later Mot", errors)
+
+    def test_book_ranks_order_items_within_same_module_by_element(self):
+        source = self.module["elements"][0]
+        other = copy.deepcopy(source)
+        other["id"] = "sit_06_size"
+        for item in other["items"]:
+            item["id"] = item["id"].replace("_order_", "_size_")
+        self.module["elements"].insert(0, other)
+        # Taught in the second element: the whole first element is earlier.
+        errors = "\n".join(self.errors(draft=True))
+        self.assertIn("sit_06_size_d01: 'comme d'habitude' used before firstSeen 'sit_06_order_d01'", errors)
+
+    def test_stale_ranks_for_linted_module_are_ignored(self):
+        stale = {"sit_06_order_d01": (6, 9, 9)}
+        self.assertEqual([], lint_content(self.module, self.words, self.audio, draft=True,
+                                          book_ranks=stale))
+
+    def test_module_id_range(self):
+        for good in ("sit_01", "sit_25"):
+            module = self.renumber(int(good[-2:]))
+            self.assertNotIn("bad ID", "\n".join(lint_content(module, self.words, self.audio,
+                                                              draft=True, check_audio=False)))
+        module = self.renumber(26)
+        self.assertIn("module: bad ID 'sit_26'",
+                      "\n".join(lint_content(module, self.words, self.audio, draft=True, check_audio=False)))
+
+    def test_cast_alias_and_voice_field(self):
+        turn = self.module["elements"][0]["items"][0]["turns"][0]
+        turn["name"] = "Monsieur Ferrand"
+        self.assert_bad("use canonical cast name 'M. Ferrand'")
+        turn["name"] = "Karim"
+        turn["voice"] = "female"
+        self.assert_bad("voice is only 'male' or 'female' on an unnamed server turn")
+        del turn["name"]
+        self.assertNotIn("voice is only", "\n".join(self.errors(draft=True)))
+
+    def test_other_channel_uses_module_home_place(self):
+        for item in self.module["elements"][0]["items"]:
+            if "standalone" not in item:
+                item["place"] = "Sur le palier"
+        self.assert_bad("other-channel or social")
+        self.module["elements"][0]["items"][0]["place"] = "Texto · Léa"
+        self.module["elements"][0]["items"][1]["place"] = "Messagerie"
+        self.assertNotIn("other-channel or social", "\n".join(self.errors()))
 
 
 if __name__ == "__main__":

@@ -13,15 +13,23 @@ from pathlib import Path
 import re
 import sys
 
+sys.path.append(str(Path(__file__).resolve().parent))
+from sitbook import (  # noqa: E402
+    CONFIG, MODULE_ID, ROOT, SITUATIONS, item_ranks, load_config,
+    load_manifest_modules, module_number, read_json,
+)
 
-ROOT = Path(__file__).resolve().parents[2]
-SITUATIONS = ROOT / "carambole/Resources/Situations"
 AUDIO = ROOT / "carambole/Resources/Audio"
 KINDS = {"comprehend", "reply", "pick", "complete", "fix", "word"}
 STANDALONE = {"Construire": "reply", "Choisir le ton": "pick",
               "Corriger": "fix", "Transformer": "reply", "Mot en retour": "complete"}
 SPOKEN = {"je sais pas", "t'as", "t'es", "y a", "y a encore", "ouais", "du coup",
           "carrément", "bref", "pas de souci", "top", "ça marche", "on"}
+# Canonical cast `name` strings; the audio CAST map uses the same keys.
+SOCIAL_CAST = {"Léa", "Théo", "Inès", "M. Ferrand", "Mme Dumas"}
+CAST_ALIASES = {"Monsieur Ferrand": "M. Ferrand", "Madame Dumas": "Mme Dumas",
+                "Ines": "Inès", "Lea": "Léa", "Theo": "Théo"}
+VOICES = {"male", "female"}
 TEXTING = re.compile(r"(?i)(?<!\w)(?:mdr|stp|jsp|slt|svp|ptdr|bjr)(?!\w)")
 GENDERED_SELF = re.compile(r"\b(?:je\s+(?:suis|me sens|serai)|j['’](?:étais|ai))\s+"
                           r"(?:\w+\s+){0,3}(?:désolé(?:e)?s?|prêt(?:e)?s?|"
@@ -149,13 +157,21 @@ def buildable(answer: list[str], bank: list[str]) -> bool:
     return True
 
 
-def lint_content(module: dict, word_data: dict, audio_dir: Path = AUDIO,
-                 *, check_audio: bool = True, draft: bool = False,
-                 other_ids: set[str] | None = None) -> list[str]:
+def _hay(lines: list[str]) -> str:
+    """Token-joined lines; a phrase matches when `_needle(phrase)` is a substring."""
+    return "\n".join(" " + " ".join(tokens(line)) + " " for line in lines)
+
+
+def _needle(phrase: str) -> str:
+    parts = tokens(phrase)
+    return " " + " ".join(parts) + " " if parts else ""
+
+
+def word_errors(word_data: dict, audio_dir: Path = AUDIO, *, check_audio: bool = True) -> list[str]:
+    """Checks on the book-wide words file itself (run once per lint)."""
     errors: list[str] = []
     word_entries = word_data.get("words", [])
-    word_by_key = {norm(w.get("fr", "")): w for w in word_entries}
-    keys = set(word_by_key)
+    keys = {norm(w.get("fr", "")) for w in word_entries}
     if len(keys) != len(word_entries):
         errors.append("words: duplicate or empty French gloss key")
     for audio_key, count in Counter(w.get("audio") for w in word_entries if w.get("audio")).items():
@@ -171,18 +187,38 @@ def lint_content(module: dict, word_data: dict, audio_dir: Path = AUDIO,
             errors.append(f"words: spoken entry '{key}' must be marked spoken")
         if check_audio and word.get("audio"):
             _audio(errors, audio_dir, word["audio"])
+    return errors
+
+
+def lint_content(module: dict, word_data: dict, audio_dir: Path = AUDIO,
+                 *, check_audio: bool = True, draft: bool = False,
+                 other_ids: set[str] | None = None,
+                 book_ranks: dict[str, tuple] | None = None,
+                 check_words: bool = True) -> list[str]:
+    """Lint one module against the book-wide words file.
+
+    `book_ranks` maps the other modules' item IDs to their book position
+    (`sitbook.item_ranks`). Without it, a firstSeen in another module is
+    ordered by its module number alone.
+    """
+    errors: list[str] = word_errors(word_data, audio_dir, check_audio=check_audio) if check_words else []
+    word_entries = word_data.get("words", [])
+    word_by_key = {norm(w.get("fr", "")): w for w in word_entries}
+    keys = set(word_by_key)
 
     module_id = module.get("id", "")
-    if not re.fullmatch(r"sit_\d{2}", module_id):
+    if not MODULE_ID.fullmatch(module_id):
         errors.append(f"module: bad ID '{module_id}'")
     if not all(module.get(field) for field in ("title", "arc", "goal")):
         errors.append("module: missing title, arc, or goal")
     seen = set(other_ids or ())
-    all_items = []
     introduced: dict[str, list[str]] = {}
     for word in word_entries:
         if word.get("firstSeen"):
             introduced.setdefault(word["firstSeen"], []).append(norm(word.get("fr", "")))
+    home_place = Counter(x.get("place", "") for element in module.get("elements", [])
+                         for x in element.get("items", []) if "standalone" not in x).most_common(1)
+    home_place = home_place[0][0] if home_place else ""
     for element in module.get("elements", []):
         eid = element.get("id", "")
         if not re.fullmatch(re.escape(module_id) + r"_[a-z]+", eid):
@@ -201,12 +237,10 @@ def lint_content(module: dict, word_data: dict, audio_dir: Path = AUDIO,
         expected = ([False, False, True] * 5)[:len(items)]
         if pattern != expected or (not draft and len(items) != 15):
             errors.append(f"{eid}: expected D D S session order")
-        item_positions = {x.get("id"): n for n, x in enumerate(items)}
         boundary_types = []
         all_dialogue_kinds = []
         for item in items:
             iid = item.get("id", "")
-            all_items.append(item)
             solo = "standalone" in item
             suffix = r"s\d{2}" if solo else r"d\d{2}"
             if not re.fullmatch(re.escape(eid) + "_" + suffix, iid):
@@ -247,6 +281,11 @@ def lint_content(module: dict, word_data: dict, audio_dir: Path = AUDIO,
             for index, turn in enumerate(turns):
                 if turn.get("speaker") not in {"server", "learner"} or not turn.get("text"):
                     errors.append(f"{iid}: bad turn")
+                if turn.get("name") in CAST_ALIASES:
+                    errors.append(f"{iid}: use canonical cast name '{CAST_ALIASES[turn['name']]}'")
+                if "voice" in turn and (turn["voice"] not in VOICES or turn.get("name")
+                                        or turn.get("speaker") != "server"):
+                    errors.append(f"{iid}: voice is only 'male' or 'female' on an unnamed server turn")
                 count = len(tokens(turn.get("text", "")))
                 if not solo and count > 10:
                     errors.append(f"{iid}: dialogue line over 10 words")
@@ -306,10 +345,6 @@ def lint_content(module: dict, word_data: dict, audio_dir: Path = AUDIO,
                 for line in solo_surfaces:
                     for missing in set(unglossed(line, keys)):
                         errors.append(f"{iid}: standalone untaught word or missing gloss '{missing}'")
-                    for key, entry in word_by_key.items():
-                        first = entry.get("firstSeen")
-                        if first in item_positions and item_positions[first] >= item_positions[iid] and contains_phrase(line, key):
-                            errors.append(f"{iid}: standalone uses '{key}' before it is taught")
             for line in tappable_lines(item):
                 for missing in set(unglossed(line, keys)):
                     errors.append(f"{iid}: missing gloss '{missing}'")
@@ -329,45 +364,64 @@ def lint_content(module: dict, word_data: dict, audio_dir: Path = AUDIO,
                                             " ".join(d.get("prompt", "") for d in x.get("drills", [])) + " " +
                                             " ".join(exposure_lines(x))) for x in dialogue):
                 errors.append(f"{eid}: needs a clarification or repetition dialogue")
-            social_cast = {"Léa", "Théo", "Inès", "Monsieur Ferrand", "Madame Dumas"}
-            other = sum(x.get("place", "") != "Au café" or any(
-                t.get("name") in social_cast for t in x.get("turns", [])) for x in dialogue)
+            other = sum(x.get("place", "") != home_place or any(
+                t.get("name") in SOCIAL_CAST for t in x.get("turns", [])) for x in dialogue)
             if other < 2:
                 errors.append(f"{eid}: needs 2 other-channel or social dialogues")
 
-    positions = {x.get("id"): i for i, x in enumerate(all_items)}
-    for item in all_items:
-        if "standalone" not in item:
-            continue
-        for word in word_entries:
-            first = word.get("firstSeen")
-            if first in positions and positions[first] >= positions[item.get("id")]:
-                key = norm(word.get("fr", ""))
-                if any(contains_phrase(line, key) for line in tappable_lines(item)):
-                    errors.append(f"{item.get('id')}: standalone uses '{key}' before it is taught")
+    errors += _order_errors(module, word_entries, book_ranks, draft)
+    return sorted(set(errors))
+
+
+def _order_errors(module: dict, word_entries: list[dict],
+                  book_ranks: dict[str, tuple] | None, draft: bool) -> list[str]:
+    """Book-wide "no word before its firstSeen" and in-module recurrence gates."""
+    errors: list[str] = []
+    number = module_number(module.get("id")) or 0
+    all_items = [x for element in module.get("elements", []) for x in element.get("items", [])]
+    ranks = {iid: rank for iid, rank in (book_ranks or {}).items() if rank[0] != number}
+    positions = {}
+    for index, item in enumerate(all_items):
+        positions.setdefault(item.get("id"), index)
+    for iid, rank in item_ranks([module]).items():
+        ranks.setdefault(iid, rank)
+    exposure = [_hay(exposure_lines(x)) for x in all_items]
+    tappable = [_hay(tappable_lines(x)) if "standalone" in x else "" for x in all_items]
     for word in word_entries:
         first = word.get("firstSeen")
-        if first not in positions:
+        if not first:
             continue
         key = norm(word.get("fr", ""))
-        origin = positions[first]
-        for item in all_items[:origin]:
-            if any(contains_phrase(line, key) for line in exposure_lines(item)):
+        needle = _needle(key)
+        if not needle:
+            continue
+        origin = ranks.get(first)
+        if origin is None:
+            first_module = module_number(first)
+            if first_module is None or first_module == number:
+                continue  # unknown item: global_id_errors reports it
+            origin = (first_module,)
+        for index, item in enumerate(all_items):
+            rank = ranks[item.get("id")]
+            if rank < origin and needle in exposure[index]:
                 errors.append(f"{item.get('id')}: '{key}' used before firstSeen '{first}'")
-        later = all_items[origin + 1:]
+            if "standalone" in item and rank <= origin and needle in tappable[index]:
+                errors.append(f"{item.get('id')}: standalone uses '{key}' before it is taught")
+        if draft or first not in positions:
+            continue
+        later = all_items[positions[first] + 1:]
         later_dialogues = [x for x in later if "standalone" not in x and
                            any(contains_phrase(line, key) for line in exposure_lines(x))]
-        if not draft and len(later_dialogues) < 2:
+        if len(later_dialogues) < 2:
             errors.append(f"{first}: '{key}' needs two later dialogues")
-        if not draft and not any(
+        if not any(
             any(d.get("type") == "word" and norm(d.get("target", "")) == key or
                 x.get("standalone") == "Mot en retour" and d.get("type") == "complete" and
                 isinstance(d.get("correct"), int) and 0 <= d["correct"] < len(d.get("choices", [])) and
                 norm(d["choices"][d["correct"]]) == key for d in x.get("drills", []))
             for x in later):
             errors.append(f"{first}: '{key}' needs later Mot or Mot en retour")
-
-    return sorted(set(errors))
+    return errors
 
 
 def _audio(errors: list[str], directory: Path, key: str) -> None:
@@ -438,41 +492,59 @@ def book_one_ids() -> set[str]:
     return ids
 
 
+def _fill_fragment(module: dict) -> dict:
+    """Give a draft fragment (only `elements`) its module header from modules.json."""
+    if "id" in module or "elements" not in module:
+        return module
+    first = next((e.get("id", "") for e in module["elements"]), "")
+    number = module_number(first)
+    header = {"id": f"sit_{number:02}" if number else "sit_06", "title": "Au café",
+              "arc": "Le quartier", "goal": "Use French at the café."}
+    if number and CONFIG.is_file():
+        entry = load_config().get(f"{number:02}")
+        if entry:
+            header = {field: entry[field] for field in ("id", "title", "arc", "goal")}
+    return {**header, **module}
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--no-audio", action="store_true", help="authoring pass before TTS")
     parser.add_argument("--draft", action="store_true", help="allow incomplete element counts and word recurrence")
-    parser.add_argument("--module", type=Path, help="lint one module; default: manifest modules")
+    parser.add_argument("--module", type=Path, help="lint one module file (in book context); default: all manifest modules")
     parser.add_argument("--words", type=Path, help="words file; default: production words.json")
     args = parser.parse_args()
-    manifest_path = SITUATIONS / "situations_manifest.json"
-    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest = read_json(SITUATIONS / "situations_manifest.json")
     if manifest.get("book") != "fr_en_situation":
         print("situations_manifest.json: wrong book ID", file=sys.stderr)
         return 1
-    words = json.loads((args.words or SITUATIONS / "words.json").read_text(encoding="utf-8"))
-    files = [args.module] if args.module else [SITUATIONS / f for f in manifest.get("moduleFiles", [])]
-    all_errors = []
-    modules = []
-    used = set()
-    for file in files:
-        module = json.loads(file.read_text(encoding="utf-8"))
-        if args.draft and "id" not in module and "elements" in module:
-            module = {"id": "sit_06", "title": "Au café", "arc": "Le quartier",
-                      "goal": "Use French at the café.", **module}
-        modules.append(module)
+    words = read_json(args.words or SITUATIONS / "words.json")
+    book = load_manifest_modules()
+    if args.module:
+        module = read_json(args.module)
+        if args.draft:
+            module = _fill_fragment(module)
+        targets = [module]
+        context = [m for m in book if m.get("id") != module.get("id")]
+    else:
+        targets, context = book, []
+    ranks = item_ranks(context + targets)
+    all_errors = word_errors(words, check_audio=not args.no_audio)
+    used: set[str] = set()
+    for module in targets:
         all_errors += lint_content(module, words, check_audio=not args.no_audio,
-                                   draft=args.draft, other_ids=used)
+                                   draft=args.draft, other_ids=used,
+                                   book_ranks=ranks, check_words=False)
         used |= {module.get("id")} | {e.get("id") for e in module.get("elements", [])} | {
             x.get("id") for e in module.get("elements", []) for x in e.get("items", [])}
     if not args.draft and not args.module:
-        all_errors += global_id_errors(modules, words, book_one_ids())
+        all_errors += global_id_errors(targets, words, book_one_ids())
     for error in all_errors:
         print(error)
     if all_errors:
         print(f"{len(all_errors)} error(s)", file=sys.stderr)
         return 1
-    print(f"OK: {len(files)} situation module(s)")
+    print(f"OK: {len(targets)} situation module(s)")
     return 0
 
 

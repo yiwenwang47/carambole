@@ -11,16 +11,20 @@ import argparse
 import copy
 import json
 from pathlib import Path
+import sys
 
+sys.path.append(str(Path(__file__).resolve().parent))
+from sitbook import ROOT, SITUATIONS, load_manifest_modules  # noqa: E402
 
-ROOT = Path(__file__).resolve().parents[2]
-MODULE = ROOT / "carambole/Resources/Situations/06_au_cafe.json"
-WORDS = ROOT / "carambole/Resources/Situations/words.json"
+WORDS = SITUATIONS / "words.json"
 OUTPUT = ROOT / "carambole/Debug/testbook_situation.json"
 
 
-def export(module: dict, words: dict, ids: list[str]) -> dict:
-    entries = {item["id"]: (element, item)
+def export(modules: dict | list[dict], words: dict, ids: list[str]) -> dict:
+    """Export nine items (from any manifest modules) in the given D D S order."""
+    if isinstance(modules, dict):
+        modules = [modules]
+    entries = {item["id"]: (element, item) for module in modules
                for element in module["elements"] for item in element["items"]}
     if len(ids) != 9 or len(set(ids)) != 9:
         raise ValueError("review set needs nine distinct item IDs")
@@ -46,12 +50,11 @@ def export(module: dict, words: dict, ids: list[str]) -> dict:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("ids", nargs=9, help="nine item IDs, ordered D D S three times")
+    parser.add_argument("ids", nargs=9, help="nine item IDs from any modules, ordered D D S three times")
     parser.add_argument("--output", type=Path, default=OUTPUT)
     args = parser.parse_args()
-    module = json.loads(MODULE.read_text(encoding="utf-8"))
     words = json.loads(WORDS.read_text(encoding="utf-8"))
-    result = export(module, words, args.ids)
+    result = export(load_manifest_modules(), words, args.ids)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"wrote {len(result['dialogues'])} cards to {args.output}")

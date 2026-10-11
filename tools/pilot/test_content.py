@@ -32,9 +32,9 @@ class DialoguePilotContentTests(unittest.TestCase):
         for d in self.items:
             with self.subTest(d["id"]):
                 solo = "standalone" in d
-                # Pilot IDs (sit_06_cafe_/solo_) or production review-set IDs (sit_06_<move>_dNN/sNN).
+                # Pilot IDs (sit_06_cafe_/solo_) or production review-set IDs (sit_NN_<move>_dNN/sNN).
                 kind = "s" if solo else "d"
-                self.assertRegex(d["id"], rf"^sit_06_({'solo' if solo else 'cafe'}_\w+|[a-z]+_{kind}\d{{2}})$")
+                self.assertRegex(d["id"], rf"^sit_\d{{2}}_({'solo' if solo else 'cafe'}_\w+|[a-z]+_{kind}\d{{2}})$")
                 if solo:
                     self.assertNotIn("followUp", d)
                     self.assertTrue(len(d["turns"]) <= 2)
