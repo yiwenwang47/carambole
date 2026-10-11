@@ -1,0 +1,2681 @@
+{
+  "elements": [
+    {
+      "id": "sit_01_greet",
+      "title": "Saluer",
+      "note": "Use « salut » with people who say tu, and « bonjour » with anyone. Answer « Ça va ? » with « Ça va, merci », then ask back with « Et toi ? » (or « Et vous ? »).",
+      "items": [
+        {
+          "id": "sit_01_greet_d01",
+          "place": "À l'appart",
+          "cue": "Move-in day. Your new flatmate, Léa, opens the door. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Salut ! Ça va ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa ask you?",
+              "choices": [
+                "Who you are",
+                "How you are"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Ça va ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Greet her back, say you're fine, and ask her back.",
+              "bank": [
+                "Salut !",
+                "Ça va.",
+                "Et toi ?",
+                "Et vous ?",
+                "Et tu ?"
+              ],
+              "accepted": [
+                [
+                  "Salut !",
+                  "Ça va.",
+                  "Et toi ?"
+                ]
+              ],
+              "model": "Salut ! Ça va. Et toi ?"
+            }
+          ],
+          "followUp": "Ça va, ça va ! Entre !",
+          "newWords": [
+            "salut",
+            "ça va"
+          ]
+        },
+        {
+          "id": "sit_01_greet_d02",
+          "place": "Texto · Léa",
+          "cue": "The morning you arrive, Léa, your new flatmate, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Salut, Alex ! Ça va ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, ça ___, merci ! Et toi ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Complete your text.",
+              "choices": [
+                "vas",
+                "vais",
+                "va"
+              ],
+              "correct": 2,
+              "why": [
+                "« Vas » goes with tu. After « ça », use « va ».",
+                "« Vais » goes with je. After « ça », use « va ».",
+                ""
+              ]
+            },
+            {
+              "type": "word",
+              "prompt": "What does « salut » mean here?",
+              "target": "salut",
+              "choices": [
+                "thanks",
+                "hi",
+                "sorry"
+              ],
+              "correct": 1,
+              "why": [
+                "Thanks is « merci », the word in your reply.",
+                "",
+                "Sorry is a different word."
+              ]
+            }
+          ],
+          "followUp": "Ça va ! À ce soir, alors !",
+          "newWords": [
+            "merci"
+          ]
+        },
+        {
+          "id": "sit_01_greet_s01",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Construire",
+          "cue": "Léa, your flatmate, says tu to you. Say you're fine, thank her, and ask her back.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Salut, Alex ! Alors, ça va ce matin, à Lyon ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Answer: you're fine, thanks. Then ask her back.",
+              "bank": [
+                "Ça va,",
+                "merci.",
+                "Et toi ?",
+                "Ça vas,",
+                "Et tu ?",
+                "Et vous ?"
+              ],
+              "accepted": [
+                [
+                  "Ça va,",
+                  "merci.",
+                  "Et toi ?"
+                ]
+              ],
+              "model": "Ça va, merci. Et toi ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_01_greet_d03",
+          "place": "Sur le palier",
+          "cue": "On the landing, you meet M. Ferrand, an older neighbour. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Bonjour !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Greet him back.",
+              "choices": [
+                "Salut ! Ça va ?",
+                "Bonjour ! Ça vas ?",
+                "Bonjour !"
+              ],
+              "correct": 2,
+              "why": [
+                "Good French with a friend, but « salut » is too casual for a neighbour who says vous.",
+                "Not French: after « ça », use « va », not « vas ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Bonne journée !",
+          "newWords": [
+            "bonjour"
+          ]
+        },
+        {
+          "id": "sit_01_greet_d04",
+          "place": "Au bureau",
+          "cue": "Your first morning at work. Inès, a colleague, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Salut ! Ça va, ce matin ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, ça va, ___ ! Et toi ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « ça va » mean here?",
+              "target": "ça va",
+              "choices": [
+                "how are you?",
+                "see you later",
+                "thank you"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "A goodbye would end the talk; Inès is asking about you.",
+                "Thank you is « merci »."
+              ]
+            },
+            {
+              "type": "complete",
+              "prompt": "Thank her for asking.",
+              "choices": [
+                "merci",
+                "salut",
+                "bonjour"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Salut » says hi, and you've already greeted each other.",
+                "« Bonjour » says hello, and you've already greeted each other."
+              ]
+            }
+          ],
+          "followUp": "Ça va ! Un café, alors ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_01_greet_s02",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "On the landing, M. Ferrand, an older neighbour, says vous to you. Choose the greeting that fits.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which greeting fits M. Ferrand?",
+              "choices": [
+                "Salut ! Ça va, toi ?",
+                "Bonjour ! Vous allez bien ?",
+                "Bonjour ! Tu vas bien ?"
+              ],
+              "correct": 1,
+              "why": [
+                "Good French with a friend, but « salut » and « toi » are too casual for him.",
+                "",
+                "Good French with a friend, but he says vous, so « Vous allez bien ? »."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_01_greet_d05",
+          "place": "À l'appart",
+          "cue": "Clarify: Léa, your flatmate, calls from the kitchen and you don't catch it. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Pardon ? Tu peux répéter ?"
+            },
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Tu veux un thé ou un café ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa ask?",
+              "choices": [
+                "If you want a drink",
+                "If you want to eat"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Tu veux un thé ou un café ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Ask for a tea and thank her.",
+              "bank": [
+                "Un thé,",
+                "merci !",
+                "Une thé,",
+                "Un café,",
+                "pardon !"
+              ],
+              "accepted": [
+                [
+                  "Un thé,",
+                  "merci !"
+                ]
+              ],
+              "model": "Un thé, merci !"
+            }
+          ],
+          "followUp": "Un thé pour Alex !",
+          "newWords": [
+            "pardon"
+          ]
+        },
+        {
+          "id": "sit_01_greet_d06",
+          "place": "Les copains · groupe",
+          "cue": "Théo, a friend of Léa's, writes to you in his group chat. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Salut, Alex ! Ça va, à Lyon ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Salut ! Ça va, merci. Et ___ ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Ask Théo back.",
+              "choices": [
+                "tu",
+                "te",
+                "toi"
+              ],
+              "correct": 2,
+              "why": [
+                "After « et » alone, use « toi », not « tu ».",
+                "« Te » can't stand alone: use « toi ».",
+                ""
+              ]
+            },
+            {
+              "type": "word",
+              "prompt": "What does « merci » mean here?",
+              "target": "merci",
+              "choices": [
+                "sorry",
+                "hello",
+                "thanks"
+              ],
+              "correct": 2,
+              "why": [
+                "Sorry is « pardon ».",
+                "Hello is « bonjour » or « salut ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Ça va très bien !",
+          "newWords": []
+        },
+        {
+          "id": "sit_01_greet_s03",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Corriger",
+          "cue": "Léa, your flatmate, says tu to you. Fix the mistake in your reply.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Salut, Léa ! Oui, ça va bien, merci. Et tu ?",
+              "error": {
+                "word": "tu",
+                "fix": "toi",
+                "choices": [
+                  "ton",
+                  "toi",
+                  "te"
+                ],
+                "why": "After « et » alone, use the stressed form « toi »: « Et toi ? »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Correct the highlighted word."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_01_greet_d07",
+          "place": "À l'appart",
+          "cue": "Move-in day. You're carrying boxes, and Léa, your flatmate, squeezes past you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Pardon ! Je t'aide avec ça ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, ___ ! C'est gentil."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa offer?",
+              "choices": [
+                "To help you",
+                "To make you a coffee"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Je t'aide avec ça ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Thank her.",
+              "choices": [
+                "pardon",
+                "salut",
+                "merci"
+              ],
+              "correct": 2,
+              "why": [
+                "« Pardon » says sorry; Léa is the one helping you.",
+                "« Salut » says hi; it doesn't thank her.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Pas de problème !",
+          "newWords": []
+        },
+        {
+          "id": "sit_01_greet_d08",
+          "place": "Texto · Inès",
+          "cue": "Sunday morning. Inès, your new colleague, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Bonjour, Alex ! Ça va ? C'est Inès, du bureau."
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Greet her, say you're fine, thank her, and ask her back.",
+              "bank": [
+                "Bonjour !",
+                "Salut !",
+                "Ça va,",
+                "merci.",
+                "Et toi ?",
+                "Et vous ?",
+                "Ça vas,"
+              ],
+              "accepted": [
+                [
+                  "Bonjour !",
+                  "Ça va,",
+                  "merci.",
+                  "Et toi ?"
+                ],
+                [
+                  "Salut !",
+                  "Ça va,",
+                  "merci.",
+                  "Et toi ?"
+                ]
+              ],
+              "model": "Bonjour ! Ça va, merci. Et toi ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « bonjour » mean here?",
+              "target": "bonjour",
+              "choices": [
+                "good evening",
+                "goodbye",
+                "hello"
+              ],
+              "correct": 2,
+              "why": [
+                "Good evening is a different word.",
+                "Goodbye ends a talk; Inès is starting one.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Ça va ! À demain, au bureau !",
+          "newWords": []
+        },
+        {
+          "id": "sit_01_greet_s04",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You greeted Léa, who says tu to you. Now greet M. Ferrand, an older neighbour who says vous to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Salut, Léa ! Tu vas bien ce matin ? Moi, ça va.",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it for M. Ferrand.",
+              "bank": [
+                "Bonjour !",
+                "Vous allez",
+                "bien",
+                "ce matin ?",
+                "Moi, ça va.",
+                "Salut !",
+                "Tu vas",
+                "Vous vas"
+              ],
+              "accepted": [
+                [
+                  "Bonjour !",
+                  "Vous allez",
+                  "bien",
+                  "ce matin ?",
+                  "Moi, ça va."
+                ],
+                [
+                  "Bonjour !",
+                  "Vous allez",
+                  "bien",
+                  "ce matin ?"
+                ]
+              ],
+              "model": "Bonjour ! Vous allez bien ce matin ? Moi, ça va."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_01_greet_d09",
+          "place": "Sur le palier",
+          "cue": "On the landing, M. Ferrand, an older neighbour, says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Bonjour ! Vous allez bien ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, très bien, ___. Et vous ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Thank him for asking.",
+              "choices": [
+                "merci",
+                "pardon",
+                "salut"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Pardon » says sorry; nothing went wrong.",
+                "« Salut » says hi, and it's too casual for him."
+              ]
+            }
+          ],
+          "followUp": "Très bien aussi. Bonne journée !",
+          "newWords": []
+        },
+        {
+          "id": "sit_01_greet_d10",
+          "place": "À l'appart",
+          "cue": "Léa, your flatmate, bumps into you in the hallway. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Pardon ! Ça va ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « pardon » mean here?",
+              "target": "pardon",
+              "choices": [
+                "thanks",
+                "sorry",
+                "hello"
+              ],
+              "correct": 1,
+              "why": [
+                "Thanks is « merci ».",
+                "",
+                "Hello is « salut » or « bonjour »."
+              ]
+            },
+            {
+              "type": "reply",
+              "prompt": "Reassure her: yes, you're fine, no problem.",
+              "bank": [
+                "Oui,",
+                "ça va,",
+                "pas de problème !",
+                "ça vas,",
+                "bonjour !"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "ça va,",
+                  "pas de problème !"
+                ]
+              ],
+              "model": "Oui, ça va, pas de problème !"
+            }
+          ],
+          "followUp": "Très bien !",
+          "newWords": []
+        },
+        {
+          "id": "sit_01_greet_s05",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Which French word means “hello” to anyone, friend or stranger?",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "___ ! Vous allez bien ce matin ? Moi, ça va."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "hello (to anyone)",
+              "choices": [
+                "Salut",
+                "Merci",
+                "Bonjour"
+              ],
+              "correct": 2,
+              "why": [
+                "« Salut » is only for people who say tu; this line says vous.",
+                "« Merci » means thank you.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_01_name",
+      "title": "Se présenter",
+      "note": "Give your name with « Je m'appelle… » or, more casually, « Moi, c'est… ». Answer an introduction with « Enchanté ! » (written « Enchantée ! » when a woman says it).",
+      "items": [
+        {
+          "id": "sit_01_name_d01",
+          "place": "À l'appart",
+          "cue": "Move-in day. Your new flatmate opens the door. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Salut ! Moi, c'est Léa. Et toi ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does she tell you?",
+              "choices": [
+                "Where she's from",
+                "Her name"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Moi, c'est Léa. »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Greet her and give your name, Alex, the casual way.",
+              "bank": [
+                "Salut !",
+                "Moi, c'est",
+                "Alex.",
+                "Toi, c'est",
+                "Me, c'est"
+              ],
+              "accepted": [
+                [
+                  "Salut !",
+                  "Moi, c'est",
+                  "Alex."
+                ]
+              ],
+              "model": "Salut ! Moi, c'est Alex."
+            }
+          ],
+          "followUp": "Salut, Alex ! Entre, entre !",
+          "newWords": [
+            "moi c'est"
+          ]
+        },
+        {
+          "id": "sit_01_name_d02",
+          "place": "Sur le palier",
+          "cue": "On the landing, an older neighbour shakes your hand. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Bonjour ! Ferrand, enchanté !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Bonjour ! Je ___ Alex."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does he tell you?",
+              "choices": [
+                "His name",
+                "Where he lives"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Ferrand, enchanté ! »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Give your name.",
+              "choices": [
+                "t'appelles",
+                "m'appelle",
+                "appelle"
+              ],
+              "correct": 1,
+              "why": [
+                "« T'appelles » goes with tu: « tu t'appelles ».",
+                "",
+                "« S'appeler » needs « me » here: « je m'appelle »."
+              ]
+            }
+          ],
+          "followUp": "Alex. Très bien, bonne journée !",
+          "newWords": [
+            "enchanté"
+          ]
+        },
+        {
+          "id": "sit_01_name_s01",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Construire",
+          "cue": "Léa, your flatmate, says tu to you. She asks your name.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Salut ! Moi, c'est Léa. Et toi, tu t'appelles comment ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Greet her and give your name, Alex.",
+              "bank": [
+                "Salut !",
+                "Moi, c'est",
+                "Je m'appelle",
+                "Alex.",
+                "Toi, c'est",
+                "Tu t'appelles"
+              ],
+              "accepted": [
+                [
+                  "Salut !",
+                  "Moi, c'est",
+                  "Alex."
+                ],
+                [
+                  "Salut !",
+                  "Je m'appelle",
+                  "Alex."
+                ]
+              ],
+              "model": "Salut ! Moi, c'est Alex."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_01_name_d03",
+          "place": "Au bureau",
+          "cue": "Your first day at work. A woman comes to your desk. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Salut ! Moi, c'est Inès, de l'équipe."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "Who is Inès?",
+              "choices": [
+                "Someone on your team",
+                "Your boss"
+              ],
+              "correct": 0,
+              "miss": "Reread: « de l'équipe »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Greet her by name and give yours, Alex, the casual way.",
+              "bank": [
+                "Salut, Inès !",
+                "Moi, c'est",
+                "Alex.",
+                "Toi, c'est",
+                "Me, c'est"
+              ],
+              "accepted": [
+                [
+                  "Salut, Inès !",
+                  "Moi, c'est",
+                  "Alex."
+                ]
+              ],
+              "model": "Salut, Inès ! Moi, c'est Alex."
+            }
+          ],
+          "followUp": "Enchantée, Alex ! Un café ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_01_name_d04",
+          "place": "Texto · Théo",
+          "cue": "Someone texts you for the first time. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Salut ! C'est Théo, l'ami de Léa. Ton prénom ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Salut, Théo ! ___, c'est Alex !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Give your name the casual way.",
+              "choices": [
+                "Me",
+                "Toi",
+                "Moi"
+              ],
+              "correct": 2,
+              "why": [
+                "Before « c'est », use the stressed form « moi », not « me ».",
+                "« Toi » means you; you're giving your own name.",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "Who is Théo?",
+              "choices": [
+                "Léa's brother",
+                "A friend of Léa's"
+              ],
+              "correct": 1,
+              "miss": "Reread: « l'ami de Léa »"
+            }
+          ],
+          "followUp": "Enchanté, Alex !",
+          "newWords": [
+            "prénom"
+          ]
+        },
+        {
+          "id": "sit_01_name_s02",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "On the landing, M. Ferrand, an older neighbour, says vous to you. Choose the answer that fits.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Bonjour ! Pardon, je ne connais pas votre prénom."
+            }
+          ],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which answer fits M. Ferrand?",
+              "choices": [
+                "Salut ! Moi, c'est Alex.",
+                "Alex. Et toi, ton prénom ?",
+                "Bonjour ! Je m'appelle Alex."
+              ],
+              "correct": 2,
+              "why": [
+                "Good French with a friend, but « salut » is too casual for a neighbour who says vous.",
+                "Good French with a friend, but « toi » and « ton » are tu forms.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_01_name_d05",
+          "place": "À l'appart",
+          "cue": "Clarify: Léa, your flatmate, didn't catch your name in the noise. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Pardon ? Tu peux répéter ton prénom ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Repeat your name in a full sentence, the casual way.",
+              "bank": [
+                "Moi, c'est",
+                "Alex.",
+                "Toi, c'est",
+                "Me, c'est"
+              ],
+              "accepted": [
+                [
+                  "Moi, c'est",
+                  "Alex."
+                ]
+              ],
+              "model": "Moi, c'est Alex."
+            },
+            {
+              "type": "word",
+              "prompt": "What does « prénom » mean here?",
+              "target": "prénom",
+              "choices": [
+                "last name",
+                "nickname",
+                "first name"
+              ],
+              "correct": 2,
+              "why": [
+                "A last name is « nom ».",
+                "A nickname is « surnom ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Alex ! Pardon !",
+          "newWords": []
+        },
+        {
+          "id": "sit_01_name_d06",
+          "place": "Au bureau",
+          "cue": "At the coffee machine, Inès, a colleague, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Pardon ! Ton prénom, c'est Alex ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, c'est ___ ! Et toi, c'est Inès ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès ask?",
+              "choices": [
+                "If your first name is Alex",
+                "If you're new here"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Ton prénom, c'est Alex ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Say that's right.",
+              "choices": [
+                "ça",
+                "sa",
+                "se"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Sa » means his or her.",
+                "« Se » is a pronoun before a verb."
+              ]
+            }
+          ],
+          "followUp": "Oui, c'est ça ! Pardon, Alex !",
+          "newWords": []
+        },
+        {
+          "id": "sit_01_name_s03",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Corriger",
+          "cue": "Léa, your flatmate, says tu to you. Fix the mistake in how you introduce yourself.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Salut, Léa ! Me, c'est Alex. Et toi, ça va ?",
+              "error": {
+                "word": "Me",
+                "fix": "Moi",
+                "choices": [
+                  "Je",
+                  "Moi",
+                  "Mon"
+                ],
+                "why": "Before « c'est », use the stressed form « moi »: « Moi, c'est Alex. »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Correct the highlighted word."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_01_name_d07",
+          "place": "Sur le palier",
+          "cue": "On the landing, M. Ferrand, an older neighbour, says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Enchanté ! Votre prénom, c'est Alex ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, c'est ça. Et ___ ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « enchanté » mean here?",
+              "target": "enchanté",
+              "choices": [
+                "welcome",
+                "nice to meet you",
+                "goodbye"
+              ],
+              "correct": 1,
+              "why": [
+                "Welcome is a different word.",
+                "",
+                "Goodbye ends a talk; he's starting one."
+              ]
+            },
+            {
+              "type": "complete",
+              "prompt": "Ask him back.",
+              "choices": [
+                "toi",
+                "vous",
+                "tu"
+              ],
+              "correct": 1,
+              "why": [
+                "« Toi » is for tu; M. Ferrand says vous.",
+                "",
+                "After « et » alone, « tu » can't stand; and he says vous anyway."
+              ]
+            }
+          ],
+          "followUp": "Moi ? Ferrand. Ferrand, c'est tout !",
+          "newWords": []
+        },
+        {
+          "id": "sit_01_name_d08",
+          "place": "Les copains · groupe",
+          "cue": "Théo, a friend of Léa's, adds you to his group chat. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Salut ! Moi, c'est Théo. Et toi ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Greet him by name and give yours, Alex.",
+              "bank": [
+                "Salut,",
+                "Théo !",
+                "Moi, c'est",
+                "Je m'appelle",
+                "Alex.",
+                "Toi, c'est"
+              ],
+              "accepted": [
+                [
+                  "Salut,",
+                  "Théo !",
+                  "Moi, c'est",
+                  "Alex."
+                ],
+                [
+                  "Salut,",
+                  "Théo !",
+                  "Je m'appelle",
+                  "Alex."
+                ]
+              ],
+              "model": "Salut, Théo ! Moi, c'est Alex."
+            },
+            {
+              "type": "word",
+              "prompt": "What does « moi, c'est » mean here?",
+              "target": "moi c'est",
+              "choices": [
+                "I'm (+ name)",
+                "me too",
+                "it's me"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "Me too is « moi aussi ».",
+                "It's me is « c'est moi », the other way round."
+              ]
+            }
+          ],
+          "followUp": "Enchanté, Alex !",
+          "newWords": []
+        },
+        {
+          "id": "sit_01_name_s04",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You introduced yourself to Théo, who says tu. Now introduce yourself to M. Ferrand, an older neighbour who says vous.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Salut, Théo ! Moi, c'est Alex. Et toi, ton prénom ?",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it for M. Ferrand: greet him, give your name, ask him back.",
+              "bank": [
+                "Bonjour !",
+                "Je m'appelle",
+                "Alex.",
+                "Et vous ?",
+                "Salut !",
+                "Et toi ?",
+                "Tu t'appelles"
+              ],
+              "accepted": [
+                [
+                  "Bonjour !",
+                  "Je m'appelle",
+                  "Alex.",
+                  "Et vous ?"
+                ]
+              ],
+              "model": "Bonjour ! Je m'appelle Alex. Et vous ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_01_name_d09",
+          "place": "À l'appart",
+          "cue": "Léa, your flatmate, says tu to you. She has a pen in her hand.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "J'écris ton prénom sur la porte. C'est Alex ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, ___ prénom, c'est Alex."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What is Léa doing?",
+              "choices": [
+                "Writing your name on the door",
+                "Writing you a letter"
+              ],
+              "correct": 0,
+              "miss": "Reread: « J'écris ton prénom sur la porte. »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Confirm your name.",
+              "choices": [
+                "mon",
+                "ma",
+                "me"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Prénom » is masculine, so « mon prénom ».",
+                "« Me » isn't a possessive: use « mon »."
+              ]
+            }
+          ],
+          "followUp": "Alex et Léa. Parfait !",
+          "newWords": []
+        },
+        {
+          "id": "sit_01_name_d10",
+          "place": "Au bureau",
+          "cue": "Your first day at work. A colleague comes over. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Salut ! Inès, enchantée ! Tu es Alex ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès ask?",
+              "choices": [
+                "If you're new",
+                "If you're Alex"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Tu es Alex ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, and nice to meet you too.",
+              "bank": [
+                "Oui !",
+                "Enchanté !",
+                "Enchantée !",
+                "Non !",
+                "Pardon !"
+              ],
+              "accepted": [
+                [
+                  "Oui !",
+                  "Enchanté !"
+                ],
+                [
+                  "Oui !",
+                  "Enchantée !"
+                ]
+              ],
+              "model": "Oui ! Enchanté !"
+            }
+          ],
+          "followUp": "On est dans la même équipe !",
+          "newWords": []
+        },
+        {
+          "id": "sit_01_name_s05",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Which French word means “first name”?",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Salut ! Mon ___, c'est Alex. Et toi, c'est Léa ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "first name",
+              "choices": [
+                "pardon",
+                "prénom",
+                "bonjour"
+              ],
+              "correct": 1,
+              "why": [
+                "« Pardon » means sorry.",
+                "",
+                "« Bonjour » means hello."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_01_others",
+      "title": "Présenter quelqu'un",
+      "note": "Introduce someone with « je te présente… » and say who they are to you. The possessive agrees with the person: « ma coloc » for Léa, « mon voisin » for M. Ferrand.",
+      "items": [
+        {
+          "id": "sit_01_others_d01",
+          "place": "À l'appart",
+          "cue": "Théo drops by the flat. Léa, your flatmate, says tu to you, and so does Théo.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Alex, je te présente Théo, un ami."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "Who is Théo?",
+              "choices": [
+                "Léa's brother",
+                "A friend of Léa's"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Théo, un ami »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Greet Théo and say nice to meet you.",
+              "bank": [
+                "Salut,",
+                "Théo !",
+                "Enchanté !",
+                "Enchantée !",
+                "Enchantés !",
+                "Pardon,"
+              ],
+              "accepted": [
+                [
+                  "Salut,",
+                  "Théo !",
+                  "Enchanté !"
+                ],
+                [
+                  "Salut,",
+                  "Théo !",
+                  "Enchantée !"
+                ]
+              ],
+              "model": "Salut, Théo ! Enchanté !"
+            }
+          ],
+          "followUp": "Salut, Alex ! Enchanté !",
+          "followUpBy": "Théo",
+          "newWords": [
+            "je te présente"
+          ]
+        },
+        {
+          "id": "sit_01_others_d02",
+          "place": "Sur le palier",
+          "cue": "On the landing, Léa, your flatmate (tu), introduces you to an older man who says vous.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Alex, je te présente notre voisin."
+            },
+            {
+              "speaker": "learner",
+              "text": "___ ! Je m'appelle Alex."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « je te présente » mean here?",
+              "target": "je te présente",
+              "choices": [
+                "I'll show you",
+                "this is / let me introduce",
+                "I'm here with"
+              ],
+              "correct": 1,
+              "why": [
+                "Showing you something is « je te montre ».",
+                "",
+                "Being here with someone is « je suis avec »."
+              ]
+            },
+            {
+              "type": "complete",
+              "prompt": "Greet him.",
+              "choices": [
+                "Salut",
+                "Merci",
+                "Bonjour"
+              ],
+              "correct": 2,
+              "why": [
+                "« Salut » is too casual for a neighbour who says vous.",
+                "« Merci » thanks him; it doesn't greet him.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Enchanté. Je m'appelle Ferrand.",
+          "followUpBy": "M. Ferrand",
+          "newWords": [
+            "voisin"
+          ]
+        },
+        {
+          "id": "sit_01_others_s01",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Construire",
+          "cue": "Inès, a colleague, says tu to you. Introduce your friend Théo to her.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Salut, Alex ! Et ton ami, là, c'est qui ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Introduce Théo to Inès.",
+              "bank": [
+                "Inès,",
+                "je te présente",
+                "Théo.",
+                "je vous présente",
+                "Léa."
+              ],
+              "accepted": [
+                [
+                  "Inès,",
+                  "je te présente",
+                  "Théo."
+                ]
+              ],
+              "model": "Inès, je te présente Théo."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_01_others_d03",
+          "place": "Texto · Inès",
+          "cue": "Inès, a colleague, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Léa ? C'est ta coloc ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, c'est ___ coloc."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Answer about Léa.",
+              "choices": [
+                "ma",
+                "mon",
+                "ta"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "Léa is a woman: « ma coloc ».",
+                "« Ta » means your; Léa is your flatmate."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès ask?",
+              "choices": [
+                "If Léa is your sister",
+                "If Léa is your flatmate"
+              ],
+              "correct": 1,
+              "miss": "Reread: « C'est ta coloc ? »"
+            }
+          ],
+          "followUp": "Elle a de la chance !",
+          "newWords": [
+            "coloc"
+          ]
+        },
+        {
+          "id": "sit_01_others_d04",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Qui vient ce soir ? Inès, ta collègue ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say yes: she's your colleague.",
+              "bank": [
+                "Oui,",
+                "c'est",
+                "ma",
+                "collègue.",
+                "mon",
+                "ta"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "c'est",
+                  "ma",
+                  "collègue."
+                ]
+              ],
+              "model": "Oui, c'est ma collègue."
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa want to know?",
+              "choices": [
+                "When Inès is coming",
+                "Who is coming tonight"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Qui vient ce soir ? »"
+            }
+          ],
+          "followUp": "Parfait ! Je fais un gâteau.",
+          "newWords": [
+            "collègue"
+          ]
+        },
+        {
+          "id": "sit_01_others_s02",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "On the landing, M. Ferrand, an older neighbour, says vous to you. Introduce Léa, your flatmate.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Bonjour ! Et qui est la jeune femme avec vous ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which answer fits M. Ferrand?",
+              "choices": [
+                "Salut ! Je te présente Léa, ma coloc.",
+                "Bonjour ! Voici Léa, ma coloc.",
+                "Léa. Et toi, tu es qui ?"
+              ],
+              "correct": 1,
+              "why": [
+                "Good French with a friend, but « salut » and « je te présente » are tu forms.",
+                "",
+                "Good French with a friend, but « toi » and « tu » are wrong for him, and it's abrupt."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_01_others_d05",
+          "place": "À l'appart",
+          "cue": "Clarify: Léa, your flatmate, talks fast and you miss part of it. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Le voisin vient ce soir. Il veut te voir."
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say sorry and ask her to repeat.",
+              "bank": [
+                "Pardon ?",
+                "Tu peux",
+                "répéter ?",
+                "Tu peut",
+                "répètes ?",
+                "Merci ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon ?",
+                  "Tu peux",
+                  "répéter ?"
+                ],
+                [
+                  "Tu peux",
+                  "répéter ?"
+                ]
+              ],
+              "model": "Pardon ? Tu peux répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « voisin » mean here?",
+              "target": "voisin",
+              "choices": [
+                "landlord",
+                "friend",
+                "neighbour"
+              ],
+              "correct": 2,
+              "why": [
+                "A landlord is « propriétaire ».",
+                "A friend is « ami ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Le voisin ! Il vient ce soir.",
+          "newWords": []
+        },
+        {
+          "id": "sit_01_others_d06",
+          "place": "Au bureau",
+          "cue": "Léa, your flatmate, comes to meet you at work. Inès, a colleague, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Salut, Alex ! C'est qui, avec toi ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Inès, je te présente Léa, ___ coloc."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès ask?",
+              "choices": [
+                "Where you're going",
+                "Who is with you"
+              ],
+              "correct": 1,
+              "miss": "Reread: « C'est qui, avec toi ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Introduce Léa.",
+              "choices": [
+                "ta",
+                "ma",
+                "mon"
+              ],
+              "correct": 1,
+              "why": [
+                "« Ta » means your; Léa is your flatmate, not Inès's.",
+                "",
+                "Léa is a woman: « ma coloc »."
+              ]
+            }
+          ],
+          "followUp": "Salut, Léa ! Enchantée !",
+          "newWords": []
+        },
+        {
+          "id": "sit_01_others_s03",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Corriger",
+          "cue": "Inès, a colleague, says tu to you. Fix the mistake in how you introduce Léa.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Inès, je te présente Léa, mon coloc. Elle est très gentille.",
+              "error": {
+                "word": "mon",
+                "fix": "ma",
+                "choices": [
+                  "ma",
+                  "ta",
+                  "mes"
+                ],
+                "why": "Léa is a woman, so « ma coloc »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Correct the highlighted word."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_01_others_d07",
+          "place": "Sur le palier",
+          "cue": "You come home with Inès, a colleague. M. Ferrand, an older neighbour, says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Bonjour ! C'est votre coloc ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Non, c'est une ___."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « coloc » mean here?",
+              "target": "coloc",
+              "choices": [
+                "flatmate",
+                "colleague",
+                "neighbour"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "A colleague is « collègue ».",
+                "A neighbour is « voisin »."
+              ]
+            },
+            {
+              "type": "complete",
+              "prompt": "Say who Inès is.",
+              "choices": [
+                "collègues",
+                "collègue",
+                "coloc"
+              ],
+              "correct": 1,
+              "why": [
+                "« Une » needs a singular noun: « une collègue ».",
+                "",
+                "You've just said no: she isn't your flatmate."
+              ]
+            }
+          ],
+          "followUp": "Pardon ! Enchanté.",
+          "newWords": []
+        },
+        {
+          "id": "sit_01_others_d08",
+          "place": "Texto · Inès",
+          "cue": "Inès, a colleague, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Ton voisin, il est gentil ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say yes, he's very kind.",
+              "bank": [
+                "Oui,",
+                "il est",
+                "très",
+                "gentil !",
+                "gentille !",
+                "elle est",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "il est",
+                  "très",
+                  "gentil !"
+                ],
+                [
+                  "Oui,",
+                  "il est",
+                  "gentil !"
+                ],
+                [
+                  "Oui,",
+                  "très",
+                  "gentil !"
+                ]
+              ],
+              "model": "Oui, il est très gentil !"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « voisin » mean here?",
+              "target": "voisin",
+              "choices": [
+                "neighbour",
+                "flatmate",
+                "landlord"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "A flatmate is « coloc ».",
+                "A landlord is « propriétaire »."
+              ]
+            }
+          ],
+          "followUp": "C'est bien !",
+          "newWords": []
+        },
+        {
+          "id": "sit_01_others_s04",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You introduced Inès to Léa. Now turn it around: introduce Léa, your flatmate, to Inès. Both say tu.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Léa, je te présente Inès, ma collègue du bureau.",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Introduce Léa to Inès.",
+              "bank": [
+                "Inès,",
+                "je te présente",
+                "Léa,",
+                "ma coloc.",
+                "mon coloc.",
+                "ma collègue.",
+                "je vous présente"
+              ],
+              "accepted": [
+                [
+                  "Inès,",
+                  "je te présente",
+                  "Léa,",
+                  "ma coloc."
+                ]
+              ],
+              "model": "Inès, je te présente Léa, ma coloc."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_01_others_d09",
+          "place": "À l'appart",
+          "cue": "Léa, your flatmate, says tu to you. You've just mentioned Inès.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "C'est qui, Inès ? Ta collègue ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, ___ travaille avec moi."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « collègue » mean here?",
+              "target": "collègue",
+              "choices": [
+                "cousin",
+                "classmate",
+                "colleague"
+              ],
+              "correct": 2,
+              "why": [
+                "A cousin is « cousine » here.",
+                "A classmate is « camarade ».",
+                ""
+              ]
+            },
+            {
+              "type": "complete",
+              "prompt": "Answer about Inès.",
+              "choices": [
+                "il",
+                "elle",
+                "on"
+              ],
+              "correct": 1,
+              "why": [
+                "Inès is a woman: « elle ».",
+                "",
+                "« On » means we; you're talking about Inès."
+              ]
+            }
+          ],
+          "followUp": "Inès du bureau, c'est ça !",
+          "newWords": []
+        },
+        {
+          "id": "sit_01_others_d10",
+          "place": "À l'appart",
+          "cue": "Your colleague arrives at the flat, and Léa, your flatmate, opens the door. Everyone says tu.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Salut ! Tu es Inès ? Entre !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa ask the visitor?",
+              "choices": [
+                "If she's Inès",
+                "If she's lost"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Tu es Inès ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Introduce Inès, your colleague, to Léa.",
+              "bank": [
+                "Léa,",
+                "je te présente",
+                "Inès,",
+                "ma collègue.",
+                "mon collègue.",
+                "ma coloc."
+              ],
+              "accepted": [
+                [
+                  "Léa,",
+                  "je te présente",
+                  "Inès,",
+                  "ma collègue."
+                ]
+              ],
+              "model": "Léa, je te présente Inès, ma collègue."
+            }
+          ],
+          "followUp": "Salut, Léa ! Enchantée !",
+          "followUpBy": "Inès",
+          "newWords": []
+        },
+        {
+          "id": "sit_01_others_s05",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Which French words mean “this is / let me introduce” to someone you call tu?",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Salut, Théo ! ___ Inès, ma collègue. Elle est gentille."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "let me introduce (tu)",
+              "choices": [
+                "Je vous présente",
+                "Je te présente",
+                "Je me présente"
+              ],
+              "correct": 1,
+              "why": [
+                "« Je vous présente » is for vous; Théo says tu.",
+                "",
+                "« Je me présente » means I introduce myself."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_01_origin",
+      "title": "Dire d'où l'on vient",
+      "note": "Ask « Tu viens d'où ? » (« Vous venez d'où ? » with vous) and answer « Je viens de… ». React with « Ah bon ? » or « C'est loin ! ».",
+      "items": [
+        {
+          "id": "sit_01_origin_d01",
+          "place": "À l'appart",
+          "cue": "Léa, your flatmate, says tu to you. You are from Boston.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Alors, Alex, tu viens d'où ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa ask?",
+              "choices": [
+                "Where you work",
+                "Where you're from"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Tu viens d'où ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say you're from Boston, then ask her back.",
+              "bank": [
+                "Je viens",
+                "de Boston.",
+                "Et toi ?",
+                "Je vais",
+                "à Boston.",
+                "Et vous ?"
+              ],
+              "accepted": [
+                [
+                  "Je viens",
+                  "de Boston.",
+                  "Et toi ?"
+                ]
+              ],
+              "model": "Je viens de Boston. Et toi ?"
+            }
+          ],
+          "followUp": "Moi, je suis d'ici, de Lyon !",
+          "newWords": [
+            "d'où"
+          ]
+        },
+        {
+          "id": "sit_01_origin_d02",
+          "place": "Au bureau",
+          "cue": "At the coffee machine, Inès, a colleague, says tu to you. You are from Boston.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Tu es d'où, toi ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Je ___ de Boston. Et toi ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Say where you're from.",
+              "choices": [
+                "vais",
+                "venir",
+                "viens"
+              ],
+              "correct": 2,
+              "why": [
+                "« Je vais » means I'm going.",
+                "« Venir » is the infinitive; with « je », say « viens ».",
+                ""
+              ]
+            },
+            {
+              "type": "word",
+              "prompt": "What does « d'où » mean here?",
+              "target": "d'où",
+              "choices": [
+                "where from",
+                "since when",
+                "how"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "Since when is a different question.",
+                "How is « comment »."
+              ]
+            }
+          ],
+          "followUp": "Moi, je suis de Paris.",
+          "newWords": []
+        },
+        {
+          "id": "sit_01_origin_s01",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Construire",
+          "cue": "Léa, your flatmate, says tu to you. You're from Boston. Answer, then ask her back.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Alors, Alex, tu viens d'où ? Tu n'es pas de Paris ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say no, you're from Boston, then ask her back.",
+              "bank": [
+                "Non,",
+                "je viens",
+                "de Boston.",
+                "Et toi ?",
+                "je vais",
+                "à Boston.",
+                "Et tu ?"
+              ],
+              "accepted": [
+                [
+                  "Non,",
+                  "je viens",
+                  "de Boston.",
+                  "Et toi ?"
+                ],
+                [
+                  "Non,",
+                  "de Boston.",
+                  "Et toi ?"
+                ]
+              ],
+              "model": "Non, je viens de Boston. Et toi ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_01_origin_d03",
+          "place": "Sur le palier",
+          "cue": "M. Ferrand, an older neighbour, says vous to you. You've just told him you're from Boston.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Boston ? C'est loin !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does M. Ferrand say about Boston?",
+              "choices": [
+                "It's beautiful",
+                "It's far"
+              ],
+              "correct": 1,
+              "miss": "Reread: « C'est loin ! »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Agree, but say you like Lyon.",
+              "bank": [
+                "Oui,",
+                "mais",
+                "j'aime",
+                "Lyon !",
+                "Non,",
+                "aime"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "mais",
+                  "j'aime",
+                  "Lyon !"
+                ]
+              ],
+              "model": "Oui, mais j'aime Lyon !"
+            }
+          ],
+          "followUp": "Lyon, c'est la plus belle ville !",
+          "newWords": [
+            "loin"
+          ]
+        },
+        {
+          "id": "sit_01_origin_d04",
+          "place": "Texto · Théo",
+          "cue": "Théo, a friend of Léa's, texts you. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Ah bon ? Tu viens de Boston ? Et tu parles français !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, un ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Say you speak a little.",
+              "choices": [
+                "peu",
+                "petit",
+                "pas"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Un petit » needs a noun after it; « a little » is « un peu ».",
+                "« Un pas » means a step."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo notice?",
+              "choices": [
+                "That you speak French",
+                "That you live with Léa"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Et tu parles français ! »"
+            }
+          ],
+          "followUp": "Un peu ? Tu parles très bien !",
+          "newWords": [
+            "ah bon"
+          ]
+        },
+        {
+          "id": "sit_01_origin_s02",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "M. Ferrand, an older neighbour, says vous to you. You're from Boston. Choose the answer that fits.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Bonjour ! Alors, vous venez d'où ? Vous n'êtes pas d'ici ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which answer fits M. Ferrand?",
+              "choices": [
+                "Je viens de Boston. Et vous ?",
+                "De Boston. Et toi ?",
+                "Salut ! Je viens de Boston."
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "Good French with a friend, but « toi » is a tu form.",
+                "Good French with a friend, but « salut » is too casual for him."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_01_origin_d05",
+          "place": "À l'appart",
+          "cue": "Clarify: Léa, your flatmate, asks you something very fast. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Et toi, Alex, tu viens d'où ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "You didn't catch it. Say sorry and ask her to repeat.",
+              "bank": [
+                "Pardon ?",
+                "Tu peux",
+                "répéter ?",
+                "Tu peut",
+                "répète ?",
+                "Merci ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon ?",
+                  "Tu peux",
+                  "répéter ?"
+                ],
+                [
+                  "Tu peux",
+                  "répéter ?"
+                ]
+              ],
+              "model": "Pardon ? Tu peux répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « d'où » mean here?",
+              "target": "d'où",
+              "choices": [
+                "since when",
+                "where from",
+                "what"
+              ],
+              "correct": 1,
+              "why": [
+                "Since when is a different question.",
+                "",
+                "What is a different question."
+              ]
+            }
+          ],
+          "followUp": "Pardon ! Tu… viens… d'où ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_01_origin_d06",
+          "place": "Au bureau",
+          "cue": "Inès, a colleague, says tu to you. You've just told her you're from Boston.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Ah bon ? Tu viens de Boston ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, c'est ___ de Lyon !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Say it's far from Lyon.",
+              "choices": [
+                "loin",
+                "tôt",
+                "tard"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Tôt » means early.",
+                "« Tard » means late."
+              ]
+            },
+            {
+              "type": "word",
+              "prompt": "What does « ah bon » mean here?",
+              "target": "ah bon",
+              "choices": [
+                "oh, good",
+                "so what?",
+                "oh, really?"
+              ],
+              "correct": 2,
+              "why": [
+                "Not « good »: « ah bon ? » shows surprise.",
+                "« Ah bon ? » is curious, not rude.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Oui ! Et tu parles très bien français !",
+          "newWords": []
+        },
+        {
+          "id": "sit_01_origin_s03",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Corriger",
+          "cue": "Léa, your flatmate, says tu to you. Fix the mistake in your answer.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Moi ? Je viens à Boston. Et toi, tu viens d'où ?",
+              "error": {
+                "word": "à",
+                "fix": "de",
+                "choices": [
+                  "de",
+                  "du",
+                  "en"
+                ],
+                "why": "With « venir », say where you come from with « de »: « je viens de Boston »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Correct the highlighted word."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_01_origin_d07",
+          "place": "Les copains · groupe",
+          "cue": "Théo, a friend of Léa's, adds you to his group chat. Everyone there says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Tout le monde, voici Alex ! Alex vient de Boston."
+            },
+            {
+              "speaker": "learner",
+              "text": "Salut ! Oui, je viens de Boston. Et ___ ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo tell the group?",
+              "choices": [
+                "Where you live",
+                "Where you're from"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Alex vient de Boston. »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Ask the whole group back.",
+              "choices": [
+                "vous",
+                "toi",
+                "tu"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Toi » asks one person; you're asking everyone.",
+                "After « et » alone, « tu » can't stand; and you're asking everyone."
+              ]
+            }
+          ],
+          "followUp": "Nous, on est tous de Lyon !",
+          "newWords": []
+        },
+        {
+          "id": "sit_01_origin_d08",
+          "place": "Sur le palier",
+          "cue": "M. Ferrand, an older neighbour, says vous to you. You've just told him you're from Boston.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Moi, je suis de Lyon. Ma fille habite à Boston !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "React with surprise: oh really, in Boston?",
+              "bank": [
+                "Ah bon ?",
+                "À Boston ?",
+                "De Boston ?",
+                "À Lyon ?",
+                "Merci !"
+              ],
+              "accepted": [
+                [
+                  "Ah bon ?",
+                  "À Boston ?"
+                ]
+              ],
+              "model": "Ah bon ? À Boston ?"
+            },
+            {
+              "type": "comprehend",
+              "prompt": "Who lives in Boston?",
+              "choices": [
+                "M. Ferrand's daughter",
+                "M. Ferrand's son"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Ma fille habite à Boston ! »"
+            }
+          ],
+          "followUp": "Oui ! Alors, Boston, je connais un peu.",
+          "newWords": []
+        },
+        {
+          "id": "sit_01_origin_s04",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You asked Léa where she's from. Now ask M. Ferrand, an older neighbour who says vous.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Et toi, Léa, tu viens d'où ? De Lyon aussi ?",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Ask M. Ferrand the same question.",
+              "bank": [
+                "Et vous,",
+                "vous venez",
+                "d'où ?",
+                "De Lyon",
+                "aussi ?",
+                "tu viens",
+                "vous viens",
+                "Et toi,"
+              ],
+              "accepted": [
+                [
+                  "Et vous,",
+                  "vous venez",
+                  "d'où ?",
+                  "De Lyon",
+                  "aussi ?"
+                ],
+                [
+                  "Et vous,",
+                  "vous venez",
+                  "d'où ?"
+                ]
+              ],
+              "model": "Et vous, vous venez d'où ? De Lyon aussi ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_01_origin_d09",
+          "place": "Texto · Inès",
+          "cue": "Inès, a colleague, texts you. She says tu to you. You are from Boston.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Boston, c'est loin ! Ta famille est où ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Mes parents ___ à Boston."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « loin » mean here?",
+              "target": "loin",
+              "choices": [
+                "late",
+                "far",
+                "expensive"
+              ],
+              "correct": 1,
+              "why": [
+                "Late is « tard ».",
+                "",
+                "Expensive is « cher »."
+              ]
+            },
+            {
+              "type": "complete",
+              "prompt": "Say where your parents live.",
+              "choices": [
+                "habitent",
+                "habites",
+                "habite"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Habites » goes with tu.",
+                "« Habite » goes with one person; « mes parents » is plural."
+              ]
+            }
+          ],
+          "followUp": "Et ils parlent français, tes parents ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_01_origin_d10",
+          "place": "À l'appart",
+          "cue": "Léa, your flatmate, says tu to you. You've just mentioned your family.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Ah bon ? Ta famille est à Boston ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa ask?",
+              "choices": [
+                "If your family is coming",
+                "If your family is in Boston"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Ta famille est à Boston ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, and that it's far.",
+              "bank": [
+                "Oui,",
+                "et",
+                "c'est",
+                "loin !",
+                "Non,",
+                "tard !"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "et",
+                  "c'est",
+                  "loin !"
+                ],
+                [
+                  "Oui,",
+                  "c'est",
+                  "loin !"
+                ]
+              ],
+              "model": "Oui, et c'est loin !"
+            }
+          ],
+          "followUp": "Ici, on est ta famille, maintenant !",
+          "newWords": []
+        },
+        {
+          "id": "sit_01_origin_s05",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Which French words mean “oh, really?”",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "___ ? Tu viens de Boston, toi ? C'est loin de Lyon !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "oh, really?",
+              "choices": [
+                "Merci",
+                "Salut",
+                "Ah bon"
+              ],
+              "correct": 2,
+              "why": [
+                "« Merci » means thank you.",
+                "« Salut » means hi.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    }
+  ]
+}

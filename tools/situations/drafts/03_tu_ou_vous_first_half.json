@@ -1,0 +1,2634 @@
+{
+  "elements": [
+    {
+      "id": "sit_03_landing",
+      "title": "Saluer M. Ferrand",
+      "note": "Greet an older neighbour formally: « Bonjour, monsieur », « Vous allez bien ? », and « excusez-moi » to get past or get attention.",
+      "items": [
+        {
+          "id": "sit_03_landing_d01",
+          "place": "Sur le palier",
+          "cue": "On the landing, you greet M. Ferrand. M. Ferrand, your older neighbour, says vous to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Bonjour, monsieur !"
+            },
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Bonjour ! Vous allez bien ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does M. Ferrand ask?",
+              "choices": [
+                "If you are well",
+                "If you live here"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Vous allez bien ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say you're very well, thank him, and ask him back.",
+              "bank": [
+                "Très bien,",
+                "merci.",
+                "Et vous ?",
+                "Et toi ?",
+                "Très bon,"
+              ],
+              "accepted": [
+                [
+                  "Très bien,",
+                  "merci.",
+                  "Et vous ?"
+                ]
+              ],
+              "model": "Très bien, merci. Et vous ?"
+            }
+          ],
+          "followUp": "Pas mal, merci !",
+          "newWords": [
+            "monsieur"
+          ]
+        },
+        {
+          "id": "sit_03_landing_d02",
+          "place": "WhatsApp · Mme Dumas",
+          "cue": "Mme Dumas, your landlady, messages you on WhatsApp for the first time. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Mme Dumas",
+              "text": "Bonjour, c'est Mme Dumas. Vous êtes Alex ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Bonjour, madame. Oui, je ___ Alex."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Mme Dumas ask?",
+              "choices": [
+                "If you are at home",
+                "If you are Alex"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Vous êtes Alex ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Complete your reply: yes, you are Alex.",
+              "choices": [
+                "suis",
+                "est",
+                "es"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Est » goes with il or elle.",
+                "« Es » goes with tu: « tu es »."
+              ]
+            }
+          ],
+          "followUp": "Très bien. Bonne journée !",
+          "newWords": [
+            "madame"
+          ]
+        },
+        {
+          "id": "sit_03_landing_s01",
+          "place": "Sur le palier · phrase seule",
+          "standalone": "Construire",
+          "cue": "You meet M. Ferrand on the landing. M. Ferrand, your older neighbour, says vous to you.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Greet him politely, call him sir, and ask how he is.",
+              "bank": [
+                "Bonjour,",
+                "monsieur !",
+                "Vous allez bien ?",
+                "Tu vas bien ?",
+                "Salut,",
+                "madame !"
+              ],
+              "accepted": [
+                [
+                  "Bonjour,",
+                  "monsieur !",
+                  "Vous allez bien ?"
+                ]
+              ],
+              "model": "Bonjour, monsieur ! Vous allez bien ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_03_landing_d03",
+          "place": "Sur le palier",
+          "cue": "You're rushing down the stairs and need to get past M. Ferrand. M. Ferrand, your older neighbour, says vous to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Excusez-moi, monsieur."
+            },
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Pardon ! Vous allez au travail ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, et je ___ en retard !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Complete your answer: you're late.",
+              "choices": [
+                "suis",
+                "es",
+                "ai"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Es » goes with tu: « tu es ».",
+                "Late is « être en retard »: « je suis en retard »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does M. Ferrand ask?",
+              "choices": [
+                "If you're going to work",
+                "If you're going home"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Vous allez au travail ? »"
+            }
+          ],
+          "followUp": "Alors, bonne journée !",
+          "followUpBy": "M. Ferrand",
+          "newWords": [
+            "excusez-moi"
+          ]
+        },
+        {
+          "id": "sit_03_landing_d04",
+          "place": "Au café",
+          "cue": "At the café, Karim greets a regular, then you. Karim, the barista, says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Bonjour, madame !"
+            },
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Ah, bonjour ! Vous allez bien ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « madame » mean here?",
+              "target": "madame",
+              "choices": [
+                "sir",
+                "madam",
+                "neighbour"
+              ],
+              "correct": 1,
+              "why": [
+                "Sir would be « monsieur ».",
+                "",
+                "Neighbour would be « voisine »."
+              ]
+            },
+            {
+              "type": "reply",
+              "prompt": "Say you're fine, thank him, and ask him back.",
+              "bank": [
+                "Bien,",
+                "merci.",
+                "Et vous ?",
+                "Et toi ?",
+                "Bon,"
+              ],
+              "accepted": [
+                [
+                  "Bien,",
+                  "merci.",
+                  "Et vous ?"
+                ]
+              ],
+              "model": "Bien, merci. Et vous ?"
+            }
+          ],
+          "followUp": "Très bien, merci !",
+          "newWords": []
+        },
+        {
+          "id": "sit_03_landing_s02",
+          "place": "Sur le palier · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "Mme Dumas, your landlady, messages you on WhatsApp. She says vous to you. Choose your greeting.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which greeting fits Mme Dumas?",
+              "choices": [
+                "Salut ! Ça va ?",
+                "Bonjour ! Tu vas bien ?",
+                "Bonjour, madame. Vous allez bien ?"
+              ],
+              "correct": 2,
+              "why": [
+                "Good French with a friend, but too casual for your landlady.",
+                "Good French, but tu is for friends. Mme Dumas says vous to you.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_03_landing_d05",
+          "place": "Sur le palier",
+          "cue": "Clarify: on the landing, M. Ferrand speaks very quietly, and you don't catch it. M. Ferrand, your older neighbour, says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Excusez-moi, vous avez l'heure ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Ask him politely to say it again: sorry, sir?",
+              "bank": [
+                "Pardon,",
+                "monsieur ?",
+                "madame ?",
+                "Quoi ?",
+                "Salut,"
+              ],
+              "accepted": [
+                [
+                  "Pardon,",
+                  "monsieur ?"
+                ]
+              ],
+              "model": "Pardon, monsieur ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « excusez-moi » mean here?",
+              "target": "excusez-moi",
+              "choices": [
+                "good morning",
+                "thank you",
+                "excuse me"
+              ],
+              "correct": 2,
+              "why": [
+                "Good morning would be « bonjour ».",
+                "Thank you would be « merci ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Vous avez l'heure, s'il vous plaît ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_03_landing_d06",
+          "place": "Au bureau",
+          "cue": "At the office, Inès, your colleague, says tu to you. She asks about M. Ferrand, your older neighbour, who says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Tu dis « monsieur » à ton voisin ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, et je lui dis ___ aussi."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Complete your answer: tu or vous with an older neighbour?",
+              "choices": [
+                "tu",
+                "toi",
+                "vous"
+              ],
+              "correct": 2,
+              "why": [
+                "Tu is for friends and colleagues like Inès. With an older neighbour, say vous.",
+                "« Toi » is the tu form after « et » or « pour ». Your neighbour gets vous.",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès ask?",
+              "choices": [
+                "If you know your neighbour",
+                "If you call your neighbour sir"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Tu dis monsieur à ton voisin ? »"
+            }
+          ],
+          "followUp": "Ici, au bureau, on dit tu !",
+          "newWords": []
+        },
+        {
+          "id": "sit_03_landing_s03",
+          "place": "Sur le palier · phrase seule",
+          "standalone": "Corriger",
+          "cue": "Mme Dumas, your landlady, asked how you are. She says vous to you. Fix your reply.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Bonjour, madame ! Je vais très bien, merci, et toi ?",
+              "error": {
+                "word": "toi",
+                "fix": "vous",
+                "choices": [
+                  "tu",
+                  "vous",
+                  "lui"
+                ],
+                "why": "Mme Dumas says vous to you, so ask back « et vous ? »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Correct the highlighted word."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_03_landing_d07",
+          "place": "WhatsApp · Mme Dumas",
+          "cue": "Mme Dumas, your landlady, says vous to you. She messages you on WhatsApp. You'll be home.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Mme Dumas",
+              "text": "Bonjour. Vous êtes chez vous demain matin ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, ___, je suis là."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Complete your reply: address her politely.",
+              "choices": [
+                "monsieur",
+                "madame",
+                "Léa"
+              ],
+              "correct": 1,
+              "why": [
+                "« Monsieur » is for a man. Mme Dumas is a woman.",
+                "",
+                "Léa is your flatmate, not your landlady."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Mme Dumas want to know?",
+              "choices": [
+                "If you're home tomorrow morning",
+                "If you're free tonight"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Vous êtes chez vous demain matin ? »"
+            }
+          ],
+          "followUp": "Parfait. À dix heures, alors.",
+          "newWords": []
+        },
+        {
+          "id": "sit_03_landing_d08",
+          "place": "Au café",
+          "cue": "At the café, your bag is on a chair. Karim, the barista, says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Excusez-moi, c'est à vous, ce sac ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say yes, it's yours, and thank him.",
+              "bank": [
+                "Oui,",
+                "c'est",
+                "à moi.",
+                "à toi.",
+                "Merci !",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "c'est",
+                  "à moi.",
+                  "Merci !"
+                ],
+                [
+                  "Merci !",
+                  "Oui,",
+                  "c'est",
+                  "à moi."
+                ]
+              ],
+              "model": "Oui, c'est à moi. Merci !"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « excusez-moi » mean here?",
+              "target": "excusez-moi",
+              "choices": [
+                "here you are",
+                "excuse me",
+                "be careful"
+              ],
+              "correct": 1,
+              "why": [
+                "Here you are would be « voilà ».",
+                "",
+                "Be careful would be « attention »."
+              ]
+            }
+          ],
+          "followUp": "De rien !",
+          "newWords": []
+        },
+        {
+          "id": "sit_03_landing_s04",
+          "place": "Sur le palier · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You greeted Léa, your flatmate, who says tu to you. Now greet Mme Dumas, your landlady, who says vous.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Salut, Léa ! Ça va ? Tu vas bien ce matin ?",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Greet Mme Dumas the same way, with vous.",
+              "bank": [
+                "Bonjour,",
+                "madame !",
+                "Vous allez bien",
+                "ce matin ?",
+                "Tu vas bien",
+                "Salut,",
+                "monsieur !"
+              ],
+              "accepted": [
+                [
+                  "Bonjour,",
+                  "madame !",
+                  "Vous allez bien",
+                  "ce matin ?"
+                ]
+              ],
+              "model": "Bonjour, madame ! Vous allez bien ce matin ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_03_landing_d09",
+          "place": "Sur le palier",
+          "cue": "On the landing, M. Ferrand, your older neighbour, says vous to you. He asks you something you can't answer.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Bonjour ! Mme Dumas est là aujourd'hui ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Je ne ___ pas, monsieur."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does M. Ferrand want to know?",
+              "choices": [
+                "If Mme Dumas is coming tomorrow",
+                "If Mme Dumas is around today"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Mme Dumas est là aujourd'hui ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Complete your answer: you don't know.",
+              "choices": [
+                "sait",
+                "savez",
+                "sais"
+              ],
+              "correct": 2,
+              "why": [
+                "« Sait » goes with il or elle.",
+                "« Savez » goes with vous. You're talking about yourself.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Bon, merci. Bonne journée !",
+          "newWords": []
+        },
+        {
+          "id": "sit_03_landing_d10",
+          "place": "Sur le palier",
+          "cue": "On the landing with M. Ferrand. M. Ferrand, your older neighbour, says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Au revoir, et bonne journée !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does M. Ferrand say?",
+              "choices": [
+                "Goodbye, have a good day",
+                "Hello, how are you"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Au revoir, et bonne journée ! »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Thank him, call him sir, and wish him the same.",
+              "bank": [
+                "Merci,",
+                "monsieur.",
+                "Vous aussi !",
+                "Toi aussi !",
+                "madame."
+              ],
+              "accepted": [
+                [
+                  "Merci,",
+                  "monsieur.",
+                  "Vous aussi !"
+                ],
+                [
+                  "Vous aussi !",
+                  "Merci,",
+                  "monsieur."
+                ]
+              ],
+              "model": "Merci, monsieur. Vous aussi !"
+            }
+          ],
+          "followUp": "Merci ! À bientôt.",
+          "newWords": []
+        },
+        {
+          "id": "sit_03_landing_s05",
+          "place": "Sur le palier · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Which French word means “sir”?",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Au revoir, ___ ! Bonne journée, et merci pour le pain !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "sir",
+              "choices": [
+                "voisin",
+                "monsieur",
+                "madame"
+              ],
+              "correct": 1,
+              "why": [
+                "« Voisin » means neighbour.",
+                "",
+                "« Madame » means madam, for a woman."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_03_register",
+      "title": "Choisir tu ou vous",
+      "note": "Tu with Léa, Inès and Théo; vous with M. Ferrand, Karim and Mme Dumas, and with a whole group. The pairs « s'il te plaît / s'il vous plaît » and « excuse-moi / excusez-moi ».",
+      "items": [
+        {
+          "id": "sit_03_register_d01",
+          "place": "Au bureau",
+          "cue": "At the office, Inès, your colleague, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Tu peux m'aider, s'il te plaît ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès ask?",
+              "choices": [
+                "If you can wait for her",
+                "If you can help her"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Tu peux m'aider ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, no problem.",
+              "bank": [
+                "Oui,",
+                "pas de problème !",
+                "s'il te plaît !",
+                "merci !"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "pas de problème !"
+                ]
+              ],
+              "model": "Oui, pas de problème !"
+            }
+          ],
+          "followUp": "Merci ! C'est très rapide.",
+          "newWords": [
+            "s'il te plaît"
+          ]
+        },
+        {
+          "id": "sit_03_register_d02",
+          "place": "Au café",
+          "cue": "At the café, Karim, the barista, says vous to you. You'd like a coffee.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Bonjour ! Un café, comme hier ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, un café, s'il ___ plaît."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Complete your polite request to Karim.",
+              "choices": [
+                "te",
+                "tu",
+                "vous"
+              ],
+              "correct": 2,
+              "why": [
+                "« Te » is for a friend. Karim says vous to you.",
+                "Not French: the phrase is « s'il te plaît » or « s'il vous plaît ».",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Karim ask?",
+              "choices": [
+                "If you want a coffee, like yesterday",
+                "If you want a tea today"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Un café, comme hier ? »"
+            }
+          ],
+          "followUp": "Très bien, un café !",
+          "newWords": []
+        },
+        {
+          "id": "sit_03_register_s01",
+          "place": "Au bureau · phrase seule",
+          "standalone": "Construire",
+          "cue": "At the office, ask Inès to close the door. Inès, your colleague, says tu to you.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Ask her politely to close the door. Use tu.",
+              "bank": [
+                "Tu peux",
+                "fermer",
+                "la porte,",
+                "s'il te plaît ?",
+                "Vous pouvez",
+                "s'il vous plaît ?",
+                "le porte,"
+              ],
+              "accepted": [
+                [
+                  "Tu peux",
+                  "fermer",
+                  "la porte,",
+                  "s'il te plaît ?"
+                ]
+              ],
+              "model": "Tu peux fermer la porte, s'il te plaît ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_03_register_d03",
+          "place": "À l'appart",
+          "cue": "At the flat, Léa bumps into you in the hallway. Léa, your flatmate, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Oh, excuse-moi ! Je suis en retard !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Pas de ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Tell her it's fine.",
+              "choices": [
+                "problème",
+                "merci",
+                "rien"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Pas de merci » isn't French. To accept an apology, say « pas de problème ».",
+                "« De rien » answers thanks, and « pas de rien » isn't French."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "Why is Léa rushing?",
+              "choices": [
+                "She's lost her keys",
+                "She's late"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Je suis en retard ! »"
+            }
+          ],
+          "followUp": "Merci ! À ce soir !",
+          "followUpBy": "Léa",
+          "newWords": [
+            "excuse-moi"
+          ]
+        },
+        {
+          "id": "sit_03_register_d04",
+          "place": "Sur le palier",
+          "cue": "On the landing, M. Ferrand is carrying something heavy. M. Ferrand, your older neighbour, says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Excusez-moi, vous pouvez m'aider avec ce sac ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say yes, you'll help him. Use vous and call him sir.",
+              "bank": [
+                "Oui !",
+                "Je vous aide,",
+                "Je t'aide,",
+                "monsieur.",
+                "madame."
+              ],
+              "accepted": [
+                [
+                  "Oui !",
+                  "Je vous aide,",
+                  "monsieur."
+                ]
+              ],
+              "model": "Oui ! Je vous aide, monsieur."
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does M. Ferrand ask?",
+              "choices": [
+                "For help with a bag",
+                "For the time"
+              ],
+              "correct": 0,
+              "miss": "Reread: « vous pouvez m'aider avec ce sac ? »"
+            }
+          ],
+          "followUp": "Merci, c'est très gentil.",
+          "newWords": []
+        },
+        {
+          "id": "sit_03_register_s02",
+          "place": "Au bureau · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "At the office, ask Inès for the time. Inès, your colleague, says tu to you.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which question fits Inès?",
+              "choices": [
+                "Excusez-moi, vous avez l'heure ?",
+                "Excuse-moi, tu as l'heure ?",
+                "Pardon, madame, vous avez l'heure ?"
+              ],
+              "correct": 1,
+              "why": [
+                "Good French, but vous is for people you don't know well. Inès says tu to you.",
+                "",
+                "Good French for a stranger, but far too formal for a colleague who says tu."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_03_register_d05",
+          "place": "À l'appart",
+          "cue": "Clarify: at the flat, the music is loud and you don't catch Léa's request. Léa, your flatmate, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Tu peux acheter du pain, s'il te plaît ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Ask her to say it again. Use tu.",
+              "bank": [
+                "Pardon,",
+                "tu peux",
+                "répéter ?",
+                "tu veux",
+                "Merci,"
+              ],
+              "accepted": [
+                [
+                  "Pardon,",
+                  "tu peux",
+                  "répéter ?"
+                ]
+              ],
+              "model": "Pardon, tu peux répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « s'il te plaît » mean here?",
+              "target": "s'il te plaît",
+              "choices": [
+                "thank you",
+                "you're welcome",
+                "please"
+              ],
+              "correct": 2,
+              "why": [
+                "Thank you would be « merci ».",
+                "You're welcome would be « de rien ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Du pain, pour ce soir !",
+          "newWords": []
+        },
+        {
+          "id": "sit_03_register_d06",
+          "place": "Au café",
+          "cue": "The café is busy, and you want Karim's attention. Karim, the barista, says vous to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "___ ! Un café, s'il vous plaît."
+            },
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Oui, tout de suite !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Get his attention politely.",
+              "choices": [
+                "Excuse-moi",
+                "Excusez-moi",
+                "Salut"
+              ],
+              "correct": 1,
+              "why": [
+                "« Excuse-moi » is the tu form. Karim says vous to you.",
+                "",
+                "« Salut » is too casual for Karim, who says vous to you."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Karim answer?",
+              "choices": [
+                "In ten minutes",
+                "Right away"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Oui, tout de suite ! »"
+            }
+          ],
+          "followUp": "Voilà, un café !",
+          "newWords": []
+        },
+        {
+          "id": "sit_03_register_s03",
+          "place": "Au bureau · phrase seule",
+          "standalone": "Corriger",
+          "cue": "On the landing, M. Ferrand, your older neighbour, says vous to you. Fix the mistake in your question.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Excuse-moi, monsieur ! Vous avez l'heure, s'il vous plaît ?",
+              "error": {
+                "word": "Excuse-moi",
+                "fix": "Excusez-moi",
+                "choices": [
+                  "Excuse-moi",
+                  "Salut",
+                  "Excusez-moi"
+                ],
+                "why": "You say vous to M. Ferrand, so « excusez-moi »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Correct the highlighted word."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_03_register_d07",
+          "place": "Texto · Théo",
+          "cue": "Théo, your friend, texts you. He says tu to you. You're already there.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Excuse-moi, je suis en retard ! Dix minutes !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Pas de problème, je ___ ici."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « excuse-moi » mean here?",
+              "target": "excuse-moi",
+              "choices": [
+                "sorry",
+                "thanks",
+                "hurry"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "Thanks would be « merci ».",
+                "Hurry would be « vite »."
+              ]
+            },
+            {
+              "type": "complete",
+              "prompt": "Tell him you'll wait for him.",
+              "choices": [
+                "vous attends",
+                "te attends",
+                "t'attends"
+              ],
+              "correct": 2,
+              "why": [
+                "Théo says tu to you, so « je t'attends ».",
+                "Before a vowel, « te » becomes « t' ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Merci ! Dix minutes, pas plus !",
+          "followUpBy": "Théo",
+          "newWords": []
+        },
+        {
+          "id": "sit_03_register_d08",
+          "place": "WhatsApp · Mme Dumas",
+          "cue": "Mme Dumas, your landlady, says vous to you. She messages you on WhatsApp. You're free all day tomorrow.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Mme Dumas",
+              "text": "Bonjour. Vous pouvez être là demain, à dix heures ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say yes, madam: you'll be there at ten.",
+              "bank": [
+                "Oui,",
+                "madame.",
+                "Je suis là",
+                "à dix heures.",
+                "Tu es là",
+                "monsieur."
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "madame.",
+                  "Je suis là",
+                  "à dix heures."
+                ]
+              ],
+              "model": "Oui, madame. Je suis là à dix heures."
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Mme Dumas want to know?",
+              "choices": [
+                "If you can be there",
+                "If you can call her"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Vous pouvez être là demain ? »"
+            }
+          ],
+          "followUp": "Très bien. Merci, et bonne journée.",
+          "newWords": []
+        },
+        {
+          "id": "sit_03_register_s04",
+          "place": "Au bureau · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You asked Léa, your flatmate, who says tu to you. Now ask M. Ferrand, your older neighbour, who says vous.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Léa, tu peux m'aider avec la table, s'il te plaît ?",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Ask M. Ferrand the same thing, with vous.",
+              "bank": [
+                "Monsieur,",
+                "vous pouvez",
+                "m'aider",
+                "avec la table,",
+                "s'il vous plaît ?",
+                "tu peux",
+                "s'il te plaît ?"
+              ],
+              "accepted": [
+                [
+                  "Monsieur,",
+                  "vous pouvez",
+                  "m'aider",
+                  "avec la table,",
+                  "s'il vous plaît ?"
+                ]
+              ],
+              "model": "Monsieur, vous pouvez m'aider avec la table, s'il vous plaît ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_03_register_d09",
+          "place": "Au bureau",
+          "cue": "At the office, Inès, your colleague, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Excuse-moi, tu peux m'aider deux minutes, s'il te plaît ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui ! Qu'est-ce que je peux faire pour ___ ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "How long does Inès need you?",
+              "choices": [
+                "Ten minutes",
+                "Two minutes"
+              ],
+              "correct": 1,
+              "miss": "Reread: « tu peux m'aider deux minutes ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Offer your help. Use tu.",
+              "choices": [
+                "vous",
+                "toi",
+                "tu"
+              ],
+              "correct": 1,
+              "why": [
+                "Inès says tu to you, so « pour toi ».",
+                "",
+                "After « pour », use « toi », not « tu »."
+              ]
+            }
+          ],
+          "followUp": "Merci ! C'est en anglais, et tu parles anglais !",
+          "newWords": []
+        },
+        {
+          "id": "sit_03_register_d10",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat; his vous means all of you. You say tu to Théo.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Vous pouvez venir à sept heures ? C'est chez moi."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What time does Théo say?",
+              "choices": [
+                "At seven",
+                "At six"
+              ],
+              "correct": 0,
+              "miss": "Reread: « à sept heures »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, you're coming, and offer Théo your help.",
+              "bank": [
+                "Oui,",
+                "je viens !",
+                "Je peux",
+                "t'aider ?",
+                "vous aider ?",
+                "je venez !"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "je viens !",
+                  "Je peux",
+                  "t'aider ?"
+                ]
+              ],
+              "model": "Oui, je viens ! Je peux t'aider ?"
+            }
+          ],
+          "followUp": "Oui, merci ! Viens un peu avant, alors.",
+          "newWords": []
+        },
+        {
+          "id": "sit_03_register_s05",
+          "place": "Au bureau · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Which French words mean “please” to a friend?",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Léa, tu peux fermer la porte, ___ ? Il fait froid ici !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "please (to a friend)",
+              "choices": [
+                "s'il vous plaît",
+                "s'il te plaît",
+                "merci"
+              ],
+              "correct": 1,
+              "why": [
+                "« S'il vous plaît » is for vous. Léa says tu to you.",
+                "",
+                "« Merci » means thank you."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_03_weather",
+      "title": "Parler de la pluie et du beau temps",
+      "note": "Weather small talk: « il pleut », « il fait beau / froid », « il y a du soleil », and « encore » meaning still. Say « très froid », never « beaucoup froid ».",
+      "items": [
+        {
+          "id": "sit_03_weather_d01",
+          "place": "Sur le palier",
+          "cue": "On the landing, M. Ferrand makes small talk. M. Ferrand, your older neighbour, says vous to you. It's cold today.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Bonjour ! Il pleut, aujourd'hui."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does M. Ferrand say about the weather?",
+              "choices": [
+                "It's sunny",
+                "It's raining"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Il pleut, aujourd'hui. »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Agree, and add that it's cold.",
+              "bank": [
+                "Oui,",
+                "et il fait",
+                "froid !",
+                "et il est",
+                "chaud !",
+                "beaucoup"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "et il fait",
+                  "froid !"
+                ]
+              ],
+              "model": "Oui, et il fait froid !"
+            }
+          ],
+          "followUp": "Oui, très froid. Bonne journée !",
+          "newWords": [
+            "il pleut"
+          ]
+        },
+        {
+          "id": "sit_03_weather_d02",
+          "place": "Au café",
+          "cue": "At the café, Karim looks out of the window. Karim, the barista, says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Bonjour ! Il y a du soleil ce matin !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, il fait ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What's the weather like, says Karim?",
+              "choices": [
+                "Sunny",
+                "Rainy"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Il y a du soleil ce matin ! »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Agree: the weather's nice.",
+              "choices": [
+                "beau",
+                "belle",
+                "beaux"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Il fait » takes « beau », not the feminine « belle ».",
+                "« Beaux » is plural. « Il fait » takes « beau »."
+              ]
+            }
+          ],
+          "followUp": "Alors, un café dehors ?",
+          "newWords": [
+            "soleil"
+          ]
+        },
+        {
+          "id": "sit_03_weather_s01",
+          "place": "Sur le palier · phrase seule",
+          "standalone": "Construire",
+          "cue": "On the landing, M. Ferrand, your older neighbour, says vous to you. It's raining, but it isn't cold.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Bonjour ! Vous sortez ce matin ? Il fait froid, non ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say no: it's raining, but it isn't cold.",
+              "bank": [
+                "Non,",
+                "il pleut,",
+                "mais",
+                "il ne fait pas",
+                "froid.",
+                "il n'est pas",
+                "beaucoup"
+              ],
+              "accepted": [
+                [
+                  "Non,",
+                  "il pleut,",
+                  "mais",
+                  "il ne fait pas",
+                  "froid."
+                ]
+              ],
+              "model": "Non, il pleut, mais il ne fait pas froid."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_03_weather_d03",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, says tu to you. She texts you in the morning.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Il pleut encore ! T'as vu ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, et il fait ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Agree, and say it's cold.",
+              "choices": [
+                "froide",
+                "froids",
+                "froid"
+              ],
+              "correct": 2,
+              "why": [
+                "« Il fait » takes « froid », not the feminine.",
+                "« Il fait » takes « froid », not the plural.",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa say?",
+              "choices": [
+                "It has stopped raining",
+                "It's still raining"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Il pleut encore ! »"
+            }
+          ],
+          "followUp": "Je reste à la maison, alors !",
+          "followUpBy": "Léa",
+          "newWords": [
+            "encore"
+          ]
+        },
+        {
+          "id": "sit_03_weather_d04",
+          "place": "Au bureau",
+          "cue": "At the office, Inès looks out of the window. Inès, your colleague, says tu to you. You agree with her.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Il pleut encore ? Je n'aime pas la pluie !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « il pleut » mean here?",
+              "target": "il pleut",
+              "choices": [
+                "it's cold",
+                "it's raining",
+                "it's late"
+              ],
+              "correct": 1,
+              "why": [
+                "It's cold would be « il fait froid ».",
+                "",
+                "It's late would be « il est tard »."
+              ]
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, it's still raining, and agree with her.",
+              "bank": [
+                "Oui,",
+                "il pleut",
+                "encore.",
+                "Moi non plus !",
+                "Moi aussi !",
+                "il fait"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "il pleut",
+                  "encore.",
+                  "Moi non plus !"
+                ],
+                [
+                  "Moi non plus !",
+                  "Oui,",
+                  "il pleut",
+                  "encore."
+                ]
+              ],
+              "model": "Oui, il pleut encore. Moi non plus !"
+            }
+          ],
+          "followUp": "Bon, un café, alors ?",
+          "newWords": [
+            "pluie"
+          ]
+        },
+        {
+          "id": "sit_03_weather_s02",
+          "place": "Sur le palier · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "At the café, make small talk with Karim. Karim, the barista, says vous to you.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which remark fits Karim?",
+              "choices": [
+                "Il fait beau, t'as vu ?",
+                "Il fait beau aujourd'hui, vous avez vu ?",
+                "Il y a du soleil, tu as vu ?"
+              ],
+              "correct": 1,
+              "why": [
+                "Casual spoken French for a friend. Karim says vous to you.",
+                "",
+                "Good French, but tu is for friends. Karim says vous to you."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_03_weather_d05",
+          "place": "Sur le palier",
+          "cue": "Clarify: on the landing, M. Ferrand mumbles. M. Ferrand, your older neighbour, says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Il pleut encore ! Et demain, il pleut aussi."
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Ask him to say it again: sorry, sir, you didn't understand.",
+              "bank": [
+                "Pardon,",
+                "monsieur ?",
+                "Je n'ai pas",
+                "compris.",
+                "Quoi ?",
+                "madame ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon,",
+                  "monsieur ?",
+                  "Je n'ai pas",
+                  "compris."
+                ]
+              ],
+              "model": "Pardon, monsieur ? Je n'ai pas compris."
+            },
+            {
+              "type": "word",
+              "prompt": "What does « encore » mean here?",
+              "target": "encore",
+              "choices": [
+                "never",
+                "still",
+                "already"
+              ],
+              "correct": 1,
+              "why": [
+                "Never would be « jamais ».",
+                "",
+                "Already would be « déjà »."
+              ]
+            }
+          ],
+          "followUp": "Il pleut encore, et demain aussi !",
+          "newWords": []
+        },
+        {
+          "id": "sit_03_weather_d06",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat, Les copains. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Demain, soleil et pas de pluie ! On va au parc ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Carrément, je ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Say you're coming.",
+              "choices": [
+                "vient",
+                "venez",
+                "viens"
+              ],
+              "correct": 2,
+              "why": [
+                "« Vient » goes with il or elle.",
+                "« Venez » goes with vous. You're talking about yourself.",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo suggest?",
+              "choices": [
+                "Going to the park",
+                "Going to the pool"
+              ],
+              "correct": 0,
+              "miss": "Reread: « On va au parc ? »"
+            }
+          ],
+          "followUp": "Parfait ! À dix heures, au parc.",
+          "followUpBy": "Théo",
+          "newWords": []
+        },
+        {
+          "id": "sit_03_weather_s03",
+          "place": "Sur le palier · phrase seule",
+          "standalone": "Corriger",
+          "cue": "On the landing, M. Ferrand, your older neighbour, says vous to you. Fix the mistake in your small talk.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Il pleut encore, et il fait beaucoup froid ce matin.",
+              "error": {
+                "word": "beaucoup",
+                "fix": "très",
+                "choices": [
+                  "beaucoup",
+                  "très",
+                  "bon"
+                ],
+                "why": "Before an adjective like « froid », say « très », not « beaucoup »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Correct the highlighted word."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_03_weather_d07",
+          "place": "Au café",
+          "cue": "At the café, Karim, the barista, says vous to you. You agree with him.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Encore du soleil aujourd'hui ! C'est bien, non ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, j'aime ___ le soleil !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « soleil » mean here?",
+              "target": "soleil",
+              "choices": [
+                "rain",
+                "wind",
+                "sun"
+              ],
+              "correct": 2,
+              "why": [
+                "Rain would be « pluie ».",
+                "Wind would be « vent ».",
+                ""
+              ]
+            },
+            {
+              "type": "complete",
+              "prompt": "Say you like it.",
+              "choices": [
+                "bien",
+                "bon",
+                "très"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Bon » is an adjective. With « aimer », say « j'aime bien ».",
+                "« Très » can't go alone after « j'aime »."
+              ]
+            }
+          ],
+          "followUp": "Moi aussi ! Vous prenez un café dehors ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_03_weather_d08",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, says tu to you. She texts you before work. You're taking the metro too.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Il pleut, du coup je viens en métro."
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say you're taking the metro too.",
+              "bank": [
+                "Moi aussi,",
+                "je prends",
+                "le métro !",
+                "Moi non plus,",
+                "la métro !",
+                "je prend"
+              ],
+              "accepted": [
+                [
+                  "Moi aussi,",
+                  "je prends",
+                  "le métro !"
+                ]
+              ],
+              "model": "Moi aussi, je prends le métro !"
+            },
+            {
+              "type": "comprehend",
+              "prompt": "Why is Inès taking the metro?",
+              "choices": [
+                "Because she's late",
+                "Because it's raining"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Il pleut, du coup… »"
+            }
+          ],
+          "followUp": "Parfait, à tout à l'heure !",
+          "newWords": []
+        },
+        {
+          "id": "sit_03_weather_s04",
+          "place": "Sur le palier · phrase seule",
+          "standalone": "Transformer",
+          "cue": "It's still cold this morning. Rewrite the sentence with « encore ».",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Il fait froid ce matin, et il pleut.",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say it's still cold this morning, and it's raining.",
+              "bank": [
+                "Il fait",
+                "encore",
+                "froid",
+                "ce matin,",
+                "et il pleut.",
+                "beaucoup",
+                "Il est"
+              ],
+              "accepted": [
+                [
+                  "Il fait",
+                  "encore",
+                  "froid",
+                  "ce matin,",
+                  "et il pleut."
+                ]
+              ],
+              "model": "Il fait encore froid ce matin, et il pleut."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_03_weather_d09",
+          "place": "Sur le palier",
+          "cue": "On the landing, M. Ferrand, your older neighbour, says vous to you. You're on your way to work.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Encore de la pluie ! Vous sortez avec ce temps ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, je vais ___ travail."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Say you're going to work.",
+              "choices": [
+                "à la",
+                "en",
+                "au"
+              ],
+              "correct": 2,
+              "why": [
+                "« Travail » is masculine: « à » + « le » becomes « au ».",
+                "« En travail » isn't said. You go « au travail ».",
+                ""
+              ]
+            },
+            {
+              "type": "word",
+              "prompt": "What does « pluie » mean here?",
+              "target": "pluie",
+              "choices": [
+                "snow",
+                "rain",
+                "cold"
+              ],
+              "correct": 1,
+              "why": [
+                "Snow would be « neige ».",
+                "",
+                "Cold would be « froid »."
+              ]
+            }
+          ],
+          "followUp": "Alors, bonne journée !",
+          "newWords": []
+        },
+        {
+          "id": "sit_03_weather_d10",
+          "place": "À l'appart",
+          "cue": "At the flat, Léa, your flatmate, says tu to you. You'd like to go to the park.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Il y a du soleil ! On sort ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa suggest?",
+              "choices": [
+                "Going out",
+                "Staying in"
+              ],
+              "correct": 0,
+              "miss": "Reread: « On sort ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, and suggest the park.",
+              "bank": [
+                "Oui !",
+                "On va",
+                "au parc ?",
+                "à la parc ?",
+                "Non !"
+              ],
+              "accepted": [
+                [
+                  "Oui !",
+                  "On va",
+                  "au parc ?"
+                ]
+              ],
+              "model": "Oui ! On va au parc ?"
+            }
+          ],
+          "followUp": "Oui ! Je prends mon sac.",
+          "newWords": []
+        },
+        {
+          "id": "sit_03_weather_s05",
+          "place": "Sur le palier · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Which French words mean “it's raining”?",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Tu prends le métro avec moi, Léa ? ___ ce matin !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "it's raining",
+              "choices": [
+                "Il fait beau",
+                "Il pleut",
+                "Il fait chaud"
+              ],
+              "correct": 1,
+              "why": [
+                "« Il fait beau » means the weather's nice.",
+                "",
+                "« Il fait chaud » means it's hot."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_03_repeat",
+      "title": "Faire répéter, demander le sens",
+      "note": "When you don't follow: « Vous pouvez répéter ? », « plus lentement », and « … ça veut dire quoi ? ». You only ask about words you already know.",
+      "items": [
+        {
+          "id": "sit_03_repeat_d01",
+          "place": "Au café",
+          "cue": "At the café, Karim talks fast. Karim, the barista, says vous to you. You take nothing in your coffee.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Pardon, vous pouvez répéter ?"
+            },
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Du sucre ? Vous voulez du sucre ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Karim ask?",
+              "choices": [
+                "If you want milk",
+                "If you want sugar"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Vous voulez du sucre ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say no thanks: no sugar.",
+              "bank": [
+                "Non,",
+                "merci.",
+                "Sans sucre.",
+                "Avec sucre.",
+                "Oui,",
+                "s'il te plaît."
+              ],
+              "accepted": [
+                [
+                  "Non,",
+                  "merci.",
+                  "Sans sucre."
+                ]
+              ],
+              "model": "Non, merci. Sans sucre."
+            }
+          ],
+          "followUp": "Très bien, sans sucre !",
+          "followUpBy": "Karim",
+          "newWords": [
+            "vous pouvez répéter"
+          ]
+        },
+        {
+          "id": "sit_03_repeat_d02",
+          "place": "Au bureau",
+          "cue": "At the office, you ask Inès if she'd like a coffee. Inès, your colleague, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Un café ? Carrément !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Carrément ? Ça veut dire quoi ?"
+            },
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Ça veut dire : oui, ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Complete what Inès says.",
+              "choices": [
+                "pas trop",
+                "vraiment",
+                "parfois"
+              ],
+              "correct": 1,
+              "why": [
+                "« Pas trop » means not really: the opposite.",
+                "",
+                "« Parfois » means sometimes."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "So, does Inès want a coffee?",
+              "choices": [
+                "Yes",
+                "No"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Ça veut dire : oui, vraiment ! »"
+            }
+          ],
+          "followUp": "Alors, on y va !",
+          "followUpBy": "Inès",
+          "newWords": [
+            "ça veut dire"
+          ]
+        },
+        {
+          "id": "sit_03_repeat_s01",
+          "place": "Au café · phrase seule",
+          "standalone": "Construire",
+          "cue": "At the café, Karim talks too fast. Karim, the barista, says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Vous voulez un café, un thé ou un chocolat, aujourd'hui ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say sorry, and ask him to repeat more slowly.",
+              "bank": [
+                "Pardon,",
+                "vous pouvez",
+                "répéter",
+                "plus",
+                "lentement ?",
+                "tu peux",
+                "vite ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon,",
+                  "vous pouvez",
+                  "répéter",
+                  "plus",
+                  "lentement ?"
+                ]
+              ],
+              "model": "Pardon, vous pouvez répéter plus lentement ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_03_repeat_d03",
+          "place": "Sur le palier",
+          "cue": "On the landing, you told M. Ferrand where you're from, too fast. M. Ferrand, your older neighbour, says vous to you. You're from Boston.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Pardon, vous pouvez répéter ? Boston ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, je viens ___ Boston, monsieur."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « vous pouvez répéter » mean here?",
+              "target": "vous pouvez répéter",
+              "choices": [
+                "can you come?",
+                "can you say that again?",
+                "can you wait?"
+              ],
+              "correct": 1,
+              "why": [
+                "Come would be « venir ».",
+                "",
+                "Wait would be « attendre »."
+              ]
+            },
+            {
+              "type": "complete",
+              "prompt": "Say where you're from.",
+              "choices": [
+                "à",
+                "de",
+                "du"
+              ],
+              "correct": 1,
+              "why": [
+                "« À » is for where you are or go, not where you're from.",
+                "",
+                "Boston is a city, so no article: « de Boston »."
+              ]
+            }
+          ],
+          "followUp": "Ah, Boston ! C'est loin !",
+          "followUpBy": "M. Ferrand",
+          "newWords": []
+        },
+        {
+          "id": "sit_03_repeat_d04",
+          "place": "Texto · Léa",
+          "cue": "You text Léa about a phrase she uses a lot. Léa, your flatmate, says tu to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "« Du coup », ça veut dire quoi ?"
+            },
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Ça veut dire « alors »."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does « du coup » mean, says Léa?",
+              "choices": [
+                "Maybe",
+                "So"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Ça veut dire alors. »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Thank her, then try it out: so, it's easy!",
+              "bank": [
+                "Ah,",
+                "merci !",
+                "Du coup,",
+                "c'est facile !",
+                "De rien !",
+                "Pardon,"
+              ],
+              "accepted": [
+                [
+                  "Ah,",
+                  "merci !",
+                  "Du coup,",
+                  "c'est facile !"
+                ]
+              ],
+              "model": "Ah, merci ! Du coup, c'est facile !"
+            }
+          ],
+          "followUp": "Voilà ! Tu parles très bien.",
+          "followUpBy": "Léa",
+          "newWords": []
+        },
+        {
+          "id": "sit_03_repeat_s02",
+          "place": "Au café · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "At the café, you didn't catch what Karim said. Karim, the barista, says vous to you.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which question fits Karim?",
+              "choices": [
+                "Quoi ?",
+                "Tu peux répéter ?",
+                "Pardon, vous pouvez répéter ?"
+              ],
+              "correct": 2,
+              "why": [
+                "Good French with friends, but too blunt for Karim.",
+                "Good French, but tu is for friends. Karim says vous to you.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_03_repeat_d05",
+          "place": "Au café",
+          "cue": "Clarify: the café is noisy, and you didn't hear Karim. Karim, the barista, says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Vous voulez du lait ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say sorry, and ask him to repeat.",
+              "bank": [
+                "Pardon,",
+                "vous pouvez",
+                "répéter ?",
+                "tu peux",
+                "Quoi ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon,",
+                  "vous pouvez",
+                  "répéter ?"
+                ]
+              ],
+              "model": "Pardon, vous pouvez répéter ?"
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Karim offer?",
+              "choices": [
+                "Milk",
+                "Sugar"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Vous voulez du lait ? »"
+            }
+          ],
+          "followUp": "Du lait, pour votre café ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_03_repeat_d06",
+          "place": "Au bureau",
+          "cue": "At the office, you check a phrase with Inès. Inès, your colleague, says tu to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "« Pas trop », ça veut dire « non » ?"
+            },
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Oui, ça veut dire : non, pas ___."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « ça veut dire » mean here?",
+              "target": "ça veut dire",
+              "choices": [
+                "it says",
+                "it means",
+                "it wants"
+              ],
+              "correct": 1,
+              "why": [
+                "It says would be « ça dit ».",
+                "",
+                "Together, « veut dire » means mean, not want."
+              ]
+            },
+            {
+              "type": "complete",
+              "prompt": "Complete what Inès says.",
+              "choices": [
+                "beaucoup",
+                "bien",
+                "vite"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Pas bien » means not well.",
+                "« Pas vite » means not fast."
+              ]
+            }
+          ],
+          "followUp": "Voilà, c'est ça !",
+          "followUpBy": "Inès",
+          "newWords": []
+        },
+        {
+          "id": "sit_03_repeat_s03",
+          "place": "Au café · phrase seule",
+          "standalone": "Corriger",
+          "cue": "At the café, Karim, the barista, says vous to you. Fix the verb in your request.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Pardon, vous peux répéter plus lentement, s'il vous plaît ?",
+              "error": {
+                "word": "peux",
+                "fix": "pouvez",
+                "choices": [
+                  "peux",
+                  "pouvez",
+                  "peut"
+                ],
+                "why": "With vous, the verb is « pouvez »: « vous pouvez répéter »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Correct the highlighted word."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_03_repeat_d07",
+          "place": "Sur le palier",
+          "cue": "On the landing, you told M. Ferrand, too fast, how you get to work. M. Ferrand, your older neighbour, says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Vous pouvez répéter plus lentement ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Je ___ au travail à pied."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does M. Ferrand ask?",
+              "choices": [
+                "To speak louder",
+                "To say it again more slowly"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Vous pouvez répéter plus lentement ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Say it again, slowly.",
+              "choices": [
+                "allez",
+                "vais",
+                "va"
+              ],
+              "correct": 1,
+              "why": [
+                "« Allez » goes with vous. You're talking about yourself.",
+                "",
+                "« Va » goes with il or elle."
+              ]
+            }
+          ],
+          "followUp": "Ah, à pied ! C'est bien.",
+          "newWords": []
+        },
+        {
+          "id": "sit_03_repeat_d08",
+          "place": "WhatsApp · Mme Dumas",
+          "cue": "Mme Dumas, your landlady, says vous to you. You asked her on WhatsApp for a visit to fix the shower. You want Saturday.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Mme Dumas",
+              "text": "Excusez-moi, vous pouvez répéter ? C'est pour quand ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say sorry, madam: it's for Saturday.",
+              "bank": [
+                "Pardon,",
+                "madame.",
+                "C'est pour",
+                "samedi.",
+                "monsieur.",
+                "dimanche."
+              ],
+              "accepted": [
+                [
+                  "Pardon,",
+                  "madame.",
+                  "C'est pour",
+                  "samedi."
+                ]
+              ],
+              "model": "Pardon, madame. C'est pour samedi."
+            },
+            {
+              "type": "word",
+              "prompt": "What does « vous pouvez répéter » mean here?",
+              "target": "vous pouvez répéter",
+              "choices": [
+                "can you say that again?",
+                "can you come?",
+                "can you write?"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "Come would be « venir ».",
+                "Write would be « écrire »."
+              ]
+            }
+          ],
+          "followUp": "Samedi, très bien. Bonne journée.",
+          "newWords": []
+        },
+        {
+          "id": "sit_03_repeat_s04",
+          "place": "Au café · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You asked Inès, your colleague, who says tu to you. Now ask Karim, the barista, who says vous.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Pardon, Inès, tu peux répéter plus lentement, s'il te plaît ?",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Ask Karim the same thing, with vous.",
+              "bank": [
+                "Pardon,",
+                "vous pouvez répéter",
+                "plus lentement,",
+                "s'il vous plaît ?",
+                "tu peux répéter",
+                "s'il te plaît ?",
+                "Inès,"
+              ],
+              "accepted": [
+                [
+                  "Pardon,",
+                  "vous pouvez répéter",
+                  "plus lentement,",
+                  "s'il vous plaît ?"
+                ]
+              ],
+              "model": "Pardon, vous pouvez répéter plus lentement, s'il vous plaît ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_03_repeat_d09",
+          "place": "Texto · Théo",
+          "cue": "Théo, your friend, texts you. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Le film ? Pas mal !"
+            },
+            {
+              "speaker": "learner",
+              "text": "« Pas mal », ça veut dire quoi ?"
+            },
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Ça veut dire : c'est ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What is Théo talking about?",
+              "choices": [
+                "A film",
+                "A café"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Le film ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Complete what Théo says.",
+              "choices": [
+                "mal",
+                "bien",
+                "loin"
+              ],
+              "correct": 1,
+              "why": [
+                "« Pas mal » is positive: not bad means good.",
+                "",
+                "« Loin » means far."
+              ]
+            }
+          ],
+          "followUp": "Tu vas aimer !",
+          "followUpBy": "Théo",
+          "newWords": []
+        },
+        {
+          "id": "sit_03_repeat_d10",
+          "place": "À l'appart",
+          "cue": "At the flat, you didn't catch what Léa said. Léa, your flatmate, says tu to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Pardon, vous pouvez répéter ?"
+            },
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "« Vous » ? Avec moi, c'est « tu » !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "Why does Léa react?",
+              "choices": [
+                "You spoke too fast",
+                "You said vous to her"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Vous ? Avec moi, c'est tu ! »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say sorry, and ask again with tu.",
+              "bank": [
+                "Pardon !",
+                "Tu peux",
+                "répéter ?",
+                "Vous pouvez",
+                "Tu peut"
+              ],
+              "accepted": [
+                [
+                  "Pardon !",
+                  "Tu peux",
+                  "répéter ?"
+                ]
+              ],
+              "model": "Pardon ! Tu peux répéter ?"
+            }
+          ],
+          "followUp": "Je dis : tu manges ici ce soir ?",
+          "followUpBy": "Léa",
+          "newWords": []
+        },
+        {
+          "id": "sit_03_repeat_s05",
+          "place": "Au café · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Which French words mean “it means”?",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Pardon, Léa, « carrément », ___ quoi ? Je ne comprends pas."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "it means",
+              "choices": [
+                "ça veut dire",
+                "ça dit",
+                "ça veut"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Ça dit » means it says.",
+                "« Ça veut » means it wants."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,2623 @@
+{
+  "elements": [
+    {
+      "id": "sit_05_when",
+      "title": "Choisir le jour",
+      "note": "Propose a day with « On se voit… ? », or leave it open with « Quand tu veux » (« Quand vous voulez » with vous).",
+      "items": [
+        {
+          "id": "sit_05_when_d01",
+          "place": "Texto · Théo",
+          "cue": "Théo, a friend, texts you. He says tu to you. You're free on Saturday.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Salut ! On se voit quand ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo want to know?",
+              "choices": [
+                "When you can meet",
+                "Where you can meet"
+              ],
+              "correct": 0,
+              "miss": "Reread: « On se voit quand ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Suggest Saturday, if that works for him.",
+              "bank": [
+                "On se voit",
+                "samedi,",
+                "si tu veux !",
+                "si vous voulez !",
+                "On se vois",
+                "dimanche,"
+              ],
+              "accepted": [
+                [
+                  "On se voit",
+                  "samedi,",
+                  "si tu veux !"
+                ]
+              ],
+              "model": "On se voit samedi, si tu veux !"
+            }
+          ],
+          "followUp": "Top ! Samedi, alors.",
+          "newWords": [
+            "on se voit"
+          ]
+        },
+        {
+          "id": "sit_05_when_d02",
+          "place": "Texto · Inès",
+          "cue": "Inès, a colleague, texts you. She says tu to you. You have no plans that evening.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "On se voit vendredi soir ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, vendredi, je suis ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "When does Inès suggest meeting?",
+              "choices": [
+                "Friday evening",
+                "Saturday evening"
+              ],
+              "correct": 0,
+              "miss": "Reread: « vendredi soir »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Say you're free.",
+              "choices": [
+                "libres",
+                "calme",
+                "libre"
+              ],
+              "correct": 2,
+              "why": [
+                "You are one person, so no -s.",
+                "« Calme » means calm, not free.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Super ! À vendredi, alors.",
+          "newWords": [
+            "vendredi"
+          ]
+        },
+        {
+          "id": "sit_05_when_s01",
+          "place": "Texto · Théo · phrase seule",
+          "standalone": "Construire",
+          "cue": "Théo, a friend, texts you. He says tu to you. You're free on Friday evening too.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Salut ! Je suis libre vendredi soir et samedi, et toi ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say you're free too, then suggest Friday evening.",
+              "bank": [
+                "Moi aussi !",
+                "On se voit",
+                "vendredi soir ?",
+                "Moi non plus !",
+                "On se vois",
+                "samedi soir ?"
+              ],
+              "accepted": [
+                [
+                  "Moi aussi !",
+                  "On se voit",
+                  "vendredi soir ?"
+                ]
+              ],
+              "model": "Moi aussi ! On se voit vendredi soir ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_05_when_d03",
+          "place": "À l'appart",
+          "cue": "Léa, your flatmate, says tu to you. You'd like to go on Saturday evening.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "On va au cinéma ? Quand tu veux !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Samedi soir, ça te ___ ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Suggest Saturday evening.",
+              "choices": [
+                "dis",
+                "dit",
+                "dire"
+              ],
+              "correct": 1,
+              "why": [
+                "« Ça » takes the il form: « ça te dit ».",
+                "",
+                "« Dire » is the infinitive; « ça » needs a verb form."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa say about the day?",
+              "choices": [
+                "She's only free on Saturday",
+                "You can choose the day"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Quand tu veux ! »"
+            }
+          ],
+          "followUp": "Carrément ! Samedi soir, alors.",
+          "newWords": [
+            "quand tu veux"
+          ]
+        },
+        {
+          "id": "sit_05_when_d04",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat. He says tu to you. You're only free on Friday.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Les copains, on se voit vendredi ou samedi ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « vendredi » mean here?",
+              "target": "vendredi",
+              "choices": [
+                "Saturday",
+                "Friday",
+                "Sunday"
+              ],
+              "correct": 1,
+              "why": [
+                "Saturday is « samedi ».",
+                "",
+                "Sunday is « dimanche »."
+              ]
+            },
+            {
+              "type": "reply",
+              "prompt": "Say you're free on Friday.",
+              "bank": [
+                "Moi,",
+                "je suis",
+                "libre",
+                "libres",
+                "vendredi !",
+                "samedi !",
+                "tu es"
+              ],
+              "accepted": [
+                [
+                  "Moi,",
+                  "je suis",
+                  "libre",
+                  "vendredi !"
+                ]
+              ],
+              "model": "Moi, je suis libre vendredi !"
+            }
+          ],
+          "followUp": "Vendredi, alors ! Et vous, les copains ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_05_when_s02",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "Mme Dumas, your landlady, wants to come by the flat. She says vous to you. Any day suits you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Mme Dumas",
+              "text": "Bonjour. Je voudrais passer chez vous. Quel jour, pour vous ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which reply fits Mme Dumas?",
+              "choices": [
+                "Vendredi, top !",
+                "Quand vous voulez, madame.",
+                "Quand tu veux !"
+              ],
+              "correct": 1,
+              "why": [
+                "Too casual: « top » is for friends.",
+                "",
+                "Good French with a friend, but « tu » is wrong here. Say vous to Mme Dumas."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_05_when_d05",
+          "place": "Au bureau",
+          "cue": "Inès, a colleague, says tu to you. She speaks fast at her desk, and you don't catch it.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "On se voit vendredi ou samedi ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Ask her to repeat.",
+              "bank": [
+                "Pardon,",
+                "tu peux",
+                "vous pouvez",
+                "répéter ?",
+                "répète ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon,",
+                  "tu peux",
+                  "répéter ?"
+                ]
+              ],
+              "model": "Pardon, tu peux répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « on se voit » mean here?",
+              "target": "on se voit",
+              "choices": [
+                "can you see us?",
+                "shall we meet?",
+                "shall we eat?"
+              ],
+              "correct": 1,
+              "why": [
+                "That would be « tu nous vois ? ».",
+                "",
+                "Eat would be « manger »."
+              ]
+            }
+          ],
+          "followUp": "Pardon ! On se voit vendredi ou samedi ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_05_when_d06",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you. You'd like to go on Sunday.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Le cinéma ? Quand tu veux, je suis libre !"
+            },
+            {
+              "speaker": "learner",
+              "text": "On se ___ dimanche, alors ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Suggest Sunday.",
+              "choices": [
+                "vois",
+                "voir",
+                "voit"
+              ],
+              "correct": 2,
+              "why": [
+                "« Vois » goes with je or tu.",
+                "« Voir » is the infinitive; « on » needs a verb form.",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa say?",
+              "choices": [
+                "She's free any day",
+                "She doesn't want to go"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Quand tu veux, je suis libre ! »"
+            }
+          ],
+          "followUp": "Dimanche, parfait !",
+          "newWords": []
+        },
+        {
+          "id": "sit_05_when_s03",
+          "place": "Texto · Théo · phrase seule",
+          "standalone": "Corriger",
+          "cue": "You text Théo, a friend. You say tu to each other. Fix the mistake in your text.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Salut Théo ! Tu es libre vendredi soir ? On se vois au cinéma ?",
+              "error": {
+                "word": "vois",
+                "fix": "voit",
+                "choices": [
+                  "voir",
+                  "vois",
+                  "voit"
+                ],
+                "why": "With « on », the verb takes the il form: « on se voit »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Correct the highlighted word."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_05_when_d07",
+          "place": "Au bureau",
+          "cue": "Inès, a colleague, says tu to you. You'd like Saturday at ten.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "La piscine ? Quand tu veux, vendredi ou samedi."
+            },
+            {
+              "speaker": "learner",
+              "text": "Alors samedi, ___ dix heures ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « quand tu veux » mean here?",
+              "target": "quand tu veux",
+              "choices": [
+                "what do you want?",
+                "where you like",
+                "whenever you like"
+              ],
+              "correct": 2,
+              "why": [
+                "That would be « qu'est-ce que tu veux ? ».",
+                "Where would be « où ».",
+                ""
+              ]
+            },
+            {
+              "type": "complete",
+              "prompt": "Suggest ten o'clock.",
+              "choices": [
+                "en",
+                "de",
+                "à"
+              ],
+              "correct": 2,
+              "why": [
+                "« En » doesn't go before a clock time.",
+                "« De dix heures » means from ten o'clock.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Parfait, à samedi !",
+          "newWords": []
+        },
+        {
+          "id": "sit_05_when_d08",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat (vous = you all). He says tu to you. You're free.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "On se voit vendredi soir ? Vous êtes libres ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say yes, you're free.",
+              "bank": [
+                "Oui,",
+                "je suis",
+                "libre !",
+                "libres !",
+                "tu es",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "je suis",
+                  "libre !"
+                ]
+              ],
+              "model": "Oui, je suis libre !"
+            },
+            {
+              "type": "comprehend",
+              "prompt": "When does Théo want to meet?",
+              "choices": [
+                "Saturday evening",
+                "Friday evening"
+              ],
+              "correct": 1,
+              "miss": "Reread: « vendredi soir »."
+            }
+          ],
+          "followUp": "Moi aussi ! Vendredi, alors.",
+          "followUpBy": "Léa",
+          "newWords": []
+        },
+        {
+          "id": "sit_05_when_s04",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You wrote this to Théo, a friend. Now write it to Mme Dumas, your landlady, who says vous to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Salut ! Je suis libre samedi et dimanche, quand tu veux !",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Now write it to Mme Dumas. Greet her politely.",
+              "bank": [
+                "Bonjour, madame !",
+                "Je suis libre",
+                "samedi et dimanche,",
+                "quand vous voulez.",
+                "quand tu veux.",
+                "Salut !",
+                "quand vous veux."
+              ],
+              "accepted": [
+                [
+                  "Bonjour, madame !",
+                  "Je suis libre",
+                  "samedi et dimanche,",
+                  "quand vous voulez."
+                ]
+              ],
+              "model": "Bonjour, madame ! Je suis libre samedi et dimanche, quand vous voulez."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_05_when_d09",
+          "place": "Texto · Inès",
+          "cue": "Inès, a colleague, texts you. She says tu to you. You're free that day too.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Pour le cinéma, je suis libre vendredi. Et toi ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Moi aussi ! On se voit ___ cinéma ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "When is Inès free?",
+              "choices": [
+                "On Friday",
+                "On Saturday"
+              ],
+              "correct": 0,
+              "miss": "Reread: « je suis libre vendredi »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Suggest meeting at the cinema.",
+              "choices": [
+                "à la",
+                "en",
+                "au"
+              ],
+              "correct": 2,
+              "why": [
+                "« Cinéma » is masculine: à + le = au.",
+                "We don't say « en cinéma ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Oui ! À vendredi !",
+          "newWords": []
+        },
+        {
+          "id": "sit_05_when_d10",
+          "place": "À l'appart",
+          "cue": "Léa, your flatmate, says tu to you. Tonight you can't; tomorrow evening you can.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Ce soir, on se voit chez Karim ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "Where does Léa suggest meeting?",
+              "choices": [
+                "At the cinema",
+                "At Karim's café"
+              ],
+              "correct": 1,
+              "miss": "Reread: « chez Karim »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Say you can't tonight, and suggest tomorrow evening.",
+              "bank": [
+                "Ce soir,",
+                "je ne peux pas.",
+                "Demain soir ?",
+                "je peux.",
+                "Hier soir ?"
+              ],
+              "accepted": [
+                [
+                  "Ce soir,",
+                  "je ne peux pas.",
+                  "Demain soir ?"
+                ]
+              ],
+              "model": "Ce soir, je ne peux pas. Demain soir ?"
+            }
+          ],
+          "followUp": "D'accord, demain soir !",
+          "newWords": []
+        },
+        {
+          "id": "sit_05_when_s05",
+          "place": "Texto · Théo · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Which French word means “Friday”?",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Je suis libre ___ soir. On se voit au cinéma ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Friday",
+              "choices": [
+                "samedi",
+                "vendredi",
+                "dimanche"
+              ],
+              "correct": 1,
+              "why": [
+                "« Samedi » means Saturday.",
+                "",
+                "« Dimanche » means Sunday."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_05_time",
+      "title": "Fixer l'heure",
+      "note": "Give a time with « et quart » or « et demie », then check it suits: « Ça te va ? » with a friend, « Ça vous va ? » with Mme Dumas or a whole group.",
+      "items": [
+        {
+          "id": "sit_05_time_d01",
+          "place": "Texto · Inès",
+          "cue": "Inès, a colleague, texts you. She says tu to you. The time suits you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "On se voit vendredi à sept heures et quart ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "When does Inès suggest meeting?",
+              "choices": [
+                "Saturday at 7:15",
+                "Friday at 7:15"
+              ],
+              "correct": 1,
+              "miss": "Reread: « vendredi à sept heures et quart »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes: quarter past seven is perfect.",
+              "bank": [
+                "Oui,",
+                "sept heures",
+                "et quart,",
+                "et demie,",
+                "parfait !",
+                "sept heure"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "sept heures",
+                  "et quart,",
+                  "parfait !"
+                ]
+              ],
+              "model": "Oui, sept heures et quart, parfait !"
+            }
+          ],
+          "followUp": "Top ! À vendredi.",
+          "newWords": [
+            "et quart"
+          ]
+        },
+        {
+          "id": "sit_05_time_d02",
+          "place": "Texto · Théo",
+          "cue": "Théo, a friend, texts you. He says tu to you. You're happy with his plan.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Samedi, on se voit à huit heures. Ça te va ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, ça ___ va très bien !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What time does Théo suggest?",
+              "choices": [
+                "Six o'clock",
+                "Eight o'clock"
+              ],
+              "correct": 1,
+              "miss": "Reread: « à huit heures »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Say it suits you.",
+              "choices": [
+                "me",
+                "te",
+                "moi"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Te » means you; you're talking about yourself.",
+                "« Moi » can't go before the verb here."
+              ]
+            }
+          ],
+          "followUp": "Super, à samedi !",
+          "newWords": [
+            "ça te va"
+          ]
+        },
+        {
+          "id": "sit_05_time_s01",
+          "place": "Texto · Léa · phrase seule",
+          "standalone": "Construire",
+          "cue": "Léa, your flatmate, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Ce soir, je suis libre. On se voit à quelle heure ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Suggest 7:15 and ask if that suits her.",
+              "bank": [
+                "Sept heures",
+                "et quart,",
+                "ça te va ?",
+                "ça me va ?",
+                "Sept heure",
+                "ça te vas ?"
+              ],
+              "accepted": [
+                [
+                  "Sept heures",
+                  "et quart,",
+                  "ça te va ?"
+                ]
+              ],
+              "model": "Sept heures et quart, ça te va ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_05_time_d03",
+          "place": "WhatsApp · Mme Dumas",
+          "cue": "Mme Dumas, your landlady, writes to you on WhatsApp. She says vous to you. She wants to come by the flat. The time suits you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Mme Dumas",
+              "text": "Bonjour. Vendredi à dix heures, ça vous va ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, ça me va très ___, madame."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Say it suits you very well.",
+              "choices": [
+                "bon",
+                "bien",
+                "beau"
+              ],
+              "correct": 1,
+              "why": [
+                "« Bon » is an adjective; after a verb, use « bien ».",
+                "",
+                "« Beau » means beautiful."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "When does Mme Dumas want to come?",
+              "choices": [
+                "Friday at two",
+                "Friday at ten"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Vendredi à dix heures »."
+            }
+          ],
+          "followUp": "Très bien. À vendredi.",
+          "newWords": [
+            "ça vous va"
+          ]
+        },
+        {
+          "id": "sit_05_time_d04",
+          "place": "Au bureau",
+          "cue": "Inès, a colleague, says tu to you at the office. The time suits you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "On mange à midi et quart ? Ça te va ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « et quart » mean here?",
+              "target": "et quart",
+              "choices": [
+                "half past",
+                "quarter to",
+                "quarter past"
+              ],
+              "correct": 2,
+              "why": [
+                "Half past is « et demie ».",
+                "Quarter to would be « moins le quart ».",
+                ""
+              ]
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes: quarter past twelve suits you.",
+              "bank": [
+                "Oui,",
+                "midi",
+                "et quart,",
+                "et demie,",
+                "ça me va !",
+                "ça te va !"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "midi",
+                  "et quart,",
+                  "ça me va !"
+                ],
+                [
+                  "Oui,",
+                  "ça me va !"
+                ]
+              ],
+              "model": "Oui, midi et quart, ça me va !"
+            }
+          ],
+          "followUp": "Top, à tout à l'heure !",
+          "newWords": []
+        },
+        {
+          "id": "sit_05_time_s02",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "Mme Dumas, your landlady, writes to you on WhatsApp. She says vous to you. The time suits you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Mme Dumas",
+              "text": "Bonjour. Je peux passer samedi à dix heures et quart ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which reply fits Mme Dumas?",
+              "choices": [
+                "Top !",
+                "Ouais, ça me va !",
+                "Oui, ça me va très bien, madame."
+              ],
+              "correct": 2,
+              "why": [
+                "Too casual: « top » is for friends.",
+                "« Ouais » is too casual for Mme Dumas.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_05_time_d05",
+          "place": "À l'appart",
+          "cue": "Léa, your flatmate, calls from the hallway, and you don't catch the time. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Ce soir, sept heures et quart, ça te va ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Ask her to repeat the time.",
+              "bank": [
+                "Pardon,",
+                "tu peux",
+                "répéter",
+                "l'heure ?",
+                "vous pouvez",
+                "répéter ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon,",
+                  "tu peux",
+                  "répéter",
+                  "l'heure ?"
+                ],
+                [
+                  "Pardon,",
+                  "tu peux",
+                  "répéter ?"
+                ]
+              ],
+              "model": "Pardon, tu peux répéter l'heure ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « ça te va » mean here?",
+              "target": "ça te va",
+              "choices": [
+                "are you OK?",
+                "does that suit you?",
+                "are you going?"
+              ],
+              "correct": 1,
+              "why": [
+                "« Ça va ? » alone means are you OK?",
+                "",
+                "Going would be « tu vas »."
+              ]
+            }
+          ],
+          "followUp": "Sept heures et quart ! Ça te va ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_05_time_d06",
+          "place": "WhatsApp · Mme Dumas",
+          "cue": "Mme Dumas, your landlady, writes to you on WhatsApp. She says vous to you. The time suits you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Mme Dumas",
+              "text": "Bonjour. Samedi, dix heures et quart, ça vous va ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, c'est ___ pour moi, merci."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Say it's perfect for you.",
+              "choices": [
+                "parfaite",
+                "parfaits",
+                "parfait"
+              ],
+              "correct": 2,
+              "why": [
+                "After « c'est », use the masculine: « parfait ».",
+                "« Parfaits » is plural.",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What time does Mme Dumas suggest?",
+              "choices": [
+                "10:30",
+                "10:15"
+              ],
+              "correct": 1,
+              "miss": "Reread: « dix heures et quart »."
+            }
+          ],
+          "followUp": "Très bien. Bonne journée.",
+          "newWords": []
+        },
+        {
+          "id": "sit_05_time_s03",
+          "place": "Texto · Théo · phrase seule",
+          "standalone": "Corriger",
+          "cue": "You text Théo, a friend. You say tu to each other. Fix the mistake in your text.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Salut Théo ! Samedi soir, on se voit à huit heures, ça te vas ?",
+              "error": {
+                "word": "vas",
+                "fix": "va",
+                "choices": [
+                  "va",
+                  "vas",
+                  "vais"
+                ],
+                "why": "The subject is « ça », so the verb is « va »: « ça te va »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Correct the highlighted word."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_05_time_d07",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat (vous = you all). He says tu to you. Eight is a bit early for you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Samedi, on se voit vers huit heures. Ça vous va ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Pour moi, c'est un peu ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « ça vous va » mean here?",
+              "target": "ça vous va",
+              "choices": [
+                "are you all coming?",
+                "are you all OK?",
+                "does that suit you all?"
+              ],
+              "correct": 2,
+              "why": [
+                "Coming would be « vous venez ».",
+                "« Ça va ? » alone asks how you are.",
+                ""
+              ]
+            },
+            {
+              "type": "complete",
+              "prompt": "Say it's a bit early for you.",
+              "choices": [
+                "tôt",
+                "loin",
+                "tard"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Loin » means far.",
+                "« Tard » means late."
+              ]
+            }
+          ],
+          "followUp": "Bon, alors huit heures et demie !",
+          "newWords": []
+        },
+        {
+          "id": "sit_05_time_d08",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you. 6:15 is too early for you; 7:30 is fine.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "On va à la piscine demain ? Six heures et quart ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say it's too early, and suggest 7:30.",
+              "bank": [
+                "C'est trop tôt !",
+                "Sept heures",
+                "et demie ?",
+                "et demi ?",
+                "C'est trop loin !"
+              ],
+              "accepted": [
+                [
+                  "C'est trop tôt !",
+                  "Sept heures",
+                  "et demie ?"
+                ]
+              ],
+              "model": "C'est trop tôt ! Sept heures et demie ?"
+            },
+            {
+              "type": "comprehend",
+              "prompt": "Where does Léa want to go?",
+              "choices": [
+                "To the cinema",
+                "To the pool"
+              ],
+              "correct": 1,
+              "miss": "Reread: « à la piscine »."
+            }
+          ],
+          "followUp": "D'accord, sept heures et demie !",
+          "newWords": []
+        },
+        {
+          "id": "sit_05_time_s04",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You wrote this to Léa, your flatmate. Now write it to Mme Dumas, your landlady, who says vous to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Salut ! Demain à dix heures et quart, ça te va ?",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Now write it to Mme Dumas. Greet her politely.",
+              "bank": [
+                "Bonjour, madame !",
+                "Demain",
+                "à dix heures",
+                "et quart,",
+                "ça vous va ?",
+                "ça te va ?",
+                "Salut !",
+                "ça vous vas ?"
+              ],
+              "accepted": [
+                [
+                  "Bonjour, madame !",
+                  "Demain",
+                  "à dix heures",
+                  "et quart,",
+                  "ça vous va ?"
+                ]
+              ],
+              "model": "Bonjour, madame ! Demain à dix heures et quart, ça vous va ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_05_time_d09",
+          "place": "Au bureau",
+          "cue": "Inès, a colleague, says tu to you at the office. The time suits you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Un café demain matin ? Ça te va, huit heures ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, je ___ libre. À demain !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès suggest?",
+              "choices": [
+                "A coffee tomorrow morning",
+                "A coffee this evening"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Un café demain matin ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Say you're free.",
+              "choices": [
+                "es",
+                "suis",
+                "est"
+              ],
+              "correct": 1,
+              "why": [
+                "« Es » goes with tu.",
+                "",
+                "« Est » goes with il or elle."
+              ]
+            }
+          ],
+          "followUp": "Super, huit heures, alors !",
+          "newWords": []
+        },
+        {
+          "id": "sit_05_time_d10",
+          "place": "WhatsApp · Mme Dumas",
+          "cue": "Mme Dumas, your landlady, writes to you on WhatsApp. She says vous to you. 8:15 is a bit early for you; ten o'clock is fine.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Mme Dumas",
+              "text": "Bonjour. Vendredi, huit heures et quart, ça vous va ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "Which day does Mme Dumas suggest?",
+              "choices": [
+                "Saturday",
+                "Friday"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Vendredi, huit heures et quart »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Say it's a bit early for you, and suggest ten o'clock. Use vous.",
+              "bank": [
+                "C'est un peu tôt",
+                "pour moi.",
+                "Dix heures,",
+                "ça vous va ?",
+                "ça te va ?",
+                "pour vous."
+              ],
+              "accepted": [
+                [
+                  "C'est un peu tôt",
+                  "pour moi.",
+                  "Dix heures,",
+                  "ça vous va ?"
+                ]
+              ],
+              "model": "C'est un peu tôt pour moi. Dix heures, ça vous va ?"
+            }
+          ],
+          "followUp": "Dix heures, très bien. À vendredi.",
+          "newWords": []
+        },
+        {
+          "id": "sit_05_time_s05",
+          "place": "Texto · Inès · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Which French words mean “quarter past”?",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Salut Inès ! On se voit vendredi à sept heures ___ ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "quarter past",
+              "choices": [
+                "et demie",
+                "en retard",
+                "et quart"
+              ],
+              "correct": 2,
+              "why": [
+                "« Et demie » means half past.",
+                "« En retard » means late.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_05_where",
+      "title": "Fixer le lieu",
+      "note": "Agree on a place: « On se retrouve où ? », « devant la gare », « à l'entrée du parc ».",
+      "items": [
+        {
+          "id": "sit_05_where_d01",
+          "place": "Texto · Théo",
+          "cue": "Théo, a friend, texts you. He says tu to you. You'd like to meet at the station.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Pour samedi, on se retrouve où ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo want to know?",
+              "choices": [
+                "When to meet",
+                "Where to meet"
+              ],
+              "correct": 1,
+              "miss": "Reread: « on se retrouve où ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Suggest the station.",
+              "bank": [
+                "On se retrouve",
+                "à la gare ?",
+                "à le gare ?",
+                "au gare ?"
+              ],
+              "accepted": [
+                [
+                  "On se retrouve",
+                  "à la gare ?"
+                ]
+              ],
+              "model": "On se retrouve à la gare ?"
+            }
+          ],
+          "followUp": "Super, à samedi !",
+          "newWords": [
+            "on se retrouve"
+          ]
+        },
+        {
+          "id": "sit_05_where_d02",
+          "place": "Texto · Inès",
+          "cue": "Inès, a colleague, texts you. She says tu to you. You agree, but you need the time.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "On se retrouve devant chez Karim ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "D'accord ! À ___ heure ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "Where does Inès suggest meeting?",
+              "choices": [
+                "Next to Karim's café",
+                "In front of Karim's café"
+              ],
+              "correct": 1,
+              "miss": "Reread: « devant chez Karim »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Ask what time.",
+              "choices": [
+                "quelle",
+                "quel",
+                "quelles"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Heure » is feminine: « quelle ».",
+                "« Quelles » is plural; you mean one time."
+              ]
+            }
+          ],
+          "followUp": "Six heures et demie !",
+          "newWords": [
+            "devant"
+          ]
+        },
+        {
+          "id": "sit_05_where_s01",
+          "place": "Texto · Théo · phrase seule",
+          "standalone": "Construire",
+          "cue": "Théo, a friend, texts you. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Salut ! Pour samedi, on se retrouve où, et à quelle heure ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Suggest outside the station, at eight.",
+              "bank": [
+                "Devant",
+                "la gare,",
+                "le gare,",
+                "à huit heures ?",
+                "en huit heures ?"
+              ],
+              "accepted": [
+                [
+                  "Devant",
+                  "la gare,",
+                  "à huit heures ?"
+                ]
+              ],
+              "model": "Devant la gare, à huit heures ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_05_where_d03",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat. He says tu to you. You're in, but you need the time.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Dimanche, on se retrouve à l'entrée du parc !"
+            },
+            {
+              "speaker": "learner",
+              "text": "D'accord ! ___ quelle heure ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Ask at what time.",
+              "choices": [
+                "En",
+                "À",
+                "De"
+              ],
+              "correct": 1,
+              "why": [
+                "« En » doesn't go before a clock time.",
+                "",
+                "« De quelle heure » means from what time."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "Where does Théo want to meet?",
+              "choices": [
+                "At the park entrance",
+                "At the station entrance"
+              ],
+              "correct": 0,
+              "miss": "Reread: « à l'entrée du parc »."
+            }
+          ],
+          "followUp": "Vers dix heures !",
+          "newWords": [
+            "l'entrée"
+          ]
+        },
+        {
+          "id": "sit_05_where_d04",
+          "place": "À l'appart",
+          "cue": "Léa, your flatmate, says tu to you. You're fine with her plan.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Ce soir, on se retrouve devant le cinéma ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « devant » mean here?",
+              "target": "devant",
+              "choices": [
+                "inside",
+                "in front of",
+                "next to"
+              ],
+              "correct": 1,
+              "why": [
+                "Inside would be « dans ».",
+                "",
+                "Next to is « à côté de »."
+              ]
+            },
+            {
+              "type": "reply",
+              "prompt": "Agree, and ask what time.",
+              "bank": [
+                "D'accord !",
+                "Oui !",
+                "À quelle heure ?",
+                "À quel heure ?"
+              ],
+              "accepted": [
+                [
+                  "D'accord !",
+                  "À quelle heure ?"
+                ],
+                [
+                  "Oui !",
+                  "À quelle heure ?"
+                ]
+              ],
+              "model": "D'accord ! À quelle heure ?"
+            }
+          ],
+          "followUp": "Vers huit heures, ça te va ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_05_where_s02",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "Mme Dumas, your landlady, writes to you on WhatsApp. She says vous to you. Suggest the entrance.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Mme Dumas",
+              "text": "Bonjour. Pour les clés, on se retrouve où samedi ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which reply fits Mme Dumas?",
+              "choices": [
+                "On se retrouve devant chez moi, ça te va ?",
+                "Devant.",
+                "Devant l'entrée, si ça vous va, madame."
+              ],
+              "correct": 2,
+              "why": [
+                "Good French with a friend, but « te » is for tu. Say vous to Mme Dumas.",
+                "Too short and abrupt for Mme Dumas.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_05_where_d05",
+          "place": "Texto · Théo",
+          "cue": "Clarify: Théo, a friend, texts you. He says tu to you. The park has two entrances.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Samedi, on se retrouve à l'entrée du parc ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Ask him which entrance.",
+              "bank": [
+                "Pardon,",
+                "quelle entrée ?",
+                "quel entrée ?",
+                "quelles entrée ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon,",
+                  "quelle entrée ?"
+                ]
+              ],
+              "model": "Pardon, quelle entrée ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « on se retrouve » mean here?",
+              "target": "on se retrouve",
+              "choices": [
+                "we find it",
+                "we go back",
+                "we meet up"
+              ],
+              "correct": 2,
+              "why": [
+                "Find would be « trouver ».",
+                "Go back would be « on rentre ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "L'entrée à côté du métro !",
+          "newWords": []
+        },
+        {
+          "id": "sit_05_where_d06",
+          "place": "Au bureau",
+          "cue": "Inès, a colleague, says tu to you at the office. Her plan suits you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Demain matin, on se retrouve devant la piscine ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, ça me ___ ! À demain."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Say it suits you.",
+              "choices": [
+                "vas",
+                "va",
+                "vais"
+              ],
+              "correct": 1,
+              "why": [
+                "« Vas » goes with tu.",
+                "",
+                "« Vais » goes with je."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "Where does Inès want to meet?",
+              "choices": [
+                "In front of the office",
+                "In front of the pool"
+              ],
+              "correct": 1,
+              "miss": "Reread: « devant la piscine »."
+            }
+          ],
+          "followUp": "Super ! Sept heures, alors.",
+          "newWords": []
+        },
+        {
+          "id": "sit_05_where_s03",
+          "place": "Texto · Théo · phrase seule",
+          "standalone": "Corriger",
+          "cue": "You text Théo, a friend. You say tu to each other. Fix the mistake in your text.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Salut Théo ! Samedi, on se retrouve devant le gare à huit heures ?",
+              "error": {
+                "word": "le",
+                "fix": "la",
+                "choices": [
+                  "la",
+                  "le",
+                  "les"
+                ],
+                "why": "« Gare » is feminine: « la gare »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Correct the highlighted word."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_05_where_d07",
+          "place": "WhatsApp · Mme Dumas",
+          "cue": "Mme Dumas, your landlady, writes to you on WhatsApp. She says vous to you. You're running five minutes late.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Mme Dumas",
+              "text": "Bonjour. Je suis devant l'entrée, avec les clés."
+            },
+            {
+              "speaker": "learner",
+              "text": "Pardon, madame ! Vous ___ attendre cinq minutes ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « l'entrée » mean here?",
+              "target": "l'entrée",
+              "choices": [
+                "the entrance",
+                "the exit",
+                "the stairs"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "Exit would be « la sortie ».",
+                "Stairs would be « l'escalier »."
+              ]
+            },
+            {
+              "type": "complete",
+              "prompt": "Ask her politely to wait.",
+              "choices": [
+                "peut",
+                "peux",
+                "pouvez"
+              ],
+              "correct": 2,
+              "why": [
+                "« Peut » goes with il or elle.",
+                "« Peux » goes with je or tu; you say vous to Mme Dumas.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Bien sûr. Je vous attends.",
+          "newWords": []
+        },
+        {
+          "id": "sit_05_where_d08",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat. He says tu to you. You'd like to meet outside the cinema.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Samedi soir, on se retrouve où, les copains ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Suggest outside the cinema.",
+              "bank": [
+                "Devant",
+                "le cinéma ?",
+                "la cinéma ?",
+                "Dans",
+                "Pour"
+              ],
+              "accepted": [
+                [
+                  "Devant",
+                  "le cinéma ?"
+                ]
+              ],
+              "model": "Devant le cinéma ?"
+            },
+            {
+              "type": "comprehend",
+              "prompt": "When is the plan?",
+              "choices": [
+                "Sunday evening",
+                "Saturday evening"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Samedi soir »."
+            }
+          ],
+          "followUp": "Devant le cinéma ? Top !",
+          "followUpBy": "Léa",
+          "newWords": []
+        },
+        {
+          "id": "sit_05_where_s04",
+          "place": "Texto · Théo · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You wrote this to Théo, a friend; you say tu to each other. Now you don't know the place yet.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Samedi, on se retrouve devant la gare à huit heures.",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Turn it into a question: ask where you meet on Saturday at eight.",
+              "bank": [
+                "Samedi",
+                "à huit heures,",
+                "on se retrouve",
+                "où ?",
+                "quand ?",
+                "devant la gare."
+              ],
+              "accepted": [
+                [
+                  "Samedi",
+                  "à huit heures,",
+                  "on se retrouve",
+                  "où ?"
+                ]
+              ],
+              "model": "Samedi à huit heures, on se retrouve où ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_05_where_d09",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you. You agree, and you'd like a coffee after.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Dimanche, on se retrouve devant l'entrée du marché ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, et on ___ un café après ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "Where does Léa suggest meeting?",
+              "choices": [
+                "At the market entrance",
+                "At the park entrance"
+              ],
+              "correct": 0,
+              "miss": "Reread: « devant l'entrée du marché »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Suggest a coffee after.",
+              "choices": [
+                "prends",
+                "prendre",
+                "prend"
+              ],
+              "correct": 2,
+              "why": [
+                "« Prends » goes with je or tu.",
+                "« Prendre » is the infinitive; « on » needs a verb form.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Carrément ! À dimanche.",
+          "newWords": []
+        },
+        {
+          "id": "sit_05_where_d10",
+          "place": "Au café",
+          "cue": "You're at Karim's café. It's noisy, and you don't catch what he says. Karim, the barista, says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Bonjour ! Vos amis vous attendent devant."
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Ask him to repeat, politely.",
+              "bank": [
+                "Pardon,",
+                "vous pouvez répéter ?",
+                "tu peux répéter ?",
+                "Salut,"
+              ],
+              "accepted": [
+                [
+                  "Pardon,",
+                  "vous pouvez répéter ?"
+                ]
+              ],
+              "model": "Pardon, vous pouvez répéter ?"
+            },
+            {
+              "type": "comprehend",
+              "prompt": "Where are your friends?",
+              "choices": [
+                "Inside the café",
+                "Outside the café"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Vos amis vous attendent devant. »"
+            }
+          ],
+          "followUp": "Vos amis ! Ils sont devant, dehors.",
+          "newWords": []
+        },
+        {
+          "id": "sit_05_where_s05",
+          "place": "Texto · Théo · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Which French word means “in front of”?",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Salut ! On se retrouve ___ la gare, à huit heures ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "in front of",
+              "choices": [
+                "à côté de",
+                "devant",
+                "dans"
+              ],
+              "correct": 1,
+              "why": [
+                "« À côté de » means next to.",
+                "",
+                "« Dans » means inside."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_05_who",
+      "title": "Qui vient ?",
+      "note": "Count people with « On est combien ? » and « à part… ». You « amener » a person but « apporter » a thing.",
+      "items": [
+        {
+          "id": "sit_05_who_d01",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Pour samedi soir, on est combien ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo want to know?",
+              "choices": [
+                "What time you're coming",
+                "How many people are coming"
+              ],
+              "correct": 1,
+              "miss": "Reread: « on est combien ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Tell him there are four of you, with Léa.",
+              "bank": [
+                "On est",
+                "quatre,",
+                "avec Léa !",
+                "On sont",
+                "quatre heures,"
+              ],
+              "accepted": [
+                [
+                  "On est",
+                  "quatre,",
+                  "avec Léa !"
+                ]
+              ],
+              "model": "On est quatre, avec Léa !"
+            }
+          ],
+          "followUp": "Quatre ? Super !",
+          "newWords": [
+            "on est combien"
+          ]
+        },
+        {
+          "id": "sit_05_who_d02",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you about your apéro on Saturday. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Samedi, je peux amener une amie ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, bien sûr ! Elle ___ à quelle heure ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa ask?",
+              "choices": [
+                "If she can bring crisps",
+                "If she can bring a friend"
+              ],
+              "correct": 1,
+              "miss": "Reread: « je peux amener une amie ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Ask when her friend is coming.",
+              "choices": [
+                "vient",
+                "viens",
+                "venir"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Viens » goes with je or tu.",
+                "« Venir » is the infinitive; « elle » needs a verb form."
+              ]
+            }
+          ],
+          "followUp": "Vers huit heures !",
+          "newWords": [
+            "amener"
+          ]
+        },
+        {
+          "id": "sit_05_who_s01",
+          "place": "Texto · Théo · phrase seule",
+          "standalone": "Construire",
+          "cue": "Théo, a friend, texts you. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Samedi, apéro chez moi ! Tu viens à quelle heure ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say around eight, then ask if you can bring Léa.",
+              "bank": [
+                "Vers huit heures.",
+                "Je peux",
+                "amener",
+                "apporter",
+                "Léa ?",
+                "amène"
+              ],
+              "accepted": [
+                [
+                  "Vers huit heures.",
+                  "Je peux",
+                  "amener",
+                  "Léa ?"
+                ],
+                [
+                  "Je peux",
+                  "amener",
+                  "Léa ?",
+                  "Vers huit heures."
+                ]
+              ],
+              "model": "Vers huit heures. Je peux amener Léa ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_05_who_d03",
+          "place": "Texto · Inès",
+          "cue": "Inès, a colleague, texts you about your apéro on Saturday. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Samedi, à part toi, qui vient ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Léa et Théo. Ils ___ vers huit heures."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Say they're coming around eight.",
+              "choices": [
+                "venez",
+                "viennent",
+                "vient"
+              ],
+              "correct": 1,
+              "why": [
+                "« Venez » goes with vous.",
+                "",
+                "« Vient » goes with il or elle; « ils » is plural."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès want to know?",
+              "choices": [
+                "Who else is coming",
+                "When you're coming"
+              ],
+              "correct": 0,
+              "miss": "Reread: « à part toi, qui vient ? »"
+            }
+          ],
+          "followUp": "Top ! Je viens aussi.",
+          "newWords": [
+            "à part"
+          ]
+        },
+        {
+          "id": "sit_05_who_d04",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Dimanche, on est combien ? Cinq ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « on est combien » mean here?",
+              "target": "on est combien",
+              "choices": [
+                "how much is it?",
+                "what time is it?",
+                "how many of us are there?"
+              ],
+              "correct": 2,
+              "why": [
+                "How much is it would be « c'est combien ? ».",
+                "What time is it would be « quelle heure est-il ? ».",
+                ""
+              ]
+            },
+            {
+              "type": "reply",
+              "prompt": "Say no: there are six of you, with Léa and Inès.",
+              "bank": [
+                "Non,",
+                "on est",
+                "six,",
+                "avec Léa et Inès.",
+                "on sont",
+                "cinq,"
+              ],
+              "accepted": [
+                [
+                  "Non,",
+                  "on est",
+                  "six,",
+                  "avec Léa et Inès."
+                ]
+              ],
+              "model": "Non, on est six, avec Léa et Inès."
+            }
+          ],
+          "followUp": "Six ? Parfait !",
+          "newWords": []
+        },
+        {
+          "id": "sit_05_who_s02",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "Mme Dumas, your landlady, writes to you on WhatsApp. She says vous to you. You'd like Léa, your flatmate, to come too.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Mme Dumas",
+              "text": "Bonjour. Samedi à dix heures, pour les clés, ça vous va ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which reply fits Mme Dumas?",
+              "choices": [
+                "Oui, top ! Je peux amener ma coloc, ça te va ?",
+                "Oui, très bien. Je peux amener ma coloc, madame ?",
+                "Oui. J'amène ma coloc."
+              ],
+              "correct": 1,
+              "why": [
+                "Too casual: « top » and « te » are for friends.",
+                "",
+                "Good French, but abrupt: ask her, don't announce it."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_05_who_d05",
+          "place": "Chez Théo",
+          "cue": "You're at Théo's place, and the music is loud. He says tu to you. You don't catch what he says.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "À part Léa, tout le monde vient samedi !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Ask him to repeat.",
+              "bank": [
+                "Pardon,",
+                "tu peux",
+                "répéter ?",
+                "vous pouvez",
+                "répète ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon,",
+                  "tu peux",
+                  "répéter ?"
+                ]
+              ],
+              "model": "Pardon, tu peux répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « à part » mean here?",
+              "target": "à part",
+              "choices": [
+                "together with",
+                "apart from",
+                "next to"
+              ],
+              "correct": 1,
+              "why": [
+                "Together with would be « avec ».",
+                "",
+                "Next to is « à côté de »."
+              ]
+            }
+          ],
+          "followUp": "À part Léa ! Elle travaille samedi.",
+          "newWords": []
+        },
+        {
+          "id": "sit_05_who_d06",
+          "place": "Au bureau",
+          "cue": "Inès, a colleague, asks you about your apéro on Saturday. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Samedi, je peux amener ma sœur ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Bien sûr ! ___ vient à quelle heure ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "Who does Inès want to bring?",
+              "choices": [
+                "Her brother",
+                "Her sister"
+              ],
+              "correct": 1,
+              "miss": "Reread: « ma sœur »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Ask when her sister is coming.",
+              "choices": [
+                "Il",
+                "Ils",
+                "Elle"
+              ],
+              "correct": 2,
+              "why": [
+                "« Ma sœur » is a woman: « elle ».",
+                "« Ils » is plural; it's one person.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Vers huit heures, avec moi !",
+          "newWords": []
+        },
+        {
+          "id": "sit_05_who_s03",
+          "place": "Texto · Théo · phrase seule",
+          "standalone": "Corriger",
+          "cue": "You text Théo, a friend. You say tu to each other. Fix the mistake in your text.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Salut Théo ! Samedi soir, je peux amène ma coloc chez toi ?",
+              "error": {
+                "word": "amène",
+                "fix": "amener",
+                "choices": [
+                  "amener",
+                  "amène",
+                  "amené"
+                ],
+                "why": "After « je peux », use the infinitive: « amener »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Correct the highlighted word."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_05_who_d07",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat. He says tu to you. You and Léa are coming around eight.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Samedi, tu peux amener Léa, bien sûr !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Merci ! Léa et moi, on ___ vers huit heures."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « amener » mean here?",
+              "target": "amener",
+              "choices": [
+                "to invite",
+                "to bring (a thing)",
+                "to bring (a person)"
+              ],
+              "correct": 2,
+              "why": [
+                "Invite would be « inviter ».",
+                "Bringing a thing is « apporter ».",
+                ""
+              ]
+            },
+            {
+              "type": "complete",
+              "prompt": "Say you're both coming around eight.",
+              "choices": [
+                "vient",
+                "viens",
+                "venons"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Viens » goes with je or tu.",
+                "« Venons » goes with nous, not on."
+              ]
+            }
+          ],
+          "followUp": "Top, à samedi !",
+          "newWords": []
+        },
+        {
+          "id": "sit_05_who_d08",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you about your apéro on Saturday. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Samedi, on est combien, du coup ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say you don't know; you'll tell her tomorrow.",
+              "bank": [
+                "Je ne sais pas.",
+                "Je sais pas.",
+                "Je te dis",
+                "Je vous dis",
+                "demain !",
+                "hier !"
+              ],
+              "accepted": [
+                [
+                  "Je ne sais pas.",
+                  "Je te dis",
+                  "demain !"
+                ],
+                [
+                  "Je sais pas.",
+                  "Je te dis",
+                  "demain !"
+                ]
+              ],
+              "model": "Je ne sais pas. Je te dis demain !"
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa ask?",
+              "choices": [
+                "Who is bringing crisps",
+                "How many people are coming"
+              ],
+              "correct": 1,
+              "miss": "Reread: « on est combien ? »"
+            }
+          ],
+          "followUp": "Pas de souci !",
+          "newWords": []
+        },
+        {
+          "id": "sit_05_who_s04",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You asked Théo this. Now ask Mme Dumas, your landlady, about her visit on Saturday. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Salut ! Samedi, je peux amener Léa ? Elle est libre.",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Greet Mme Dumas politely, then ask the same question with « est-ce que ».",
+              "bank": [
+                "Bonjour, madame.",
+                "Samedi,",
+                "est-ce que",
+                "je peux",
+                "amener",
+                "Léa ?",
+                "Salut !",
+                "tu peux"
+              ],
+              "accepted": [
+                [
+                  "Bonjour, madame.",
+                  "Samedi,",
+                  "est-ce que",
+                  "je peux",
+                  "amener",
+                  "Léa ?"
+                ]
+              ],
+              "model": "Bonjour, madame. Samedi, est-ce que je peux amener Léa ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_05_who_d09",
+          "place": "Texto · Inès",
+          "cue": "Inès, a colleague, texts you about your apéro on Saturday. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "À part Théo, qui vient samedi ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Léa, ma coloc. Elle est très ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès ask?",
+              "choices": [
+                "If Théo is coming",
+                "Who else is coming"
+              ],
+              "correct": 1,
+              "miss": "Reread: « À part Théo, qui vient ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Say she's really nice.",
+              "choices": [
+                "gentil",
+                "sympa",
+                "sympas"
+              ],
+              "correct": 1,
+              "why": [
+                "With « elle », it would be « gentille ».",
+                "",
+                "« Sympas » is plural; Léa is one person."
+              ]
+            }
+          ],
+          "followUp": "Top ! À samedi, alors.",
+          "newWords": []
+        },
+        {
+          "id": "sit_05_who_d10",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "À part moi, qui vient samedi ? On est combien ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo want to know?",
+              "choices": [
+                "Where to meet",
+                "Who's coming, and how many"
+              ],
+              "correct": 1,
+              "miss": "Reread: « qui vient samedi ? On est combien ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Apart from him, it's three of you: Léa, Inès and you. Tell him.",
+              "bank": [
+                "À part toi,",
+                "on est trois :",
+                "Léa, Inès",
+                "et moi.",
+                "on sont trois :",
+                "et toi."
+              ],
+              "accepted": [
+                [
+                  "À part toi,",
+                  "on est trois :",
+                  "Léa, Inès",
+                  "et moi."
+                ]
+              ],
+              "model": "À part toi, on est trois : Léa, Inès et moi."
+            }
+          ],
+          "followUp": "Quatre avec moi, super !",
+          "newWords": []
+        },
+        {
+          "id": "sit_05_who_s05",
+          "place": "Les copains · groupe · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Which French words mean “apart from”?",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "___ Léa et moi, qui vient samedi soir chez Théo ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "apart from",
+              "choices": [
+                "Avec",
+                "À part",
+                "Comme"
+              ],
+              "correct": 1,
+              "why": [
+                "« Avec » means with.",
+                "",
+                "« Comme » means like."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    }
+  ]
+}

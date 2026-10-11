@@ -24,7 +24,8 @@ KINDS = {"comprehend", "reply", "pick", "complete", "fix", "word"}
 STANDALONE = {"Construire": "reply", "Choisir le ton": "pick",
               "Corriger": "fix", "Transformer": "reply", "Mot en retour": "complete"}
 SPOKEN = {"je sais pas", "t'as", "t'es", "y a", "y a encore", "ouais", "du coup",
-          "carrément", "bref", "pas de souci", "top", "ça marche", "on"}
+          "carrément", "bref", "pas de souci", "top", "ça marche", "on",
+          "dispo", "boulot"}
 # Canonical cast `name` strings; the audio CAST map uses the same keys.
 SOCIAL_CAST = {"Léa", "Théo", "Inès", "M. Ferrand", "Mme Dumas"}
 CAST_ALIASES = {"Monsieur Ferrand": "M. Ferrand", "Madame Dumas": "Mme Dumas",
@@ -358,7 +359,7 @@ def lint_content(module: dict, word_data: dict, audio_dir: Path = AUDIO,
                 errors.append(f"{eid}: reply and complete need at least half the dialogue drills")
             if {x.get("standalone") for x in alone} != set(STANDALONE):
                 errors.append(f"{eid}: standalone drills need all five labels")
-            clarification = re.compile(r"(?i)\b(?:repeat|clarif|say (?:it|that) again|répétez|répéter|"
+            clarification = re.compile(r"(?i)\b(?:repeat|clarif\w*|say (?:it|that) again|répétez|répéter|"
                                        r"pouvez-vous redire|ça veut dire quoi|qu'est-ce que ça veut dire)\b")
             if not any(clarification.search(x.get("cue", "") + " " +
                                             " ".join(d.get("prompt", "") for d in x.get("drills", [])) + " " +

@@ -1,0 +1,2775 @@
+{
+  "elements": [
+    {
+      "id": "sit_01_work",
+      "title": "Parler de son travail",
+      "note": "Say what you do and why you're in Lyon, and understand « Tu fais quoi dans la vie ? ». Your own lines avoid job titles, which change with gender; « je travaille dans une entreprise » works for everyone. « Boulot » is the everyday word for « travail ».",
+      "items": [
+        {
+          "id": "sit_01_work_d01",
+          "place": "À l'appart",
+          "cue": "Move-in evening. Léa, your flatmate, says tu to you. She's curious about you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Alors, tu fais quoi dans la vie ?",
+              "name": "Léa"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa want to know?",
+              "choices": [
+                "What you do for a living",
+                "Where you come from"
+              ],
+              "correct": 0,
+              "miss": "Reread: « tu fais quoi dans la vie ? » asks what you do for a living."
+            },
+            {
+              "type": "reply",
+              "prompt": "Say you work here, in Lyon. Then ask her back.",
+              "bank": [
+                "Je",
+                "travaille",
+                "ici,",
+                "à Lyon.",
+                "Et",
+                "toi ?",
+                "travailles",
+                "tu ?"
+              ],
+              "accepted": [
+                [
+                  "Je",
+                  "travaille",
+                  "ici,",
+                  "à Lyon.",
+                  "Et",
+                  "toi ?"
+                ]
+              ],
+              "model": "Je travaille ici, à Lyon. Et toi ?"
+            }
+          ],
+          "followUp": "Moi, je travaille à la maison.",
+          "newWords": [
+            "quoi",
+            "dans la vie"
+          ]
+        },
+        {
+          "id": "sit_01_work_d02",
+          "place": "Sur le palier",
+          "cue": "M. Ferrand, the neighbour, says vous to you. He chats with you on the landing.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Vous travaillez dans une entreprise ?",
+              "name": "M. Ferrand"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, dans une entreprise ___ Lyon."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does M. Ferrand ask?",
+              "choices": [
+                "If you live alone",
+                "If you work for a company"
+              ],
+              "correct": 1,
+              "miss": "Reread: « vous travaillez dans une entreprise ? » asks if you work for a company."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "en",
+                "au",
+                "à"
+              ],
+              "correct": 2,
+              "why": [
+                "Before a city, use « à », not « en ».",
+                "« Au » is « à le »; a city name takes plain « à ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Très bien. Lyon, c'est bien pour le travail.",
+          "newWords": [
+            "entreprise"
+          ]
+        },
+        {
+          "id": "sit_01_work_s01",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Construire",
+          "cue": "Léa, your flatmate, says tu to you. Tell her what you do.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Dis, tu fais quoi dans la vie, toi ?",
+              "name": "Léa"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say you work for a company, in Lyon.",
+              "bank": [
+                "Je",
+                "travaille",
+                "dans",
+                "une",
+                "entreprise,",
+                "à Lyon.",
+                "en",
+                "un",
+                "travailles"
+              ],
+              "accepted": [
+                [
+                  "Je",
+                  "travaille",
+                  "dans",
+                  "une",
+                  "entreprise,",
+                  "à Lyon."
+                ]
+              ],
+              "model": "Je travaille dans une entreprise, à Lyon."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_01_work_d03",
+          "place": "Texto · Théo",
+          "cue": "Théo, Léa's friend, says tu to you. He texts you on Friday evening.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Salut ! Et ton boulot, ça va ?",
+              "name": "Théo"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, ça va, ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What is Théo asking about?",
+              "choices": [
+                "Your flat",
+                "Your job"
+              ],
+              "correct": 1,
+              "miss": "Reread: « ton boulot » means your job."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "merci",
+                "pardon",
+                "bonjour"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Pardon » means sorry; nobody bumped into anyone.",
+                "« Bonjour » is a greeting, not a thank-you."
+              ]
+            }
+          ],
+          "followUp": "Très bien ! Et Léa, ça va ?",
+          "newWords": [
+            "boulot"
+          ]
+        },
+        {
+          "id": "sit_01_work_d04",
+          "place": "Au bureau",
+          "cue": "Your first week at the office. Inès, a colleague, says tu to you. You've just joined her project; she doesn't know yet.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Alors, tu fais quoi, ici ?",
+              "name": "Inès"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say you work on a project, with her.",
+              "bank": [
+                "Je",
+                "travaille",
+                "sur",
+                "un",
+                "projet,",
+                "avec",
+                "toi !",
+                "une",
+                "travailles",
+                "tu !"
+              ],
+              "accepted": [
+                [
+                  "Je",
+                  "travaille",
+                  "sur",
+                  "un",
+                  "projet,",
+                  "avec",
+                  "toi !"
+                ]
+              ],
+              "model": "Je travaille sur un projet, avec toi !"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « quoi » mean here?",
+              "choices": [
+                "where",
+                "what",
+                "who"
+              ],
+              "correct": 1,
+              "why": [
+                "« Où » means where.",
+                "",
+                "« Qui » means who."
+              ],
+              "target": "quoi"
+            }
+          ],
+          "followUp": "Avec moi ? Très bien !",
+          "newWords": [
+            "quoi"
+          ]
+        },
+        {
+          "id": "sit_01_work_s02",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "M. Ferrand, the neighbour, says vous to you. Answer his question.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Alors, vous travaillez dans une entreprise, ici à Lyon ?",
+              "name": "M. Ferrand"
+            }
+          ],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "Le boulot ? Ça va, ça va.",
+                "Oui, je travaille dans une entreprise, ici à Lyon.",
+                "Oui ! Et toi, tu fais quoi dans la vie ?"
+              ],
+              "correct": 1,
+              "why": [
+                "Good French, but casual and it doesn't answer him.",
+                "",
+                "Good French, but M. Ferrand says vous: « toi » and « tu » sound rude."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_01_work_d05",
+          "place": "À l'appart",
+          "cue": "Léa, your flatmate, says tu to you. She asks something quickly and you don't follow.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Et toi, tu fais quoi dans la vie ?",
+              "name": "Léa"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say sorry and ask her to repeat.",
+              "bank": [
+                "Pardon ?",
+                "Tu",
+                "peux",
+                "répéter ?",
+                "Vous",
+                "pouvez",
+                "Merci ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon ?",
+                  "Tu",
+                  "peux",
+                  "répéter ?"
+                ]
+              ],
+              "model": "Pardon ? Tu peux répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « dans la vie » mean here?",
+              "choices": [
+                "at the moment",
+                "in the city",
+                "for a living"
+              ],
+              "correct": 2,
+              "why": [
+                "« En ce moment » means at the moment.",
+                "« En ville » means in the city.",
+                ""
+              ],
+              "target": "dans la vie"
+            }
+          ],
+          "followUp": "Ton travail, c'est quoi ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_01_work_d06",
+          "place": "Texto · Inès",
+          "cue": "Inès, a colleague, says tu to you. She texts you after work.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Et le boulot, c'est bien ?",
+              "name": "Inès"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, c'est ___ bien !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "beaucoup",
+                "très",
+                "bon"
+              ],
+              "correct": 1,
+              "why": [
+                "« Beaucoup » goes with verbs, not before « bien ».",
+                "",
+                "« Bon » is an adjective; it can't go before « bien »."
+              ]
+            },
+            {
+              "type": "word",
+              "prompt": "What does « boulot » mean here?",
+              "choices": [
+                "job",
+                "flat",
+                "city"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Appart » means flat.",
+                "« Ville » means city."
+              ],
+              "target": "boulot"
+            }
+          ],
+          "followUp": "Bien ! Et Lyon, ça va aussi ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_01_work_s03",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Corriger",
+          "cue": "M. Ferrand, the neighbour, says vous to you. Fix the mistake in your answer.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Bonjour ! Je travaille en une entreprise, ici à Lyon.",
+              "error": {
+                "word": "en",
+                "fix": "dans",
+                "choices": [
+                  "à",
+                  "dans",
+                  "en"
+                ],
+                "why": "With « une entreprise », say « dans une entreprise »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_01_work_d07",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to you in the group chat. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Et toi, tu fais quoi dans la vie ?",
+              "name": "Théo"
+            },
+            {
+              "speaker": "learner",
+              "text": "Je travaille dans une ___ à Lyon."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo want to know?",
+              "choices": [
+                "When you arrived",
+                "What you do for a living"
+              ],
+              "correct": 1,
+              "miss": "Reread: « tu fais quoi dans la vie ? » asks what you do for a living."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "entreprise",
+                "boulot",
+                "ville"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Boulot » is masculine, and you work in a company, not in a job.",
+                "« Ville » means city; Lyon is already the city."
+              ]
+            }
+          ],
+          "followUp": "Bien ! Moi, je travaille dans un café.",
+          "newWords": []
+        },
+        {
+          "id": "sit_01_work_d08",
+          "place": "Sur le palier",
+          "cue": "M. Ferrand, the neighbour, says vous to you. You told him where you work.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "C'est une grande entreprise ?",
+              "name": "M. Ferrand"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say no, a small company.",
+              "bank": [
+                "Non,",
+                "une",
+                "petite",
+                "entreprise.",
+                "petit",
+                "un",
+                "Oui,",
+                "grande"
+              ],
+              "accepted": [
+                [
+                  "Non,",
+                  "une",
+                  "petite",
+                  "entreprise."
+                ]
+              ],
+              "model": "Non, une petite entreprise."
+            },
+            {
+              "type": "word",
+              "prompt": "What does « entreprise » mean here?",
+              "choices": [
+                "street",
+                "company",
+                "flat"
+              ],
+              "correct": 1,
+              "why": [
+                "« Rue » means street.",
+                "",
+                "« Appart » means flat."
+              ],
+              "target": "entreprise"
+            }
+          ],
+          "followUp": "C'est bien aussi, une petite entreprise.",
+          "newWords": []
+        },
+        {
+          "id": "sit_01_work_s04",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You texted this to Léa. Say the same to M. Ferrand (vous), without the casual word « boulot ».",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Le boulot ? C'est bien, et mon entreprise est grande !",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it in standard French.",
+              "bank": [
+                "Le",
+                "travail ?",
+                "C'est",
+                "bien,",
+                "et",
+                "mon",
+                "entreprise",
+                "est",
+                "grande !",
+                "boulot ?",
+                "ma",
+                "grand !"
+              ],
+              "accepted": [
+                [
+                  "Le",
+                  "travail ?",
+                  "C'est",
+                  "bien,",
+                  "et",
+                  "mon",
+                  "entreprise",
+                  "est",
+                  "grande !"
+                ]
+              ],
+              "model": "Le travail ? C'est bien, et mon entreprise est grande !"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_01_work_d09",
+          "place": "Au bureau",
+          "cue": "Your first day at the office. Inès, a colleague, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "C'est une grande entreprise, non ?",
+              "name": "Inès"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui ! Et ___ boulot, c'est bien."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès say about the company?",
+              "choices": [
+                "It's new",
+                "It's big"
+              ],
+              "correct": 1,
+              "miss": "Reread: « une grande entreprise » means a big company."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "la",
+                "le",
+                "les"
+              ],
+              "correct": 1,
+              "why": [
+                "« Boulot » is masculine: « le boulot ».",
+                "",
+                "« Les » is plural; « boulot » is singular here."
+              ]
+            }
+          ],
+          "followUp": "Très bien ! Bon, au travail !",
+          "newWords": []
+        },
+        {
+          "id": "sit_01_work_d10",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, says tu to you. She texts you at lunchtime.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Ton premier jour de boulot, ça va ?",
+              "name": "Léa"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What is Léa asking about?",
+              "choices": [
+                "Your first day at work",
+                "Your first week in Lyon"
+              ],
+              "correct": 0,
+              "miss": "Reread: « ton premier jour de boulot » means your first day at work."
+            },
+            {
+              "type": "reply",
+              "prompt": "Say it's going well, thank her and ask back.",
+              "bank": [
+                "Oui,",
+                "ça va",
+                "bien,",
+                "merci !",
+                "Et",
+                "toi ?",
+                "vous ?",
+                "pardon !"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "ça va",
+                  "bien,",
+                  "merci !",
+                  "Et",
+                  "toi ?"
+                ]
+              ],
+              "model": "Oui, ça va bien, merci ! Et toi ?"
+            }
+          ],
+          "followUp": "Très bien ! À ce soir !",
+          "newWords": []
+        },
+        {
+          "id": "sit_01_work_s05",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Which French words mean “for a living”?",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Et toi, Théo, tu fais quoi ___ ? Tu travailles ici ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "for a living",
+              "choices": [
+                "ce soir",
+                "dans la vie",
+                "à la maison"
+              ],
+              "correct": 1,
+              "why": [
+                "« Ce soir » means this evening.",
+                "",
+                "« À la maison » means at home."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_01_askback",
+      "title": "Relancer la conversation",
+      "note": "Answer, then keep the talk going with a question back: « Et toi ? », « Depuis quand ? », « C'est comment ? ». « Depuis » takes the present: « je suis à Lyon depuis hier ». « Sympa » and « pas mal » are everyday praise.",
+      "items": [
+        {
+          "id": "sit_01_askback_d01",
+          "place": "À l'appart",
+          "cue": "Léa, your flatmate, says tu to you. You chat in the kitchen.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Et tu es à Lyon depuis quand ?",
+              "name": "Léa"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa want to know?",
+              "choices": [
+                "Where you live in Lyon",
+                "How long you've been in Lyon"
+              ],
+              "correct": 1,
+              "miss": "Reread: « depuis quand ? » asks since when."
+            },
+            {
+              "type": "reply",
+              "prompt": "Say since yesterday, then ask her back.",
+              "bank": [
+                "Depuis",
+                "hier.",
+                "Et",
+                "toi ?",
+                "demain.",
+                "tu ?",
+                "vous ?"
+              ],
+              "accepted": [
+                [
+                  "Depuis",
+                  "hier.",
+                  "Et",
+                  "toi ?"
+                ]
+              ],
+              "model": "Depuis hier. Et toi ?"
+            }
+          ],
+          "followUp": "Moi ? Depuis deux ans.",
+          "newWords": [
+            "depuis quand",
+            "depuis"
+          ]
+        },
+        {
+          "id": "sit_01_askback_d02",
+          "place": "Au bureau",
+          "cue": "Inès, a colleague, says tu to you. It's your first week in Lyon.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Alors, Lyon, c'est comment ?",
+              "name": "Inès"
+            },
+            {
+              "speaker": "learner",
+              "text": "C'est très ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès ask?",
+              "choices": [
+                "What Lyon is like",
+                "Where Lyon is"
+              ],
+              "correct": 0,
+              "miss": "Reread: « c'est comment ? » asks what it's like."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "belle",
+                "bon",
+                "beau"
+              ],
+              "correct": 2,
+              "why": [
+                "After « c'est », the adjective stays masculine: « beau ».",
+                "« Bon » is for food or drink; for a city, say « beau ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Oui, et on mange très bien, ici !",
+          "newWords": [
+            "c'est comment"
+          ]
+        },
+        {
+          "id": "sit_01_askback_s01",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Construire",
+          "cue": "Inès, a colleague, says tu to you. Ask her since when she's lived here.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Moi, je ne suis pas de Lyon, mais j'habite ici.",
+              "name": "Inès"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Ask her since when she's lived here.",
+              "bank": [
+                "Et",
+                "tu",
+                "habites",
+                "ici",
+                "depuis quand ?",
+                "habite",
+                "vous",
+                "où ?"
+              ],
+              "accepted": [
+                [
+                  "Et",
+                  "tu",
+                  "habites",
+                  "ici",
+                  "depuis quand ?"
+                ]
+              ],
+              "model": "Et tu habites ici depuis quand ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_01_askback_d03",
+          "place": "Texto · Théo",
+          "cue": "Théo, Léa's friend, says tu to you. He texts you on your second day.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Et Léa, elle est sympa ?",
+              "name": "Théo"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, elle est ___ sympa !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo want to know?",
+              "choices": [
+                "If Léa is at home",
+                "If Léa is nice"
+              ],
+              "correct": 1,
+              "miss": "Reread: « elle est sympa ? » asks if she's nice."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "très",
+                "beaucoup",
+                "beau"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Beaucoup » goes with verbs; before an adjective, say « très ».",
+                "« Beau » is an adjective; it can't go before « sympa »."
+              ]
+            }
+          ],
+          "followUp": "Oui ! Et toi aussi, tu es sympa !",
+          "newWords": [
+            "sympa"
+          ]
+        },
+        {
+          "id": "sit_01_askback_d04",
+          "place": "Sur le palier",
+          "cue": "M. Ferrand, the neighbour, says vous to you. He stops you on the landing.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Vous êtes à Lyon depuis quand ?",
+              "name": "M. Ferrand"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « depuis quand » mean here?",
+              "choices": [
+                "where from",
+                "until when",
+                "since when"
+              ],
+              "correct": 2,
+              "why": [
+                "« D'où » means where from.",
+                "« Jusqu'à quand » means until when.",
+                ""
+              ],
+              "target": "depuis quand"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say for a week, then ask him back.",
+              "bank": [
+                "Depuis",
+                "une",
+                "semaine.",
+                "Et",
+                "vous ?",
+                "toi ?",
+                "un",
+                "hier."
+              ],
+              "accepted": [
+                [
+                  "Depuis",
+                  "une",
+                  "semaine.",
+                  "Et",
+                  "vous ?"
+                ]
+              ],
+              "model": "Depuis une semaine. Et vous ?"
+            }
+          ],
+          "followUp": "Moi ? Depuis toujours !",
+          "newWords": []
+        },
+        {
+          "id": "sit_01_askback_s02",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "M. Ferrand, the neighbour, says vous to you. Ask him back how long he's lived here.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "Et toi, tu habites ici depuis quand ?",
+                "Depuis quand ?",
+                "Et vous, vous habitez ici depuis quand ?"
+              ],
+              "correct": 2,
+              "why": [
+                "Good French, but M. Ferrand says vous: « toi » and « tu » sound rude.",
+                "Good French, but very curt on its own; a full question is warmer.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_01_askback_d05",
+          "place": "À l'appart",
+          "cue": "Léa, your flatmate, says tu to you. She says something from the kitchen and you don't catch it.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Lyon, c'est pas mal, non ?",
+              "name": "Léa"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say sorry and ask her to repeat.",
+              "bank": [
+                "Pardon ?",
+                "Tu",
+                "peux",
+                "répéter ?",
+                "Vous",
+                "pouvez",
+                "Merci ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon ?",
+                  "Tu",
+                  "peux",
+                  "répéter ?"
+                ]
+              ],
+              "model": "Pardon ? Tu peux répéter ?"
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa think of Lyon?",
+              "choices": [
+                "It's pretty good",
+                "It's too big"
+              ],
+              "correct": 0,
+              "miss": "Reread: « c'est pas mal » means it's pretty good."
+            }
+          ],
+          "followUp": "Lyon, c'est pas mal ? Tu aimes ?",
+          "newWords": [
+            "pas mal"
+          ]
+        },
+        {
+          "id": "sit_01_askback_d06",
+          "place": "Texto · Inès",
+          "cue": "Inès, a colleague, says tu to you. You're from Boston and just told her Lyon is beautiful.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Vraiment ? Et Boston, c'est comment ?",
+              "name": "Inès"
+            },
+            {
+              "speaker": "learner",
+              "text": "___ ! Mais Lyon, c'est plus beau."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap: Boston is pretty good.",
+              "choices": [
+                "Pas bien",
+                "Pas mal",
+                "Pas bon"
+              ],
+              "correct": 1,
+              "why": [
+                "« Pas bien » would mean not good.",
+                "",
+                "« Pas bon » is for food that tastes bad."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès ask about?",
+              "choices": [
+                "Where Boston is",
+                "What Boston is like"
+              ],
+              "correct": 1,
+              "miss": "Reread: « c'est comment ? » asks what it's like."
+            }
+          ],
+          "followUp": "Merci pour Lyon, alors !",
+          "newWords": [
+            "vraiment"
+          ]
+        },
+        {
+          "id": "sit_01_askback_s03",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Corriger",
+          "cue": "You're texting Léa, your flatmate (tu). Fix the mistake.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Lyon, c'est très sympa ! Et ta boulot, c'est comment ?",
+              "error": {
+                "word": "ta",
+                "fix": "ton",
+                "choices": [
+                  "tes",
+                  "ton",
+                  "ta"
+                ],
+                "why": "« Boulot » is masculine, so « ton boulot »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_01_askback_d07",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to you in the group chat. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Alors, Lyon, c'est comment ? Pas mal, non ?",
+              "name": "Théo"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, c'est ___ beau !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « c'est comment » mean here?",
+              "choices": [
+                "how much is it",
+                "what's it like",
+                "where is it"
+              ],
+              "correct": 1,
+              "why": [
+                "« C'est combien » means how much is it.",
+                "",
+                "« C'est où » means where is it."
+              ],
+              "target": "c'est comment"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "beaucoup",
+                "bon",
+                "vraiment"
+              ],
+              "correct": 2,
+              "why": [
+                "« Beaucoup » goes with verbs, not before an adjective.",
+                "« Bon » is an adjective; it can't go before « beau ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Bien ! On mange ensemble, ce soir ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_01_askback_d08",
+          "place": "Au bureau",
+          "cue": "Inès, a colleague, says tu to you. You chat at the coffee machine.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Le travail ici, c'est pas mal, non ?",
+              "name": "Inès"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Agree, then ask since when she's worked here.",
+              "bank": [
+                "Oui,",
+                "vraiment !",
+                "Et",
+                "toi,",
+                "tu",
+                "travailles",
+                "ici",
+                "depuis quand ?",
+                "travaille",
+                "vous,",
+                "quand ?"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "vraiment !",
+                  "Et",
+                  "toi,",
+                  "tu",
+                  "travailles",
+                  "ici",
+                  "depuis quand ?"
+                ]
+              ],
+              "model": "Oui, vraiment ! Et toi, tu travailles ici depuis quand ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « pas mal » mean here?",
+              "choices": [
+                "not at all",
+                "pretty good",
+                "too much"
+              ],
+              "correct": 1,
+              "why": [
+                "« Pas du tout » means not at all.",
+                "",
+                "« Trop » means too much."
+              ],
+              "target": "pas mal"
+            }
+          ],
+          "followUp": "Moi ? Depuis deux ans.",
+          "newWords": []
+        },
+        {
+          "id": "sit_01_askback_s04",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You asked Léa this (tu). Ask M. Ferrand the same, with vous.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Et toi, tu habites ici depuis quand ? Tu es de Lyon ?",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it with vous.",
+              "bank": [
+                "Et",
+                "vous,",
+                "vous",
+                "habitez",
+                "ici",
+                "depuis quand ?",
+                "Vous",
+                "êtes",
+                "de Lyon ?",
+                "toi,",
+                "habites",
+                "es"
+              ],
+              "accepted": [
+                [
+                  "Et",
+                  "vous,",
+                  "vous",
+                  "habitez",
+                  "ici",
+                  "depuis quand ?",
+                  "Vous",
+                  "êtes",
+                  "de Lyon ?"
+                ]
+              ],
+              "model": "Et vous, vous habitez ici depuis quand ? Vous êtes de Lyon ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_01_askback_d09",
+          "place": "Sur le palier",
+          "cue": "M. Ferrand, the neighbour, says vous to you. You've just told him you're from Boston.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Vraiment ? Et vous êtes à Lyon depuis quand ?",
+              "name": "M. Ferrand"
+            },
+            {
+              "speaker": "learner",
+              "text": "Depuis une semaine. C'est très ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "sympa",
+                "sympas",
+                "beaucoup"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "After « c'est », « sympa » stays singular.",
+                "« Beaucoup » can't follow « très »."
+              ]
+            },
+            {
+              "type": "word",
+              "prompt": "What does « vraiment » mean here?",
+              "choices": [
+                "really",
+                "already",
+                "again"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Déjà » means already.",
+                "« Encore » means again."
+              ],
+              "target": "vraiment"
+            }
+          ],
+          "followUp": "Très bien. Lyon, c'est une belle ville.",
+          "newWords": []
+        },
+        {
+          "id": "sit_01_askback_d10",
+          "place": "À l'appart",
+          "cue": "Léa, your flatmate, says tu to you. Théo is coming over tonight.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Théo est vraiment sympa, tu vas voir !",
+              "name": "Léa"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "React, then ask what he does for a living.",
+              "bank": [
+                "Ah bon ?",
+                "Il",
+                "fait",
+                "quoi",
+                "dans la vie ?",
+                "fais",
+                "Elle",
+                "où ?"
+              ],
+              "accepted": [
+                [
+                  "Ah bon ?",
+                  "Il",
+                  "fait",
+                  "quoi",
+                  "dans la vie ?"
+                ]
+              ],
+              "model": "Ah bon ? Il fait quoi dans la vie ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « sympa » mean here?",
+              "choices": [
+                "busy",
+                "funny",
+                "nice"
+              ],
+              "correct": 2,
+              "why": [
+                "« Occupé » means busy.",
+                "« Drôle » means funny.",
+                ""
+              ],
+              "target": "sympa"
+            }
+          ],
+          "followUp": "Il travaille dans un café.",
+          "newWords": []
+        },
+        {
+          "id": "sit_01_askback_s05",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Which French word means “since”?",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Je suis à Lyon ___ une semaine, et c'est très sympa !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "since",
+              "choices": [
+                "dans",
+                "pour",
+                "depuis"
+              ],
+              "correct": 2,
+              "why": [
+                "« Dans une semaine » means in a week, in the future.",
+                "« Pour une semaine » means for a planned week, not since.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_01_flat",
+      "title": "Découvrir l'appart",
+      "note": "Move-in day: say thanks for the welcome, ask where things are (« c'est où ? ») and place them with « à côté de ». Léa says « t'as » for « tu as », as most people do in casual speech; you can write « tu as ».",
+      "items": [
+        {
+          "id": "sit_01_flat_d01",
+          "place": "À l'appart",
+          "cue": "Move-in day. Léa, your flatmate, says tu to you. She opens a door.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Bienvenue ! Voilà ta chambre.",
+              "name": "Léa"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What is Léa showing you?",
+              "choices": [
+                "The kitchen",
+                "Your room"
+              ],
+              "correct": 1,
+              "miss": "Reread: « voilà ta chambre » means here's your room."
+            },
+            {
+              "type": "reply",
+              "prompt": "Thank her and say it's very big.",
+              "bank": [
+                "Merci !",
+                "Elle",
+                "est",
+                "très",
+                "grande !",
+                "grand !",
+                "Il",
+                "Pardon !"
+              ],
+              "accepted": [
+                [
+                  "Merci !",
+                  "Elle",
+                  "est",
+                  "très",
+                  "grande !"
+                ]
+              ],
+              "model": "Merci ! Elle est très grande !"
+            }
+          ],
+          "followUp": "Oui, et il y a un bureau.",
+          "newWords": [
+            "bienvenue"
+          ]
+        },
+        {
+          "id": "sit_01_flat_d02",
+          "place": "À l'appart",
+          "cue": "Move-in day. Léa, your flatmate, says tu to you. She shows you around.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "La salle de bains est là.",
+              "name": "Léa"
+            },
+            {
+              "speaker": "learner",
+              "text": "Et la cuisine, c'est ___ ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa show you?",
+              "choices": [
+                "The bathroom",
+                "The kitchen"
+              ],
+              "correct": 0,
+              "miss": "Reread: « la salle de bains » is the bathroom."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "quand",
+                "où",
+                "qui"
+              ],
+              "correct": 1,
+              "why": [
+                "« Quand » asks when, not where.",
+                "",
+                "« Qui » asks who, not where."
+              ]
+            }
+          ],
+          "followUp": "Là, à gauche !",
+          "newWords": [
+            "salle de bains"
+          ]
+        },
+        {
+          "id": "sit_01_flat_s01",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Construire",
+          "cue": "Léa, your flatmate, says tu to you. Ask her where the bathroom is.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Bon, ta chambre est là, et la cuisine est à gauche.",
+              "name": "Léa"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Ask where the bathroom is.",
+              "bank": [
+                "La",
+                "salle de bains,",
+                "c'est",
+                "où ?",
+                "Le",
+                "quand ?",
+                "est"
+              ],
+              "accepted": [
+                [
+                  "La",
+                  "salle de bains,",
+                  "c'est",
+                  "où ?"
+                ]
+              ],
+              "model": "La salle de bains, c'est où ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_01_flat_d03",
+          "place": "Sur le palier",
+          "cue": "Move-in day. M. Ferrand, the neighbour, says vous to you. You meet on the landing.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Bienvenue ! J'habite à côté.",
+              "name": "M. Ferrand"
+            },
+            {
+              "speaker": "learner",
+              "text": "Merci ! Moi, j'habite ___ Léa."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « bienvenue » mean here?",
+              "choices": [
+                "thank you",
+                "welcome",
+                "goodbye"
+              ],
+              "correct": 1,
+              "why": [
+                "« Merci » means thank you.",
+                "",
+                "« Au revoir » means goodbye."
+              ],
+              "target": "bienvenue"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "avec",
+                "à",
+                "de"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« À » goes before a place, not a person.",
+                "« De » means from; you live with her."
+              ]
+            }
+          ],
+          "followUp": "Léa ? Elle est très gentille.",
+          "newWords": [
+            "à côté"
+          ]
+        },
+        {
+          "id": "sit_01_flat_d04",
+          "place": "À l'appart",
+          "cue": "Léa, your flatmate, says tu to you. You've been unpacking all afternoon.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "T'as faim ? Il y a du pain.",
+              "name": "Léa"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa offer you?",
+              "choices": [
+                "Coffee",
+                "Bread"
+              ],
+              "correct": 1,
+              "miss": "Reread: « il y a du pain » means there's bread."
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes and thank her: you're very hungry.",
+              "bank": [
+                "Oui,",
+                "merci !",
+                "J'ai",
+                "très",
+                "faim.",
+                "Je suis",
+                "beaucoup",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "merci !",
+                  "J'ai",
+                  "très",
+                  "faim."
+                ]
+              ],
+              "model": "Oui, merci ! J'ai très faim."
+            }
+          ],
+          "followUp": "Et il y a du fromage, aussi !",
+          "newWords": [
+            "t'as"
+          ]
+        },
+        {
+          "id": "sit_01_flat_s02",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "Move-in day. M. Ferrand, the neighbour, says vous to you. Answer him.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Vous habitez à côté, chez Léa ? Alors, bienvenue !",
+              "name": "M. Ferrand"
+            }
+          ],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "Merci ! Et toi, tu habites ici ?",
+                "Salut ! Merci, c'est sympa !",
+                "Merci beaucoup, c'est très gentil !"
+              ],
+              "correct": 2,
+              "why": [
+                "Good French, but M. Ferrand says vous: « toi » and « tu » sound rude.",
+                "Good French, but « salut » is for friends, too casual for M. Ferrand.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_01_flat_d05",
+          "place": "À l'appart",
+          "cue": "Léa, your flatmate, says tu to you. She calls from the hall and you miss the end.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "La salle de bains est à côté de ta chambre.",
+              "name": "Léa"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "You didn't catch it all. Rather than make her repeat, ask: next to what?",
+              "bank": [
+                "Pardon ?",
+                "À côté",
+                "de",
+                "quoi ?",
+                "du",
+                "où ?",
+                "Merci ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon ?",
+                  "À côté",
+                  "de",
+                  "quoi ?"
+                ]
+              ],
+              "model": "Pardon ? À côté de quoi ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « salle de bains » mean here?",
+              "choices": [
+                "bathroom",
+                "kitchen",
+                "bedroom"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Cuisine » means kitchen.",
+                "« Chambre » means bedroom."
+              ],
+              "target": "salle de bains"
+            }
+          ],
+          "followUp": "De ta chambre, là !",
+          "newWords": []
+        },
+        {
+          "id": "sit_01_flat_d06",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, says tu to you. She texts you while you're out.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "T'as tes clés ?",
+              "name": "Léa"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, je ___ ai."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "la",
+                "les",
+                "leur"
+              ],
+              "correct": 1,
+              "why": [
+                "« Clés » is plural, so « les »; and « la » becomes « l' » before a vowel.",
+                "",
+                "« Leur » means to them; keys need « les »."
+              ]
+            },
+            {
+              "type": "word",
+              "prompt": "What does « t'as » mean here?",
+              "choices": [
+                "you are",
+                "you take",
+                "you have"
+              ],
+              "correct": 2,
+              "why": [
+                "« Tu es » means you are.",
+                "« Tu prends » means you take.",
+                ""
+              ],
+              "target": "t'as"
+            }
+          ],
+          "followUp": "Parfait, je ne suis pas là ce soir.",
+          "newWords": [
+            "t'as"
+          ]
+        },
+        {
+          "id": "sit_01_flat_s03",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Corriger",
+          "cue": "You're showing Théo (tu) around the flat. Fix the mistake.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Ma chambre est là, et la salle de bains est à côté du cuisine.",
+              "error": {
+                "word": "du",
+                "fix": "de la",
+                "choices": [
+                  "de",
+                  "de la",
+                  "du"
+                ],
+                "why": "« Cuisine » is feminine, so « à côté de la cuisine »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_01_flat_d07",
+          "place": "Texto · Théo",
+          "cue": "Théo, Léa's friend, says tu to you. He texts you on move-in day.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Bienvenue à Lyon ! T'as besoin d'aide ?",
+              "name": "Théo"
+            },
+            {
+              "speaker": "learner",
+              "text": "Non, ça va, ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo offer?",
+              "choices": [
+                "Help",
+                "A coffee"
+              ],
+              "correct": 0,
+              "miss": "Reread: « t'as besoin d'aide ? » means do you need help?"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "bienvenue",
+                "pardon",
+                "merci"
+              ],
+              "correct": 2,
+              "why": [
+                "« Bienvenue » means welcome; you're the one being welcomed.",
+                "« Pardon » means sorry; nothing went wrong.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Bon, à ce soir, alors !",
+          "newWords": []
+        },
+        {
+          "id": "sit_01_flat_d08",
+          "place": "À l'appart",
+          "cue": "Move-in day. Léa, your flatmate, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Ta chambre est à côté de la salle de bains.",
+              "name": "Léa"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say great, then ask where her room is.",
+              "bank": [
+                "Parfait !",
+                "Et",
+                "ta",
+                "chambre,",
+                "c'est",
+                "où ?",
+                "ton",
+                "quand ?"
+              ],
+              "accepted": [
+                [
+                  "Parfait !",
+                  "Et",
+                  "ta",
+                  "chambre,",
+                  "c'est",
+                  "où ?"
+                ]
+              ],
+              "model": "Parfait ! Et ta chambre, c'est où ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « à côté » mean here?",
+              "choices": [
+                "far from",
+                "next to",
+                "above"
+              ],
+              "correct": 1,
+              "why": [
+                "« Loin » means far.",
+                "",
+                "« Au-dessus » means above."
+              ],
+              "target": "à côté"
+            }
+          ],
+          "followUp": "Ma chambre ? À côté de la cuisine.",
+          "newWords": []
+        },
+        {
+          "id": "sit_01_flat_s04",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You said this to Léa (tu) in casual French. Rewrite it in standard French.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Léa, t'as faim ? Il y a du pain dans la cuisine.",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it with « tu as ».",
+              "bank": [
+                "Léa,",
+                "tu",
+                "as",
+                "faim ?",
+                "Il y a",
+                "du",
+                "pain",
+                "dans",
+                "la cuisine.",
+                "es",
+                "t'as",
+                "de la"
+              ],
+              "accepted": [
+                [
+                  "Léa,",
+                  "tu",
+                  "as",
+                  "faim ?",
+                  "Il y a",
+                  "du",
+                  "pain",
+                  "dans",
+                  "la cuisine."
+                ]
+              ],
+              "model": "Léa, tu as faim ? Il y a du pain dans la cuisine."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_01_flat_d09",
+          "place": "Au bureau",
+          "cue": "Inès, a colleague, says tu to you. You chat at the coffee machine.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "T'as une grande chambre ?",
+              "name": "Inès"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, et la salle de bains est ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès ask about?",
+              "choices": [
+                "Your company",
+                "Your room"
+              ],
+              "correct": 1,
+              "miss": "Reread: « une grande chambre » means a big room."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap: the bathroom is right next to it.",
+              "choices": [
+                "à côté",
+                "à côté de",
+                "dans"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« À côté de » needs a noun after it; alone, say « à côté ».",
+                "« Dans » needs a noun after it, and it means in, not next to."
+              ]
+            }
+          ],
+          "followUp": "Moi, j'ai une petite chambre.",
+          "newWords": []
+        },
+        {
+          "id": "sit_01_flat_d10",
+          "place": "Sur le palier",
+          "cue": "M. Ferrand, the neighbour, says vous to you. It's your first evening.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Vous habitez à côté, chez Léa ? Bienvenue !",
+              "name": "M. Ferrand"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does M. Ferrand ask?",
+              "choices": [
+                "If you work with Léa",
+                "If you live next door, at Léa's"
+              ],
+              "correct": 1,
+              "miss": "Reread: « vous habitez à côté, chez Léa ? » asks if you live next door."
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes and thank him warmly.",
+              "bank": [
+                "Oui !",
+                "Merci",
+                "beaucoup,",
+                "c'est",
+                "gentil.",
+                "gentille.",
+                "Non !",
+                "Salut !"
+              ],
+              "accepted": [
+                [
+                  "Oui !",
+                  "Merci",
+                  "beaucoup,",
+                  "c'est",
+                  "gentil."
+                ]
+              ],
+              "model": "Oui ! Merci beaucoup, c'est gentil."
+            }
+          ],
+          "followUp": "Et si vous avez besoin, je suis là.",
+          "newWords": []
+        },
+        {
+          "id": "sit_01_flat_s05",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Which French word means “welcome”?",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "___ chez nous ! Ta chambre est là, à côté de la cuisine.",
+              "name": "Léa"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "welcome",
+              "choices": [
+                "Pardon",
+                "Bienvenue",
+                "Bonjour"
+              ],
+              "correct": 1,
+              "why": [
+                "« Pardon » means sorry.",
+                "",
+                "« Bonjour » means hello."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_01_bye",
+      "title": "Remercier et prendre congé",
+      "note": "Thank someone, answer thanks with « de rien », and say goodbye for the right moment: « à tout à l'heure » (later today), « à bientôt » (soon), « au revoir » and « bonne soirée » with anyone.",
+      "items": [
+        {
+          "id": "sit_01_bye_d01",
+          "place": "À l'appart",
+          "cue": "Morning in the kitchen. Léa, your flatmate, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Voilà, un café pour toi !",
+              "name": "Léa"
+            },
+            {
+              "speaker": "learner",
+              "text": "___, c'est gentil !"
+            },
+            {
+              "speaker": "server",
+              "text": "De rien !",
+              "name": "Léa"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa give you?",
+              "choices": [
+                "A key",
+                "A coffee"
+              ],
+              "correct": 1,
+              "miss": "Reread: « un café pour toi » means a coffee for you."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "Merci",
+                "Pardon",
+                "Bonjour"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Pardon » means sorry; nothing went wrong.",
+                "« Bonjour » is a greeting, not a thank-you."
+              ]
+            }
+          ],
+          "followUp": "Bon, je vais au travail.",
+          "newWords": [
+            "de rien"
+          ]
+        },
+        {
+          "id": "sit_01_bye_d02",
+          "place": "Sur le palier",
+          "cue": "M. Ferrand, the neighbour, says vous to you. He's going into his flat.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Au revoir ! Bonne soirée !",
+              "name": "M. Ferrand"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Thank him, wish him the same, and say goodbye.",
+              "bank": [
+                "Merci,",
+                "vous aussi !",
+                "Au revoir !",
+                "toi aussi !",
+                "Bonjour !",
+                "De rien,"
+              ],
+              "accepted": [
+                [
+                  "Merci,",
+                  "vous aussi !",
+                  "Au revoir !"
+                ],
+                [
+                  "Au revoir !",
+                  "Merci,",
+                  "vous aussi !"
+                ]
+              ],
+              "model": "Merci, vous aussi ! Au revoir !"
+            },
+            {
+              "type": "comprehend",
+              "prompt": "When is this goodbye?",
+              "choices": [
+                "In the morning",
+                "In the evening"
+              ],
+              "correct": 1,
+              "miss": "Reread: « bonne soirée » means have a good evening."
+            }
+          ],
+          "followUp": "Merci ! À demain !",
+          "newWords": [
+            "au revoir",
+            "bonne soirée"
+          ]
+        },
+        {
+          "id": "sit_01_bye_s01",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Construire",
+          "cue": "Léa, your flatmate, says tu to you. She's going out. Thank her and wish her a good evening.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Bon, je vais chez Théo ce soir. Il y a du pain !",
+              "name": "Léa"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Thank her and wish her a good evening.",
+              "bank": [
+                "Merci,",
+                "Léa !",
+                "Bonne soirée !",
+                "Bonne journée !",
+                "De rien,",
+                "Pardon,"
+              ],
+              "accepted": [
+                [
+                  "Merci,",
+                  "Léa !",
+                  "Bonne soirée !"
+                ],
+                [
+                  "Bonne soirée !",
+                  "Merci,",
+                  "Léa !"
+                ]
+              ],
+              "model": "Merci, Léa ! Bonne soirée !"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_01_bye_d03",
+          "place": "Texto · Léa",
+          "cue": "Evening. Léa, your flatmate, says tu to you. She texts you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Je vais chez Théo. À tout à l'heure !",
+              "name": "Léa"
+            },
+            {
+              "speaker": "learner",
+              "text": "___ ! À tout à l'heure !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "When will Léa be back?",
+              "choices": [
+                "Later today",
+                "Next week"
+              ],
+              "correct": 0,
+              "miss": "Reread: « à tout à l'heure » means see you later today."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "De rien",
+                "Bienvenue",
+                "Bonne soirée"
+              ],
+              "correct": 2,
+              "why": [
+                "« De rien » answers thanks; she didn't thank you.",
+                "« Bienvenue » means welcome; she's going out.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Merci ! Toi aussi !",
+          "newWords": [
+            "à tout à l'heure"
+          ]
+        },
+        {
+          "id": "sit_01_bye_d04",
+          "place": "Au bureau",
+          "cue": "Friday evening at the office. Inès, a colleague, says tu to you. She's on holiday next week.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Bonne soirée ! Et à bientôt !",
+              "name": "Inès"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « bonne soirée » mean here?",
+              "choices": [
+                "see you tonight",
+                "have a good evening",
+                "good morning"
+              ],
+              "correct": 1,
+              "why": [
+                "« À ce soir » means see you tonight.",
+                "",
+                "« Bonjour » means good morning or hello."
+              ],
+              "target": "bonne soirée"
+            },
+            {
+              "type": "reply",
+              "prompt": "Thank her, wish her the same, and say see you soon.",
+              "bank": [
+                "Merci !",
+                "Toi aussi,",
+                "à bientôt !",
+                "Vous aussi,",
+                "à tout à l'heure !",
+                "De rien !"
+              ],
+              "accepted": [
+                [
+                  "Merci !",
+                  "Toi aussi,",
+                  "à bientôt !"
+                ]
+              ],
+              "model": "Merci ! Toi aussi, à bientôt !"
+            }
+          ],
+          "followUp": "Merci ! Et bonne semaine !",
+          "newWords": [
+            "à bientôt"
+          ]
+        },
+        {
+          "id": "sit_01_bye_s02",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "Evening on the landing. M. Ferrand, the neighbour, says vous to you. He's going home. Say goodbye.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "Salut ! À tout à l'heure !",
+                "Au revoir, bonne soirée !",
+                "Au revoir, bonne soirée à toi !"
+              ],
+              "correct": 1,
+              "why": [
+                "Good French, but too casual for M. Ferrand, and you won't see him later today.",
+                "",
+                "Good French, but M. Ferrand says vous: « à toi » sounds rude."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_01_bye_d05",
+          "place": "À l'appart",
+          "cue": "Léa, your flatmate, says tu to you. She calls out fast from the door; you'd rather check than ask her to repeat.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Je vais au cinéma. À tout à l'heure !",
+              "name": "Léa"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say sorry, and check she's here tonight.",
+              "bank": [
+                "Pardon ?",
+                "Tu",
+                "es",
+                "là",
+                "ce soir ?",
+                "demain ?",
+                "est"
+              ],
+              "accepted": [
+                [
+                  "Pardon ?",
+                  "Tu",
+                  "es",
+                  "là",
+                  "ce soir ?"
+                ]
+              ],
+              "model": "Pardon ? Tu es là ce soir ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « à tout à l'heure » mean here?",
+              "choices": [
+                "see you tomorrow",
+                "see you next week",
+                "see you later today"
+              ],
+              "correct": 2,
+              "why": [
+                "« À demain » means see you tomorrow.",
+                "« À la semaine prochaine » means see you next week.",
+                ""
+              ],
+              "target": "à tout à l'heure"
+            }
+          ],
+          "followUp": "Oui, à huit heures !",
+          "newWords": []
+        },
+        {
+          "id": "sit_01_bye_d06",
+          "place": "Texto · Théo",
+          "cue": "Théo, Léa's friend, says tu to you. You left him some bread this morning.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Merci pour le pain ! À tout à l'heure !",
+              "name": "Théo"
+            },
+            {
+              "speaker": "learner",
+              "text": "___ ! À ce soir !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "Merci",
+                "De rien",
+                "Bienvenue"
+              ],
+              "correct": 1,
+              "why": [
+                "He thanked you; answer with « de rien ».",
+                "",
+                "In France, « bienvenue » means welcome, not you're welcome."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What is Théo thanking you for?",
+              "choices": [
+                "The bread",
+                "The coffee"
+              ],
+              "correct": 0,
+              "miss": "Reread: « merci pour le pain » means thanks for the bread."
+            }
+          ],
+          "followUp": "Il est très bon !",
+          "newWords": []
+        },
+        {
+          "id": "sit_01_bye_s03",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Corriger",
+          "cue": "Léa, your flatmate, says tu to you. Fix the mistake in your message.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Merci pour ta aide, Léa ! Bonne soirée et à tout à l'heure !",
+              "error": {
+                "word": "ta",
+                "fix": "ton",
+                "choices": [
+                  "tes",
+                  "ta",
+                  "ton"
+                ],
+                "why": "Before a vowel, say « ton », even for a feminine word: « ton aide »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_01_bye_d07",
+          "place": "Sur le palier",
+          "cue": "M. Ferrand, the neighbour, says vous to you. You helped him with his bags.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Merci pour votre aide ! Au revoir !",
+              "name": "M. Ferrand"
+            },
+            {
+              "speaker": "learner",
+              "text": "___ ! Bonne soirée !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « au revoir » mean here?",
+              "choices": [
+                "good evening",
+                "goodbye",
+                "see you soon"
+              ],
+              "correct": 1,
+              "why": [
+                "« Bonsoir » means good evening.",
+                "",
+                "« À bientôt » means see you soon."
+              ],
+              "target": "au revoir"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "Bienvenue",
+                "Merci",
+                "De rien"
+              ],
+              "correct": 2,
+              "why": [
+                "In France, « bienvenue » means welcome, not you're welcome.",
+                "He thanked you; answer with « de rien ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Merci, vous aussi ! À bientôt !",
+          "newWords": []
+        },
+        {
+          "id": "sit_01_bye_d08",
+          "place": "Au bureau",
+          "cue": "End of the day. Inès, a colleague, says tu to you. She helped you all afternoon.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Merci pour ton aide !"
+            },
+            {
+              "speaker": "server",
+              "text": "De rien ! À demain ?",
+              "name": "Inès"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say yes, see you tomorrow, and wish her a good evening.",
+              "bank": [
+                "Oui,",
+                "à demain !",
+                "Bonne soirée !",
+                "Bonne journée !",
+                "Non,",
+                "à bientôt !"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "à demain !",
+                  "Bonne soirée !"
+                ]
+              ],
+              "model": "Oui, à demain ! Bonne soirée !"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « de rien » mean here?",
+              "choices": [
+                "you're welcome",
+                "see you",
+                "excuse me"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« À plus » means see you.",
+                "« Pardon » means excuse me."
+              ],
+              "target": "de rien"
+            }
+          ],
+          "followUp": "Merci, toi aussi !",
+          "newWords": []
+        },
+        {
+          "id": "sit_01_bye_s04",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You said this to Léa (tu). M. Ferrand (vous) also gave you a coffee. Rewrite it for him: he's going home for the evening.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Salut, Léa ! Merci pour le café, et à tout à l'heure !",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it for M. Ferrand.",
+              "bank": [
+                "Au revoir !",
+                "Merci",
+                "pour",
+                "le café,",
+                "et",
+                "bonne soirée !",
+                "Salut !",
+                "à tout à l'heure !",
+                "ton"
+              ],
+              "accepted": [
+                [
+                  "Au revoir !",
+                  "Merci",
+                  "pour",
+                  "le café,",
+                  "et",
+                  "bonne soirée !"
+                ]
+              ],
+              "model": "Au revoir ! Merci pour le café, et bonne soirée !"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_01_bye_d09",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to everyone in the group chat. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Bonne soirée, tout le monde ! À bientôt !",
+              "name": "Théo"
+            },
+            {
+              "speaker": "learner",
+              "text": "Merci, ___ aussi ! À bientôt !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "tu",
+                "toi",
+                "te"
+              ],
+              "correct": 1,
+              "why": [
+                "« Tu » can't stand alone: say « toi aussi ».",
+                "",
+                "« Te » can't stand alone: say « toi aussi »."
+              ]
+            },
+            {
+              "type": "word",
+              "prompt": "What does « à bientôt » mean here?",
+              "choices": [
+                "see you soon",
+                "see you tomorrow",
+                "good night"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« À demain » means see you tomorrow.",
+                "« Bonne nuit » means good night."
+              ],
+              "target": "à bientôt"
+            }
+          ],
+          "followUp": "Bon, à demain, alors !",
+          "newWords": []
+        },
+        {
+          "id": "sit_01_bye_d10",
+          "place": "Sur le palier",
+          "cue": "Evening on the landing. M. Ferrand, the neighbour, says vous to you. You brought him a coffee.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Bon, au revoir ! Et merci pour le café !",
+              "name": "M. Ferrand"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does M. Ferrand thank you for?",
+              "choices": [
+                "The coffee",
+                "The bread"
+              ],
+              "correct": 0,
+              "miss": "Reread: « merci pour le café » means thanks for the coffee."
+            },
+            {
+              "type": "reply",
+              "prompt": "Answer his thanks and wish him a good evening.",
+              "bank": [
+                "De rien !",
+                "Bonne soirée !",
+                "Merci !",
+                "Bonne journée !",
+                "À tout à l'heure !"
+              ],
+              "accepted": [
+                [
+                  "De rien !",
+                  "Bonne soirée !"
+                ]
+              ],
+              "model": "De rien ! Bonne soirée !"
+            }
+          ],
+          "followUp": "Vous aussi !",
+          "newWords": []
+        },
+        {
+          "id": "sit_01_bye_s05",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Which French words mean “see you later (today)”?",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Je vais chez Théo, mais je suis là ce soir. ___ !",
+              "name": "Léa"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "see you later (today)",
+              "choices": [
+                "Au revoir",
+                "À bientôt",
+                "À tout à l'heure"
+              ],
+              "correct": 2,
+              "why": [
+                "« Au revoir » means goodbye, with no time given.",
+                "« À bientôt » means see you soon, some other day.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    }
+  ]
+}
