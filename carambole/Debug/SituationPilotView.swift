@@ -242,8 +242,15 @@ struct SituationPilotView: View {
                     .padding(.top, 8)
                     .frame(minHeight: geo.size.height, alignment: .bottom)
                 }
+                .defaultScrollAnchor(.bottom, for: .sizeChanges)
                 .onScrollPhaseChange { _, phase in if phase == .interacting { tip = nil } }
                 .onChange(of: slot) { _, _ in scrollToEnd(reader) }
+                // Keep the learner's answer in view as it grows (tiles placed, gap
+                // filled) and when the drill zone below grows and shrinks the chat.
+                .onChange(of: placed) { _, _ in scrollToEnd(reader) }
+                .onChange(of: gapText) { _, _ in scrollToEnd(reader) }
+                .onChange(of: step) { _, _ in scrollToEnd(reader) }
+                .onChange(of: geo.size.height) { _, _ in scrollToEnd(reader) }
                 .onChange(of: showFollow) { _, _ in scrollToEnd(reader) }
                 .onChange(of: index) { _, _ in scrollToEnd(reader) }
                 .onAppear { scrollToEnd(reader) }
@@ -526,6 +533,9 @@ struct SituationPilotView: View {
             }
             .padding(14)
             .frame(maxWidth: .infinity, minHeight: 96)
+            // Never let the locked card squeeze the tray below its tiles; the
+            // chat above gives up the space and scrolls instead.
+            .fixedSize(horizontal: false, vertical: true)
             .background(RoundedRectangle(cornerRadius: 22, style: .continuous).fill(Color(hex: theme.tint)))
         }
     }
