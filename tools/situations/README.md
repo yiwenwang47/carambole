@@ -42,8 +42,20 @@ Production audio keys use the complete item ID once: `sit_06_order_d01_t0`
 for turn 0 and `sit_06_order_d01_f` for its follow-up. Each word has an
 independent `sitw_...` key. The linter checks all MP3s in strict mode.
 
-Choices are shown in stored order by the pilot view, so vary the slot of the
-correct answer and keep `why` aligned with `choices`.
+The Test book pilot shows choices in stored order, so vary the slot of the
+correct answer and keep `why` aligned with `choices`. The production view
+(`Features/Situation/SituationSessionView.swift`) shuffles choices and reply
+banks at render time and grades by choice text, so stored order never reaches
+the learner there.
+
+The app loads every module listed in `situations_manifest.json` (no Swift
+change for a new module). Pure-logic tests for the production model
+(`carambole/Models/Situation.swift`) run against the bundled content:
+
+```sh
+swiftc carambole/Models/Situation.swift tools/situations/SituationModelTests.swift -o /tmp/cb-sit-model-tests
+/tmp/cb-sit-model-tests carambole/Resources/Situations
+```
 
 Authoring commands:
 
