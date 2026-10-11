@@ -2,12 +2,12 @@
 
 > ## ▶ RECENT HANDOFFS
 >
-> **▶ BOOK 2 — ARC 1 AUTHORED (modules 01–05) + REVIEW SET v5 (2026-10-11, `main`).**
-> START at **`docs/plans/2026-10-11-book-2-arc1-handoff.md`**. 600 items authored,
-> judged (20 judges) and fixed; café audio complete; tooling book-wide; Corriger
-> error words now split out of set phrases. Review set v5 (9 cards, new voices
-> M. Ferrand / Inès / Mme Dumas) is in the Test book on the simulator; awaiting the
-> user's review before production audio for 01–05.
+> **▶ BOOK 2 — START HERE: `docs/plans/2026-10-11-book-2-next-session-handoff.md`
+> (2026-10-11, `main`, not pushed).** Modules 01–06 are authored, reviewed and have
+> full audio (1,751 clips). Robin, the learner, is a woman from Eugene, Oregon; her
+> lines are feminine only. M. Ferrand's voice is Orus. Agent prompts for the next
+> batch are in `tools/situations/agents/`. Next: confirm review set v5 with the
+> user, then 07–10.
 >
 > **▶ BOOK 2 — PRODUCTION VIEW + PER-BOOK PROGRESS (Tasks 2–3, 2026-10-11, merged
 > to `main`).** *En situation* is on the shelf

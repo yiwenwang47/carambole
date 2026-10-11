@@ -149,3 +149,7 @@ Inès, M. Ferrand or Mme Dumas. An author still needs to review whether the requ
 whether English cues hide a needed fact, whether gender and register are
 recoverable, whether distractors have unique reasons, and whether the French
 sounds natural. These judgments cannot be proven from this JSON alone.
+
+## Agent prompts
+
+`agents/planner.md`, `agents/author.md`, `agents/judge.md` and `agents/fixer.md` are the prompts for the batch pipeline: plan, then two authors per module, four judges per module, and one fixer per draft half. The coordinator assembles and harmonises glosses. See the latest Book 2 handoff in `docs/plans/`.

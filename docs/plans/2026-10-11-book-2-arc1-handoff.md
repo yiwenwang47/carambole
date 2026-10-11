@@ -1,5 +1,7 @@
 # Book 2 handoff: arc 1 authored, review set v5
 
+> **Superseded as the starting point by the [next-session handoff](2026-10-11-book-2-next-session-handoff.md).** Keep this file for the arc-1 detail.
+
 **Date:** 2026-10-11
 **Repo:** `/Users/yiwenwang/Documents/CMU/research/personal/carambole/carambole`, branch `main`. Not pushed.
 **Supersedes:** the [café handoff](2026-10-11-book-2-cafe-handoff.md) as the starting point. The [content handoff](2026-10-11-book-2-content-handoff.md) is still the rulebook. The [arc-1 plan](2026-10-11-book-2-arc1-plan.md) and its five module matrices record how arc 1 was designed.
