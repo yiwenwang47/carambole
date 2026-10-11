@@ -8,28 +8,28 @@
         {
           "id": "sit_06_takeaway_d01",
           "place": "Au café",
-          "cue": "Karim uses vous. You want your coffee to go.",
+          "cue": "Karim, the barista, says vous to you. You want to take your coffee with you.",
           "turns": [
             {
               "speaker": "server",
               "name": "Karim",
-              "text": "Bonjour ! Sur place ou à emporter ? Un sac ?"
+              "text": "Un café, très bien. Sur place ou à emporter ?"
             }
           ],
           "drills": [
             {
               "type": "comprehend",
-              "prompt": "What choice does Karim offer?",
+              "prompt": "What does Karim want to know?",
               "choices": [
-                "Have it here or take it away",
-                "Choose the drink size"
+                "Whether you want it large or small",
+                "Whether you'll drink it here or take it away"
               ],
-              "correct": 0,
-              "miss": "Reread « sur place ou à emporter »."
+              "correct": 1,
+              "miss": "Reread: « sur place ou à emporter ? »"
             },
             {
               "type": "reply",
-              "prompt": "Ask for it to go, politely.",
+              "prompt": "Say you'll take it with you, politely.",
               "bank": [
                 "À emporter,",
                 "s'il vous plaît.",
@@ -45,68 +45,85 @@
               "model": "À emporter, s'il vous plaît."
             }
           ],
-          "followUp": "Très bien, à emporter.",
+          "followUp": "Parfait, je vous prépare ça.",
           "newWords": [
             "sur place",
-            "à emporter",
-            "un sac"
+            "à emporter"
           ]
         },
         {
           "id": "sit_06_takeaway_d02",
           "place": "Au café",
-          "cue": "Karim uses vous. You need a bag for your order.",
+          "cue": "Karim says vous to you. You're taking two coffees, and you brought your own bag.",
           "turns": [
             {
               "speaker": "server",
               "name": "Karim",
-              "text": "Pour votre café à emporter, vous voulez ___ ?"
+              "text": "Deux cafés à emporter. Il vous faut un sac ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Non merci, j'ai ___ sac."
             }
           ],
           "drills": [
             {
-              "type": "complete",
-              "prompt": "Which French words mean a bag?",
+              "type": "comprehend",
+              "prompt": "What does Karim offer you?",
               "choices": [
-                "un sac",
-                "une sac",
-                "un café"
+                "A bag",
+                "A table"
               ],
               "correct": 0,
+              "miss": "Reread: « il vous faut un sac ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "mes",
+                "ma",
+                "mon"
+              ],
+              "correct": 2,
               "why": [
-                "",
-                "« Sac » is masculine.",
-                "That asks about coffee, not a bag."
+                "One bag, so not « mes ».",
+                "« Sac » is masculine, so not « ma ».",
+                ""
               ]
             }
           ],
-          "followUp": "Je vous donne un sac.",
+          "followUp": "Très bien ! Merci à vous.",
           "newWords": [
-            "un sac"
+            "un sac",
+            "à emporter"
           ]
         },
         {
           "id": "sit_06_takeaway_s01",
           "place": "Au café · phrase seule",
           "standalone": "Construire",
-          "cue": "Karim uses vous. Ask for coffee to go.",
+          "cue": "Karim says vous to you. Order a large coffee to take with you.",
           "turns": [
             {
               "speaker": "server",
               "name": "Karim",
-              "text": "Bonjour ! Vous voulez un grand café sur place ou à emporter ?"
+              "text": "Bonjour ! Un grand café aujourd'hui ? Sur place ou à emporter ?"
             }
           ],
           "drills": [
             {
               "type": "reply",
-              "prompt": "Build the whole order.",
+              "prompt": "Build your order.",
               "bank": [
                 "Bonjour,",
                 "je voudrais",
-                "un grand café",
+                "un",
+                "grand",
+                "café",
                 "à emporter,",
                 "s'il vous plaît.",
+                "grande",
                 "sur place,",
                 "s'il te plaît."
               ],
@@ -114,7 +131,9 @@
                 [
                   "Bonjour,",
                   "je voudrais",
-                  "un grand café",
+                  "un",
+                  "grand",
+                  "café",
                   "à emporter,",
                   "s'il vous plaît."
                 ]
@@ -127,52 +146,66 @@
         {
           "id": "sit_06_takeaway_d03",
           "place": "Au café",
-          "cue": "Karim uses vous. You want to stay at the café.",
+          "cue": "Karim says vous to you. Today you're staying at the café.",
           "turns": [
             {
               "speaker": "server",
               "name": "Karim",
-              "text": "C'est sur place ?"
+              "text": "Et pour vous, c'est sur place ?"
             }
           ],
           "drills": [
             {
               "type": "word",
-              "prompt": "What does « sur place » mean?",
-              "target": "sur place",
+              "prompt": "What does « sur place » mean here?",
               "choices": [
-                "to have here",
                 "to go",
+                "here, in the café",
                 "in a bag"
               ],
-              "correct": 0,
+              "correct": 1,
               "why": [
+                "« À emporter » means to go.",
                 "",
-                "That means to go, not to have here.",
-                "That means in a bag, not to have here."
-              ]
+                "No: « sur place » is about where you drink it."
+              ],
+              "target": "sur place"
             },
             {
               "type": "reply",
-              "prompt": "Confirm that you'll stay.",
+              "prompt": "Say yes, and ask for a large tea.",
               "bank": [
                 "Oui,",
-                "sur place,",
+                "sur place.",
+                "Un",
+                "grand",
+                "thé,",
                 "s'il vous plaît.",
-                "à emporter,",
-                "non,"
+                "grande",
+                "à emporter."
               ],
               "accepted": [
                 [
                   "Oui,",
-                  "sur place,",
+                  "sur place.",
+                  "Un",
+                  "grand",
+                  "thé,",
                   "s'il vous plaît."
+                ],
+                [
+                  "Un",
+                  "grand",
+                  "thé,",
+                  "s'il vous plaît.",
+                  "Oui,",
+                  "sur place."
                 ]
               ],
-              "model": "Oui, sur place, s'il vous plaît."
+              "model": "Oui, sur place. Un grand thé, s'il vous plaît."
             }
           ],
-          "followUp": "Je vous apporte le café.",
+          "followUp": "Très bien. Il reste une table, là.",
           "newWords": [
             "sur place"
           ]
@@ -180,72 +213,71 @@
         {
           "id": "sit_06_takeaway_d04",
           "place": "Au café",
-          "cue": "Karim uses vous. You need a bag.",
+          "cue": "Karim says vous to you. You ordered a tea and a coffee to go, and you need a bag.",
           "turns": [
             {
               "speaker": "server",
               "name": "Karim",
-              "text": "Votre café est à emporter. Vous voulez ___ ?"
+              "text": "Un thé et un café, à emporter ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, et je voudrais ___ sac, s'il vous plaît."
             }
           ],
           "drills": [
             {
               "type": "comprehend",
-              "prompt": "Where is this coffee going?",
+              "prompt": "What does Karim check?",
               "choices": [
-                "To go",
-                "To have here"
+                "That you want two teas",
+                "That both drinks are to go"
               ],
-              "correct": 0,
-              "miss": "Reread « à emporter »."
+              "correct": 1,
+              "miss": "Reread: « un thé et un café, à emporter ? »"
             },
             {
               "type": "complete",
-              "prompt": "Which French words mean a bag?",
+              "prompt": "Fill the gap.",
               "choices": [
-                "un sac",
-                "une sac",
-                "un café"
+                "des",
+                "une",
+                "un"
               ],
-              "correct": 0,
+              "correct": 2,
               "why": [
-                "",
-                "« Sac » is masculine.",
-                "A coffee is not the bag he offers."
+                "You ask for one bag, so not « des ».",
+                "« Sac » is masculine, so not « une ».",
+                ""
               ]
             }
           ],
-          "followUp": "Voilà le sac.",
+          "followUp": "Voilà, un sac pour les deux.",
           "newWords": [
-            "un sac"
+            "un sac",
+            "à emporter"
           ]
         },
         {
           "id": "sit_06_takeaway_s02",
           "place": "Au café · phrase seule",
           "standalone": "Choisir le ton",
-          "cue": "Karim uses vous. Ask politely to take the coffee away.",
-          "turns": [
-            {
-              "speaker": "server",
-              "name": "Karim",
-              "text": "Bonjour ! Vous voulez un grand café sur place ou à emporter ?"
-            }
-          ],
+          "cue": "Karim says vous to you. Ask for a coffee to go, with a bag.",
+          "turns": [],
           "drills": [
             {
               "type": "pick",
-              "prompt": "Which request fits Karim?",
+              "prompt": "Which one fits?",
               "choices": [
-                "Bonjour, je voudrais un grand café à emporter, s'il vous plaît.",
-                "Bonjour, je voudrais un grand café à emporter, s'il te plaît.",
-                "Je veux un grand café à emporter. Vite."
+                "Je voudrais un café à emporter, avec un sac, s'il te plaît.",
+                "Je voudrais un café à emporter, avec un sac, s'il vous plaît.",
+                "Je veux un café à emporter. Et un sac. Vite."
               ],
-              "correct": 0,
+              "correct": 1,
               "why": [
+                "Good French, but « s'il te plaît » is for friends. Karim says vous to you.",
                 "",
-                "« Te » addresses a friend.",
-                "This is too abrupt for Karim."
+                "Good French, but « je veux » and « vite » sound rude to a barista."
               ]
             }
           ],
@@ -254,52 +286,52 @@
         {
           "id": "sit_06_takeaway_d05",
           "place": "Au café",
-          "cue": "Karim uses vous. Confirm that you want the coffee to go.",
+          "cue": "Karim says vous to you. You ordered two large coffees to go.",
           "turns": [
             {
               "speaker": "server",
               "name": "Karim",
-              "text": "À emporter, c'est bien ça ?"
+              "text": "Deux cafés à emporter, c'est bien ça ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, deux ___, s'il vous plaît."
             }
           ],
           "drills": [
             {
               "type": "word",
-              "prompt": "What does « à emporter » mean?",
-              "target": "à emporter",
+              "prompt": "What does « à emporter » mean here?",
               "choices": [
+                "with milk",
                 "to go",
-                "to have here",
-                "with milk"
+                "to have here"
               ],
-              "correct": 0,
+              "correct": 1,
               "why": [
+                "« Au lait » means with milk.",
                 "",
-                "That means to have here, not to go.",
-                "That means with milk, not to go."
-              ]
+                "« Sur place » means to have here."
+              ],
+              "target": "à emporter"
             },
             {
-              "type": "reply",
-              "prompt": "Confirm your coffee is to go.",
-              "bank": [
-                "Oui,",
-                "à emporter,",
-                "s'il vous plaît.",
-                "sur place,",
-                "s'il te plaît."
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "grand",
+                "grands",
+                "grandes"
               ],
-              "accepted": [
-                [
-                  "Oui,",
-                  "à emporter,",
-                  "s'il vous plaît."
-                ]
-              ],
-              "model": "Oui, à emporter, s'il vous plaît."
+              "correct": 1,
+              "why": [
+                "Two coffees, so it needs the plural.",
+                "",
+                "« Café » is masculine, so not « grandes »."
+              ]
             }
           ],
-          "followUp": "Je prépare votre café à emporter.",
+          "followUp": "Parfait, deux grands cafés à emporter.",
           "newWords": [
             "à emporter"
           ]
@@ -307,74 +339,68 @@
         {
           "id": "sit_06_takeaway_d06",
           "place": "Au café",
-          "cue": "Karim uses vous. You ordered to go and need a bag.",
+          "cue": "Karim says vous to you. You're having your coffee here today.",
           "turns": [
             {
               "speaker": "server",
               "name": "Karim",
-              "text": "Il vous faut un sac ?"
+              "text": "Sur place ? Il reste une table dehors."
+            },
+            {
+              "speaker": "learner",
+              "text": "Très bien, je prends ___ table dehors !"
             }
           ],
           "drills": [
             {
-              "type": "word",
-              "prompt": "What does « un sac » mean?",
-              "target": "un sac",
+              "type": "comprehend",
+              "prompt": "Where is the free table?",
               "choices": [
-                "a bag",
-                "a cup",
-                "a table"
+                "Outside",
+                "Inside"
               ],
               "correct": 0,
-              "why": [
-                "",
-                "That means a cup, not a bag.",
-                "That means a table, not a bag."
-              ]
+              "miss": "Reread: « une table dehors »."
             },
             {
-              "type": "reply",
-              "prompt": "Say yes, and ask politely.",
-              "bank": [
-                "Oui,",
-                "un sac,",
-                "s'il vous plaît.",
-                "une sac,",
-                "s'il te plaît."
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "le",
+                "les",
+                "la"
               ],
-              "accepted": [
-                [
-                  "Oui,",
-                  "un sac,",
-                  "s'il vous plaît."
-                ]
-              ],
-              "model": "Oui, un sac, s'il vous plaît."
+              "correct": 2,
+              "why": [
+                "« Table » is feminine, so not « le ».",
+                "There is one table left, so not « les ».",
+                ""
+              ]
             }
           ],
-          "followUp": "Voilà, avec votre café.",
+          "followUp": "Parfait, j'arrive avec votre café.",
           "newWords": [
-            "un sac"
+            "sur place"
           ]
         },
         {
           "id": "sit_06_takeaway_s03",
           "place": "Au café · phrase seule",
           "standalone": "Corriger",
-          "cue": "Karim uses vous. Correct your own request for a bag.",
+          "cue": "Karim says vous to you. You ask for two coffees to go and a bag.",
           "turns": [
             {
               "speaker": "learner",
-              "text": "Je voudrais une sac pour mon grand café à emporter.",
+              "text": "Bonjour, je voudrais deux cafés à emporter et une sac, s'il vous plaît.",
               "error": {
                 "word": "une",
                 "fix": "un",
                 "choices": [
-                  "un",
                   "des",
-                  "le"
+                  "un",
+                  "la"
                 ],
-                "why": "« Sac » is masculine: « un sac »."
+                "why": "« Sac » is masculine and there's one bag: « un sac »."
               }
             }
           ],
@@ -389,117 +415,150 @@
         {
           "id": "sit_06_takeaway_d07",
           "place": "Texto · Léa",
-          "cue": "Léa uses tu. Text her that your coffee is to go.",
+          "cue": "Léa, your flatmate, texts you. She says tu to you. You're both near Karim's café.",
           "turns": [
             {
               "speaker": "server",
               "name": "Léa",
-              "text": "Tu restes au café ?"
+              "text": "T'as cinq minutes ? Un café sur place, avec moi ?"
             }
           ],
           "drills": [
             {
               "type": "comprehend",
-              "prompt": "What is Léa asking?",
+              "prompt": "What is Léa suggesting?",
               "choices": [
-                "Are you staying at the café?",
-                "Did you pay?"
+                "Getting coffee to take home",
+                "Having a coffee together at the café"
               ],
-              "correct": 0,
-              "miss": "Reread « tu restes au café »."
+              "correct": 1,
+              "miss": "Reread: « un café sur place, avec moi ? »"
             },
             {
               "type": "reply",
-              "prompt": "Say no, you're taking it to go.",
+              "prompt": "Say no time: you're getting yours to go.",
               "bank": [
-                "Non,",
-                "c'est",
+                "Pas",
+                "le temps,",
+                "je prends",
+                "un café",
                 "à emporter.",
                 "sur place.",
-                "oui,"
+                "tu prends"
               ],
               "accepted": [
                 [
-                  "Non,",
-                  "c'est",
+                  "Pas",
+                  "le temps,",
+                  "je prends",
+                  "un café",
                   "à emporter."
                 ]
               ],
-              "model": "Non, c'est à emporter."
+              "model": "Pas le temps, je prends un café à emporter."
             }
           ],
-          "followUp": "D'accord, je te retrouve dehors.",
+          "followUp": "Bon, ce soir, alors ?",
           "newWords": [
+            "t'as",
+            "sur place",
             "à emporter"
           ]
         },
         {
           "id": "sit_06_takeaway_d08",
           "place": "Texto · Léa",
-          "cue": "Léa uses tu. She asks by text whether you have a bag.",
+          "cue": "Léa texts you while you're at the café. She says tu to you.",
           "turns": [
             {
               "speaker": "server",
               "name": "Léa",
-              "text": "Tu as un sac pour le café ?"
+              "text": "Tu me prends un café à emporter ? T'as un sac ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, je ___ prends un grand !"
             }
           ],
           "drills": [
             {
-              "type": "word",
-              "prompt": "What does « un sac » mean?",
-              "target": "un sac",
+              "type": "complete",
+              "prompt": "Fill the gap.",
               "choices": [
-                "a bag",
-                "a cup",
-                "a drink"
+                "me",
+                "te",
+                "vous"
+              ],
+              "correct": 1,
+              "why": [
+                "« Me » would mean for yourself, not for Léa.",
+                "",
+                "Léa says tu to you, so not « vous »."
+              ]
+            },
+            {
+              "type": "word",
+              "prompt": "What does « t'as » mean here?",
+              "choices": [
+                "you have",
+                "you are",
+                "you take"
               ],
               "correct": 0,
               "why": [
                 "",
-                "That means a cup, not a bag.",
-                "That means a drink, not a bag."
-              ]
+                "That would be « t'es » (tu es).",
+                "That would be « tu prends »."
+              ],
+              "target": "t'as"
             }
           ],
-          "followUp": "Moi, je prends le café sur place.",
+          "followUp": "Merci, c'est gentil !",
+          "followUpBy": "Léa",
           "newWords": [
-            "un sac"
+            "t'as",
+            "un sac",
+            "à emporter"
           ]
         },
         {
           "id": "sit_06_takeaway_s04",
           "place": "Au café · phrase seule",
           "standalone": "Transformer",
-          "cue": "Karim uses vous. Change your answer from here to to go.",
+          "cue": "You're used to saying tu at home. Rewrite it for Karim, who says vous to you.",
           "turns": [
             {
               "speaker": "learner",
-              "text": "Oui, mon grand café est sur place, s'il vous plaît.",
+              "text": "Tu as un sac pour mes deux cafés à emporter, s'il te plaît ?",
               "source": true
             }
           ],
           "drills": [
             {
               "type": "reply",
-              "prompt": "Rewrite it to mean to go.",
+              "prompt": "Rewrite it with vous.",
               "bank": [
-                "Oui,",
-                "mon grand café est",
+                "Vous",
+                "avez",
+                "un sac",
+                "pour mes deux cafés",
                 "à emporter,",
-                "s'il vous plaît.",
-                "sur place,",
-                "s'il te plaît."
+                "s'il vous plaît ?",
+                "as",
+                "s'il te plaît ?",
+                "Tu"
               ],
               "accepted": [
                 [
-                  "Oui,",
-                  "mon grand café est",
+                  "Vous",
+                  "avez",
+                  "un sac",
+                  "pour mes deux cafés",
                   "à emporter,",
-                  "s'il vous plaît."
+                  "s'il vous plaît ?"
                 ]
               ],
-              "model": "Oui, mon grand café est à emporter, s'il vous plaît."
+              "model": "Vous avez un sac pour mes deux cafés à emporter, s'il vous plaît ?"
             }
           ],
           "newWords": []
@@ -507,63 +566,66 @@
         {
           "id": "sit_06_takeaway_d09",
           "place": "Les copains · groupe",
-          "cue": "Théo uses tu in the group chat. You're picking up coffee to go.",
+          "cue": "Théo's group chat « Les copains ». Everyone says tu.",
           "turns": [
             {
               "speaker": "server",
               "name": "Théo",
-              "text": "On prend les cafés à emporter ?"
+              "text": "Café chez Karim à dix heures ? T'as le temps ?"
             }
           ],
           "drills": [
             {
               "type": "word",
-              "prompt": "What does « à emporter » mean?",
-              "target": "à emporter",
+              "prompt": "What does « t'as » mean here?",
               "choices": [
-                "to go",
-                "in a bag",
-                "to have here"
+                "you are",
+                "you take",
+                "you have"
               ],
-              "correct": 0,
+              "correct": 2,
               "why": [
-                "",
-                "That means in a bag, not to go.",
-                "That means to have here, not to go."
-              ]
+                "That would be « t'es » (tu es).",
+                "That would be « tu prends ».",
+                ""
+              ],
+              "target": "t'as"
             },
             {
               "type": "reply",
-              "prompt": "Agree to take the coffee to go.",
+              "prompt": "Say yes, but to go.",
               "bank": [
                 "Oui,",
+                "mais",
                 "à emporter.",
                 "sur place.",
-                "non,"
+                "Non,"
               ],
               "accepted": [
                 [
                   "Oui,",
+                  "mais",
                   "à emporter."
                 ]
               ],
-              "model": "Oui, à emporter."
+              "model": "Oui, mais à emporter."
             }
           ],
-          "followUp": "Oui, je vous attends !",
+          "followUp": "Bon, je t'attends dehors.",
           "newWords": [
+            "t'as",
             "à emporter"
           ]
         },
         {
           "id": "sit_06_takeaway_d10",
           "place": "Au café",
-          "cue": "Karim uses vous. The café is noisy; ask him to repeat.",
+          "cue": "Karim says vous to you. It's busy and he talks fast.",
           "turns": [
             {
               "speaker": "server",
               "name": "Karim",
-              "text": "Sur place ou à emporter ?"
+              "text": "Pour vous, c'est sur place ou à emporter ?"
             }
           ],
           "drills": [
@@ -571,33 +633,36 @@
               "type": "comprehend",
               "prompt": "What does Karim want to know?",
               "choices": [
-                "Where you'll have it",
-                "How you'll pay"
+                "How you'll pay",
+                "Whether you're staying or taking it away"
               ],
-              "correct": 0,
-              "miss": "Reread « sur place ou à emporter »."
+              "correct": 1,
+              "miss": "Reread: « sur place ou à emporter ? »"
             },
             {
               "type": "reply",
-              "prompt": "Ask him to repeat, politely.",
+              "prompt": "Ask him to say it again.",
               "bank": [
                 "Pardon,",
-                "vous pouvez",
+                "vous",
+                "pouvez",
                 "répéter ?",
-                "tu peux",
-                "répétez ?"
+                "tu",
+                "peux",
+                "peut"
               ],
               "accepted": [
                 [
                   "Pardon,",
-                  "vous pouvez",
+                  "vous",
+                  "pouvez",
                   "répéter ?"
                 ]
               ],
               "model": "Pardon, vous pouvez répéter ?"
             }
           ],
-          "followUp": "Sur place ou à emporter ?",
+          "followUp": "Sur place… ou à emporter ?",
           "newWords": [
             "sur place",
             "à emporter"
@@ -607,11 +672,12 @@
           "id": "sit_06_takeaway_s05",
           "place": "Au café · phrase seule",
           "standalone": "Mot en retour",
-          "cue": "You use vous with Karim. Recall the word for a bag.",
+          "cue": "Karim says vous to you. Which words mean “a bag”?",
           "turns": [
             {
-              "speaker": "learner",
-              "text": "Pour mon grand café à emporter, vous avez ___ ?"
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Voilà vos deux cafés à emporter. Il vous faut ___ ?"
             }
           ],
           "drills": [
@@ -619,15 +685,15 @@
               "type": "complete",
               "prompt": "a bag",
               "choices": [
+                "un thé",
                 "un sac",
-                "un café",
-                "sur place"
+                "une table"
               ],
-              "correct": 0,
+              "correct": 1,
               "why": [
+                "« Un thé » is a tea.",
                 "",
-                "That is a coffee.",
-                "That means to have here."
+                "« Une table » is a table."
               ]
             }
           ],
@@ -638,12 +704,12 @@
     {
       "id": "sit_06_usual",
       "title": "Comme d'habitude",
-      "note": "Recognize a familiar order and handle the explicit switch to tu.",
+      "note": "Recognize a familiar order, handle Karim's switch to tu, and use tu with him after it. Each cue says whether Karim says vous or tu to you.",
       "items": [
         {
           "id": "sit_06_usual_d01",
           "place": "Au café",
-          "cue": "Karim uses vous. He recognizes your usual order.",
+          "cue": "Karim, the barista, knows your order by now. He still says vous to you.",
           "turns": [
             {
               "speaker": "server",
@@ -654,35 +720,37 @@
           "drills": [
             {
               "type": "comprehend",
-              "prompt": "What does Karim ask?",
+              "prompt": "What is Karim asking?",
               "choices": [
-                "Whether you want your usual",
-                "Whether you want to pay"
+                "If you want your usual",
+                "If you want to pay"
               ],
               "correct": 0,
-              "miss": "Reread « comme d'habitude »."
+              "miss": "Reread: « comme d'habitude » means as usual."
             },
             {
               "type": "reply",
-              "prompt": "Say yes: a large coffee, please.",
+              "prompt": "Say yes, but to go today.",
               "bank": [
                 "Oui,",
-                "un grand café,",
-                "s'il vous plaît.",
-                "une grande café,",
-                "s'il te plaît."
+                "mais",
+                "à emporter",
+                "aujourd'hui.",
+                "sur place",
+                "Non,"
               ],
               "accepted": [
                 [
                   "Oui,",
-                  "un grand café,",
-                  "s'il vous plaît."
+                  "mais",
+                  "à emporter",
+                  "aujourd'hui."
                 ]
               ],
-              "model": "Oui, un grand café, s'il vous plaît."
+              "model": "Oui, mais à emporter aujourd'hui."
             }
           ],
-          "followUp": "Je prépare votre grand café.",
+          "followUp": "Très bien ! Un grand café à emporter, alors.",
           "newWords": [
             "comme d'habitude"
           ]
@@ -690,69 +758,92 @@
         {
           "id": "sit_06_usual_d02",
           "place": "Texto · Léa",
-          "cue": "Léa uses tu. She asks whether you always order coffee.",
+          "cue": "Léa, your flatmate, texts you. She says tu to you.",
           "turns": [
             {
               "speaker": "server",
               "name": "Léa",
-              "text": "Tu prends ___ un café ?"
+              "text": "Tu prends un café chez Karim ? Comme d'habitude ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, un grand café. Et ___ ?"
             }
           ],
           "drills": [
             {
               "type": "complete",
-              "prompt": "Which French word means always?",
+              "prompt": "Fill the gap.",
               "choices": [
-                "toujours",
-                "jamais",
-                "encore"
+                "tu",
+                "te",
+                "toi"
               ],
-              "correct": 0,
+              "correct": 2,
               "why": [
-                "",
-                "« Jamais » means never.",
-                "« Encore » means again or still."
+                "After « et » alone, use « toi », not « tu ».",
+                "« Te » can't stand alone: use « toi ».",
+                ""
               ]
+            },
+            {
+              "type": "word",
+              "prompt": "What does « comme d'habitude » mean here?",
+              "choices": [
+                "to go",
+                "right now",
+                "as usual"
+              ],
+              "correct": 2,
+              "why": [
+                "« À emporter » means to go.",
+                "« Maintenant » means right now.",
+                ""
+              ],
+              "target": "comme d'habitude"
             }
           ],
-          "followUp": "Je prends un café aussi.",
-          "newWords": []
+          "followUp": "Moi, un thé, s'il te plaît !",
+          "newWords": [
+            "comme d'habitude"
+          ]
         },
         {
           "id": "sit_06_usual_s01",
           "place": "Au café · phrase seule",
           "standalone": "Construire",
-          "cue": "Karim uses vous. Ask for your usual large coffee.",
+          "cue": "Karim knows your order. He still says vous to you. Ask for your usual.",
           "turns": [
             {
               "speaker": "server",
               "name": "Karim",
-              "text": "Bonjour ! Vous voulez un grand café comme d'habitude ?"
+              "text": "Bonjour ! Un grand café comme d'habitude, ou un thé aujourd'hui ?"
             }
           ],
           "drills": [
             {
               "type": "reply",
-              "prompt": "Build the full polite order.",
+              "prompt": "Say: a large coffee, as usual, please.",
               "bank": [
-                "Bonjour,",
-                "je voudrais",
-                "un grand café",
+                "Un",
+                "grand",
+                "café,",
                 "comme d'habitude,",
                 "s'il vous plaît.",
-                "une grande café",
+                "grande",
+                "thé,",
                 "s'il te plaît."
               ],
               "accepted": [
                 [
-                  "Bonjour,",
-                  "je voudrais",
-                  "un grand café",
+                  "Un",
+                  "grand",
+                  "café,",
                   "comme d'habitude,",
                   "s'il vous plaît."
                 ]
               ],
-              "model": "Bonjour, je voudrais un grand café comme d'habitude, s'il vous plaît."
+              "model": "Un grand café, comme d'habitude, s'il vous plaît."
             }
           ],
           "newWords": []
@@ -760,50 +851,55 @@
         {
           "id": "sit_06_usual_d03",
           "place": "Au café",
-          "cue": "Karim uses vous. He asks whether you want your usual coffee.",
+          "cue": "Karim knows your order. He still says vous to you. Today you want tea.",
           "turns": [
             {
               "speaker": "server",
               "name": "Karim",
-              "text": "Comme d'habitude, un grand café ?"
+              "text": "Bonjour ! Un grand café, comme d'habitude ?"
             }
           ],
           "drills": [
             {
               "type": "word",
-              "prompt": "What does « comme d'habitude » mean?",
-              "target": "comme d'habitude",
+              "prompt": "What does « comme d'habitude » mean here?",
               "choices": [
-                "as usual",
-                "right away",
-                "to go"
+                "as well",
+                "for here",
+                "as usual"
               ],
-              "correct": 0,
+              "correct": 2,
               "why": [
-                "",
-                "That means right away, not as usual.",
-                "That means to go, not as usual."
-              ]
+                "« Aussi » means as well.",
+                "« Sur place » means for here.",
+                ""
+              ],
+              "target": "comme d'habitude"
             },
             {
               "type": "reply",
-              "prompt": "Confirm the usual order.",
+              "prompt": "Say no: a tea today, please.",
               "bank": [
+                "Non,",
+                "un thé",
+                "aujourd'hui,",
+                "s'il vous plaît.",
+                "une thé",
                 "Oui,",
-                "comme d'habitude.",
-                "non,",
-                "à emporter."
+                "s'il te plaît."
               ],
               "accepted": [
                 [
-                  "Oui,",
-                  "comme d'habitude."
+                  "Non,",
+                  "un thé",
+                  "aujourd'hui,",
+                  "s'il vous plaît."
                 ]
               ],
-              "model": "Oui, comme d'habitude."
+              "model": "Non, un thé aujourd'hui, s'il vous plaît."
             }
           ],
-          "followUp": "Je vous le prépare.",
+          "followUp": "Un thé ? Très bien, pas de problème !",
           "newWords": [
             "comme d'habitude"
           ]
@@ -811,48 +907,50 @@
         {
           "id": "sit_06_usual_d04",
           "place": "Au café",
-          "cue": "Karim asks to use tu with you. Accept the switch.",
+          "cue": "Third week at the café. Karim has always said vous to you, until today.",
           "turns": [
             {
               "speaker": "server",
               "name": "Karim",
-              "text": "On peut se tutoyer ?"
+              "text": "On peut se tutoyer, non ?"
             }
           ],
           "drills": [
             {
               "type": "comprehend",
-              "prompt": "What does Karim propose?",
+              "prompt": "What does Karim suggest?",
               "choices": [
                 "Saying tu to each other",
-                "Changing your order"
+                "Paying later"
               ],
               "correct": 0,
-              "miss": "Reread « se tutoyer »."
+              "miss": "Reread: « se tutoyer » means to say tu to each other."
             },
             {
               "type": "reply",
-              "prompt": "Agree, then ask him for a coffee using tu.",
+              "prompt": "Say yes, then order a coffee using tu.",
               "bank": [
-                "Oui,",
-                "bien sûr !",
-                "Tu me fais",
-                "un café ?",
-                "Vous me faites",
-                "non,"
+                "Oui !",
+                "Alors,",
+                "un café",
+                "pour moi,",
+                "s'il te plaît.",
+                "s'il vous plaît.",
+                "pour toi,"
               ],
               "accepted": [
                 [
-                  "Oui,",
-                  "bien sûr !",
-                  "Tu me fais",
-                  "un café ?"
+                  "Oui !",
+                  "Alors,",
+                  "un café",
+                  "pour moi,",
+                  "s'il te plaît."
                 ]
               ],
-              "model": "Oui, bien sûr ! Tu me fais un café ?"
+              "model": "Oui ! Alors, un café pour moi, s'il te plaît."
             }
           ],
-          "followUp": "Avec plaisir !",
+          "followUp": "Avec plaisir ! Un grand, comme d'habitude ?",
           "newWords": [
             "on peut se tutoyer"
           ]
@@ -861,28 +959,22 @@
           "id": "sit_06_usual_s02",
           "place": "Au café · phrase seule",
           "standalone": "Choisir le ton",
-          "cue": "Karim uses vous in this card. Ask for your usual coffee.",
-          "turns": [
-            {
-              "speaker": "server",
-              "name": "Karim",
-              "text": "Bonjour ! Vous voulez un grand café comme d'habitude ?"
-            }
-          ],
+          "cue": "Karim switched to tu with you last week. Ask him for your usual.",
+          "turns": [],
           "drills": [
             {
               "type": "pick",
-              "prompt": "Which version fits this card?",
+              "prompt": "Which one fits?",
               "choices": [
-                "Bonjour, je voudrais un grand café comme d'habitude, s'il vous plaît.",
-                "Bonjour, je voudrais un grand café comme d'habitude, s'il te plaît.",
-                "Comme d'habitude, un grand café. Vite, s'il te plaît."
+                "Bonjour, je voudrais un grand café, comme d'habitude, s'il vous plaît.",
+                "Bonjour Karim ! Tu peux me faire un grand café, comme d'habitude ?",
+                "Un grand café. Comme d'habitude. Vite."
               ],
-              "correct": 0,
+              "correct": 1,
               "why": [
+                "Good French, but Karim says tu to you now, so « vous » sounds cold.",
                 "",
-                "« Te » is for a tu exchange.",
-                "That is too abrupt and uses tu."
+                "Good French, but far too blunt, even with a friend."
               ]
             }
           ],
@@ -891,121 +983,122 @@
         {
           "id": "sit_06_usual_d05",
           "place": "Au café",
-          "cue": "Karim uses vous. He checks your usual coffee size.",
+          "cue": "Karim switched to tu with you last week. He greets you.",
           "turns": [
             {
               "speaker": "server",
               "name": "Karim",
-              "text": "Comme d'habitude : un ___ café ?"
+              "text": "Bonjour ! ___ prends comme d'habitude ?"
             }
           ],
           "drills": [
             {
               "type": "word",
-              "prompt": "What does « comme d'habitude » mean?",
-              "target": "comme d'habitude",
+              "prompt": "What does « comme d'habitude » mean here?",
               "choices": [
-                "as usual",
-                "with sugar",
-                "to go"
+                "to go",
+                "right now",
+                "as usual"
               ],
-              "correct": 0,
+              "correct": 2,
               "why": [
-                "",
-                "That means with sugar, not as usual.",
-                "That means to go, not as usual."
-              ]
+                "« À emporter » means to go.",
+                "« Maintenant » means right now.",
+                ""
+              ],
+              "target": "comme d'habitude"
             },
             {
               "type": "complete",
-              "prompt": "Complete the order.",
+              "prompt": "Fill the gap.",
               "choices": [
-                "grand",
-                "grande",
-                "petit"
+                "Je",
+                "Vous",
+                "Tu"
               ],
-              "correct": 0,
+              "correct": 2,
               "why": [
-                "",
-                "« Café » is masculine: « grand ».",
-                "That changes the size."
+                "Karim is asking about your order, not his.",
+                "« Vous » needs « prenez », and Karim says tu to you now.",
+                ""
               ]
             }
           ],
-          "followUp": "Un grand café, bien sûr.",
+          "followUp": "Un grand café pour toi, alors !",
           "newWords": [
             "comme d'habitude"
           ]
         },
         {
           "id": "sit_06_usual_d06",
-          "place": "Texto · Léa",
-          "cue": "Léa uses tu. Text her what Karim asked you.",
+          "place": "Au café",
+          "cue": "Karim switched to tu with you last week, but today he forgets.",
           "turns": [
             {
               "speaker": "server",
-              "name": "Léa",
-              "text": "On peut se tutoyer ? C'est la question de Karim."
+              "name": "Karim",
+              "text": "Bonjour ! Vous prenez comme d'habitude ?"
             }
           ],
           "drills": [
             {
-              "type": "word",
-              "prompt": "What does « on peut se tutoyer » mean?",
-              "target": "on peut se tutoyer",
+              "type": "comprehend",
+              "prompt": "How does Karim speak to you today?",
               "choices": [
-                "can we use tu together?",
-                "can we sit together?",
-                "can we pay together?"
+                "With vous, like before",
+                "With tu, like last week"
               ],
               "correct": 0,
-              "why": [
-                "",
-                "That means can we sit together?, not can we use tu together?.",
-                "That means can we pay together?, not can we use tu together?."
-              ]
+              "miss": "Reread: « vous prenez »."
             },
             {
               "type": "reply",
-              "prompt": "Tell Léa you agreed.",
+              "prompt": "Remind him, with a smile.",
               "bank": [
-                "Oui,",
-                "bien sûr !",
-                "non,",
-                "s'il vous plaît."
+                "On",
+                "peut",
+                "se",
+                "tutoyer,",
+                "non ?",
+                "peux",
+                "Tu"
               ],
               "accepted": [
                 [
-                  "Oui,",
-                  "bien sûr !"
+                  "On",
+                  "peut",
+                  "se",
+                  "tutoyer,",
+                  "non ?"
                 ]
               ],
-              "model": "Oui, bien sûr !"
+              "model": "On peut se tutoyer, non ?"
             }
           ],
-          "followUp": "Ça, c'est sympa !",
+          "followUp": "Oui, pardon ! Tu prends comme d'habitude ?",
           "newWords": [
-            "on peut se tutoyer"
+            "on peut se tutoyer",
+            "comme d'habitude"
           ]
         },
         {
           "id": "sit_06_usual_s03",
           "place": "Au café · phrase seule",
           "standalone": "Corriger",
-          "cue": "Karim uses vous in this card. Correct your polite order.",
+          "cue": "Karim switched to tu with you last week. Ask for your usual.",
           "turns": [
             {
               "speaker": "learner",
-              "text": "Une grand café comme d'habitude, s'il vous plaît, Karim.",
+              "text": "Karim, tu peux me faire un grand café comme d'habitude, s'il vous plaît ?",
               "error": {
-                "word": "Une",
-                "fix": "Un",
+                "word": "vous",
+                "fix": "te",
                 "choices": [
-                  "Un",
-                  "Des",
-                  "Le"
+                  "toi",
+                  "te",
+                  "tu"
                 ],
-                "why": "« Café » is masculine: « un grand café »."
+                "why": "You say tu to Karim now, so « s'il te plaît »."
               }
             }
           ],
@@ -1020,44 +1113,46 @@
         {
           "id": "sit_06_usual_d07",
           "place": "Texto · Théo",
-          "cue": "Théo uses tu. He asks about your café routine by text.",
+          "cue": "Théo, a friend, texts you. He says tu to you.",
           "turns": [
             {
               "speaker": "server",
               "name": "Théo",
-              "text": "Tu prends ton café comme d'habitude ?"
+              "text": "Je suis chez Karim. Je te prends un café ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, un grand, ___ d'habitude !"
             }
           ],
           "drills": [
             {
-              "type": "comprehend",
-              "prompt": "What is Théo asking?",
+              "type": "complete",
+              "prompt": "Fill the gap.",
               "choices": [
-                "Whether you have your usual coffee",
-                "Whether you need a bag"
+                "comment",
+                "comme",
+                "combien"
               ],
-              "correct": 0,
-              "miss": "Reread « comme d'habitude »."
+              "correct": 1,
+              "why": [
+                "« Comment » means how.",
+                "",
+                "« Combien » means how much."
+              ]
             },
             {
-              "type": "reply",
-              "prompt": "Say yes, the usual coffee.",
-              "bank": [
-                "Oui,",
-                "comme d'habitude.",
-                "non,",
-                "en espèces."
+              "type": "comprehend",
+              "prompt": "What does Théo offer?",
+              "choices": [
+                "To meet you at home",
+                "To get you a coffee"
               ],
-              "accepted": [
-                [
-                  "Oui,",
-                  "comme d'habitude."
-                ]
-              ],
-              "model": "Oui, comme d'habitude."
+              "correct": 1,
+              "miss": "Reread: « je te prends un café ? »"
             }
           ],
-          "followUp": "Je te rejoins au café.",
+          "followUp": "Parfait, j'arrive !",
           "newWords": [
             "comme d'habitude"
           ]
@@ -1065,33 +1160,53 @@
         {
           "id": "sit_06_usual_d08",
           "place": "Texto · Léa",
-          "cue": "Léa uses tu. She asks what Karim's question meant.",
+          "cue": "Léa, your flatmate, texts you. She says tu to you.",
           "turns": [
+            {
+              "speaker": "learner",
+              "text": "Karim m'a dit : « On peut se tutoyer ? »"
+            },
             {
               "speaker": "server",
               "name": "Léa",
-              "text": "On peut se tutoyer ? C'est bien ça ?"
+              "text": "Et maintenant, tu ___ dis tu ?"
             }
           ],
           "drills": [
             {
-              "type": "word",
-              "prompt": "What did Karim suggest?",
-              "target": "on peut se tutoyer",
+              "type": "complete",
+              "prompt": "Fill the gap.",
               "choices": [
-                "using tu with each other",
-                "taking coffee away",
-                "paying together"
+                "leur",
+                "le",
+                "lui"
               ],
-              "correct": 0,
+              "correct": 2,
               "why": [
-                "",
-                "That means taking coffee away, not using tu with each other.",
-                "That means paying together, not using tu with each other."
+                "Karim is one person, so not « leur ».",
+                "You say tu « à Karim », so « lui », not « le ».",
+                ""
               ]
+            },
+            {
+              "type": "word",
+              "prompt": "What does « on peut se tutoyer » mean here?",
+              "choices": [
+                "can we sit together?",
+                "can we say tu to each other?",
+                "can we pay later?"
+              ],
+              "correct": 1,
+              "why": [
+                "No: « se tutoyer » is about saying tu.",
+                "",
+                "No: « se tutoyer » is about saying tu."
+              ],
+              "target": "on peut se tutoyer"
             }
           ],
-          "followUp": "Karim est sympa !",
+          "followUp": "Alors c'est un ami, maintenant !",
+          "followUpBy": "Léa",
           "newWords": [
             "on peut se tutoyer"
           ]
@@ -1100,33 +1215,40 @@
           "id": "sit_06_usual_s04",
           "place": "Au café · phrase seule",
           "standalone": "Transformer",
-          "cue": "Karim uses vous in this card. Change tu to vous.",
+          "cue": "Karim switched to tu with you last week. Your sentence still uses vous.",
           "turns": [
             {
               "speaker": "learner",
-              "text": "Tu me fais un grand café comme d'habitude ?",
+              "text": "Bonjour Karim, vous pouvez me faire un grand café, s'il vous plaît ?",
               "source": true
             }
           ],
           "drills": [
             {
               "type": "reply",
-              "prompt": "Rewrite the question politely.",
+              "prompt": "Rewrite it with tu.",
               "bank": [
-                "Vous me faites",
-                "un grand café",
-                "comme d'habitude ?",
-                "Tu me fais",
-                "une grande café"
+                "Bonjour Karim,",
+                "tu",
+                "peux",
+                "me faire",
+                "un grand café,",
+                "s'il te plaît ?",
+                "pouvez",
+                "s'il vous plaît ?",
+                "vous"
               ],
               "accepted": [
                 [
-                  "Vous me faites",
-                  "un grand café",
-                  "comme d'habitude ?"
+                  "Bonjour Karim,",
+                  "tu",
+                  "peux",
+                  "me faire",
+                  "un grand café,",
+                  "s'il te plaît ?"
                 ]
               ],
-              "model": "Vous me faites un grand café comme d'habitude ?"
+              "model": "Bonjour Karim, tu peux me faire un grand café, s'il te plaît ?"
             }
           ],
           "newWords": []
@@ -1134,97 +1256,109 @@
         {
           "id": "sit_06_usual_d09",
           "place": "Les copains · groupe",
-          "cue": "Théo uses tu. Tell the group about Karim's friendly question.",
+          "cue": "Théo's group chat « Les copains ». Everyone says tu. Karim says tu to you now.",
           "turns": [
             {
               "speaker": "server",
               "name": "Théo",
-              "text": "On peut se tutoyer ? Karim a dit ça ?"
+              "text": "Karim te dit tu, maintenant ? Pas à moi !"
             }
           ],
           "drills": [
             {
               "type": "comprehend",
-              "prompt": "What did Karim ask?",
+              "prompt": "What does Théo say about himself?",
               "choices": [
-                "To switch to tu",
-                "To buy two coffees"
+                "Karim says tu to him too",
+                "Karim doesn't say tu to him"
               ],
-              "correct": 0,
-              "miss": "Reread « on peut se tutoyer »."
+              "correct": 1,
+              "miss": "Reread: « pas à moi ! »"
             },
             {
               "type": "reply",
-              "prompt": "Say that you agreed.",
+              "prompt": "Say yes, and that you say tu to him too.",
               "bank": [
                 "Oui,",
-                "j'ai dit oui.",
-                "non,",
-                "j'ai dit non."
+                "et",
+                "je",
+                "lui",
+                "dis",
+                "tu",
+                "aussi.",
+                "le",
+                "dit"
               ],
               "accepted": [
                 [
                   "Oui,",
-                  "j'ai dit oui."
+                  "et",
+                  "je",
+                  "lui",
+                  "dis",
+                  "tu",
+                  "aussi."
                 ]
               ],
-              "model": "Oui, j'ai dit oui."
+              "model": "Oui, et je lui dis tu aussi."
             }
           ],
-          "followUp": "Ah, oui !",
-          "newWords": [
-            "on peut se tutoyer"
-          ]
+          "followUp": "Bon, demain, je lui dis tu aussi !",
+          "followUpBy": "Théo",
+          "newWords": []
         },
         {
           "id": "sit_06_usual_d10",
           "place": "Au café",
-          "cue": "Karim uses vous. Ask him to repeat your usual order.",
+          "cue": "Karim switched to tu with you last week. He talks fast this morning.",
           "turns": [
             {
               "speaker": "server",
               "name": "Karim",
-              "text": "Comme d'habitude : un grand café ?"
+              "text": "Bonjour ! Comme d'habitude, ou un thé aujourd'hui ?"
             }
           ],
           "drills": [
             {
               "type": "word",
-              "prompt": "What does « comme d'habitude » mean?",
-              "target": "comme d'habitude",
+              "prompt": "What does « comme d'habitude » mean here?",
               "choices": [
+                "today",
                 "as usual",
-                "to go",
-                "with milk"
+                "to go"
               ],
-              "correct": 0,
+              "correct": 1,
               "why": [
+                "« Aujourd'hui » means today.",
                 "",
-                "That means to go, not as usual.",
-                "That means with milk, not as usual."
-              ]
+                "« À emporter » means to go."
+              ],
+              "target": "comme d'habitude"
             },
             {
               "type": "reply",
-              "prompt": "Ask him to repeat politely.",
+              "prompt": "Ask him to say it again. You say tu to each other.",
               "bank": [
                 "Pardon,",
-                "vous pouvez",
+                "tu",
+                "peux",
                 "répéter ?",
-                "tu peux",
-                "répétez ?"
+                "vous",
+                "pouvez",
+                "peut"
               ],
               "accepted": [
                 [
                   "Pardon,",
-                  "vous pouvez",
+                  "tu",
+                  "peux",
                   "répéter ?"
                 ]
               ],
-              "model": "Pardon, vous pouvez répéter ?"
+              "model": "Pardon, tu peux répéter ?"
             }
           ],
-          "followUp": "Un grand café, comme d'habitude.",
+          "followUp": "Comme d'habitude… ou un thé aujourd'hui ?",
           "newWords": [
             "comme d'habitude"
           ]
@@ -1233,11 +1367,12 @@
           "id": "sit_06_usual_s05",
           "place": "Au café · phrase seule",
           "standalone": "Mot en retour",
-          "cue": "You use vous with Karim. Recall how to say as usual.",
+          "cue": "Karim says tu to you now. Which words mean “as usual”?",
           "turns": [
             {
-              "speaker": "learner",
-              "text": "Bonjour, pour moi, ___, un grand café, s'il vous plaît."
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Bonjour ! Je te prépare un grand café à emporter, ___ ?"
             }
           ],
           "drills": [
@@ -1245,15 +1380,15 @@
               "type": "complete",
               "prompt": "as usual",
               "choices": [
-                "Comme d'habitude",
-                "À emporter",
-                "Sur place"
+                "comme d'habitude",
+                "sur place",
+                "aujourd'hui"
               ],
               "correct": 0,
               "why": [
                 "",
-                "That means to go.",
-                "That means to have it here."
+                "« Sur place » means to have here, but this coffee is to go.",
+                "« Aujourd'hui » means today."
               ]
             }
           ],
@@ -1269,113 +1404,134 @@
         {
           "id": "sit_06_mixup_d01",
           "place": "Au café",
-          "cue": "Karim uses vous. He hands you tea, but you ordered coffee.",
+          "cue": "Karim says vous to you. You ordered a coffee, and he brings you something else.",
           "turns": [
             {
               "speaker": "server",
               "name": "Karim",
-              "text": "C'est votre thé ? Il y a une erreur ?"
+              "text": "Voilà votre thé !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Pardon, je crois qu'il y a une erreur."
             }
           ],
           "drills": [
             {
               "type": "comprehend",
-              "prompt": "What drink is Karim offering?",
+              "prompt": "What does Karim bring you?",
               "choices": [
-                "Tea",
-                "Coffee"
+                "A tea",
+                "A coffee"
               ],
               "correct": 0,
-              "miss": "Reread « thé »."
+              "miss": "Reread: « voilà votre thé ! »"
             },
             {
               "type": "reply",
-              "prompt": "Politely say there's a mistake; you ordered coffee.",
+              "prompt": "Say you ordered a coffee, not a tea.",
               "bank": [
-                "Je crois",
-                "qu'il y a une erreur.",
                 "J'ai pris",
-                "un café.",
+                "un café,",
+                "pas",
                 "un thé.",
-                "pas"
+                "Je suis",
+                "une"
               ],
               "accepted": [
                 [
-                  "Je crois",
-                  "qu'il y a une erreur.",
                   "J'ai pris",
-                  "un café."
+                  "un café,",
+                  "pas",
+                  "un thé."
                 ]
               ],
-              "model": "Je crois qu'il y a une erreur. J'ai pris un café."
+              "model": "J'ai pris un café, pas un thé."
             }
           ],
-          "followUp": "Ah, pardon, voici votre café.",
+          "followUp": "Pardon ! Le thé, c'est pour la table deux.",
           "newWords": [
-            "une erreur"
+            "une erreur",
+            "je crois"
           ]
         },
         {
           "id": "sit_06_mixup_d02",
           "place": "Au café",
-          "cue": "Karim uses vous. He mistakenly offers a small coffee; you ordered a large one.",
+          "cue": "Karim says vous to you. You ordered a large coffee.",
           "turns": [
             {
               "speaker": "server",
               "name": "Karim",
-              "text": "C'est un ___ café pour vous ?"
+              "text": "Voilà, un petit café pour vous."
+            },
+            {
+              "speaker": "learner",
+              "text": "Pardon, j'ai pris un ___ café."
             }
           ],
           "drills": [
             {
-              "type": "complete",
-              "prompt": "Which French word means small for « café »?",
+              "type": "comprehend",
+              "prompt": "What size does Karim bring?",
               "choices": [
-                "petit",
-                "petite",
-                "grand"
+                "Small",
+                "Large"
               ],
               "correct": 0,
+              "miss": "Reread: « un petit café »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "petit",
+                "grand",
+                "grande"
+              ],
+              "correct": 1,
               "why": [
+                "Good French, but a small one is what he brought, so there'd be no mistake.",
                 "",
-                "« Café » is masculine: « petit ».",
-                "That changes the size."
+                "« Café » is masculine, so not « grande »."
               ]
             }
           ],
-          "followUp": "Ah, vous vouliez un grand café.",
+          "followUp": "Oui, pardon ! Un grand café, j'arrive.",
           "newWords": []
         },
         {
           "id": "sit_06_mixup_s01",
           "place": "Au café · phrase seule",
           "standalone": "Construire",
-          "cue": "Karim uses vous. He gave you tea instead of coffee.",
+          "cue": "Karim says vous to you. He brings you a tea, but you ordered a coffee.",
           "turns": [
             {
               "speaker": "server",
               "name": "Karim",
-              "text": "Bonjour, voici le thé que vous avez demandé."
+              "text": "Bonjour ! Voilà votre grand thé, et bonne journée !"
             }
           ],
           "drills": [
             {
               "type": "reply",
-              "prompt": "Politely explain the mistake.",
+              "prompt": "Politely say there's a mistake: you ordered a coffee.",
               "bank": [
                 "Pardon,",
                 "je crois",
-                "qu'il y a une erreur.",
+                "qu'il y a",
+                "une erreur.",
                 "J'ai pris",
                 "un café.",
                 "un thé.",
-                "pas"
+                "un erreur."
               ],
               "accepted": [
                 [
                   "Pardon,",
                   "je crois",
-                  "qu'il y a une erreur.",
+                  "qu'il y a",
+                  "une erreur.",
                   "J'ai pris",
                   "un café."
                 ]
@@ -1388,52 +1544,62 @@
         {
           "id": "sit_06_mixup_d03",
           "place": "Au café",
-          "cue": "Karim uses vous. The order has a mistake.",
+          "cue": "Karim says vous to you. He brought you the wrong drink and comes back.",
           "turns": [
             {
               "speaker": "server",
               "name": "Karim",
-              "text": "Il y a une erreur avec votre café ?"
+              "text": "Il y a une erreur ? C'était un thé, non ?"
             }
           ],
           "drills": [
             {
               "type": "word",
-              "prompt": "What does « une erreur » mean?",
-              "target": "une erreur",
+              "prompt": "What does « une erreur » mean here?",
               "choices": [
+                "a delay",
                 "a mistake",
-                "a bag",
-                "a receipt"
+                "a bill"
               ],
-              "correct": 0,
+              "correct": 1,
               "why": [
+                "No: « une erreur » is something wrong, not a wait.",
                 "",
-                "That means a bag, not a mistake.",
-                "That means a receipt, not a mistake."
-              ]
+                "No: « une erreur » is something wrong, not the bill."
+              ],
+              "target": "une erreur"
             },
             {
               "type": "reply",
-              "prompt": "Confirm that you ordered a coffee.",
+              "prompt": "Say no: you ordered a large coffee.",
               "bank": [
-                "Oui,",
+                "Non,",
                 "j'ai pris",
-                "un café.",
-                "un thé.",
-                "non,"
+                "un",
+                "grand",
+                "café.",
+                "Oui,",
+                "grande"
               ],
               "accepted": [
                 [
-                  "Oui,",
+                  "Non,",
                   "j'ai pris",
-                  "un café."
+                  "un",
+                  "grand",
+                  "café."
+                ],
+                [
+                  "Non,",
+                  "un",
+                  "grand",
+                  "café."
                 ]
               ],
-              "model": "Oui, j'ai pris un café."
+              "model": "Non, j'ai pris un grand café."
             }
           ],
-          "followUp": "Je vous donne le bon café.",
+          "followUp": "Pardon ! Un grand café, tout de suite.",
           "newWords": [
             "une erreur"
           ]
@@ -1441,74 +1607,68 @@
         {
           "id": "sit_06_mixup_d04",
           "place": "Au café",
-          "cue": "Karim uses vous. He has two coffees; you ordered one.",
+          "cue": "Karim says vous to you. You ordered a black coffee.",
           "turns": [
             {
               "speaker": "server",
               "name": "Karim",
-              "text": "Deux cafés pour vous ?"
+              "text": "Et voilà votre café au lait !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Pardon, je l'ai pris ___ lait."
             }
           ],
           "drills": [
             {
               "type": "comprehend",
-              "prompt": "How many coffees does Karim offer?",
+              "prompt": "What does Karim bring?",
               "choices": [
-                "Two",
-                "One"
+                "A coffee with milk",
+                "A tea with milk"
               ],
               "correct": 0,
-              "miss": "Reread « deux cafés »."
+              "miss": "Reread: « votre café au lait »."
             },
             {
-              "type": "reply",
-              "prompt": "Correct the number politely.",
-              "bank": [
-                "Non,",
-                "un seul café,",
-                "s'il vous plaît.",
-                "deux cafés,",
-                "s'il te plaît."
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "sans",
+                "de",
+                "avec"
               ],
-              "accepted": [
-                [
-                  "Non,",
-                  "un seul café,",
-                  "s'il vous plaît."
-                ]
-              ],
-              "model": "Non, un seul café, s'il vous plaît."
+              "correct": 0,
+              "why": [
+                "",
+                "Not French here: « sans lait ».",
+                "Good French, but then there'd be no mistake."
+              ]
             }
           ],
-          "followUp": "Ah oui, un seul café.",
+          "followUp": "Pardon ! Un café sans lait, alors.",
           "newWords": []
         },
         {
           "id": "sit_06_mixup_s02",
           "place": "Au café · phrase seule",
           "standalone": "Choisir le ton",
-          "cue": "Karim uses vous. Correct a mistaken order politely.",
-          "turns": [
-            {
-              "speaker": "server",
-              "name": "Karim",
-              "text": "Bonjour, voici le thé que vous avez demandé."
-            }
-          ],
+          "cue": "Karim says vous to you. He brought you the wrong drink. Point it out.",
+          "turns": [],
           "drills": [
             {
               "type": "pick",
-              "prompt": "Which reply fits?",
+              "prompt": "Which one fits?",
               "choices": [
-                "Pardon, je crois qu'il y a une erreur avec mon café.",
-                "Pardon, tu as fait une erreur avec mon café.",
-                "Il y a une erreur avec mon café. Vite !"
+                "Pardon, je crois que tu as fait une erreur : j'ai pris un café.",
+                "Pardon, je crois qu'il y a une erreur : j'ai pris un café.",
+                "Ce n'est pas mon café ! Vous avez fait une erreur !"
               ],
-              "correct": 0,
+              "correct": 1,
               "why": [
+                "Good French, but « tu » is for friends. Karim says vous to you.",
                 "",
-                "This uses tu with Karim.",
-                "That is too abrupt."
+                "Good French, but it sounds like a complaint, not a polite correction."
               ]
             }
           ],
@@ -1517,52 +1677,52 @@
         {
           "id": "sit_06_mixup_d05",
           "place": "Au café",
-          "cue": "Karim uses vous. Your coffee has a mistake.",
+          "cue": "Karim says vous to you. He's checking a mistake on your order.",
           "turns": [
             {
               "speaker": "server",
               "name": "Karim",
-              "text": "Il y a une erreur avec ce café ?"
+              "text": "Pardon, une erreur ! Votre café, c'était sans sucre ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Non, ___ deux sucres, s'il vous plaît."
             }
           ],
           "drills": [
             {
               "type": "word",
-              "prompt": "What does « une erreur » mean?",
-              "target": "une erreur",
+              "prompt": "What does « une erreur » mean here?",
               "choices": [
+                "a receipt",
                 "a mistake",
-                "a choice",
-                "a bill"
+                "a question"
+              ],
+              "correct": 1,
+              "why": [
+                "No: « une erreur » is something wrong.",
+                "",
+                "No: « une erreur » is something wrong."
+              ],
+              "target": "une erreur"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "avec",
+                "sans",
+                "de"
               ],
               "correct": 0,
               "why": [
                 "",
-                "That means a choice, not a mistake.",
-                "That means a bill, not a mistake."
+                "You just said « non » to « sans sucre ».",
+                "Not French here: « avec deux sucres »."
               ]
-            },
-            {
-              "type": "reply",
-              "prompt": "Confirm you ordered a large coffee.",
-              "bank": [
-                "Oui,",
-                "j'ai pris",
-                "un grand café.",
-                "un petit café.",
-                "non,"
-              ],
-              "accepted": [
-                [
-                  "Oui,",
-                  "j'ai pris",
-                  "un grand café."
-                ]
-              ],
-              "model": "Oui, j'ai pris un grand café."
             }
           ],
-          "followUp": "Je vais le changer.",
+          "followUp": "Très bien, avec deux sucres. Voilà !",
           "newWords": [
             "une erreur"
           ]
@@ -1570,66 +1730,69 @@
         {
           "id": "sit_06_mixup_d06",
           "place": "Au café",
-          "cue": "Karim uses vous. He offers a small coffee; you ordered a large one.",
+          "cue": "Karim says vous to you. You ordered a small coffee.",
           "turns": [
             {
               "speaker": "server",
               "name": "Karim",
-              "text": "Un petit café pour vous ?"
+              "text": "Voilà, un grand café pour vous !"
             }
           ],
           "drills": [
             {
               "type": "comprehend",
-              "prompt": "What size does Karim offer?",
+              "prompt": "What size is the coffee Karim brings?",
               "choices": [
-                "Small",
-                "Large"
+                "Large",
+                "Small"
               ],
               "correct": 0,
-              "miss": "Reread « un petit café »."
+              "miss": "Reread: « un grand café »."
             },
             {
               "type": "reply",
-              "prompt": "Say no: you ordered a large coffee.",
+              "prompt": "Say there's a mistake: you ordered a small one.",
               "bank": [
-                "Non,",
+                "Pardon,",
                 "j'ai pris",
-                "un grand café.",
-                "un petit café.",
-                "oui,"
+                "un",
+                "petit.",
+                "grand.",
+                "petite.",
+                "une"
               ],
               "accepted": [
                 [
-                  "Non,",
+                  "Pardon,",
                   "j'ai pris",
-                  "un grand café."
+                  "un",
+                  "petit."
                 ]
               ],
-              "model": "Non, j'ai pris un grand café."
+              "model": "Pardon, j'ai pris un petit."
             }
           ],
-          "followUp": "Je vous apporte le grand café.",
+          "followUp": "Pardon ! Un petit, j'arrive.",
           "newWords": []
         },
         {
           "id": "sit_06_mixup_s03",
           "place": "Au café · phrase seule",
           "standalone": "Corriger",
-          "cue": "Karim uses vous. Correct the size in your own sentence.",
+          "cue": "Karim says vous to you. You point out a mistake.",
           "turns": [
             {
               "speaker": "learner",
-              "text": "J'ai pris une grand café, pas un petit café, Karim.",
+              "text": "Pardon, je crois qu'il y a un erreur avec mon café.",
               "error": {
-                "word": "une",
-                "fix": "un",
+                "word": "un",
+                "fix": "une",
                 "choices": [
-                  "un",
                   "des",
-                  "la"
+                  "le",
+                  "une"
                 ],
-                "why": "« Café » is masculine: « un grand café »."
+                "why": "« Erreur » is feminine: « une erreur »."
               }
             }
           ],
@@ -1644,115 +1807,143 @@
         {
           "id": "sit_06_mixup_d07",
           "place": "Texto · Léa",
-          "cue": "Léa uses tu. Text her about the wrong order.",
+          "cue": "Léa is waiting for you at home. She says tu to you.",
           "turns": [
+            {
+              "speaker": "learner",
+              "text": "Pardon, je suis en retard. Une erreur chez Karim !"
+            },
             {
               "speaker": "server",
               "name": "Léa",
-              "text": "Il y a une erreur avec ton café ?"
+              "text": "Pas de souci ! Il t'a ___ un thé ?"
             }
           ],
           "drills": [
             {
-              "type": "word",
-              "prompt": "What does « une erreur » mean?",
-              "target": "une erreur",
+              "type": "complete",
+              "prompt": "Fill the gap.",
               "choices": [
-                "a mistake",
-                "a bag",
-                "a payment"
+                "donné",
+                "donner",
+                "donnée"
               ],
               "correct": 0,
               "why": [
                 "",
-                "That means a bag, not a mistake.",
-                "That means a payment, not a mistake."
+                "After « il t'a », use the past participle « donné ».",
+                "No agreement here: « donné »."
               ]
             },
             {
-              "type": "reply",
-              "prompt": "Say yes, you got tea instead.",
-              "bank": [
-                "Oui,",
-                "j'ai un thé,",
-                "pas un café.",
-                "j'ai un café,",
-                "non,"
+              "type": "word",
+              "prompt": "What does « une erreur » mean here?",
+              "choices": [
+                "a mistake",
+                "a delay",
+                "a bag"
               ],
-              "accepted": [
-                [
-                  "Oui,",
-                  "j'ai un thé,",
-                  "pas un café."
-                ]
+              "correct": 0,
+              "why": [
+                "",
+                "No: « en retard » means late.",
+                "« Un sac » is a bag."
               ],
-              "model": "Oui, j'ai un thé, pas un café."
+              "target": "une erreur"
             }
           ],
-          "followUp": "Ah, demande le bon café !",
+          "followUp": "Bon, je t'attends à la maison.",
+          "followUpBy": "Léa",
           "newWords": [
+            "pas de souci",
             "une erreur"
           ]
         },
         {
           "id": "sit_06_mixup_d08",
           "place": "Texto · Léa",
-          "cue": "Léa uses tu. You both ordered coffee by text.",
+          "cue": "Léa texts you. She says tu to you. You brought two drinks home: one for you, one for her.",
           "turns": [
             {
               "speaker": "server",
               "name": "Léa",
-              "text": "J'ai pris deux cafés. Et toi ?"
+              "text": "Je crois qu'il y a une erreur : c'est un thé !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Non, pardon ! C'est ___ thé, alors."
             }
           ],
           "drills": [
             {
               "type": "comprehend",
-              "prompt": "How many coffees did Léa order?",
+              "prompt": "What's wrong, according to Léa?",
               "choices": [
-                "Two",
-                "One"
+                "She got two coffees",
+                "She got a tea"
               ],
-              "correct": 0,
-              "miss": "Reread « deux cafés »."
+              "correct": 1,
+              "miss": "Reread: « c'est un thé ! »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "ma",
+                "mon",
+                "ton"
+              ],
+              "correct": 1,
+              "why": [
+                "« Thé » is masculine, so not « ma ».",
+                "",
+                "Léa didn't order a tea, so it isn't « ton thé »."
+              ]
             }
           ],
-          "followUp": "Je suis au café.",
-          "newWords": []
+          "followUp": "Et toi, t'as mon café ?",
+          "followUpBy": "Léa",
+          "newWords": [
+            "je crois",
+            "une erreur"
+          ]
         },
         {
           "id": "sit_06_mixup_s04",
           "place": "Au café · phrase seule",
           "standalone": "Transformer",
-          "cue": "Karim uses vous. Change your sentence from tea to coffee.",
+          "cue": "You told Léa about the mistake. Now tell Karim, who says vous to you.",
           "turns": [
             {
               "speaker": "learner",
-              "text": "J'ai pris un thé pour moi, s'il vous plaît.",
+              "text": "Léa, je crois que Karim a fait une erreur avec mon café.",
               "source": true
             }
           ],
           "drills": [
             {
               "type": "reply",
-              "prompt": "Rewrite it with coffee.",
+              "prompt": "Say it to Karim, with vous.",
               "bank": [
-                "J'ai pris",
-                "un café",
-                "pour moi,",
-                "s'il vous plaît.",
-                "un thé",
-                "s'il te plaît."
+                "Karim,",
+                "je crois que",
+                "vous avez fait",
+                "une erreur",
+                "avec mon café.",
+                "il a fait",
+                "tu as fait",
+                "un erreur"
               ],
               "accepted": [
                 [
-                  "J'ai pris",
-                  "un café",
-                  "pour moi,",
-                  "s'il vous plaît."
+                  "Karim,",
+                  "je crois que",
+                  "vous avez fait",
+                  "une erreur",
+                  "avec mon café."
                 ]
               ],
-              "model": "J'ai pris un café pour moi, s'il vous plaît."
+              "model": "Karim, je crois que vous avez fait une erreur avec mon café."
             }
           ],
           "newWords": []
@@ -1760,115 +1951,136 @@
         {
           "id": "sit_06_mixup_d09",
           "place": "Les copains · groupe",
-          "cue": "Théo uses tu in the group chat. He recounts a mix-up.",
+          "cue": "Théo's group chat « Les copains ». Everyone says tu.",
           "turns": [
             {
               "speaker": "server",
               "name": "Théo",
-              "text": "J'ai demandé un ___, mais j'ai eu un thé."
+              "text": "Karim m'a donné un thé. Je crois qu'il est fatigué !"
             }
           ],
           "drills": [
             {
-              "type": "comprehend",
-              "prompt": "What did Théo receive?",
+              "type": "word",
+              "prompt": "What does « je crois » mean here?",
               "choices": [
-                "Tea",
-                "Coffee"
-              ],
-              "correct": 0,
-              "miss": "Reread « j'ai eu un thé »."
-            },
-            {
-              "type": "complete",
-              "prompt": "Complete what Théo originally asked for.",
-              "choices": [
-                "café",
-                "thé",
-                "sac"
+                "I think",
+                "I'm sure",
+                "I know"
               ],
               "correct": 0,
               "why": [
                 "",
-                "Tea is what he received.",
-                "A bag is not his drink."
-              ]
+                "« Je suis sûr » would be I'm sure.",
+                "« Je sais » would be I know."
+              ],
+              "target": "je crois"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say: same for you, a tea, not a coffee!",
+              "bank": [
+                "Moi",
+                "aussi !",
+                "Un thé,",
+                "pas",
+                "un café.",
+                "Toi",
+                "un thé."
+              ],
+              "accepted": [
+                [
+                  "Moi",
+                  "aussi !",
+                  "Un thé,",
+                  "pas",
+                  "un café."
+                ]
+              ],
+              "model": "Moi aussi ! Un thé, pas un café."
             }
           ],
-          "followUp": "Ils ont corrigé.",
-          "newWords": []
+          "followUp": "Bon, demain, je prends un thé !",
+          "newWords": [
+            "je crois"
+          ]
         },
         {
           "id": "sit_06_mixup_d10",
           "place": "Au café",
-          "cue": "Karim uses vous. The café is noisy; ask him to repeat.",
+          "cue": "Karim says vous to you. It's busy and he talks fast.",
           "turns": [
             {
               "speaker": "server",
               "name": "Karim",
-              "text": "Vous avez demandé un grand café ?"
+              "text": "Une erreur, pardon. C'était un grand ou un petit ?"
             }
           ],
           "drills": [
             {
               "type": "comprehend",
-              "prompt": "What size does Karim say?",
+              "prompt": "What does Karim want to know?",
               "choices": [
-                "Large",
-                "Small"
+                "How you'll pay",
+                "The size you ordered"
               ],
-              "correct": 0,
-              "miss": "Reread « un grand café »."
+              "correct": 1,
+              "miss": "Reread: « un grand ou un petit ? »"
             },
             {
               "type": "reply",
-              "prompt": "Ask him to repeat politely.",
+              "prompt": "Ask him to say it again.",
               "bank": [
                 "Pardon,",
-                "vous pouvez",
+                "vous",
+                "pouvez",
                 "répéter ?",
-                "tu peux",
-                "répétez ?"
+                "tu",
+                "peux",
+                "peut"
               ],
               "accepted": [
                 [
                   "Pardon,",
-                  "vous pouvez",
+                  "vous",
+                  "pouvez",
                   "répéter ?"
                 ]
               ],
               "model": "Pardon, vous pouvez répéter ?"
             }
           ],
-          "followUp": "Un grand café, c'est bien ça ?",
-          "newWords": []
+          "followUp": "Votre café : un grand… ou un petit ?",
+          "newWords": [
+            "une erreur"
+          ]
         },
         {
           "id": "sit_06_mixup_s05",
           "place": "Au café · phrase seule",
           "standalone": "Mot en retour",
-          "cue": "Karim uses vous. Recall the word for a mistake.",
+          "cue": "Karim says vous to you. Which words mean “no worries”?",
           "turns": [
             {
               "speaker": "server",
               "name": "Karim",
-              "text": "Pardon, je crois qu'il y a ___ avec ce café."
+              "text": "Une erreur ? ___, voilà un autre café pour vous."
             }
           ],
           "drills": [
             {
               "type": "complete",
-              "prompt": "a mistake",
+              "prompt": "no worries",
               "choices": [
-                "une erreur",
-                "un sac",
-                "un café"
+                "Pas de souci",
+                "Sur place",
+                "Comme d'habitude"
               ],
               "correct": 0,
               "why": [
                 "",
-                "A bag is not a mistake.",
-                "A coffee is not a mistake."
+                "« Sur place » means to have here.",
+                "« Comme d'habitude » means as usual."
               ]
             }
           ],
@@ -1884,312 +2096,33 @@
         {
           "id": "sit_06_pay_d01",
           "place": "Au café",
-          "cue": "Karim uses vous. He asks about card payment and tells you the total.",
+          "cue": "Karim says vous to you. You're paying for your coffee.",
           "turns": [
             {
               "speaker": "server",
               "name": "Karim",
-              "text": "Vous payez par carte ? Ça fait trois euros."
+              "text": "Ça fait trois euros. Par carte ?"
             }
           ],
           "drills": [
             {
               "type": "comprehend",
-              "prompt": "What is the total?",
+              "prompt": "How much is it?",
               "choices": [
-                "Three euros",
-                "Two euros"
+                "Two euros",
+                "Three euros"
               ],
-              "correct": 0,
-              "miss": "Reread « trois euros »."
+              "correct": 1,
+              "miss": "Reread: « ça fait trois euros »."
             },
             {
               "type": "reply",
-              "prompt": "Say yes, you'll pay by card.",
-              "bank": [
-                "Oui,",
-                "je paie",
-                "par carte.",
-                "en espèces.",
-                "tu paies"
-              ],
-              "accepted": [
-                [
-                  "Oui,",
-                  "je paie",
-                  "par carte."
-                ]
-              ],
-              "model": "Oui, je paie par carte."
-            }
-          ],
-          "followUp": "Très bien, merci.",
-          "newWords": [
-            "ça fait",
-            "par carte"
-          ]
-        },
-        {
-          "id": "sit_06_pay_d02",
-          "place": "Au café",
-          "cue": "Karim uses vous. The card terminal is broken; you will pay another way.",
-          "turns": [
-            {
-              "speaker": "server",
-              "name": "Karim",
-              "text": "Le terminal est en panne."
-            },
-            {
-              "speaker": "learner",
-              "text": "Je paie ___ ."
-            }
-          ],
-          "drills": [
-            {
-              "type": "comprehend",
-              "prompt": "What is broken?",
-              "choices": [
-                "The card terminal",
-                "The coffee machine"
-              ],
-              "correct": 0,
-              "miss": "Reread « le terminal est en panne »."
-            },
-            {
-              "type": "complete",
-              "prompt": "another way",
-              "choices": [
-                "autrement",
-                "par carte",
-                "en retard"
-              ],
-              "correct": 0,
-              "why": [
-                "",
-                "The terminal cannot take cards.",
-                "That means late."
-              ]
-            }
-          ],
-          "followUp": "Très bien, merci.",
-          "newWords": [
-            "terminal",
-            "en panne"
-          ]
-        },
-        {
-          "id": "sit_06_pay_s01",
-          "place": "Au café · phrase seule",
-          "standalone": "Construire",
-          "cue": "Karim uses vous. Ask how much you owe for coffee.",
-          "turns": [
-            {
-              "speaker": "server",
-              "name": "Karim",
-              "text": "Bonjour, vous avez pris un grand café à emporter ?"
-            }
-          ],
-          "drills": [
-            {
-              "type": "reply",
-              "prompt": "Build a polite question.",
-              "bank": [
-                "Bonjour,",
-                "je vous dois",
-                "combien",
-                "pour ce grand café,",
-                "s'il vous plaît ?",
-                "je te dois",
-                "combien."
-              ],
-              "accepted": [
-                [
-                  "Bonjour,",
-                  "je vous dois",
-                  "combien",
-                  "pour ce grand café,",
-                  "s'il vous plaît ?"
-                ]
-              ],
-              "model": "Bonjour, je vous dois combien pour ce grand café, s'il vous plaît ?"
-            }
-          ],
-          "newWords": []
-        },
-        {
-          "id": "sit_06_pay_d03",
-          "place": "Au café",
-          "cue": "Karim uses vous. You did not catch the total.",
-          "turns": [
-            {
-              "speaker": "server",
-              "name": "Karim",
-              "text": "Vous payez par carte ? Ça fait quatre euros."
-            }
-          ],
-          "drills": [
-            {
-              "type": "word",
-              "prompt": "What does « ça fait » mean here?",
-              "target": "ça fait",
-              "choices": [
-                "the total comes to",
-                "it is made of",
-                "it's too late"
-              ],
-              "correct": 0,
-              "why": [
-                "",
-                "That means it is made of, not the total comes to.",
-                "That means it's too late, not the total comes to."
-              ]
-            },
-            {
-              "type": "reply",
-              "prompt": "Ask him to repeat the total.",
-              "bank": [
-                "Pardon,",
-                "vous pouvez",
-                "répéter ?",
-                "tu peux",
-                "répétez ?"
-              ],
-              "accepted": [
-                [
-                  "Pardon,",
-                  "vous pouvez",
-                  "répéter ?"
-                ]
-              ],
-              "model": "Pardon, vous pouvez répéter ?"
-            }
-          ],
-          "followUp": "Quatre euros.",
-          "newWords": [
-            "ça fait"
-          ]
-        },
-        {
-          "id": "sit_06_pay_d04",
-          "place": "Au café",
-          "cue": "Karim uses vous. The card terminal is broken.",
-          "turns": [
-            {
-              "speaker": "server",
-              "name": "Karim",
-              "text": "Le terminal est encore en panne."
-            }
-          ],
-          "drills": [
-            {
-              "type": "word",
-              "prompt": "What does « en panne » mean?",
-              "target": "en panne",
-              "choices": [
-                "broken / out of order",
-                "ready to use",
-                "paid for"
-              ],
-              "correct": 0,
-              "why": [
-                "",
-                "That means ready to use, not broken / out of order.",
-                "That means paid for, not broken / out of order."
-              ]
-            },
-            {
-              "type": "reply",
-              "prompt": "Say you'll pay another way.",
-              "bank": [
-                "Je paie",
-                "autrement,",
-                "alors.",
-                "par carte,",
-                "en retard."
-              ],
-              "accepted": [
-                [
-                  "Je paie",
-                  "autrement,",
-                  "alors."
-                ]
-              ],
-              "model": "Je paie autrement, alors."
-            }
-          ],
-          "followUp": "D'accord, merci.",
-          "newWords": [
-            "terminal",
-            "en panne"
-          ]
-        },
-        {
-          "id": "sit_06_pay_s02",
-          "place": "Au café · phrase seule",
-          "standalone": "Choisir le ton",
-          "cue": "Karim uses vous. Ask how much you owe politely.",
-          "turns": [
-            {
-              "speaker": "server",
-              "name": "Karim",
-              "text": "Voilà votre grand café à emporter. Vous payez maintenant ?"
-            }
-          ],
-          "drills": [
-            {
-              "type": "pick",
-              "prompt": "Which question fits?",
-              "choices": [
-                "Bonjour, je vous dois combien pour ce grand café, s'il vous plaît ?",
-                "Bonjour, je te dois combien pour ce grand café, s'il te plaît ?",
-                "Je veux mon grand café. Combien ? Vite."
-              ],
-              "correct": 0,
-              "why": [
-                "",
-                "« Te » is for a friend.",
-                "That is too blunt."
-              ]
-            }
-          ],
-          "newWords": []
-        },
-        {
-          "id": "sit_06_pay_d05",
-          "place": "Au café",
-          "cue": "Karim uses vous. He names the price and asks about card payment.",
-          "turns": [
-            {
-              "speaker": "server",
-              "name": "Karim",
-              "text": "Ça fait cinq euros. Vous payez par carte ?"
-            }
-          ],
-          "drills": [
-            {
-              "type": "word",
-              "prompt": "What does « par carte » mean here?",
-              "target": "par carte",
-              "choices": [
-                "by card",
-                "in cash",
-                "afterward"
-              ],
-              "correct": 0,
-              "why": [
-                "",
-                "That means in cash, not by card.",
-                "That means afterward, not by card."
-              ]
-            },
-            {
-              "type": "reply",
-              "prompt": "Confirm card payment politely.",
+              "prompt": "Say yes, by card, please.",
               "bank": [
                 "Oui,",
                 "par carte,",
                 "s'il vous plaît.",
-                "en espèces,",
+                "en carte,",
                 "s'il te plaît."
               ],
               "accepted": [
@@ -2202,63 +2135,341 @@
               "model": "Oui, par carte, s'il vous plaît."
             }
           ],
-          "followUp": "Très bien, merci.",
+          "followUp": "Parfait, merci. Bonne journée !",
           "newWords": [
             "ça fait",
             "par carte"
           ]
         },
         {
-          "id": "sit_06_pay_d06",
+          "id": "sit_06_pay_d02",
           "place": "Au café",
-          "cue": "Karim uses vous. The terminal is broken; he asks for cash.",
+          "cue": "Karim says vous to you. You want to pay by card, and you have some coins on you.",
           "turns": [
             {
               "speaker": "server",
               "name": "Karim",
-              "text": "Vous payez en espèces ? Vous voulez la monnaie ?"
+              "text": "Non, le terminal ___ en panne."
+            },
+            {
+              "speaker": "learner",
+              "text": "Pas de souci, j'ai de la monnaie."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "est",
+                "sont",
+                "a"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "One terminal, so not « sont ».",
+                "Not French: you say « être en panne »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "Why can't you pay by card?",
+              "choices": [
+                "Your card doesn't work",
+                "The card machine doesn't work"
+              ],
+              "correct": 1,
+              "miss": "Reread: « le terminal est en panne »."
+            }
+          ],
+          "followUp": "Parfait, merci !",
+          "newWords": [
+            "terminal",
+            "en panne",
+            "monnaie",
+            "pas de souci"
+          ]
+        },
+        {
+          "id": "sit_06_pay_s01",
+          "place": "Au café · phrase seule",
+          "standalone": "Construire",
+          "cue": "Karim says vous to you. Ask how much you owe.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Voilà votre grand café à emporter. Bonne journée !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Thank him and ask how much you owe, politely.",
+              "bank": [
+                "Merci !",
+                "Je",
+                "vous",
+                "dois",
+                "combien,",
+                "s'il vous plaît ?",
+                "te",
+                "doit"
+              ],
+              "accepted": [
+                [
+                  "Merci !",
+                  "Je",
+                  "vous",
+                  "dois",
+                  "combien,",
+                  "s'il vous plaît ?"
+                ]
+              ],
+              "model": "Merci ! Je vous dois combien, s'il vous plaît ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_06_pay_d03",
+          "place": "Au café",
+          "cue": "Karim says vous to you. It's noisy and you missed the price.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Ça fait quatre euros, s'il vous plaît."
             }
           ],
           "drills": [
             {
               "type": "word",
-              "prompt": "What does « espèces » mean here?",
-              "target": "espèces",
+              "prompt": "What does « ça fait » mean here?",
               "choices": [
-                "cash",
-                "a card",
-                "a receipt"
+                "it's been",
+                "it's done",
+                "that comes to"
+              ],
+              "correct": 2,
+              "why": [
+                "« Ça fait » can mean it's been, with time. Here it's a price.",
+                "No: « c'est fait » would be it's done. Here it's a price.",
+                ""
+              ],
+              "target": "ça fait"
+            },
+            {
+              "type": "reply",
+              "prompt": "Ask him to repeat the price: how much is it?",
+              "bank": [
+                "Pardon,",
+                "ça fait",
+                "combien ?",
+                "comment ?",
+                "fais"
+              ],
+              "accepted": [
+                [
+                  "Pardon,",
+                  "ça fait",
+                  "combien ?"
+                ]
+              ],
+              "model": "Pardon, ça fait combien ?"
+            }
+          ],
+          "followUp": "Quatre euros !",
+          "newWords": [
+            "ça fait"
+          ]
+        },
+        {
+          "id": "sit_06_pay_d04",
+          "place": "Au café",
+          "cue": "Karim says vous to you. You want to pay by card again today.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Par carte ? Non, le terminal est encore en panne."
+            },
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "En espèces, alors ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, j'ai ___ monnaie."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « en panne » mean here?",
+              "choices": [
+                "broken",
+                "busy",
+                "new"
               ],
               "correct": 0,
               "why": [
                 "",
-                "That means a card, not cash.",
-                "That means a receipt, not cash."
+                "No: « en panne » means it doesn't work, not busy.",
+                "No: « en panne » means it doesn't work."
+              ],
+              "target": "en panne"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "de la",
+                "des",
+                "du"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Monnaie » is singular here, so not « des ».",
+                "« Monnaie » is feminine, so not « du »."
               ]
+            }
+          ],
+          "followUp": "Merci beaucoup !",
+          "newWords": [
+            "en panne",
+            "terminal",
+            "en espèces",
+            "monnaie"
+          ]
+        },
+        {
+          "id": "sit_06_pay_s02",
+          "place": "Au café · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "Karim says vous to you. The card machine is broken, so you'll pay in cash.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "Très bien, en espèces, alors. Ça fait combien, s'il te plaît ?",
+                "Très bien, en espèces, alors. Ça fait combien, s'il vous plaît ?",
+                "Encore en panne ? Bon, en espèces. Combien ?"
+              ],
+              "correct": 1,
+              "why": [
+                "Good French, but « s'il te plaît » is for friends. Karim says vous to you.",
+                "",
+                "Good French, but it sounds annoyed and curt."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_06_pay_d05",
+          "place": "Au café",
+          "cue": "Karim says vous to you. The card machine works again today.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Ça fait cinq euros. Par carte, comme d'habitude ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « par carte » mean here?",
+              "choices": [
+                "on the bill",
+                "by card",
+                "in cash"
+              ],
+              "correct": 1,
+              "why": [
+                "No: « par carte » is how you pay.",
+                "",
+                "« En espèces » means in cash."
+              ],
+              "target": "par carte"
             },
             {
               "type": "reply",
-              "prompt": "Say you'll pay cash.",
+              "prompt": "Say no: in cash today.",
+              "bank": [
+                "Non,",
+                "en espèces",
+                "aujourd'hui.",
+                "par espèces",
+                "Oui,"
+              ],
+              "accepted": [
+                [
+                  "Non,",
+                  "en espèces",
+                  "aujourd'hui."
+                ]
+              ],
+              "model": "Non, en espèces aujourd'hui."
+            }
+          ],
+          "followUp": "En espèces ? Pas de souci.",
+          "newWords": [
+            "ça fait",
+            "par carte",
+            "en espèces"
+          ]
+        },
+        {
+          "id": "sit_06_pay_d06",
+          "place": "Au café",
+          "cue": "Karim says vous to you. You're paying three euros in cash.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Vous avez de la monnaie ? Je n'en ai plus !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Karim need?",
+              "choices": [
+                "Coins, small money",
+                "A card"
+              ],
+              "correct": 0,
+              "miss": "Reread: « vous avez de la monnaie ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes: here are three euros.",
               "bank": [
                 "Oui,",
-                "je paie",
-                "en espèces.",
-                "par carte.",
-                "tu paies"
+                "voilà",
+                "trois euros.",
+                "trois euro.",
+                "Non,"
               ],
               "accepted": [
                 [
                   "Oui,",
-                  "je paie",
-                  "en espèces."
+                  "voilà",
+                  "trois euros."
                 ]
               ],
-              "model": "Oui, je paie en espèces."
+              "model": "Oui, voilà trois euros."
             }
           ],
-          "followUp": "Voilà votre monnaie.",
+          "followUp": "Parfait, merci ! Bonne journée.",
           "newWords": [
-            "espèces",
             "monnaie"
           ]
         },
@@ -2266,11 +2477,11 @@
           "id": "sit_06_pay_s03",
           "place": "Au café · phrase seule",
           "standalone": "Corriger",
-          "cue": "Karim uses vous. Correct your own question about paying.",
+          "cue": "Karim says vous to you. You want to pay by card.",
           "turns": [
             {
               "speaker": "learner",
-              "text": "Je peux payer en carte pour mon grand café, Karim ?",
+              "text": "Bonjour, un café à emporter, et c'est en carte, s'il vous plaît.",
               "error": {
                 "word": "en",
                 "fix": "par",
@@ -2279,7 +2490,7 @@
                   "à",
                   "de"
                 ],
-                "why": "The French payment phrase is « par carte »."
+                "why": "You pay « par carte » (by card). « En » goes with « espèces »."
               }
             }
           ],
@@ -2294,18 +2505,27 @@
         {
           "id": "sit_06_pay_d07",
           "place": "Texto · Léa",
-          "cue": "Léa uses tu. She asks what the total came to.",
+          "cue": "Léa, your flatmate, texts you. She says tu to you.",
           "turns": [
             {
               "speaker": "server",
               "name": "Léa",
-              "text": "Ça fait ___ pour ton café ?"
+              "text": "Un café chez Karim, ça fait ___ ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Trois euros."
+            },
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Et le terminal ? Toujours en panne ?"
             }
           ],
           "drills": [
             {
               "type": "complete",
-              "prompt": "how much",
+              "prompt": "Fill the gap.",
               "choices": [
                 "combien",
                 "comment",
@@ -2314,101 +2534,120 @@
               "correct": 0,
               "why": [
                 "",
-                "That means how.",
-                "That means when."
+                "« Comment » means how.",
+                "« Quand » means when."
               ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa ask about?",
+              "choices": [
+                "Whether the card machine still doesn't work",
+                "Whether Karim is still there"
+              ],
+              "correct": 0,
+              "miss": "Reread: « toujours en panne ? »"
             }
           ],
-          "followUp": "Je prends un café aussi.",
+          "followUp": "Bon, je prends de la monnaie, alors.",
+          "followUpBy": "Léa",
           "newWords": [
-            "ça fait"
+            "ça fait",
+            "terminal",
+            "en panne"
           ]
         },
         {
           "id": "sit_06_pay_d08",
           "place": "Texto · Léa",
-          "cue": "Léa uses tu. You need cash because the terminal is broken.",
+          "cue": "Léa texts you from Karim's café. She says tu to you. You have some cash.",
           "turns": [
             {
               "speaker": "server",
               "name": "Léa",
-              "text": "Tu as des espèces ?"
+              "text": "C'est en espèces chez Karim. T'as trois euros ___ moi ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui ! J'arrive dans cinq minutes."
             }
           ],
           "drills": [
             {
-              "type": "reply",
-              "prompt": "Say yes, you have cash.",
-              "bank": [
-                "Oui,",
-                "j'ai des espèces.",
-                "non,",
-                "j'ai une carte."
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "par",
+                "pour",
+                "de"
               ],
-              "accepted": [
-                [
-                  "Oui,",
-                  "j'ai des espèces."
-                ]
-              ],
-              "model": "Oui, j'ai des espèces."
+              "correct": 1,
+              "why": [
+                "Not French here: « pour moi ».",
+                "",
+                "Not French here: « pour moi »."
+              ]
             },
             {
               "type": "word",
-              "prompt": "What does « espèces » mean here?",
-              "target": "espèces",
+              "prompt": "What does « en espèces » mean here?",
               "choices": [
-                "cash",
-                "coins only",
-                "a bank card"
+                "in coins only",
+                "by card",
+                "in cash"
               ],
-              "correct": 0,
+              "correct": 2,
               "why": [
-                "",
-                "That means coins only, not cash.",
-                "That means a bank card, not cash."
-              ]
+                "No: « en espèces » is cash, notes or coins.",
+                "« Par carte » means by card.",
+                ""
+              ],
+              "target": "en espèces"
             }
           ],
-          "followUp": "Moi, j'ai de la monnaie.",
+          "followUp": "Merci ! Je t'attends.",
+          "followUpBy": "Léa",
           "newWords": [
-            "espèces",
-            "monnaie"
+            "en espèces",
+            "t'as"
           ]
         },
         {
           "id": "sit_06_pay_s04",
           "place": "Au café · phrase seule",
           "standalone": "Transformer",
-          "cue": "Karim uses vous. Change the payment method from card to cash.",
+          "cue": "Karim says vous to you. The card machine is broken. Change your order to cash.",
           "turns": [
             {
               "speaker": "learner",
-              "text": "Je paie par carte pour mon café, s'il vous plaît.",
+              "text": "Un grand café à emporter, et c'est par carte, s'il vous plaît.",
               "source": true
             }
           ],
           "drills": [
             {
               "type": "reply",
-              "prompt": "Rewrite it with cash.",
+              "prompt": "Rewrite it: you'll pay in cash.",
               "bank": [
-                "Je paie",
-                "en espèces",
-                "pour mon café,",
+                "Un grand café",
+                "à emporter,",
+                "et c'est",
+                "en espèces,",
                 "s'il vous plaît.",
-                "par carte",
+                "par carte,",
+                "par espèces,",
                 "s'il te plaît."
               ],
               "accepted": [
                 [
-                  "Je paie",
-                  "en espèces",
-                  "pour mon café,",
+                  "Un grand café",
+                  "à emporter,",
+                  "et c'est",
+                  "en espèces,",
                   "s'il vous plaît."
                 ]
               ],
-              "model": "Je paie en espèces pour mon café, s'il vous plaît."
+              "model": "Un grand café à emporter, et c'est en espèces, s'il vous plaît."
             }
           ],
           "newWords": []
@@ -2416,102 +2655,103 @@
         {
           "id": "sit_06_pay_d09",
           "place": "Les copains · groupe",
-          "cue": "Théo addresses the whole group using plural vous. He warns about the café terminal.",
+          "cue": "Théo's group chat « Les copains ». Everyone says tu.",
           "turns": [
             {
               "speaker": "server",
               "name": "Théo",
-              "text": "Le terminal est en panne. Prenez des ___ !"
+              "text": "Chez Karim, c'est ___ espèces aujourd'hui. Terminal en panne !"
             }
           ],
           "drills": [
             {
               "type": "word",
               "prompt": "What does « terminal » mean here?",
-              "target": "terminal",
               "choices": [
-                "card terminal",
                 "coffee machine",
-                "cash register"
+                "cash drawer",
+                "card machine"
               ],
-              "correct": 0,
+              "correct": 2,
               "why": [
-                "",
-                "That means coffee machine, not card terminal.",
-                "That means cash register, not card terminal."
-              ]
+                "No: the card machine is the problem here.",
+                "No: « terminal » is the machine you pay with by card.",
+                ""
+              ],
+              "target": "terminal"
             },
             {
               "type": "complete",
-              "prompt": "Complete Théo's suggested payment method.",
+              "prompt": "Fill the gap.",
               "choices": [
-                "espèces",
-                "cartes",
-                "monnaies"
+                "par",
+                "en",
+                "des"
               ],
-              "correct": 0,
+              "correct": 1,
               "why": [
+                "Not French: « par carte », but « en espèces ».",
                 "",
-                "Cards cannot use the broken terminal.",
-                "« Monnaies » is not the natural word here."
+                "Not French here: « en espèces »."
               ]
             }
           ],
-          "followUp": "Merci, Théo !",
+          "followUp": "Merci, Théo ! Je prends de la monnaie.",
+          "followUpBy": "Léa",
           "newWords": [
             "terminal",
-            "en panne",
-            "espèces"
-          ],
-          "followUpBy": "Léa"
+            "en panne"
+          ]
         },
         {
           "id": "sit_06_pay_d10",
           "place": "Au café",
-          "cue": "Karim uses vous. You pay cash and need change.",
+          "cue": "Karim says vous to you. You give him five euros for a four-euro coffee.",
           "turns": [
             {
               "speaker": "server",
               "name": "Karim",
-              "text": "Je vous rends la monnaie ?"
+              "text": "Quatre euros… Voilà votre monnaie : un euro."
             }
           ],
           "drills": [
             {
               "type": "word",
               "prompt": "What does « monnaie » mean here?",
-              "target": "monnaie",
               "choices": [
                 "change",
-                "a bank card",
-                "a bill"
+                "receipt",
+                "tip"
               ],
               "correct": 0,
               "why": [
                 "",
-                "That means a bank card, not change.",
-                "That means a bill, not change."
-              ]
+                "No: « monnaie » is the money he gives back.",
+                "No: « monnaie » is the money he gives back, not a tip."
+              ],
+              "target": "monnaie"
             },
             {
               "type": "reply",
-              "prompt": "Say yes, politely.",
+              "prompt": "Tell him to keep it: it's for him.",
               "bank": [
-                "Oui,",
-                "s'il vous plaît.",
-                "non,",
-                "s'il te plaît."
+                "Merci,",
+                "c'est",
+                "pour vous !",
+                "pour toi !",
+                "pour lui !"
               ],
               "accepted": [
                 [
-                  "Oui,",
-                  "s'il vous plaît."
+                  "Merci,",
+                  "c'est",
+                  "pour vous !"
                 ]
               ],
-              "model": "Oui, s'il vous plaît."
+              "model": "Merci, c'est pour vous !"
             }
           ],
-          "followUp": "Voilà votre monnaie.",
+          "followUp": "Merci, c'est gentil ! Bonne journée !",
           "newWords": [
             "monnaie"
           ]
@@ -2520,28 +2760,28 @@
           "id": "sit_06_pay_s05",
           "place": "Au café · phrase seule",
           "standalone": "Mot en retour",
-          "cue": "Karim uses vous. Recall the French word for cash.",
+          "cue": "Karim says vous to you. Which words mean “in cash”?",
           "turns": [
             {
               "speaker": "server",
               "name": "Karim",
-              "text": "Bonjour, le terminal est en panne; vous payez en ___ ?"
+              "text": "Le terminal est en panne aujourd'hui, alors c'est ___ ."
             }
           ],
           "drills": [
             {
               "type": "complete",
-              "prompt": "cash",
+              "prompt": "in cash",
               "choices": [
-                "espèces",
-                "carte",
-                "panne"
+                "par carte",
+                "en espèces",
+                "sur place"
               ],
-              "correct": 0,
+              "correct": 1,
               "why": [
+                "« Par carte » means by card, and the machine is broken.",
                 "",
-                "That means card.",
-                "That means breakdown."
+                "« Sur place » means to have here."
               ]
             }
           ],

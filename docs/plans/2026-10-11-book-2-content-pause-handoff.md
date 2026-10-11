@@ -46,4 +46,6 @@ The first-half author received these findings just before interruption. The seco
 5. Generate audio only after the content and voices are settled: `rtk python3 tools/situations/generate_audio.py --dry-run` to inspect coverage; `--review` for the Test book clips; the default mode for production item and word clips. Re-run strict lint with audio. The current cast uses the existing Karim, Léa, and Théo Chirp 3 HD voice mapping; no new cast voice was chosen.
 6. Build and inspect the Test book on a simulator, then show only the small review set to the user. Do not install on the phone without a new user request. Café approval is the gate before expanding the other 24 modules or starting the production book integration.
 
+**Answered 2026-10-11 (resume):** the Karim/Léa/Théo voices are fine, and Karim switches to *tu* inside café move `usual`, using *vous* everywhere else in module 06.
+
 Two questions were sent asynchronously but no answer had arrived at pause: whether Karim/Léa/Théo sound right on the phone, and whether Karim changes to *tu* in café move `usual`. The current draft assumes the handoff's recommendation: the switch happens inside `usual`; Karim otherwise uses *vous* in module 06.
