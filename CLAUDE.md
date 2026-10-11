@@ -2,13 +2,19 @@
 
 > ## ▶ RECENT HANDOFFS
 >
-> **▶ BOOK 2 DIALOGUE PILOT v2 (2026-10-11, branch `book2-dialogue-pilot`).**
-> Read **`docs/plans/2026-10-11-book-2-pilot-v2-handoff.md`**. The Test book
-> runs short café dialogues on one locked chat card with six drill types. The
-> English for a word shows only when tapped. Wrong answers are logged and
-> summarised. It was installed on the iPhone 18 Pro. User rules: never show
-> English automatically, never strike through words, keep the current
-> (slightly slower) transition timing.
+> **▶ BOOK 2 — NEXT: AUTHOR THE REAL CONTENT (2026-10-11, merged to `main`).**
+> Read **`docs/plans/2026-10-11-book-2-content-handoff.md`** first: binding
+> rules, the Lyon cast and voices, the module 06 move plan, the JSON shape, the
+> lint checklist, the authoring steps and the commands. The Test book pilot
+> (`Debug/SituationPilotView.swift`, `Debug/testbook_situation.json`) runs a
+> 9-card review set: 6 chat dialogues and 3 standalone drills (1 per 2
+> dialogues). It uses named speakers, channels (texts, group chat), spoken
+> forms glossed with `*`, and Chirp 3 HD cast voices. The user played it on
+> the iPhone 18 Pro and approved it. User rules: never show English
+> automatically (tap only; a tap elsewhere closes it), never strike through
+> words, keep the current transition timing, and review content in small sets.
+> Also on `main`: swipe up closes the "Marqué trop facile" pill
+> (`DrillSessionView`). Only the Test book build is on the phone so far.
 >
 > **▶ OPEN: ~1,055 French `explanation` fields are English** — handoff
 > `docs/handoffs/2026-10-10-french-explanations-in-english.md`, finder

@@ -2,8 +2,9 @@
 
 **Date:** 2026-10-11
 **Repo:** `/Users/yiwenwang/Documents/CMU/research/personal/carambole/carambole`
-**Branch:** `book2-dialogue-pilot` (not merged, not pushed)
+**Branch:** merged to `main` on 2026-10-11 (was `book2-dialogue-pilot`, now deleted); not pushed
 **Supersedes:** [the first Book 2 handoff](2026-10-11-book-2-handoff.md), which described the rejected café pilot.
+**Next session:** start from the [content handoff](2026-10-11-book-2-content-handoff.md). This file stays the reference for the pilot screen, the UI rules and review set v3. The branch was merged to `main` on 2026-10-11 and deleted.
 
 ## Read first
 

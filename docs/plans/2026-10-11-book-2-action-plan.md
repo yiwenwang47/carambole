@@ -4,7 +4,7 @@
 
 **Status:** Design reworked 2026-10-11 after the user tried the café pilot on the phone (see *Design rework* below). The pilot content and screen are superseded: short dialogues, six drill types, at most two drills per dialogue, a chat layout, and new words glossed on tap. The Test book pilot was rebuilt to the rework (eight café dialogues, all six drill types, Corriger first) and installed on the iPhone 18 Pro on 2026-10-11. Follow-up user requests are also built and installed: smooth, slightly slower transitions; a recorded list of wrong answers with a session summary; no strike line or colour flash in Corriger; and a larger English cue. A full play-through and audio feedback are pending. Full-book implementation has not started.
 
-**New-session handoff:** [Book 2 dialogue pilot v2 handoff](2026-10-11-book-2-pilot-v2-handoff.md).
+**New-session handoff:** [Book 2 content handoff](2026-10-11-book-2-content-handoff.md) (authoring the real content). The pilot screen and rules are in the [pilot v2 handoff](2026-10-11-book-2-pilot-v2-handoff.md). Since 2026-10-11 the Test book runs a 9-card review set (cast, channels, standalone drills), and the user approved it on the phone. The branch is merged to `main`.
 
 ## Difficulty pilot checkpoint (2026-10-11)
 
