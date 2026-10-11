@@ -29,7 +29,9 @@ then picks its fix from 3 options.
   options themselves reveal the slot.
 - **Grade.** Fix right + no miss → `.good`; fix right after a miss → `.hard`;
   fix wrong → `.again`.
-- **No Écouter before the answer** — the audio would read the corrected sentence.
+- **Écouter is available before and after the answer** (updated 2026-10-11).
+  It deliberately reads the corrected sentence, even if that reveals the fix.
+  The corrected spot sentences are included in the bundled female-voice audio batch.
 - **Correctness gate (authoring, not runtime).** A corrupted sentence must be
   ungrammatical (not just a different meaning: `Je leur parle` for "I speak to
   him" is valid French → rejected), have exactly one error, have a unique fix,
@@ -108,3 +110,19 @@ parle)"). Harness: `CB_LADDER_SPOT=1` serves the spot form.
 
 **Open:** many drills' French `explanation` field is written in English (futur
 simple, possessifs, subjonctif, si — judges found ~150). Worth a pass.
+
+## Audio update (2026-10-11)
+
+`Écouter` is available before and after a spot answer. It reads the corrected
+sentence. The user approved hearing the answer before submitting a fix.
+
+`tools/tts/extract.py` adds each corrected spot sentence to
+`spoken_manifest.json`. The manifest has 2,561 unique audio keys. All 2,561
+keys have a bundled MP3, including all 437 spot drills. The batch added 132
+MP3s with the female `fr-FR-Neural2-F` voice. It sent 2,497 characters to
+Google Cloud Text-to-Speech. `Speaker` uses only a female French iOS voice if
+a future MP3 is missing. It stays silent if no such voice is available.
+
+The Python regression test passed. The signed iPhone build passed and contains
+all 2,561 MP3s. It was installed and launched on the user's iPhone 18 Pro.
+The user has not yet reported a listening check on the phone.

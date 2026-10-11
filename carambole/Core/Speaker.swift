@@ -35,11 +35,16 @@ final class Speaker {
             }
         }
 
-        // Fallback: on-device synthesizer. Rate a touch under default so learners follow.
+        // Fallback: use only a female French voice. If none is installed, stay
+        // silent rather than speaking with an unspecified or male voice.
         player?.stop()
         synth.stopSpeaking(at: .immediate)
+        guard let voice = AVSpeechSynthesisVoice.speechVoices()
+            .filter({ $0.language == language && $0.gender == .female })
+            .sorted(by: { $0.quality.rawValue > $1.quality.rawValue })
+            .first else { return }
         let utterance = AVSpeechUtterance(string: trimmed)
-        utterance.voice = AVSpeechSynthesisVoice(language: language)
+        utterance.voice = voice
         utterance.rate = 0.42
         synth.speak(utterance)
     }

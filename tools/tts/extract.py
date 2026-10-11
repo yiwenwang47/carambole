@@ -8,6 +8,7 @@ Swift `audioKey`, so the generated files line up with what the app looks up, and
 identical sentences across drills dedup to one file.
 
 Run:  python3 tools/tts/extract.py            # writes spoken_manifest.json + stats
+The manifest includes the corrected sentence of each spot-the-error variant.
 The golden self-test (--selftest, also run on every invocation) locks the port
 to the exact input/output pairs asserted in Exercise.swift `_selfTest()`.
 """
@@ -102,6 +103,13 @@ def spoken_for_example(ex: dict) -> str:
     return spoken_french(ex['prompt'], answer, prompt_has_blank(ex['prompt']))
 
 
+def spoken_for_spot(spot: dict) -> str:
+    """The spot variant speaks its corrected sentence, not its wrong tokens."""
+    corrected = spot['tokens'].copy()
+    corrected[spot['wrongIndex']] = spot['options'][0]
+    return spoken_french("Trouve l'erreur.", display_join(corrected), False)
+
+
 # --- golden self-test (mirrors Exercise.swift _selfTest) ---------------------
 
 def _self_test() -> None:
@@ -168,28 +176,38 @@ def topics_dir() -> str:
 
 def collect() -> list[dict]:
     tdir = topics_dir()
-    manifest = json.load(open(os.path.join(tdir, 'manifest.json')))
+    with open(os.path.join(tdir, 'manifest.json')) as f:
+        manifest = json.load(f)
     files = manifest['moduleFiles']
     by_key: dict[str, dict] = {}
     n_examples = 0
+    n_spots = 0
+
+    def add(text: str, example_id: str, module: str) -> None:
+        if not text.strip():
+            return
+        key = audio_key(text)
+        if key not in by_key:
+            by_key[key] = {'key': key, 'text': text,
+                           'example_id': example_id, 'module': module,
+                           'count': 1}
+        else:
+            by_key[key]['count'] += 1
+
     for fname in files:
-        mod = json.load(open(os.path.join(tdir, fname)))
+        with open(os.path.join(tdir, fname)) as f:
+            mod = json.load(f)
         for el in mod.get('elements', []):
             for ex in el.get('examples', []):
                 n_examples += 1
-                text = spoken_for_example(ex)
-                if not text.strip():
-                    continue
-                key = audio_key(text)
-                if key not in by_key:
-                    by_key[key] = {'key': key, 'text': text,
-                                   'example_id': ex['id'], 'module': fname,
-                                   'count': 1}
-                else:
-                    by_key[key]['count'] += 1
+                add(spoken_for_example(ex), ex['id'], fname)
+                if spot := ex.get('spot'):
+                    n_spots += 1
+                    add(spoken_for_spot(spot), ex['id'] + '~spot', fname)
     rows = list(by_key.values())
     rows.sort(key=lambda r: (r['module'], r['example_id']))
-    print(f'examples scanned: {n_examples} | unique sentences: {len(rows)} | '
+    print(f'examples scanned: {n_examples} | spot variants: {n_spots} | '
+          f'unique sentences: {len(rows)} | '
           f'total chars (unique): {sum(len(r["text"]) for r in rows)}')
     return rows
 

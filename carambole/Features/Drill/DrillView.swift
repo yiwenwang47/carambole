@@ -275,14 +275,7 @@ struct DrillView: View {
                     indiceButton
                 }
                 Spacer(minLength: Spacing.sm)
-                // Spot the error: the audio reads the CORRECTED sentence, so it
-                // would give the answer away before checking.
-                // Hidden, not removed, so the sentence doesn't jump on check.
-                let hideListen = isSpot && !checked && reviewData == nil
                 listenButton
-                    .opacity(hideListen ? 0 : 1)
-                    .allowsHitTesting(!hideListen)
-                    .accessibilityHidden(hideListen)
             }
             if let hint = exercise.hint, !hint.isEmpty {
                 // A drawer, not an insert/remove transition: the panel always

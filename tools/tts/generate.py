@@ -21,9 +21,9 @@ import os
 import sys
 
 # Neural2 (not Chirp3-HD): its rule-based French G2P frontend handles elisions
-# correctly (Chirp3-HD spelled bare "n'" as the letter N). Same 1M chars/mo free
-# tier as WaveNet. Female voice C.
-VOICE = 'fr-FR-Neural2-C'
+# correctly (Chirp3-HD spelled bare "n'" as the letter N). Google's current
+# female French Neural2 voice is F; the former C name maps to F.
+VOICE = 'fr-FR-Neural2-F'
 LANG = 'fr-FR'
 RATE = 0.9
 
@@ -56,7 +56,6 @@ def main(argv: list[str]) -> int:
     ap.add_argument('--limit', type=int, default=None, help='first N sentences')
     ap.add_argument('--spread', type=int, default=None,
                     help='N sentences evenly spread across the course (smoke test)')
-    ap.add_argument('--voice', default=VOICE)
     ap.add_argument('--rate', type=float, default=RATE)
     ap.add_argument('--force', action='store_true', help='re-synthesize existing')
     args = ap.parse_args(argv)
@@ -70,7 +69,7 @@ def main(argv: list[str]) -> int:
 
     from google.cloud import texttospeech as tts
     client = tts.TextToSpeechClient()
-    voice = tts.VoiceSelectionParams(language_code=LANG, name=args.voice)
+    voice = tts.VoiceSelectionParams(language_code=LANG, name=VOICE)
     cfg = tts.AudioConfig(audio_encoding=tts.AudioEncoding.MP3,
                           speaking_rate=args.rate)
 
@@ -89,7 +88,7 @@ def main(argv: list[str]) -> int:
               f'{r["text"]}')
 
     print(f'\ndone: {made} synthesized, {skipped} skipped → {args.out}')
-    print(f'chars synthesized: {chars} (Chirp3-HD free tier = 1,000,000/month)')
+    print(f'chars synthesized: {chars}')
     return 0
 
 

@@ -7,9 +7,18 @@
 > `tools/explanation_lang.py`.
 >
 > **▶ BOOK 1: BANK LINT + SPOT ITEMS + LADDER (2026-10-10).** Bank lint on
-> main (`tools/bank_lint.py` — run after any bank/prompt edit). 437 `spot`
-> items + `Core/DrillLadder.swift` on branch `spot-ladder`. Details + open
-> items: `docs/plans/2026-10-10-drill-types-design.md` (Book 1 rollout).
+> main (`tools/bank_lint.py` — run after any bank/prompt edit). The 437 `spot`
+> items and `Core/DrillLadder.swift` are on main. See
+> `docs/plans/2026-10-10-drill-types-design.md` for the Book 1 rollout.
+>
+> **▶ SPOT AUDIO — INSTALLED ON IPHONE 18 PRO (2026-10-11).** `Écouter` is
+> available before and after a spot answer. It plays the corrected sentence.
+> `tools/tts/extract.py` includes spot variants in the manifest. The 132 new
+> MP3s use female `fr-FR-Neural2-F` (2,497 API characters). All 437 spot drills
+> have bundled audio; 2,561 manifest keys match 2,561 MP3s. `Speaker` selects
+> only a female French voice if a future file is missing. The signed build was
+> installed and launched on physical iPhone `00008160-001A09920AA0000A`.
+> The user has not yet reported a listening check on the phone.
 >
 > **▶ NEW DRILL TYPES — merged to main (2026-10-10).**
 > Spot the error (`InputMode.spotError`, `SpotErrorView`) + second try on build
@@ -18,9 +27,8 @@
 > after a retry or missed tap). Test book app `wen.carambole.testbook` ("Test
 > book" on the phone) serves 24 hand-checked spot items
 > (`Debug/testbook_spot.json`) + 10 long builds. Design + authoring findings:
-> **`docs/plans/2026-10-10-drill-types-design.md`**. Spot items are NOT in the
-> real topics yet — correctness pipeline (Grammalecte flag + one-fix probe +
-> LLM judge + human spot check) still to be built as `tools/`.
+> **`docs/plans/2026-10-10-drill-types-design.md`**. The 437 reviewed spot
+> items are in the real topics. The authoring pipeline is in `tools/spot/`.
 >
 > **▶ RING SEAM + STAR GLOW + LAUNCH TWIST + PUSH OVERLAP — DONE, user OK'd on
 > phone (2026-10-10).** Causes + fixes: **`docs/plans/2026-10-10-ring-star-glow-handoff.md`**.
