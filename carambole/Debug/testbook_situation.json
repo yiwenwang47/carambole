@@ -1,193 +1,241 @@
 {
   "glossary": {
-    "plus de": "no more",
-    "lait d'avoine": "oat milk",
+    "comme d'habitude": "as usual",
+    "en fait": "actually",
     "soja": "soy",
-    "un quart d'heure": "15 minutes",
-    "prête": "ready",
-    "sur place": "eat in",
-    "à emporter": "to take away",
-    "sac": "bag",
-    "avec ça": "anything else? (lit. with that)",
-    "terminal": "card machine",
-    "en panne": "broken",
-    "espèces": "cash",
-    "monnaie": "change (coins back)",
-    "ça fait": "that comes to",
-    "tout de suite": "right away",
+    "au soja": "with soy milk",
+    "quand même": "all the same",
+    "ça marche": "* OK, coming up",
+    "pardon": "sorry / excuse me",
+    "je vous dois combien": "how much do I owe you?",
+    "je te dois combien": "how much do I owe you? (to a friend)",
+    "combien": "how much",
+    "vite": "quick",
+    "y a": "* there is / there are (il y a)",
+    "plus de": "no more",
+    "du coup": "* so",
+    "pain au chocolat": "chocolate croissant",
+    "vous pouvez répéter": "can you say that again?",
+    "répéter": "repeat",
+    "on se retrouve": "shall we meet? (on = we)",
+    "du coin": "local (lit. of the corner)",
+    "ouais": "* yeah",
+    "carrément": "* totally",
+    "j'arrive": "I'm coming / on my way",
+    "top": "* great",
+    "à tout de suite": "see you in a minute",
+    "ce matin": "this morning",
+    "j'ai pris": "I had / I took (prendre)",
+    "je prends": "I'm having / I take",
+    "t'es": "* you are (tu es)",
+    "je t'attends": "I'm waiting for you",
+    "en retard": "late",
+    "pas de souci": "* no worries",
+    "prends ton temps": "take your time",
+    "je reste": "I'm staying",
+    "à la maison": "at home",
+    "super": "great",
+    "on peut se tutoyer": "can we say tu to each other?",
+    "non": "no / right?",
+    "bien sûr": "of course",
+    "tu me fais": "can you make me (lit. you make me)",
+    "avec plaisir": "with pleasure",
+    "mais": "but",
+    "toujours": "still / always",
+    "trois": "three",
+    "dix": "ten",
+    "deux": "two",
+    "minutes": "minutes",
     "bonjour": "hello",
-    "vous": "you",
-    "désirez": "would like",
-    "désolé": "sorry",
-    "au": "with / at the",
-    "petit": "small",
-    "ou": "or",
-    "grand": "large",
+    "oui": "yes",
     "un": "a",
     "une": "a",
-    "s'il vous plaît": "please",
-    "le": "the",
-    "la": "the",
-    "sandwich": "sandwich",
-    "ça": "that / it",
-    "prend": "takes",
-    "et": "and",
-    "je": "I",
-    "voudrais": "would like",
-    "croissant": "croissant",
-    "est": "is",
-    "pas de problème": "no problem",
-    "paie": "pay",
-    "en": "in",
-    "quatre": "four",
-    "euros": "euros",
-    "cinquante": "fifty",
-    "très": "very",
-    "bien": "good",
-    "parfait": "perfect",
+    "grand": "large",
     "café": "coffee",
+    "s'il vous plaît": "please",
+    "s'il te plaît": "please (to a friend)",
     "c'est": "it is",
-    "noté": "noted",
-    "voilà": "here is",
-    "elle": "it / she",
+    "déjà": "already",
+    "prêt": "ready",
+    "ah": "oh",
+    "croissants": "croissants",
     "d'accord": "OK",
-    "donne": "give",
-    "merci": "thank you",
-    "votre": "your",
-    "bonne": "good",
-    "journée": "day",
-    "alors": "so",
-    "salade": "salad",
-    "oui": "yes",
-    "cinq": "five"
+    "pas": "not",
+    "je": "I",
+    "suis": "am",
+    "où": "where",
+    "au café": "at the café",
+    "euros": "euros",
+    "tu": "you (friend)",
+    "vous": "you (polite)"
   },
   "dialogues": [
     {
-      "id": "sit_06_cafe_pastry_01",
-      "element": "Commander une viennoiserie",
-      "cue": "You want one croissant.",
+      "id": "sit_06_cafe_usual_01",
+      "element": "Commander comme d'habitude",
+      "place": "Au café",
+      "cue": "Karim, the barista, knows you by now.",
       "turns": [
-        {"speaker": "server", "text": "Et avec ça ?"},
-        {"speaker": "learner", "text": "Je voudrais une croissant, s’il vous plaît.",
-         "error": {"word": "une", "fix": "un", "choices": ["un", "des", "la"], "why": "Croissant is masculine: « un croissant »."}}
+        {"speaker": "server", "name": "Karim", "text": "Bonjour ! Comme d'habitude ?"}
       ],
       "drills": [
-        {"type": "fix", "prompt": "One word is wrong. Tap it.",
-         "miss": "That word is fine. Check the article."}
+        {"type": "comprehend", "prompt": "What is Karim asking?",
+         "choices": ["If you want your usual", "If you want to pay"], "correct": 0,
+         "miss": "Reread: « comme d'habitude » means as usual."},
+        {"type": "reply", "prompt": "Say yes: a large coffee with soy milk.",
+         "bank": ["Oui,", "un", "grand", "café", "au soja,", "s'il vous plaît.", "grande", "une"],
+         "accepted": [["Oui,", "un", "grand", "café", "au soja,", "s'il vous plaît."]],
+         "model": "Oui, un grand café au soja, s'il vous plaît."}
       ],
-      "followUp": "Un croissant, très bien.",
-      "newWords": ["avec ça"]
+      "followUp": "C'est déjà prêt, en fait !",
+      "newWords": ["comme d'habitude", "au soja", "en fait"]
     },
     {
-      "id": "sit_06_cafe_order_01",
-      "element": "Commander une boisson",
-      "cue": "You want a coffee.",
-      "turns": [{"speaker": "server", "text": "Bonjour, vous désirez ?"}],
+      "id": "sit_06_cafe_hello_01",
+      "element": "Dire bonjour d'abord",
+      "place": "Au café",
+      "cue": "You walk in and order straight away.",
+      "turns": [
+        {"speaker": "learner", "text": "Un café."},
+        {"speaker": "server", "name": "Karim", "text": "Bonjour quand même !"},
+        {"speaker": "learner", "text": "Ah, pardon ! Bonjour ! Un café, ___ plaît."}
+      ],
       "drills": [
-        {"type": "reply", "prompt": "Order one coffee.",
-         "bank": ["Un", "café,", "s’il vous plaît.", "Une", "cafés,"],
-         "accepted": [["Un", "café,", "s’il vous plaît."]],
-         "model": "Un café, s’il vous plaît."}
+        {"type": "word", "prompt": "What does « quand même » mean here?", "target": "quand même",
+         "choices": ["all the same", "right now", "too much"], "correct": 0},
+        {"type": "complete", "prompt": "Fill the gap.",
+         "choices": ["s'il vous", "s'il te", "si vous"], "correct": 0,
+         "why": ["", "Karim says vous to you, so « s'il vous plaît ».", "Not French: it's « s'il vous plaît »."]}
       ],
-      "followUp": "Très bien, tout de suite.",
-      "newWords": ["tout de suite"]
+      "followUp": "Bonjour ! Un café, ça marche.",
+      "newWords": ["quand même", "pardon", "ça marche"]
     },
     {
-      "id": "sit_06_cafe_substitute_01",
-      "element": "Accepter un remplacement",
-      "cue": "You asked for oat milk.",
-      "turns": [{"speaker": "server", "text": "Désolé, plus de lait d’avoine. Au soja ?"}],
+      "id": "sit_06_solo_tone_01",
+      "element": "Demander combien on doit",
+      "place": "Au café · phrase seule",
+      "standalone": "Choisir le ton",
+      "cue": "Ask Karim how much you owe. He says vous to you.",
+      "turns": [],
+      "drills": [
+        {"type": "pick", "prompt": "Which one fits?",
+         "choices": ["Je vous dois combien, s'il vous plaît ?", "Je te dois combien, s'il te plaît ?", "Combien ? Vite."], "correct": 0,
+         "why": ["", "Good French, but « te » is for a friend. Karim says vous to you.", "Good French, but too blunt for Karim."]}
+      ],
+      "newWords": ["je vous dois combien"]
+    },
+    {
+      "id": "sit_06_cafe_repeat_01",
+      "element": "Faire répéter",
+      "place": "Au café",
+      "cue": "It's busy and Karim talks fast.",
+      "turns": [
+        {"speaker": "server", "name": "Karim", "text": "Y a plus de croissants, du coup… pain au chocolat ?"}
+      ],
       "drills": [
         {"type": "comprehend", "prompt": "What has run out?",
-         "choices": ["Oat milk", "Coffee"], "correct": 0,
-         "miss": "Reread: « plus de lait d’avoine »."},
-        {"type": "pick", "prompt": "Which reply accepts the soy milk?",
-         "choices": ["Oui, au soja, merci.", "Oui, à la soja, merci.", "Oui, au lait d’avoine, merci."], "correct": 0,
-         "why": ["", "Wrong French: soja is masculine, so « au soja ».", "Good French, but there’s no oat milk left."]}
+         "choices": ["Croissants", "Coffee"], "correct": 0,
+         "miss": "Reread: « plus de croissants »."},
+        {"type": "reply", "prompt": "Ask him to say it again.",
+         "bank": ["Pardon,", "vous", "pouvez", "répéter ?", "peut", "répétez ?"],
+         "accepted": [["Pardon,", "vous", "pouvez", "répéter ?"]],
+         "model": "Pardon, vous pouvez répéter ?"}
       ],
-      "followUp": "Parfait, un café au soja !",
-      "newWords": ["plus de", "lait d'avoine", "soja"]
+      "followUp": "Plus de croissants. Un pain au chocolat ?",
+      "newWords": ["y a", "plus de", "du coup", "pain au chocolat", "vous pouvez répéter"]
     },
     {
-      "id": "sit_06_cafe_size_01",
-      "element": "Préciser la taille",
-      "cue": "You want a large one.",
+      "id": "sit_06_cafe_groupchat_01",
+      "element": "Se donner rendez-vous au café",
+      "place": "Les copains · groupe",
+      "cue": "Théo's group chat. Plans for a coffee.",
       "turns": [
-        {"speaker": "server", "text": "Petit ou grand ?"},
-        {"speaker": "learner", "text": "Un ___, s’il vous plaît."}
+        {"speaker": "server", "name": "Théo", "text": "On se retrouve au café du coin ?"},
+        {"speaker": "server", "name": "Léa", "text": "Ouais, carrément !"}
       ],
       "drills": [
-        {"type": "complete", "prompt": "Fill the gap.",
-         "choices": ["grand", "grande", "petit"], "correct": 0,
-         "why": ["", "Café is masculine: « un grand ».", "You want a large one."]}
+        {"type": "word", "prompt": "What does « carrément » mean here?", "target": "carrément",
+         "choices": ["totally", "maybe", "never"], "correct": 0},
+        {"type": "reply", "prompt": "Say OK, you'll be there in ten minutes.",
+         "bank": ["D'accord,", "j'arrive", "dans", "dix", "minutes.", "je", "arrive", "deux"],
+         "accepted": [["D'accord,", "j'arrive", "dans", "dix", "minutes."]],
+         "model": "D'accord, j'arrive dans dix minutes."}
       ],
-      "followUp": "Un grand café, c’est noté.",
+      "followUp": "Top, à tout de suite !",
+      "followUpBy": "Théo",
+      "newWords": ["on se retrouve", "du coin", "ouais", "carrément", "top"]
+    },
+    {
+      "id": "sit_06_solo_transform_01",
+      "element": "Raconter sa commande",
+      "place": "Texto · Léa · phrase seule",
+      "standalone": "Transformer",
+      "cue": "Tell Léa what you had this morning.",
+      "turns": [
+        {"speaker": "learner", "source": true, "text": "Je prends un café au soja."}
+      ],
+      "drills": [
+        {"type": "reply", "prompt": "Put it in the past. Start with « Ce matin ».",
+         "bank": ["Ce matin,", "j'ai pris", "un", "café", "au soja.", "je prends", "je suis", "pris"],
+         "accepted": [["Ce matin,", "j'ai pris", "un", "café", "au soja."]],
+         "model": "Ce matin, j'ai pris un café au soja."}
+      ],
+      "newWords": ["ce matin", "j'ai pris"]
+    },
+    {
+      "id": "sit_06_cafe_text_01",
+      "element": "S'excuser d'être en retard",
+      "place": "Texto · Léa",
+      "cue": "Léa is already at the café. You're late.",
+      "turns": [
+        {"speaker": "server", "name": "Léa", "text": "T'es où ? Je t'attends au café."}
+      ],
+      "drills": [
+        {"type": "comprehend", "prompt": "Where is Léa?",
+         "choices": ["At the café", "At home"], "correct": 0,
+         "miss": "Reread: « je t'attends au café »."},
+        {"type": "pick", "prompt": "Which reply works?",
+         "choices": ["Pardon, je suis en retard ! J'arrive.", "Pardon, je suis à retard ! J'arrive.", "Super, je reste à la maison !"], "correct": 0,
+         "why": ["", "Wrong French: late is « en retard ».", "Good French, but she's waiting for you."]}
+      ],
+      "followUp": "Pas de souci, prends ton temps.",
+      "newWords": ["t'es", "je t'attends", "en retard", "pas de souci"]
+    },
+    {
+      "id": "sit_06_cafe_tutoyer_01",
+      "element": "Passer au tu",
+      "place": "Au café",
+      "cue": "Third week. Karim is friendly now.",
+      "turns": [
+        {"speaker": "server", "name": "Karim", "text": "On peut se tutoyer, non ?"}
+      ],
+      "drills": [
+        {"type": "comprehend", "prompt": "What does Karim suggest?",
+         "choices": ["Saying tu to each other", "Paying later"], "correct": 0,
+         "miss": "Reread: « se tutoyer » means to say tu to each other."},
+        {"type": "reply", "prompt": "Say of course, and ask for a coffee with tu.",
+         "bank": ["Oui,", "bien sûr !", "Tu", "me", "fais", "un café ?", "faites", "Vous"],
+         "accepted": [["Oui,", "bien sûr !", "Tu", "me", "fais", "un café ?"]],
+         "model": "Oui, bien sûr ! Tu me fais un café ?"}
+      ],
+      "followUp": "Avec plaisir. Mais c'est toujours trois euros !",
+      "newWords": ["on peut se tutoyer", "bien sûr", "tu me fais", "avec plaisir"]
+    },
+    {
+      "id": "sit_06_solo_back_01",
+      "element": "Commander comme d'habitude",
+      "place": "Au café · phrase seule",
+      "standalone": "Mot en retour",
+      "cue": "Which French words mean “as usual”?",
+      "turns": [
+        {"speaker": "server", "name": "Karim", "text": "Bonjour ! ___ ?"}
+      ],
+      "drills": [
+        {"type": "complete", "prompt": "as usual",
+         "choices": ["Comme d'habitude", "Du coup", "Quand même"], "correct": 0,
+         "why": ["", "« Du coup » means so.", "« Quand même » means all the same."]}
+      ],
       "newWords": []
-    },
-    {
-      "id": "sit_06_cafe_ready_01",
-      "element": "Choisir ce qui est prêt",
-      "cue": "You’re in a hurry.",
-      "turns": [{"speaker": "server", "text": "Le sandwich ? Ça prend un quart d’heure."}],
-      "drills": [
-        {"type": "word", "prompt": "What does « un quart d’heure » mean?", "target": "un quart d'heure",
-         "choices": ["15 minutes", "4 minutes", "1 hour"], "correct": 0},
-        {"type": "reply", "prompt": "Take the salad instead.",
-         "bank": ["Alors,", "la", "salade,", "s’il vous plaît.", "le", "sandwich,"],
-         "accepted": [["Alors,", "la", "salade,", "s’il vous plaît."], ["la", "salade,", "s’il vous plaît."]],
-         "model": "Alors, la salade, s’il vous plaît."}
-      ],
-      "followUp": "Voilà, elle est prête.",
-      "newWords": ["un quart d'heure", "prête"]
-    },
-    {
-      "id": "sit_06_cafe_takeaway_01",
-      "element": "Sur place ou à emporter",
-      "cue": "You’re leaving right away.",
-      "turns": [{"speaker": "server", "text": "Sur place ou à emporter ?"}],
-      "drills": [
-        {"type": "reply", "prompt": "Say it’s to take away.",
-         "bank": ["À emporter,", "s’il vous plaît.", "Sur place,", "merci."],
-         "accepted": [["À emporter,", "s’il vous plaît."], ["À emporter,", "merci."]],
-         "model": "À emporter, s’il vous plaît."}
-      ],
-      "followUp": "D’accord, je vous donne un sac.",
-      "newWords": ["sur place", "à emporter", "sac"]
-    },
-    {
-      "id": "sit_06_cafe_payment_01",
-      "element": "Régler un problème de paiement",
-      "cue": "You have cash too.",
-      "turns": [
-        {"speaker": "server", "text": "Désolé, le terminal est en panne."},
-        {"speaker": "learner", "text": "Pas de problème, je paie en ___."}
-      ],
-      "drills": [
-        {"type": "comprehend", "prompt": "What’s the problem?",
-         "choices": ["The card machine is broken", "There’s no coffee"], "correct": 0,
-         "miss": "Reread: « le terminal est en panne »."},
-        {"type": "complete", "prompt": "Fill the gap.",
-         "choices": ["espèces", "carte", "panne"], "correct": 0,
-         "why": ["", "The card machine is broken.", "« En panne » means broken."]}
-      ],
-      "followUp": "Merci, voilà votre monnaie.",
-      "newWords": ["terminal", "en panne", "espèces", "monnaie"]
-    },
-    {
-      "id": "sit_06_cafe_pay_01",
-      "element": "Payer",
-      "cue": "You have a 5 € note.",
-      "turns": [{"speaker": "server", "text": "Ça fait quatre euros cinquante."}],
-      "drills": [
-        {"type": "comprehend", "prompt": "How much is it?",
-         "choices": ["€4.50", "€14.50"], "correct": 0,
-         "miss": "Reread: « quatre euros cinquante ». Quatorze would be 14."},
-        {"type": "pick", "prompt": "Which reply pays?",
-         "choices": ["Voilà cinq euros.", "Voilà cinq euro.", "Voilà quatre euros."], "correct": 0,
-         "why": ["", "Wrong French: five takes the plural, « euros ».", "Good French, but four euros isn’t enough."]}
-      ],
-      "followUp": "Merci ! Bonne journée.",
-      "newWords": ["ça fait"]
     }
   ]
 }

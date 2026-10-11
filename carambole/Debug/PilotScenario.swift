@@ -32,14 +32,19 @@ struct PilotDialogue: Decodable, Identifiable {
             /// English reason shown after a wrong fix.
             let why: String?
         }
-        /// "server" or "learner".
+        /// "server" or "learner". Any non-learner voice counts as "server".
         let speaker: String
-        /// Learner lines may hold one `___` gap (Compléter).
+        /// Cast name shown above a server bubble ("Karim", "Léa"). Nil → "Serveur".
+        let name: String?
+        /// Transformer: the learner's earlier line, shown grey, to rewrite.
+        let source: Bool?
+        /// One line may hold a `___` gap (Compléter, Mot en retour).
         let text: String
         /// Learner line with one wrong word (Corriger).
         let error: ErrorMark?
 
         var isLearner: Bool { speaker == "learner" }
+        var isSource: Bool { source == true }
     }
 
     let id: String
@@ -47,16 +52,33 @@ struct PilotDialogue: Decodable, Identifiable {
     let cue: String
     let turns: [Turn]
     let drills: [PilotDrill]
-    let followUp: String
+    /// Server's closing line. Standalone drills have none.
+    let followUp: String?
+    /// Who says the follow-up; defaults to the first named server turn.
+    let followUpBy: String?
+    /// Label above the cue: place or channel ("Au café", "Texto · Léa").
+    let place: String?
+    /// Standalone sentence drill label ("Transformer", "Mot en retour"…).
+    /// Nil for a dialogue.
+    let standalone: String?
     let newWords: [String]
+
+    var isStandalone: Bool { standalone != nil }
+    var followUpSpeaker: String? { followUpBy ?? turns.first { !$0.isLearner && $0.name != nil }?.name }
 
     var gapTurnIndex: Int? { turns.firstIndex { $0.text.contains("___") } }
     var errorTurnIndex: Int? { turns.firstIndex { $0.error != nil } }
 
     var validationErrors: [String] {
         var errors: [String] = []
-        if id.isEmpty || element.isEmpty || cue.isEmpty || followUp.isEmpty { errors.append("missing required text") }
-        if turns.isEmpty || turns.count > 3 { errors.append("dialogue needs 1–3 lines") }
+        if id.isEmpty || element.isEmpty || cue.isEmpty { errors.append("missing required text") }
+        if isStandalone {
+            if followUp != nil { errors.append("standalone drill has no follow-up") }
+            if turns.count > 2 || drills.count != 1 { errors.append("standalone needs 0–2 lines and one drill") }
+        } else {
+            if (followUp ?? "").isEmpty { errors.append("dialogue needs a follow-up") }
+            if turns.isEmpty || turns.count > 3 { errors.append("dialogue needs 1–3 lines") }
+        }
         if turns.contains(where: { !["server", "learner"].contains($0.speaker) || $0.text.isEmpty }) {
             errors.append("bad turn")
         }
@@ -204,6 +226,14 @@ enum PilotText {
             if toks[i].hasPrefix("___") {
                 out.append(Segment(index: out.count, display: "", trailing: String(toks[i].dropFirst(3)),
                                    key: nil, kind: .gap))
+                i += 1
+                continue
+            }
+            // French spaced punctuation (« ? », « ! ») rides on the word before
+            // with a no-break space, so it never wraps onto a line of its own.
+            if norm(toks[i]).isEmpty, let last = out.popLast() {
+                out.append(Segment(index: last.index, display: last.display,
+                                   trailing: last.trailing + "\u{00A0}" + toks[i], key: last.key, kind: last.kind))
                 i += 1
                 continue
             }

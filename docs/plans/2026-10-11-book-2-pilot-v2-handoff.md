@@ -113,6 +113,33 @@ Mixing rules:
 
 See *Content direction* in the action plan: recurring Lyon cast, varied channels, social and culture moves, mostly standard French with spoken forms marked `*` in the tooltip, no texting abbreviations, both genders accepted in learner lines. Next: author the full café module with Karim, play it in Test book, then freeze the schema.
 
+## Review set v3 (installed 2026-10-11)
+
+The Test book pilot now holds a small review set instead of the old 8 café dialogues (those are in git history before this commit). It has 9 cards: 6 dialogues and 3 standalone drills in the order D D S D D S D D S. It uses the Lyon cast, the channels and the spoken register. The user will review this set, not a full module.
+
+| # | Card | Shows |
+|---|---|---|
+| 1 | Comme d'habitude (Karim) | Comprendre + Répondre, cast name, history |
+| 2 | Bonjour d'abord | culture move, Mot + Compléter |
+| 3 | Choisir le ton (standalone) | Book 1 multiple choice, register |
+| 4 | Faire répéter | spoken *y a*, *du coup* with `*` glosses |
+| 5 | Les copains (group chat) | two named speakers, *ouais*, *carrément* |
+| 6 | Transformer (standalone) | grey "Vous · avant" line → passé composé |
+| 7 | Texto · Léa | text channel, *t'es*, gender-free *Pardon* |
+| 8 | On peut se tutoyer ? | register switch, twist follow-up |
+| 9 | Mot en retour (standalone) | gap in Karim's line, English → French |
+
+Contract changes (`PilotScenario.swift`, JSON):
+- Turn `name` (speaker label) and `source` (grey line to rewrite).
+- Dialogue `place` (label above the cue), `standalone` (drill label; no follow-up, 0–2 lines, one drill) and `followUpBy`.
+- A gap may sit in any line.
+- Spoken glosses start with `* `.
+- Lone `?`/`!` attach to the word before with a no-break space.
+
+Audio: cast voices are Chirp 3 HD: Karim `Charon`, Théo `Achird`, Léa `Aoede`. Unnamed speakers use Neural2-G. 14 clips were generated and the 16 old clips removed.
+
+Checks: 10 Python content tests and the Swift contract test pass. I looked at simulator screenshots of every card type. `CB_PILOT_AUTOPLAY=wrong` plays all 9 cards through to the summary. Not checked: real taps, audio on the phone, and the Écrire typing drill, which isn't built in Swift.
+
 ## Pilot behaviour (as built)
 
 | Moment | Behaviour |

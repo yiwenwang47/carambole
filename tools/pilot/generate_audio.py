@@ -24,17 +24,30 @@ OUT = ROOT / "carambole/Resources/Audio"
 ENDPOINT = "https://texttospeech.googleapis.com/v1/text:synthesize"
 FEMALE = "fr-FR-Neural2-F"
 MALE = "fr-FR-Neural2-G"
+# One stable voice per recurring character (Chirp 3 HD: more conversational).
+CAST = {
+    "Karim": "fr-FR-Chirp3-HD-Charon",
+    "Théo": "fr-FR-Chirp3-HD-Achird",
+    "Léa": "fr-FR-Chirp3-HD-Aoede",
+}
+
+
+def voice_for(name: str | None) -> str:
+    return CAST.get(name or "", MALE)
 
 
 def clip_rows(item: dict) -> list[tuple[str, str, str]]:
-    """Server lines and the follow-up, one clip each, in the server's voice."""
+    """Server lines and the follow-up, one clip each, in the speaker's voice."""
     stem = "pilot2_" + item["id"]
     rows = [
-        (f"{stem}_t{i}", turn["text"], MALE)
+        (f"{stem}_t{i}", turn["text"].replace("___", "…"), voice_for(turn.get("name")))
         for i, turn in enumerate(item["turns"])
         if turn["speaker"] == "server"
     ]
-    rows.append((f"{stem}_f", item["followUp"], MALE))
+    if "followUp" in item:
+        by = item.get("followUpBy") or next(
+            (t.get("name") for t in item["turns"] if t["speaker"] == "server" and t.get("name")), None)
+        rows.append((f"{stem}_f", item["followUp"], voice_for(by)))
     return rows
 
 

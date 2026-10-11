@@ -69,7 +69,8 @@ struct SituationPilotView: View {
         let id = UUID()
         let dialogueID: String
         let element: String
-        let kind: PilotDrill.Kind
+        /// Drill name as shown ("Corriger", or a standalone label).
+        let title: String
         /// What the learner gave, as shown.
         let given: String
         /// The right answer.
@@ -82,7 +83,8 @@ struct SituationPilotView: View {
 
     private func log(_ given: String, expected: String, why: String?) {
         guard let drill else { return }
-        mistakes.append(Mistake(dialogueID: dialogue.id, element: dialogue.element, kind: drill.type,
+        mistakes.append(Mistake(dialogueID: dialogue.id, element: dialogue.element,
+                                title: dialogue.standalone ?? drill.type.title,
                                 given: given, expected: expected, why: why))
     }
 
@@ -181,7 +183,7 @@ struct SituationPilotView: View {
 
     private var cueBlock: some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text("Au café").uppercaseLabel()
+            Text(dialogue.place ?? "Au café").uppercaseLabel()
             ZStack(alignment: .leading) {
                 Text(dialogue.cue).font(.display(size: 21, wght: 400)).foregroundColor(AppColor.ink)
                     .fixedSize(horizontal: false, vertical: true)
@@ -206,14 +208,16 @@ struct SituationPilotView: View {
                                 if turn.isLearner {
                                     learnerBubble(turnIndex: i, turn: turn)
                                 } else {
-                                    serverBubble(id: "t\(i)", text: turn.text, audioKey: "pilot2_\(dialogue.id)_t\(i)")
+                                    serverBubble(id: "t\(i)", name: turn.name, text: turn.text,
+                                                 audioKey: "pilot2_\(dialogue.id)_t\(i)")
                                 }
                             }
                             if slot != .hidden {
                                 slotBubble.transition(Self.swap)
                             }
-                            if showFollow {
-                                serverBubble(id: "f", text: dialogue.followUp, audioKey: "pilot2_\(dialogue.id)_f")
+                            if showFollow, let followUp = dialogue.followUp {
+                                serverBubble(id: "f", name: dialogue.followUpSpeaker, text: followUp,
+                                             audioKey: "pilot2_\(dialogue.id)_f")
                                     .transition(Self.swap)
                             }
                         }
@@ -242,10 +246,10 @@ struct SituationPilotView: View {
         Text(text).font(.label(size: 10.5)).tracking(1.2).foregroundColor(AppColor.g2).padding(.horizontal, 6)
     }
 
-    private func serverBubble(id: String, text: String, audioKey: String) -> some View {
+    private func serverBubble(id: String, name: String?, text: String, audioKey: String) -> some View {
         HStack {
             VStack(alignment: .leading, spacing: 3) {
-                speakerLabel("SERVEUR")
+                speakerLabel((name ?? "Serveur").uppercased())
                 HStack(alignment: .top, spacing: 10) {
                     Button { Speaker.shared.speak(text, key: audioKey) } label: {
                         Image(systemName: "play.fill").font(.system(size: 10)).foregroundColor(AppColor.ink)
@@ -276,10 +280,11 @@ struct SituationPilotView: View {
         HStack {
             Spacer(minLength: 40)
             VStack(alignment: .trailing, spacing: 3) {
-                speakerLabel("VOUS")
+                speakerLabel(turn.isSource ? "VOUS · AVANT" : "VOUS")
                 lineText(id: "t\(turnIndex)", text: turn.text, turnIndex: turnIndex)
                     .padding(.vertical, 11).padding(.horizontal, 15)
-                    .background(learnerShape().fill(Color(hex: theme.tileOn)))
+                    // The line to rewrite sits grey, so the new reply reads as the answer.
+                    .background(learnerShape().fill(turn.isSource ? AppColor.hairline : Color(hex: theme.tileOn)))
             }
         }
     }
@@ -445,9 +450,11 @@ struct SituationPilotView: View {
         VStack(alignment: .leading, spacing: 12) {
             if let drill {
                 HStack {
-                    Text(drill.type.title).uppercaseLabel()
+                    Text(dialogue.standalone ?? drill.type.title).uppercaseLabel()
                     Spacer()
-                    if dialogue.drills.count > 1 {
+                    if dialogue.isStandalone {
+                        Text("Phrase seule").uppercaseLabel()
+                    } else if dialogue.drills.count > 1 {
                         Text("\(step + 1)/\(dialogue.drills.count)").uppercaseLabel()
                     }
                 }
@@ -540,7 +547,7 @@ struct SituationPilotView: View {
             HStack {
                 Text("Fini").uppercaseLabel()
                 Spacer()
-                Text(dialogue.drills.map(\.type.title).joined(separator: " + ")).uppercaseLabel()
+                Text(dialogue.standalone ?? dialogue.drills.map(\.type.title).joined(separator: " + ")).uppercaseLabel()
             }
             Text(failed ? "Pas trouvé. On le reverra bientôt."
                  : misses > 0 ? "Réussi avec un essai de plus." : "Du premier coup.")
@@ -568,7 +575,7 @@ struct SituationPilotView: View {
 
     private func mistakeRow(_ m: Mistake, compact: Bool) -> some View {
         VStack(alignment: .leading, spacing: 2) {
-            (Text(m.kind.title.uppercased() + "  ").font(.label(size: 11)).foregroundColor(AppColor.g2)
+            (Text(m.title.uppercased() + "  ").font(.label(size: 11)).foregroundColor(AppColor.g2)
              + Text("Vous : " + m.given).font(.display(size: 14, wght: 400)).foregroundColor(AppColor.graphite)
              + Text("  →  " + m.expected).font(.display(size: 14, wght: 500)).foregroundColor(AppColor.ink))
             if !compact, let why = m.why, !why.isEmpty {
@@ -620,7 +627,7 @@ struct SituationPilotView: View {
     private var footer: some View {
         let (label, enabled): (String, Bool) = {
             guard let drill else {
-                return (index == dialogues.count - 1 ? "Terminer" : "Dialogue suivant", true)
+                return (index == dialogues.count - 1 ? "Terminer" : "Suivant", true)
             }
             switch drill.type {
             case .comprehend, .word: return ("Choisissez une réponse", false)
@@ -800,6 +807,9 @@ struct SituationPilotView: View {
         }
     }
 
+    /// The finished card is complete once its follow-up shows (if it has one).
+    private var settled: Bool { showFollow || dialogue.followUp == nil }
+
     private func nextDialogue() {
         if index == dialogues.count - 1 {
             withAnimation(Self.motion) { showSummary = true }
@@ -836,7 +846,7 @@ struct SituationPilotView: View {
     private func autoStep(wrongFirst: Bool) -> Bool {
         guard !locked, !showSummary else { return !showSummary }
         guard let drill else {
-            guard showFollow else { return true }
+            guard settled else { return true }
             nextDialogue(); return true
         }
         if wrongFirst && misses == 0 && tries == 0 && wrongChoices.isEmpty {
