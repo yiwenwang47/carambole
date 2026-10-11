@@ -53,6 +53,9 @@ struct SituationPilotView: View {
     @State private var tipToken = 0
     /// Simulator flag: keep the launch-flag tip open for a screenshot.
     @State private var tipPinned = false
+    /// When a word was last tapped, so the card-wide tap that closes the tip
+    /// can tell a tap on a word from a tap anywhere else.
+    @State private var lastWordTap = Date.distantPast
 
     /// One curve for every drill-to-drill and dialogue-to-dialogue change.
     private static let motion = Animation.smooth(duration: 0.5)
@@ -148,6 +151,16 @@ struct SituationPilotView: View {
             }
             .allowsHitTesting(false)
         }
+        // Any tap off a word closes the tip at once. Runs alongside the word's own
+        // tap, in either order; a fresh word tap within the same touch keeps it.
+        .simultaneousGesture(TapGesture().onEnded {
+            guard tip != nil else { return }
+            DispatchQueue.main.async {
+                if Date().timeIntervalSince(lastWordTap) > 0.15 {
+                    withAnimation(.easeOut(duration: 0.15)) { tip = nil }
+                }
+            }
+        })
         .task(id: tipToken) {
             guard tip != nil, !tipPinned else { return }
             try? await Task.sleep(nanoseconds: 2_600_000_000)
@@ -415,6 +428,7 @@ struct SituationPilotView: View {
             return
         }
         guard let key = seg.key, let english = glossary[key] else { return }
+        lastWordTap = Date()
         withAnimation(.easeOut(duration: 0.15)) {
             tip = Tip(id: wordID, french: seg.display, english: english)
         }

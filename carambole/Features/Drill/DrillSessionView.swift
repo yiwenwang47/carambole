@@ -108,6 +108,8 @@ struct DrillSessionView: View {
     /// Bumped each time a too-easy graduation happens; the auto-dismiss task keys off
     /// this so a NEW too-easy (toast re-shown) cancels the previous dismissal timer.
     @State private var tooEasyUndoToken = 0
+    /// Upward drag on the undo toast; it follows the finger until it dismisses.
+    @State private var tooEasyDrag: CGFloat = 0
 
     private var answeredCount: Int { resultByIndex.count }
     private var correctCount: Int { resultByIndex.values.filter { $0 }.count }
@@ -443,11 +445,29 @@ struct DrillSessionView: View {
         .padding(.horizontal, 22)
         .frame(height: 48)
         .background(Capsule().fill(AppColor.buttonDark))
+        .offset(y: tooEasyDrag)
+        // Swipe up dismisses the moment the drag passes a short threshold,
+        // without waiting for the finger to lift. A tap still reaches Annuler.
+        .gesture(
+            DragGesture(minimumDistance: 6)
+                .onChanged { value in
+                    guard tooEasyUndoElementID != nil else { return }
+                    tooEasyDrag = min(0, value.translation.height)
+                    if value.translation.height < -24 { dismissTooEasyUndo() }
+                }
+                .onEnded { _ in
+                    // Kept as-is once dismissed, so the pill leaves from where it is.
+                    guard tooEasyUndoElementID != nil else { return }
+                    withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) { tooEasyDrag = 0 }
+                }
+        )
+        .accessibilityAction(named: "Fermer") { dismissTooEasyUndo() }
     }
 
     /// Surface the undo toast for `elementID` (called on the too-easy-correct path).
     /// Bumping the token (re)starts the auto-dismiss timer.
     private func presentTooEasyUndo(elementID: String) {
+        tooEasyDrag = 0
         tooEasyUndoElementID = elementID
         tooEasyUndoToken += 1
     }
