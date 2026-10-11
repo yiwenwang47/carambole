@@ -134,7 +134,7 @@ enum DrillDemo {
 /// One page: a button per test session; each relaunches as often as wanted.
 private struct TestBookView: View {
     private enum Kind: Int, Identifiable {
-        case spot, build, transform, interp, demo
+        case spot, build, transform, interp, situation, demo
         var id: Int { rawValue }
     }
     @State private var running: Kind?
@@ -155,6 +155,8 @@ private struct TestBookView: View {
                 "Change one thing in a sentence; build only the part that changes.", .transform)
             row("Comprendre · \(interps.count)",
                 "Read a sentence, answer what only its grammar tells you. No English shown.", .interp)
+            row("En situation · essai",
+                "Hear a changing café exchange, work out the problem, and form a useful reply.", .situation)
             if ProcessInfo.processInfo.environment["CB_DRILL_DEMO"] != nil {
                 row("Lancer le drill", "Tap Indice, place words, scroll the word tray, check.", .demo)
             }
@@ -170,6 +172,7 @@ private struct TestBookView: View {
             case "build": running = .build
             case "transform": running = .transform
             case "interp": running = .interp
+            case "situation": running = .situation
             default: break
             }
         }
@@ -180,6 +183,7 @@ private struct TestBookView: View {
                 case .build: DrillDemo.session("Deuxième essai", builds) { running = nil }
                 case .transform: DrillDemo.session("Transformer", transforms) { running = nil }
                 case .interp: DrillDemo.session("Comprendre", interps) { running = nil }
+                case .situation: SituationPilotView { running = nil }
                 case .demo: DrillDemo.makeSession(testBook: true)
                 }
             }

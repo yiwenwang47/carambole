@@ -1,0 +1,94 @@
+[
+  {
+    "id": "sit_06_cafe_substitute_01",
+    "context": "You are at a café by the station. Your train leaves in ten minutes. You want your order to go. You have a phone and bank card, but no cash.",
+    "turns": [
+      {"speaker": "customer", "text": "Bonjour, un café au lait d’avoine à emporter, s’il vous plaît."},
+      {"speaker": "server", "text": "Pour celui à l’avoine, il faudrait attendre la livraison de cet après-midi. Au soja, je peux vous le faire tout de suite."}
+    ],
+    "question": "Which drink can be ready before your train?",
+    "choices": ["Coffee with oat milk", "Coffee with soy milk", "Neither drink"],
+    "correctChoice": 1,
+    "responsePrompt": "Accept the available plant-milk substitution politely.",
+    "replyTokens": ["Alors,", "je le prends", "au soja,", "s’il vous plaît."],
+    "tokenBank": ["Alors,", "je le prends", "au soja,", "s’il vous plaît.", "à l’avoine,", "au lait de vache,"],
+    "acceptedReplies": [
+      ["Alors,", "je le prends", "au soja,", "s’il vous plaît."],
+      ["Alors,", "au soja,", "s’il vous plaît."],
+      ["je le prends", "au soja,", "s’il vous plaît."],
+      ["au soja,", "s’il vous plaît."]
+    ],
+    "modelReply": "Alors, je le prends au soja, s’il vous plaît.",
+    "followUp": "Très bien, je vous le prépare au soja.",
+    "explanationEN": "The oat milk delivery is this afternoon, after your train. The server can make the soy version now."
+  },
+  {
+    "id": "sit_06_cafe_time_01",
+    "context": "You are at a café by the station. Your train leaves in ten minutes. You want your order to go. You have a phone and bank card, but no cash.",
+    "turns": [
+      {"speaker": "customer", "text": "Et pour manger, le sandwich aux légumes est prêt ?"},
+      {"speaker": "server", "text": "Il en reste, mais il doit passer au four ; vous l’aurez dans un quart d’heure. La salade de lentilles, elle, est déjà prête."}
+    ],
+    "question": "What can you take without waiting past departure?",
+    "choices": ["The hot vegetable sandwich", "Both", "The lentil salad"],
+    "correctChoice": 2,
+    "responsePrompt": "Order the ready food instead of the sandwich.",
+    "replyTokens": ["Je vais plutôt prendre", "la salade de lentilles,", "s’il vous plaît."],
+    "tokenBank": ["Je vais plutôt prendre", "Alors,", "la salade de lentilles,", "s’il vous plaît.", "le sandwich aux légumes,", "une quiche,"],
+    "acceptedReplies": [
+      ["Je vais plutôt prendre", "la salade de lentilles,", "s’il vous plaît."],
+      ["Alors,", "la salade de lentilles,", "s’il vous plaît."],
+      ["la salade de lentilles,", "s’il vous plaît."]
+    ],
+    "modelReply": "Je vais plutôt prendre la salade de lentilles, s’il vous plaît.",
+    "followUp": "D’accord, je vous l’ajoute.",
+    "explanationEN": "Un quart d’heure means 15 minutes. The sandwich must go in the oven, but your train leaves in 10 minutes; the salad is ready."
+  },
+  {
+    "id": "sit_06_cafe_repair_01",
+    "context": "You are at a café by the station. Your train leaves in ten minutes. You want your order to go. You have a phone and bank card, but no cash.",
+    "turns": [
+      {"speaker": "customer", "text": "Ma commande est prête ?"},
+      {"speaker": "server", "text": "Oui. J’ai mis votre salade sur une assiette et je vous ai gardé une place près de la fenêtre. Je vous apporte le café à table ?"}
+    ],
+    "question": "What has the server assumed?",
+    "choices": ["You already paid", "You will eat in the café", "You cancelled the food"],
+    "correctChoice": 1,
+    "responsePrompt": "Correct the server: this is takeaway, and ask for the salad in a box.",
+    "replyTokens": ["En fait,", "c’est à emporter.", "Pourriez-vous mettre la salade dans une boîte,", "s’il vous plaît ?"],
+    "tokenBank": ["En fait,", "Non,", "c’est à emporter.", "Pourriez-vous mettre la salade dans une boîte,", "Vous pouvez mettre la salade dans une boîte,", "s’il vous plaît ?", "c’est pour ici.", "Pourriez-vous mettre la salade sur une assiette,"],
+    "acceptedReplies": [
+      ["En fait,", "c’est à emporter.", "Pourriez-vous mettre la salade dans une boîte,", "s’il vous plaît ?"],
+      ["En fait,", "c’est à emporter.", "Vous pouvez mettre la salade dans une boîte,", "s’il vous plaît ?"],
+      ["Non,", "c’est à emporter.", "Pourriez-vous mettre la salade dans une boîte,", "s’il vous plaît ?"],
+      ["Non,", "c’est à emporter.", "Vous pouvez mettre la salade dans une boîte,", "s’il vous plaît ?"],
+      ["c’est à emporter.", "Pourriez-vous mettre la salade dans une boîte,", "s’il vous plaît ?"],
+      ["c’est à emporter.", "Vous pouvez mettre la salade dans une boîte,", "s’il vous plaît ?"]
+    ],
+    "modelReply": "En fait, c’est à emporter. Pourriez-vous mettre la salade dans une boîte, s’il vous plaît ?",
+    "followUp": "Bien sûr, excusez-moi. Je vous la mets dans une boîte.",
+    "explanationEN": "A plate, reserved seat, and table service show the server expects you to eat in. State that it is takeaway and ask for a box."
+  },
+  {
+    "id": "sit_06_cafe_payment_01",
+    "context": "You are at a café by the station. Your train leaves in ten minutes. You want your order to go. You have a phone and bank card, but no cash.",
+    "turns": [
+      {"speaker": "customer", "text": "Je peux régler sans contact ?"},
+      {"speaker": "server", "text": "Le terminal vient de tomber en panne. Si vous n’avez pas de liquide, vous pouvez scanner le code sur le comptoir avec votre téléphone."}
+    ],
+    "question": "Given what you have, how can you still pay?",
+    "choices": ["Pay with cash", "Tap your card on the terminal", "Scan the code with your phone"],
+    "correctChoice": 2,
+    "responsePrompt": "Confirm that you will pay by scanning the code.",
+    "replyTokens": ["D’accord,", "je vais scanner le code", "avec mon téléphone."],
+    "tokenBank": ["D’accord,", "je vais scanner le code", "avec mon téléphone.", "Je peux payer en scannant le code, alors.", "avec ma carte.", "en espèces."],
+    "acceptedReplies": [
+      ["D’accord,", "je vais scanner le code", "avec mon téléphone."],
+      ["je vais scanner le code", "avec mon téléphone."],
+      ["Je peux payer en scannant le code, alors."]
+    ],
+    "modelReply": "D’accord, je vais scanner le code avec mon téléphone.",
+    "followUp": "Oui, le code est juste ici. Merci.",
+    "explanationEN": "The card terminal is broken, so contactless payment will not work. You have no cash, but you can scan the code with your phone."
+  }
+]
