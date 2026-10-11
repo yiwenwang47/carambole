@@ -32,24 +32,40 @@ final class HistoryViewModel: ObservableObject {
     /// real days. The library needs this: its ribbon is a still drawn from
     /// these days, and starting from `[]` drew a second, different picture
     /// once the async load landed (a visible twist on launch).
-    init(loadImmediately: Bool = false) {
-        if loadImmediately { days = Self.fetch() }
+    /// The book whose days this model counts (history is per book).
+    let descriptor: BookDescriptor
+    /// Element IDs of `descriptor`, loaded once.
+    private var bookIDs: Set<String>?
+
+    init(book: BookDescriptor = BookCatalog.fondations, loadImmediately: Bool = false) {
+        self.descriptor = book
+        if loadImmediately {
+            let ids = Self.elementIDs(book)
+            bookIDs = ids
+            days = Self.fetch(bookIDs: ids)
+        }
     }
 
     /// Fetch the facts off-main, bucket them, then publish on main. Mirrors
     /// `BookViewModel.load()` / `refresh()`.
     func load() {
+        let descriptor = self.descriptor
+        let known = bookIDs
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-            let result = HistoryViewModel.fetch()
+            let ids = known ?? HistoryViewModel.elementIDs(descriptor)
+            let result = HistoryViewModel.fetch(bookIDs: ids)
             DispatchQueue.main.async {
+                self?.bookIDs = ids
                 self?.days = result
             }
         }
     }
 
-    private static func fetch() -> [DayActivity] {
-        let book = ContentLoader.loadBook()
-        let bookIDs = Set(book.allElements.map(\.id))
+    private static func elementIDs(_ book: BookDescriptor) -> Set<String> {
+        Set(ContentLoader.loadBook(book).allElements.map(\.id))
+    }
+
+    private static func fetch(bookIDs: Set<String>) -> [DayActivity] {
         return activities(
             bookIDs: bookIDs,
             firstSeen: DataManager.shared.fetchFirstSeenByElement(),
@@ -153,8 +169,12 @@ extension HistoryViewModel {
 
 /// Loads the history and shows it as the 09 "Liste" page.
 struct HistoryView: View {
-    @StateObject private var viewModel = HistoryViewModel()
+    @StateObject private var viewModel: HistoryViewModel
     @Environment(\.dismiss) private var dismiss
+
+    init(book: BookDescriptor = BookCatalog.fondations) {
+        _viewModel = StateObject(wrappedValue: HistoryViewModel(book: book))
+    }
 
     var body: some View {
         HistoryContent(days: viewModel.days, today: Date()) { dismiss() }

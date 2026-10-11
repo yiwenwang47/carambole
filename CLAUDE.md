@@ -2,6 +2,15 @@
 
 > ## ▶ RECENT HANDOFFS
 >
+> **▶ BOOK 2 — PRODUCTION VIEW + PER-BOOK PROGRESS (Tasks 2–3, 2026-10-11, branch
+> `worktree-agent-af444cbcb1f2e58cc`, NOT merged).** *En situation* is on the shelf
+> with its own progress, history, due queue, overflow and settings
+> (`settings.book_fr_en_situation.*`). `Features/Situation/SituationSessionView.swift`
+> is the production dialogue card (ported pilot); `Models/Situation.swift` holds the
+> pure rules (tests: `tools/situations/SituationModelTests.swift`). Schema v5 adds
+> `situation_item_log` + `situation_attempt_log` (additive). Status/open items:
+> action plan, "Tasks 2–3 status".
+>
 > **▶ BOOK 2 — CAFÉ MODULE AUTHORED + REVIEWED (2026-10-11, merged to `main`).**
 > Read **`docs/plans/2026-10-11-book-2-cafe-handoff.md`** first. Module 06
 > *Au café* (120 items, `Resources/Situations/`) passed lint, Grammalecte and

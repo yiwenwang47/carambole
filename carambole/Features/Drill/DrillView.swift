@@ -42,9 +42,9 @@ struct DrillView: View {
     private let correctAdvanceDelay: TimeInterval = 1.0
 
     /// Opt-in: read the model sentence aloud automatically on a correct answer.
-    /// OFF by default. Same UserDefaults key the `StudySettingsStore` toggle writes
-    /// ("settings.autoSpeak") — they stay in sync via UserDefaults.standard.
-    @AppStorage("settings.autoSpeak") private var autoSpeak = false
+    /// OFF by default. Passed down from the selected book's `StudySettingsStore`
+    /// (each book has its own toggle), never read from a global key.
+    var autoSpeak: Bool = false
 
     @State private var answer: [String] = []
     @State private var checked = false

@@ -42,7 +42,13 @@ struct BookView: View {
     /// Shown with a back affordance when pushed from the library shelf.
     var showBack: Bool = false
 
-    @StateObject private var viewModel = BookViewModel()
+    /// The selected book; everything on this screen is scoped to it.
+    @StateObject private var viewModel: BookViewModel
+
+    init(book: BookDescriptor = BookCatalog.fondations, showBack: Bool = false) {
+        self.showBack = showBack
+        _viewModel = StateObject(wrappedValue: BookViewModel(book: book))
+    }
     @Environment(\.dismiss) private var dismiss
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -90,8 +96,9 @@ struct BookView: View {
             withAnimation(reduceMotion ? nil : .easeOut(duration: 0.45)) { revealed = true }
         }
         .fullScreenCover(item: $session, onDismiss: { viewModel.refresh() }) { s in
-            DrillSessionView(title: s.title, ruleNote: s.ruleNote, elements: s.elements, mode: s.mode,
-                             moduleNumber: s.moduleNumber, module: s.module, viewModel: viewModel) {
+            StudySessionView(viewModel: viewModel, title: s.title, ruleNote: s.ruleNote,
+                             elements: s.elements, mode: s.mode,
+                             moduleNumber: s.moduleNumber, module: s.module) {
                 session = nil
             }
         }
@@ -138,6 +145,21 @@ struct BookView: View {
         }
         .onReceive(NotificationCenter.default.publisher(for: DemoRemote.Action.startReview.notification)) { _ in
             startReview()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: DemoRemote.Action.startLearn.notification)) { _ in
+            startLearn()
+        }
+        .onReceive(viewModel.$unlockedIDs) { ids in
+            // CB_START=learn|review opens a session once the book has loaded.
+            guard !ids.isEmpty, DemoRemote.takeLaunchStart(bookID: viewModel.descriptor.id) else { return }
+            // Wait for the shelf push to settle; a cover requested mid-push is dropped.
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                switch ProcessInfo.processInfo.environment["CB_START"] {
+                case "learn": startLearn()
+                case "review": startReview()
+                default: break
+                }
+            }
         }
         .onReceive(NotificationCenter.default.publisher(for: DemoRemote.Action.closeSession.notification)) { _ in
             session = nil
@@ -319,7 +341,7 @@ struct BookView: View {
             .frame(height: 100 + 15, alignment: .top)
 
             Button { openModules() } label: {
-                Text("\(viewModel.book.modules.count) modules  →")
+                Text(viewModel.book.modules.count == 1 ? "1 module  →" : "\(viewModel.book.modules.count) modules  →")
                     .font(.display(size: 17, wght: 400))
                     .tracking(-0.2)
                     .foregroundColor(AppColor.ink)
@@ -395,5 +417,5 @@ struct BookView: View {
 // MARK: - Preview
 
 #Preview {
-    NavigationStack { BookView(showBack: true) }
+    NavigationStack { BookView(book: BookCatalog.fondations, showBack: true) }
 }

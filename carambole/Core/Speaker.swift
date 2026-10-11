@@ -24,7 +24,8 @@ final class Speaker {
         configureSessionIfNeeded()
 
         if let key, let url = Speaker.bundledAudioURL(key: key) {
-            synth.stopSpeaking(at: .immediate)
+            // Rapid replay restarts cleanly: the old clip stops before the new one.
+            stop()
             do {
                 let p = try AVAudioPlayer(contentsOf: url)
                 player = p          // hold strong so it isn't deallocated mid-playback
@@ -47,6 +48,26 @@ final class Speaker {
         utterance.voice = voice
         utterance.rate = 0.42
         synth.speak(utterance)
+    }
+
+    /// Stops any clip or synthesized speech in flight (exit, next card, replay).
+    func stop() {
+        player?.stop()
+        player = nil
+        synth.stopSpeaking(at: .immediate)
+    }
+
+    /// Plays a bundled clip only; does nothing when the file is missing (no
+    /// synthesized fallback). Used for *En situation* word audio, where a wrong
+    /// fallback voice would teach a wrong sound.
+    func playBundled(key: String) {
+        guard let url = Speaker.bundledAudioURL(key: key) else { return }
+        configureSessionIfNeeded()
+        stop()
+        if let p = try? AVAudioPlayer(contentsOf: url) {
+            player = p
+            p.play()
+        }
     }
 
     /// Locates a bundled audio file. Xcode 16's `PBXFileSystemSynchronizedRootGroup`

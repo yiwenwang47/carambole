@@ -23,25 +23,28 @@ private struct ShelfBook: Identifiable {
     /// `.lab` kicker after the number, e.g. `Grammaire A1 → B1`.
     let kicker: String
     let available: Bool
+    /// The book to open (nil for a placeholder).
+    let descriptor: BookDescriptor?
 }
 
 struct LibraryView: View {
-    /// Authored order; open books are moved to the front for display.
-    private let catalog: [ShelfBook] = [
-        ShelfBook(id: "fr_fondations", title: "Fondations",
-                  kicker: "Grammaire A1 → B1", available: true),
-        ShelfBook(id: "fr_conversation", title: "Conversation",
-                  kicker: "Oral", available: false),
-    ]
+    /// Authored order (`BookCatalog.all`); open books are moved to the front.
+    private let catalog: [ShelfBook] = BookCatalog.all.map {
+        ShelfBook(id: $0.id, title: $0.shelfTitle, kicker: $0.kicker, available: true, descriptor: $0)
+    }
 
-    /// Fondations progress (%) — the only live book today.
-    @StateObject private var bookViewModel = BookViewModel()
-    /// Fondations per-day activity — feeds its ribbon stretch. Loaded before
+    /// Each book's progress (%), from its own element IDs.
+    @StateObject private var fondationsModel = BookViewModel(book: BookCatalog.fondations)
+    @StateObject private var situationModel = BookViewModel(book: BookCatalog.enSituation)
+    /// Each book's per-day activity — feeds its own ribbon stretch. Loaded before
     /// the first frame so the ribbon is drawn once, from real days.
-    @StateObject private var historyViewModel = HistoryViewModel(loadImmediately: true)
+    @StateObject private var fondationsHistory = HistoryViewModel(book: BookCatalog.fondations,
+                                                                  loadImmediately: true)
+    @StateObject private var situationHistory = HistoryViewModel(book: BookCatalog.enSituation,
+                                                                 loadImmediately: true)
     @State private var loaded = false
-    /// Pushes Fondations' `BookView`.
-    @State private var openBook = false
+    /// The book pushed from the shelf (`BookView`).
+    @State private var openedBook: BookDescriptor?
     /// Pushes the colour page.
     @State private var openColors = false
     @AppStorage(AppPalette.storageKey) private var paletteID = AppPalette.fallback.rawValue
@@ -66,20 +69,38 @@ struct LibraryView: View {
                     .background(AppColor.paper.ignoresSafeArea(edges: .top))
             }
             .toolbar(.hidden, for: .navigationBar)
-            .navigationDestination(isPresented: $openBook) { BookView(showBack: true) }
+            .navigationDestination(item: $openedBook) { book in
+                BookView(book: book, showBack: true)
+            }
             .navigationDestination(isPresented: $openColors) { ColorSettingsView() }
             .onAppear {
                 StarLoopPlayers.shared.prewarm()
                 // First appearance loads content; returning from a book refreshes.
-                if loaded { bookViewModel.refresh() } else { bookViewModel.load(); loaded = true }
-                historyViewModel.load()
+                if loaded {
+                    fondationsModel.refresh()
+                    situationModel.refresh()
+                } else {
+                    fondationsModel.load()
+                    situationModel.load()
+                    loaded = true
+                    #if DEBUG
+                    if let id = ProcessInfo.processInfo.environment["CB_OPEN_BOOK"] {
+                        openedBook = BookCatalog.descriptor(id: id)
+                    }
+                    #endif
+                }
+                fondationsHistory.load()
+                situationHistory.load()
             }
             #if DEBUG
             .onReceive(NotificationCenter.default.publisher(for: DemoRemote.Action.openBook.notification)) { _ in
-                openBook = true
+                openedBook = BookCatalog.fondations
+            }
+            .onReceive(NotificationCenter.default.publisher(for: DemoRemote.Action.openSituationBook.notification)) { _ in
+                openedBook = BookCatalog.enSituation
             }
             .onReceive(NotificationCenter.default.publisher(for: DemoRemote.Action.closeBook.notification)) { _ in
-                openBook = false
+                openedBook = nil
             }
             #endif
         }
@@ -127,9 +148,15 @@ struct LibraryView: View {
     /// faint strip for a book to come.
     private func stretch(for book: ShelfBook) -> LibraryRibbonGeometry.Stretch {
         guard book.available else { return .toCome }
-        let window = HistoryViewModel.window(days: historyViewModel.days, today: Date(),
+        let days = book.id == BookCatalog.enSituation.id ? situationHistory.days : fondationsHistory.days
+        let window = HistoryViewModel.window(days: days, today: Date(),
                                              count: 30, calendar: .current)
         return .started(window.map { $0.learned + $0.reviewed })
+    }
+
+    private func percent(_ book: ShelfBook) -> Int {
+        let model = book.id == BookCatalog.enSituation.id ? situationModel : fondationsModel
+        return model.estimate.percentComplete
     }
 
     private func catalogNumber(_ book: ShelfBook) -> Int {
@@ -182,14 +209,10 @@ struct LibraryView: View {
 
     // MARK: - Book block
 
-    private func open() {
-        openBook = true
-    }
-
     @ViewBuilder
     private func block(_ book: ShelfBook, number: Int) -> some View {
-        if book.available {
-            Button(action: open) {
+        if book.available, let descriptor = book.descriptor {
+            Button { openedBook = descriptor } label: {
                 blockLabel(book, number: number)
             }
             .buttonStyle(ShelfRowButtonStyle())
@@ -219,7 +242,7 @@ struct LibraryView: View {
                         .overlay(alignment: .bottom) {
                             Rectangle().fill(AppColor.ink).frame(height: 1)
                         }
-                    Text("\(bookViewModel.estimate.percentComplete) %")
+                    Text("\(percent(book)) %")
                         .uppercaseLabel(AppColor.ink)
                 }
                 .padding(.top, 4)

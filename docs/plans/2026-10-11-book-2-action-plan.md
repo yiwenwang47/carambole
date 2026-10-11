@@ -159,6 +159,10 @@ Audio is required content. Bundle every turn and follow-up, plus each new word's
 
 **Gate:** A reviewer can identify, for all ten dialogues, each drill's answer, all acceptable replies, and why each distractor fails; every new word is glossed and recurs.
 
+### Tasks 2–3 status (2026-10-11, branch `worktree-agent-af444cbcb1f2e58cc`, not merged)
+
+Built and simulator-checked: `BookCatalog` + `ContentLoader.loadBook(_:)` (all manifest modules); *En situation* on the shelf; per-book `BookViewModel`/`HistoryViewModel`/`StudySettingsStore` (`settings.book_fr_en_situation.*`, Book 1 keys unchanged); overflow filtered by book before the cap (`StudyScheduler.scopedOverflow`); auto-speak passed from the book's store (no global `@AppStorage`); schema v5 adds `situation_item_log` + `situation_attempt_log` only. `SituationSessionView` ports the pilot with both café scroll/tray fixes, render-time shuffling, identity grading, worst-drill rating, attempt logging, session summary, Réviser selection and the 3-item/2-type gate (on top of FSRS S ≥ 21). Simulator flags: `CB_OPEN_BOOK`, `CB_START=learn|review`, `CB_SIT_ITEMS`, `CB_SIT_INDEX/STEP/STAGE/TIP/AUTOPLAY`. Open: history page does not yet show attempt-log rows; VoiceOver only partly labelled; real hand taps untested.
+
 ### Task 2 — Book selection and isolated progress
 
 **Files:** `Models/ContentLoader.swift`, `BookContent.swift`, `Features/Library/LibraryView.swift`, `Features/Book/BookView.swift` and `BookViewModel.swift`, `Features/History/HistoryView.swift`, `Core/StudySettings.swift`, and the minimal scheduler/data query change.

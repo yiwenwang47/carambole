@@ -28,7 +28,7 @@ struct ModuleListView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
                     header
-                    Text("\(modules.count) modules")
+                    Text(modules.count == 1 ? "1 module" : "\(modules.count) modules")
                         .font(.display(size: 40, wght: 250))
                         .tracking(-1.2)
                         .foregroundColor(AppColor.ink)
@@ -50,10 +50,10 @@ struct ModuleListView: View {
             }
         }
         .fullScreenCover(item: $selectedModule, onDismiss: { viewModel.refresh() }) { module in
-            DrillSessionView(title: module.title, ruleNote: module.ruleNote,
+            StudySessionView(viewModel: viewModel, title: module.title, ruleNote: module.ruleNote,
                              elements: viewModel.moduleLearnElements(module), mode: .learn,
                              moduleNumber: module.sortOrder, module: module,
-                             viewModel: viewModel, canStart: viewModel.isUnlocked(module)) {
+                             canStart: viewModel.isUnlocked(module)) {
                 selectedModule = nil
             }
         }

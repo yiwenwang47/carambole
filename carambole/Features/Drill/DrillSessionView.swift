@@ -36,11 +36,14 @@ struct DrillSessionView: View {
     let module: CourseModule?
     let viewModel: BookViewModel?
     let canStart: Bool
+    /// The selected book's auto-speak setting (`StudySettingsStore.autoSpeak`).
+    let autoSpeak: Bool
     var onFinish: () -> Void = {}
 
     init(title: String, ruleNote: String, elements: [GrammarElement], mode: Mode,
          moduleNumber: Int? = nil, module: CourseModule? = nil,
          viewModel: BookViewModel? = nil, canStart: Bool = true,
+         autoSpeak: Bool? = nil,
          onFinish: @escaping () -> Void = {}) {
         self.title = title
         self.ruleNote = ruleNote
@@ -50,6 +53,10 @@ struct DrillSessionView: View {
         self.module = module
         self.viewModel = viewModel
         self.canStart = canStart
+        // Default: the presenting book's store; with no view model (Test book
+        // harness), *Fondations*' own setting.
+        self.autoSpeak = autoSpeak ?? viewModel?.settingsStore.autoSpeak
+            ?? StudySettingsStore(book: BookCatalog.fondations).autoSpeak
         self.onFinish = onFinish
     }
 
@@ -271,7 +278,8 @@ struct DrillSessionView: View {
             reviewData: (i < frontier && i != hideExplanationAt)
                 ? DrillView.ReviewData(answer: submittedAnswers[i] ?? [],
                                        correct: resultByIndex[i] ?? false)
-                : nil
+                : nil,
+            autoSpeak: autoSpeak
         )
         .id(i)
     }
@@ -636,43 +644,7 @@ struct DrillSessionView: View {
     /// the sticky `graduated_date` via `markGraduated` (idempotent — safe every time).
     /// Reads/writes run on the database's serial queue, so a follow-up read sees this.
     private func gradeElement(_ element: GrammarElement, exampleID: String, rating: FSRS.Rating) {
-        let now = Date()
-        var status = DataManager.shared.fetchReviewStatus(elementID: element.id)
-            ?? ReviewStatus(elementID: element.id)
-        let correct = rating != .again
-
-        // Keep the (now non-gating) distinct-correct bookkeeping for History/back-compat.
-        if correct { status.recordCorrect(exampleID: exampleID) }
-
-        // FSRS state: first-ever review (no S yet) → seed; otherwise advance over the
-        // calendar-day gap since the last review (0 if never reviewed / same day).
-        let newState: FSRS.State
-        if let s = status.stability, let d = status.difficulty {
-            let elapsed = CalendarDays.elapsed(from: status.lastReviewDate, to: now)
-            newState = FSRS.next(FSRS.State(stability: s, difficulty: d),
-                                 elapsedDays: elapsed, rating: rating)
-        } else {
-            newState = FSRS.initialState(rating: rating)
-        }
-        status.stability = newState.stability
-        status.difficulty = newState.difficulty
-        status.lastReviewDate = now
-        // NOTE: `learning_state` is intentionally NOT maintained under FSRS — it's
-        // non-gating now (S/D + graduated_date drive everything); it stays at its
-        // fetched/seed value and is read only by the one-time v4 backfill.
-        // Next review when predicted recall decays to desiredRetention; round to whole
-        // days (≥1) so the due-queue's date math stays day-granular, mirroring the old
-        // integer-interval scheduling. interval_days is kept in sync for overflow order.
-        let intervalDays = max(1, Int(FSRS.intervalDays(stability: newState.stability).rounded()))
-        status.intervalDays = intervalDays
-        status.nextReviewDate = Calendar.current.date(byAdding: .day, value: intervalDays, to: now) ?? now
-
-        DataManager.shared.upsertReviewStatus(status)
-
-        // Graduation hook: only on success, only once S crosses the 21-day bar. Idempotent.
-        if correct && newState.stability >= FSRS.graduationStability {
-            DataManager.shared.markGraduated(elementID: element.id, on: now)
-        }
+        ElementGrader.grade(elementID: element.id, exampleID: exampleID, rating: rating)
     }
 
     // MARK: - Intro card (one-time English ease-in)

@@ -167,6 +167,46 @@ class DataManager {
 
             setUserVersion(4)
         }
+
+        // v5 — *En situation* (Book 2). Two NEW tables; nothing existing changes.
+        // Book 2 element IDs start with `sit_`, so they share `review_status` /
+        // `review_log` / `mastery_log` with Book 1 without colliding; every reader
+        // filters by the selected book's IDs.
+        //   - `situation_item_log`: one row per dialogue/standalone item — when it
+        //     was last done, how often, and its last rating (1 again, 2 hard,
+        //     3 good). Drives Réviser selection (unseen first, then oldest; a
+        //     missed item comes back first).
+        //   - `situation_attempt_log`: every wrong attempt, append-only, with the
+        //     book ID so each book's log stays separate.
+        if version < 5 {
+            sqlite3_exec(db, """
+                CREATE TABLE IF NOT EXISTS situation_item_log (
+                    item_id TEXT PRIMARY KEY,
+                    element_id TEXT NOT NULL,
+                    last_done REAL NOT NULL,
+                    times INTEGER NOT NULL DEFAULT 0,
+                    last_rating INTEGER NOT NULL
+                );
+                """, nil, nil, nil)
+            sqlite3_exec(db, """
+                CREATE TABLE IF NOT EXISTS situation_attempt_log (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    book_id TEXT NOT NULL,
+                    element_id TEXT NOT NULL,
+                    dialogue_id TEXT NOT NULL,
+                    drill_type TEXT NOT NULL,
+                    given TEXT NOT NULL,
+                    expected TEXT NOT NULL,
+                    reason TEXT,
+                    created_at REAL NOT NULL
+                );
+                """, nil, nil, nil)
+            sqlite3_exec(db, """
+                CREATE INDEX IF NOT EXISTS situation_attempt_log_element
+                ON situation_attempt_log (book_id, element_id);
+                """, nil, nil, nil)
+            setUserVersion(5)
+        }
     }
 
     /// One-time v2 backfill: seed `review_log` from each `review_status` row that
@@ -698,9 +738,13 @@ class DataManager {
         return count
     }
 
-    /// Not-yet-due review items (soonest-due first), excluding suspended, capped at
-    /// `limit`. Tops up the review queue toward the soft target.
-    func fetchOverflowElementIDs(asOf now: Date, limit: Int) -> [String] {
+    /// Not-yet-due review items of ONE book (soonest-due first), excluding
+    /// suspended, capped at `limit`. Tops up the review queue toward the soft target.
+    ///
+    /// The book filter runs BEFORE the cap (`StudyScheduler.scopedOverflow`): the
+    /// table holds every book's rows, and a SQL `LIMIT` ahead of the filter let
+    /// another book's soonest-due IDs use up the whole limit, starving this one.
+    func fetchOverflowElementIDs(asOf now: Date, limit: Int, within bookIDs: Set<String>) -> [String] {
         guard limit > 0 else { return [] }
         var ids: [String] = []
         dbQueue.sync {
@@ -708,20 +752,139 @@ class DataManager {
                 SELECT element_id FROM review_status
                 WHERE next_review_date IS NOT NULL AND next_review_date > ?
                   AND (suspended IS NULL OR suspended = 0)
-                ORDER BY next_review_date ASC, interval_days ASC
-                LIMIT ?;
+                ORDER BY next_review_date ASC, interval_days ASC;
                 """
             var statement: OpaquePointer?
             if sqlite3_prepare_v2(self.db, query, -1, &statement, nil) == SQLITE_OK {
                 sqlite3_bind_double(statement, 1, now.timeIntervalSince1970)
-                sqlite3_bind_int(statement, 2, Int32(limit))
                 while sqlite3_step(statement) == SQLITE_ROW {
                     if let c = sqlite3_column_text(statement, 0) { ids.append(String(cString: c)) }
                 }
             }
             sqlite3_finalize(statement)
         }
-        return ids
+        return StudyScheduler.scopedOverflow(ids, bookIDs: bookIDs, limit: limit)
+    }
+
+    // MARK: - En situation (Book 2) item + attempt logs (v5)
+
+    /// Record one finished item: stamp `last_done`, bump `times`, keep its rating.
+    func logSituationItem(itemID: String, elementID: String, rating: SituationOutcome, at date: Date) {
+        dbQueue.async {
+            let query = """
+                INSERT INTO situation_item_log (item_id, element_id, last_done, times, last_rating)
+                VALUES (?, ?, ?, 1, ?)
+                ON CONFLICT(item_id) DO UPDATE SET
+                    last_done = excluded.last_done,
+                    times = situation_item_log.times + 1,
+                    last_rating = excluded.last_rating;
+                """
+            var statement: OpaquePointer?
+            if sqlite3_prepare_v2(self.db, query, -1, &statement, nil) == SQLITE_OK {
+                sqlite3_bind_text(statement, 1, (itemID as NSString).utf8String, -1, SQLITE_TRANSIENT)
+                sqlite3_bind_text(statement, 2, (elementID as NSString).utf8String, -1, SQLITE_TRANSIENT)
+                sqlite3_bind_double(statement, 3, date.timeIntervalSince1970)
+                sqlite3_bind_int(statement, 4, Int32(rating.rawValue))
+                if sqlite3_step(statement) != SQLITE_DONE {
+                    print("Error logging situation item: \(String(cString: sqlite3_errmsg(self.db)))")
+                }
+            } else {
+                print("Error preparing situation item log: \(String(cString: sqlite3_errmsg(self.db)))")
+            }
+            sqlite3_finalize(statement)
+        }
+    }
+
+    /// Item history for one element's items, keyed by item ID.
+    func fetchSituationItemHistory(elementID: String) -> [String: SituationItemHistory] {
+        var result: [String: SituationItemHistory] = [:]
+        dbQueue.sync {
+            let query = "SELECT item_id, last_done, times, last_rating FROM situation_item_log WHERE element_id = ?;"
+            var statement: OpaquePointer?
+            if sqlite3_prepare_v2(self.db, query, -1, &statement, nil) == SQLITE_OK {
+                sqlite3_bind_text(statement, 1, (elementID as NSString).utf8String, -1, SQLITE_TRANSIENT)
+                while sqlite3_step(statement) == SQLITE_ROW {
+                    guard let c = sqlite3_column_text(statement, 0) else { continue }
+                    result[String(cString: c)] = SituationItemHistory(
+                        lastDone: Date(timeIntervalSince1970: sqlite3_column_double(statement, 1)),
+                        times: Int(sqlite3_column_int(statement, 2)),
+                        lastOutcome: SituationOutcome(rawValue: Int(sqlite3_column_int(statement, 3))) ?? .good)
+                }
+            }
+            sqlite3_finalize(statement)
+        }
+        return result
+    }
+
+    /// One wrong attempt, kept so the learner's own mistakes can be shown back.
+    struct SituationAttempt: Equatable {
+        let bookID: String
+        let elementID: String
+        let dialogueID: String
+        let drillType: String
+        let given: String
+        let expected: String
+        let reason: String?
+        let createdAt: Date
+    }
+
+    func logSituationAttempt(_ attempt: SituationAttempt) {
+        dbQueue.async {
+            let query = """
+                INSERT INTO situation_attempt_log
+                    (book_id, element_id, dialogue_id, drill_type, given, expected, reason, created_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+                """
+            var statement: OpaquePointer?
+            if sqlite3_prepare_v2(self.db, query, -1, &statement, nil) == SQLITE_OK {
+                let texts = [attempt.bookID, attempt.elementID, attempt.dialogueID, attempt.drillType,
+                             attempt.given, attempt.expected]
+                for (i, text) in texts.enumerated() {
+                    sqlite3_bind_text(statement, Int32(i + 1), (text as NSString).utf8String, -1, SQLITE_TRANSIENT)
+                }
+                if let reason = attempt.reason {
+                    sqlite3_bind_text(statement, 7, (reason as NSString).utf8String, -1, SQLITE_TRANSIENT)
+                } else {
+                    sqlite3_bind_null(statement, 7)
+                }
+                sqlite3_bind_double(statement, 8, attempt.createdAt.timeIntervalSince1970)
+                if sqlite3_step(statement) != SQLITE_DONE {
+                    print("Error logging situation attempt: \(String(cString: sqlite3_errmsg(self.db)))")
+                }
+            } else {
+                print("Error preparing situation attempt log: \(String(cString: sqlite3_errmsg(self.db)))")
+            }
+            sqlite3_finalize(statement)
+        }
+    }
+
+    /// Wrong attempts for one book, newest first.
+    func fetchSituationAttempts(bookID: String, limit: Int = 500) -> [SituationAttempt] {
+        var rows: [SituationAttempt] = []
+        dbQueue.sync {
+            let query = """
+                SELECT book_id, element_id, dialogue_id, drill_type, given, expected, reason, created_at
+                FROM situation_attempt_log WHERE book_id = ?
+                ORDER BY created_at DESC, id DESC LIMIT ?;
+                """
+            var statement: OpaquePointer?
+            if sqlite3_prepare_v2(self.db, query, -1, &statement, nil) == SQLITE_OK {
+                sqlite3_bind_text(statement, 1, (bookID as NSString).utf8String, -1, SQLITE_TRANSIENT)
+                sqlite3_bind_int(statement, 2, Int32(limit))
+                while sqlite3_step(statement) == SQLITE_ROW {
+                    func text(_ i: Int32) -> String {
+                        sqlite3_column_text(statement, i).map { String(cString: $0) } ?? ""
+                    }
+                    rows.append(SituationAttempt(
+                        bookID: text(0), elementID: text(1), dialogueID: text(2), drillType: text(3),
+                        given: text(4), expected: text(5),
+                        reason: sqlite3_column_type(statement, 6) == SQLITE_NULL ? nil : text(6),
+                        createdAt: Date(timeIntervalSince1970: sqlite3_column_double(statement, 7))))
+                }
+            }
+            sqlite3_finalize(statement)
+        }
+        return rows
     }
 
     /// Element ids that have GRADUATED — the sticky `graduated_date` flag is set. This
