@@ -117,7 +117,7 @@ Pilot **Au café** (module 06) first because a service exchange makes understand
    - After the dialogue, the learner's mistakes are listed with the right answer.
    - At the end of a session, a summary shows every mistake with its reason.
    - Persist each wrong attempt in an additive `situation_attempt_log` table (element ID, dialogue ID, drill type, given answer, expected answer, timestamp), separate per book. Use it for the history page and to bring back the missed dialogue first at the next review.
-   - Never cross out a word being corrected; mark it with the palette's pale `tint` fill.
+   - Never cross out a word being corrected. Mark it with a white highlight on the learner bubble, not the palette `tint` (it read as a flash).
 7. **Grading.** No open speech recognition or LLM grading. Every accepted reply buildable from the bank must grade correct; lint rejects a second valid reply that is not listed.
 
 Each dialogue needs stable ID, element ID, situation cue, ordered turns (speaker, text, audio key, optional gap or error marker), 1–2 drill payloads from the table, follow-up line and audio key, new-word references, and a French explanation with English support for feedback. A reader must be able to recover number, gender, person, and formality from the visible text and cue. Audit the **rendered** dialogue with each drill answer filled in, plus every distractor, not isolated fields.

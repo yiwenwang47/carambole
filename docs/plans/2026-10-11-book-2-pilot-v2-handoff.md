@@ -66,6 +66,47 @@ The production Book 2 doesn't exist yet. There is no shelf entry, no `Resources/
 - **Order:** Corriger is the first dialogue in the pilot so the user can try it first.
 - **Text:** the French text is always visible from the start. Audio is replay only.
 
+## Book 2 UI rules (moved from assistant memory, binding)
+
+The user set these on 2026-10-11 while testing the pilot on the phone. They apply to all Book 2 UI work, pilot or production.
+
+- **English only on tap.** A tap shows the English in a tooltip right above the tapped word. Never print English above words automatically ("english shouldnt immediately appear above the french! tap to show. come on why did you do that"). New words may be underlined.
+- **The app must teach new words.** Many new words are fine if the app teaches them. Logic puzzles and arithmetic inside questions were rejected.
+- **Learner bubble colour comes from the active palette** (`tileOn`), not a fixed colour. "Sender's bubble" means the learner's own messages.
+- **No strike-through** on a word being corrected ("too complicated"). **No colour flash** either: the palette `tint` read as a pale-sky flash. Use the white highlight.
+- **Motion:** smooth, then "slightly longer". Settle about 0.7 s, fade-out 0.16 s, rise 0.45 s. Don't speed them up.
+- **Wrong answers are recorded and shown back**, because the learner is asked to correct their own answers.
+
+## Drill mix: not dialogues only (user direction, 2026-10-11)
+
+Book 2 must not be dialogue drills only. Sessions mix the chat dialogues with **standalone sentence drills reused from Book 1's drill types**, with harder questions.
+
+**Harder means:** longer sentences (8–14 words), two grammar points in one item, closer distractors (same word in another gender, person, tense or register), less scaffolding (typing instead of tiles). **Harder never means** logic puzzles, arithmetic or untaught words. Every word in a standalone drill is either in *Fondations*, in Book 1, or already taught in Book 2.
+
+Book 1 types to reuse (`InputMode` in `carambole/Models/Exercise.swift`):
+
+| Book 1 type | Book 2 use | What makes it harder |
+|---|---|---|
+| `buildFromTokens` | Build a full sentence from an English prompt, outside the chat | Longer sentence; decoy tiles are near forms (`vais`/`va`, `lui`/`leur`, `le`/`la`); Book 1's second-try flow stays |
+| `freeText` | Type a short reply or a missing chunk, accent-strict | No tiles at all; 2–5 words; only after the words have been seen in tiles |
+| `multipleChoice` | Pick the French that fits the cue | All 3 options are good French; only one fits the register or situation (tu/vous, polite/blunt) |
+| `spotError` | One wrong word in a standalone sentence | Errors that need context: agreement across a clause, wrong register for the cue, wrong tense for the time marker |
+
+Mixing rules:
+
+- Never two items of the same type back to back.
+- A standalone drill reuses the module's situation and words, so the session still feels like one scene.
+- Standalone drills use the same card, button, colours, motion and mistake log as dialogues. Wrong attempts go to the same attempt log and summary.
+- Ratio is open (proposal: about 1 standalone per 2 dialogues).
+
+**Proposed new ideas (not approved yet):**
+
+1. **Transformer.** Rewrite a line one step: tu → vous, present → passé composé, affirmative → negative. Code computes the answer; build or type it.
+2. **Remettre en ordre.** Put 3–4 shuffled chat bubbles of a short exchange in order. Tests understanding of the whole dialogue, not one line.
+3. **Écouter puis choisir.** Hear a server line, pick what it means. Conflicts with "French text always visible"; needs the user's yes before building.
+4. **Mot en retour.** Reverse of Mot: English shown, pick or type the French word taught earlier in the module.
+5. **Réplique libre limitée.** Type the learner's reply with a word bank shown but no tiles; graded against listed accepted replies only.
+
 ## Pilot behaviour (as built)
 
 | Moment | Behaviour |
