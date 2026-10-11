@@ -476,6 +476,7 @@ struct SituationSessionView: View {
             Spacer(minLength: 40)
             VStack(alignment: .trailing, spacing: 3) {
                 speakerLabel(turn.isSource ? "VOUS · AVANT" : "VOUS")
+                    .accessibilityLabel(turn.isSource ? "Vous, avant" : "Vous")
                 lineText(id: "t\(turnIndex)", text: turn.text, turnIndex: turnIndex)
                     .padding(.vertical, 11).padding(.horizontal, 15)
                     // The line to rewrite sits grey, so the new reply reads as the answer.
@@ -495,6 +496,7 @@ struct SituationSessionView: View {
                         if placed.isEmpty {
                             Text("votre réponse").font(.display(size: 15, wght: 400)).foregroundColor(AppColor.g2)
                                 .padding(.horizontal, 10).frame(minWidth: 130, minHeight: 34)
+                                .accessibilityLabel("Votre réponse, vide")
                         } else {
                             FlowLayout(spacing: 6, lineSpacing: 6) {
                                 ForEach(placed, id: \.self) { bankIndex in
@@ -506,7 +508,8 @@ struct SituationSessionView: View {
                                     }
                                     .transition(.scale(scale: 0.85).combined(with: .opacity))
                                     .buttonStyle(.plain)
-                                    .accessibilityLabel("Retirer \(bank[bankIndex])")
+                                    .accessibilityLabel(bank[bankIndex])
+                                    .accessibilityHint("Retire ce mot de votre réponse")
                                 }
                             }
                         }
@@ -517,6 +520,7 @@ struct SituationSessionView: View {
                     .transition(.identity)
                 case .preview(let text):
                     Text(text).font(.display(size: 18, wght: 400)).foregroundColor(AppColor.ink)
+                        .accessibilityLabel("Votre réponse : \(text)")
                         .padding(.vertical, 11).padding(.horizontal, 15)
                         .background(learnerShape().fill(AppColor.white))
                         .overlay(learnerShape().strokeBorder(AppColor.g3, style: StrokeStyle(lineWidth: 1.5, dash: [5, 4])))
@@ -525,6 +529,8 @@ struct SituationSessionView: View {
                     lineText(id: "s", text: text, turnIndex: nil)
                         .padding(.vertical, 11).padding(.horizontal, 15)
                         .background(learnerShape().fill(ok ? Color(hex: theme.tileOn) : AppColor.hairline))
+                        .accessibilityElement(children: .contain)
+                        .accessibilityLabel(ok ? "Votre réponse" : "La bonne réponse")
                         .transition(.identity)
                 case .hidden:
                     EmptyView()
@@ -580,9 +586,29 @@ struct SituationSessionView: View {
                 .anchorPreference(key: SituationTipAnchorKey.self, value: .bounds) { [wordID: $0] }
                 .contentShape(Rectangle())
                 .onTapGesture { tapWord(seg, wordID: wordID, fixLine: fixLine, isError: isError) }
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel(shown + seg.trailing.replacingOccurrences(of: "\u{00A0}", with: " "))
+                .accessibilityValue(wordAccessibilityValue(marked: marked, isNew: isNew && !fixLine, key: seg.key))
                 .accessibilityAddTraits(.isButton)
-                .accessibilityHint(seg.key == nil ? "" : "Affiche l'anglais")
+                .accessibilityHint(wordAccessibilityHint(fixLine: fixLine, key: seg.key))
         }
+    }
+
+    /// VoiceOver state of a tappable word: the Corriger word being fixed, a
+    /// Mot target, a new word.
+    private func wordAccessibilityValue(marked: Bool, isNew: Bool, key: String?) -> String {
+        if marked { return "Mot à corriger" }
+        if drill?.type == .word, let key, let target = drill?.target, key == SituationText.norm(target) {
+            return "Mot de la question"
+        }
+        return isNew ? "Nouveau mot" : ""
+    }
+
+    private func wordAccessibilityHint(fixLine: Bool, key: String?) -> String {
+        if fixLine && drill?.type == .fix && fixPhase == .find && !locked {
+            return "Touchez ce mot s'il est faux"
+        }
+        return key == nil ? "" : "Affiche l'anglais"
     }
 
     private func highlight(wordID: String, key: String?) -> Color {
@@ -605,6 +631,7 @@ struct SituationSessionView: View {
             .overlay(RoundedRectangle(cornerRadius: 8)
                 .strokeBorder(gapSettled ? .clear : (filled ? AppColor.ink : AppColor.g2),
                               style: StrokeStyle(lineWidth: 1.5, dash: filled ? [] : [4, 3])))
+            .accessibilityLabel(gapText.map { gapSettled ? $0 : "Blanc : \($0)" } ?? "Blanc")
     }
 
     private func matchCase(_ word: String, like original: String) -> String {
@@ -622,6 +649,7 @@ struct SituationSessionView: View {
         withAnimation(.easeOut(duration: 0.15)) {
             tip = Tip(id: wordID, french: seg.display, english: word.tipText)
         }
+        announce(word.en)
         tipPinned = false
         tipToken += 1
     }
@@ -660,8 +688,11 @@ struct SituationSessionView: View {
                         Text("Phrase seule").uppercaseLabel()
                     } else if item.drills.count > 1 {
                         Text("\(step + 1)/\(item.drills.count)").uppercaseLabel()
+                            .accessibilityLabel("Exercice \(step + 1) sur \(item.drills.count)")
                     }
                 }
+                .accessibilityElement(children: .combine)
+                .accessibilityAddTraits(.isHeader)
                 Text(promptText(drill))
                     .font(.display(size: 21, wght: 350))
                     .foregroundColor(AppColor.ink)
@@ -673,6 +704,7 @@ struct SituationSessionView: View {
                     .foregroundColor(AppColor.graphite)
                     .frame(minHeight: 20, alignment: .topLeading)
                     .fixedSize(horizontal: false, vertical: true)
+                    .onChange(of: note) { _, new in announce(new) }
             } else {
                 doneBlock
             }
@@ -736,6 +768,8 @@ struct SituationSessionView: View {
                         .opacity(used ? 0.25 : 1)
                         .disabled(used)
                         .accessibilityLabel(bank[i])
+                        .accessibilityValue(used ? "Déjà placé" : "")
+                        .accessibilityHint(used ? "" : "Ajoute ce mot à votre réponse")
                 }
             }
             .padding(14)
@@ -770,6 +804,8 @@ struct SituationSessionView: View {
                 }
                 .buttonStyle(.plain)
                 .disabled(isWrong || rightChoice != nil)
+                .accessibilityValue(isRight ? "Bonne réponse" : (isWrong ? "Mauvaise réponse" : ""))
+                .accessibilityAddTraits(isSel ? .isSelected : [])
             }
         }
     }
@@ -785,6 +821,10 @@ struct SituationSessionView: View {
             Text(outcome == .again ? "Pas trouvé. On le reverra bientôt."
                  : outcome == .hard ? "Réussi avec un essai de plus." : "Du premier coup.")
                 .font(.display(size: 21, wght: 350)).foregroundColor(AppColor.ink)
+                .onAppear {
+                    announce(outcome == .again ? "Pas trouvé." : outcome == .hard ? "Réussi avec un essai de plus."
+                             : "Du premier coup.")
+                }
             if !cardMistakes.isEmpty {
                 Text("Vos erreurs").uppercaseLabel()
                 VStack(alignment: .leading, spacing: 6) {
@@ -887,6 +927,26 @@ struct SituationSessionView: View {
         .buttonStyle(DrillButtonStyle())
         .disabled(!enabled)
         .opacity(enabled ? 1 : 0.4)
+        .accessibilityHint(footerHint(enabled: enabled))
+    }
+
+    /// Why the footer button is off, for VoiceOver.
+    private func footerHint(enabled: Bool) -> String {
+        guard !enabled, let drill else { return "" }
+        switch drill.type {
+        case .reply:
+            return placed.isEmpty ? "Placez des mots d'abord." : "Changez votre réponse avant de vérifier."
+        case .pick, .complete: return "Choisissez une réponse d'abord."
+        case .fix: return fixPhase == .find ? "Touchez le mot faux dans votre ligne." : "Choisissez la correction."
+        case .comprehend, .word: return ""
+        }
+    }
+
+    /// Reads feedback aloud when VoiceOver is on (wrong-answer notes, the
+    /// rating, a word's English).
+    private func announce(_ text: String) {
+        guard UIAccessibility.isVoiceOverRunning, !text.isEmpty else { return }
+        AccessibilityNotification.Announcement(text).post()
     }
 
     // MARK: - Logic
