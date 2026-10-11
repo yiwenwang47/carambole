@@ -13,7 +13,8 @@
 | Tooling | Book-wide. `modules.json` holds module metadata; drafts are named `NN_<slug>_<half>.json`; `assemble.py [NN…]`; lint, deep lint, audio and review set run across all modules. New cast voices: M. Ferrand = Chirp3-HD Orus, Inès = Despina, Mme Dumas = Gacrux, anonymous female = Neural2-F (`voice: "female"`). |
 | Arc 1 content | Modules 01–05 are authored: 600 items, 137 newly taught words. All reviewed by 20 judges and fixed by 10 fixers. Lint, 68 Python tests, Grammalecte (1,927 lines, 0 flags) and the Swift model test (720 items) pass. |
 | Review set v5 | 9 cards in `carambole/Debug/testbook_situation.json`, with `pilot2_*` audio. Installed in the Test book on the iPhone 18 Pro **simulator** only. |
-| Not done | Production audio for 01–05: waits for the user to approve v5 and the new voices. The other 19 modules (arcs 3–5, then 07–10). The Écrire drill. |
+| Arc 1 audio | Generated and committed: 1,370 clips, about 33,100 API characters. The strict lint passes. M. Ferrand uses Orus (Algenib paused for about 1 s between sentences). |
+| Not done | The other 19 modules (arcs 3–5, then 07–10). The Écrire drill. |
 
 ## 2. Review set v5 (for the user)
 
