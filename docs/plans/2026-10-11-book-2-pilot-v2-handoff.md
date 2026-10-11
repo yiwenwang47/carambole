@@ -109,6 +109,10 @@ Mixing rules:
 
 **Next:** mockup first, in the style of the reference mock, before any Swift work. Drill-mix mock v1 (private artifact, playable): `https://claude.ai/artifact/8A6hQgxpcQo1Ud9hyQnvGv`. Séance 1 has 8 dialogues and 4 standalone drills (Construire, Écrire, Choisir le ton, Corriger). Séance 2 shows Transformer and Mot en retour. Waiting for the user's review.
 
+## Content direction (2026-10-11)
+
+See *Content direction* in the action plan: recurring Lyon cast, varied channels, social and culture moves, mostly standard French with spoken forms marked `*` in the tooltip, no texting abbreviations, both genders accepted in learner lines. Next: author the full café module with Karim, play it in Test book, then freeze the schema.
+
 ## Pilot behaviour (as built)
 
 | Moment | Behaviour |

@@ -63,37 +63,59 @@ Three approaches were considered:
 
 ## Syllabus and release size
 
-Target **25 modules × 8 communicative elements × 10 short dialogues = 2,000 dialogues (≈3,000 drills at 1–2 drills each)** for the first complete edition. The 2026-10-11 rework replaced the earlier 4 longer exchanges per element: four variants run out by the third review, and long exchanges were too slow and too hard. The earlier ten-module, 50-element proposal was too small for a full second book beside *Fondations* (25 modules, 500 elements). These counts size authoring and review; they are not CEFR standards. Each element is one reusable conversational move and the existing FSRS unit. The module note names the real-world goal; element notes explain a move in context. Group the modules into five coherent arcs so the increased count adds new communicative work rather than splitting one task into artificial chapters.
+Target **25 modules × 8 communicative elements × 10 short dialogues = 2,000 dialogues (≈3,000 drills at 1–2 drills each), plus ≈1,000 standalone drills at 1 per 2 dialogues** for the first complete edition. The 2026-10-11 rework replaced the earlier 4 longer exchanges per element: four variants run out by the third review, and long exchanges were too slow and too hard. The earlier ten-module, 50-element proposal was too small for a full second book beside *Fondations* (25 modules, 500 elements). These counts size authoring and review; they are not CEFR standards. Each element is one reusable conversational move and the existing FSRS unit. The module note names the real-world goal; element notes explain a move in context. Group the modules into five coherent arcs so the increased count adds new communicative work rather than splitting one task into artificial chapters.
 
-| Arc | Module | Situation | Learner outcome |
+### Content direction (user decisions, 2026-10-11)
+
+The old table was textbook units only. The user wants content that is varied and interesting, with the usual service scenes kept but not dominant, and French closer to how people talk.
+
+- **Recurring cast.** The learner has just moved to Lyon for work. The same people come back across modules, so dialogues carry light history ("Comme d'habitude ?"). Each dialogue still makes sense alone.
+  - **Léa**, flatmate, *tu*, direct.
+  - **Monsieur Ferrand**, neighbour on the landing, *vous*, fussy, kind underneath.
+  - **Karim**, barista at the café du coin, *vous* at first, *tu* later (module 03 sets up the switch).
+  - **Inès**, colleague, *tu*.
+  - **Théo**, friend, runs the group chat "Les copains".
+  - **Madame Dumas**, landlady, *vous*, writes on WhatsApp.
+  - Service people (pharmacist, driver, shop staff) are one-off.
+- **Channels.** Most dialogues are face to face. About 2–3 of each move's 10 dialogues use another channel: text message, group chat, WhatsApp from the landlady, voicemail (audio plus text), a call, a message from a colleague. The cue line names the channel. Same card, same drills.
+- **Social moves, not only transactions.** Apologise for being late, comfort a friend, complain politely, turn down an invite without offending, react to news, give a compliment, say you didn't understand.
+- **Culture as moves.** *Bonjour* first; *on peut se tutoyer ?*; *la bise*; *l'apéro*; *une tradition* at the bakery; strikes; Sunday and August closures; the pharmacist as first stop. Each one also carries grammar.
+- **Light twists.** A follow-up line may carry a small surprise (the barista already started your usual). Never a puzzle, never graded.
+- **Register: mostly standard, sprinkled with everyday spoken French.** Mainly in *tu* dialogues: *je sais pas*, *t'as*, *ouais*, *du coup*, *on* for *nous*, *carrément*, *pas de souci*, *bref*. No slang-heavy lines, no verlan.
+  - **Spoken forms carry a tap hint:** the tooltip shows an asterisk and the English, e.g. `* I don't know`. The glossary marks these entries `spoken: true`.
+  - Learner replies accept the standard and the spoken form (*je ne sais pas* / *je sais pas*). The model answer is standard.
+- **No texting abbreviations** (no *mdr*, *stp*, *jsp*). Text messages use normal spelling.
+- **Learner gender:** the learner's own lines accept both forms (*prêt/prête*, *allé/allée*). Corriger never targets the learner's own gender. No setting.
+
+| Arc | Module | Situation (cast · channel) | Learner outcome |
 |---|---:|---|---|
-| Se rencontrer | 01 | Faire connaissance | Introduce oneself and ask a follow-up |
-|  | 02 | Parler de son quotidien | Exchange routines, interests, and frequency |
-|  | 03 | Garder la conversation | React, ask back, and request repetition |
-|  | 04 | Inviter quelqu'un | Invite, accept, or decline politely |
-|  | 05 | Fixer un rendez-vous | Agree on time, place, and people |
-| Services et déplacements | 06 | Au café | Order, specify, and check an order |
-|  | 07 | Au marché | Ask about quantities, prices, and alternatives |
-|  | 08 | En boutique | Ask for an item, size, or exchange |
-|  | 09 | Réserver | Make and confirm a booking |
-|  | 10 | Se repérer | Ask for directions and confirm a route |
-| Faire face aux changements | 11 | Prendre les transports | Understand a departure, transfer, or delay |
-|  | 12 | À l'hôtel | Explain a need and clarify a booking |
-|  | 13 | Changer un rendez-vous | Explain a change and settle a new plan |
-|  | 14 | Demander de l'aide | Describe a need, check understanding, thank |
-|  | 15 | Expliquer un problème | State what went wrong and request a solution |
-| Raconter et décider | 16 | Raconter sa journée | Sequence everyday events |
-|  | 17 | Raconter un événement | Distinguish event from background; answer follow-ups |
-|  | 18 | Comparer des options | Compare practical advantages and drawbacks |
-|  | 19 | Choisir ensemble | Negotiate a choice and confirm it |
-|  | 20 | Conseiller quelqu'un | Recommend an option with a reason |
-| Échanger des idées | 21 | Donner son avis | State and support a familiar opinion |
-|  | 22 | Être d'accord ou non | Agree, disagree, and soften a response |
+| Arriver à Lyon | 01 | Faire connaissance (Léa on move-in day) | Introduce oneself and ask a follow-up |
+|  | 02 | Le quotidien (Léa, Inès · texts) | Exchange routines, interests, and frequency |
+|  | 03 | Tu ou vous ? (Ferrand on the landing, Karim, Inès) | Pick the register, small talk, ask to repeat, *on peut se tutoyer ?* |
+|  | 04 | Inviter (group chat, Léa) | Invite to an apéro; accept or decline without offending |
+|  | 05 | Fixer un rendez-vous (texts, a call) | Agree on time, place, and people; move it |
+| Le quartier | 06 | Au café (Karim) | Order, specify, accept a substitute, "comme d'habitude", pay |
+|  | 07 | Boulangerie et marché | *Une tradition*, quantities, prices, *c'est tout ?* |
+|  | 08 | En boutique | Ask for an item or size; exchange or return |
+|  | 09 | Réserver (a call, voicemail) | Book a table; confirm or change it |
+|  | 10 | Se repérer (a lost delivery driver · call) | Give and follow directions |
+| Les imprévus | 11 | Grève et retards (station, group chat) | Understand a cancellation; find another way |
+|  | 12 | Le logement (Madame Dumas · WhatsApp, Ferrand) | Report a broken boiler, a leak, lost keys |
+|  | 13 | Être en retard, annuler | Apologise, explain, propose a new plan |
+|  | 14 | Santé (pharmacist, doctor's office · call) | Describe a symptom; get advice or an appointment |
+|  | 15 | Ça ne marche pas (parcel, haircut, bike repair) | Complain politely and ask for a fix |
+| Raconter | 16 | Raconter sa soirée (Léa) | Sequence everyday events |
+|  | 17 | Une galère (Théo tells a disaster day) | React, sympathise, ask back |
+|  | 18 | Comparer (flats, phone plans, bikes) | Compare advantages and drawbacks |
+|  | 19 | Choisir ensemble (group chat) | Negotiate a choice and confirm it |
+|  | 20 | Conseiller (Inès asks for advice) | Recommend an option with a reason |
+| Échanger | 21 | Donner son avis (film, food, the neighbourhood) | State and support an opinion |
+|  | 22 | D'accord ou pas (chores with Léa) | Agree, disagree, soften |
 |  | 23 | Expliquer pourquoi | Give reasons, consequences, and examples |
-|  | 24 | Et si… ? | Explore a realistic condition and alternative |
-|  | 25 | Résoudre un imprévu | Combine listening, repair, and response in a less routine exchange |
+|  | 24 | Et si… ? (a long weekend) | Explore a realistic condition and alternative |
+|  | 25 | Un week-end qui déraille (whole cast) | Combine listening, repair, and response in a less routine exchange |
 
-Pilot **Au café** (module 06) first because a service exchange makes understanding and useful replies easy to observe. Its eight elements: request an item; specify size; specify quantity; ask about availability; respond to a substitution; correct a misunderstanding; ask the price; close/pay. Ten short dialogues per element, mixing at least four drill types; at least one dialogue asks for repetition or clarification. Freeze the template after testing the pilot, then author the other modules. Its grammar draws mainly from *Fondations* 01, 03, 05–06, 11, and 22; the rest of the syllabus recycles questions, place words, future and past forms, pronouns, comparison, imperatives, conditional, relatives, and `si` clauses across relevant situations.
+Pilot **Au café** (module 06) first, now with Karim and the spoken register. Its eight moves: order (with *bonjour* first); specify size or quantity; ask what's available; accept a substitute; *sur place ou à emporter*; "comme d'habitude" (Karim remembers); fix a misunderstanding; pay or sort out a payment problem. Ten short dialogues per move plus standalone drills at 1 per 2 dialogues (about 40). At least one dialogue per move uses another channel or a social move, and at least one asks for repetition or clarification. Sequence: author café → play it in Test book → freeze the content schema (Task 1) and per-book progress (Task 2) → bulk authoring. Its grammar draws mainly from *Fondations* 01, 03, 05–06, 11, and 22; the rest of the syllabus recycles questions, place words, future and past forms, pronouns, comparison, imperatives, conditional, relatives, and `si` clauses across relevant situations.
 
 ## Interaction and content contract
 
