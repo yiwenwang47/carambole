@@ -822,15 +822,7 @@ struct SituationSessionView: View {
     }
 
     private func mistakeRow(_ m: Mistake, compact: Bool) -> some View {
-        VStack(alignment: .leading, spacing: 2) {
-            (Text(m.title.uppercased() + "  ").font(.label(size: 11)).foregroundColor(AppColor.g2)
-             + Text("Vous : " + m.given).font(.display(size: 14, wght: 400)).foregroundColor(AppColor.graphite)
-             + Text("  →  " + m.expected).font(.display(size: 14, wght: 500)).foregroundColor(AppColor.ink))
-            if !compact, let why = m.why, !why.isEmpty {
-                Text(why).font(.display(size: 13, wght: 400)).foregroundColor(AppColor.graphite)
-            }
-        }
-        .fixedSize(horizontal: false, vertical: true)
+        SituationMistakeRow(title: m.title, given: m.given, expected: m.expected, why: m.why, compact: compact)
     }
 
     /// Closing screen: the session's ratings, then every wrong attempt with its

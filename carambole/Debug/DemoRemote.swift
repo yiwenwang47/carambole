@@ -11,7 +11,8 @@
 //  `closeModules` and `openToday` / `closeToday` (push / pop a page over the
 //  book), `openSettings` / `closeSettings` (sheet), `startReview` /
 //  `closeSession` (full-screen drill), `nextPalette`, `openSituationBook`
-//  (push *En situation*), `startLearn` (Apprendre on the open book).
+//  (push *En situation*), `startLearn` (Apprendre on the open book),
+//  `openHistory` / `closeHistory` (push / pop History over Aujourd'hui).
 //
 
 #if DEBUG
@@ -23,6 +24,8 @@ enum DemoRemote {
         case openSettings, closeSettings, startReview, closeSession, nextPalette
         /// Book 2: push *En situation* from the shelf; start an Apprendre session.
         case openSituationBook, startLearn
+        /// Push / pop History over Aujourd'hui (`openToday` first).
+        case openHistory, closeHistory
         var notification: Notification.Name { Notification.Name("cb.demo.\(rawValue)") }
     }
 
