@@ -1,4 +1,6 @@
-# Book 2 café content — paused handoff
+# Book 2 café content — paused handoff (superseded)
+
+**Superseded on 2026-10-11 by the [café handoff](2026-10-11-book-2-cafe-handoff.md).** Start there. This file records the pause state only.
 
 **Paused:** 2026-10-11 at the user's request. Do not resume authoring until asked.
 **Repo:** `/Users/yiwenwang/Documents/CMU/research/personal/carambole/carambole`

@@ -14,7 +14,9 @@ Each turn has `speaker: "server" | "learner"`, `text`, optional cast `name`,
 optional `source: true` for Transformer, and optional `error` for Corriger.
 The `error` object has `word`, `fix`, three `choices`, and a single English
 `why` string. A line can contain one `___` gap for Compléter. Dialogue lines
-have at most ten words; standalone lines have eight to fourteen.
+have at most ten words; standalone lines have eight to fourteen. A dialogue
+has at most three lines counting its turns plus the learner's built reply
+(one extra line when it has a `reply` drill).
 
 Each drill has `type` and `prompt`. `comprehend` has two distinct `choices`,
 `correct`, and `miss`. `pick`, `complete`, and `word` have three choices,
@@ -39,6 +41,9 @@ glosses. Standalone items use words already taught and have `place` ending in
 Production audio keys use the complete item ID once: `sit_06_order_d01_t0`
 for turn 0 and `sit_06_order_d01_f` for its follow-up. Each word has an
 independent `sitw_...` key. The linter checks all MP3s in strict mode.
+
+Choices are shown in stored order by the pilot view, so vary the slot of the
+correct answer and keep `why` aligned with `choices`.
 
 Authoring commands:
 

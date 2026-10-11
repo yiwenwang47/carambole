@@ -1,5 +1,7 @@
 # Book 2 handoff — authoring the real content
 
+> **Status 2026-10-11:** module 06 is authored and reviewed. Start from the [café handoff](2026-10-11-book-2-cafe-handoff.md) for state and next steps; this file stays the rulebook.
+
 **Date:** 2026-10-11
 **Repo:** `/Users/yiwenwang/Documents/CMU/research/personal/carambole/carambole`
 **Branch:** `main`. The `book2-dialogue-pilot` branch was merged and deleted. Nothing is pushed.

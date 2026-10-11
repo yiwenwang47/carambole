@@ -2,8 +2,16 @@
 
 > ## ▶ RECENT HANDOFFS
 >
-> **▶ BOOK 2 — NEXT: AUTHOR THE REAL CONTENT (2026-10-11, merged to `main`).**
-> Read **`docs/plans/2026-10-11-book-2-content-handoff.md`** first: binding
+> **▶ BOOK 2 — CAFÉ MODULE AUTHORED + REVIEWED (2026-10-11, merged to `main`).**
+> Read **`docs/plans/2026-10-11-book-2-cafe-handoff.md`** first. Module 06
+> *Au café* (120 items, `Resources/Situations/`) passed lint, Grammalecte and
+> four independent judges. Review set v4 plays in the Test book on the phone.
+> Next: confirm café approval, production audio, then the production Book 2
+> view (Tasks 2–3), then the other 24 modules. The content handoff below stays
+> the rulebook.
+>
+> **▶ BOOK 2 — AUTHORING RULES (2026-10-11, merged to `main`).**
+> Rulebook: **`docs/plans/2026-10-11-book-2-content-handoff.md`** — binding
 > rules, the Lyon cast and voices, the module 06 move plan, the JSON shape, the
 > lint checklist, the authoring steps and the commands. The Test book pilot
 > (`Debug/SituationPilotView.swift`, `Debug/testbook_situation.json`) runs a
