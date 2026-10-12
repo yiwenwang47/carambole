@@ -26,3 +26,4 @@ Pipeline = 2026-10-11 handoff §4. Status:
 - [x] Prep (`ae2a4a9`): modules.json 11–15, « mal » gloss widened, « t'inquiète » spoken, arc-3 roles
 - [ ] Author (2 agents/module) — 10 agents launched 2026-10-12; outputs `tools/situations/drafts/1[1-5]_*_{first,second}_half{,_words}.json`. If interrupted: rerun only halves whose files are missing/fail `lint.py --draft`  - [ ] Gloss scan + assemble  - [ ] Judges  - [ ] Fixers  - [ ] Vocab audit  - [ ] 9-card review set v8
 - User 2026-10-12: accept all arc-3 plan defaults; author all 5 modules then v8.
+- 2026-10-12 17:10: all 10 authors hit the usage limit mid-run; partial drafts on disk (11 both halves, 13 second, 14 first, 14 second w/o words, 15 first). Resumed all 10 with context. Drafts are untracked until assemble — if lost again, relaunch only halves whose files fail `lint.py --draft`.
