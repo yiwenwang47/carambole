@@ -68,6 +68,10 @@ struct SituationPilotView: View {
     // ended; `live` holds the one in play while an earlier one is shown.
     @State private var finishedCards: [Int: CardState] = [:]
     @State private var live: CardState?
+    /// Horizontal drag of the card (Book 1's carousel motion, one card at a time).
+    @State private var dragX: CGFloat = 0
+    @State private var dragIsHorizontal: Bool?
+    @State private var cardWidth: CGFloat = 390
 
     /// One curve for every drill-to-drill and dialogue-to-dialogue change.
     private static let motion = Animation.smooth(duration: 0.5)
@@ -150,7 +154,7 @@ struct SituationPilotView: View {
         VStack(spacing: 0) {
             VStack(spacing: 0) {
                 topBar
-                cueBlock
+                cueBlock.offset(x: dragX)
             }
             .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { fit.header = $0 }
             // With a word tray below, the chat keeps room for all its bubbles
@@ -159,7 +163,7 @@ struct SituationPilotView: View {
             chat
                 .frame(minHeight: fit.chatFloor(trayShown: drill?.type == .reply))
                 .opacity(contentOpacity)
-                .offset(y: contentOffset)
+                .offset(x: dragX, y: contentOffset)
             Rectangle().fill(AppColor.hairline).frame(height: 1).padding(.top, 10)
             ZStack(alignment: .topLeading) {
                 zone
@@ -167,13 +171,14 @@ struct SituationPilotView: View {
                     .transition(Self.swap)
             }
             .opacity(contentOpacity)
-            .offset(y: contentOffset)
+            .offset(x: dragX, y: contentOffset)
             .padding(.horizontal, 18)
             .padding(.top, 22)
             .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { fit.zone = $0 }
             .layoutPriority(1)
             Spacer(minLength: 0).frame(maxHeight: 4)
             footer
+                .offset(x: dragX)
                 .padding(.horizontal, 18)
                 .padding(.top, 12)
                 .padding(.bottom, 8)
@@ -182,11 +187,21 @@ struct SituationPilotView: View {
         }
         .frame(minHeight: 0, maxHeight: .infinity)
         .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { fit.card = $0 }
-        .simultaneousGesture(DragGesture(minimumDistance: 24).onEnded { value in
-            let dx = value.translation.width, dy = value.translation.height
-            guard abs(dx) > 60, abs(dx) > abs(dy) * 1.5 else { return }
-            if dx > 0 { goBack() } else if canGoForward { goForward() }
-        })
+        .onGeometryChange(for: CGFloat.self) { $0.size.width } action: { cardWidth = $0 }
+        // Book 1's swipe: the card tracks the finger toward a neighbour and
+        // rubber-bands where there is none. Vertical drags stay with the chat.
+        .simultaneousGesture(DragGesture(minimumDistance: 12)
+            .onChanged { value in
+                let dx = value.translation.width, dy = value.translation.height
+                if dragIsHorizontal == nil { dragIsHorizontal = abs(dx) > abs(dy) }
+                guard dragIsHorizontal == true else { return }
+                dragX = resistedOffset(dx)
+            }
+            .onEnded { value in
+                defer { dragIsHorizontal = nil }
+                guard dragIsHorizontal == true else { return }
+                endDrag(translation: value.translation.width, predicted: value.predictedEndTranslation.width)
+            })
         .overlayPreferenceValue(TipAnchorKey.self) { anchors in
             GeometryReader { proxy in
                 if let tip, let anchor = anchors[tip.id] {
@@ -975,21 +990,42 @@ struct SituationPilotView: View {
         fixPhase = c.fixPhase
     }
 
-    private func swapCard(_ change: @escaping () -> Void) {
+    private static let pageSpring = Animation.interactiveSpring(response: 0.32, dampingFraction: 0.86)
+
+    /// Book 1's paging: slide the card off (right when going back), swap it
+    /// unseen, and slide the other card in from the opposite side.
+    private func swapCard(back: Bool, _ change: @escaping () -> Void) {
         Speaker.shared.stop()
         tip = nil
-        withAnimation(.easeIn(duration: 0.18)) { contentOpacity = 0 }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        let w = cardWidth
+        withAnimation(Self.pageSpring) { dragX = back ? w : -w }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.16) {
             var t = Transaction(); t.disablesAnimations = true
-            withTransaction(t) { change() }
-            withAnimation(Self.motion) { contentOpacity = 1 }
+            withTransaction(t) { change(); dragX = back ? -w : w }
+            withAnimation(Self.pageSpring) { dragX = 0 }
         }
+    }
+
+    /// 1:1 toward a card you can go to; damped and capped otherwise (Book 1).
+    private func resistedOffset(_ raw: CGFloat) -> CGFloat {
+        if raw > 0 ? canGoBack : canGoForward { return raw }
+        let cap = cardWidth * 0.22
+        return max(-cap, min(cap, raw * 0.32))
+    }
+
+    /// Commit past 28 % of the width or on a fast flick; else spring back (Book 1).
+    private func endDrag(translation: CGFloat, predicted: CGFloat) {
+        let commit = abs(translation) > cardWidth * 0.28 || abs(predicted) > cardWidth * 0.55
+        if commit && translation > 0 && canGoBack { goBack(); return }
+        if commit && translation < 0 && canGoForward { goForward(); return }
+        withAnimation(Self.pageSpring) { dragX = 0 }
     }
 
     private func goBack() {
         guard canGoBack, let earlier = finishedCards[index - 1] else { return }
         let current = live == nil ? captureCard() : nil
-        swapCard {
+        swapCard(back: true) {
             if let current { live = current }
             restoreCard(earlier)
         }
@@ -998,7 +1034,7 @@ struct SituationPilotView: View {
     private func goForward() {
         guard let liveCard = live else { return }
         let next = index + 1
-        swapCard {
+        swapCard(back: false) {
             if next < liveCard.index, let later = finishedCards[next] {
                 restoreCard(later)
             } else {
