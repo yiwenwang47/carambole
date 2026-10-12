@@ -111,6 +111,11 @@ struct SituationSessionView: View {
     @State private var tipToken = 0
     @State private var tipPinned = false
     @State private var lastWordTap = Date.distantPast
+    // Going back (like Book 1): each finished card is kept as it ended, and an
+    // earlier one can be looked at read-only. `live` holds the card in play
+    // while one is being looked at; nil means the card in play is on screen.
+    @State private var finishedCards: [Int: CardState] = [:]
+    @State private var live: CardState?
 
     /// One curve for every drill-to-drill and dialogue-to-dialogue change.
     private static let motion = Animation.smooth(duration: 0.5)
@@ -133,6 +138,23 @@ struct SituationSessionView: View {
     }
 
     private enum Slot: Equatable { case hidden, building, preview(String), done(String, ok: Bool) }
+
+    /// Everything that draws one card, so a finished card can be shown again
+    /// and the card in play put back exactly as it was.
+    private struct CardState {
+        var index = 0, step = 0, finished = false
+        var drillOutcomes: [SituationOutcome] = []
+        var tries = 0, drillMisses = 0, drillFailed = false
+        var selected: Int?, rightChoice: Int?
+        var wrongChoices: Set<Int> = []
+        var placed: [Int] = [], bankOrder: [Int] = []
+        var rejectedReplies: [[String]] = []
+        var note = ""
+        var slot: Slot = .hidden
+        var gapText: String?
+        var gapSettled = false, errorFixed = false, showFollow = false
+        var fixPhase: FixPhase = .find
+    }
     private enum FixPhase { case find, choose }
     private struct Tip: Equatable { let id: String; let french: String; let english: String }
 
@@ -328,6 +350,12 @@ struct SituationSessionView: View {
         }
         .frame(minHeight: 0, maxHeight: .infinity)
         .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { fit.card = $0 }
+        // Swipe right for the previous dialogue, left to come back (Book 1's gesture).
+        .simultaneousGesture(DragGesture(minimumDistance: 24).onEnded { value in
+            let dx = value.translation.width, dy = value.translation.height
+            guard abs(dx) > 60, abs(dx) > abs(dy) * 1.5 else { return }
+            if dx > 0 { goBack() } else if canGoForward { goForward() }
+        })
         .overlayPreferenceValue(SituationTipAnchorKey.self) { anchors in
             GeometryReader { proxy in
                 if let tip, let anchor = anchors[tip.id] {
@@ -365,12 +393,33 @@ struct SituationSessionView: View {
             }
             .frame(height: 4)
             .accessibilityHidden(true)
-            Text("\(index + 1)/\(cards.count)")
-                .font(.label(size: 12)).foregroundColor(AppColor.g2).monospacedDigit()
-                .accessibilityLabel("Dialogue \(index + 1) sur \(cards.count)")
+            HStack(spacing: 0) {
+                navChevron("‹", label: "Dialogue précédent", enabled: canGoBack, action: goBack)
+                Text("\(index + 1)/\(cards.count)")
+                    .font(.label(size: 12)).foregroundColor(AppColor.g2).monospacedDigit()
+                    .accessibilityLabel("Dialogue \(index + 1) sur \(cards.count)")
+                navChevron("›", label: "Dialogue suivant", enabled: canGoForward, action: goForward)
+            }
         }
         .padding(.horizontal, Spacing.screenH)
         .padding(.top, 8)
+    }
+
+    /// Book 1's ‹ › chevrons; invisible when there is nowhere to go.
+    private func navChevron(_ glyph: String, label: String, enabled: Bool,
+                            action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Text(glyph)
+                .font(.display(size: 20, wght: 300))
+                .foregroundColor(AppColor.ink)
+                .frame(width: 24, height: 32)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .opacity(enabled ? 1 : 0)
+        .disabled(!enabled)
+        .accessibilityLabel(label)
+        .accessibilityHidden(!enabled)
     }
 
     private var progress: CGFloat {
@@ -379,7 +428,8 @@ struct SituationSessionView: View {
 
     private var cueBlock: some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text(item.place ?? card.element.label).uppercaseLabel()
+            Text(live == nil ? (item.place ?? card.element.label)
+                 : "Révision · " + (item.place ?? card.element.label)).uppercaseLabel()
             Text(item.cue).font(.display(size: 21, wght: 400)).foregroundColor(AppColor.ink)
                 .fixedSize(horizontal: false, vertical: true)
                 .opacity(contentOpacity)
@@ -929,6 +979,7 @@ struct SituationSessionView: View {
 
     private var footer: some View {
         let (label, enabled): (String, Bool) = {
+            if let live { return (index + 1 == live.index ? "Reprendre" : "Suivant", true) }
             guard let drill else {
                 return (index == cards.count - 1 ? "Terminer" : "Suivant", true)
             }
@@ -940,7 +991,7 @@ struct SituationSessionView: View {
             }
         }()
         return Button {
-            if drill == nil { nextDialogue() } else { withAnimation(Self.motion) { check() } }
+            if live != nil { goForward() } else if drill == nil { nextDialogue() } else { withAnimation(Self.motion) { check() } }
         } label: {
             Text(label).contentTransition(.identity)
         }
@@ -1204,6 +1255,9 @@ struct SituationSessionView: View {
         }
         guard !locked else { return }
         locked = true
+        var kept = captureCard()
+        kept.showFollow = true
+        finishedCards[index] = kept
         withAnimation(.easeIn(duration: 0.24)) { contentOpacity = 0; contentOffset = -8 }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.26) {
             var t = Transaction(); t.disablesAnimations = true
@@ -1222,6 +1276,65 @@ struct SituationSessionView: View {
         slot = .hidden; gapText = nil; gapSettled = false; errorFixed = false
         showFollow = false; tip = nil
         startDrill()
+    }
+
+    // MARK: - Going back
+
+    private var canGoBack: Bool { !locked && finishedCards[index - 1] != nil }
+    private var canGoForward: Bool { live != nil }
+
+    private func captureCard() -> CardState {
+        CardState(index: index, step: step, finished: finished, drillOutcomes: drillOutcomes,
+                  tries: tries, drillMisses: drillMisses, drillFailed: drillFailed,
+                  selected: selected, rightChoice: rightChoice, wrongChoices: wrongChoices,
+                  placed: placed, bankOrder: bankOrder, rejectedReplies: rejectedReplies, note: note,
+                  slot: slot, gapText: gapText, gapSettled: gapSettled, errorFixed: errorFixed,
+                  showFollow: showFollow, fixPhase: fixPhase)
+    }
+
+    private func restoreCard(_ c: CardState) {
+        index = c.index; step = c.step; finished = c.finished; drillOutcomes = c.drillOutcomes
+        tries = c.tries; drillMisses = c.drillMisses; drillFailed = c.drillFailed
+        selected = c.selected; rightChoice = c.rightChoice; wrongChoices = c.wrongChoices
+        placed = c.placed; bankOrder = c.bankOrder; rejectedReplies = c.rejectedReplies; note = c.note
+        slot = c.slot; gapText = c.gapText; gapSettled = c.gapSettled; errorFixed = c.errorFixed
+        // A follow-up that was due while away has shown by now.
+        showFollow = c.showFollow || c.finished
+        fixPhase = c.fixPhase
+    }
+
+    /// Fade out, swap the card without animation, fade back in (as between dialogues).
+    private func swapCard(_ change: @escaping () -> Void) {
+        Speaker.shared.stop()
+        tip = nil
+        withAnimation(.easeIn(duration: 0.18)) { contentOpacity = 0 }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            var t = Transaction(); t.disablesAnimations = true
+            withTransaction(t) { change() }
+            withAnimation(Self.motion) { contentOpacity = 1 }
+        }
+    }
+
+    private func goBack() {
+        guard canGoBack, let earlier = finishedCards[index - 1] else { return }
+        let current = live == nil ? captureCard() : nil
+        swapCard {
+            if let current { live = current }
+            restoreCard(earlier)
+        }
+    }
+
+    private func goForward() {
+        guard let liveCard = live else { return }
+        let next = index + 1
+        swapCard {
+            if next < liveCard.index, let later = finishedCards[next] {
+                restoreCard(later)
+            } else {
+                restoreCard(liveCard)
+                live = nil
+            }
+        }
     }
 
     // MARK: - Simulator flags (DEBUG)

@@ -64,6 +64,10 @@ struct SituationPilotView: View {
     /// When a word was last tapped, so the card-wide tap that closes the tip
     /// can tell a tap on a word from a tap anywhere else.
     @State private var lastWordTap = Date.distantPast
+    // Going back, as in the production card: finished dialogues kept as they
+    // ended; `live` holds the one in play while an earlier one is shown.
+    @State private var finishedCards: [Int: CardState] = [:]
+    @State private var live: CardState?
 
     /// One curve for every drill-to-drill and dialogue-to-dialogue change.
     private static let motion = Animation.smooth(duration: 0.5)
@@ -100,6 +104,20 @@ struct SituationPilotView: View {
     }
 
     private enum Slot: Equatable { case hidden, building, preview(String), done(String, ok: Bool) }
+
+    private struct CardState {
+        var index = 0, step = 0, finished = false
+        var misses = 0, failed = false, tries = 0
+        var selected: Int?, rightChoice: Int?
+        var wrongChoices: Set<Int> = []
+        var placed: [Int] = [], bankOrder: [Int] = []
+        var rejectedReplies: [[String]] = []
+        var note = ""
+        var slot: Slot = .hidden
+        var gapText: String?
+        var gapSettled = false, errorFixed = false, showFollow = false
+        var fixPhase: FixPhase = .find
+    }
     private enum FixPhase { case find, choose }
     private struct Tip: Equatable { let id: String; let french: String; let english: String }
 
@@ -164,6 +182,11 @@ struct SituationPilotView: View {
         }
         .frame(minHeight: 0, maxHeight: .infinity)
         .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { fit.card = $0 }
+        .simultaneousGesture(DragGesture(minimumDistance: 24).onEnded { value in
+            let dx = value.translation.width, dy = value.translation.height
+            guard abs(dx) > 60, abs(dx) > abs(dy) * 1.5 else { return }
+            if dx > 0 { goBack() } else if canGoForward { goForward() }
+        })
         .overlayPreferenceValue(TipAnchorKey.self) { anchors in
             GeometryReader { proxy in
                 if let tip, let anchor = anchors[tip.id] {
@@ -204,11 +227,31 @@ struct SituationPilotView: View {
                 }
             }
             .frame(height: 4)
-            Text("\(index + 1)/\(dialogues.count)")
-                .font(.label(size: 12)).foregroundColor(AppColor.g2).monospacedDigit()
+            HStack(spacing: 0) {
+                navChevron("‹", label: "Dialogue précédent", enabled: canGoBack, action: goBack)
+                Text("\(index + 1)/\(dialogues.count)")
+                    .font(.label(size: 12)).foregroundColor(AppColor.g2).monospacedDigit()
+                navChevron("›", label: "Dialogue suivant", enabled: canGoForward, action: goForward)
+            }
         }
         .padding(.horizontal, Spacing.screenH)
         .padding(.top, 8)
+    }
+
+    private func navChevron(_ glyph: String, label: String, enabled: Bool,
+                            action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Text(glyph)
+                .font(.display(size: 20, wght: 300))
+                .foregroundColor(AppColor.ink)
+                .frame(width: 24, height: 32)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .opacity(enabled ? 1 : 0)
+        .disabled(!enabled)
+        .accessibilityLabel(label)
+        .accessibilityHidden(!enabled)
     }
 
     private var progress: CGFloat {
@@ -217,7 +260,8 @@ struct SituationPilotView: View {
 
     private var cueBlock: some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text(dialogue.place ?? "Au café").uppercaseLabel()
+            Text(live == nil ? (dialogue.place ?? "Au café")
+                 : "Révision · " + (dialogue.place ?? "Au café")).uppercaseLabel()
             ZStack(alignment: .leading) {
                 Text(dialogue.cue).font(.display(size: 21, wght: 400)).foregroundColor(AppColor.ink)
                     .fixedSize(horizontal: false, vertical: true)
@@ -691,6 +735,7 @@ struct SituationPilotView: View {
 
     private var footer: some View {
         let (label, enabled): (String, Bool) = {
+            if let live { return (index + 1 == live.index ? "Reprendre" : "Suivant", true) }
             guard let drill else {
                 return (index == dialogues.count - 1 ? "Terminer" : "Suivant", true)
             }
@@ -702,7 +747,7 @@ struct SituationPilotView: View {
             }
         }()
         return Button {
-            if drill == nil { nextDialogue() } else { withAnimation(Self.motion) { check() } }
+            if live != nil { goForward() } else if drill == nil { nextDialogue() } else { withAnimation(Self.motion) { check() } }
         } label: {
             Text(label).contentTransition(.identity)
         }
@@ -886,6 +931,9 @@ struct SituationPilotView: View {
         }
         guard !locked else { return }
         locked = true
+        var kept = captureCard()
+        kept.showFollow = true
+        finishedCards[index] = kept
         withAnimation(.easeIn(duration: 0.24)) { contentOpacity = 0; contentOffset = -8 }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.26) {
             var t = Transaction(); t.disablesAnimations = true
@@ -903,6 +951,61 @@ struct SituationPilotView: View {
         slot = .hidden; gapText = nil; gapSettled = false; errorFixed = false
         showFollow = false; tip = nil
         startDrill()
+    }
+
+    // MARK: - Going back
+
+    private var canGoBack: Bool { !locked && finishedCards[index - 1] != nil }
+    private var canGoForward: Bool { live != nil }
+
+    private func captureCard() -> CardState {
+        CardState(index: index, step: step, finished: finished, misses: misses, failed: failed, tries: tries,
+                  selected: selected, rightChoice: rightChoice, wrongChoices: wrongChoices,
+                  placed: placed, bankOrder: bankOrder, rejectedReplies: rejectedReplies, note: note,
+                  slot: slot, gapText: gapText, gapSettled: gapSettled, errorFixed: errorFixed,
+                  showFollow: showFollow, fixPhase: fixPhase)
+    }
+
+    private func restoreCard(_ c: CardState) {
+        index = c.index; step = c.step; finished = c.finished; misses = c.misses; failed = c.failed
+        tries = c.tries; selected = c.selected; rightChoice = c.rightChoice; wrongChoices = c.wrongChoices
+        placed = c.placed; bankOrder = c.bankOrder; rejectedReplies = c.rejectedReplies; note = c.note
+        slot = c.slot; gapText = c.gapText; gapSettled = c.gapSettled; errorFixed = c.errorFixed
+        showFollow = c.showFollow || c.finished
+        fixPhase = c.fixPhase
+    }
+
+    private func swapCard(_ change: @escaping () -> Void) {
+        Speaker.shared.stop()
+        tip = nil
+        withAnimation(.easeIn(duration: 0.18)) { contentOpacity = 0 }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            var t = Transaction(); t.disablesAnimations = true
+            withTransaction(t) { change() }
+            withAnimation(Self.motion) { contentOpacity = 1 }
+        }
+    }
+
+    private func goBack() {
+        guard canGoBack, let earlier = finishedCards[index - 1] else { return }
+        let current = live == nil ? captureCard() : nil
+        swapCard {
+            if let current { live = current }
+            restoreCard(earlier)
+        }
+    }
+
+    private func goForward() {
+        guard let liveCard = live else { return }
+        let next = index + 1
+        swapCard {
+            if next < liveCard.index, let later = finishedCards[next] {
+                restoreCard(later)
+            } else {
+                restoreCard(liveCard)
+                live = nil
+            }
+        }
     }
 
     // MARK: - Launch flags (simulator checks)
@@ -971,7 +1074,12 @@ struct SituationPilotView: View {
         if let mode = env["CB_PILOT_AUTOPLAY"] {
             Task { @MainActor in
                 try? await Task.sleep(nanoseconds: 1_500_000_000)
-                while autoStep(wrongFirst: mode == "wrong") { try? await Task.sleep(nanoseconds: 1_100_000_000) }
+                // CB_PILOT_BACK_AT=n: stop on dialogue n and go back one (checks the review view).
+                let backAt = env["CB_PILOT_BACK_AT"].flatMap(Int.init)
+                while autoStep(wrongFirst: mode == "wrong") {
+                    try? await Task.sleep(nanoseconds: 1_100_000_000)
+                    if let backAt, index == backAt, !locked { goBack(); break }
+                }
             }
         }
         if let n = env["CB_PILOT_INDEX"].flatMap(Int.init), dialogues.indices.contains(n) { index = n }

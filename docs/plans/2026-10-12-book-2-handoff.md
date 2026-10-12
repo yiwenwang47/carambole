@@ -57,3 +57,5 @@ Pipeline = 2026-10-11 handoff §4. Status:
 ## Next (arc 3)
 - v8 checked on simulator (cards 2, 6 frames OK) and INSTALLED on the iPhone (Test book, 2026-10-12). Waiting on user: v8 verdict.
 - On v8 approval: production audio 11–15 (`for m in 11 12 13 14 15; do until python3 tools/situations/generate_audio.py --module $m; do sleep 10; done; done`, then a plain `generate_audio.py` for firstSeen-null words), strict lint must pass. Then arc 4 (16–20).
+- 2026-10-12: user on v8: "sounds ok" → approved. Next: 11–15 production audio. User asked: no swipe back to previous drill in Book 2 (investigating).
+- Book 2 back-nav DONE (user asked 2026-10-12): swipe right or ‹ shows earlier finished cards read-only (« Révision · … », your mistakes, Reprendre/Suivant); swipe left or › returns. SituationSessionView + Test book pilot. Sim-checked via CB_PILOT_AUTOPLAY=wrong CB_PILOT_BACK_AT=2. Real swipe untested (taps unautomatable).
