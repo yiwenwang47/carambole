@@ -41,3 +41,4 @@ Pipeline = 2026-10-11 handoff §4. Status:
 - 15 first half DONE. New base key « pas trop court » (else « pas trop » swallows it, « court » = runs); `sitw_coupe_past`.
 - [ ] Judges: 20 launched; findings → scratchpad/judges/NN_<m1>_<m2>.md, copied to docs/plans/arc3-judges/ when done
 - 2026-10-12 ~22:10: all 20 judges hit the usage limit before writing findings; resumed. If lost: relaunch judges per tools/situations/agents/judge.md, 2 moves each (list: 11 strike/cancelled, delay/desk, group/another, work/arrive; 12 boiler/leak, plumber/keys, neighbour/broken, landlady/visit; 13 late/sorry, reason/wait, cancel/newplan, react/formal; 14 symptom/cold, pharmacy/advice, appointment/doctor, sick/better; 15 parcel/wrong, complain/haircut, bike/repair, again/fix). Consider batches of ~7 to stay under limits.
+- Note: 13 late_d04 « Désolée ! Plutôt vingt minutes. » now buildable after my sentence split → fixer must add to accepted (judge MUST).
