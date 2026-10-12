@@ -33,6 +33,21 @@ def speechlike(seconds=1.5, level=0.05, seed=1) -> np.ndarray:
 
 
 class PlanTests(unittest.TestCase):
+    def test_emphatic_burst_is_capped_below_target(self):
+        x = speechlike(seconds=3.0)
+        x[int(0.5 * SR):int(1.0 * SR)] *= 4.0  # a shouted word
+        y = na.apply(x, SR, na.Plan(0.0, 0.0))
+        self.assertLessEqual(na.max_momentary_loudness(y, SR), na.MOMENTARY_MAX_LUFS + 0.2)
+        self.assertLess(na.integrated_loudness(y, SR), na.TARGET_LUFS - 0.5)
+
+    def test_burst_at_target_is_not_noop(self):
+        p = na.plan(na.Stats(-18.0, -6.0, -6.0, 500.0, -30.0, na.MOMENTARY_MAX_LUFS + 1.5))
+        self.assertFalse(p.is_noop)
+
+    def test_even_clip_still_reaches_target(self):
+        y = na.apply(speechlike(seconds=3.0), SR, na.Plan(0.0, 0.0))
+        self.assertAlmostEqual(na.integrated_loudness(y, SR), na.TARGET_LUFS, delta=0.3)
+
     def test_quiet_clip_gets_positive_gain_to_target(self):
         p = na.plan(stats(lufs=-24.0))
         self.assertAlmostEqual(p.gain_db, 6.0)

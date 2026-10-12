@@ -168,6 +168,10 @@ clip right after writing it. Needs macOS `afconvert`, numpy, scipy and
 `lameenc` (`pip install lameenc`); the generators stop before any TTS call if
 the codec is missing.
 
+- **Bursts:** the loudest 400 ms block (momentary loudness) is capped at
+  -15.5 LUFS; a clip with an emphatic word is turned down as a whole until it
+  fits, so it may sit below -18 integrated. Added after the user heard
+  Théo's « Je ne sais pas ! » as loud at -18.
 - **Loudness:** -18 LUFS integrated (ITU-R BS.1770, gated), true peak
   ≤ -1.5 dBTP (a 5 ms look-ahead limiter at -2 dBTP; then the decoded MP3 is
   checked and re-encoded if the codec's ~-0.45 dB shift or overshoot moved it).

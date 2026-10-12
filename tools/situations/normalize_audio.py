@@ -46,6 +46,7 @@ ROOT = Path(__file__).resolve().parents[2]
 AUDIO = ROOT / "carambole/Resources/Audio"
 
 TARGET_LUFS = -18.0
+MOMENTARY_MAX_LUFS = -15.5  # loudest 400 ms block; emphatic bursts sound loud even at -18 LUFS integrated
 CEILING_DBTP = -2.0  # limiter ceiling; leaves 0.5 dB for MP3 overshoot under -1.5
 LOUDNESS_TOLERANCE_LU = 0.5
 PEAK_LIMIT_DBTP = -1.5  # a clip is "done" while its decoded true peak stays at or below this
@@ -57,7 +58,7 @@ MAX_SHELF_DB = 4.0
 HF_DUCK_DB = -12.0  # after the shelf, HF share above this lowers the clip's target
 MAX_DUCK_DB = 8.0
 TAG_KEY = b"carambole-normalize"
-TAG_VALUE = f"v1 {TARGET_LUFS:g} LUFS, ceiling {CEILING_DBTP:g} dBTP".encode()
+TAG_VALUE = f"v2 {TARGET_LUFS:g} LUFS, momentary <= {MOMENTARY_MAX_LUFS:g}, ceiling {CEILING_DBTP:g} dBTP".encode()
 MP3_FRAME = 576  # samples per MPEG-2/2.5 layer III frame (TTS clips are 24 kHz)
 EDGE_SILENT_DB = -40.0  # an edge frame this far below the clip's peak is codec delay/padding
 
@@ -69,6 +70,7 @@ class Stats:
     sample_peak_db: float
     centroid_hz: float
     hf_db: float
+    momentary_max: float = -99.0  # loudest 400 ms block, LUFS
 
 
 @dataclass(frozen=True)
@@ -131,6 +133,22 @@ def integrated_loudness(x: np.ndarray, sr: int) -> float:
     return float(-0.691 + 10 * np.log10(np.mean(y ** 2) + 1e-20))
 
 
+def max_momentary_loudness(x: np.ndarray, sr: int) -> float:
+    """Loudest 400 ms block (BS.1770 momentary loudness, 100 ms hop)."""
+    y = k_weight(np.asarray(x, dtype=np.float64), sr)
+    block, step = int(0.4 * sr), int(0.1 * sr)
+    if len(y) < block:
+        return float(-0.691 + 10 * np.log10(np.mean(y ** 2) + 1e-20))
+    z = max(np.mean(y[s:s + block] ** 2) for s in range(0, len(y) - block + 1, step))
+    return float(-0.691 + 10 * np.log10(z + 1e-20))
+
+
+def burst_capped(target: float, x: np.ndarray, sr: int) -> float:
+    """Lower the integrated target so the loudest 400 ms stays under MOMENTARY_MAX_LUFS."""
+    burst = max_momentary_loudness(x, sr) - integrated_loudness(x, sr)
+    return min(target, MOMENTARY_MAX_LUFS - burst)
+
+
 def true_peak_db(x: np.ndarray) -> float:
     """4x oversampled peak (BS.1770 annex 2 style), in dBTP."""
     up = signal.resample_poly(np.asarray(x, dtype=np.float64), 4, 1)
@@ -161,7 +179,8 @@ def brightness(x: np.ndarray, sr: int) -> tuple[float, float]:
 
 def measure(x: np.ndarray, sr: int) -> Stats:
     centroid, hf = brightness(x, sr)
-    return Stats(integrated_loudness(x, sr), true_peak_db(x), sample_peak_db(x), centroid, hf)
+    return Stats(integrated_loudness(x, sr), true_peak_db(x), sample_peak_db(x), centroid, hf,
+                 max_momentary_loudness(x, sr))
 
 
 # ---------------------------------------------------------------- the rule
@@ -176,7 +195,8 @@ def plan(stats: Stats) -> Plan:
     if excess > HF_TOLERANCE_DB:
         shelf = -round(min(MAX_SHELF_DB, excess), 2)
     gain = TARGET_LUFS - stats.lufs
-    if abs(gain) <= LOUDNESS_TOLERANCE_LU and stats.true_peak_db <= PEAK_LIMIT_DBTP and shelf == 0.0:
+    burst_ok = stats.momentary_max <= MOMENTARY_MAX_LUFS + LOUDNESS_TOLERANCE_LU
+    if abs(gain) <= LOUDNESS_TOLERANCE_LU and stats.true_peak_db <= PEAK_LIMIT_DBTP and shelf == 0.0 and burst_ok:
         return Plan(0.0, 0.0, is_noop=True)
     return Plan(round(gain, 2), shelf)
 
@@ -209,6 +229,7 @@ def apply(x: np.ndarray, sr: int, p: Plan) -> np.ndarray:
         b, a = biquad_high_shelf(sr, SHELF_HZ, p.shelf_db, 1 / math.sqrt(2))
         y = signal.lfilter(b, a, y)
         target = clip_target(brightness(y, sr)[1])
+    target = burst_capped(target, y, sr)
     # Gain is re-measured here, after the shelf, rather than taken from the plan.
     y = y * 10 ** ((target - integrated_loudness(y, sr)) / 20)
     for _ in range(3):  # limiting trims loudness slightly; nudge back up
