@@ -113,3 +113,18 @@ Stale-clip check: map each audio key to its text with `item_clips()` from `tools
 
 **Next:** user reviews v7 → production audio for 07–10 (`generate_audio.py --module NN` in a retry loop; strict lint currently fails only on missing 07–10 audio) → arc 3 (11–15) with the same pipeline. Coordinator decisions for fixers lived in a scratch `COORDINATOR_NOTES.md`; carry the reusable ones into the next batch's agent prompts (gloss list is now in words.json; « À l'appart » is the home label; avoid untaught phrase keys like « je veux bien »).
 - 2026-10-12: all 4,382 clips loudness-normalised to −18 LUFS (true peak ≤ −1.5 dBTP) with a gentle 6 kHz shelf on bright clips (`tools/situations/normalize_audio.py`, `09dd94a`); every generator now runs it on new clips. User asked: "same volume on average, nothing too shrill". « pull » question answered: content is masculine; « une / pull noire » are decoys.
+- 2026-10-12: user still heard Théo's « Je ne sais pas ! » (v7 card 7, follow-up of `sit_08_gift_d02`) as loud after a momentary-loudness cap (-15.5 LUFS, `167dbdf`). Said "leave it" unless TTS emphasis can be turned down. Chirp 3 HD has no emphasis setting, so `tools/situations/tts_overrides.json` now maps display text → spoken text (« ! » → « . »); the clip was regenerated (`2f8f188`). **The Test book reinstall with that clip was interrupted — it may not be on the phone yet; reinstall before asking the user to listen.**
+
+## 8. Start here next time (2026-10-12)
+
+1. **HARD RULE from the user: audio clips must be complete — never leave out the answer.** Gap lines (`___`) are currently voiced with « … » (`item_clips()` in `tools/situations/generate_audio.py`, `turn["text"].replace("___", "…")`). Change it to speak the line with the correct choice filled in (the `complete` drill's `choices[correct]`, honouring elision/spacing exactly as the app renders the filled line). Then:
+   - find every existing clip whose text had a gap (modules 01–06 production `sit_*` clips and the v7 `pilot2_*` clips), delete those MP3s, and regenerate them (generator skips existing files; stale-clip check in §6);
+   - add a lint/test that no clip text contains « … » from a gap;
+   - the clip now reveals the answer: make sure the app doesn't auto-play a gap line before the learner answers (check `SituationSessionView` / pilot autoplay; audio is "replay only" per content handoff §3) — if it would leak, play the filled clip only after the drill is answered and ask the user;
+   - normalisation runs automatically on the new clips.
+   The user said "make that a hard rule, but don't do it now".
+2. Reinstall the Test book (v7 + calmer Théo + any gap-clip fix) and get the user's verdict on v7.
+3. After v7 approval: production audio for 07–10 (`generate_audio.py --module NN`, retry loop for 503s), then strict lint must pass.
+4. Open from the user: « pull » question was answered (content is masculine; « je cherche une / pull noire » are deliberate decoys) — ask whether gender decoys like that confuse and should go.
+5. Main Carambole app: do NOT reinstall until the user says so (said "not now" on 2026-10-11).
+6. Then arc 3 (modules 11–15) with the same pipeline (planner → 2 authors/module → gloss scan → assemble → 4 judges/module → fixers → vocab audit → 9-card review set).

@@ -31,6 +31,12 @@
 
 ## 3. Binding rules (the user decided all of these; don't reopen them)
 
+### Audio (hard rules, 2026-10-12)
+
+- **Clips are complete. Never leave out the answer.** A server line with a gap (`___`) is spoken with the answer filled in, never with « … » or a pause in its place. (Not yet implemented: `item_clips()` in `tools/situations/generate_audio.py` still replaces `___` with « … ». See the next-session handoff §8.)
+- Every clip goes through `tools/situations/normalize_audio.py` (-18 LUFS integrated, loudest 400 ms ≤ -15.5 LUFS, gentle 6 kHz shelf on bright clips). Nothing shrill, nothing punching out.
+- Emphasis: Chirp 3 HD has no emphasis control; « ! » makes it exclaim. To calm a line, add `"display text": "spoken text"` (e.g. « ! » → « . ») to `tools/situations/tts_overrides.json`; the screen keeps the original.
+
 ### Screen and interaction
 
 - One locked chat card. Only the chat scrolls. The card never scrolls as a whole.
