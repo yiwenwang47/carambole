@@ -101,6 +101,13 @@ class SituationLintTests(unittest.TestCase):
             turn["role"] = good
             self.assertNotIn("capitalised French", "\n".join(self.errors()))
 
+    def test_arc3_roles_and_spoken_form(self):
+        from tools.situations.lint import FEMININE_ROLES, MASCULINE_ROLES, SPOKEN
+        self.assertIn("t'inquiète", SPOKEN)
+        self.assertLessEqual({"Gardienne", "Coiffeuse", "Conseillère"}, FEMININE_ROLES)
+        self.assertLessEqual({"Gardien", "Coiffeur", "Conseiller"}, MASCULINE_ROLES)
+        self.assertNotIn("Secrétaire", FEMININE_ROLES | MASCULINE_ROLES)
+
     def test_role_gender_matches_voice(self):
         turn = self.module["elements"][0]["items"][0]["turns"][0]
         del turn["name"]

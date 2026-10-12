@@ -25,7 +25,7 @@ STANDALONE = {"Construire": "reply", "Choisir le ton": "pick",
               "Corriger": "fix", "Transformer": "reply", "Mot en retour": "complete"}
 SPOKEN = {"je sais pas", "t'as", "t'es", "y a", "y a encore", "ouais", "du coup",
           "carrément", "bref", "pas de souci", "top", "ça marche", "on",
-          "dispo", "dispos", "boulot"}
+          "dispo", "dispos", "boulot", "t'inquiète"}
 # Canonical cast `name` strings; the audio CAST map uses the same keys.
 SOCIAL_CAST = {"Léa", "Théo", "Inès", "M. Ferrand", "Mme Dumas"}
 CAST_ALIASES = {"Monsieur Ferrand": "M. Ferrand", "Madame Dumas": "Mme Dumas",
@@ -37,9 +37,11 @@ VOICES = {"male", "female"}
 ROLE = re.compile(r"^[A-ZÀÂÇÉÈÊËÎÏÔÛÙÜŸŒÆ][a-zàâçéèêëîïôûùüÿœæ'’ -]*$")
 # Gendered roles must match the turn's voice (`voice: "female"` → feminine).
 FEMININE_ROLES = {"Vendeuse", "Serveuse", "Boulangère", "Marchande", "Voisine",
-                  "Passante", "Livreuse", "Pharmacienne", "Caissière"}
+                  "Passante", "Livreuse", "Pharmacienne", "Caissière",
+                  "Conseillère", "Coiffeuse", "Employée", "Voyageuse", "Gardienne"}
 MASCULINE_ROLES = {"Vendeur", "Serveur", "Boulanger", "Marchand", "Voisin",
-                   "Passant", "Livreur", "Pharmacien", "Caissier"}
+                   "Passant", "Livreur", "Pharmacien", "Caissier",
+                   "Conseiller", "Coiffeur", "Employé", "Voyageur", "Gardien"}
 TEXTING = re.compile(r"(?i)(?<!\w)(?:mdr|stp|jsp|slt|svp|ptdr|bjr)(?!\w)")
 # Robin, the learner, is a woman (user decision 2026-10-11): her own lines use
 # feminine agreement only. Flags a masculine first-person form in a learner

@@ -24,3 +24,4 @@ Supersedes `2026-10-11-book-2-next-session-handoff.md` as the starting point (it
 Pipeline = 2026-10-11 handoff §4. Status:
 - [x] Plan: `docs/plans/2026-10-12-book-2-arc3-plan.md` + 5 matrices (126 new words, 600 rows checked by planner script). Open questions in plan §12 (defaults given); `modules.json` entries in plan, not pasted yet
 - [ ] Author (2 agents/module)  - [ ] Gloss scan + assemble  - [ ] Judges  - [ ] Fixers  - [ ] Vocab audit  - [ ] 9-card review set v8
+- User 2026-10-12: accept all arc-3 plan defaults; author all 5 modules then v8.
