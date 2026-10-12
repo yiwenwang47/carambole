@@ -1,0 +1,2697 @@
+{
+  "elements": [
+    {
+      "id": "sit_10_straight",
+      "title": "Tout droit",
+      "note": "Distances and positions: « tout droit » (straight on), « au bout de » (at the end of), « juste après » (right after) and « derrière » (behind). « Tout droit » never changes: « droite » is the right-hand side. « Jusqu'à » + « le » contracts: « jusqu'au bout de la rue ».",
+      "items": [
+        {
+          "id": "sit_10_straight_d01",
+          "place": "Dans la rue",
+          "cue": "You asked a woman in the street the way to the station. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "voice": "female",
+              "text": "Allez tout droit, c'est au bout de la rue."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "Where is the station?",
+              "choices": [
+                "At the corner of the street",
+                "At the end of the street"
+              ],
+              "correct": 1,
+              "miss": "Reread: « c'est au bout de la rue »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Thank her (madame) and ask if it's far.",
+              "bank": [
+                "Merci,",
+                "madame !",
+                "C'est",
+                "loin ?",
+                "monsieur !",
+                "tard ?"
+              ],
+              "accepted": [
+                [
+                  "Merci,",
+                  "madame !",
+                  "C'est",
+                  "loin ?"
+                ],
+                [
+                  "C'est",
+                  "loin ?",
+                  "Merci,",
+                  "madame !"
+                ]
+              ],
+              "model": "Merci, madame ! C'est loin ?"
+            }
+          ],
+          "followUp": "Non, cinq minutes à pied.",
+          "newWords": [
+            "au bout de"
+          ]
+        },
+        {
+          "id": "sit_10_straight_d02",
+          "place": "Appel · livreur",
+          "cue": "The delivery driver calls you. He says vous to you. Your building is right after the bakery.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Je suis au feu, devant la gare. Et maintenant ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Continuez tout droit. C'est juste après ___ boulangerie."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "Where is the driver?",
+              "choices": [
+                "At the bakery",
+                "At the traffic lights"
+              ],
+              "correct": 1,
+              "miss": "Reread: « je suis au feu »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "le",
+                "l'",
+                "la"
+              ],
+              "correct": 2,
+              "why": [
+                "« Boulangerie » is feminine, so not « le ».",
+                "« L' » only goes before a vowel or a mute h.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Ah, je vois la boulangerie ! Merci.",
+          "newWords": [
+            "juste après"
+          ]
+        },
+        {
+          "id": "sit_10_straight_s01",
+          "place": "Dans la rue · phrase seule",
+          "standalone": "Construire",
+          "cue": "A man in the street says vous to you. He's looking for the market.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Excusez-moi, madame, je cherche le marché, s'il vous plaît."
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Tell him: go straight on to the end of the street; it's on the left.",
+              "bank": [
+                "Allez",
+                "tout droit",
+                "jusqu'au",
+                "bout de la rue,",
+                "c'est",
+                "à gauche.",
+                "Va",
+                "jusqu'à",
+                "à droite."
+              ],
+              "accepted": [
+                [
+                  "Allez",
+                  "tout droit",
+                  "jusqu'au",
+                  "bout de la rue,",
+                  "c'est",
+                  "à gauche."
+                ]
+              ],
+              "model": "Allez tout droit jusqu'au bout de la rue, c'est à gauche."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_10_straight_d03",
+          "place": "Appel · livreur",
+          "cue": "The delivery driver calls you. He says vous to you. He's looking for your street.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Je suis derrière la gare. Je vais où ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Allez tout droit, c'est ___ bout de la rue."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "à",
+                "du",
+                "au"
+              ],
+              "correct": 2,
+              "why": [
+                "« À » + « le » contracts to « au ».",
+                "« Du » means of the: you say « au bout de ».",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "Where is the driver?",
+              "choices": [
+                "Behind the station",
+                "In front of the station"
+              ],
+              "correct": 0,
+              "miss": "Reread: « je suis derrière la gare »."
+            }
+          ],
+          "followUp": "D'accord, tout droit. J'arrive !",
+          "newWords": [
+            "derrière"
+          ]
+        },
+        {
+          "id": "sit_10_straight_d04",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Le café de Karim, c'est au bout de la rue ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « au bout de » mean here?",
+              "choices": [
+                "at the corner of",
+                "at the end of",
+                "behind"
+              ],
+              "correct": 1,
+              "why": [
+                "« Au coin de » means at the corner of.",
+                "",
+                "« Derrière » means behind."
+              ],
+              "target": "au bout de"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, right after the chemist's.",
+              "bank": [
+                "Oui,",
+                "juste après",
+                "la pharmacie.",
+                "le pharmacie.",
+                "Non,",
+                "derrière"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "juste après",
+                  "la pharmacie."
+                ]
+              ],
+              "model": "Oui, juste après la pharmacie."
+            }
+          ],
+          "followUp": "Top, merci !",
+          "followUpBy": "Léa",
+          "newWords": []
+        },
+        {
+          "id": "sit_10_straight_s02",
+          "place": "Sur le palier · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "M. Ferrand, your neighbour, says vous to you. He asks where the café is. Tell him: straight on, at the end of the street.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "Continue tout droit, c'est au bout de la rue !",
+                "Tout droit, vite ! Au bout !",
+                "Allez tout droit, monsieur, c'est au bout de la rue."
+              ],
+              "correct": 2,
+              "why": [
+                "Good French, but « continue » is tu. Say vous to M. Ferrand.",
+                "Good French, but it's curt and rude to your neighbour.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_10_straight_d05",
+          "place": "Dans la rue",
+          "cue": "Clarify: you asked a man in the street the way to the park. He says vous to you and talks fast.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "C'est juste après le pont, derrière la gare."
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say sorry, ask him to repeat, and check: right after the bridge?",
+              "bank": [
+                "Pardon,",
+                "vous pouvez répéter ?",
+                "Juste après",
+                "le pont ?",
+                "tu peux répéter ?",
+                "Derrière"
+              ],
+              "accepted": [
+                [
+                  "Pardon,",
+                  "vous pouvez répéter ?",
+                  "Juste après",
+                  "le pont ?"
+                ],
+                [
+                  "Juste après",
+                  "le pont ?",
+                  "Pardon,",
+                  "vous pouvez répéter ?"
+                ]
+              ],
+              "model": "Pardon, vous pouvez répéter ? Juste après le pont ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « juste après » mean here?",
+              "choices": [
+                "just before",
+                "right after",
+                "right behind"
+              ],
+              "correct": 1,
+              "why": [
+                "« Juste avant » means just before.",
+                "",
+                "« Juste derrière » means right behind."
+              ],
+              "target": "juste après"
+            }
+          ],
+          "followUp": "Oui, après le pont. Bonne journée !",
+          "newWords": []
+        },
+        {
+          "id": "sit_10_straight_d06",
+          "place": "Les copains · groupe",
+          "cue": "Théo's group chat « Les copains ». Everyone says tu.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Le restaurant de samedi, il est derrière la gare ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Non, il est ___ face de la gare."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "à",
+                "en",
+                "au"
+              ],
+              "correct": 1,
+              "why": [
+                "Not French: you say « en face de ».",
+                "",
+                "Not French: you say « en face de »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo want to know?",
+              "choices": [
+                "If the restaurant is open on Saturday",
+                "If the restaurant is behind the station"
+              ],
+              "correct": 1,
+              "miss": "Reread: « il est derrière la gare ? »"
+            }
+          ],
+          "followUp": "Ah, d'accord ! Merci, Robin.",
+          "newWords": []
+        },
+        {
+          "id": "sit_10_straight_s03",
+          "place": "Dans la rue · phrase seule",
+          "standalone": "Corriger",
+          "cue": "A woman in the street says vous to you. Tell her the way to the chemist's.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Allez tout droite jusqu'au bout de la rue, c'est juste après la pharmacie.",
+              "error": {
+                "word": "droite",
+                "fix": "droit",
+                "choices": [
+                  "droits",
+                  "droit",
+                  "droites"
+                ],
+                "why": "« Tout droit » (straight on) never changes; « droite » is the right-hand side."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_10_straight_d07",
+          "place": "Appel · livreur",
+          "cue": "The delivery driver calls you. He says vous to you. You live at huit, rue Pasteur.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Le huit, c'est derrière la boulangerie ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Non, c'est à ___ de la boulangerie. La porte bleue !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « derrière » mean here?",
+              "choices": [
+                "next to",
+                "opposite",
+                "behind"
+              ],
+              "correct": 2,
+              "why": [
+                "« À côté de » means next to.",
+                "« En face de » means opposite.",
+                ""
+              ],
+              "target": "derrière"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "côte",
+                "côté",
+                "coté"
+              ],
+              "correct": 1,
+              "why": [
+                "« Côte » (coast, rib) is another word: you need « à côté de ».",
+                "",
+                "« Coté » needs a circumflex: « côté »."
+              ]
+            }
+          ],
+          "followUp": "Ah, la porte bleue ! Je vois.",
+          "newWords": []
+        },
+        {
+          "id": "sit_10_straight_d08",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, says tu to you. She's coming to your building, right after the bakery.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Je suis au bout de ta rue. Et après ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Tell her (tu): turn left, it's right after the bakery.",
+              "bank": [
+                "Tourne",
+                "Tournez",
+                "à gauche,",
+                "à droite,",
+                "c'est juste après",
+                "la boulangerie."
+              ],
+              "accepted": [
+                [
+                  "Tourne",
+                  "à gauche,",
+                  "c'est juste après",
+                  "la boulangerie."
+                ]
+              ],
+              "model": "Tourne à gauche, c'est juste après la boulangerie."
+            },
+            {
+              "type": "comprehend",
+              "prompt": "Where is Inès?",
+              "choices": [
+                "At the station",
+                "At the end of your street"
+              ],
+              "correct": 1,
+              "miss": "Reread: « je suis au bout de ta rue »."
+            }
+          ],
+          "followUp": "Ah, je vois la porte bleue !",
+          "followUpBy": "Inès",
+          "newWords": []
+        },
+        {
+          "id": "sit_10_straight_s04",
+          "place": "Dans la rue · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You told Léa, your flatmate, the way (tu). Now a man in the street asks, and he says vous to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Léa, continue tout droit jusqu'au bout de la rue, c'est à gauche.",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say the same to him, with vous.",
+              "bank": [
+                "Monsieur,",
+                "continuez",
+                "tout droit",
+                "jusqu'au",
+                "bout de la rue,",
+                "c'est à gauche.",
+                "continue",
+                "Léa,",
+                "continues"
+              ],
+              "accepted": [
+                [
+                  "Monsieur,",
+                  "continuez",
+                  "tout droit",
+                  "jusqu'au",
+                  "bout de la rue,",
+                  "c'est à gauche."
+                ]
+              ],
+              "model": "Monsieur, continuez tout droit jusqu'au bout de la rue, c'est à gauche."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_10_straight_d09",
+          "place": "Appel · livreur",
+          "cue": "The delivery driver calls you. He says vous to you. Rue Pasteur is behind the station.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Je suis devant la gare. Vous êtes où ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Mon immeuble est ___ la gare, à côté de la boulangerie."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "Where is the driver?",
+              "choices": [
+                "In front of the station",
+                "Behind the station"
+              ],
+              "correct": 0,
+              "miss": "Reread: « je suis devant la gare »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "dernière",
+                "dernier",
+                "derrière"
+              ],
+              "correct": 2,
+              "why": [
+                "« Dernière » means last.",
+                "« Dernier » means last.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Derrière la gare ? D'accord, j'arrive !",
+          "newWords": []
+        },
+        {
+          "id": "sit_10_straight_d10",
+          "place": "Dans la rue",
+          "cue": "You asked a man in the street the way to a bakery. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "La boulangerie ? Juste après le feu, à droite."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "Where is the bakery?",
+              "choices": [
+                "Right before the traffic lights",
+                "Right after the traffic lights"
+              ],
+              "correct": 1,
+              "miss": "Reread: « juste après le feu »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Thank him (monsieur): that's very kind.",
+              "bank": [
+                "Merci,",
+                "monsieur,",
+                "c'est",
+                "très gentil !",
+                "très gentille !",
+                "madame,"
+              ],
+              "accepted": [
+                [
+                  "Merci,",
+                  "monsieur,",
+                  "c'est",
+                  "très gentil !"
+                ],
+                [
+                  "Merci,",
+                  "c'est",
+                  "très gentil !"
+                ]
+              ],
+              "model": "Merci, monsieur, c'est très gentil !"
+            }
+          ],
+          "followUp": "De rien, bonne journée !",
+          "newWords": []
+        },
+        {
+          "id": "sit_10_straight_s05",
+          "place": "Dans la rue · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "A woman in the street says vous to you. Which words mean “at the end of”?",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "La pharmacie ? Allez tout droit, c'est ___ la rue, à gauche."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "at the end of",
+              "choices": [
+                "au coin de",
+                "en face de",
+                "au bout de"
+              ],
+              "correct": 2,
+              "why": [
+                "« Au coin de » means at the corner of.",
+                "« En face de » means opposite.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_10_door",
+      "title": "En bas de l'immeuble",
+      "note": "The last metres of a delivery: « le code » (the door code), « l'interphone » (the entry phone), « je descends » (I'm coming down) and « en bas » (downstairs). With « je », the verb ends in -s: « je descends ».",
+      "items": [
+        {
+          "id": "sit_10_door_d01",
+          "place": "Appel · livreur",
+          "cue": "The delivery driver calls you. He says vous to you. Your door code is deux, cinq, huit.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Je suis devant votre porte. Il y a un code ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "Where is the driver?",
+              "choices": [
+                "At the station",
+                "Outside your door"
+              ],
+              "correct": 1,
+              "miss": "Reread: « je suis devant votre porte »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, and give him the code.",
+              "bank": [
+                "Oui,",
+                "le code,",
+                "c'est",
+                "deux, cinq, huit.",
+                "deux, six, huit.",
+                "Non,",
+                "la code,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "le code,",
+                  "c'est",
+                  "deux, cinq, huit."
+                ],
+                [
+                  "Oui,",
+                  "c'est",
+                  "deux, cinq, huit."
+                ]
+              ],
+              "model": "Oui, le code, c'est deux, cinq, huit."
+            }
+          ],
+          "followUp": "Deux, cinq, huit… Merci, madame !",
+          "newWords": [
+            "code"
+          ]
+        },
+        {
+          "id": "sit_10_door_d02",
+          "place": "Appel · livreur",
+          "cue": "The delivery driver calls you. He says vous to you. The name on the entry phone is yours, Robin.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Le code ne marche pas. Il y a un interphone ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, au nom ___ Robin, au troisième."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What's the problem?",
+              "choices": [
+                "The code doesn't work",
+                "There's no entry phone"
+              ],
+              "correct": 0,
+              "miss": "Reread: « le code ne marche pas »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "à",
+                "du",
+                "de"
+              ],
+              "correct": 2,
+              "why": [
+                "Not French: you say « au nom de ».",
+                "« Du » is « de » + « le »: no article before a name.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Robin, au troisième… Ah, voilà !",
+          "newWords": [
+            "interphone"
+          ]
+        },
+        {
+          "id": "sit_10_door_s01",
+          "place": "Appel · livreur · phrase seule",
+          "standalone": "Construire",
+          "cue": "The delivery driver calls you. He says vous to you. Your door code is deux, cinq, huit. You live on the third floor.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Bonjour, madame, je suis devant votre immeuble avec votre colis."
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Give him the code, and say it's on the third floor.",
+              "bank": [
+                "Le code,",
+                "c'est",
+                "deux, cinq, huit,",
+                "et c'est",
+                "au troisième étage.",
+                "au deuxième étage.",
+                "La code,",
+                "deux, six, huit,"
+              ],
+              "accepted": [
+                [
+                  "Le code,",
+                  "c'est",
+                  "deux, cinq, huit,",
+                  "et c'est",
+                  "au troisième étage."
+                ],
+                [
+                  "Le code,",
+                  "c'est",
+                  "deux, cinq, huit,",
+                  "au troisième étage."
+                ]
+              ],
+              "model": "Le code, c'est deux, cinq, huit, et c'est au troisième étage."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_10_door_d03",
+          "place": "Appel · livreur",
+          "cue": "The delivery driver calls you. He says vous to you. He has your parcel.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Bonjour, je suis devant votre immeuble, avec le colis."
+            },
+            {
+              "speaker": "learner",
+              "text": "Je descends ! Je suis en bas dans ___ minute."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "un",
+                "une",
+                "des"
+              ],
+              "correct": 1,
+              "why": [
+                "« Minute » is feminine: « une minute ».",
+                "",
+                "« Des » is plural, but « minute » is singular here."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "Where will you be in a minute?",
+              "choices": [
+                "Downstairs, at the door",
+                "On the third floor"
+              ],
+              "correct": 0,
+              "miss": "Reread: « je suis en bas dans une minute »."
+            }
+          ],
+          "followUp": "Parfait, je vous attends !",
+          "newWords": [
+            "je descends",
+            "en bas"
+          ]
+        },
+        {
+          "id": "sit_10_door_d04",
+          "place": "WhatsApp · Mme Dumas",
+          "cue": "Mme Dumas, your landlady, writes on WhatsApp. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Mme Dumas",
+              "text": "Bonjour, Robin. Ce soir, le code ne marche pas."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « code » mean here?",
+              "choices": [
+                "key",
+                "entry phone",
+                "door code"
+              ],
+              "correct": 2,
+              "why": [
+                "A key is « une clé ».",
+                "The entry phone is « l'interphone ».",
+                ""
+              ],
+              "target": "code"
+            },
+            {
+              "type": "reply",
+              "prompt": "Thank her (madame): noted.",
+              "bank": [
+                "Merci,",
+                "madame,",
+                "c'est noté !",
+                "monsieur,",
+                "c'est nouveau !"
+              ],
+              "accepted": [
+                [
+                  "Merci,",
+                  "madame,",
+                  "c'est noté !"
+                ],
+                [
+                  "Merci,",
+                  "c'est noté !"
+                ]
+              ],
+              "model": "Merci, madame, c'est noté !"
+            }
+          ],
+          "followUp": "Pour le livreur, il y a l'interphone.",
+          "followUpBy": "Mme Dumas",
+          "newWords": []
+        },
+        {
+          "id": "sit_10_door_s02",
+          "place": "Appel · livreur · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "The delivery driver calls you. He says vous to you. Tell him you're coming down right away.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "Je descends, attends deux minutes !",
+                "Je descends tout de suite, monsieur !",
+                "Ouais, je descends !"
+              ],
+              "correct": 1,
+              "why": [
+                "Good French, but « attends » is tu. Say vous to the driver.",
+                "",
+                "Good French, but « ouais » is too casual for a stranger."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_10_door_d05",
+          "place": "Appel · livreur",
+          "cue": "Clarify: the delivery driver calls you. He says vous to you. The line is bad.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Allô ? Je sonne à votre interphone, ou vous descendez ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say sorry, you can't hear him well, and ask him to repeat.",
+              "bank": [
+                "Pardon,",
+                "je vous entends mal.",
+                "Vous pouvez répéter ?",
+                "je t'entends mal.",
+                "Tu peux répéter ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon,",
+                  "je vous entends mal.",
+                  "Vous pouvez répéter ?"
+                ],
+                [
+                  "Vous pouvez répéter ?",
+                  "Pardon,",
+                  "je vous entends mal."
+                ]
+              ],
+              "model": "Pardon, je vous entends mal. Vous pouvez répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « interphone » mean here?",
+              "choices": [
+                "mobile phone",
+                "entry phone, intercom",
+                "door code"
+              ],
+              "correct": 1,
+              "why": [
+                "A mobile is « un portable ».",
+                "",
+                "The door code is « le code »."
+              ],
+              "target": "interphone"
+            }
+          ],
+          "followUp": "J'ai dit : vous descendez ? Je suis en bas !",
+          "newWords": []
+        },
+        {
+          "id": "sit_10_door_d06",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Robin, le livreur est en bas, avec ton colis !"
+            },
+            {
+              "speaker": "learner",
+              "text": "D'accord, je ___ tout de suite !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "descends",
+                "descend",
+                "descendre"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Descend » goes with il or elle: with « je », it ends in -s.",
+                "« Descendre » is the infinitive."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "Where is the delivery driver?",
+              "choices": [
+                "At the station",
+                "Downstairs"
+              ],
+              "correct": 1,
+              "miss": "Reread: « le livreur est en bas »."
+            }
+          ],
+          "followUp": "Super ! Il est devant la porte bleue.",
+          "followUpBy": "Léa",
+          "newWords": []
+        },
+        {
+          "id": "sit_10_door_s03",
+          "place": "Appel · livreur · phrase seule",
+          "standalone": "Corriger",
+          "cue": "The delivery driver calls you. He says vous to you. Tell him you're coming down.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Je descende tout de suite, monsieur, je suis en bas dans deux minutes.",
+              "error": {
+                "word": "descende",
+                "fix": "descends",
+                "choices": [
+                  "descend",
+                  "descendre",
+                  "descends"
+                ],
+                "why": "With « je », the present is « je descends »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_10_door_d07",
+          "place": "Appel · livreur",
+          "cue": "The delivery driver calls you. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Je suis en bas. J'ai sonné à votre interphone."
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, pardon ! Je descends, ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « en bas » mean here?",
+              "choices": [
+                "upstairs",
+                "at the back",
+                "downstairs"
+              ],
+              "correct": 2,
+              "why": [
+                "Upstairs is « en haut ».",
+                "At the back is « au fond ».",
+                ""
+              ],
+              "target": "en bas"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "tu arrives",
+                "j'arrive",
+                "j'attends"
+              ],
+              "correct": 1,
+              "why": [
+                "You're the one coming, not the driver: « j'arrive ».",
+                "",
+                "« J'attends » means I'm waiting, but you're coming down."
+              ]
+            }
+          ],
+          "followUp": "Parfait, merci !",
+          "newWords": []
+        },
+        {
+          "id": "sit_10_door_d08",
+          "place": "Texto · Théo",
+          "cue": "Théo, your friend, texts you. He says tu to you. Your door code is deux, cinq, huit.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Je suis en bas ! C'est quoi, le code ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Give him the code and say you're coming down.",
+              "bank": [
+                "C'est",
+                "deux, cinq, huit.",
+                "Je descends !",
+                "deux, six, huit.",
+                "Je descend !",
+                "Tu descends !"
+              ],
+              "accepted": [
+                [
+                  "C'est",
+                  "deux, cinq, huit.",
+                  "Je descends !"
+                ],
+                [
+                  "Je descends !",
+                  "C'est",
+                  "deux, cinq, huit."
+                ]
+              ],
+              "model": "C'est deux, cinq, huit. Je descends !"
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo ask for?",
+              "choices": [
+                "Your floor",
+                "The door code"
+              ],
+              "correct": 1,
+              "miss": "Reread: « c'est quoi, le code ? »"
+            }
+          ],
+          "followUp": "Top, je t'attends !",
+          "followUpBy": "Théo",
+          "newWords": []
+        },
+        {
+          "id": "sit_10_door_s04",
+          "place": "Appel · livreur · phrase seule",
+          "standalone": "Transformer",
+          "cue": "The delivery driver calls you. He says vous to you. Say it with « aller » + infinitive: you're going to come down.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Je descends dans deux minutes, monsieur, je suis au troisième.",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it in the near future.",
+              "bank": [
+                "Je vais",
+                "descendre",
+                "dans deux minutes,",
+                "monsieur,",
+                "je suis",
+                "au troisième.",
+                "descends",
+                "descendu"
+              ],
+              "accepted": [
+                [
+                  "Je vais",
+                  "descendre",
+                  "dans deux minutes,",
+                  "monsieur,",
+                  "je suis",
+                  "au troisième."
+                ],
+                [
+                  "Je vais",
+                  "descendre",
+                  "dans deux minutes,",
+                  "je suis",
+                  "au troisième."
+                ]
+              ],
+              "model": "Je vais descendre dans deux minutes, monsieur, je suis au troisième."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_10_door_d09",
+          "place": "Sur le palier",
+          "cue": "M. Ferrand, your neighbour, says vous to you. He's going downstairs; you can't go down right now.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Madame, le livreur sonne à votre interphone !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Merci ! Vous pouvez ___ ouvrir, s'il vous plaît ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What's happening?",
+              "choices": [
+                "The delivery driver is calling your phone",
+                "The delivery driver is ringing your entry phone"
+              ],
+              "correct": 1,
+              "miss": "Reread: « le livreur sonne à votre interphone »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "leur",
+                "le",
+                "lui"
+              ],
+              "correct": 2,
+              "why": [
+                "« Leur » is plural, but there's one driver.",
+                "You open the door « to » him: « lui ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Bien sûr, je descends.",
+          "followUpBy": "M. Ferrand",
+          "newWords": []
+        },
+        {
+          "id": "sit_10_door_d10",
+          "place": "Appel · livreur",
+          "cue": "The delivery driver calls you. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Bonjour, je suis en bas. Vous descendez ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the driver ask?",
+              "choices": [
+                "If you're coming down",
+                "If you're at home"
+              ],
+              "correct": 0,
+              "miss": "Reread: « vous descendez ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, you're coming down right away.",
+              "bank": [
+                "Oui,",
+                "je descends",
+                "tout de suite !",
+                "je descend",
+                "dans deux minutes !"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "je descends",
+                  "tout de suite !"
+                ]
+              ],
+              "model": "Oui, je descends tout de suite !"
+            }
+          ],
+          "followUp": "Super, merci ! J'ai votre colis.",
+          "newWords": []
+        },
+        {
+          "id": "sit_10_door_s05",
+          "place": "Texto · Léa · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Léa, your flatmate, texts you. She says tu to you. Which words mean “I'm coming down”?",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Le livreur est en bas ? D'accord, ___ tout de suite !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "I'm coming down",
+              "choices": [
+                "je reste",
+                "je rappelle",
+                "je descends"
+              ],
+              "correct": 2,
+              "why": [
+                "« Je reste » means I'm staying.",
+                "« Je rappelle » means I'll call back.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_10_ask",
+      "title": "Demander son chemin",
+      "note": "Now you're the lost one: « c'est par où ? » (which way is it?), « le chemin » (the way) and « je me suis trompée de rue » (I got the wrong street). You're a woman, so it's « trompée » and « perdue », with -e.",
+      "items": [
+        {
+          "id": "sit_10_ask_d01",
+          "place": "Dans la rue",
+          "cue": "You're looking for the station. You stop a woman in the street; she says vous to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Excusez-moi, madame, la gare, c'est par où ?"
+            },
+            {
+              "speaker": "server",
+              "voice": "female",
+              "text": "Allez tout droit, et après, à gauche."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "Where is the station?",
+              "choices": [
+                "Straight on, then right",
+                "Straight on, then left"
+              ],
+              "correct": 1,
+              "miss": "Reread: « tout droit, et après, à gauche »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Thank her and ask if it's far on foot.",
+              "bank": [
+                "Merci !",
+                "C'est loin",
+                "à pied ?",
+                "à vélo ?",
+                "C'est tard"
+              ],
+              "accepted": [
+                [
+                  "Merci !",
+                  "C'est loin",
+                  "à pied ?"
+                ],
+                [
+                  "C'est loin",
+                  "à pied ?",
+                  "Merci !"
+                ]
+              ],
+              "model": "Merci ! C'est loin à pied ?"
+            }
+          ],
+          "followUp": "Non, dix minutes. Bonne journée !",
+          "newWords": [
+            "c'est par où"
+          ]
+        },
+        {
+          "id": "sit_10_ask_d02",
+          "place": "Appel · Léa",
+          "cue": "You call Léa, your flatmate. She says tu to you. You're a woman.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Léa, je me suis trompée ___ rue !"
+            },
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "T'es où ? Devant le marché ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa ask?",
+              "choices": [
+                "Where you are",
+                "What time it is"
+              ],
+              "correct": 0,
+              "miss": "Reread: « t'es où ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "la",
+                "à",
+                "de"
+              ],
+              "correct": 2,
+              "why": [
+                "Not French: you say « se tromper de » + the noun.",
+                "Not French: you say « se tromper de » + the noun.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Pas grave, je t'attends au café !",
+          "newWords": [
+            "je me suis trompée"
+          ]
+        },
+        {
+          "id": "sit_10_ask_s01",
+          "place": "Dans la rue · phrase seule",
+          "standalone": "Construire",
+          "cue": "You're looking for the park. Ask a man in the street the way; he says vous to you.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Call him monsieur and ask politely which way the park is.",
+              "bank": [
+                "Excusez-moi,",
+                "monsieur,",
+                "le parc,",
+                "c'est par où,",
+                "s'il vous plaît ?",
+                "s'il te plaît ?",
+                "madame,",
+                "c'est par quoi,"
+              ],
+              "accepted": [
+                [
+                  "Excusez-moi,",
+                  "monsieur,",
+                  "le parc,",
+                  "c'est par où,",
+                  "s'il vous plaît ?"
+                ]
+              ],
+              "model": "Excusez-moi, monsieur, le parc, c'est par où, s'il vous plaît ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_10_ask_d03",
+          "place": "Dans la rue",
+          "cue": "A man in the street says vous to you. You're a woman.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Bonjour, madame. Vous cherchez votre chemin ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, je suis ___ ! Le cinéma, c'est par où ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "perdu",
+                "perdue",
+                "perdues"
+              ],
+              "correct": 1,
+              "why": [
+                "You're a woman: « perdue », with -e.",
+                "",
+                "« Perdues » is plural, but you're one person."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does the man ask?",
+              "choices": [
+                "If you're waiting for someone",
+                "If you're trying to find your way"
+              ],
+              "correct": 1,
+              "miss": "Reread: « vous cherchez votre chemin ? »"
+            }
+          ],
+          "followUp": "Le cinéma ? Tout droit, juste après le pont.",
+          "newWords": [
+            "chemin"
+          ]
+        },
+        {
+          "id": "sit_10_ask_d04",
+          "place": "Texto · Théo",
+          "cue": "Théo, your friend, texts you. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Je suis à la gare. Le cinéma, c'est par où ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « c'est par où » mean here?",
+              "choices": [
+                "which way is it?",
+                "is it far?",
+                "what time is it?"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« C'est loin ? » means is it far?",
+                "« Il est quelle heure ? » means what time is it?"
+              ],
+              "target": "c'est par où"
+            },
+            {
+              "type": "reply",
+              "prompt": "Tell him (tu): keep going straight on, it's after the bridge.",
+              "bank": [
+                "Continue",
+                "Continuez",
+                "tout droit,",
+                "c'est après",
+                "le pont.",
+                "la pont."
+              ],
+              "accepted": [
+                [
+                  "Continue",
+                  "tout droit,",
+                  "c'est après",
+                  "le pont."
+                ]
+              ],
+              "model": "Continue tout droit, c'est après le pont."
+            }
+          ],
+          "followUp": "Merci ! J'arrive dans dix minutes.",
+          "followUpBy": "Théo",
+          "newWords": []
+        },
+        {
+          "id": "sit_10_ask_s02",
+          "place": "Dans la rue · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "You're lost. Ask a woman in the street, who says vous to you, which way the chemist's is.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "Salut, la pharmacie, c'est par où ?",
+                "Pardon, madame, la pharmacie, c'est par où ?",
+                "Dis, la pharmacie, c'est par où ?"
+              ],
+              "correct": 1,
+              "why": [
+                "Good French, but « salut » is for friends.",
+                "",
+                "Good French, but « dis » is tu, for friends."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_10_ask_d05",
+          "place": "Dans la rue",
+          "cue": "Clarify: a woman in the street says vous to you. She talks fast.",
+          "turns": [
+            {
+              "speaker": "server",
+              "voice": "female",
+              "text": "Vous cherchez votre chemin ? Après le feu, à droite."
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say sorry and ask her to repeat more slowly.",
+              "bank": [
+                "Pardon,",
+                "vous pouvez répéter",
+                "plus lentement ?",
+                "tu peux répéter",
+                "vite ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon,",
+                  "vous pouvez répéter",
+                  "plus lentement ?"
+                ]
+              ],
+              "model": "Pardon, vous pouvez répéter plus lentement ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « chemin » mean here?",
+              "choices": [
+                "street",
+                "station",
+                "way, route"
+              ],
+              "correct": 2,
+              "why": [
+                "A street is « une rue ».",
+                "« Gare » means station.",
+                ""
+              ],
+              "target": "chemin"
+            }
+          ],
+          "followUp": "Bien sûr. Après le feu… à droite.",
+          "newWords": []
+        },
+        {
+          "id": "sit_10_ask_d06",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. She says tu to you. You're a woman.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Tu es où ? On est devant le restaurant !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Désolée, je me suis ___ de rue !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "trompé",
+                "tromper",
+                "trompée"
+              ],
+              "correct": 2,
+              "why": [
+                "You're a woman: « trompée », with -e.",
+                "« Tromper » is the infinitive: after « je me suis », use the participle.",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "Where is Inès?",
+              "choices": [
+                "In front of the restaurant",
+                "At the station"
+              ],
+              "correct": 0,
+              "miss": "Reread: « on est devant le restaurant »."
+            }
+          ],
+          "followUp": "Pas grave ! C'est juste après la gare.",
+          "followUpBy": "Inès",
+          "newWords": []
+        },
+        {
+          "id": "sit_10_ask_s03",
+          "place": "Dans la rue · phrase seule",
+          "standalone": "Corriger",
+          "cue": "A woman in the street says vous to you. You're a woman. Ask her the way.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Excusez-moi, madame, je me suis trompé de rue, la gare, c'est par où ?",
+              "error": {
+                "word": "trompé",
+                "fix": "trompée",
+                "choices": [
+                  "trompés",
+                  "trompée",
+                  "tromper"
+                ],
+                "why": "You're a woman, so the participle agrees: « je me suis trompée »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_10_ask_d07",
+          "place": "Appel · Léa",
+          "cue": "You call Léa, your flatmate. She says tu to you. You're a woman.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Je me suis trompée de chemin, je suis ___ retard !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « je me suis trompée » mean here?",
+              "choices": [
+                "I'm tired",
+                "I went the wrong way",
+                "I'm in a hurry"
+              ],
+              "correct": 1,
+              "why": [
+                "« Je suis fatiguée » means I'm tired.",
+                "",
+                "« Je suis pressée » means I'm in a hurry."
+              ],
+              "target": "je me suis trompée"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "au",
+                "en",
+                "de"
+              ],
+              "correct": 1,
+              "why": [
+                "Not French: late is « en retard ».",
+                "",
+                "Not French: late is « en retard »."
+              ]
+            }
+          ],
+          "followUp": "Pas grave ! Je t'attends au café.",
+          "followUpBy": "Léa",
+          "newWords": []
+        },
+        {
+          "id": "sit_10_ask_d08",
+          "place": "Dans la rue",
+          "cue": "You meet M. Ferrand, your neighbour, in town. He says vous to you. You're looking for the station.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Bonjour, madame ! Vous cherchez votre chemin ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say yes (monsieur), and ask him which way the station is.",
+              "bank": [
+                "Oui,",
+                "monsieur !",
+                "La gare,",
+                "c'est par où ?",
+                "c'est par quoi ?",
+                "Le gare,",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "monsieur !",
+                  "La gare,",
+                  "c'est par où ?"
+                ]
+              ],
+              "model": "Oui, monsieur ! La gare, c'est par où ?"
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does M. Ferrand ask?",
+              "choices": [
+                "If you're going to the station",
+                "If you're trying to find your way"
+              ],
+              "correct": 1,
+              "miss": "Reread: « vous cherchez votre chemin ? »"
+            }
+          ],
+          "followUp": "La gare ? Tout droit, au bout de la rue.",
+          "newWords": []
+        },
+        {
+          "id": "sit_10_ask_s04",
+          "place": "Dans la rue · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You asked Léa this (tu). Now ask a man in the street, who says vous to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Léa, tu peux me dire le chemin pour la gare, s'il te plaît ?",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Ask him the same, with vous.",
+              "bank": [
+                "Monsieur,",
+                "vous pouvez",
+                "me dire",
+                "le chemin",
+                "pour la gare,",
+                "s'il vous plaît ?",
+                "tu peux",
+                "s'il te plaît ?",
+                "Léa,"
+              ],
+              "accepted": [
+                [
+                  "Monsieur,",
+                  "vous pouvez",
+                  "me dire",
+                  "le chemin",
+                  "pour la gare,",
+                  "s'il vous plaît ?"
+                ]
+              ],
+              "model": "Monsieur, vous pouvez me dire le chemin pour la gare, s'il vous plaît ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_10_ask_d09",
+          "place": "Dans la rue",
+          "cue": "You asked a woman in the street the way to the station. She says vous to you. You're a woman.",
+          "turns": [
+            {
+              "speaker": "server",
+              "voice": "female",
+              "text": "La gare ? Ah non, c'est derrière vous !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Merci ! Je me suis trompée de ___."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "Where is the station?",
+              "choices": [
+                "In front of you",
+                "Behind you"
+              ],
+              "correct": 1,
+              "miss": "Reread: « c'est derrière vous »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "chemins",
+                "chemin",
+                "chemise"
+              ],
+              "correct": 1,
+              "why": [
+                "One way: singular « chemin ».",
+                "",
+                "« Chemise » means shirt."
+              ]
+            }
+          ],
+          "followUp": "Pas de problème. Bonne journée !",
+          "newWords": []
+        },
+        {
+          "id": "sit_10_ask_d10",
+          "place": "Les copains · groupe",
+          "cue": "Théo's group chat « Les copains ». Everyone says tu. You're a woman.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Robin, t'es où ? Tu es perdue ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo ask?",
+              "choices": [
+                "If you're late",
+                "If you're lost"
+              ],
+              "correct": 1,
+              "miss": "Reread: « tu es perdue ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say you went the wrong way, and that you're in front of the station.",
+              "bank": [
+                "Je me suis trompée",
+                "Je me suis trompé",
+                "de chemin !",
+                "Je suis",
+                "devant la gare.",
+                "derrière la gare."
+              ],
+              "accepted": [
+                [
+                  "Je me suis trompée",
+                  "de chemin !",
+                  "Je suis",
+                  "devant la gare."
+                ],
+                [
+                  "Je suis",
+                  "devant la gare.",
+                  "Je me suis trompée",
+                  "de chemin !"
+                ]
+              ],
+              "model": "Je me suis trompée de chemin ! Je suis devant la gare."
+            }
+          ],
+          "followUp": "Pas grave, on arrive !",
+          "followUpBy": "Théo",
+          "newWords": []
+        },
+        {
+          "id": "sit_10_ask_s05",
+          "place": "Dans la rue · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "A woman in the street says vous to you. You're a woman. Which words mean “which way is it?”",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Excusez-moi, madame, je suis perdue. La pharmacie, ___, s'il vous plaît ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "which way is it?",
+              "choices": [
+                "c'est combien",
+                "c'est noté",
+                "c'est par où"
+              ],
+              "correct": 2,
+              "why": [
+                "« C'est combien ? » means how much is it?",
+                "« C'est noté » means noted.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_10_transit",
+      "title": "Métro et tram",
+      "note": "Public transport: « la ligne » (the line), « l'arrêt » (the stop), « le tram ». Lyon's metro lines are letters: « la ligne A », « la ligne B ». To say where you get off: « je descends au troisième arrêt » (« à » + « le » = « au »).",
+      "items": [
+        {
+          "id": "sit_10_transit_d01",
+          "place": "Dans la rue",
+          "cue": "You asked a woman in the street the way to Bellecour. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "voice": "female",
+              "text": "Pour Bellecour ? Prenez le métro, cette ligne, là."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does she tell you?",
+              "choices": [
+                "To take the metro",
+                "To take the bus"
+              ],
+              "correct": 0,
+              "miss": "Reread: « prenez le métro »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Thank her and ask where to get off.",
+              "bank": [
+                "Merci !",
+                "Je descends",
+                "où ?",
+                "Je descend",
+                "quand ?"
+              ],
+              "accepted": [
+                [
+                  "Merci !",
+                  "Je descends",
+                  "où ?"
+                ],
+                [
+                  "Je descends",
+                  "où ?",
+                  "Merci !"
+                ]
+              ],
+              "model": "Merci ! Je descends où ?"
+            }
+          ],
+          "followUp": "Descendez à Bellecour. Bonne journée !",
+          "newWords": [
+            "ligne"
+          ]
+        },
+        {
+          "id": "sit_10_transit_d02",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. She says tu to you. You're going to her place.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Prends le métro. Mon arrêt, c'est le troisième."
+            },
+            {
+              "speaker": "learner",
+              "text": "D'accord, je descends ___ troisième arrêt !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "How should you go?",
+              "choices": [
+                "By bike",
+                "By metro"
+              ],
+              "correct": 1,
+              "miss": "Reread: « prends le métro »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "à",
+                "au",
+                "en"
+              ],
+              "correct": 1,
+              "why": [
+                "« À » + « le » contracts to « au ».",
+                "",
+                "Not French here: you get off « au » + the stop."
+              ]
+            }
+          ],
+          "followUp": "Top ! Je t'attends à l'arrêt.",
+          "followUpBy": "Inès",
+          "newWords": [
+            "arrêt"
+          ]
+        },
+        {
+          "id": "sit_10_transit_s01",
+          "place": "Dans la rue · phrase seule",
+          "standalone": "Construire",
+          "cue": "You're going to the station. Ask a man in the street, who says vous to you, which metro line to take: A or B?",
+          "turns": [],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Call him monsieur and ask: for the station, line A or line B?",
+              "bank": [
+                "Pardon,",
+                "monsieur,",
+                "pour la gare,",
+                "je prends",
+                "la ligne A",
+                "ou",
+                "la ligne B ?",
+                "tu prends",
+                "madame,"
+              ],
+              "accepted": [
+                [
+                  "Pardon,",
+                  "monsieur,",
+                  "pour la gare,",
+                  "je prends",
+                  "la ligne A",
+                  "ou",
+                  "la ligne B ?"
+                ]
+              ],
+              "model": "Pardon, monsieur, pour la gare, je prends la ligne A ou la ligne B ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_10_transit_d03",
+          "place": "Les copains · groupe",
+          "cue": "Théo's group chat « Les copains ». Everyone says tu. He's planning Saturday.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Pour samedi, le tram ou le métro ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Le tram ! Il y a un arrêt devant chez ___."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "me",
+                "moi",
+                "je"
+              ],
+              "correct": 1,
+              "why": [
+                "After « chez », use « moi », not « me ».",
+                "",
+                "« Je » is a subject: after « chez », use « moi »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo ask?",
+              "choices": [
+                "What time the tram leaves",
+                "How you're all going: tram or metro"
+              ],
+              "correct": 1,
+              "miss": "Reread: « le tram ou le métro ? »"
+            }
+          ],
+          "followUp": "Top, le tram, alors !",
+          "newWords": [
+            "tram"
+          ]
+        },
+        {
+          "id": "sit_10_transit_d04",
+          "place": "Dans la rue",
+          "cue": "A man in the street says vous to you. You're going to the station.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "La ligne A ? Oui, c'est ce métro, là."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « ligne » mean here?",
+              "choices": [
+                "queue",
+                "ticket",
+                "line (metro)"
+              ],
+              "correct": 2,
+              "why": [
+                "A queue is « la queue ».",
+                "« Ticket » means ticket.",
+                ""
+              ],
+              "target": "ligne"
+            },
+            {
+              "type": "reply",
+              "prompt": "Thank him, and ask which stop is for the station.",
+              "bank": [
+                "Merci !",
+                "C'est",
+                "quel arrêt",
+                "quelle arrêt",
+                "pour la gare ?",
+                "pour le gare ?"
+              ],
+              "accepted": [
+                [
+                  "Merci !",
+                  "C'est",
+                  "quel arrêt",
+                  "pour la gare ?"
+                ],
+                [
+                  "C'est",
+                  "quel arrêt",
+                  "pour la gare ?",
+                  "Merci !"
+                ]
+              ],
+              "model": "Merci ! C'est quel arrêt pour la gare ?"
+            }
+          ],
+          "followUp": "C'est le deuxième arrêt. Bonne journée !",
+          "newWords": []
+        },
+        {
+          "id": "sit_10_transit_s02",
+          "place": "Dans la rue · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "Ask a woman in the street, who says vous to you, which stop is for Bellecour.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "Salut ! C'est quel arrêt pour Bellecour ?",
+                "Excusez-moi, madame, c'est quel arrêt pour Bellecour ?",
+                "Tu sais, c'est quel arrêt pour Bellecour ?"
+              ],
+              "correct": 1,
+              "why": [
+                "Good French, but « salut » is for friends.",
+                "",
+                "Good French, but « tu sais » is tu: say vous to a stranger."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_10_transit_d05",
+          "place": "Dans la rue",
+          "cue": "Clarify: you asked a woman in the street the way to Bellecour. She says vous to you and talks fast.",
+          "turns": [
+            {
+              "speaker": "server",
+              "voice": "female",
+              "text": "Descendez au troisième arrêt, juste après la gare."
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say sorry, ask her to repeat, and check: the third stop?",
+              "bank": [
+                "Pardon,",
+                "vous pouvez répéter ?",
+                "Le troisième",
+                "arrêt ?",
+                "Le deuxième",
+                "tu peux répéter ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon,",
+                  "vous pouvez répéter ?",
+                  "Le troisième",
+                  "arrêt ?"
+                ],
+                [
+                  "Le troisième",
+                  "arrêt ?",
+                  "Pardon,",
+                  "vous pouvez répéter ?"
+                ]
+              ],
+              "model": "Pardon, vous pouvez répéter ? Le troisième arrêt ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « arrêt » mean here?",
+              "choices": [
+                "exit",
+                "stop (tram, metro)",
+                "ticket"
+              ],
+              "correct": 1,
+              "why": [
+                "An exit is « une sortie ».",
+                "",
+                "« Ticket » means ticket."
+              ],
+              "target": "arrêt"
+            }
+          ],
+          "followUp": "Oui, le troisième, après la gare.",
+          "newWords": []
+        },
+        {
+          "id": "sit_10_transit_d06",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Je suis dans le tram. Tu es où ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Descends au deuxième ___ ! Je t'attends là."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "arrête",
+                "arrêts",
+                "arrêt"
+              ],
+              "correct": 2,
+              "why": [
+                "« Arrête » is the verb (stop!), not the noun.",
+                "One stop: singular « arrêt ».",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "Where is Léa?",
+              "choices": [
+                "On the tram",
+                "At the stop"
+              ],
+              "correct": 0,
+              "miss": "Reread: « je suis dans le tram »."
+            }
+          ],
+          "followUp": "D'accord, j'arrive !",
+          "followUpBy": "Léa",
+          "newWords": []
+        },
+        {
+          "id": "sit_10_transit_s03",
+          "place": "Dans la rue · phrase seule",
+          "standalone": "Corriger",
+          "cue": "A man in the street says vous to you. Tell him how you're going.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Je prends le tram et je descends au troisième arrête, après la gare.",
+              "error": {
+                "word": "arrête",
+                "fix": "arrêt",
+                "choices": [
+                  "arrêter",
+                  "arrêt",
+                  "arrêts"
+                ],
+                "why": "« Arrête » is the verb (stop!). The tram stop is the noun « arrêt »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_10_transit_d07",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Le tram est en panne ce matin !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Pas grave, je ___ le métro."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « tram » mean here?",
+              "choices": [
+                "bus",
+                "tram, streetcar",
+                "train"
+              ],
+              "correct": 1,
+              "why": [
+                "« Bus » means bus.",
+                "",
+                "A train is « un train »."
+              ],
+              "target": "tram"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "prendre",
+                "prend",
+                "prends"
+              ],
+              "correct": 2,
+              "why": [
+                "« Prendre » is the infinitive.",
+                "« Prend » goes with il or elle: with je, it's « prends ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Bonne idée ! À tout à l'heure.",
+          "followUpBy": "Inès",
+          "newWords": []
+        },
+        {
+          "id": "sit_10_transit_d08",
+          "place": "WhatsApp · Mme Dumas",
+          "cue": "Mme Dumas, your landlady, invites you to her place. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Mme Dumas",
+              "text": "Pour venir chez moi, prenez la ligne A du métro."
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Thank her (madame), and ask at which stop you get off.",
+              "bank": [
+                "Merci,",
+                "madame !",
+                "Je descends",
+                "à quel arrêt ?",
+                "Tu descends",
+                "à quelle arrêt ?"
+              ],
+              "accepted": [
+                [
+                  "Merci,",
+                  "madame !",
+                  "Je descends",
+                  "à quel arrêt ?"
+                ],
+                [
+                  "Je descends",
+                  "à quel arrêt ?",
+                  "Merci,",
+                  "madame !"
+                ]
+              ],
+              "model": "Merci, madame ! Je descends à quel arrêt ?"
+            },
+            {
+              "type": "comprehend",
+              "prompt": "How should you go to Mme Dumas's?",
+              "choices": [
+                "By tram",
+                "By metro, line A"
+              ],
+              "correct": 1,
+              "miss": "Reread: « prenez la ligne A du métro »."
+            }
+          ],
+          "followUp": "Descendez à Bellecour. À samedi !",
+          "followUpBy": "Mme Dumas",
+          "newWords": []
+        },
+        {
+          "id": "sit_10_transit_s04",
+          "place": "Dans la rue · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You told Léa the way (tu). Now tell a man in the street, who says vous to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Léa, prends la ligne A et descends au troisième arrêt, c'est Bellecour.",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say the same to him, with vous.",
+              "bank": [
+                "Monsieur,",
+                "prenez",
+                "la ligne A",
+                "et",
+                "descendez",
+                "au troisième arrêt,",
+                "c'est Bellecour.",
+                "prends",
+                "descends",
+                "Léa,"
+              ],
+              "accepted": [
+                [
+                  "Monsieur,",
+                  "prenez",
+                  "la ligne A",
+                  "et",
+                  "descendez",
+                  "au troisième arrêt,",
+                  "c'est Bellecour."
+                ]
+              ],
+              "model": "Monsieur, prenez la ligne A et descendez au troisième arrêt, c'est Bellecour."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_10_transit_d09",
+          "place": "Dans la rue",
+          "cue": "You asked a woman in the street for the tram. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "voice": "female",
+              "text": "Le tram ? L'arrêt est à côté, devant la boulangerie."
+            },
+            {
+              "speaker": "learner",
+              "text": "Merci ! Et c'est quelle ___ ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "Where is the tram stop?",
+              "choices": [
+                "Behind the station",
+                "Nearby, in front of the bakery"
+              ],
+              "correct": 1,
+              "miss": "Reread: « l'arrêt est à côté, devant la boulangerie »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "ligne",
+                "lignes",
+                "linge"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Quelle » is singular here: one line.",
+                "« Linge » means laundry."
+              ]
+            }
+          ],
+          "followUp": "C'est écrit à l'arrêt. Bonne journée !",
+          "newWords": []
+        },
+        {
+          "id": "sit_10_transit_d10",
+          "place": "Texto · Karim",
+          "cue": "Karim, the barista, texts you. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Salut ! Tu viens au café en tram ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Karim ask?",
+              "choices": [
+                "If you want a coffee",
+                "If you're coming to the café by tram"
+              ],
+              "correct": 1,
+              "miss": "Reread: « tu viens au café en tram ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say no: you're taking line A of the metro.",
+              "bank": [
+                "Non,",
+                "je prends",
+                "la ligne A",
+                "du métro.",
+                "le ligne A",
+                "Oui,",
+                "de métro."
+              ],
+              "accepted": [
+                [
+                  "Non,",
+                  "je prends",
+                  "la ligne A",
+                  "du métro."
+                ]
+              ],
+              "model": "Non, je prends la ligne A du métro."
+            }
+          ],
+          "followUp": "Super, à tout à l'heure !",
+          "followUpBy": "Karim",
+          "newWords": []
+        },
+        {
+          "id": "sit_10_transit_s05",
+          "place": "Dans la rue · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Tell a visitor in the street, who says vous to you, how to get to Bellecour. Which word means “stop” (bus, tram)?",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Prenez le tram et descendez au troisième ___, juste après la gare."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "stop (bus, tram)",
+              "choices": [
+                "ligne",
+                "pont",
+                "arrêt"
+              ],
+              "correct": 2,
+              "why": [
+                "« Ligne » means line.",
+                "« Pont » means bridge.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    }
+  ]
+}

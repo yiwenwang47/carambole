@@ -1,0 +1,5451 @@
+{
+  "id": "sit_07",
+  "title": "Boulangerie et marché",
+  "arc": "Le quartier",
+  "goal": "Order bread and market food, ask quantities and prices, and say « c'est tout ».",
+  "elements": [
+    {
+      "id": "sit_07_bread",
+      "title": "Commander du pain",
+      "note": "Order bread at the bakery. A « tradition » is the baker's traditional baguette, and many people prefer it to a plain « baguette ». Say how you like it baked: « bien cuite » or « pas trop cuite » (« cuite » agrees with the feminine bread).",
+      "items": [
+        {
+          "id": "sit_07_bread_d01",
+          "place": "À la boulangerie",
+          "cue": "At the bakery, the baker greets you. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Bonjour, madame ! Une baguette ou une tradition ?",
+              "voice": "female"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the baker ask?",
+              "choices": [
+                "Which kind of bread you want",
+                "Whether you want it well baked"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Une baguette ou une tradition ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Greet her back, then order one tradition, politely.",
+              "bank": [
+                "Bonjour !",
+                "Une tradition,",
+                "s'il vous plaît.",
+                "Un tradition,",
+                "s'il te plaît.",
+                "Une baguette,"
+              ],
+              "accepted": [
+                [
+                  "Bonjour !",
+                  "Une tradition,",
+                  "s'il vous plaît."
+                ]
+              ],
+              "model": "Bonjour ! Une tradition, s'il vous plaît."
+            }
+          ],
+          "followUp": "Une tradition, voilà !",
+          "newWords": [
+            "baguette",
+            "tradition"
+          ]
+        },
+        {
+          "id": "sit_07_bread_d02",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Tu passes à la boulangerie ? Une tradition pour moi !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Pas de souci, je ___ prends une."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa want?",
+              "choices": [
+                "Two baguettes",
+                "A tradition"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Une tradition pour moi ! »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Say you'll get one for her.",
+              "choices": [
+                "te",
+                "t'en",
+                "en"
+              ],
+              "correct": 1,
+              "why": [
+                "« Prendre une » needs « en » for the bread: « je t'en prends une ».",
+                "",
+                "« Je » can't stand before « en », and « te » shows it's for her: « je t'en prends une »."
+              ]
+            }
+          ],
+          "followUp": "Super, merci !",
+          "newWords": [
+            "boulangerie"
+          ]
+        },
+        {
+          "id": "sit_07_bread_s01",
+          "place": "À la boulangerie · phrase seule",
+          "standalone": "Construire",
+          "cue": "At the bakery, the baker says vous to you. Greet her and order two traditions.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Bonjour, madame ! Une baguette ou une tradition ce matin ?",
+              "voice": "female"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Greet her, then order two traditions, politely.",
+              "bank": [
+                "Bonjour,",
+                "je voudrais",
+                "deux traditions,",
+                "s'il vous plaît.",
+                "deux tradition,",
+                "je voudras",
+                "s'il te plaît."
+              ],
+              "accepted": [
+                [
+                  "Bonjour,",
+                  "je voudrais",
+                  "deux traditions,",
+                  "s'il vous plaît."
+                ],
+                [
+                  "Bonjour,",
+                  "deux traditions,",
+                  "s'il vous plaît."
+                ]
+              ],
+              "model": "Bonjour, je voudrais deux traditions, s'il vous plaît."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_07_bread_d03",
+          "place": "À la boulangerie",
+          "cue": "At the bakery, the baker says vous to you. You like your bread pale and soft.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Bien cuite, la baguette ?",
+              "voice": "female"
+            },
+            {
+              "speaker": "learner",
+              "text": "Non, pas ___ cuite, s'il vous plaît."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Ask for it not too well baked.",
+              "choices": [
+                "beaucoup",
+                "trop",
+                "tout"
+              ],
+              "correct": 1,
+              "why": [
+                "« Beaucoup » can't go before an adjective: « pas trop cuite ».",
+                "",
+                "« Pas tout cuite » isn't French: « pas trop cuite »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does the baker ask about the baguette?",
+              "choices": [
+                "Whether you want it well baked",
+                "Whether you want two"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Bien cuite, la baguette ? »"
+            }
+          ],
+          "followUp": "Pas trop cuite, d'accord. Voilà !",
+          "newWords": [
+            "bien cuite"
+          ]
+        },
+        {
+          "id": "sit_07_bread_d04",
+          "place": "À la boulangerie",
+          "cue": "The baker knows you by now. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Bonjour, madame ! Une tradition, comme d'habitude ?",
+              "voice": "female"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « tradition » mean here?",
+              "target": "tradition",
+              "choices": [
+                "a traditional baguette",
+                "a sliced loaf",
+                "a small cake"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "No: « une tradition » is a long baguette, made the traditional way.",
+                "No: « une tradition » is bread, not a cake."
+              ]
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, and a baguette too, politely.",
+              "bank": [
+                "Oui,",
+                "et une baguette aussi,",
+                "s'il vous plaît.",
+                "et un baguette aussi,",
+                "et une baguette non plus,",
+                "s'il te plaît."
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "et une baguette aussi,",
+                  "s'il vous plaît."
+                ]
+              ],
+              "model": "Oui, et une baguette aussi, s'il vous plaît."
+            }
+          ],
+          "followUp": "Une tradition et une baguette. Voilà !",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_bread_s02",
+          "place": "Texto · Léa · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "Léa, your flatmate, texts you that there's no bread at home. She says tu to you. Choose your reply.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Robin, plus de pain à la maison ! Tu passes à la boulangerie ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which reply fits Léa?",
+              "choices": [
+                "Très bien, madame, je passe à la boulangerie.",
+                "Une tradition, s'il vous plaît.",
+                "Pas de souci, je passe à la boulangerie !"
+              ],
+              "correct": 2,
+              "why": [
+                "Good French, but « madame » is far too formal for your flatmate.",
+                "Good French for the baker, not for a text to Léa.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_07_bread_d05",
+          "place": "À la boulangerie",
+          "cue": "It's busy at the bakery, the baker talks fast, and you didn't catch her question. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Bien cuite ou pas trop, la tradition ?",
+              "voice": "female"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Ask her to repeat, politely.",
+              "bank": [
+                "Pardon ?",
+                "Vous pouvez",
+                "répéter ?",
+                "Tu peux",
+                "Merci ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon ?",
+                  "Vous pouvez",
+                  "répéter ?"
+                ],
+                [
+                  "Vous pouvez",
+                  "répéter ?"
+                ],
+                [
+                  "Pardon ?"
+                ]
+              ],
+              "model": "Pardon ? Vous pouvez répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « bien cuite » mean here?",
+              "target": "bien cuite",
+              "choices": [
+                "still warm",
+                "well baked",
+                "well sliced"
+              ],
+              "correct": 1,
+              "why": [
+                "No: « bien cuite » is about how long it baked, not how warm it is.",
+                "",
+                "No: « cuite » is about baking, not slicing."
+              ]
+            }
+          ],
+          "followUp": "Bien cuite… ou pas trop ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_bread_d06",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat « Les copains ». He says tu to you. You'll buy two baguettes.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Qui passe à la boulangerie pour ce soir ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Moi ! Je prends deux ___."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Say you'll get two baguettes.",
+              "choices": [
+                "baguette",
+                "boulangeries",
+                "baguettes"
+              ],
+              "correct": 2,
+              "why": [
+                "Two baguettes: the noun takes -s.",
+                "You buy bread, not bakeries.",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo ask?",
+              "choices": [
+                "Who's going to the bakery",
+                "Who's coming tonight"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Qui passe à la boulangerie ? »"
+            }
+          ],
+          "followUp": "Top, merci Robin !",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_bread_s03",
+          "place": "À la boulangerie · phrase seule",
+          "standalone": "Corriger",
+          "cue": "At the bakery, the baker says vous to you. Fix the agreement in your order.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Bonjour, je voudrais une tradition bien cuit, s'il vous plaît.",
+              "error": {
+                "word": "cuit",
+                "fix": "cuite",
+                "choices": [
+                  "cuites",
+                  "cuite",
+                  "cuit"
+                ],
+                "why": "« Tradition » is feminine and singular, so « bien cuite »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Correct the highlighted word."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_07_bread_d07",
+          "place": "À la boulangerie",
+          "cue": "At the bakery, the baker says vous to you. You'd like your baguette well baked, and a tradition as well.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Et la baguette, bien cuite ?",
+              "voice": "female"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, et une tradition ___."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « baguette » mean here?",
+              "target": "baguette",
+              "choices": [
+                "a bread roll",
+                "a plain French loaf",
+                "a cake"
+              ],
+              "correct": 1,
+              "why": [
+                "No: « une baguette » is long, not a roll.",
+                "",
+                "No: « une baguette » is bread."
+              ]
+            },
+            {
+              "type": "complete",
+              "prompt": "Add a tradition as well.",
+              "choices": [
+                "non plus",
+                "aussi",
+                "trop"
+              ],
+              "correct": 1,
+              "why": [
+                "« Non plus » only follows a negative; after « oui », say « aussi ».",
+                "",
+                "« Trop » means too much, not as well."
+              ]
+            }
+          ],
+          "followUp": "Une baguette bien cuite et une tradition. Voilà !",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_bread_d08",
+          "place": "Sur le palier",
+          "cue": "M. Ferrand, your older neighbour, meets you on the landing. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Bonjour ! Vous allez à la boulangerie ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say yes, and offer to get him a baguette.",
+              "bank": [
+                "Oui !",
+                "Je vous prends",
+                "une baguette ?",
+                "Je te prends",
+                "un baguette ?"
+              ],
+              "accepted": [
+                [
+                  "Oui !",
+                  "Je vous prends",
+                  "une baguette ?"
+                ]
+              ],
+              "model": "Oui ! Je vous prends une baguette ?"
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does M. Ferrand ask?",
+              "choices": [
+                "If you're going to the bakery",
+                "If you've been to the bakery"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Vous allez à la boulangerie ? »"
+            }
+          ],
+          "followUp": "Oh, c'est gentil ! Une baguette bien cuite, alors.",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_bread_s04",
+          "place": "Sur le palier · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You asked Léa, who says tu to you. Now ask M. Ferrand, your neighbour, who says vous to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Léa, je passe à la boulangerie. Tu veux une tradition ?",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Ask M. Ferrand the same two things, with vous.",
+              "bank": [
+                "Monsieur, je passe",
+                "à la boulangerie.",
+                "Vous voulez",
+                "une tradition ?",
+                "Tu veux",
+                "Vous veux"
+              ],
+              "accepted": [
+                [
+                  "Monsieur, je passe",
+                  "à la boulangerie.",
+                  "Vous voulez",
+                  "une tradition ?"
+                ],
+                [
+                  "Vous voulez",
+                  "une tradition ?",
+                  "Monsieur, je passe",
+                  "à la boulangerie."
+                ]
+              ],
+              "model": "Monsieur, je passe à la boulangerie. Vous voulez une tradition ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_07_bread_d09",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, is at the bakery and texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Il reste une tradition bien cuite !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Super, prends-la ___ moi !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès tell you?",
+              "choices": [
+                "There are no traditions left",
+                "There's one well-baked tradition left"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Il reste une tradition bien cuite ! »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Ask her to take it for you.",
+              "choices": [
+                "à",
+                "pour",
+                "de"
+              ],
+              "correct": 1,
+              "why": [
+                "« Prends-la à moi » isn't French: « pour moi » means for me.",
+                "",
+                "« De moi » means from me or of me."
+              ]
+            }
+          ],
+          "followUp": "C'est noté !",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_bread_d10",
+          "place": "À la boulangerie",
+          "cue": "At the bakery, you asked for a tradition. The baker says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Plus de traditions, désolée ! Une baguette à la place ?",
+              "voice": "female"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the baker say?",
+              "choices": [
+                "The traditions are well baked",
+                "There are no traditions left"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Plus de traditions »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Accept the baguette, politely.",
+              "bank": [
+                "Oui,",
+                "une baguette,",
+                "s'il vous plaît.",
+                "un baguette,",
+                "s'il te plaît.",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "une baguette,",
+                  "s'il vous plaît."
+                ],
+                [
+                  "Oui,",
+                  "s'il vous plaît."
+                ]
+              ],
+              "model": "Oui, une baguette, s'il vous plaît."
+            }
+          ],
+          "followUp": "Une baguette, voilà ! Bonne journée !",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_bread_s05",
+          "place": "Texto · Léa · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "You're texting Léa, who says tu to you. Which French word means “bakery”?",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Je passe à la ___ ce matin, tu veux une tradition ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "bakery",
+              "choices": [
+                "tradition",
+                "boulangerie",
+                "baguette"
+              ],
+              "correct": 1,
+              "why": [
+                "« Tradition » is the bread, not the shop.",
+                "",
+                "« Baguette » is a loaf, not the shop."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_07_pastry",
+      "title": "Les viennoiseries",
+      "note": "Order pastries: « croissants », « pains au chocolat » and « une tarte aux pommes ». Use « en » with a number instead of repeating the noun (« j'en prends deux »), and « aux » for a flavour.",
+      "items": [
+        {
+          "id": "sit_07_pastry_d01",
+          "place": "À la boulangerie",
+          "cue": "At the bakery, the baker says vous to you. You'd like two croissants.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Il reste des croissants, si vous voulez.",
+              "voice": "female"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the baker say?",
+              "choices": [
+                "The croissants are all gone",
+                "There are still some croissants"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Il reste des croissants »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Order two, with « en », politely.",
+              "bank": [
+                "Oui !",
+                "J'en prends",
+                "deux,",
+                "s'il vous plaît.",
+                "Je prends",
+                "deux croissant,",
+                "s'il te plaît."
+              ],
+              "accepted": [
+                [
+                  "Oui !",
+                  "J'en prends",
+                  "deux,",
+                  "s'il vous plaît."
+                ],
+                [
+                  "J'en prends",
+                  "deux,",
+                  "s'il vous plaît."
+                ]
+              ],
+              "model": "Oui ! J'en prends deux, s'il vous plaît."
+            }
+          ],
+          "followUp": "Deux croissants, voilà !",
+          "newWords": [
+            "croissants"
+          ]
+        },
+        {
+          "id": "sit_07_pastry_d02",
+          "place": "Au café",
+          "cue": "At the café, Karim, the barista, has a bakery bag. He says tu to you now.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Tu veux un pain au chocolat ? J'en ai trois."
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, merci, c'est ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Karim offer?",
+              "choices": [
+                "A chocolate croissant",
+                "A hot chocolate"
+              ],
+              "correct": 0,
+              "miss": "Reread: « un pain au chocolat »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Say it's kind of him.",
+              "choices": [
+                "gentille",
+                "gentils",
+                "gentil"
+              ],
+              "correct": 2,
+              "why": [
+                "After « c'est », the adjective stays masculine: « c'est gentil », even from a woman.",
+                "After « c'est », no plural: « c'est gentil ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "De rien ! Voilà, pour toi.",
+          "newWords": [
+            "pain au chocolat"
+          ]
+        },
+        {
+          "id": "sit_07_pastry_s01",
+          "place": "À la boulangerie · phrase seule",
+          "standalone": "Construire",
+          "cue": "At the bakery, the baker says vous to you. Order one croissant and two chocolate croissants.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Bonjour, madame ! Il reste des croissants et des pains au chocolat.",
+              "voice": "female"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Greet her, then order one croissant and two chocolate croissants, politely.",
+              "bank": [
+                "Bonjour !",
+                "Un croissant",
+                "et",
+                "deux pains au chocolat,",
+                "s'il vous plaît.",
+                "deux pain au chocolat,",
+                "Une croissant",
+                "s'il te plaît."
+              ],
+              "accepted": [
+                [
+                  "Bonjour !",
+                  "Un croissant",
+                  "et",
+                  "deux pains au chocolat,",
+                  "s'il vous plaît."
+                ]
+              ],
+              "model": "Bonjour ! Un croissant et deux pains au chocolat, s'il vous plaît."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_07_pastry_d03",
+          "place": "À la boulangerie",
+          "cue": "At the bakery, the baker says vous to you. You need a tart for six people tonight.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Une tarte aux pommes, madame ?",
+              "voice": "female"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, une tarte ___ six, s'il vous plaît."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Say it's for six people.",
+              "choices": [
+                "à",
+                "avec",
+                "pour"
+              ],
+              "correct": 2,
+              "why": [
+                "« Une tarte à six » isn't how you say it: « pour six » means for six people.",
+                "« Avec six » would mean with six of something.",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does the baker offer?",
+              "choices": [
+                "An apple tart",
+                "A bag of apples"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Une tarte aux pommes ? »"
+            }
+          ],
+          "followUp": "Une tarte pour six, voilà !",
+          "newWords": [
+            "tarte"
+          ]
+        },
+        {
+          "id": "sit_07_pastry_d04",
+          "place": "À l'appart",
+          "cue": "At home, Léa, your flatmate, says tu to you. You've just come back from the bakery.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Tu as pris des croissants ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « croissants » mean here?",
+              "target": "croissants",
+              "choices": [
+                "chocolate croissants",
+                "croissants",
+                "apple tarts"
+              ],
+              "correct": 1,
+              "why": [
+                "Those would be « pains au chocolat ».",
+                "",
+                "Those would be « tartes aux pommes »."
+              ]
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes: two croissants and a tart.",
+              "bank": [
+                "Oui,",
+                "deux croissants",
+                "et",
+                "une tarte !",
+                "deux croissant",
+                "un tarte !",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "deux croissants",
+                  "et",
+                  "une tarte !"
+                ]
+              ],
+              "model": "Oui, deux croissants et une tarte !"
+            }
+          ],
+          "followUp": "Une tarte aussi ? Super !",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_pastry_s02",
+          "place": "Au bureau · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "At the office, Inès, your colleague, offers you a chocolate croissant. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Robin, tu veux un pain au chocolat ? J'en ai deux !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which reply fits Inès?",
+              "choices": [
+                "Je vous remercie, madame.",
+                "Un pain au chocolat, s'il vous plaît.",
+                "Oh, merci, c'est gentil !"
+              ],
+              "correct": 2,
+              "why": [
+                "Good French, but far too formal for a colleague who says tu to you.",
+                "Good French for ordering from the baker, not for thanking a friend.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_07_pastry_d05",
+          "place": "À la boulangerie",
+          "cue": "At the bakery, the baker talks fast and you didn't catch it. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Il reste un pain au chocolat et une tarte.",
+              "voice": "female"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Ask her to repeat it more slowly, politely.",
+              "bank": [
+                "Pardon ?",
+                "Vous pouvez",
+                "répéter",
+                "plus lentement ?",
+                "Tu peux",
+                "répète"
+              ],
+              "accepted": [
+                [
+                  "Pardon ?",
+                  "Vous pouvez",
+                  "répéter",
+                  "plus lentement ?"
+                ],
+                [
+                  "Vous pouvez",
+                  "répéter",
+                  "plus lentement ?"
+                ]
+              ],
+              "model": "Pardon ? Vous pouvez répéter plus lentement ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « pain au chocolat » mean here?",
+              "target": "pain au chocolat",
+              "choices": [
+                "a loaf of bread",
+                "a chocolate croissant",
+                "a hot chocolate"
+              ],
+              "correct": 1,
+              "why": [
+                "No: « un pain au chocolat » is a pastry, not a loaf.",
+                "",
+                "A hot chocolate would be « un chocolat »."
+              ]
+            }
+          ],
+          "followUp": "Un pain au chocolat… et une tarte !",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_pastry_d06",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat « Les copains ». He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "J'apporte des croissants demain matin !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Super ! Et un pain au chocolat ___ moi ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Ask for a chocolate croissant for you.",
+              "choices": [
+                "avec",
+                "pour",
+                "à"
+              ],
+              "correct": 1,
+              "why": [
+                "« Avec moi » means with me, not for me.",
+                "",
+                "« À moi » means mine: ask « pour moi »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What will Théo bring tomorrow morning?",
+              "choices": [
+                "Croissants",
+                "A tart"
+              ],
+              "correct": 0,
+              "miss": "Reread: « J'apporte des croissants »."
+            }
+          ],
+          "followUp": "Ça marche, un pain au chocolat pour toi !",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_pastry_s03",
+          "place": "À la boulangerie · phrase seule",
+          "standalone": "Corriger",
+          "cue": "At the bakery, the baker says vous to you. Fix the plural in your order.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Bonjour, je voudrais deux croissant et une tarte, s'il vous plaît.",
+              "error": {
+                "word": "croissant",
+                "fix": "croissants",
+                "choices": [
+                  "croissant",
+                  "croissants",
+                  "de croissants"
+                ],
+                "why": "Two croissants: the noun takes -s, « deux croissants »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Correct the highlighted word."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_07_pastry_d07",
+          "place": "À la boulangerie",
+          "cue": "At the bakery, the baker says vous to you. You want the tart for six people, and you'd like apple.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "La tarte, pour deux ou pour six ?",
+              "voice": "female"
+            },
+            {
+              "speaker": "learner",
+              "text": "Pour six. Elle est ___ pommes ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « tarte » mean here?",
+              "target": "tarte",
+              "choices": [
+                "a loaf",
+                "a tart, pie",
+                "a bag"
+              ],
+              "correct": 1,
+              "why": [
+                "No: a loaf is bread; « une tarte » has a pastry base and a filling.",
+                "",
+                "No: a bag would be « un sac »."
+              ]
+            },
+            {
+              "type": "complete",
+              "prompt": "Ask if it's an apple one.",
+              "choices": [
+                "à",
+                "des",
+                "aux"
+              ],
+              "correct": 2,
+              "why": [
+                "« À » + « les » contracts: « aux pommes ».",
+                "« Des pommes » would mean some apples; a flavour takes « aux ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Oui, aux pommes. Pour six, voilà !",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_pastry_d08",
+          "place": "WhatsApp · Mme Dumas",
+          "cue": "Mme Dumas, your landlady, writes on WhatsApp. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Mme Dumas",
+              "text": "Je passe demain matin. J'apporte des croissants !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Thank her formally, and say it's very kind.",
+              "bank": [
+                "Je vous remercie,",
+                "madame,",
+                "c'est très gentil !",
+                "Je te remercie,",
+                "c'est très gentille !",
+                "Salut,"
+              ],
+              "accepted": [
+                [
+                  "Je vous remercie,",
+                  "madame,",
+                  "c'est très gentil !"
+                ],
+                [
+                  "Je vous remercie,",
+                  "c'est très gentil !"
+                ]
+              ],
+              "model": "Je vous remercie, madame, c'est très gentil !"
+            },
+            {
+              "type": "comprehend",
+              "prompt": "When is Mme Dumas coming?",
+              "choices": [
+                "This evening",
+                "Tomorrow morning"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Je passe demain matin »."
+            }
+          ],
+          "followUp": "Bonne journée, Robin.",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_pastry_s04",
+          "place": "À la boulangerie · phrase seule",
+          "standalone": "Transformer",
+          "cue": "At the bakery, the baker says vous to you. Change your order from one croissant to three.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Bonjour, je voudrais un croissant, s'il vous plaît.",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Now order three croissants.",
+              "bank": [
+                "Bonjour,",
+                "je voudrais",
+                "trois croissants,",
+                "s'il vous plaît.",
+                "trois croissant,",
+                "un croissant,",
+                "s'il te plaît."
+              ],
+              "accepted": [
+                [
+                  "Bonjour,",
+                  "je voudrais",
+                  "trois croissants,",
+                  "s'il vous plaît."
+                ],
+                [
+                  "Bonjour,",
+                  "trois croissants,",
+                  "s'il vous plaît."
+                ]
+              ],
+              "model": "Bonjour, je voudrais trois croissants, s'il vous plaît."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_07_pastry_d09",
+          "place": "À la boulangerie",
+          "cue": "At the bakery, the baker says vous to you. You came for a croissant, but a chocolate croissant is fine too.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Plus de croissants, désolée !",
+              "voice": "female"
+            },
+            {
+              "speaker": "learner",
+              "text": "Ah ! Un pain au chocolat, ___ la place."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the baker say?",
+              "choices": [
+                "There are no croissants left",
+                "The croissants are still warm"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Plus de croissants »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Ask for a chocolate croissant instead.",
+              "choices": [
+                "de",
+                "à",
+                "en"
+              ],
+              "correct": 1,
+              "why": [
+                "« De la place » means some room, not instead.",
+                "",
+                "« En la place » isn't French."
+              ]
+            }
+          ],
+          "followUp": "Un pain au chocolat, voilà !",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_pastry_d10",
+          "place": "Au café",
+          "cue": "At the café, Karim, the barista, says tu to you now. You'd like a chocolate croissant.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Des croissants ou un pain au chocolat, ce matin ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Karim offer?",
+              "choices": [
+                "Coffee or tea",
+                "Croissants or a chocolate croissant"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Des croissants ou un pain au chocolat ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Ask for a chocolate croissant. You say tu to each other.",
+              "bank": [
+                "Un pain au chocolat,",
+                "s'il te plaît !",
+                "s'il vous plaît !",
+                "Une pain au chocolat,",
+                "Des croissants,"
+              ],
+              "accepted": [
+                [
+                  "Un pain au chocolat,",
+                  "s'il te plaît !"
+                ]
+              ],
+              "model": "Un pain au chocolat, s'il te plaît !"
+            }
+          ],
+          "followUp": "Et un café, comme d'habitude ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_pastry_s05",
+          "place": "À la boulangerie · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "At the bakery, the baker says vous to you. Which French word means “tart, pie”?",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Bonjour ! Une ___ aux pommes pour ce soir, s'il vous plaît."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "tart, pie",
+              "choices": [
+                "tradition",
+                "baguette",
+                "tarte"
+              ],
+              "correct": 2,
+              "why": [
+                "« Tradition » is a loaf of bread.",
+                "« Baguette » is a loaf of bread.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_07_quantity",
+      "title": "Les quantités au marché",
+      "note": "Ask for market quantities: « un kilo de », « une barquette de ». After a quantity, use « de », not « des »: « un kilo de tomates », but « j'ai pris des fraises ».",
+      "items": [
+        {
+          "id": "sit_07_quantity_d01",
+          "place": "Au marché",
+          "cue": "At the market, a stallholder says vous to you. You'd like a kilo of what he offers.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Bonjour ! Des tomates, aujourd'hui ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the stallholder offer?",
+              "choices": [
+                "Apples",
+                "Tomatoes"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Des tomates ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes: a kilo of them, politely.",
+              "bank": [
+                "Oui,",
+                "un kilo de tomates,",
+                "s'il vous plaît.",
+                "un kilo des tomates,",
+                "une kilo de tomates,",
+                "s'il te plaît."
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "un kilo de tomates,",
+                  "s'il vous plaît."
+                ]
+              ],
+              "model": "Oui, un kilo de tomates, s'il vous plaît."
+            }
+          ],
+          "followUp": "Un kilo de tomates, voilà !",
+          "newWords": [
+            "tomates"
+          ]
+        },
+        {
+          "id": "sit_07_quantity_d02",
+          "place": "Au marché",
+          "cue": "At the market, the stallholder says vous to you. You'd rather have a kilo.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Une barquette de tomates ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Non, un ___ de tomates, s'il vous plaît."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the stallholder suggest?",
+              "choices": [
+                "A punnet of tomatoes",
+                "A kilo of tomatoes"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Une barquette de tomates ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Ask for one kilo.",
+              "choices": [
+                "litre",
+                "kilo",
+                "kilos"
+              ],
+              "correct": 1,
+              "why": [
+                "You don't buy tomatoes by the litre.",
+                "",
+                "One kilo: no -s."
+              ]
+            }
+          ],
+          "followUp": "Un kilo, très bien.",
+          "newWords": [
+            "barquette"
+          ]
+        },
+        {
+          "id": "sit_07_quantity_s01",
+          "place": "Au marché · phrase seule",
+          "standalone": "Construire",
+          "cue": "At the market, the stallholder says vous to you. Order a kilo of tomatoes and some apples.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Bonjour, madame ! Des tomates ou des pommes, aujourd'hui ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Order a kilo of tomatoes and some apples, politely.",
+              "bank": [
+                "Un kilo",
+                "de tomates",
+                "et",
+                "des pommes,",
+                "s'il vous plaît.",
+                "des tomates",
+                "Une kilo",
+                "s'il te plaît."
+              ],
+              "accepted": [
+                [
+                  "Un kilo",
+                  "de tomates",
+                  "et",
+                  "des pommes,",
+                  "s'il vous plaît."
+                ]
+              ],
+              "model": "Un kilo de tomates et des pommes, s'il vous plaît."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_07_quantity_d03",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you from the market. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Il y a des fraises au marché ! Je t'en prends ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, une ___ de fraises !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Ask for one punnet.",
+              "choices": [
+                "kilo",
+                "barquettes",
+                "barquette"
+              ],
+              "correct": 2,
+              "why": [
+                "« Kilo » is masculine: it would be « un kilo ».",
+                "One punnet: no -s after « une ».",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa tell you?",
+              "choices": [
+                "There are strawberries at the market",
+                "There are no strawberries left"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Il y a des fraises au marché ! »"
+            }
+          ],
+          "followUp": "Top, une barquette pour toi !",
+          "newWords": [
+            "fraises"
+          ]
+        },
+        {
+          "id": "sit_07_quantity_d04",
+          "place": "Au marché",
+          "cue": "At the market, a stallholder says vous to you. You'd also like a kilo of tomatoes.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Et avec les fraises, des tomates ?",
+              "voice": "female"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « tomates » mean here?",
+              "target": "tomates",
+              "choices": [
+                "apples",
+                "tomatoes",
+                "cherries"
+              ],
+              "correct": 1,
+              "why": [
+                "Apples would be « pommes ».",
+                "",
+                "No: « tomates » are tomatoes."
+              ]
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes: a kilo, politely.",
+              "bank": [
+                "Oui,",
+                "un kilo,",
+                "s'il vous plaît.",
+                "une kilo,",
+                "s'il te plaît."
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "un kilo,",
+                  "s'il vous plaît."
+                ]
+              ],
+              "model": "Oui, un kilo, s'il vous plaît."
+            }
+          ],
+          "followUp": "Un kilo de tomates, voilà !",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_quantity_s02",
+          "place": "Au marché · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "At the market, a stallholder says vous to you. Choose how to ask for a punnet of strawberries.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Bonjour, madame ! Des fraises ou des tomates, aujourd'hui ?",
+              "voice": "female"
+            }
+          ],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which order fits the stallholder?",
+              "choices": [
+                "Une barquette de fraises, s'il te plaît.",
+                "Ouais, des fraises.",
+                "Une barquette de fraises, s'il vous plaît."
+              ],
+              "correct": 2,
+              "why": [
+                "Good French with a friend, but the stallholder says vous to you.",
+                "Good spoken French, but too casual for a stallholder.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_07_quantity_d05",
+          "place": "Au marché",
+          "cue": "At the market, it's noisy and you didn't catch the stallholder. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Les tomates, une barquette ou un kilo ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Ask him to repeat, politely.",
+              "bank": [
+                "Pardon ?",
+                "Vous pouvez",
+                "répéter ?",
+                "Tu peux",
+                "Merci ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon ?",
+                  "Vous pouvez",
+                  "répéter ?"
+                ],
+                [
+                  "Vous pouvez",
+                  "répéter ?"
+                ],
+                [
+                  "Pardon ?"
+                ]
+              ],
+              "model": "Pardon ? Vous pouvez répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « barquette » mean here?",
+              "target": "barquette",
+              "choices": [
+                "a big bag",
+                "a kilo",
+                "a punnet, small tray"
+              ],
+              "correct": 2,
+              "why": [
+                "A bag would be « un sac ».",
+                "A kilo is « un kilo », the other option.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Une barquette… ou un kilo ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_quantity_d06",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat « Les copains ». He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Une tarte ce soir ! Qui passe au marché ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Moi ! J'apporte deux barquettes de ___."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Say you're bringing two punnets of strawberries.",
+              "choices": [
+                "tomates",
+                "pain",
+                "fraises"
+              ],
+              "correct": 2,
+              "why": [
+                "« Tomates » are tomatoes: you're bringing strawberries.",
+                "« Pain » is bread, and it doesn't come in punnets.",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo ask?",
+              "choices": [
+                "Who's going to the market",
+                "Who's making the tart"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Qui passe au marché ? »"
+            }
+          ],
+          "followUp": "Top ! Des fraises pour la tarte !",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_quantity_s03",
+          "place": "Au marché · phrase seule",
+          "standalone": "Corriger",
+          "cue": "At the market, the stallholder says vous to you. Fix the word after the quantity.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Bonjour, je voudrais un kilo des tomates, s'il vous plaît.",
+              "error": {
+                "word": "des",
+                "fix": "de",
+                "choices": [
+                  "du",
+                  "de",
+                  "des"
+                ],
+                "why": "After a quantity like « un kilo », use « de »: « un kilo de tomates »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Correct the highlighted word."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_07_quantity_d07",
+          "place": "Au marché",
+          "cue": "At the market, a stallholder says vous to you. You'd like two punnets of strawberries.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Et pour les fraises, combien ?",
+              "voice": "female"
+            },
+            {
+              "speaker": "learner",
+              "text": "Deux ___, s'il vous plaît."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « fraises » mean here?",
+              "target": "fraises",
+              "choices": [
+                "cherries",
+                "strawberries",
+                "tomatoes"
+              ],
+              "correct": 1,
+              "why": [
+                "No: « fraises » are strawberries.",
+                "",
+                "Tomatoes are « tomates »."
+              ]
+            },
+            {
+              "type": "complete",
+              "prompt": "Ask for two punnets.",
+              "choices": [
+                "barquette",
+                "litres",
+                "barquettes"
+              ],
+              "correct": 2,
+              "why": [
+                "Two punnets: add -s.",
+                "Strawberries aren't sold by the litre.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Deux barquettes de fraises, voilà !",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_quantity_d08",
+          "place": "Sur le palier",
+          "cue": "M. Ferrand, your older neighbour, is back from the market with his basket. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Les tomates du marché sont délicieuses !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say you're going to buy some tomatoes tomorrow.",
+              "bank": [
+                "Je vais acheter",
+                "des tomates",
+                "demain !",
+                "de tomates",
+                "hier !",
+                "Vous allez acheter"
+              ],
+              "accepted": [
+                [
+                  "Je vais acheter",
+                  "des tomates",
+                  "demain !"
+                ]
+              ],
+              "model": "Je vais acheter des tomates demain !"
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does M. Ferrand say about the tomatoes?",
+              "choices": [
+                "They're expensive",
+                "They're delicious"
+              ],
+              "correct": 1,
+              "miss": "Reread: « sont délicieuses »."
+            }
+          ],
+          "followUp": "Bonne idée !",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_quantity_s04",
+          "place": "Au marché · phrase seule",
+          "standalone": "Transformer",
+          "cue": "At the market, the stallholder says vous to you. Ask for two kilos instead of one.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Bonjour, je voudrais un kilo de tomates, s'il vous plaît.",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Now ask for two kilos.",
+              "bank": [
+                "Bonjour,",
+                "je voudrais",
+                "deux kilos",
+                "de tomates,",
+                "s'il vous plaît.",
+                "deux kilo",
+                "des tomates,"
+              ],
+              "accepted": [
+                [
+                  "Bonjour,",
+                  "je voudrais",
+                  "deux kilos",
+                  "de tomates,",
+                  "s'il vous plaît."
+                ],
+                [
+                  "Bonjour,",
+                  "deux kilos",
+                  "de tomates,",
+                  "s'il vous plaît."
+                ]
+              ],
+              "model": "Bonjour, je voudrais deux kilos de tomates, s'il vous plaît."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_07_quantity_d09",
+          "place": "Au bureau",
+          "cue": "At the office, Inès, your colleague, says tu to you. You went to the market this morning.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Tu es allée au marché ce matin ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui ! J'ai pris ___ fraises et un kilo de tomates."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès ask?",
+              "choices": [
+                "If you went to the market",
+                "If you're going to the market"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Tu es allée au marché ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Say you got some strawberries.",
+              "choices": [
+                "de",
+                "du",
+                "des"
+              ],
+              "correct": 2,
+              "why": [
+                "No quantity before « fraises », so « des », not « de ».",
+                "« Fraises » is plural: « des ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Des fraises ? Top !",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_quantity_d10",
+          "place": "Au marché",
+          "cue": "At the market, a stallholder says vous to you. You came for strawberries.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Il reste une barquette de fraises !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the stallholder say?",
+              "choices": [
+                "The strawberries are all gone",
+                "There's one punnet of strawberries left"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Il reste une barquette de fraises ! »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say great, you'll take it.",
+              "bank": [
+                "Super !",
+                "Je la prends.",
+                "Je le prends.",
+                "Je les prends."
+              ],
+              "accepted": [
+                [
+                  "Super !",
+                  "Je la prends."
+                ],
+                [
+                  "Je la prends."
+                ]
+              ],
+              "model": "Super ! Je la prends."
+            }
+          ],
+          "followUp": "Une barquette de fraises, voilà !",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_quantity_s05",
+          "place": "Au marché · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "At the market, a stallholder says vous to you. Which French word means “punnet, small tray”?",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Bonjour ! Une ___ de fraises et un kilo de tomates, s'il vous plaît."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "punnet, small tray",
+              "choices": [
+                "tarte",
+                "barquette",
+                "baguette"
+              ],
+              "correct": 1,
+              "why": [
+                "« Tarte » is a tart, not a container.",
+                "",
+                "« Baguette » is a loaf of bread."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_07_price",
+      "title": "Demander le prix",
+      "note": "Ask « C'est combien ? » and understand prices « le kilo » and « la barquette ». After « c'est », « cher » never changes: « c'est un peu cher », « pas cher », even about tomatoes.",
+      "items": [
+        {
+          "id": "sit_07_price_d01",
+          "place": "Au marché",
+          "cue": "At the market, a stallholder says vous to you. You ask about the strawberries.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Bonjour ! C'est combien, les fraises ?"
+            },
+            {
+              "speaker": "server",
+              "text": "Quatre euros la barquette."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "How much are the strawberries?",
+              "choices": [
+                "Four euros a kilo",
+                "Four euros a punnet"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Quatre euros la barquette »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Ask for one punnet, politely.",
+              "bank": [
+                "Une barquette,",
+                "s'il vous plaît.",
+                "Un barquette,",
+                "Deux barquettes,",
+                "s'il te plaît."
+              ],
+              "accepted": [
+                [
+                  "Une barquette,",
+                  "s'il vous plaît."
+                ]
+              ],
+              "model": "Une barquette, s'il vous plaît."
+            }
+          ],
+          "followUp": "Une barquette, voilà !",
+          "newWords": [
+            "c'est combien"
+          ]
+        },
+        {
+          "id": "sit_07_price_d02",
+          "place": "Au marché",
+          "cue": "At the market, a stallholder says vous to you. You think the tomatoes cost a bit too much.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Les tomates ? Trois euros le kilo.",
+              "voice": "female"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oh, c'est un peu ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What's the price of the tomatoes?",
+              "choices": [
+                "Three euros a kilo",
+                "Three euros a punnet"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Trois euros le kilo »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Say it's a bit expensive.",
+              "choices": [
+                "chère",
+                "chers",
+                "cher"
+              ],
+              "correct": 2,
+              "why": [
+                "After « c'est », « cher » stays masculine, even about tomatoes.",
+                "After « c'est », no plural: « c'est cher ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Mais elles sont très bonnes, madame !",
+          "newWords": [
+            "le kilo"
+          ]
+        },
+        {
+          "id": "sit_07_price_s01",
+          "place": "Au marché · phrase seule",
+          "standalone": "Construire",
+          "cue": "At the market, the stallholder says vous to you. Greet him and ask the price of a punnet of strawberries.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Bonjour, madame ! Il reste des fraises et des tomates."
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Greet him, then ask how much a punnet of strawberries is.",
+              "bank": [
+                "Bonjour,",
+                "c'est combien,",
+                "la barquette",
+                "de fraises ?",
+                "des fraises ?",
+                "le barquette"
+              ],
+              "accepted": [
+                [
+                  "Bonjour,",
+                  "c'est combien,",
+                  "la barquette",
+                  "de fraises ?"
+                ]
+              ],
+              "model": "Bonjour, c'est combien, la barquette de fraises ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_07_price_d03",
+          "place": "À l'appart",
+          "cue": "At home, Léa, your flatmate, says tu to you. You bought strawberries at the market.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Les fraises du marché, c'est quel prix ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Quatre euros la barquette. Pas ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Say they're not expensive.",
+              "choices": [
+                "cher",
+                "chers",
+                "chère"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "It's short for « ce n'est pas cher »: no plural.",
+                "It's short for « ce n'est pas cher »: « cher » stays masculine."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa ask?",
+              "choices": [
+                "Where the market is",
+                "The price of the strawberries"
+              ],
+              "correct": 1,
+              "miss": "Reread: « c'est quel prix ? »"
+            }
+          ],
+          "followUp": "Top ! Des fraises pour ce soir, alors !",
+          "newWords": [
+            "prix"
+          ]
+        },
+        {
+          "id": "sit_07_price_d04",
+          "place": "Au marché",
+          "cue": "At the market, a stallholder says vous to you. You'd like two kilos of apples.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "C'est combien, les pommes ?"
+            },
+            {
+              "speaker": "server",
+              "text": "Deux euros le kilo.",
+              "voice": "female"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « c'est combien » mean here?",
+              "target": "c'est combien",
+              "choices": [
+                "is it ripe?",
+                "how much is it?",
+                "where is it?"
+              ],
+              "correct": 1,
+              "why": [
+                "No: you're asking about money.",
+                "",
+                "No: « où » would ask where."
+              ]
+            },
+            {
+              "type": "reply",
+              "prompt": "Ask for two kilos, politely.",
+              "bank": [
+                "Deux kilos,",
+                "s'il vous plaît.",
+                "Deux kilo,",
+                "Deux litres,",
+                "s'il te plaît."
+              ],
+              "accepted": [
+                [
+                  "Deux kilos,",
+                  "s'il vous plaît."
+                ]
+              ],
+              "model": "Deux kilos, s'il vous plaît."
+            }
+          ],
+          "followUp": "Deux kilos de pommes, voilà !",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_price_s02",
+          "place": "Au marché · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "At the market, a stallholder you don't know says vous to you. Choose how to ask the price of the cheese.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which question fits the stallholder?",
+              "choices": [
+                "Salut ! C'est combien, le fromage ?",
+                "Excusez-moi, c'est combien, le fromage ?",
+                "Le fromage, c'est combien, Léa ?"
+              ],
+              "correct": 1,
+              "why": [
+                "Good French with a friend, but « salut » is too casual for a stallholder.",
+                "",
+                "Good French, but you're asking the stallholder, not Léa."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_07_price_d05",
+          "place": "Au marché",
+          "cue": "At the market, it's noisy and you didn't catch the stallholder. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Les pommes ! Deux euros le kilo !",
+              "voice": "female"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Ask her to repeat, politely.",
+              "bank": [
+                "Pardon ?",
+                "Vous pouvez",
+                "répéter ?",
+                "Tu peux",
+                "Merci ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon ?",
+                  "Vous pouvez",
+                  "répéter ?"
+                ],
+                [
+                  "Vous pouvez",
+                  "répéter ?"
+                ],
+                [
+                  "Pardon ?"
+                ]
+              ],
+              "model": "Pardon ? Vous pouvez répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « le kilo » mean here?",
+              "target": "le kilo",
+              "choices": [
+                "per piece",
+                "per punnet",
+                "per kilo"
+              ],
+              "correct": 2,
+              "why": [
+                "No: « le kilo » is by weight.",
+                "Per punnet would be « la barquette ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Deux euros le kilo, les pommes !",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_price_d06",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. She says tu to you. You saw the tomatoes at the market this morning.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Les tomates au marché, c'est quel prix ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Trois euros ___ kilo."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Tell her the price per kilo.",
+              "choices": [
+                "la",
+                "les",
+                "le"
+              ],
+              "correct": 2,
+              "why": [
+                "« Kilo » is masculine: « le kilo ».",
+                "One kilo, so singular: « le kilo ».",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès want to know?",
+              "choices": [
+                "The price of tomatoes",
+                "Where to buy tomatoes"
+              ],
+              "correct": 0,
+              "miss": "Reread: « c'est quel prix ? »"
+            }
+          ],
+          "followUp": "Pas cher ! Merci, Robin !",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_price_s03",
+          "place": "Au marché · phrase seule",
+          "standalone": "Corriger",
+          "cue": "At the market, the stallholder says vous to you. Fix the article.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Bonjour, c'est combien, la kilo de tomates, s'il vous plaît ?",
+              "error": {
+                "word": "la",
+                "fix": "le",
+                "choices": [
+                  "le",
+                  "les",
+                  "la"
+                ],
+                "why": "« Kilo » is masculine: « le kilo »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Correct the highlighted word."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_07_price_d07",
+          "place": "Au marché",
+          "cue": "At the market, the stallholder says vous to you. You can't read the little sign.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Les prix ? C'est écrit là, madame."
+            },
+            {
+              "speaker": "learner",
+              "text": "Pardon, je ne ___ pas bien."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « prix » mean here?",
+              "target": "prix",
+              "choices": [
+                "sizes",
+                "prices",
+                "labels"
+              ],
+              "correct": 1,
+              "why": [
+                "No: « prix » is what things cost.",
+                "",
+                "No: « prix » is what things cost."
+              ]
+            },
+            {
+              "type": "complete",
+              "prompt": "Say you can't see well.",
+              "choices": [
+                "voit",
+                "vois",
+                "vu"
+              ],
+              "correct": 1,
+              "why": [
+                "« Voit » goes with « il » or « elle »: « je vois ».",
+                "",
+                "« Vu » is a past participle; you need the present: « je ne vois pas »."
+              ]
+            }
+          ],
+          "followUp": "Pardon ! Trois euros le kilo, madame.",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_price_d08",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat « Les copains ». He says tu to you. You bought strawberries this morning.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "C'est combien, les fraises au marché ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Tell him: four euros a punnet.",
+              "bank": [
+                "C'est",
+                "quatre euros",
+                "la barquette !",
+                "le barquette !",
+                "le kilo !"
+              ],
+              "accepted": [
+                [
+                  "C'est",
+                  "quatre euros",
+                  "la barquette !"
+                ]
+              ],
+              "model": "C'est quatre euros la barquette !"
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo want to know?",
+              "choices": [
+                "How much the strawberries cost",
+                "Where the market is"
+              ],
+              "correct": 0,
+              "miss": "Reread: « C'est combien, les fraises ? »"
+            }
+          ],
+          "followUp": "Pas cher ! J'en prends deux.",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_price_s04",
+          "place": "Au marché · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You asked like you would a friend. Ask the stallholder the same thing politely; she says vous to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Salut ! C'est combien, les tomates et les fraises, là ?",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Ask her the same thing, politely.",
+              "bank": [
+                "Excusez-moi,",
+                "c'est combien,",
+                "les tomates",
+                "et les fraises,",
+                "s'il vous plaît ?",
+                "Salut !",
+                "s'il te plaît ?"
+              ],
+              "accepted": [
+                [
+                  "Excusez-moi,",
+                  "c'est combien,",
+                  "les tomates",
+                  "et les fraises,",
+                  "s'il vous plaît ?"
+                ]
+              ],
+              "model": "Excusez-moi, c'est combien, les tomates et les fraises, s'il vous plaît ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_07_price_d09",
+          "place": "Au marché",
+          "cue": "At the market, a stallholder says vous to you. You bought two kilos of tomatoes.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Deux kilos, ça fait six euros, madame.",
+              "voice": "female"
+            },
+            {
+              "speaker": "learner",
+              "text": "Voilà. Les prix sont ___ ici !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "How much do you pay?",
+              "choices": [
+                "Three euros",
+                "Six euros"
+              ],
+              "correct": 1,
+              "miss": "Reread: « ça fait six euros »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Say the prices are good here.",
+              "choices": [
+                "bonnes",
+                "bons",
+                "bon"
+              ],
+              "correct": 1,
+              "why": [
+                "« Prix » is masculine: « bons ».",
+                "",
+                "« Les prix » is plural: « bons »."
+              ]
+            }
+          ],
+          "followUp": "Merci, madame ! Bonne journée !",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_price_d10",
+          "place": "Au marché",
+          "cue": "At the market, a stallholder says vous to you. You only need one kilo.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Les tomates ? Cinq euros le kilo."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "How much are the tomatoes?",
+              "choices": [
+                "Five euros a kilo",
+                "Five euros a punnet"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Cinq euros le kilo »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Say it's a bit expensive, but you'll take one kilo.",
+              "bank": [
+                "C'est un peu cher,",
+                "mais",
+                "je prends",
+                "un kilo.",
+                "C'est un peu chère,",
+                "deux kilos.",
+                "je prend"
+              ],
+              "accepted": [
+                [
+                  "C'est un peu cher,",
+                  "mais",
+                  "je prends",
+                  "un kilo."
+                ]
+              ],
+              "model": "C'est un peu cher, mais je prends un kilo."
+            }
+          ],
+          "followUp": "Un kilo, voilà. Elles sont très bonnes !",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_price_s05",
+          "place": "Au marché · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "At the market, you tell a stallholder, who says vous to you. Which French word means “prices”?",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Vos ___ sont très bons, et vos tomates sont délicieuses !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "prices",
+              "choices": [
+                "kilos",
+                "prix",
+                "barquettes"
+              ],
+              "correct": 1,
+              "why": [
+                "« Kilos » are weights, not what things cost.",
+                "",
+                "« Barquettes » are punnets, and they're feminine: that would need « bonnes »."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_07_taste",
+      "title": "Choisir et goûter",
+      "note": "Taste before you buy: stallholders offer « Vous voulez goûter ? », and you answer « Je veux bien en goûter un ». « Mûr » agrees with the fruit: « les fraises sont mûres », « les abricots sont mûrs ». Stallholders say vous; friends say tu.",
+      "items": [
+        {
+          "id": "sit_07_taste_d01",
+          "place": "Au marché",
+          "cue": "At the market, a stallholder (a woman) says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Vous voulez goûter une fraise, madame ?",
+              "voice": "female"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the stallholder offer you?",
+              "choices": [
+                "A strawberry to taste",
+                "A punnet of tomatoes"
+              ],
+              "correct": 0,
+              "miss": "Reread: « goûter une fraise » means to taste a strawberry."
+            },
+            {
+              "type": "reply",
+              "prompt": "Accept with thanks, then say it's delicious.",
+              "bank": [
+                "Oui,",
+                "merci !",
+                "Elle",
+                "est",
+                "délicieuse !",
+                "Il",
+                "délicieux !",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "merci !",
+                  "Elle",
+                  "est",
+                  "délicieuse !"
+                ]
+              ],
+              "model": "Oui, merci ! Elle est délicieuse !"
+            }
+          ],
+          "followUp": "Merci ! Une barquette, alors ?",
+          "newWords": [
+            "goûter"
+          ]
+        },
+        {
+          "id": "sit_07_taste_d02",
+          "place": "Au marché",
+          "cue": "At the market, a stallholder (a man) says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Les tomates sont bien mûres aujourd'hui !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Super, je prends un kilo ___ tomates."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does he say about the tomatoes?",
+              "choices": [
+                "They're cheap today",
+                "They're nice and ripe today"
+              ],
+              "correct": 1,
+              "miss": "Reread: « bien mûres » means nice and ripe."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "de",
+                "des",
+                "du"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "After a quantity like « un kilo », use « de », not « des ».",
+                "« Du » is for one masculine thing; after « un kilo », use « de »."
+              ]
+            }
+          ],
+          "followUp": "Voilà, un kilo. Bonne journée !",
+          "newWords": [
+            "mûres"
+          ]
+        },
+        {
+          "id": "sit_07_taste_s01",
+          "place": "Au marché · phrase seule",
+          "standalone": "Construire",
+          "cue": "At the market, a stallholder (a woman) says vous to you. Ask if you can taste a strawberry.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Bonjour, madame ! Elles sont belles, les fraises, aujourd'hui !",
+              "voice": "female"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say: can I taste a strawberry, please?",
+              "bank": [
+                "Je peux",
+                "goûter",
+                "une",
+                "fraise,",
+                "s'il vous plaît ?",
+                "goûté",
+                "un",
+                "s'il te plaît ?"
+              ],
+              "accepted": [
+                [
+                  "Je peux",
+                  "goûter",
+                  "une",
+                  "fraise,",
+                  "s'il vous plaît ?"
+                ]
+              ],
+              "model": "Je peux goûter une fraise, s'il vous plaît ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_07_taste_d03",
+          "place": "Au marché",
+          "cue": "At the market, the stallholder (a man) says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Et les abricots ? Vous voulez goûter ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, je veux bien ___ goûter un."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "en",
+                "le",
+                "y"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Le » means the apricot itself; with « un », you need « en ».",
+                "« Y » stands for a place, not for « des abricots »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does the stallholder offer now?",
+              "choices": [
+                "A kilo of tomatoes",
+                "A taste of the apricots"
+              ],
+              "correct": 1,
+              "miss": "Reread: « les abricots ? Vous voulez goûter ? »"
+            }
+          ],
+          "followUp": "Voilà ! Ils sont très bons.",
+          "newWords": [
+            "abricots"
+          ]
+        },
+        {
+          "id": "sit_07_taste_d04",
+          "place": "À l'appart",
+          "cue": "Léa, your flatmate, says tu to you. You've just come home from the market.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Elles sont mûres, tes fraises ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « mûres » mean here?",
+              "choices": [
+                "cheap",
+                "ripe",
+                "small"
+              ],
+              "correct": 1,
+              "why": [
+                "Cheap is « pas chères ».",
+                "",
+                "Small is « petites »."
+              ],
+              "target": "mûres"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, very ripe, and ask if she wants a taste.",
+              "bank": [
+                "Oui,",
+                "très",
+                "mûres !",
+                "Tu veux",
+                "goûter ?",
+                "mûrs !",
+                "Vous voulez",
+                "goûté ?"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "très",
+                  "mûres !",
+                  "Tu veux",
+                  "goûter ?"
+                ]
+              ],
+              "model": "Oui, très mûres ! Tu veux goûter ?"
+            }
+          ],
+          "followUp": "Oh oui ! Elles sont délicieuses !",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_taste_s02",
+          "place": "Sur le palier · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "M. Ferrand, your neighbour, says vous to you. Offer him a strawberry on the landing.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "Tu veux goûter une fraise ? Elles sont très mûres !",
+                "Vous voulez goûter une fraise, monsieur ? Elles sont très mûres.",
+                "Goûte une fraise, elles sont très mûres !"
+              ],
+              "correct": 1,
+              "why": [
+                "Good French, but you say vous to M. Ferrand, not tu.",
+                "",
+                "Good French, but « goûte » is a tu command: too familiar for M. Ferrand."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_07_taste_d05",
+          "place": "Au marché",
+          "cue": "Clarify: at the market, a stallholder (a man) says vous to you. He talks very fast.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Vous voulez goûter les abricots, madame ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "You didn't catch it. Ask him to repeat.",
+              "bank": [
+                "Pardon ?",
+                "Vous pouvez",
+                "répéter ?",
+                "Tu peux",
+                "répète ?",
+                "Merci ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon ?",
+                  "Vous pouvez",
+                  "répéter ?"
+                ],
+                [
+                  "Vous pouvez",
+                  "répéter ?"
+                ],
+                [
+                  "Pardon ?"
+                ]
+              ],
+              "model": "Pardon ? Vous pouvez répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « goûter » mean here?",
+              "choices": [
+                "to buy",
+                "to taste",
+                "to choose"
+              ],
+              "correct": 1,
+              "why": [
+                "To buy is « acheter ».",
+                "",
+                "To choose is « choisir »."
+              ],
+              "target": "goûter"
+            }
+          ],
+          "followUp": "Pardon ! Vous voulez goûter les abricots ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_taste_d06",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, says tu to you. She texts you. You bought apricots this morning.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Les abricots du marché sont bons ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, mais pas très ___."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "mûres",
+                "mûr",
+                "mûrs"
+              ],
+              "correct": 2,
+              "why": [
+                "« Les abricots » are masculine: « mûrs », not « mûres ».",
+                "« Les abricots » are plural: « mûrs », with an s.",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès ask about?",
+              "choices": [
+                "The apricots from the market",
+                "The strawberries from the market"
+              ],
+              "correct": 0,
+              "miss": "Reread: « les abricots du marché »."
+            }
+          ],
+          "followUp": "Ah, dommage ! Je prends des fraises, alors.",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_taste_s03",
+          "place": "Au marché · phrase seule",
+          "standalone": "Corriger",
+          "cue": "At the market, a stallholder (a woman) says vous to you. You tell her what you'll buy.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Les fraises sont bien mûrs aujourd'hui, je prends une barquette, s'il vous plaît.",
+              "error": {
+                "word": "mûrs",
+                "fix": "mûres",
+                "choices": [
+                  "mûre",
+                  "mûres",
+                  "mûr"
+                ],
+                "why": "« Les fraises » are feminine plural: « mûres »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_07_taste_d07",
+          "place": "Au marché",
+          "cue": "At the market, a stallholder (a woman) says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Les abricots, quatre euros le kilo.",
+              "voice": "female"
+            },
+            {
+              "speaker": "learner",
+              "text": "Je peux en ___ un ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « abricots » mean here?",
+              "choices": [
+                "peaches",
+                "plums",
+                "apricots"
+              ],
+              "correct": 2,
+              "why": [
+                "Peaches are « pêches ».",
+                "Plums are « prunes ».",
+                ""
+              ],
+              "target": "abricots"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "goûte",
+                "goûté",
+                "goûter"
+              ],
+              "correct": 2,
+              "why": [
+                "After « je peux », use the infinitive « goûter », not « goûte ».",
+                "« Goûté » is the past participle; after « je peux », use « goûter ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Bien sûr, madame. Voilà !",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_taste_d08",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat « Les copains ». He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Qui veut des abricots ? J'en ai trop !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say you do, and ask if they're ripe.",
+              "bank": [
+                "Moi !",
+                "Ils",
+                "sont",
+                "mûrs ?",
+                "mûres ?",
+                "Elles",
+                "Toi !"
+              ],
+              "accepted": [
+                [
+                  "Moi !",
+                  "Ils",
+                  "sont",
+                  "mûrs ?"
+                ]
+              ],
+              "model": "Moi ! Ils sont mûrs ?"
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo say?",
+              "choices": [
+                "He has no apricots left",
+                "He has too many apricots"
+              ],
+              "correct": 1,
+              "miss": "Reread: « J'en ai trop ! » means I have too many."
+            }
+          ],
+          "followUp": "Oui, très mûrs ! Je passe ce soir.",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_taste_s04",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You said this to a stallholder. Say the same to Léa, your flatmate, who says tu to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Vous voulez goûter, madame ? Elles sont très mûres, ces fraises.",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it for Léa, with tu.",
+              "bank": [
+                "Tu",
+                "veux",
+                "goûter,",
+                "Léa ?",
+                "Elles",
+                "sont",
+                "très",
+                "mûres,",
+                "ces fraises.",
+                "Vous",
+                "voulez",
+                "madame ?",
+                "mûrs,"
+              ],
+              "accepted": [
+                [
+                  "Tu",
+                  "veux",
+                  "goûter,",
+                  "Léa ?",
+                  "Elles",
+                  "sont",
+                  "très",
+                  "mûres,",
+                  "ces fraises."
+                ]
+              ],
+              "model": "Tu veux goûter, Léa ? Elles sont très mûres, ces fraises."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_07_taste_d09",
+          "place": "Au marché",
+          "cue": "At the market, a stallholder (a man) says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Des tomates bien mûres, pour ce soir !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, je ___ un kilo."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What is the stallholder selling?",
+              "choices": [
+                "Ripe strawberries",
+                "Ripe tomatoes"
+              ],
+              "correct": 1,
+              "miss": "Reread: « des tomates bien mûres »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "prend",
+                "prendre",
+                "prends"
+              ],
+              "correct": 2,
+              "why": [
+                "« Prend » goes with il or elle; with « je », write « prends ».",
+                "After « je », use a conjugated verb, not the infinitive.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Très bien ! Trois euros, madame.",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_taste_d10",
+          "place": "Au marché",
+          "cue": "At the market, a stallholder (a woman) says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Les abricots sont parfaits ! Vous voulez goûter ?",
+              "voice": "female"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does she say about the apricots?",
+              "choices": [
+                "They're perfect",
+                "They're expensive"
+              ],
+              "correct": 0,
+              "miss": "Reread: « parfaits » means perfect."
+            },
+            {
+              "type": "reply",
+              "prompt": "Accept with thanks, then say you'll take a kilo.",
+              "bank": [
+                "Oui,",
+                "merci !",
+                "J'en",
+                "prends",
+                "un kilo,",
+                "s'il vous plaît.",
+                "prend",
+                "une",
+                "s'il te plaît."
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "merci !",
+                  "J'en",
+                  "prends",
+                  "un kilo,",
+                  "s'il vous plaît."
+                ]
+              ],
+              "model": "Oui, merci ! J'en prends un kilo, s'il vous plaît."
+            }
+          ],
+          "followUp": "Très bien, un kilo pour madame !",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_taste_s05",
+          "place": "Au marché · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "At the market, you talk to a stallholder, who says vous to you. Which French word means “ripe”?",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Les fraises sont bien ___ aujourd'hui, je prends deux barquettes."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "ripe",
+              "choices": [
+                "chères",
+                "mûres",
+                "petites"
+              ],
+              "correct": 1,
+              "why": [
+                "« Chères » means expensive.",
+                "",
+                "« Petites » means small."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_07_anything",
+      "title": "« Et avec ceci ? »",
+      "note": "The shop ritual: the seller asks « Et avec ceci ? » (anything else?) or « Ce sera tout ? ». Answer « C'est tout » or the politer « Ce sera tout » (« tout » never changes), or ask for one more thing, like « une douzaine d'œufs ».",
+      "items": [
+        {
+          "id": "sit_07_anything_d01",
+          "place": "À la boulangerie",
+          "cue": "At the bakery, the baker (a woman) says vous to you. You only need bread today.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Une tradition, voilà. Et avec ceci ?",
+              "voice": "female"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the baker ask?",
+              "choices": [
+                "If you want anything else",
+                "If you want it well baked"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Et avec ceci ? » means anything else?"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say that's all, thanks.",
+              "bank": [
+                "C'est",
+                "tout,",
+                "merci.",
+                "tous,",
+                "toute,",
+                "s'il te plaît."
+              ],
+              "accepted": [
+                [
+                  "C'est",
+                  "tout,",
+                  "merci."
+                ]
+              ],
+              "model": "C'est tout, merci."
+            }
+          ],
+          "followUp": "Ça fait deux euros, madame.",
+          "newWords": [
+            "et avec ceci"
+          ]
+        },
+        {
+          "id": "sit_07_anything_d02",
+          "place": "Au marché",
+          "cue": "At the market, a stallholder (a man) says vous to you. You still need eggs.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Voilà les tomates. Ce sera tout ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Non, je voudrais ___ des œufs."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the stallholder ask?",
+              "choices": [
+                "If you want more tomatoes",
+                "If that will be all"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Ce sera tout ? » means will that be all?"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "non plus",
+                "trop",
+                "aussi"
+              ],
+              "correct": 2,
+              "why": [
+                "« Non plus » goes with a negative (me neither); you're adding something: « aussi ».",
+                "« Trop » means too much; it doesn't add an item.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Bien sûr ! Combien ?",
+          "newWords": [
+            "ce sera tout"
+          ]
+        },
+        {
+          "id": "sit_07_anything_s01",
+          "place": "À la boulangerie · phrase seule",
+          "standalone": "Construire",
+          "cue": "At the bakery, the baker (a woman) says vous to you. Tell her that's all for today, and wish her a good day.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Deux croissants et une tarte, voilà. Et avec ceci, madame ?",
+              "voice": "female"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say: that's all for today, thanks. Have a good day, madam!",
+              "bank": [
+                "C'est tout",
+                "pour",
+                "aujourd'hui,",
+                "merci.",
+                "Bonne journée,",
+                "madame !",
+                "monsieur !",
+                "toute",
+                "Salut !"
+              ],
+              "accepted": [
+                [
+                  "C'est tout",
+                  "pour",
+                  "aujourd'hui,",
+                  "merci.",
+                  "Bonne journée,",
+                  "madame !"
+                ],
+                [
+                  "Bonne journée,",
+                  "madame !",
+                  "C'est tout",
+                  "pour",
+                  "aujourd'hui,",
+                  "merci."
+                ]
+              ],
+              "model": "C'est tout pour aujourd'hui, merci. Bonne journée, madame !"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_07_anything_d03",
+          "place": "Au marché",
+          "cue": "At the market, a stallholder (a woman) says vous to you. You have everything you need.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Et avec ceci ? Une douzaine d'œufs ?",
+              "voice": "female"
+            },
+            {
+              "speaker": "learner",
+              "text": "Non merci, ce ___ tout."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "sera",
+                "serai",
+                "seras"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Serai » goes with je; with « ce », use « sera ».",
+                "« Seras » goes with tu; with « ce », use « sera »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does the stallholder suggest?",
+              "choices": [
+                "A punnet of strawberries",
+                "A dozen eggs"
+              ],
+              "correct": 1,
+              "miss": "Reread: « une douzaine d'œufs » means a dozen eggs."
+            }
+          ],
+          "followUp": "Très bien. Quatre euros, s'il vous plaît.",
+          "newWords": [
+            "douzaine"
+          ]
+        },
+        {
+          "id": "sit_07_anything_d04",
+          "place": "À la boulangerie",
+          "cue": "At the bakery, the baker (a woman) says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Deux croissants, voilà. Et avec ceci ?",
+              "voice": "female"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « Et avec ceci » mean here?",
+              "choices": [
+                "is that to go?",
+                "anything else?",
+                "card or cash?"
+              ],
+              "correct": 1,
+              "why": [
+                "« À emporter ? » means is that to go?",
+                "",
+                "« Par carte ou en espèces ? » means card or cash?"
+              ],
+              "target": "Et avec ceci"
+            },
+            {
+              "type": "reply",
+              "prompt": "Ask for an apple tart.",
+              "bank": [
+                "Et",
+                "une tarte",
+                "aux pommes,",
+                "s'il vous plaît.",
+                "un tarte",
+                "au pommes,",
+                "s'il te plaît."
+              ],
+              "accepted": [
+                [
+                  "Et",
+                  "une tarte",
+                  "aux pommes,",
+                  "s'il vous plaît."
+                ]
+              ],
+              "model": "Et une tarte aux pommes, s'il vous plaît."
+            }
+          ],
+          "followUp": "Une tarte aux pommes, très bien !",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_anything_s02",
+          "place": "Au marché · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "At the market, a stallholder (a woman) says vous to you. Tell her that's all.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Et avec ceci, madame ? Des tomates, des fraises, des abricots ?",
+              "voice": "female"
+            }
+          ],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "C'est tout, merci ! Salut !",
+                "Ce sera tout, merci, madame. Bonne journée !",
+                "C'est tout ! Merci, et bonne journée à toi !"
+              ],
+              "correct": 1,
+              "why": [
+                "Good French, but « salut » is for friends, not a stallholder.",
+                "",
+                "Good French, but « à toi » is tu; the stallholder says vous to you."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_07_anything_d05",
+          "place": "Au marché",
+          "cue": "Clarify: at the market, a stallholder (a man) says vous to you. It's very noisy.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Ce sera tout, madame ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "You didn't catch it. Ask him to repeat.",
+              "bank": [
+                "Pardon ?",
+                "Vous pouvez",
+                "répéter ?",
+                "Tu peux",
+                "répète ?",
+                "Bonjour ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon ?",
+                  "Vous pouvez",
+                  "répéter ?"
+                ],
+                [
+                  "Vous pouvez",
+                  "répéter ?"
+                ],
+                [
+                  "Pardon ?"
+                ]
+              ],
+              "model": "Pardon ? Vous pouvez répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « ce sera tout » mean here?",
+              "choices": [
+                "will that be all",
+                "is that too much",
+                "is it ripe"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« C'est trop ? » means is that too much?",
+                "« C'est mûr ? » means is it ripe?"
+              ],
+              "target": "ce sera tout"
+            }
+          ],
+          "followUp": "Pardon ! Ce sera tout, madame ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_anything_d06",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, says tu to you. You're at the market, and she texts you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Une douzaine d'œufs pour moi, s'il te plaît !"
+            },
+            {
+              "speaker": "learner",
+              "text": "D'accord ! C'est ___ ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "tous",
+                "tout",
+                "toute"
+              ],
+              "correct": 1,
+              "why": [
+                "« C'est tout » never changes: not « tous ».",
+                "",
+                "« C'est tout » never changes: not the feminine « toute »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa want?",
+              "choices": [
+                "A dozen croissants",
+                "A dozen eggs"
+              ],
+              "correct": 1,
+              "miss": "Reread: « une douzaine d'œufs »."
+            }
+          ],
+          "followUp": "Oui, c'est tout ! Merci !",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_anything_s03",
+          "place": "À la boulangerie · phrase seule",
+          "standalone": "Corriger",
+          "cue": "At the bakery, the baker (a woman) says vous to you. You tell her you have everything.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Ce sera tous, merci, madame, et bonne journée !",
+              "error": {
+                "word": "tous",
+                "fix": "tout",
+                "choices": [
+                  "toute",
+                  "tout",
+                  "toutes"
+                ],
+                "why": "« Ce sera tout » never changes: « tout », not « tous »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_07_anything_d07",
+          "place": "Au marché",
+          "cue": "At the market, a stallholder (a woman) says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Une douzaine d'œufs, voilà. Et avec ceci ?",
+              "voice": "female"
+            },
+            {
+              "speaker": "learner",
+              "text": "Un kilo de pommes, et c'est ___."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « douzaine » mean here?",
+              "choices": [
+                "half dozen",
+                "dozen",
+                "box"
+              ],
+              "correct": 1,
+              "why": [
+                "A half dozen is « une demi-douzaine ».",
+                "",
+                "A box is « une boîte »."
+              ],
+              "target": "douzaine"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "toutes",
+                "tous",
+                "tout"
+              ],
+              "correct": 2,
+              "why": [
+                "« C'est tout » never changes: not « toutes ».",
+                "« C'est tout » never changes: not « tous ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Parfait ! Ça fait six euros.",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_anything_d08",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat « Les copains » (vous = you all). He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Je suis au marché. Vous voulez quelque chose ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Ask him for a dozen eggs, please.",
+              "bank": [
+                "Oui !",
+                "Une",
+                "douzaine",
+                "d'œufs,",
+                "s'il te plaît !",
+                "s'il vous plaît !",
+                "Un",
+                "des œufs,"
+              ],
+              "accepted": [
+                [
+                  "Oui !",
+                  "Une",
+                  "douzaine",
+                  "d'œufs,",
+                  "s'il te plaît !"
+                ],
+                [
+                  "Une",
+                  "douzaine",
+                  "d'œufs,",
+                  "s'il te plaît !"
+                ]
+              ],
+              "model": "Oui ! Une douzaine d'œufs, s'il te plaît !"
+            },
+            {
+              "type": "comprehend",
+              "prompt": "Where is Théo?",
+              "choices": [
+                "At the market",
+                "At the bakery"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Je suis au marché »."
+            }
+          ],
+          "followUp": "Noté ! Une douzaine pour Robin.",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_anything_s04",
+          "place": "Au marché · phrase seule",
+          "standalone": "Transformer",
+          "cue": "A stallholder (a man) says vous to you. Rewrite your answer with the shop's polite « ce sera ».",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "C'est tout, merci, monsieur. Bonne journée et à samedi !",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it with « ce sera ».",
+              "bank": [
+                "Ce sera tout,",
+                "merci,",
+                "monsieur.",
+                "Bonne journée",
+                "et",
+                "à samedi !",
+                "Ce sera tous,",
+                "madame.",
+                "C'est tout,"
+              ],
+              "accepted": [
+                [
+                  "Ce sera tout,",
+                  "merci,",
+                  "monsieur.",
+                  "Bonne journée",
+                  "et",
+                  "à samedi !"
+                ]
+              ],
+              "model": "Ce sera tout, merci, monsieur. Bonne journée et à samedi !"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_07_anything_d09",
+          "place": "À la boulangerie",
+          "cue": "At the bakery, the baker (a woman) says vous to you. You have everything you need.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Et avec ceci, madame ?",
+              "voice": "female"
+            },
+            {
+              "speaker": "learner",
+              "text": "Ce sera ___, merci."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the baker ask?",
+              "choices": [
+                "If you want to pay by card",
+                "If you want anything else"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Et avec ceci ? » means anything else?"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "tout",
+                "toute",
+                "tous"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Ce sera tout » never changes: not the feminine « toute ».",
+                "« Ce sera tout » never changes: not « tous »."
+              ]
+            }
+          ],
+          "followUp": "Très bien. Bonne journée !",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_anything_d10",
+          "place": "Au marché",
+          "cue": "At the market, a stallholder (a man) says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Voilà, deux kilos de tomates. Ce sera tout ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does he ask?",
+              "choices": [
+                "If you want more tomatoes",
+                "If that will be all"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Ce sera tout ? » means will that be all?"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say no: you'd also like a dozen eggs.",
+              "bank": [
+                "Non,",
+                "je voudrais",
+                "aussi",
+                "une",
+                "douzaine",
+                "d'œufs.",
+                "Oui,",
+                "un",
+                "des"
+              ],
+              "accepted": [
+                [
+                  "Non,",
+                  "je voudrais",
+                  "aussi",
+                  "une",
+                  "douzaine",
+                  "d'œufs."
+                ],
+                [
+                  "Non,",
+                  "je voudrais",
+                  "une",
+                  "douzaine",
+                  "d'œufs."
+                ]
+              ],
+              "model": "Non, je voudrais aussi une douzaine d'œufs."
+            }
+          ],
+          "followUp": "Bien sûr ! Une douzaine, voilà.",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_anything_s05",
+          "place": "À la boulangerie · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "At the bakery, the baker (a woman) says vous to you. Which French words mean “anything else?”",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Deux traditions et une tarte aux pommes, voilà. ___ ?",
+              "voice": "female"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "anything else?",
+              "choices": [
+                "Bien cuite",
+                "Et avec ceci",
+                "C'est combien"
+              ],
+              "correct": 1,
+              "why": [
+                "« Bien cuite » means well baked.",
+                "",
+                "« C'est combien » means how much is it."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_07_hours",
+      "title": "Horaires et fermetures",
+      "note": "Opening hours: « ouvert », « fermé », « jusqu'à midi ». Many shops close on Mondays, the market is on Sunday morning, and some shops shut for weeks « en août ». « Ouvert » and « fermé » agree with the shop: « la boulangerie est fermée ».",
+      "items": [
+        {
+          "id": "sit_07_hours_d01",
+          "place": "Sur le palier",
+          "cue": "M. Ferrand, your neighbour, says vous to you. You tell him you're going to the market.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Le marché ? Il est fermé le lundi, madame."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does M. Ferrand say about the market?",
+              "choices": [
+                "It's closed on Sundays",
+                "It's closed on Mondays"
+              ],
+              "correct": 1,
+              "miss": "Reread: « fermé le lundi » means closed on Mondays."
+            },
+            {
+              "type": "reply",
+              "prompt": "Ask him if it's closed on Sunday too.",
+              "bank": [
+                "Et",
+                "le dimanche,",
+                "il",
+                "est",
+                "fermé",
+                "aussi ?",
+                "elle",
+                "fermée",
+                "la dimanche,"
+              ],
+              "accepted": [
+                [
+                  "Et",
+                  "le dimanche,",
+                  "il",
+                  "est",
+                  "fermé",
+                  "aussi ?"
+                ]
+              ],
+              "model": "Et le dimanche, il est fermé aussi ?"
+            }
+          ],
+          "followUp": "Non ! Le dimanche matin, il y a le marché.",
+          "newWords": [
+            "fermé"
+          ]
+        },
+        {
+          "id": "sit_07_hours_d02",
+          "place": "À la boulangerie",
+          "cue": "At the bakery, the baker (a woman) says vous to you. You ask about Sunday.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Le dimanche, on est ouvert jusqu'à midi.",
+              "voice": "female"
+            },
+            {
+              "speaker": "learner",
+              "text": "Merci ! Je passe ___ dix heures."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "Until when is the bakery open on Sunday?",
+              "choices": [
+                "Until noon",
+                "Until ten"
+              ],
+              "correct": 0,
+              "miss": "Reread: « jusqu'à midi » means until noon."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "devant",
+                "en",
+                "vers"
+              ],
+              "correct": 2,
+              "why": [
+                "« Devant » means in front of, not a time.",
+                "« En » doesn't go before a clock time; « vers » means around.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Parfait. À dimanche, madame !",
+          "newWords": [
+            "ouvert",
+            "jusqu'à"
+          ]
+        },
+        {
+          "id": "sit_07_hours_s01",
+          "place": "À la boulangerie · phrase seule",
+          "standalone": "Construire",
+          "cue": "At the bakery, the baker (a woman) says vous to you. Thank her and ask if they're open on Sunday morning.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Voilà les croissants, madame. Bonne journée et à bientôt !",
+              "voice": "female"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say: thanks! Are you open on Sunday morning?",
+              "bank": [
+                "Merci !",
+                "Vous",
+                "êtes",
+                "ouvert",
+                "le dimanche",
+                "matin ?",
+                "ouvrir",
+                "es",
+                "Tu",
+                "la dimanche"
+              ],
+              "accepted": [
+                [
+                  "Merci !",
+                  "Vous",
+                  "êtes",
+                  "ouvert",
+                  "le dimanche",
+                  "matin ?"
+                ],
+                [
+                  "Vous",
+                  "êtes",
+                  "ouvert",
+                  "le dimanche",
+                  "matin ?",
+                  "Merci !"
+                ]
+              ],
+              "model": "Merci ! Vous êtes ouvert le dimanche matin ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_07_hours_d03",
+          "place": "À l'appart",
+          "cue": "Léa, your flatmate, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "En août, la boulangerie ferme trois semaines !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Ah bon ? Elle est ___ jusqu'à quand ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "fermée",
+                "fermé",
+                "fermer"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« La boulangerie » is feminine: « fermée ».",
+                "After « elle est », use the adjective « fermée », not the infinitive."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "How long does the bakery close in August?",
+              "choices": [
+                "Three days",
+                "Three weeks"
+              ],
+              "correct": 1,
+              "miss": "Reread: « trois semaines » means three weeks."
+            }
+          ],
+          "followUp": "Je sais pas ! On va au marché, alors.",
+          "newWords": [
+            "août"
+          ]
+        },
+        {
+          "id": "sit_07_hours_d04",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, says tu to you. She texts you. You're at Karim's café right now.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Le café de Karim est fermé aujourd'hui ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « fermé » mean here?",
+              "choices": [
+                "full",
+                "open",
+                "closed"
+              ],
+              "correct": 2,
+              "why": [
+                "Full is « plein ».",
+                "Open is « ouvert ».",
+                ""
+              ],
+              "target": "fermé"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say no, it's open until six.",
+              "bank": [
+                "Non,",
+                "il",
+                "est",
+                "ouvert",
+                "jusqu'à",
+                "six heures.",
+                "elle",
+                "ouverte",
+                "jusqu'au"
+              ],
+              "accepted": [
+                [
+                  "Non,",
+                  "il",
+                  "est",
+                  "ouvert",
+                  "jusqu'à",
+                  "six heures."
+                ]
+              ],
+              "model": "Non, il est ouvert jusqu'à six heures."
+            }
+          ],
+          "followUp": "Top, merci ! Je passe à cinq heures.",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_hours_s02",
+          "place": "À la boulangerie · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "At the bakery, the baker (a woman) says vous to you. Ask her until what time they're open.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "T'es ouvert jusqu'à quand ?",
+                "Tu fermes à quelle heure ?",
+                "Vous êtes ouverts jusqu'à quelle heure, madame ?"
+              ],
+              "correct": 2,
+              "why": [
+                "Good spoken French, but « t'es » is for friends; the baker says vous to you.",
+                "Good French, but « tu » is too familiar for the baker.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_07_hours_d05",
+          "place": "À la boulangerie",
+          "cue": "Clarify: at the bakery, the baker (a woman) says vous to you. She speaks very fast.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Aujourd'hui, on est ouvert jusqu'à une heure.",
+              "voice": "female"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "You missed the time. Ask her to repeat it.",
+              "bank": [
+                "Pardon ?",
+                "Jusqu'à",
+                "quelle heure ?",
+                "Jusqu'au",
+                "quel heure ?",
+                "Merci !"
+              ],
+              "accepted": [
+                [
+                  "Pardon ?",
+                  "Jusqu'à",
+                  "quelle heure ?"
+                ],
+                [
+                  "Jusqu'à",
+                  "quelle heure ?"
+                ],
+                [
+                  "Pardon ?"
+                ]
+              ],
+              "model": "Pardon ? Jusqu'à quelle heure ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « ouvert » mean here?",
+              "choices": [
+                "open",
+                "closed",
+                "busy"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "Closed is « fermé ».",
+                "Busy is « occupé »."
+              ],
+              "target": "ouvert"
+            }
+          ],
+          "followUp": "Jusqu'à une heure ! Après, c'est fermé.",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_hours_d06",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat « Les copains ». He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Le marché, c'est ouvert le dimanche ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, le dimanche ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "matins",
+                "matin",
+                "soirs"
+              ],
+              "correct": 1,
+              "why": [
+                "After « le dimanche », say « matin », with no s.",
+                "",
+                "After « le dimanche », no s: and « soirs » is plural."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo ask?",
+              "choices": [
+                "Where the market is",
+                "If the market is open on Sunday"
+              ],
+              "correct": 1,
+              "miss": "Reread: « c'est ouvert le dimanche ? »"
+            }
+          ],
+          "followUp": "Top ! Rendez-vous dimanche à dix heures !",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_hours_s03",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Corriger",
+          "cue": "Léa, your flatmate, says tu to you. You tell her the news about the bakery.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "La boulangerie est fermé en août, c'est dommage pour les croissants !",
+              "error": {
+                "word": "fermé",
+                "fix": "fermée",
+                "choices": [
+                  "fermés",
+                  "fermer",
+                  "fermée"
+                ],
+                "why": "« La boulangerie » is feminine: « fermée »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_07_hours_d07",
+          "place": "Sur le palier",
+          "cue": "M. Ferrand, your neighbour, says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Le marché est fermé jusqu'à dimanche."
+            },
+            {
+              "speaker": "learner",
+              "text": "Ah, merci ! Je passe ___ boulangerie, alors."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « jusqu'à » mean here?",
+              "choices": [
+                "since",
+                "until",
+                "after"
+              ],
+              "correct": 1,
+              "why": [
+                "Since is « depuis ».",
+                "",
+                "After is « après »."
+              ],
+              "target": "jusqu'à"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "au",
+                "à",
+                "à la"
+              ],
+              "correct": 2,
+              "why": [
+                "« Boulangerie » is feminine: « à la », not « au ».",
+                "« Boulangerie » needs its article: « à la boulangerie ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Bonne idée ! Elle est ouverte aujourd'hui.",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_hours_d08",
+          "place": "Au café",
+          "cue": "Karim, the barista, says tu to you now.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "On ferme en août, trois semaines !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say what a shame, and ask until when he's open.",
+              "bank": [
+                "Dommage !",
+                "Tu",
+                "es",
+                "ouvert",
+                "jusqu'à",
+                "quand ?",
+                "T'es",
+                "Vous",
+                "êtes",
+                "ouverte"
+              ],
+              "accepted": [
+                [
+                  "Dommage !",
+                  "Tu",
+                  "es",
+                  "ouvert",
+                  "jusqu'à",
+                  "quand ?"
+                ],
+                [
+                  "Dommage !",
+                  "T'es",
+                  "ouvert",
+                  "jusqu'à",
+                  "quand ?"
+                ]
+              ],
+              "model": "Dommage ! Tu es ouvert jusqu'à quand ?"
+            },
+            {
+              "type": "comprehend",
+              "prompt": "When does Karim close?",
+              "choices": [
+                "In August, for three days",
+                "In August, for three weeks"
+              ],
+              "correct": 1,
+              "miss": "Reread: « en août, trois semaines »."
+            }
+          ],
+          "followUp": "Jusqu'à dimanche ! Après, c'est fermé.",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_hours_s04",
+          "place": "À la boulangerie · phrase seule",
+          "standalone": "Transformer",
+          "cue": "At the bakery, the baker (a woman) says vous to you. Make your question an « est-ce que » question.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Vous êtes ouvert le lundi, ou c'est fermé toute la journée ?",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it with « est-ce que ».",
+              "bank": [
+                "Est-ce que",
+                "vous",
+                "êtes",
+                "ouvert",
+                "le lundi,",
+                "ou",
+                "c'est",
+                "fermé",
+                "toute la journée ?",
+                "Qu'est-ce que",
+                "es",
+                "tu"
+              ],
+              "accepted": [
+                [
+                  "Est-ce que",
+                  "vous",
+                  "êtes",
+                  "ouvert",
+                  "le lundi,",
+                  "ou",
+                  "c'est",
+                  "fermé",
+                  "toute la journée ?"
+                ]
+              ],
+              "model": "Est-ce que vous êtes ouvert le lundi, ou c'est fermé toute la journée ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_07_hours_d09",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, says tu to you. She texts you. You're outside the bakery.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "La boulangerie est fermée ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, fermée ___ deux heures !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa ask?",
+              "choices": [
+                "If the bakery has bread",
+                "If the bakery is closed"
+              ],
+              "correct": 1,
+              "miss": "Reread: « est fermée ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "jusque",
+                "jusqu'au",
+                "jusqu'à"
+              ],
+              "correct": 2,
+              "why": [
+                "Before a time, « jusque » needs « à »: « jusqu'à ».",
+                "« Jusqu'au » is jusqu'à + le; there's no « le » before « deux heures ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Oh non ! Pas de pain pour midi, alors.",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_hours_d10",
+          "place": "Au bureau",
+          "cue": "Inès, your colleague, says tu to you. You live in Lyon.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Tu pars en août ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès ask?",
+              "choices": [
+                "If you're working in August",
+                "If you're going away in August"
+              ],
+              "correct": 1,
+              "miss": "Reread: « tu pars » means are you leaving."
+            },
+            {
+              "type": "reply",
+              "prompt": "Say no, you're staying in Lyon in August.",
+              "bank": [
+                "Non,",
+                "je",
+                "reste",
+                "à Lyon",
+                "en août.",
+                "restes",
+                "Oui,",
+                "au"
+              ],
+              "accepted": [
+                [
+                  "Non,",
+                  "je",
+                  "reste",
+                  "à Lyon",
+                  "en août."
+                ]
+              ],
+              "model": "Non, je reste à Lyon en août."
+            }
+          ],
+          "followUp": "Moi aussi ! Lyon en août, c'est calme.",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_hours_s05",
+          "place": "À la boulangerie · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "At the bakery, the baker (a woman) says vous to you. Which French word means “August”?",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Nous sommes fermés en ___, mais le marché reste ouvert.",
+              "voice": "female"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "August",
+              "choices": [
+                "lundi",
+                "août",
+                "dimanche"
+              ],
+              "correct": 1,
+              "why": [
+                "« Lundi » means Monday, and a day takes no « en ».",
+                "",
+                "« Dimanche » means Sunday, and a day takes no « en »."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_07_errand",
+      "title": "Faire les courses pour quelqu'un",
+      "note": "Errands for the flat and for friends: « le frigo », « la liste », and « je m'en occupe » (I'll take care of it) to volunteer. Friends say tu; M. Ferrand says vous.",
+      "items": [
+        {
+          "id": "sit_07_errand_d01",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, says tu to you. She texts you from home.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Il n'y a plus rien dans le frigo !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What's the problem?",
+              "choices": [
+                "The fridge is broken",
+                "The fridge is empty"
+              ],
+              "correct": 1,
+              "miss": "Reread: « plus rien dans le frigo » means nothing left in the fridge."
+            },
+            {
+              "type": "reply",
+              "prompt": "Say no problem, you're going to the market.",
+              "bank": [
+                "Pas de problème,",
+                "je",
+                "vais",
+                "au marché !",
+                "Pas de souci,",
+                "va",
+                "à la marché !"
+              ],
+              "accepted": [
+                [
+                  "Pas de problème,",
+                  "je",
+                  "vais",
+                  "au marché !"
+                ],
+                [
+                  "Pas de souci,",
+                  "je",
+                  "vais",
+                  "au marché !"
+                ]
+              ],
+              "model": "Pas de problème, je vais au marché !"
+            }
+          ],
+          "followUp": "Merci ! Prends du fromage, s'il te plaît.",
+          "newWords": [
+            "frigo"
+          ]
+        },
+        {
+          "id": "sit_07_errand_d02",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, says tu to you. You're going to the market.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Je te fais une liste ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, merci, c'est ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa offer?",
+              "choices": [
+                "To come to the market",
+                "To write you a list"
+              ],
+              "correct": 1,
+              "miss": "Reread: « une liste » means a list."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "gentille",
+                "gentils",
+                "gentil"
+              ],
+              "correct": 2,
+              "why": [
+                "After « c'est », the adjective stays masculine: « c'est gentil ».",
+                "« C'est » is singular: « gentil », with no s.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Voilà : du pain, du lait, du fromage.",
+          "newWords": [
+            "liste"
+          ]
+        },
+        {
+          "id": "sit_07_errand_s01",
+          "place": "Texto · Léa · phrase seule",
+          "standalone": "Construire",
+          "cue": "Text Léa, your flatmate, who says tu to you. Say you're dropping by the market this morning, and ask if she wants anything.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say: I'm dropping by the market this morning. Do you want anything?",
+              "bank": [
+                "Je",
+                "passe",
+                "au marché",
+                "ce matin.",
+                "Tu",
+                "veux",
+                "quelque chose ?",
+                "à la",
+                "Vous",
+                "voulez",
+                "ce soir."
+              ],
+              "accepted": [
+                [
+                  "Je",
+                  "passe",
+                  "au marché",
+                  "ce matin.",
+                  "Tu",
+                  "veux",
+                  "quelque chose ?"
+                ]
+              ],
+              "model": "Je passe au marché ce matin. Tu veux quelque chose ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_07_errand_d03",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat « Les copains ». He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Les courses pour samedi ? Je m'en occupe !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Merci ! Tu as la ___ ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "lit",
+                "liste",
+                "listes"
+              ],
+              "correct": 1,
+              "why": [
+                "« Lit » means bed.",
+                "",
+                "« La » is singular: « liste », with no s."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo offer?",
+              "choices": [
+                "To cook on Saturday",
+                "To do the shopping for Saturday"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Les courses pour samedi ? Je m'en occupe ! »"
+            }
+          ],
+          "followUp": "Oui ! Des chips, du fromage et du pain.",
+          "newWords": [
+            "je m'en occupe"
+          ]
+        },
+        {
+          "id": "sit_07_errand_d04",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, says tu to you. She texts you. You drank the last of the milk.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Il y a du lait dans le frigo ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « frigo » mean here?",
+              "choices": [
+                "fridge",
+                "cupboard",
+                "kitchen"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "A cupboard is « un placard ».",
+                "Kitchen is « cuisine »."
+              ],
+              "target": "frigo"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say no, there's no more milk.",
+              "bank": [
+                "Non,",
+                "il n'y a",
+                "plus de",
+                "lait.",
+                "du",
+                "Oui,",
+                "il y a"
+              ],
+              "accepted": [
+                [
+                  "Non,",
+                  "il n'y a",
+                  "plus de",
+                  "lait."
+                ]
+              ],
+              "model": "Non, il n'y a plus de lait."
+            }
+          ],
+          "followUp": "Ah ! Tu passes au marché ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_errand_s02",
+          "place": "Texto · Léa · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "Léa, your flatmate, says tu to you. She texts you about bread. Say you'll take care of it.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Il n'y a plus de pain ! Tu peux passer à la boulangerie ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "Je m'en occupe, madame. Bonne journée.",
+                "Très bien, je m'en occupe. Bonne journée.",
+                "Pas de souci, je m'en occupe !"
+              ],
+              "correct": 2,
+              "why": [
+                "Good French, but « madame » is far too formal for your flatmate.",
+                "Good French, but « bonne journée » sounds like a shop, not a text to your flatmate.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_07_errand_d05",
+          "place": "Appel · Léa",
+          "cue": "Clarify: Léa, your flatmate, says tu to you. She calls you from a noisy street.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Rien dans le frigo ! Tu peux passer au marché ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "The line is bad. Say you can't hear her well, and ask her to repeat.",
+              "bank": [
+                "Je t'entends mal.",
+                "Tu peux",
+                "répéter ?",
+                "Je vous entends mal.",
+                "Vous pouvez",
+                "Pardon ?"
+              ],
+              "accepted": [
+                [
+                  "Je t'entends mal.",
+                  "Tu peux",
+                  "répéter ?"
+                ],
+                [
+                  "Pardon ?",
+                  "Je t'entends mal.",
+                  "Tu peux",
+                  "répéter ?"
+                ],
+                [
+                  "Tu peux",
+                  "répéter ?",
+                  "Je t'entends mal."
+                ]
+              ],
+              "model": "Je t'entends mal. Tu peux répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « frigo » mean here?",
+              "choices": [
+                "freezer",
+                "cupboard",
+                "fridge"
+              ],
+              "correct": 2,
+              "why": [
+                "A freezer is « un congélateur ».",
+                "A cupboard is « un placard ».",
+                ""
+              ],
+              "target": "frigo"
+            }
+          ],
+          "followUp": "Rien dans le frigo ! Tu passes au marché ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_errand_d06",
+          "place": "Au bureau",
+          "cue": "Inès, your colleague, says tu to you. You need a few things from the market.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Tu me fais une liste ? Je m'en occupe ce midi."
+            },
+            {
+              "speaker": "learner",
+              "text": "Merci ! Je te ___ la liste."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "donnes",
+                "donne",
+                "donner"
+              ],
+              "correct": 1,
+              "why": [
+                "« Donnes » goes with tu; with « je », write « donne ».",
+                "",
+                "After « je te », use a conjugated verb, not the infinitive."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What will Inès do at lunchtime?",
+              "choices": [
+                "Have lunch with you",
+                "Do your shopping"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Je m'en occupe ce midi »."
+            }
+          ],
+          "followUp": "Parfait ! À tout à l'heure, alors.",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_errand_s03",
+          "place": "Texto · Léa · phrase seule",
+          "standalone": "Corriger",
+          "cue": "Léa, your flatmate, says tu to you. You text her about the bread.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Il n'y a plus de pain, mais je m'en occupes ce soir.",
+              "error": {
+                "word": "occupes",
+                "fix": "occupe",
+                "choices": [
+                  "occupé",
+                  "occupe",
+                  "occuper"
+                ],
+                "why": "With « je », the verb has no s: « je m'en occupe »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_07_errand_d07",
+          "place": "À l'appart",
+          "cue": "Léa, your flatmate, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Voilà la liste pour le marché !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Merci ! Je prends ___ fraises aussi ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « liste » mean here?",
+              "choices": [
+                "bag",
+                "receipt",
+                "list"
+              ],
+              "correct": 2,
+              "why": [
+                "A bag is « un sac ».",
+                "A receipt is « un ticket ».",
+                ""
+              ],
+              "target": "liste"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "du",
+                "de",
+                "des"
+              ],
+              "correct": 2,
+              "why": [
+                "« Fraises » is plural: « des », not « du ».",
+                "With no quantity before it, say « des fraises », not « de ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Oui ! Une barquette, s'il te plaît.",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_errand_d08",
+          "place": "Sur le palier",
+          "cue": "M. Ferrand, your neighbour, says vous to you. You meet him on the landing.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Vous allez au marché, madame ?"
+            },
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Il n'y a plus de pain chez moi."
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Offer to take care of it.",
+              "bank": [
+                "Oui !",
+                "Je",
+                "m'en",
+                "occupe,",
+                "monsieur.",
+                "occupes,",
+                "madame.",
+                "me"
+              ],
+              "accepted": [
+                [
+                  "Oui !",
+                  "Je",
+                  "m'en",
+                  "occupe,",
+                  "monsieur."
+                ],
+                [
+                  "Je",
+                  "m'en",
+                  "occupe,",
+                  "monsieur."
+                ]
+              ],
+              "model": "Oui ! Je m'en occupe, monsieur."
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does M. Ferrand need?",
+              "choices": [
+                "Milk",
+                "Bread"
+              ],
+              "correct": 1,
+              "miss": "Reread: « plus de pain » means no more bread."
+            }
+          ],
+          "followUp": "Merci, madame ! Une tradition, s'il vous plaît.",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_errand_s04",
+          "place": "Texto · Léa · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You text Léa, your flatmate, who says tu to you. This week the shopping is your job, not hers. Rewrite it with je.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Léa s'en occupe, elle passe au marché ce soir avec la liste.",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it about yourself, with je.",
+              "bank": [
+                "Je m'en occupe,",
+                "je",
+                "passe",
+                "au marché",
+                "ce soir",
+                "avec la liste.",
+                "elle",
+                "s'en occupe,",
+                "passes"
+              ],
+              "accepted": [
+                [
+                  "Je m'en occupe,",
+                  "je",
+                  "passe",
+                  "au marché",
+                  "ce soir",
+                  "avec la liste."
+                ]
+              ],
+              "model": "Je m'en occupe, je passe au marché ce soir avec la liste."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_07_errand_d09",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat « Les copains ». He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "La liste pour samedi : chips, fromage, pain."
+            },
+            {
+              "speaker": "learner",
+              "text": "Le pain, je ___ occupe !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What is Théo sharing?",
+              "choices": [
+                "The list for Saturday",
+                "The time for Saturday"
+              ],
+              "correct": 0,
+              "miss": "Reread: « La liste pour samedi »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "me",
+                "en",
+                "m'en"
+              ],
+              "correct": 2,
+              "why": [
+                "You need « en » too: « je m'en occupe ».",
+                "« En » needs « me » before it: « je m'en occupe ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Top ! Moi, je prends les chips.",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_errand_d10",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, says tu to you. She texts you. You finished the cheese yesterday.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Il reste du fromage dans le frigo ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa ask about?",
+              "choices": [
+                "Milk in the fridge",
+                "Cheese in the fridge"
+              ],
+              "correct": 1,
+              "miss": "Reread: « du fromage dans le frigo »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Say no, there's no more cheese, and offer to take care of it.",
+              "bank": [
+                "Non,",
+                "il n'y a",
+                "plus de",
+                "fromage.",
+                "Je m'en occupe !",
+                "du",
+                "Oui,",
+                "Je m'en occupes !"
+              ],
+              "accepted": [
+                [
+                  "Non,",
+                  "il n'y a",
+                  "plus de",
+                  "fromage.",
+                  "Je m'en occupe !"
+                ]
+              ],
+              "model": "Non, il n'y a plus de fromage. Je m'en occupe !"
+            }
+          ],
+          "followUp": "Merci ! T'es top !",
+          "newWords": []
+        },
+        {
+          "id": "sit_07_errand_s05",
+          "place": "Les copains · groupe · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Théo's group chat « Les copains ». Everyone says tu. Which French words mean “I'll take care of it”?",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Les courses pour samedi ? ___, Théo, je passe au marché !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "I'll take care of it",
+              "choices": [
+                "Je vous rappelle",
+                "C'est tout",
+                "Je m'en occupe"
+              ],
+              "correct": 2,
+              "why": [
+                "« Je vous rappelle » means I'll call you back.",
+                "« C'est tout » means that's all.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    }
+  ]
+}

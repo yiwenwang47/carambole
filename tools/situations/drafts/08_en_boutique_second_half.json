@@ -1,0 +1,2649 @@
+{
+  "elements": [
+    {
+      "id": "sit_08_gift",
+      "title": "Acheter un cadeau",
+      "note": "Buy a present: « c'est pour offrir ? » (is it a gift?), a birthday, and the shop's free « paquet cadeau ». « Son anniversaire » takes « son » before a vowel, even for a woman.",
+      "items": [
+        {
+          "id": "sit_08_gift_d01",
+          "place": "En boutique",
+          "cue": "A saleswoman says vous to you. You hand her a jumper at the counter.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Bonjour, madame ! C'est pour offrir ?",
+              "voice": "female"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the saleswoman ask?",
+              "choices": [
+                "If you want to pay by card",
+                "If it's a present"
+              ],
+              "correct": 1,
+              "miss": "Reread: « c'est pour offrir ? » means is it to give as a present?"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes: it's for a friend (a woman).",
+              "bank": [
+                "Oui,",
+                "c'est pour",
+                "une amie.",
+                "un ami.",
+                "moi.",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "c'est pour",
+                  "une amie."
+                ]
+              ],
+              "model": "Oui, c'est pour une amie."
+            }
+          ],
+          "followUp": "Très bien ! Elle va adorer.",
+          "newWords": [
+            "c'est pour offrir"
+          ]
+        },
+        {
+          "id": "sit_08_gift_d02",
+          "place": "Les copains · groupe",
+          "cue": "Théo's group chat « Les copains ». Everyone says tu. Théo writes about Léa, your flatmate.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Léa, son anniversaire, c'est samedi !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Super ! On ___ apporte quoi ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "When is Léa's birthday?",
+              "choices": [
+                "On Sunday",
+                "On Saturday"
+              ],
+              "correct": 1,
+              "miss": "Reread: « son anniversaire, c'est samedi »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "lui",
+                "le",
+                "la"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "You bring something TO her, so « lui ». « Le » would be the thing itself.",
+                "You bring something TO her, so « lui », not « la »."
+              ]
+            }
+          ],
+          "followUp": "Je ne sais pas ! Une idée ?",
+          "newWords": [
+            "anniversaire"
+          ]
+        },
+        {
+          "id": "sit_08_gift_s01",
+          "place": "En boutique · phrase seule",
+          "standalone": "Construire",
+          "cue": "A salesman says vous to you. You're looking for a present for a friend, a woman. It's her birthday.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Bonjour, madame ! Je peux vous aider ? C'est pour vous ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say hello: you're looking for a present for your friend. It's her birthday.",
+              "bank": [
+                "Bonjour,",
+                "je cherche",
+                "un cadeau",
+                "pour",
+                "mon amie,",
+                "ma amie,",
+                "c'est",
+                "son",
+                "sa",
+                "anniversaire."
+              ],
+              "accepted": [
+                [
+                  "Bonjour,",
+                  "je cherche",
+                  "un cadeau",
+                  "pour",
+                  "mon amie,",
+                  "c'est",
+                  "son",
+                  "anniversaire."
+                ]
+              ],
+              "model": "Bonjour, je cherche un cadeau pour mon amie, c'est son anniversaire."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_08_gift_d03",
+          "place": "En boutique",
+          "cue": "A salesman says vous to you. You're buying a jumper as a present.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "C'est pour offrir ? Je vous fais un paquet cadeau ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, merci, c'est ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "gentille",
+                "gentils",
+                "gentil"
+              ],
+              "correct": 2,
+              "why": [
+                "After « c'est », the adjective stays masculine: « c'est gentil ».",
+                "After « c'est », the adjective stays singular: « c'est gentil ».",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does the salesman offer?",
+              "choices": [
+                "To gift-wrap it",
+                "To give you a bag"
+              ],
+              "correct": 0,
+              "miss": "Reread: « je vous fais un paquet cadeau ? »"
+            }
+          ],
+          "followUp": "Avec plaisir ! Voilà.",
+          "newWords": [
+            "paquet cadeau"
+          ]
+        },
+        {
+          "id": "sit_08_gift_d04",
+          "place": "En boutique",
+          "cue": "A saleswoman says vous to you. You're buying a present for a birthday.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "C'est pour offrir, madame ?",
+              "voice": "female"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « c'est pour offrir » mean here?",
+              "choices": [
+                "it's on special offer",
+                "it's a present",
+                "it's to take away"
+              ],
+              "correct": 1,
+              "why": [
+                "No: a special offer is about the price. « Offrir » is to give.",
+                "",
+                "No: to take away is « à emporter »."
+              ],
+              "target": "c'est pour offrir"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes: it's for a birthday.",
+              "bank": [
+                "Oui,",
+                "c'est pour",
+                "un anniversaire.",
+                "une anniversaire.",
+                "pour moi.",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "c'est pour",
+                  "un anniversaire."
+                ]
+              ],
+              "model": "Oui, c'est pour un anniversaire."
+            }
+          ],
+          "followUp": "Parfait. Je vous fais un paquet cadeau.",
+          "newWords": []
+        },
+        {
+          "id": "sit_08_gift_s02",
+          "place": "En boutique · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "A saleswoman says vous to you. You're buying a present. Ask her politely to gift-wrap it.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "Tu peux faire un paquet cadeau, s'il te plaît ? C'est pour offrir.",
+                "Un paquet cadeau, et vite, s'il vous plaît !",
+                "Vous pouvez faire un paquet cadeau, s'il vous plaît ? C'est pour offrir."
+              ],
+              "correct": 2,
+              "why": [
+                "Good French, but « tu » and « s'il te plaît » are for friends. She says vous to you.",
+                "Good French, but « et vite » sounds rude and rushed.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_08_gift_d05",
+          "place": "En boutique",
+          "cue": "Clarify: A salesman says vous to you. He talks fast, and you don't catch it.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Je vous fais un paquet cadeau, madame ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say sorry, and ask him to repeat.",
+              "bank": [
+                "Pardon,",
+                "vous pouvez",
+                "répéter ?",
+                "tu peux",
+                "répète ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon,",
+                  "vous pouvez",
+                  "répéter ?"
+                ],
+                [
+                  "vous pouvez",
+                  "répéter ?"
+                ]
+              ],
+              "model": "Pardon, vous pouvez répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « paquet cadeau » mean here?",
+              "choices": [
+                "a gift card",
+                "a paper bag",
+                "gift wrapping"
+              ],
+              "correct": 2,
+              "why": [
+                "No: he wraps the present; a card is something else.",
+                "No: « un sac » is a bag. A « paquet cadeau » is wrapping.",
+                ""
+              ],
+              "target": "paquet cadeau"
+            }
+          ],
+          "followUp": "Pardon ! Un paquet cadeau, c'est pour offrir ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_08_gift_d06",
+          "place": "Au bureau",
+          "cue": "Inès, your colleague, says tu to you. She's at the office with you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Samedi, c'est l'anniversaire de Théo. Une idée ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Un pull bleu ? Il ___ le bleu."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "aimes",
+                "aime",
+                "aiment"
+              ],
+              "correct": 1,
+              "why": [
+                "« Aimes » goes with « tu ». Here it's « il ».",
+                "",
+                "« Aiment » goes with « ils ». Here it's one person, « il »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès want?",
+              "choices": [
+                "A plan for Saturday night",
+                "An idea for Théo's present"
+              ],
+              "correct": 1,
+              "miss": "Reread: « l'anniversaire de Théo. Une idée ? »"
+            }
+          ],
+          "followUp": "Bonne idée ! Tu viens avec moi ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_08_gift_s03",
+          "place": "En boutique · phrase seule",
+          "standalone": "Corriger",
+          "cue": "A saleswoman says vous to you. You're buying a present for your sister.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "C'est pour offrir à ma sœur, c'est sa anniversaire demain.",
+              "error": {
+                "word": "sa",
+                "fix": "son",
+                "choices": [
+                  "ses",
+                  "son",
+                  "une"
+                ],
+                "why": "Before a vowel, « sa » becomes « son », even for a woman: « son anniversaire »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_08_gift_d07",
+          "place": "À l'appart",
+          "cue": "Léa, your flatmate, says tu to you. You're at home.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "C'est quand, ton anniversaire ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "C'est ___ semaine prochaine !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « anniversaire » mean here?",
+              "choices": [
+                "birthday",
+                "holiday",
+                "weekend"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "No: « anniversaire » is the day you were born, every year.",
+                "No: « anniversaire » is the day you were born, every year."
+              ],
+              "target": "anniversaire"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "le",
+                "en",
+                "la"
+              ],
+              "correct": 2,
+              "why": [
+                "« Semaine » is feminine: « la semaine ».",
+                "Not French: « la semaine prochaine ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "La semaine prochaine ? On fait une fête !",
+          "newWords": []
+        },
+        {
+          "id": "sit_08_gift_d08",
+          "place": "En boutique",
+          "cue": "A saleswoman says vous to you. You're buying a present.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Voilà votre chemise, madame.",
+              "voice": "female"
+            },
+            {
+              "speaker": "server",
+              "text": "Je vous fais un paquet cadeau ?",
+              "voice": "female"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say yes please: it's a present.",
+              "bank": [
+                "Oui,",
+                "s'il vous plaît,",
+                "c'est pour offrir.",
+                "s'il te plaît,",
+                "c'est pour moi.",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "s'il vous plaît,",
+                  "c'est pour offrir."
+                ]
+              ],
+              "model": "Oui, s'il vous plaît, c'est pour offrir."
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What are you buying?",
+              "choices": [
+                "A jumper",
+                "A shirt"
+              ],
+              "correct": 1,
+              "miss": "Reread: « voilà votre chemise »."
+            }
+          ],
+          "followUp": "Très bien, je vous fais ça tout de suite.",
+          "newWords": []
+        },
+        {
+          "id": "sit_08_gift_s04",
+          "place": "Les copains · groupe · phrase seule",
+          "standalone": "Transformer",
+          "cue": "Théo's group chat « Les copains ». Everyone says tu. Léa was just mentioned in the chat. Say « her » birthday instead.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Samedi, c'est l'anniversaire de Léa, je cherche un cadeau.",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it: replace « de Léa » with a possessive.",
+              "bank": [
+                "Samedi,",
+                "c'est",
+                "son",
+                "sa",
+                "ses",
+                "anniversaire,",
+                "je cherche",
+                "un cadeau."
+              ],
+              "accepted": [
+                [
+                  "Samedi,",
+                  "c'est",
+                  "son",
+                  "anniversaire,",
+                  "je cherche",
+                  "un cadeau."
+                ]
+              ],
+              "model": "Samedi, c'est son anniversaire, je cherche un cadeau."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_08_gift_d09",
+          "place": "Les copains · groupe",
+          "cue": "Théo's group chat « Les copains ». Everyone says tu. Théo writes about Léa's present.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "J'ai le cadeau pour Léa, avec un paquet cadeau !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Top ! Elle va ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What has Théo got?",
+              "choices": [
+                "Léa's present, gift-wrapped",
+                "Gift wrap, but no present yet"
+              ],
+              "correct": 0,
+              "miss": "Reread: « j'ai le cadeau pour Léa, avec un paquet cadeau »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "adore",
+                "adorer",
+                "adoré"
+              ],
+              "correct": 1,
+              "why": [
+                "After « elle va », use the infinitive: « adorer ».",
+                "",
+                "After « elle va », use the infinitive, not the past participle."
+              ]
+            }
+          ],
+          "followUp": "Merci ! C'est un pull bleu.",
+          "newWords": []
+        },
+        {
+          "id": "sit_08_gift_d10",
+          "place": "Sur le palier",
+          "cue": "M. Ferrand, your neighbour, says vous to you. You meet him on the landing.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "C'est mon anniversaire aujourd'hui, madame."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does M. Ferrand tell you?",
+              "choices": [
+                "It's his birthday tomorrow",
+                "It's his birthday today"
+              ],
+              "correct": 1,
+              "miss": "Reread: « c'est mon anniversaire aujourd'hui »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Wish him a happy birthday, politely.",
+              "bank": [
+                "Bon",
+                "Bonne",
+                "anniversaire,",
+                "monsieur !",
+                "madame !"
+              ],
+              "accepted": [
+                [
+                  "Bon",
+                  "anniversaire,",
+                  "monsieur !"
+                ]
+              ],
+              "model": "Bon anniversaire, monsieur !"
+            }
+          ],
+          "followUp": "Merci, c'est très gentil !",
+          "newWords": []
+        },
+        {
+          "id": "sit_08_gift_s05",
+          "place": "En boutique · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "A saleswoman says vous to you. Which French words mean “gift wrapping”?",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "C'est pour offrir ? Je vous fais un ___, madame ?",
+              "voice": "female"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "gift wrapping",
+              "choices": [
+                "sac",
+                "café",
+                "paquet cadeau"
+              ],
+              "correct": 2,
+              "why": [
+                "« Un sac » is a bag. You don't « faire » a bag for a present.",
+                "« Un café » is a coffee.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_08_checkout",
+      "title": "Payer et les soldes",
+      "note": "Pay at « la caisse », keep « le ticket », and catch « les soldes »: the big sales run in January and July all over France. « Par carte », but « en espèces ».",
+      "items": [
+        {
+          "id": "sit_08_checkout_d01",
+          "place": "En boutique",
+          "cue": "A saleswoman says vous to you. You're paying for a shirt.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Ça fait vingt euros, madame.",
+              "voice": "female"
+            },
+            {
+              "speaker": "server",
+              "text": "Vous voulez payer par carte ?",
+              "voice": "female"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "How much is it?",
+              "choices": [
+                "Twenty euros",
+                "Thirty euros"
+              ],
+              "correct": 0,
+              "miss": "Reread: « ça fait vingt euros »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Say no: in cash, please.",
+              "bank": [
+                "Non,",
+                "en espèces,",
+                "s'il vous plaît.",
+                "par espèces,",
+                "s'il te plaît.",
+                "Oui,"
+              ],
+              "accepted": [
+                [
+                  "Non,",
+                  "en espèces,",
+                  "s'il vous plaît."
+                ]
+              ],
+              "model": "Non, en espèces, s'il vous plaît."
+            }
+          ],
+          "followUp": "Très bien, pas de problème.",
+          "newWords": [
+            "payer"
+          ]
+        },
+        {
+          "id": "sit_08_checkout_d02",
+          "place": "En boutique",
+          "cue": "A salesman says vous to you. You want to buy a jumper.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Vous payez à la caisse, au fond."
+            },
+            {
+              "speaker": "learner",
+              "text": "D'accord ! Je ___ par carte."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "Where do you pay?",
+              "choices": [
+                "At the till by the door",
+                "At the till at the back"
+              ],
+              "correct": 1,
+              "miss": "Reread: « à la caisse, au fond »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "paies",
+                "payer",
+                "paie"
+              ],
+              "correct": 2,
+              "why": [
+                "« Paies » goes with « tu ». Here it's « je ».",
+                "After « je », conjugate the verb: « je paie ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Parfait, merci !",
+          "newWords": [
+            "caisse"
+          ]
+        },
+        {
+          "id": "sit_08_checkout_s01",
+          "place": "En boutique · phrase seule",
+          "standalone": "Construire",
+          "cue": "A salesman says vous to you. You want to pay by card.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Ça fait vingt euros, madame, s'il vous plaît."
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Ask politely if you can pay by card.",
+              "bank": [
+                "Je peux",
+                "Tu peux",
+                "payer",
+                "payé",
+                "par carte,",
+                "s'il vous plaît ?",
+                "s'il te plaît ?"
+              ],
+              "accepted": [
+                [
+                  "Je peux",
+                  "payer",
+                  "par carte,",
+                  "s'il vous plaît ?"
+                ]
+              ],
+              "model": "Je peux payer par carte, s'il vous plaît ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_08_checkout_d03",
+          "place": "En boutique",
+          "cue": "A saleswoman says vous to you. You're paying for a jumper.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Avec les soldes, ça fait dix euros.",
+              "voice": "female"
+            },
+            {
+              "speaker": "server",
+              "text": "Voilà votre ticket.",
+              "voice": "female"
+            },
+            {
+              "speaker": "learner",
+              "text": "Merci ! Bonne ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "journée",
+                "jour",
+                "matin"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Jour » is masculine, and you say « bonne journée ».",
+                "« Matin » is masculine, and you say « bonne journée »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "Why is it only ten euros?",
+              "choices": [
+                "Because you pay in cash",
+                "Because of the sales"
+              ],
+              "correct": 1,
+              "miss": "Reread: « avec les soldes »: the sales."
+            }
+          ],
+          "followUp": "Merci, à bientôt !",
+          "newWords": [
+            "soldes",
+            "ticket"
+          ]
+        },
+        {
+          "id": "sit_08_checkout_d04",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you. You're going to the bakery.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Tu peux payer mon pain ? Je n'ai pas de monnaie !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « payer » mean here?",
+              "choices": [
+                "to buy",
+                "to bring",
+                "to pay"
+              ],
+              "correct": 2,
+              "why": [
+                "No: « payer » is to hand over the money for it.",
+                "No: to bring is « apporter ».",
+                ""
+              ],
+              "target": "payer"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say no worries: you'll pay.",
+              "bank": [
+                "Pas de problème,",
+                "Pas de souci,",
+                "je paie !",
+                "je paies !",
+                "tu paies !"
+              ],
+              "accepted": [
+                [
+                  "Pas de problème,",
+                  "je paie !"
+                ],
+                [
+                  "Pas de souci,",
+                  "je paie !"
+                ]
+              ],
+              "model": "Pas de problème, je paie !"
+            }
+          ],
+          "followUp": "Merci, t'es top !",
+          "newWords": []
+        },
+        {
+          "id": "sit_08_checkout_s02",
+          "place": "En boutique · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "You're shopping with Inès, your colleague. She says tu to you. Tell her where to pay.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "Vous payez à la caisse, au fond du magasin, madame.",
+                "Tu paies à la caisse, au fond du magasin !",
+                "Payez à la caisse, au fond du magasin, s'il vous plaît."
+              ],
+              "correct": 1,
+              "why": [
+                "Good French, but « vous » and « madame » are for strangers. Inès says tu to you.",
+                "",
+                "Good French, but « payez » is the vous form. Inès says tu to you."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_08_checkout_d05",
+          "place": "En boutique",
+          "cue": "Clarify: A salesman says vous to you. He talks fast, and you don't catch it.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Pour payer, c'est la caisse au fond, madame."
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say sorry, and ask him to repeat.",
+              "bank": [
+                "Pardon,",
+                "vous pouvez",
+                "répéter ?",
+                "tu peux",
+                "répète ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon,",
+                  "vous pouvez",
+                  "répéter ?"
+                ],
+                [
+                  "vous pouvez",
+                  "répéter ?"
+                ]
+              ],
+              "model": "Pardon, vous pouvez répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « caisse » mean here?",
+              "choices": [
+                "fitting room",
+                "till",
+                "exit"
+              ],
+              "correct": 1,
+              "why": [
+                "No: the fitting room is « la cabine ».",
+                "",
+                "No: « la caisse » is where you pay."
+              ],
+              "target": "caisse"
+            }
+          ],
+          "followUp": "La caisse : au fond du magasin !",
+          "newWords": []
+        },
+        {
+          "id": "sit_08_checkout_d06",
+          "place": "Les copains · groupe",
+          "cue": "Théo's group chat « Les copains ». Everyone says tu. Théo writes to the group.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "C'est les soldes ! On y va samedi ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Carrément ! Je ___ un nouveau pull."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "veux",
+                "voulez",
+                "veut"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Voulez » goes with « vous ». Here it's « je ».",
+                "« Veut » goes with « il » or « elle ». Here it's « je »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo suggest?",
+              "choices": [
+                "Going to the cinema on Saturday",
+                "Going to the sales on Saturday"
+              ],
+              "correct": 1,
+              "miss": "Reread: « c'est les soldes ! On y va samedi ? »"
+            }
+          ],
+          "followUp": "Top ! Moi, je cherche un pantalon.",
+          "newWords": []
+        },
+        {
+          "id": "sit_08_checkout_s03",
+          "place": "En boutique · phrase seule",
+          "standalone": "Corriger",
+          "cue": "A saleswoman says vous to you. You want to pay by card.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Ce pull est en soldes ? Je peux payé par carte, s'il vous plaît ?",
+              "error": {
+                "word": "payé",
+                "fix": "payer",
+                "choices": [
+                  "payez",
+                  "paie",
+                  "payer"
+                ],
+                "why": "After « je peux », use the infinitive: « je peux payer »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_08_checkout_d07",
+          "place": "En boutique",
+          "cue": "A saleswoman says vous to you. You've just paid for a jumper.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Vous voulez le ticket dans le sac ?",
+              "voice": "female"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, merci ! Le pull est ___ soldes ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « ticket » mean here?",
+              "choices": [
+                "price tag",
+                "receipt",
+                "bag"
+              ],
+              "correct": 1,
+              "why": [
+                "No: « le ticket » is the paper you get when you pay.",
+                "",
+                "No: the bag is « le sac »."
+              ],
+              "target": "ticket"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "à",
+                "par",
+                "en"
+              ],
+              "correct": 2,
+              "why": [
+                "Not French: something is « en soldes ».",
+                "Not French: something is « en soldes ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Oui, il est moins cher !",
+          "newWords": []
+        },
+        {
+          "id": "sit_08_checkout_d08",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Les soldes commencent demain !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say great, and suggest going together.",
+              "bank": [
+                "Super !",
+                "On y va",
+                "ensemble ?",
+                "On y vais",
+                "On y allez"
+              ],
+              "accepted": [
+                [
+                  "Super !",
+                  "On y va",
+                  "ensemble ?"
+                ],
+                [
+                  "On y va",
+                  "ensemble ?"
+                ]
+              ],
+              "model": "Super ! On y va ensemble ?"
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès tell you?",
+              "choices": [
+                "The sales start tomorrow",
+                "The sales end tomorrow"
+              ],
+              "correct": 0,
+              "miss": "Reread: « les soldes commencent demain »: they start."
+            }
+          ],
+          "followUp": "Carrément ! On se retrouve à dix heures ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_08_checkout_s04",
+          "place": "En boutique · phrase seule",
+          "standalone": "Transformer",
+          "cue": "A saleswoman says vous to you. Say what you're going to do: use « aller » + infinitive.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Je paie par carte à la caisse, merci.",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it in the near future: « je vais… ».",
+              "bank": [
+                "Je vais",
+                "payer",
+                "paie",
+                "payé",
+                "par carte",
+                "à la caisse,",
+                "au caisse,",
+                "merci."
+              ],
+              "accepted": [
+                [
+                  "Je vais",
+                  "payer",
+                  "par carte",
+                  "à la caisse,",
+                  "merci."
+                ]
+              ],
+              "model": "Je vais payer par carte à la caisse, merci."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_08_checkout_d09",
+          "place": "En boutique",
+          "cue": "A salesman says vous to you. You're at the till with your shopping.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Vous payez comment, madame ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "___ espèces, s'il vous plaît."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the salesman ask?",
+              "choices": [
+                "How much you're paying",
+                "How you're paying"
+              ],
+              "correct": 1,
+              "miss": "Reread: « vous payez comment ? »: how."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "Par",
+                "En",
+                "À"
+              ],
+              "correct": 1,
+              "why": [
+                "« Par carte », but « en espèces ».",
+                "",
+                "Not French: « en espèces »."
+              ]
+            }
+          ],
+          "followUp": "Merci. Voilà votre ticket et votre monnaie.",
+          "newWords": []
+        },
+        {
+          "id": "sit_08_checkout_d10",
+          "place": "En boutique",
+          "cue": "A saleswoman says vous to you. You're looking at a shirt.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Cette chemise est en soldes ! Moins dix euros.",
+              "voice": "female"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does she say about the shirt?",
+              "choices": [
+                "It's on sale",
+                "It's the last one"
+              ],
+              "correct": 0,
+              "miss": "Reread: « en soldes ! Moins dix euros »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Say you'll take it, and you're going to the till.",
+              "bank": [
+                "Je la prends,",
+                "Je le prends,",
+                "je vais",
+                "je vas",
+                "à la caisse.",
+                "au caisse."
+              ],
+              "accepted": [
+                [
+                  "Je la prends,",
+                  "je vais",
+                  "à la caisse."
+                ]
+              ],
+              "model": "Je la prends, je vais à la caisse."
+            }
+          ],
+          "followUp": "Très bien, la caisse est au fond.",
+          "newWords": []
+        },
+        {
+          "id": "sit_08_checkout_s05",
+          "place": "En boutique · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "A saleswoman says vous to you. Which French word means “the sales”?",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Cette chemise est en ___ ? Alors je la prends en bleu aussi !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "the sales",
+              "choices": [
+                "caisse",
+                "soldes",
+                "ticket"
+              ],
+              "correct": 1,
+              "why": [
+                "« La caisse » is the till.",
+                "",
+                "« Le ticket » is the receipt."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_08_exchange",
+      "title": "Échanger",
+      "note": "Take something back (« rapporter ») and swap it (« échanger »), always with your receipt. « Abîmé » agrees with the item: « un pull abîmé, une chemise abîmée ».",
+      "items": [
+        {
+          "id": "sit_08_exchange_d01",
+          "place": "En boutique",
+          "cue": "A saleswoman says vous to you. You're back at the shop with a jumper you bought.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Bonjour ! Je voudrais échanger ce pull."
+            },
+            {
+              "speaker": "server",
+              "text": "Bien sûr. Il est trop petit ?",
+              "voice": "female"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the saleswoman ask?",
+              "choices": [
+                "If the jumper is too small",
+                "If the jumper is too big"
+              ],
+              "correct": 0,
+              "miss": "Reread: « il est trop petit ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes: you'd like the size up.",
+              "bank": [
+                "Oui,",
+                "je voudrais",
+                "la taille",
+                "le taille",
+                "au-dessus.",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "je voudrais",
+                  "la taille",
+                  "au-dessus."
+                ]
+              ],
+              "model": "Oui, je voudrais la taille au-dessus."
+            }
+          ],
+          "followUp": "Voilà, la taille au-dessus.",
+          "newWords": [
+            "échanger"
+          ]
+        },
+        {
+          "id": "sit_08_exchange_d02",
+          "place": "En boutique",
+          "cue": "A salesman says vous to you. You're returning a jumper and a shirt.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Le pull est abîmé ? Pas de problème."
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, et ma chemise est ___ aussi."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "Is the salesman OK with it?",
+              "choices": [
+                "No, he says no",
+                "Yes, it's no problem"
+              ],
+              "correct": 1,
+              "miss": "Reread: « pas de problème »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "abîmée",
+                "abîmé",
+                "abîmés"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Chemise » is feminine: « abîmée ».",
+                "One shirt, feminine: « abîmée »."
+              ]
+            }
+          ],
+          "followUp": "D'accord, on échange les deux.",
+          "newWords": [
+            "abîmé"
+          ]
+        },
+        {
+          "id": "sit_08_exchange_s01",
+          "place": "En boutique · phrase seule",
+          "standalone": "Construire",
+          "cue": "A salesman says vous to you. You want to exchange a pair of trousers.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Bonjour, madame ! Je peux vous aider ? C'est pour quoi ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say hello: you'd like to exchange these trousers, please.",
+              "bank": [
+                "Bonjour,",
+                "je voudrais",
+                "échanger",
+                "échangé",
+                "ce",
+                "cette",
+                "pantalon,",
+                "s'il vous plaît.",
+                "s'il te plaît."
+              ],
+              "accepted": [
+                [
+                  "Bonjour,",
+                  "je voudrais",
+                  "échanger",
+                  "ce",
+                  "pantalon,",
+                  "s'il vous plaît."
+                ]
+              ],
+              "model": "Bonjour, je voudrais échanger ce pantalon, s'il vous plaît."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_08_exchange_d03",
+          "place": "À l'appart",
+          "cue": "Léa, your flatmate, says tu to you. You show her your new jumper at home.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Trop petit ? Tu peux rapporter ton pull au magasin !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, avec le ___."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "caisse",
+                "tickets",
+                "ticket"
+              ],
+              "correct": 2,
+              "why": [
+                "« Caisse » is feminine, and it's the till, not the receipt.",
+                "One receipt, so « ticket », with « le ».",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa suggest?",
+              "choices": [
+                "Giving the jumper to her",
+                "Taking the jumper back to the shop"
+              ],
+              "correct": 1,
+              "miss": "Reread: « tu peux rapporter ton pull au magasin »."
+            }
+          ],
+          "followUp": "Top, et prends la taille au-dessus !",
+          "newWords": [
+            "rapporter"
+          ]
+        },
+        {
+          "id": "sit_08_exchange_d04",
+          "place": "En boutique",
+          "cue": "A saleswoman says vous to you. You're back at the shop with a shirt.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Vous voulez échanger la chemise ?",
+              "voice": "female"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « échanger » mean here?",
+              "choices": [
+                "to try on",
+                "to pay for",
+                "to exchange"
+              ],
+              "correct": 2,
+              "why": [
+                "No: to try on is « essayer ».",
+                "No: to pay is « payer ».",
+                ""
+              ],
+              "target": "échanger"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes: it's damaged.",
+              "bank": [
+                "Oui,",
+                "elle est",
+                "il est",
+                "abîmée.",
+                "abîmé.",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "elle est",
+                  "abîmée."
+                ]
+              ],
+              "model": "Oui, elle est abîmée."
+            }
+          ],
+          "followUp": "Pardon, madame ! Voilà une autre chemise.",
+          "newWords": []
+        },
+        {
+          "id": "sit_08_exchange_s02",
+          "place": "En boutique · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "A salesman says vous to you. Ask him politely if you can exchange this jumper.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "Je veux échanger ce pull. Tout de suite.",
+                "Est-ce que je peux échanger ce pull, s'il vous plaît ?",
+                "Je peux échanger ce pull, s'il te plaît ?"
+              ],
+              "correct": 1,
+              "why": [
+                "Good French, but it sounds curt and demanding.",
+                "",
+                "Good French, but « s'il te plaît » is for friends. He says vous to you."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_08_exchange_d05",
+          "place": "En boutique",
+          "cue": "Clarify: A salesman says vous to you. He talks fast, and you don't catch it.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Il est abîmé ? Vous avez le ticket ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say sorry, and ask him to repeat.",
+              "bank": [
+                "Pardon,",
+                "vous pouvez",
+                "répéter ?",
+                "tu peux",
+                "répète ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon,",
+                  "vous pouvez",
+                  "répéter ?"
+                ],
+                [
+                  "vous pouvez",
+                  "répéter ?"
+                ]
+              ],
+              "model": "Pardon, vous pouvez répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « abîmé » mean here?",
+              "choices": [
+                "dirty",
+                "damaged",
+                "too small"
+              ],
+              "correct": 1,
+              "why": [
+                "No: « abîmé » means damaged, not dirty.",
+                "",
+                "No: too small is « trop petit »."
+              ],
+              "target": "abîmé"
+            }
+          ],
+          "followUp": "Pardon ! Il est abîmé, le pull ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_08_exchange_d06",
+          "place": "Appel · boutique",
+          "cue": "You call the shop about a jumper you want to bring back. The saleswoman says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Vous pouvez rapporter le pull jusqu'à samedi.",
+              "voice": "female"
+            },
+            {
+              "speaker": "learner",
+              "text": "Merci ! Je ___ demain, alors."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "passes",
+                "passe",
+                "passer"
+              ],
+              "correct": 1,
+              "why": [
+                "« Passes » goes with « tu ». Here it's « je ».",
+                "",
+                "After « je », conjugate the verb: « je passe »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "Until when can you bring it back?",
+              "choices": [
+                "Until Saturday",
+                "Until Sunday"
+              ],
+              "correct": 0,
+              "miss": "Reread: « jusqu'à samedi »."
+            }
+          ],
+          "followUp": "Parfait. Avec le ticket, s'il vous plaît !",
+          "newWords": []
+        },
+        {
+          "id": "sit_08_exchange_s03",
+          "place": "En boutique · phrase seule",
+          "standalone": "Corriger",
+          "cue": "A saleswoman says vous to you. You want to exchange a shirt.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Je voudrais échanger cette chemise, elle est abîmé.",
+              "error": {
+                "word": "abîmé",
+                "fix": "abîmée",
+                "choices": [
+                  "abîmés",
+                  "abîmée",
+                  "abîmées"
+                ],
+                "why": "« Chemise » is feminine and singular: « elle est abîmée »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_08_exchange_d07",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Je vais rapporter mon pantalon, il est abîmé."
+            },
+            {
+              "speaker": "learner",
+              "text": "Oh non ! Tu ___ l'échanger ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « rapporter » mean here?",
+              "choices": [
+                "to report",
+                "to take back",
+                "to try on"
+              ],
+              "correct": 1,
+              "why": [
+                "No: here « rapporter » is to take something back to the shop.",
+                "",
+                "No: to try on is « essayer »."
+              ],
+              "target": "rapporter"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "peut",
+                "pouvoir",
+                "peux"
+              ],
+              "correct": 2,
+              "why": [
+                "« Peut » goes with « il » or « elle ». Here it's « tu ».",
+                "After « tu », conjugate the verb: « tu peux ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Oui, j'ai le ticket !",
+          "newWords": []
+        },
+        {
+          "id": "sit_08_exchange_d08",
+          "place": "En boutique",
+          "cue": "A saleswoman says vous to you. You're back at the shop with a jumper.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Bonjour, madame ! Vous avez le ticket ?",
+              "voice": "female"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say yes, here it is, and that you'd like to exchange this jumper.",
+              "bank": [
+                "Oui,",
+                "voilà.",
+                "Je voudrais",
+                "échanger",
+                "échangé",
+                "ce pull.",
+                "cette pull."
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "voilà.",
+                  "Je voudrais",
+                  "échanger",
+                  "ce pull."
+                ],
+                [
+                  "Je voudrais",
+                  "échanger",
+                  "ce pull.",
+                  "Oui,",
+                  "voilà."
+                ]
+              ],
+              "model": "Oui, voilà. Je voudrais échanger ce pull."
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does she ask for?",
+              "choices": [
+                "Your bank card",
+                "Your receipt"
+              ],
+              "correct": 1,
+              "miss": "Reread: « vous avez le ticket ? »"
+            }
+          ],
+          "followUp": "Merci. Vous voulez une autre taille ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_08_exchange_s04",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Transformer",
+          "cue": "Léa, your flatmate, says tu to you. Tell her what you did this morning: put it in the past.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Ce matin, je rapporte le pantalon au magasin avec le ticket.",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it in the passé composé.",
+              "bank": [
+                "Ce matin,",
+                "j'ai",
+                "je suis",
+                "rapporté",
+                "rapporter",
+                "le pantalon",
+                "au magasin",
+                "avec le ticket."
+              ],
+              "accepted": [
+                [
+                  "Ce matin,",
+                  "j'ai",
+                  "rapporté",
+                  "le pantalon",
+                  "au magasin",
+                  "avec le ticket."
+                ]
+              ],
+              "model": "Ce matin, j'ai rapporté le pantalon au magasin avec le ticket."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_08_exchange_d09",
+          "place": "Les copains · groupe",
+          "cue": "Théo's group chat « Les copains ». Everyone says tu. Théo writes to the group.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Mon pantalon est abîmé… Je peux rapporter ça ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, avec ton ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What's Théo's problem?",
+              "choices": [
+                "His trousers are damaged",
+                "His trousers are too small"
+              ],
+              "correct": 0,
+              "miss": "Reread: « mon pantalon est abîmé »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "tickets",
+                "ticket",
+                "caisse"
+              ],
+              "correct": 1,
+              "why": [
+                "One receipt, so « ticket », with « ton ».",
+                "",
+                "« La caisse » is the till, not the receipt."
+              ]
+            }
+          ],
+          "followUp": "Oh non, je n'ai pas le ticket !",
+          "newWords": []
+        },
+        {
+          "id": "sit_08_exchange_d10",
+          "place": "En boutique",
+          "cue": "A salesman says vous to you. You want to exchange a jumper for another colour.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Plus de bleu… Vous voulez le noir à la place ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the salesman offer?",
+              "choices": [
+                "A refund",
+                "The black one"
+              ],
+              "correct": 1,
+              "miss": "Reread: « vous voulez le noir à la place ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes: black is fine for you.",
+              "bank": [
+                "Oui,",
+                "le noir,",
+                "la noire,",
+                "ça me va.",
+                "ça te va.",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "le noir,",
+                  "ça me va."
+                ],
+                [
+                  "Oui,",
+                  "ça me va."
+                ]
+              ],
+              "model": "Oui, le noir, ça me va."
+            }
+          ],
+          "followUp": "Très bien, voilà le pull noir.",
+          "newWords": []
+        },
+        {
+          "id": "sit_08_exchange_s05",
+          "place": "En boutique · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "A saleswoman says vous to you. Which French word means “to exchange”?",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Bonjour, je voudrais ___ ce pull, il est trop petit pour moi."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "to exchange",
+              "choices": [
+                "payer",
+                "échanger",
+                "essayer"
+              ],
+              "correct": 1,
+              "why": [
+                "« Payer » is to pay. You've already paid.",
+                "",
+                "« Essayer » is to try on. You know it's too small already."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_08_refund",
+      "title": "Se faire rembourser",
+      "note": "Ask for your money back politely: « je voudrais être remboursée » (you're a woman, so « remboursée »), and ask « la vendeuse » or « le responsable ».",
+      "items": [
+        {
+          "id": "sit_08_refund_d01",
+          "place": "En boutique",
+          "cue": "A salesman says vous to you. You're returning a jumper.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Pas de problème, on peut vous rembourser."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the salesman say?",
+              "choices": [
+                "He can't take it back",
+                "He can give you your money back"
+              ],
+              "correct": 1,
+              "miss": "Reread: « on peut vous rembourser »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Thank him, and hand him the receipt.",
+              "bank": [
+                "Merci !",
+                "Voilà",
+                "le ticket.",
+                "la ticket.",
+                "les tickets."
+              ],
+              "accepted": [
+                [
+                  "Merci !",
+                  "Voilà",
+                  "le ticket."
+                ],
+                [
+                  "Voilà",
+                  "le ticket.",
+                  "Merci !"
+                ]
+              ],
+              "model": "Merci ! Voilà le ticket."
+            }
+          ],
+          "followUp": "Merci, madame. Et voilà vos vingt euros.",
+          "newWords": [
+            "rembourser"
+          ]
+        },
+        {
+          "id": "sit_08_refund_d02",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you. You're in a shop with a jumper to return.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Tu veux être remboursée ? Demande à la vendeuse !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Elle ___ pas là !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa tell you to do?",
+              "choices": [
+                "Ask the saleswoman",
+                "Go home"
+              ],
+              "correct": 0,
+              "miss": "Reread: « demande à la vendeuse »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "est",
+                "n'est",
+                "n'es"
+              ],
+              "correct": 1,
+              "why": [
+                "With « pas », you need « ne »: « elle n'est pas ».",
+                "",
+                "« N'es » goes with « tu ». Here it's « elle »."
+              ]
+            }
+          ],
+          "followUp": "Ah ! Attends un peu, alors.",
+          "newWords": [
+            "vendeuse"
+          ]
+        },
+        {
+          "id": "sit_08_refund_s01",
+          "place": "En boutique · phrase seule",
+          "standalone": "Construire",
+          "cue": "You're a woman. A salesman says vous to you. You'd like your money back for a jumper.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Bonjour, madame ! Vous avez un problème avec le pull ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say hello: you'd like a refund, please.",
+              "bank": [
+                "Bonjour,",
+                "je voudrais",
+                "être",
+                "remboursée,",
+                "remboursé,",
+                "rembourser,",
+                "s'il vous plaît.",
+                "s'il te plaît."
+              ],
+              "accepted": [
+                [
+                  "Bonjour,",
+                  "je voudrais",
+                  "être",
+                  "remboursée,",
+                  "s'il vous plaît."
+                ]
+              ],
+              "model": "Bonjour, je voudrais être remboursée, s'il vous plaît."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_08_refund_d03",
+          "place": "En boutique",
+          "cue": "A saleswoman says vous to you. You'd like your money back for a shirt.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Je ne peux pas, désolée. Je demande au responsable.",
+              "voice": "female"
+            },
+            {
+              "speaker": "learner",
+              "text": "Merci, vous êtes très ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "gentil",
+                "gentille",
+                "gentilles"
+              ],
+              "correct": 1,
+              "why": [
+                "She's a woman: « gentille ».",
+                "",
+                "One person: « gentille », not plural."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What is she going to do?",
+              "choices": [
+                "Give you your money back",
+                "Ask the manager"
+              ],
+              "correct": 1,
+              "miss": "Reread: « je demande au responsable »."
+            }
+          ],
+          "followUp": "De rien ! Un moment, madame.",
+          "newWords": [
+            "responsable"
+          ]
+        },
+        {
+          "id": "sit_08_refund_d04",
+          "place": "En boutique",
+          "cue": "A salesman says vous to you. You're returning a shirt.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "On peut vous rembourser. Vous avez le ticket ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « rembourser » mean here?",
+              "choices": [
+                "to exchange",
+                "to refund",
+                "to reduce"
+              ],
+              "correct": 1,
+              "why": [
+                "No: to exchange is « échanger ».",
+                "",
+                "No: « rembourser » is giving your money back."
+              ],
+              "target": "rembourser"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes: it's in your bag.",
+              "bank": [
+                "Oui,",
+                "il est",
+                "elle est",
+                "dans mon sac.",
+                "dans ma sac.",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "il est",
+                  "dans mon sac."
+                ]
+              ],
+              "model": "Oui, il est dans mon sac."
+            }
+          ],
+          "followUp": "Parfait, je vous attends.",
+          "newWords": []
+        },
+        {
+          "id": "sit_08_refund_s02",
+          "place": "En boutique · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "A saleswoman says vous to you. She can't help you. Ask politely to speak to the manager.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "Je veux le responsable, et vite !",
+                "Tu peux appeler le responsable, s'il te plaît ?",
+                "Je peux parler au responsable, s'il vous plaît ?"
+              ],
+              "correct": 2,
+              "why": [
+                "Good French, but it sounds rude and demanding.",
+                "Good French, but « tu » and « s'il te plaît » are for friends. She says vous to you.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_08_refund_d05",
+          "place": "En boutique",
+          "cue": "Clarify: A salesman says vous to you. He talks fast, and you don't catch it.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Il faut demander à la vendeuse, à la caisse."
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say sorry, and ask him to repeat.",
+              "bank": [
+                "Pardon,",
+                "vous pouvez",
+                "répéter ?",
+                "tu peux",
+                "répète ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon,",
+                  "vous pouvez",
+                  "répéter ?"
+                ],
+                [
+                  "vous pouvez",
+                  "répéter ?"
+                ]
+              ],
+              "model": "Pardon, vous pouvez répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « vendeuse » mean here?",
+              "choices": [
+                "manager",
+                "customer",
+                "saleswoman"
+              ],
+              "correct": 2,
+              "why": [
+                "No: the manager is « le responsable ».",
+                "No: « la vendeuse » works in the shop.",
+                ""
+              ],
+              "target": "vendeuse"
+            }
+          ],
+          "followUp": "La vendeuse, là, à la caisse !",
+          "newWords": []
+        },
+        {
+          "id": "sit_08_refund_d06",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Alors, on t'a remboursée ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, la vendeuse a été très ___."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "gentil",
+                "gentils",
+                "gentille"
+              ],
+              "correct": 2,
+              "why": [
+                "« Vendeuse » is feminine: « gentille ».",
+                "One person, feminine: « gentille ».",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès ask?",
+              "choices": [
+                "If you got your money back",
+                "If you found a new jumper"
+              ],
+              "correct": 0,
+              "miss": "Reread: « on t'a remboursée ? »"
+            }
+          ],
+          "followUp": "Super ! On va au café ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_08_refund_s03",
+          "place": "En boutique · phrase seule",
+          "standalone": "Corriger",
+          "cue": "You're a woman. A saleswoman says vous to you. You'd like a refund.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Je voudrais être remboursé, s'il vous plaît. Voilà mon ticket.",
+              "error": {
+                "word": "remboursé",
+                "fix": "remboursée",
+                "choices": [
+                  "remboursée",
+                  "remboursés",
+                  "rembourser"
+                ],
+                "why": "You're a woman: « je voudrais être remboursée »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_08_refund_d07",
+          "place": "En boutique",
+          "cue": "You're a woman. The shop manager, a man, says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Je suis le responsable. Il y a un problème ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, je voudrais être ___."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « responsable » mean here?",
+              "choices": [
+                "cashier",
+                "manager",
+                "security guard"
+              ],
+              "correct": 1,
+              "why": [
+                "No: the person at the till isn't « le responsable ».",
+                "",
+                "No: « le responsable » is the person in charge."
+              ],
+              "target": "responsable"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "rembourser",
+                "remboursé",
+                "remboursée"
+              ],
+              "correct": 2,
+              "why": [
+                "After « être », use the past participle: « remboursée ».",
+                "You're a woman: « remboursée ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Bien sûr, madame. Vous avez le ticket ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_08_refund_d08",
+          "place": "Les copains · groupe",
+          "cue": "Théo's group chat « Les copains ». Everyone says tu. Théo writes to the group.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "On m'a remboursé mon pantalon !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Ask him: with or without the receipt?",
+              "bank": [
+                "Avec",
+                "ou",
+                "sans",
+                "ticket ?",
+                "tickets ?",
+                "par"
+              ],
+              "accepted": [
+                [
+                  "Avec",
+                  "ou",
+                  "sans",
+                  "ticket ?"
+                ]
+              ],
+              "model": "Avec ou sans ticket ?"
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What happened to Théo?",
+              "choices": [
+                "He bought new trousers",
+                "He got his money back for his trousers"
+              ],
+              "correct": 1,
+              "miss": "Reread: « on m'a remboursé mon pantalon »."
+            }
+          ],
+          "followUp": "Sans ticket ! La vendeuse est super sympa.",
+          "newWords": []
+        },
+        {
+          "id": "sit_08_refund_s04",
+          "place": "En boutique · phrase seule",
+          "standalone": "Transformer",
+          "cue": "The shop manager says vous to you. Make your request more polite.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Vous pouvez me rembourser ce pull, s'il vous plaît ?",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it with « vous pourriez ».",
+              "bank": [
+                "Vous pourriez",
+                "Vous pouvez",
+                "me",
+                "rembourser",
+                "remboursé",
+                "ce pull,",
+                "s'il vous plaît ?",
+                "s'il te plaît ?"
+              ],
+              "accepted": [
+                [
+                  "Vous pourriez",
+                  "me",
+                  "rembourser",
+                  "ce pull,",
+                  "s'il vous plaît ?"
+                ]
+              ],
+              "model": "Vous pourriez me rembourser ce pull, s'il vous plaît ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_08_refund_d09",
+          "place": "En boutique",
+          "cue": "A saleswoman says vous to you. You want your money back, but you have no receipt.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Sans ticket, on ne peut pas rembourser.",
+              "voice": "female"
+            },
+            {
+              "speaker": "learner",
+              "text": "Je ___ comprends."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "Can she give you your money back?",
+              "choices": [
+                "Yes, but only in cash",
+                "No, not without a receipt"
+              ],
+              "correct": 1,
+              "miss": "Reread: « sans ticket, on ne peut pas rembourser »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "te",
+                "vous",
+                "la"
+              ],
+              "correct": 1,
+              "why": [
+                "« Te » is for a friend. She says vous to you, and you say vous to her.",
+                "",
+                "« La » would be someone else. You're talking to her: « vous »."
+              ]
+            }
+          ],
+          "followUp": "Mais on peut échanger, si vous voulez.",
+          "newWords": []
+        },
+        {
+          "id": "sit_08_refund_d10",
+          "place": "En boutique",
+          "cue": "The shop manager, a man, says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Je suis le responsable. Je vous rembourse, madame."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the manager say?",
+              "choices": [
+                "He'll exchange the item",
+                "He'll give you your money back"
+              ],
+              "correct": 1,
+              "miss": "Reread: « je vous rembourse »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Thank him a lot, politely.",
+              "bank": [
+                "Merci beaucoup,",
+                "monsieur !",
+                "madame !",
+                "Salut,",
+                "Pardon,"
+              ],
+              "accepted": [
+                [
+                  "Merci beaucoup,",
+                  "monsieur !"
+                ]
+              ],
+              "model": "Merci beaucoup, monsieur !"
+            }
+          ],
+          "followUp": "Avec plaisir, madame. Bonne journée !",
+          "newWords": []
+        },
+        {
+          "id": "sit_08_refund_s05",
+          "place": "En boutique · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "You're a woman, in a shop. Which French word means “saleswoman”?",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Excusez-moi, la ___ est à la caisse ? Je voudrais être remboursée."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "saleswoman",
+              "choices": [
+                "cabine",
+                "caisse",
+                "vendeuse"
+              ],
+              "correct": 2,
+              "why": [
+                "« La cabine » is the fitting room.",
+                "« La caisse » is the till itself.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    }
+  ]
+}

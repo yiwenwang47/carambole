@@ -1,0 +1,2671 @@
+{
+  "elements": [
+    {
+      "id": "sit_09_book",
+      "title": "Réserver une table",
+      "note": "On the phone, say « je voudrais réserver une table », then give the number of « personnes » and the day. Staff say « un instant » while they check.",
+      "items": [
+        {
+          "id": "sit_09_book_d01",
+          "place": "Appel · restaurant",
+          "cue": "You call a restaurant to book a table for four. The waiter says vous to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Bonjour, je voudrais réserver une table."
+            },
+            {
+              "speaker": "server",
+              "text": "Bonjour ! Pour combien de personnes ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the waiter ask?",
+              "choices": [
+                "How many people",
+                "Which day"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Pour combien de personnes ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Answer: four people, please.",
+              "bank": [
+                "Pour",
+                "quatre personnes,",
+                "s'il vous plaît.",
+                "quatre personne,",
+                "s'il te plaît.",
+                "Par"
+              ],
+              "accepted": [
+                [
+                  "Pour",
+                  "quatre personnes,",
+                  "s'il vous plaît."
+                ]
+              ],
+              "model": "Pour quatre personnes, s'il vous plaît."
+            }
+          ],
+          "followUp": "Très bien. Et pour quel jour ?",
+          "newWords": [
+            "personnes"
+          ]
+        },
+        {
+          "id": "sit_09_book_d02",
+          "place": "Appel · restaurant",
+          "cue": "You're booking a table by phone. The waitress says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "voice": "female",
+              "text": "Pour quel jour ? Jeudi, ça vous va ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, jeudi, ___ vingt heures."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "Which day does the waitress suggest?",
+              "choices": [
+                "Tuesday",
+                "Thursday"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Jeudi, ça vous va ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Say Thursday at eight in the evening.",
+              "choices": [
+                "à",
+                "en",
+                "de"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« En » goes with months and years, not with a clock time.",
+                "« De vingt heures » means from eight; to give the time, use « à »."
+              ]
+            }
+          ],
+          "followUp": "Jeudi, vingt heures, c'est noté.",
+          "newWords": [
+            "jeudi"
+          ]
+        },
+        {
+          "id": "sit_09_book_s01",
+          "place": "Appel · restaurant · phrase seule",
+          "standalone": "Construire",
+          "cue": "You call a restaurant to book a table for four people. The waiter says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Bonjour, madame ! Oui, je vous écoute, c'est pour une table ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say yes: you'd like to book a table for four people, please.",
+              "bank": [
+                "Oui,",
+                "je voudrais",
+                "réserver",
+                "une table",
+                "pour quatre",
+                "personnes,",
+                "s'il vous plaît.",
+                "personne,",
+                "un table",
+                "réservé"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "je voudrais",
+                  "réserver",
+                  "une table",
+                  "pour quatre",
+                  "personnes,",
+                  "s'il vous plaît."
+                ],
+                [
+                  "Oui,",
+                  "je voudrais",
+                  "une table",
+                  "pour quatre",
+                  "personnes,",
+                  "s'il vous plaît."
+                ]
+              ],
+              "model": "Oui, je voudrais réserver une table pour quatre personnes, s'il vous plaît."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_09_book_d03",
+          "place": "Appel · restaurant",
+          "cue": "You're booking a table by phone. The waiter says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Jeudi, pour quatre ? Un instant, je vais voir."
+            },
+            {
+              "speaker": "learner",
+              "text": "Merci, je vous ___."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Say you'll wait.",
+              "choices": [
+                "attend",
+                "attendre",
+                "attends"
+              ],
+              "correct": 2,
+              "why": [
+                "« Attend » goes with il or elle; with je, write « attends ».",
+                "« Attendre » is the infinitive; after « je vous », conjugate it.",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What is the waiter doing?",
+              "choices": [
+                "Asking you to call back",
+                "Asking you to hold on"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Un instant, je vais voir. »"
+            }
+          ],
+          "followUp": "Oui, jeudi, c'est possible !",
+          "newWords": [
+            "un instant"
+          ]
+        },
+        {
+          "id": "sit_09_book_d04",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat. He says tu to you. Six people is right.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "On est combien jeudi ? Je réserve pour six personnes ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « personnes » mean here?",
+              "target": "personnes",
+              "choices": [
+                "people",
+                "tables",
+                "evenings"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "Tables would be « tables ».",
+                "Evenings would be « soirs »."
+              ]
+            },
+            {
+              "type": "reply",
+              "prompt": "Say six people is perfect.",
+              "bank": [
+                "Six",
+                "personnes,",
+                "c'est parfait !",
+                "personne,",
+                "Sept",
+                "c'est parfaite !"
+              ],
+              "accepted": [
+                [
+                  "Six",
+                  "personnes,",
+                  "c'est parfait !"
+                ]
+              ],
+              "model": "Six personnes, c'est parfait !"
+            }
+          ],
+          "followUp": "Top, je réserve pour six !",
+          "newWords": []
+        },
+        {
+          "id": "sit_09_book_s02",
+          "place": "Appel · restaurant · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "You call a restaurant to book for Thursday. The waitress says vous to you. Choose the reply that fits.",
+          "turns": [
+            {
+              "speaker": "server",
+              "voice": "female",
+              "text": "Bonjour, madame ! Je vous écoute, c'est pour quel jour ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which reply fits the waitress?",
+              "choices": [
+                "Tu as une table pour jeudi ?",
+                "Salut ! Une table jeudi ?",
+                "Pour jeudi, je voudrais réserver une table, s'il vous plaît."
+              ],
+              "correct": 2,
+              "why": [
+                "Good French with a friend, but staff say vous, so you say vous too.",
+                "« Salut » is too casual for a restaurant.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_09_book_d05",
+          "place": "Appel · restaurant",
+          "cue": "You're booking a table by phone, and the line is bad. The waitress says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "voice": "female",
+              "text": "Jeudi, pour combien de personnes ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say you can't hear her well, and ask her to repeat.",
+              "bank": [
+                "Pardon,",
+                "je vous entends mal.",
+                "Vous pouvez répéter ?",
+                "je t'entends mal.",
+                "Tu peux répéter ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon,",
+                  "je vous entends mal.",
+                  "Vous pouvez répéter ?"
+                ],
+                [
+                  "Vous pouvez répéter ?",
+                  "Pardon,",
+                  "je vous entends mal."
+                ]
+              ],
+              "model": "Pardon, je vous entends mal. Vous pouvez répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « jeudi » mean here?",
+              "target": "jeudi",
+              "choices": [
+                "Tuesday",
+                "Thursday",
+                "tonight"
+              ],
+              "correct": 1,
+              "why": [
+                "Tuesday is « mardi ».",
+                "",
+                "Tonight is « ce soir »."
+              ]
+            }
+          ],
+          "followUp": "Jeudi ! Pour combien de personnes ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_09_book_d06",
+          "place": "Au bureau",
+          "cue": "Inès, a colleague, says tu to you at the office.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Tu réserves pour l'équipe ? On est huit."
+            },
+            {
+              "speaker": "learner",
+              "text": "D'accord, je réserve pour huit ___."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Say you'll book for eight people.",
+              "choices": [
+                "personne",
+                "équipes",
+                "personnes"
+              ],
+              "correct": 2,
+              "why": [
+                "After « huit », use the plural: « personnes ».",
+                "« Équipes » means teams; you're counting people.",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès ask?",
+              "choices": [
+                "If you're booking for the team",
+                "If you're free tonight"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Tu réserves pour l'équipe ? »"
+            }
+          ],
+          "followUp": "Merci, tu es super !",
+          "newWords": []
+        },
+        {
+          "id": "sit_09_book_s03",
+          "place": "Appel · restaurant · phrase seule",
+          "standalone": "Corriger",
+          "cue": "You call a restaurant to book a table. The waiter says vous to you. Fix the mistake in your request.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Je voudrais réserver une table pour quatre personne, jeudi soir.",
+              "error": {
+                "word": "personne",
+                "fix": "personnes",
+                "choices": [
+                  "personnes",
+                  "personne",
+                  "de personnes"
+                ],
+                "why": "After « quatre », the noun is plural: « quatre personnes »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Correct the highlighted word."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_09_book_d07",
+          "place": "Appel · restaurant",
+          "cue": "You're booking a table by phone. The waiter says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Un instant… Jeudi, vingt heures, c'est possible."
+            },
+            {
+              "speaker": "learner",
+              "text": "Parfait, merci ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « un instant » mean here?",
+              "target": "un instant",
+              "choices": [
+                "right now",
+                "once",
+                "one moment"
+              ],
+              "correct": 2,
+              "why": [
+                "Right now is « tout de suite ».",
+                "Once is « une fois ».",
+                ""
+              ]
+            },
+            {
+              "type": "complete",
+              "prompt": "Thank him very much.",
+              "choices": [
+                "beaucoup",
+                "très",
+                "trop"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Très » needs an adjective after it; the set phrase is « merci beaucoup ».",
+                "« Merci trop » isn't French; say « merci beaucoup »."
+              ]
+            }
+          ],
+          "followUp": "Alors, jeudi à vingt heures. À jeudi !",
+          "newWords": []
+        },
+        {
+          "id": "sit_09_book_d08",
+          "place": "Au café",
+          "cue": "Karim, the barista, says tu to you. You've booked a table for four.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Salut ! Tu vas au restaurant, jeudi ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say yes: you've booked a table for four people.",
+              "bank": [
+                "Oui,",
+                "j'ai réservé",
+                "une table",
+                "pour quatre",
+                "personnes !",
+                "j'ai réservée",
+                "personne !",
+                "je suis"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "j'ai réservé",
+                  "une table",
+                  "pour quatre",
+                  "personnes !"
+                ]
+              ],
+              "model": "Oui, j'ai réservé une table pour quatre personnes !"
+            },
+            {
+              "type": "comprehend",
+              "prompt": "Which day does Karim mention?",
+              "choices": [
+                "Tuesday",
+                "Thursday"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Tu vas au restaurant, jeudi ? »"
+            }
+          ],
+          "followUp": "Super ! Bon dîner, alors !",
+          "newWords": []
+        },
+        {
+          "id": "sit_09_book_s04",
+          "place": "Texto · Léa · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You text Léa, your flatmate. You say tu to each other. It's done now: put your text in the past.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Je réserve une table pour quatre personnes jeudi soir.",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it in the passé composé.",
+              "bank": [
+                "J'ai réservé",
+                "une table",
+                "pour quatre personnes",
+                "jeudi soir.",
+                "Je réserve",
+                "un table",
+                "pour quatre personne"
+              ],
+              "accepted": [
+                [
+                  "J'ai réservé",
+                  "une table",
+                  "pour quatre personnes",
+                  "jeudi soir."
+                ]
+              ],
+              "model": "J'ai réservé une table pour quatre personnes jeudi soir."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_09_book_d09",
+          "place": "Appel · restaurant",
+          "cue": "You're booking a table by phone. The waitress says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "voice": "female",
+              "text": "Un instant… Oui, jeudi, pour quatre, c'est noté."
+            },
+            {
+              "speaker": "learner",
+              "text": "Merci ! On arrive ___ huit heures."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the waitress say?",
+              "choices": [
+                "The booking is noted",
+                "The restaurant is full"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Oui, jeudi, pour quatre, c'est noté. »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Say you'll arrive around eight.",
+              "choices": [
+                "devant",
+                "vers",
+                "sur"
+              ],
+              "correct": 1,
+              "why": [
+                "« Devant » means in front of: a place, not a time.",
+                "",
+                "« Sur » means on; before a time, use « vers » (around)."
+              ]
+            }
+          ],
+          "followUp": "Parfait, à jeudi !",
+          "newWords": []
+        },
+        {
+          "id": "sit_09_book_d10",
+          "place": "À l'appart",
+          "cue": "Léa, your flatmate, says tu to you at home. You've booked for four people at eight.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Tu as réservé pour jeudi ? On est combien ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa want to know?",
+              "choices": [
+                "If you booked, and at what time",
+                "If you booked, and how many you are"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Tu as réservé pour jeudi ? On est combien ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes: four people, at eight o'clock.",
+              "bank": [
+                "Oui,",
+                "quatre personnes,",
+                "à huit heures !",
+                "quatre personne,",
+                "à huit heure !",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "quatre personnes,",
+                  "à huit heures !"
+                ]
+              ],
+              "model": "Oui, quatre personnes, à huit heures !"
+            }
+          ],
+          "followUp": "Top, je dis ça à Théo !",
+          "newWords": []
+        },
+        {
+          "id": "sit_09_book_s05",
+          "place": "Appel · restaurant · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "The waiter says vous to you. Which French words mean “one moment”?",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "___, s'il vous plaît, je vais voir pour jeudi soir."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "one moment",
+              "choices": [
+                "Tout de suite",
+                "Un instant",
+                "Une fois"
+              ],
+              "correct": 1,
+              "why": [
+                "« Tout de suite » means right away.",
+                "",
+                "« Une fois » means once."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_09_slot",
+      "title": "Trouver un horaire",
+      "note": "When a slot is « complet » (fully booked), take another day, such as « mercredi ». Staff offer a slot politely with the conditional « ça vous irait ? » (would that suit you?).",
+      "items": [
+        {
+          "id": "sit_09_slot_d01",
+          "place": "Appel · restaurant",
+          "cue": "You call a restaurant to book for the weekend. The waiter says vous to you. Sunday evening suits you too.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Désolé, samedi soir, c'est complet."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the waiter say about Saturday evening?",
+              "choices": [
+                "It's fully booked",
+                "It's closed"
+              ],
+              "correct": 0,
+              "miss": "Reread: « samedi soir, c'est complet »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Ask if Sunday evening is possible.",
+              "bank": [
+                "Et",
+                "dimanche soir,",
+                "c'est possible ?",
+                "samedi soir,",
+                "dimanche soirs,"
+              ],
+              "accepted": [
+                [
+                  "Et",
+                  "dimanche soir,",
+                  "c'est possible ?"
+                ]
+              ],
+              "model": "Et dimanche soir, c'est possible ?"
+            }
+          ],
+          "followUp": "Dimanche soir ? Oui, il reste une table !",
+          "newWords": [
+            "complet"
+          ]
+        },
+        {
+          "id": "sit_09_slot_d02",
+          "place": "Appel · restaurant",
+          "cue": "You're booking a table by phone. The waitress says vous to you. Any day suits you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "voice": "female",
+              "text": "Samedi, c'est complet. Mercredi, vingt heures, c'est possible."
+            },
+            {
+              "speaker": "learner",
+              "text": "Mercredi ? Oui, ça me ___."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the waitress offer?",
+              "choices": [
+                "Saturday at eight in the evening",
+                "Wednesday at eight in the evening"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Mercredi, vingt heures, c'est possible. »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Say it suits you.",
+              "choices": [
+                "vas",
+                "va",
+                "vont"
+              ],
+              "correct": 1,
+              "why": [
+                "« Vas » goes with tu; the subject here is « ça ».",
+                "",
+                "« Vont » is plural; « ça » takes « va »."
+              ]
+            }
+          ],
+          "followUp": "Parfait, mercredi à vingt heures, alors.",
+          "newWords": [
+            "mercredi"
+          ]
+        },
+        {
+          "id": "sit_09_slot_s01",
+          "place": "Appel · restaurant · phrase seule",
+          "standalone": "Construire",
+          "cue": "You call a restaurant. The waiter says vous to you. You think Saturday evening is full; Sunday lunch would suit you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Bonjour ! Oui, madame, vous voulez réserver pour quel jour ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "First ask if Saturday evening is full, then if Sunday lunchtime is possible.",
+              "bank": [
+                "Samedi soir,",
+                "c'est complet ?",
+                "Et dimanche midi,",
+                "c'est possible ?",
+                "c'est complète ?",
+                "Et samedi midi,"
+              ],
+              "accepted": [
+                [
+                  "Samedi soir,",
+                  "c'est complet ?",
+                  "Et dimanche midi,",
+                  "c'est possible ?"
+                ]
+              ],
+              "model": "Samedi soir, c'est complet ? Et dimanche midi, c'est possible ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_09_slot_d03",
+          "place": "Appel · restaurant",
+          "cue": "You're booking a table by phone. The waiter says vous to you. Any time in the evening suits you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Vingt et une heures, ça vous irait ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, c'est ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Say it's perfect.",
+              "choices": [
+                "parfaite",
+                "parfaits",
+                "parfait"
+              ],
+              "correct": 2,
+              "why": [
+                "After « c'est », the adjective stays masculine: « parfait ».",
+                "« Parfaits » is plural; « c'est » takes « parfait ».",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does the waiter offer?",
+              "choices": [
+                "Eight in the evening",
+                "Nine in the evening"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Vingt et une heures, ça vous irait ? »"
+            }
+          ],
+          "followUp": "Très bien, vingt et une heures.",
+          "newWords": [
+            "ça vous irait"
+          ]
+        },
+        {
+          "id": "sit_09_slot_d04",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat (vous = you all). He says tu to you. Wednesday suits you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Samedi, le restaurant est complet ! Mercredi, ça vous va ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « complet » mean here?",
+              "target": "complet",
+              "choices": [
+                "closed",
+                "full, fully booked",
+                "expensive"
+              ],
+              "correct": 1,
+              "why": [
+                "Closed is « fermé ».",
+                "",
+                "Expensive is « cher »."
+              ]
+            },
+            {
+              "type": "reply",
+              "prompt": "Say Wednesday suits you.",
+              "bank": [
+                "Mercredi,",
+                "ça me va !",
+                "ça te va !",
+                "Samedi,",
+                "ça me vas !"
+              ],
+              "accepted": [
+                [
+                  "Mercredi,",
+                  "ça me va !"
+                ]
+              ],
+              "model": "Mercredi, ça me va !"
+            }
+          ],
+          "followUp": "Top, je réserve mercredi !",
+          "newWords": []
+        },
+        {
+          "id": "sit_09_slot_s02",
+          "place": "Appel · restaurant · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "You're booking a table by phone. The waitress says vous to you. Wednesday suits you. Choose the reply that fits.",
+          "turns": [
+            {
+              "speaker": "server",
+              "voice": "female",
+              "text": "Samedi, c'est complet, mais mercredi soir, ça vous irait ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which reply fits the waitress?",
+              "choices": [
+                "Ouais, top !",
+                "Oui, mercredi soir, ça me va très bien, merci.",
+                "Mercredi ? Carrément !"
+              ],
+              "correct": 1,
+              "why": [
+                "« Ouais » and « top » are for friends.",
+                "",
+                "« Carrément » is too casual for a restaurant."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_09_slot_d05",
+          "place": "Appel · restaurant",
+          "cue": "You're booking a table by phone, and the line is bad. The waitress says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "voice": "female",
+              "text": "Mercredi, vingt et une heures, ça vous irait ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say sorry, and ask her to repeat, please.",
+              "bank": [
+                "Pardon,",
+                "vous pouvez répéter,",
+                "s'il vous plaît ?",
+                "tu peux répéter,",
+                "s'il te plaît ?",
+                "Vous pouvez répéter,"
+              ],
+              "accepted": [
+                [
+                  "Pardon,",
+                  "vous pouvez répéter,",
+                  "s'il vous plaît ?"
+                ],
+                [
+                  "Vous pouvez répéter,",
+                  "s'il vous plaît ?"
+                ]
+              ],
+              "model": "Pardon, vous pouvez répéter, s'il vous plaît ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « mercredi » mean here?",
+              "target": "mercredi",
+              "choices": [
+                "Monday",
+                "Wednesday",
+                "Saturday"
+              ],
+              "correct": 1,
+              "why": [
+                "Monday is « lundi ».",
+                "",
+                "Saturday is « samedi »."
+              ]
+            }
+          ],
+          "followUp": "Mercredi, vingt et une heures. Ça vous irait ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_09_slot_d06",
+          "place": "Texto · Inès",
+          "cue": "Inès, a colleague, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Mercredi soir, ça te va pour le restaurant ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, mercredi, je suis ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Say you're free.",
+              "choices": [
+                "libre",
+                "libres",
+                "livre"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Libres » is plural; you're one person.",
+                "« Livre » means book."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès ask?",
+              "choices": [
+                "If you've booked the restaurant",
+                "If Wednesday evening suits you for the restaurant"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Mercredi soir, ça te va pour le restaurant ? »"
+            }
+          ],
+          "followUp": "Super, je réserve pour deux !",
+          "newWords": []
+        },
+        {
+          "id": "sit_09_slot_s03",
+          "place": "Appel · restaurant · phrase seule",
+          "standalone": "Corriger",
+          "cue": "You're booking a table by phone. The waiter says vous to you. Fix the mistake in your reply.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Samedi, c'est complète, d'accord. Alors mercredi, ça me va très bien.",
+              "error": {
+                "word": "complète",
+                "fix": "complet",
+                "choices": [
+                  "complets",
+                  "complet",
+                  "complète"
+                ],
+                "why": "After « c'est », the adjective stays masculine singular: « c'est complet »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Correct the highlighted word."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_09_slot_d07",
+          "place": "Appel · restaurant",
+          "cue": "You're booking a table by phone. The waiter says vous to you. A later time suits you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Plus tard, ça vous irait ? Vingt et une heures ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, ça ___ va."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « ça vous irait » mean here?",
+              "target": "ça vous irait",
+              "choices": [
+                "would that suit you?",
+                "are you going?",
+                "is that all?"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "Going would be « vous allez ».",
+                "That would be « c'est tout ? »."
+              ]
+            },
+            {
+              "type": "complete",
+              "prompt": "Say it suits you.",
+              "choices": [
+                "te",
+                "vous",
+                "me"
+              ],
+              "correct": 2,
+              "why": [
+                "« Te » means you; you're talking about yourself.",
+                "« Ça vous va » asks about him; say it suits you: « ça me va ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Parfait, à vingt et une heures, alors.",
+          "newWords": []
+        },
+        {
+          "id": "sit_09_slot_d08",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you. You've just called the restaurant.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Le restaurant samedi, c'est complet ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say yes, but Wednesday is possible.",
+              "bank": [
+                "Oui,",
+                "c'est complet,",
+                "mais",
+                "mercredi,",
+                "c'est possible.",
+                "c'est complète,",
+                "samedi,",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "c'est complet,",
+                  "mais",
+                  "mercredi,",
+                  "c'est possible."
+                ],
+                [
+                  "Oui,",
+                  "mais",
+                  "mercredi,",
+                  "c'est possible."
+                ]
+              ],
+              "model": "Oui, c'est complet, mais mercredi, c'est possible."
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa ask?",
+              "choices": [
+                "If the restaurant is full on Saturday",
+                "If the restaurant is far"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Le restaurant samedi, c'est complet ? »"
+            }
+          ],
+          "followUp": "D'accord, mercredi, alors !",
+          "newWords": []
+        },
+        {
+          "id": "sit_09_slot_s04",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Transformer",
+          "cue": "Mme Dumas, your landlady, wants to come by the flat. She says vous to you on WhatsApp. Make your question more polite, with the conditional.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Mercredi soir, ça vous va, madame ? Je suis à la maison.",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Ask it again, more politely.",
+              "bank": [
+                "Mercredi soir,",
+                "ça vous irait,",
+                "madame ?",
+                "Je suis",
+                "à la maison.",
+                "ça vous va,",
+                "ça te va,"
+              ],
+              "accepted": [
+                [
+                  "Mercredi soir,",
+                  "ça vous irait,",
+                  "madame ?",
+                  "Je suis",
+                  "à la maison."
+                ]
+              ],
+              "model": "Mercredi soir, ça vous irait, madame ? Je suis à la maison."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_09_slot_d09",
+          "place": "Appel · restaurant",
+          "cue": "You're booking a table by phone. The waitress says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "voice": "female",
+              "text": "Mercredi, c'est pour le déjeuner ou le dîner ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Le dîner. Mercredi ___, alors."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the waitress ask?",
+              "choices": [
+                "Lunch or dinner",
+                "Inside or outside"
+              ],
+              "correct": 0,
+              "miss": "Reread: « c'est pour le déjeuner ou le dîner ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Say Wednesday evening, then.",
+              "choices": [
+                "midi",
+                "soir",
+                "matin"
+              ],
+              "correct": 1,
+              "why": [
+                "« Midi » is lunchtime, and you want dinner.",
+                "",
+                "« Matin » means morning."
+              ]
+            }
+          ],
+          "followUp": "Très bien, mercredi soir.",
+          "newWords": []
+        },
+        {
+          "id": "sit_09_slot_d10",
+          "place": "Appel · restaurant",
+          "cue": "You're booking a table by phone. The waiter says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Le samedi, on est souvent complet. Mercredi, ça vous irait ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the waiter say about Saturdays?",
+              "choices": [
+                "They're always closed",
+                "They're often fully booked"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Le samedi, on est souvent complet. »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes: Wednesday suits you very well.",
+              "bank": [
+                "Oui,",
+                "mercredi,",
+                "ça me va",
+                "très bien.",
+                "ça vous va",
+                "très bon.",
+                "samedi,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "mercredi,",
+                  "ça me va",
+                  "très bien."
+                ],
+                [
+                  "Oui,",
+                  "ça me va",
+                  "très bien."
+                ]
+              ],
+              "model": "Oui, mercredi, ça me va très bien."
+            }
+          ],
+          "followUp": "Parfait, alors à mercredi !",
+          "newWords": []
+        },
+        {
+          "id": "sit_09_slot_s05",
+          "place": "Appel · restaurant · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "The waiter says vous to you. Which French word means “full, fully booked”?",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Désolé, madame, samedi soir, c'est ___, mais mercredi, c'est possible."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "full, fully booked",
+              "choices": [
+                "cher",
+                "libre",
+                "complet"
+              ],
+              "correct": 2,
+              "why": [
+                "« Cher » means expensive.",
+                "« Libre » means free: the opposite here.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_09_name",
+      "title": "Donner son nom",
+      "note": "Staff ask « À quel nom ? ». Answer « Au nom de Robin ». « J'ai réservé » never agrees with you, even though you're a woman: with avoir, the participle doesn't agree with the subject.",
+      "items": [
+        {
+          "id": "sit_09_name_d01",
+          "place": "Appel · restaurant",
+          "cue": "You're booking a table by phone. The waiter says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Jeudi, vingt heures, c'est noté. À quel nom ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the waiter ask?",
+              "choices": [
+                "Your name",
+                "Your phone number"
+              ],
+              "correct": 0,
+              "miss": "Reread: « À quel nom ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Give your name, Robin, politely.",
+              "bank": [
+                "Robin,",
+                "s'il vous plaît.",
+                "s'il te plaît.",
+                "Madame,"
+              ],
+              "accepted": [
+                [
+                  "Robin,",
+                  "s'il vous plaît."
+                ]
+              ],
+              "model": "Robin, s'il vous plaît."
+            }
+          ],
+          "followUp": "Robin, très bien. Merci, madame !",
+          "newWords": [
+            "à quel nom"
+          ]
+        },
+        {
+          "id": "sit_09_name_d02",
+          "place": "Appel · restaurant",
+          "cue": "You're booking a table by phone in the morning. The waitress says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "voice": "female",
+              "text": "Une table au nom de Robin, c'est noté."
+            },
+            {
+              "speaker": "learner",
+              "text": "Merci beaucoup, bonne ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the waitress say?",
+              "choices": [
+                "The table isn't available",
+                "The table is booked under your name"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Une table au nom de Robin, c'est noté. »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Wish her a good day.",
+              "choices": [
+                "jour",
+                "journée",
+                "soir"
+              ],
+              "correct": 1,
+              "why": [
+                "« Jour » is masculine, so « bonne jour » isn't French; say « bonne journée ».",
+                "",
+                "« Soir » is masculine, so « bonne soir » isn't French, and it's the morning."
+              ]
+            }
+          ],
+          "followUp": "Merci, à bientôt !",
+          "newWords": [
+            "au nom de"
+          ]
+        },
+        {
+          "id": "sit_09_name_s01",
+          "place": "Au restaurant · phrase seule",
+          "standalone": "Construire",
+          "cue": "You arrive at the restaurant. The waiter says vous to you. You booked a table under your name, Robin.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Bonjour, madame ! Bienvenue au restaurant. Je peux vous aider ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say hello, then say you booked a table under the name Robin.",
+              "bank": [
+                "Bonjour,",
+                "j'ai réservé",
+                "une table",
+                "au nom de",
+                "Robin.",
+                "j'ai réservée",
+                "un table",
+                "au nom du"
+              ],
+              "accepted": [
+                [
+                  "Bonjour,",
+                  "j'ai réservé",
+                  "une table",
+                  "au nom de",
+                  "Robin."
+                ],
+                [
+                  "Bonjour,",
+                  "j'ai réservé",
+                  "au nom de",
+                  "Robin."
+                ]
+              ],
+              "model": "Bonjour, j'ai réservé une table au nom de Robin."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_09_name_d03",
+          "place": "Appel · restaurant",
+          "cue": "You're booking a table by phone. The waiter says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Et votre numéro de téléphone, s'il vous plaît ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, je vous ___ mon numéro."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Say you'll give him your number.",
+              "choices": [
+                "donne",
+                "donnes",
+                "donner"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Donnes » goes with tu; with je, write « donne ».",
+                "« Donner » is the infinitive; after « je vous », conjugate it."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does the waiter ask for?",
+              "choices": [
+                "Your name",
+                "Your phone number"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Et votre numéro de téléphone ? »"
+            }
+          ],
+          "followUp": "Merci, c'est noté.",
+          "newWords": [
+            "numéro"
+          ]
+        },
+        {
+          "id": "sit_09_name_d04",
+          "place": "Appel · restaurant",
+          "cue": "You're booking a table by phone. The waitress says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "voice": "female",
+              "text": "Parfait. À quel nom, s'il vous plaît ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « à quel nom » mean here?",
+              "target": "à quel nom",
+              "choices": [
+                "what time?",
+                "under what name?",
+                "for how many?"
+              ],
+              "correct": 1,
+              "why": [
+                "What time is « à quelle heure ».",
+                "",
+                "For how many is « pour combien »."
+              ]
+            },
+            {
+              "type": "reply",
+              "prompt": "Answer formally: in the name of Robin.",
+              "bank": [
+                "Au nom de Robin,",
+                "s'il vous plaît.",
+                "Au nom du Robin,",
+                "s'il te plaît."
+              ],
+              "accepted": [
+                [
+                  "Au nom de Robin,",
+                  "s'il vous plaît."
+                ]
+              ],
+              "model": "Au nom de Robin, s'il vous plaît."
+            }
+          ],
+          "followUp": "Robin, c'est noté. Merci !",
+          "newWords": []
+        },
+        {
+          "id": "sit_09_name_s02",
+          "place": "Appel · restaurant · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "You're booking a table by phone. The waiter says vous to you. Choose the reply that fits.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Très bien, madame. Et c'est à quel nom, s'il vous plaît ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which reply fits the waiter?",
+              "choices": [
+                "Moi, c'est Robin, salut !",
+                "Robin, et toi ?",
+                "Au nom de Robin, s'il vous plaît."
+              ],
+              "correct": 2,
+              "why": [
+                "Good French when you meet a friend, but « salut » is too casual here.",
+                "« Et toi ? » uses tu, and he isn't asking to get to know you.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_09_name_d05",
+          "place": "Appel · restaurant",
+          "cue": "You're booking a table by phone. The waiter says vous to you. He talks fast.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Votre numéro de téléphone, s'il vous plaît ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Ask him to repeat more slowly.",
+              "bank": [
+                "Pardon,",
+                "vous pouvez répéter",
+                "plus lentement ?",
+                "tu peux répéter",
+                "Vous pouvez répéter",
+                "plus vite ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon,",
+                  "vous pouvez répéter",
+                  "plus lentement ?"
+                ],
+                [
+                  "Vous pouvez répéter",
+                  "plus lentement ?"
+                ]
+              ],
+              "model": "Pardon, vous pouvez répéter plus lentement ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « numéro » mean here?",
+              "target": "numéro",
+              "choices": [
+                "name",
+                "number",
+                "table"
+              ],
+              "correct": 1,
+              "why": [
+                "Name is « nom ».",
+                "",
+                "Table is « table »."
+              ]
+            }
+          ],
+          "followUp": "Pardon ! Votre numéro de téléphone ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_09_name_d06",
+          "place": "À l'appart",
+          "cue": "Léa, your flatmate, says tu to you at home. You booked the table.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "La table jeudi, c'est à quel nom ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Au nom ___ Robin."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Say it's under your name.",
+              "choices": [
+                "à",
+                "du",
+                "de"
+              ],
+              "correct": 2,
+              "why": [
+                "The set phrase is « au nom de ».",
+                "« Du » is « de + le »; before a name, use « de ».",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa ask?",
+              "choices": [
+                "Whose name the table is under",
+                "What time the table is"
+              ],
+              "correct": 0,
+              "miss": "Reread: « c'est à quel nom ? »"
+            }
+          ],
+          "followUp": "Ah, parfait, merci !",
+          "newWords": []
+        },
+        {
+          "id": "sit_09_name_s03",
+          "place": "Au restaurant · phrase seule",
+          "standalone": "Corriger",
+          "cue": "You arrive at the restaurant. The waitress says vous to you. Fix the mistake.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Bonjour, j'ai réservé une table au nom du Robin pour ce soir.",
+              "error": {
+                "word": "du",
+                "fix": "de",
+                "choices": [
+                  "des",
+                  "du",
+                  "de"
+                ],
+                "why": "Before a first name, there's no article: « au nom de Robin »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Correct the highlighted word."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_09_name_d07",
+          "place": "Appel · restaurant",
+          "cue": "You call the restaurant about your booking. The waitress says vous to you. You're a woman. You called yesterday.",
+          "turns": [
+            {
+              "speaker": "server",
+              "voice": "female",
+              "text": "Au nom de Robin ? Désolée, ce n'est pas noté."
+            },
+            {
+              "speaker": "learner",
+              "text": "J'ai ___ hier, madame !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « au nom de » mean here?",
+              "target": "au nom de",
+              "choices": [
+                "at the home of",
+                "at the number of",
+                "in the name of"
+              ],
+              "correct": 2,
+              "why": [
+                "At someone's home is « chez ».",
+                "Number is « numéro ».",
+                ""
+              ]
+            },
+            {
+              "type": "complete",
+              "prompt": "Say you called yesterday.",
+              "choices": [
+                "appelée",
+                "appelé",
+                "appeler"
+              ],
+              "correct": 1,
+              "why": [
+                "With avoir, the participle doesn't agree with the subject, even for a woman: « j'ai appelé ».",
+                "",
+                "« Appeler » is the infinitive; after « j'ai », use the participle « appelé »."
+              ]
+            }
+          ],
+          "followUp": "Ah, pardon, voilà ! Jeudi, vingt heures.",
+          "newWords": []
+        },
+        {
+          "id": "sit_09_name_d08",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat. He says tu to you. You booked the table, and you're all arriving at eight.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "La table jeudi, c'est au nom de qui ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say it's under your name, and you're all arriving at eight.",
+              "bank": [
+                "Au nom de Robin.",
+                "On arrive",
+                "à huit heures !",
+                "On arrives",
+                "à huit heure !",
+                "Au nom du Robin."
+              ],
+              "accepted": [
+                [
+                  "Au nom de Robin.",
+                  "On arrive",
+                  "à huit heures !"
+                ],
+                [
+                  "On arrive",
+                  "à huit heures !",
+                  "Au nom de Robin."
+                ]
+              ],
+              "model": "Au nom de Robin. On arrive à huit heures !"
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo want to know?",
+              "choices": [
+                "Which restaurant it is",
+                "Whose name the table is under"
+              ],
+              "correct": 1,
+              "miss": "Reread: « c'est au nom de qui ? »"
+            }
+          ],
+          "followUp": "Top, merci Robin !",
+          "newWords": []
+        },
+        {
+          "id": "sit_09_name_s04",
+          "place": "Au restaurant · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You arrive at a restaurant without a booking. The waiter says vous to you. Make your sentence negative.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Bonjour, j'ai réservé une table pour ce soir.",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say you haven't booked a table for tonight.",
+              "bank": [
+                "Bonjour,",
+                "je n'ai pas",
+                "réservé de table",
+                "pour ce soir.",
+                "réservé une table",
+                "réservée de table",
+                "je ne suis pas"
+              ],
+              "accepted": [
+                [
+                  "Bonjour,",
+                  "je n'ai pas",
+                  "réservé de table",
+                  "pour ce soir."
+                ]
+              ],
+              "model": "Bonjour, je n'ai pas réservé de table pour ce soir."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_09_name_d09",
+          "place": "Appel · restaurant",
+          "cue": "You've just called a restaurant from your own phone. The waiter says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Je vous rappelle à ce numéro, d'accord ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, c'est ___ numéro."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What will the waiter do?",
+              "choices": [
+                "Call you back on this number",
+                "Text you later"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Je vous rappelle à ce numéro »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Say it's your number.",
+              "choices": [
+                "ma",
+                "mes",
+                "mon"
+              ],
+              "correct": 2,
+              "why": [
+                "« Numéro » is masculine: « mon numéro ».",
+                "« Mes » is plural; it's one number.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Parfait, à tout à l'heure !",
+          "newWords": []
+        },
+        {
+          "id": "sit_09_name_d10",
+          "place": "Appel · restaurant",
+          "cue": "You're booking a table by phone. The waitress says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "voice": "female",
+              "text": "À quel nom ? Et pour combien de personnes ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the waitress ask?",
+              "choices": [
+                "Your name and the time",
+                "Your name and the number of people"
+              ],
+              "correct": 1,
+              "miss": "Reread: « À quel nom ? Et pour combien de personnes ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Answer: Robin, four people.",
+              "bank": [
+                "Au nom de Robin,",
+                "pour quatre personnes.",
+                "pour quatre personne.",
+                "Au nom du Robin,",
+                "Pour quatre personnes,",
+                "au nom de Robin."
+              ],
+              "accepted": [
+                [
+                  "Au nom de Robin,",
+                  "pour quatre personnes."
+                ],
+                [
+                  "Pour quatre personnes,",
+                  "au nom de Robin."
+                ]
+              ],
+              "model": "Au nom de Robin, pour quatre personnes."
+            }
+          ],
+          "followUp": "C'est noté, merci madame !",
+          "newWords": []
+        },
+        {
+          "id": "sit_09_name_s05",
+          "place": "Au restaurant · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "You arrive at the restaurant. The waiter says vous to you. Which French words mean “in the name of”?",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Bonjour ! J'ai réservé une table ___ Robin, pour quatre personnes."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "in the name of",
+              "choices": [
+                "chez",
+                "au nom de",
+                "à côté de"
+              ],
+              "correct": 1,
+              "why": [
+                "« Chez » means at someone's place.",
+                "",
+                "« À côté de » means next to."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_09_options",
+      "title": "Terrasse ou intérieur",
+      "note": "Choose « en terrasse » (outside) or « à l'intérieur » (inside), often by the weather. Your colleague Inès is « végétarienne », so ask for a dish without meat.",
+      "items": [
+        {
+          "id": "sit_09_options_d01",
+          "place": "Appel · restaurant",
+          "cue": "You're booking a table by phone for tonight. The waiter says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Il fait beau ce soir. Une table en terrasse ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the waiter offer?",
+              "choices": [
+                "A table by the window",
+                "A table outside"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Une table en terrasse ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes: outside, please.",
+              "bank": [
+                "Oui,",
+                "en terrasse,",
+                "s'il vous plaît.",
+                "s'il te plaît.",
+                "Non,",
+                "à côté,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "en terrasse,",
+                  "s'il vous plaît."
+                ],
+                [
+                  "Oui,",
+                  "s'il vous plaît."
+                ]
+              ],
+              "model": "Oui, en terrasse, s'il vous plaît."
+            }
+          ],
+          "followUp": "Très bien, une table en terrasse.",
+          "newWords": [
+            "en terrasse"
+          ]
+        },
+        {
+          "id": "sit_09_options_d02",
+          "place": "Appel · restaurant",
+          "cue": "You're booking a table by phone for tonight. The waitress says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "voice": "female",
+              "text": "Il pleut ce soir. À l'intérieur, plutôt ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, à l'intérieur, c'est ___."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "Why does the waitress suggest inside?",
+              "choices": [
+                "It's cold tonight",
+                "It's raining tonight"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Il pleut ce soir. »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Say it's better.",
+              "choices": [
+                "meilleur",
+                "mieux",
+                "meilleure"
+              ],
+              "correct": 1,
+              "why": [
+                "« C'est meilleur » is for taste, like food; for a choice, say « c'est mieux ».",
+                "",
+                "« Meilleure » is a feminine adjective; after « c'est », say « mieux »."
+              ]
+            }
+          ],
+          "followUp": "Parfait, une table à l'intérieur.",
+          "newWords": [
+            "à l'intérieur"
+          ]
+        },
+        {
+          "id": "sit_09_options_s01",
+          "place": "Appel · restaurant · phrase seule",
+          "standalone": "Construire",
+          "cue": "You call a restaurant. The waiter says vous to you. You'd like a table outside for four people.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Bonjour, madame ! Pour ce soir, il reste encore des tables."
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Ask for a table outside for four people, please.",
+              "bank": [
+                "Une table",
+                "en terrasse",
+                "pour quatre",
+                "personnes,",
+                "s'il vous plaît.",
+                "à l'intérieur",
+                "personne,",
+                "Un table"
+              ],
+              "accepted": [
+                [
+                  "Une table",
+                  "en terrasse",
+                  "pour quatre",
+                  "personnes,",
+                  "s'il vous plaît."
+                ]
+              ],
+              "model": "Une table en terrasse pour quatre personnes, s'il vous plaît."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_09_options_d03",
+          "place": "Au bureau",
+          "cue": "Inès, a colleague, says tu to you at the office. You're booking a restaurant for the team.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Je suis végétarienne. Ce restaurant, c'est possible pour moi ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Pas de souci, je ___ au restaurant."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Say you'll ask the restaurant.",
+              "choices": [
+                "demandes",
+                "demande",
+                "demander"
+              ],
+              "correct": 1,
+              "why": [
+                "« Demandes » goes with tu; with je, write « demande ».",
+                "",
+                "« Demander » is the infinitive; after « je », conjugate it."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès tell you?",
+              "choices": [
+                "She doesn't like restaurants",
+                "She doesn't eat meat"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Je suis végétarienne. »"
+            }
+          ],
+          "followUp": "Merci, c'est gentil !",
+          "newWords": [
+            "végétarienne"
+          ]
+        },
+        {
+          "id": "sit_09_options_d04",
+          "place": "Appel · restaurant",
+          "cue": "You're booking a table by phone. The waiter says vous to you. You don't mind where you sit.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "En terrasse, c'est complet. À l'intérieur, ça vous va ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « en terrasse » mean here?",
+              "target": "en terrasse",
+              "choices": [
+                "upstairs",
+                "by the window",
+                "outside, on the terrace"
+              ],
+              "correct": 2,
+              "why": [
+                "Upstairs would be « à l'étage ».",
+                "By the window would be « à côté de la fenêtre ».",
+                ""
+              ]
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes: inside is perfect.",
+              "bank": [
+                "Oui,",
+                "à l'intérieur,",
+                "c'est parfait.",
+                "c'est parfaite.",
+                "en terrasse,",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "à l'intérieur,",
+                  "c'est parfait."
+                ],
+                [
+                  "Oui,",
+                  "c'est parfait."
+                ]
+              ],
+              "model": "Oui, à l'intérieur, c'est parfait."
+            }
+          ],
+          "followUp": "Parfait, c'est noté.",
+          "newWords": []
+        },
+        {
+          "id": "sit_09_options_s02",
+          "place": "Appel · restaurant · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "You're booking a table by phone. The waitress says vous to you. Your friend Inès is vegetarian. Choose the question that fits.",
+          "turns": [
+            {
+              "speaker": "server",
+              "voice": "female",
+              "text": "Très bien, madame, une table pour deux jeudi soir, c'est noté."
+            }
+          ],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which question fits the waitress?",
+              "choices": [
+                "Mon amie est végétarienne : vous avez un plat sans viande ?",
+                "Mon amie est végétarienne, tu peux demander ?",
+                "Mon amie est végétarienne, ouais, pas de viande !"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "Good French with a friend, but the waitress says vous, so use vous too.",
+                "« Ouais » is too casual on the phone with a restaurant."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_09_options_d05",
+          "place": "Appel · restaurant",
+          "cue": "You're booking a table by phone. The waitress says vous to you. She talks fast.",
+          "turns": [
+            {
+              "speaker": "server",
+              "voice": "female",
+              "text": "À l'intérieur, à côté de la fenêtre, ça vous va ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say excuse me, and ask her to repeat.",
+              "bank": [
+                "Excusez-moi,",
+                "vous pouvez répéter ?",
+                "excuse-moi,",
+                "tu peux répéter ?",
+                "Vous pouvez répéter ?"
+              ],
+              "accepted": [
+                [
+                  "Excusez-moi,",
+                  "vous pouvez répéter ?"
+                ],
+                [
+                  "Vous pouvez répéter ?"
+                ]
+              ],
+              "model": "Excusez-moi, vous pouvez répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « à l'intérieur » mean here?",
+              "target": "à l'intérieur",
+              "choices": [
+                "inside",
+                "outside",
+                "upstairs"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "Outside is « en terrasse » or « dehors ».",
+                "Upstairs is « à l'étage »."
+              ]
+            }
+          ],
+          "followUp": "À l'intérieur, à côté de la fenêtre !",
+          "newWords": []
+        },
+        {
+          "id": "sit_09_options_d06",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Jeudi, il fait beau ! On mange en terrasse ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Carrément ! Je vais ___ le restaurant."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Say you're going to call the restaurant.",
+              "choices": [
+                "appelle",
+                "appelé",
+                "appeler"
+              ],
+              "correct": 2,
+              "why": [
+                "After « je vais », use the infinitive: « appeler ».",
+                "« Appelé » is the past participle; after « je vais », use the infinitive.",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo suggest?",
+              "choices": [
+                "Eating outside on Thursday",
+                "Eating inside on Thursday"
+              ],
+              "correct": 0,
+              "miss": "Reread: « On mange en terrasse ? »"
+            }
+          ],
+          "followUp": "Top ! Merci, Robin !",
+          "newWords": []
+        },
+        {
+          "id": "sit_09_options_s03",
+          "place": "Appel · restaurant · phrase seule",
+          "standalone": "Corriger",
+          "cue": "You're booking a table by phone. The waiter says vous to you. Your friend Inès is vegetarian. Fix the mistake.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Mon amie est végétarien, vous avez un plat sans viande ?",
+              "error": {
+                "word": "végétarien",
+                "fix": "végétarienne",
+                "choices": [
+                  "végétariens",
+                  "végétarienne",
+                  "végétarien"
+                ],
+                "why": "« Amie » is feminine, so the adjective is too: « végétarienne »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Correct the highlighted word."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_09_options_d07",
+          "place": "Appel · restaurant",
+          "cue": "You're booking a table by phone. You've told the waiter about your friend Inès's diet. The waiter says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Végétarienne ? Pas de problème, on a un plat."
+            },
+            {
+              "speaker": "learner",
+              "text": "___, merci beaucoup !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « végétarienne » mean here?",
+              "target": "végétarienne",
+              "choices": [
+                "on a diet",
+                "vegetarian",
+                "in a hurry"
+              ],
+              "correct": 1,
+              "why": [
+                "On a diet would be « au régime ».",
+                "",
+                "In a hurry would be « pressée »."
+              ]
+            },
+            {
+              "type": "complete",
+              "prompt": "Say it's perfect.",
+              "choices": [
+                "Parfaite",
+                "Parfait",
+                "Parfaits"
+              ],
+              "correct": 1,
+              "why": [
+                "On its own, « Parfait ! » stays masculine: it means « c'est parfait ».",
+                "",
+                "« Parfaits » is plural; on its own, say « Parfait ! »."
+              ]
+            }
+          ],
+          "followUp": "C'est noté pour jeudi, madame.",
+          "newWords": []
+        },
+        {
+          "id": "sit_09_options_d08",
+          "place": "À l'appart",
+          "cue": "Léa, your flatmate, says tu to you at home. You're going out to eat tonight.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Ce soir, en terrasse ou à l'intérieur ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say outside: the weather's nice tonight.",
+              "bank": [
+                "En terrasse !",
+                "Il fait beau",
+                "ce soir.",
+                "À l'intérieur !",
+                "Il pleut",
+                "ce matin."
+              ],
+              "accepted": [
+                [
+                  "En terrasse !",
+                  "Il fait beau",
+                  "ce soir."
+                ],
+                [
+                  "Il fait beau",
+                  "ce soir.",
+                  "En terrasse !"
+                ]
+              ],
+              "model": "En terrasse ! Il fait beau ce soir."
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa ask?",
+              "choices": [
+                "Which restaurant tonight",
+                "Outside or inside tonight"
+              ],
+              "correct": 1,
+              "miss": "Reread: « en terrasse ou à l'intérieur ? »"
+            }
+          ],
+          "followUp": "Top, en terrasse, alors !",
+          "newWords": []
+        },
+        {
+          "id": "sit_09_options_s04",
+          "place": "Appel · restaurant · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You asked for a table inside, but now it's sunny. You call back. The waitress says vous to you. Ask for a table outside instead.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Je voudrais une table à l'intérieur pour ce soir, s'il vous plaît.",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Ask for a table outside instead.",
+              "bank": [
+                "Je voudrais",
+                "une table",
+                "en terrasse",
+                "pour ce soir,",
+                "s'il vous plaît.",
+                "à l'intérieur",
+                "Je voudras",
+                "s'il te plaît."
+              ],
+              "accepted": [
+                [
+                  "Je voudrais",
+                  "une table",
+                  "en terrasse",
+                  "pour ce soir,",
+                  "s'il vous plaît."
+                ]
+              ],
+              "model": "Je voudrais une table en terrasse pour ce soir, s'il vous plaît."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_09_options_d09",
+          "place": "Appel · restaurant",
+          "cue": "You're booking a table by phone for tonight. The waitress says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "voice": "female",
+              "text": "Il pleut ce soir. Vous préférez à l'intérieur ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, je ___ à l'intérieur."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What's the weather like tonight?",
+              "choices": [
+                "It's raining",
+                "It's sunny"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Il pleut ce soir. »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Say you prefer inside.",
+              "choices": [
+                "préfère",
+                "préfères",
+                "préférez"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Préfères » goes with tu; with je, write « préfère ».",
+                "« Préférez » goes with vous."
+              ]
+            }
+          ],
+          "followUp": "Très bien, c'est noté.",
+          "newWords": []
+        },
+        {
+          "id": "sit_09_options_d10",
+          "place": "Texto · Inès",
+          "cue": "Inès, a colleague, texts you. She says tu to you. You've called the restaurant, and they have a dish for her.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Tu as demandé au restaurant ? Je suis végétarienne."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès remind you?",
+              "choices": [
+                "That she's vegetarian",
+                "That she's busy on Thursday"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Je suis végétarienne. »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes: there's a dish without meat.",
+              "bank": [
+                "Oui,",
+                "il y a",
+                "un plat",
+                "sans viande !",
+                "avec viande !",
+                "une plat",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "il y a",
+                  "un plat",
+                  "sans viande !"
+                ]
+              ],
+              "model": "Oui, il y a un plat sans viande !"
+            }
+          ],
+          "followUp": "Génial, merci !",
+          "newWords": []
+        },
+        {
+          "id": "sit_09_options_s05",
+          "place": "Texto · Léa · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "You text Léa, your flatmate. You say tu to each other. Which French words mean “outside, on the terrace”?",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Il fait beau ce soir, on mange ___ ? On est quatre."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "outside, on the terrace",
+              "choices": [
+                "à l'intérieur",
+                "en terrasse",
+                "à côté"
+              ],
+              "correct": 1,
+              "why": [
+                "« À l'intérieur » means inside.",
+                "",
+                "« À côté » means nearby or next door."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    }
+  ]
+}
