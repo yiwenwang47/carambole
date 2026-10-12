@@ -48,3 +48,4 @@ Pipeline = 2026-10-11 handoff §4. Status:
 - Gloss todo add: « fait » → add "done, made"; « un tout petit peu » key.
 - Fixer 14a DONE (23 findings applied, lint+Grammalecte clean).
 - Fixer 12a DONE (all findings; leak now always in kitchen; new base `écrire`). Gloss notes: « de » partitive, « l' » pronoun.
+- Fixers 11a, 14b, 12b DONE (lint+Grammalecte clean). Gloss todos add: « place » → "place, room, space (à la place = instead)"; optional « pas trop » → "not really, not too (much)".
