@@ -1,0 +1,5269 @@
+{
+  "id": "sit_12",
+  "title": "Le logement",
+  "arc": "Les imprévus",
+  "goal": "Report a broken boiler, a leak or lost keys, and arrange the repair with the landlady and the neighbours.",
+  "elements": [
+    {
+      "id": "sit_12_boiler",
+      "title": "Plus d'eau chaude",
+      "note": "The boiler breaks down: « la chaudière est en panne », so there's no hot water (« pas d'eau chaude ») and « le chauffage » (the heating) and « le radiateur » stay cold. « Chaude » agrees with « l'eau », which is feminine. « En panne » and « il fait froid » come back.",
+      "items": [
+        {
+          "id": "sit_12_boiler_d01",
+          "place": "À l'appart",
+          "cue": "At home, Léa, your flatmate, comes out of the bathroom. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "La chaudière ne marche pas. Pas d'eau chaude !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What's the problem?",
+              "choices": [
+                "There's no hot water",
+                "There's no cold water"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Pas d'eau chaude ! »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say oh no, and that you're writing to Mme Dumas.",
+              "bank": [
+                "Oh non !",
+                "J'écris",
+                "à Mme Dumas.",
+                "Tu écris",
+                "Oh oui !",
+                "chez Mme Dumas."
+              ],
+              "accepted": [
+                [
+                  "Oh non !",
+                  "J'écris",
+                  "à Mme Dumas."
+                ]
+              ],
+              "model": "Oh non ! J'écris à Mme Dumas."
+            }
+          ],
+          "followUp": "Merci ! Moi, je vais chez Théo, alors.",
+          "newWords": [
+            "chaudière"
+          ]
+        },
+        {
+          "id": "sit_12_boiler_d02",
+          "place": "WhatsApp · Mme Dumas",
+          "cue": "Mme Dumas, your landlady, answers your message on WhatsApp. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Mme Dumas",
+              "text": "Le chauffage est en panne aussi ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, madame, et l'eau est ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Mme Dumas ask?",
+              "choices": [
+                "If the heating is broken too",
+                "If the water is cold too"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Le chauffage est en panne aussi ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "chaude",
+                "froide",
+                "froid"
+              ],
+              "correct": 1,
+              "why": [
+                "« Chaude » means hot. With the boiler down, the water isn't hot.",
+                "",
+                "« L'eau » is feminine: « froide »."
+              ]
+            }
+          ],
+          "followUp": "D'accord. Je regarde ça aujourd'hui.",
+          "newWords": [
+            "chauffage"
+          ]
+        },
+        {
+          "id": "sit_12_boiler_s01",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Construire",
+          "cue": "Write to Mme Dumas, your landlady, on WhatsApp. She says vous to you.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say hello, then that the boiler is broken and there's no hot water.",
+              "bank": [
+                "Bonjour, madame,",
+                "la chaudière",
+                "est en panne,",
+                "il n'y a pas",
+                "d'eau chaude.",
+                "de l'eau chaude.",
+                "le chaudière",
+                "sont en panne,"
+              ],
+              "accepted": [
+                [
+                  "Bonjour, madame,",
+                  "la chaudière",
+                  "est en panne,",
+                  "il n'y a pas",
+                  "d'eau chaude."
+                ]
+              ],
+              "model": "Bonjour, madame, la chaudière est en panne, il n'y a pas d'eau chaude."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_12_boiler_d03",
+          "place": "Sur le palier",
+          "cue": "M. Ferrand, your neighbour, stops you on the landing. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Bonjour, madame. Votre radiateur est froid ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, et le chauffage ne ___ pas."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "marches",
+                "marchent",
+                "marche"
+              ],
+              "correct": 2,
+              "why": [
+                "« Marches » goes with « tu ». The subject is « le chauffage »: « marche ».",
+                "« Marchent » is plural. « Le chauffage » is one thing: « marche ».",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does M. Ferrand ask?",
+              "choices": [
+                "If your radiator is new",
+                "If your radiator is cold"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Votre radiateur est froid ? »"
+            }
+          ],
+          "followUp": "Ah ! Alors, appelez vite Mme Dumas.",
+          "newWords": [
+            "radiateur"
+          ]
+        },
+        {
+          "id": "sit_12_boiler_d04",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Et la chaudière ? Tu as écrit à Mme Dumas ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « chaudière » mean here?",
+              "choices": [
+                "heating",
+                "boiler",
+                "kitchen"
+              ],
+              "correct": 1,
+              "why": [
+                "No: the heating is « le chauffage ».",
+                "",
+                "No: the kitchen is « la cuisine »."
+              ],
+              "target": "chaudière"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes: she's coming by tomorrow morning.",
+              "bank": [
+                "Oui,",
+                "elle passe",
+                "demain matin.",
+                "il passe",
+                "Non,",
+                "demain soir."
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "elle passe",
+                  "demain matin."
+                ]
+              ],
+              "model": "Oui, elle passe demain matin."
+            }
+          ],
+          "followUp": "Top ! Moi, je suis au bureau demain.",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_boiler_s02",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "Tell Mme Dumas, your landlady, about the heating on WhatsApp. She says vous to you.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "Salut ! Le chauffage est en panne, t'as vu ?",
+                "Bonjour, madame, le chauffage ne marche pas depuis ce matin.",
+                "Ouais, le chauffage, en panne depuis ce matin !"
+              ],
+              "correct": 1,
+              "why": [
+                "Good spoken French, but « salut » and « t'as » are for friends. Mme Dumas says vous to you.",
+                "",
+                "« Ouais » and the clipped style are for friends, not for your landlady."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_12_boiler_d05",
+          "place": "Appel · Mme Dumas",
+          "cue": "Clarify: Mme Dumas, your landlady, calls you. The line is bad. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Mme Dumas",
+              "text": "Le chauffage ou la chaudière ? Quel est le problème ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say sorry, you can't hear her well, and ask her to repeat.",
+              "bank": [
+                "Pardon,",
+                "je vous entends mal.",
+                "Vous pouvez répéter ?",
+                "je t'entends mal.",
+                "Tu peux répéter ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon,",
+                  "je vous entends mal.",
+                  "Vous pouvez répéter ?"
+                ],
+                [
+                  "Vous pouvez répéter ?",
+                  "Pardon,",
+                  "je vous entends mal."
+                ]
+              ],
+              "model": "Pardon, je vous entends mal. Vous pouvez répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « chauffage » mean here?",
+              "choices": [
+                "boiler",
+                "hot water",
+                "heating"
+              ],
+              "correct": 2,
+              "why": [
+                "No: the boiler is « la chaudière ».",
+                "No: hot water is « l'eau chaude ».",
+                ""
+              ],
+              "target": "chauffage"
+            }
+          ],
+          "followUp": "Le chauffage ! Il ne marche pas ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_boiler_d06",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you from work. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Il fait froid ! Le radiateur est encore froid ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, la chaudière est ___ panne."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "à",
+                "en",
+                "dans"
+              ],
+              "correct": 1,
+              "why": [
+                "Not French here: the set phrase is « en panne ».",
+                "",
+                "Not French here: the set phrase is « en panne »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa ask?",
+              "choices": [
+                "If the radiator is still cold",
+                "If the kitchen is still cold"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Le radiateur est encore froid ? »"
+            }
+          ],
+          "followUp": "Oh non ! Ce soir, on va chez Théo !",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_boiler_s03",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Corriger",
+          "cue": "You write to Mme Dumas, your landlady, on WhatsApp. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Il n'y a pas d'eau chaud, la chaudière est en panne depuis hier.",
+              "error": {
+                "word": "chaud",
+                "fix": "chaude",
+                "choices": [
+                  "chaudes",
+                  "chaude",
+                  "chauds"
+                ],
+                "why": "« Eau » is feminine and singular: « d'eau chaude »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_12_boiler_d07",
+          "place": "Texto · Théo",
+          "cue": "Théo, your friend, texts you. He says tu to you. He knows about your boiler.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Viens chez moi ce soir ! Mon radiateur marche !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Merci ! Chez nous, le ___ est en panne."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « radiateur » mean here?",
+              "choices": [
+                "fridge",
+                "radiator",
+                "boiler"
+              ],
+              "correct": 1,
+              "why": [
+                "No: the fridge is « le frigo ».",
+                "",
+                "No: the boiler is « la chaudière »."
+              ],
+              "target": "radiateur"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "chauffage",
+                "chauffages",
+                "chaudière"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Le » is singular: « le chauffage ».",
+                "« Chaudière » is feminine: it takes « la », not « le »."
+              ]
+            }
+          ],
+          "followUp": "Top ! Viens vers huit heures.",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_boiler_d08",
+          "place": "Au bureau",
+          "cue": "Inès, your colleague, sees you arrive at work. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Ça va ? Tu es fatiguée ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say yes: no heating at your place, it's cold!",
+              "bank": [
+                "Oui !",
+                "Pas de chauffage",
+                "chez moi,",
+                "il fait froid !",
+                "chez toi,",
+                "il fait chaud !",
+                "Pas du chauffage"
+              ],
+              "accepted": [
+                [
+                  "Oui !",
+                  "Pas de chauffage",
+                  "chez moi,",
+                  "il fait froid !"
+                ],
+                [
+                  "Pas de chauffage",
+                  "chez moi,",
+                  "il fait froid !"
+                ]
+              ],
+              "model": "Oui ! Pas de chauffage chez moi, il fait froid !"
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What did Inès ask?",
+              "choices": [
+                "If you're tired",
+                "If you're cold"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Tu es fatiguée ? »"
+            }
+          ],
+          "followUp": "Oh non ! Viens, on prend un café.",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_boiler_s04",
+          "place": "Sur le palier · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You asked Léa, your flatmate (tu). Now ask M. Ferrand, your neighbour, on the landing. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Léa, tu peux venir voir la chaudière, s'il te plaît ?",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Ask M. Ferrand the same thing, with vous. Start with « Monsieur ».",
+              "bank": [
+                "Monsieur,",
+                "vous pouvez",
+                "venir voir",
+                "la chaudière,",
+                "s'il vous plaît ?",
+                "tu peux",
+                "s'il te plaît ?",
+                "Léa,"
+              ],
+              "accepted": [
+                [
+                  "Monsieur,",
+                  "vous pouvez",
+                  "venir voir",
+                  "la chaudière,",
+                  "s'il vous plaît ?"
+                ]
+              ],
+              "model": "Monsieur, vous pouvez venir voir la chaudière, s'il vous plaît ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_12_boiler_d09",
+          "place": "WhatsApp · Mme Dumas",
+          "cue": "Mme Dumas, your landlady, writes on WhatsApp the next day. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Mme Dumas",
+              "text": "La chaudière marche ? Vous avez de l'eau chaude ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, merci ! Et le radiateur ___ chaud."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Mme Dumas ask?",
+              "choices": [
+                "If the water is too hot",
+                "If you have hot water now"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Vous avez de l'eau chaude ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "es",
+                "et",
+                "est"
+              ],
+              "correct": 2,
+              "why": [
+                "« Es » goes with « tu ». « Le radiateur » takes « est ».",
+                "« Et » means and. You need the verb: « est ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Parfait. Bonne journée, Robin.",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_boiler_d10",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Le chauffage marche enfin !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa say?",
+              "choices": [
+                "The heating is broken again",
+                "The heating works at last"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Le chauffage marche enfin ! »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say great: hot water at last!",
+              "bank": [
+                "Super !",
+                "Enfin",
+                "de l'eau chaude !",
+                "d'eau chaude !",
+                "de l'eau chaud !",
+                "Dommage !"
+              ],
+              "accepted": [
+                [
+                  "Super !",
+                  "Enfin",
+                  "de l'eau chaude !"
+                ],
+                [
+                  "Enfin",
+                  "de l'eau chaude !",
+                  "Super !"
+                ]
+              ],
+              "model": "Super ! Enfin de l'eau chaude !"
+            }
+          ],
+          "followUp": "Oui ! Et ce soir, on reste à la maison !",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_boiler_s05",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Which French word means “boiler”? You write to Mme Dumas, your landlady (vous).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Il n'y a pas d'eau chaude, la ___ est en panne depuis ce matin."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "boiler",
+              "choices": [
+                "chauffage",
+                "chaudière",
+                "radiateur"
+              ],
+              "correct": 1,
+              "why": [
+                "« Chauffage » means heating (and it's masculine: « le chauffage »).",
+                "",
+                "« Radiateur » means radiator (and it's masculine: « le radiateur »)."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_12_leak",
+      "title": "Une fuite",
+      "note": "A leak: « il y a une fuite », and water « coule » (is running, is dripping) from « le plafond » (the ceiling). The neighbour from the flat below comes up: say sorry, then tell Mme Dumas. « Du plafond » is « de + le plafond ».",
+      "items": [
+        {
+          "id": "sit_12_leak_d01",
+          "place": "À l'appart",
+          "cue": "At home, Léa, your flatmate, calls you. She sounds worried. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Robin, viens vite ! Il y a une fuite !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What's the problem?",
+              "choices": [
+                "There's a leak",
+                "There's a power cut"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Il y a une fuite ! »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Ask where: in the bathroom?",
+              "bank": [
+                "Où ?",
+                "Dans",
+                "la salle de bains ?",
+                "le salle de bains ?",
+                "Quand ?",
+                "Sur"
+              ],
+              "accepted": [
+                [
+                  "Où ?",
+                  "Dans",
+                  "la salle de bains ?"
+                ],
+                [
+                  "Dans",
+                  "la salle de bains ?"
+                ]
+              ],
+              "model": "Où ? Dans la salle de bains ?"
+            }
+          ],
+          "followUp": "Non, dans la cuisine ! Regarde !",
+          "newWords": [
+            "fuite"
+          ]
+        },
+        {
+          "id": "sit_12_leak_d02",
+          "place": "À l'appart",
+          "cue": "At home, Léa, your flatmate, points up in the kitchen. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Regarde le plafond de la cuisine !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oh non ! Il y a ___ l'eau !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "Where does Léa want you to look?",
+              "choices": [
+                "At the kitchen ceiling",
+                "At the bathroom door"
+              ],
+              "correct": 0,
+              "miss": "Reread: « le plafond de la cuisine »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "du",
+                "des",
+                "de"
+              ],
+              "correct": 2,
+              "why": [
+                "« Du » is « de + le ». Before « l'eau », keep « de »: « de l'eau ».",
+                "« Des » is plural. « Eau » is singular here: « de l'eau ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Vite ! Écris à Mme Dumas !",
+          "newWords": [
+            "plafond"
+          ]
+        },
+        {
+          "id": "sit_12_leak_s01",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Construire",
+          "cue": "Write to Mme Dumas, your landlady, on WhatsApp. She says vous to you.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say hello, and that there's a leak in the bathroom.",
+              "bank": [
+                "Bonjour, madame,",
+                "il y a",
+                "une fuite",
+                "dans",
+                "la salle de bains.",
+                "un fuite",
+                "sur",
+                "Salut,"
+              ],
+              "accepted": [
+                [
+                  "Bonjour, madame,",
+                  "il y a",
+                  "une fuite",
+                  "dans",
+                  "la salle de bains."
+                ]
+              ],
+              "model": "Bonjour, madame, il y a une fuite dans la salle de bains."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_12_leak_d03",
+          "place": "Sur le palier",
+          "cue": "A neighbour from the flat below rings at your door. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Voisine",
+              "text": "Bonjour ! L'eau coule de mon plafond !",
+              "voice": "female"
+            },
+            {
+              "speaker": "learner",
+              "text": "Pardon ! On a ___ fuite dans la salle de bains."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "un",
+                "une",
+                "des"
+              ],
+              "correct": 1,
+              "why": [
+                "« Fuite » is feminine: « une fuite ».",
+                "",
+                "« Des » is plural. One leak: « une fuite »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What's happening at the neighbour's?",
+              "choices": [
+                "Water is coming under her door",
+                "Water is coming through her ceiling"
+              ],
+              "correct": 1,
+              "miss": "Reread: « L'eau coule de mon plafond ! »"
+            }
+          ],
+          "followUp": "Vite, s'il vous plaît ! Ça coule beaucoup !",
+          "newWords": [
+            "coule"
+          ]
+        },
+        {
+          "id": "sit_12_leak_d04",
+          "place": "WhatsApp · Mme Dumas",
+          "cue": "Mme Dumas, your landlady, answers your message on WhatsApp. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Mme Dumas",
+              "text": "Une fuite ? C'est où ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « fuite » mean here?",
+              "choices": [
+                "breakdown",
+                "fire",
+                "leak"
+              ],
+              "correct": 2,
+              "why": [
+                "No: a breakdown is « une panne ».",
+                "No: « fuite » is about water.",
+                ""
+              ],
+              "target": "fuite"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say: in the kitchen, on the ceiling.",
+              "bank": [
+                "Dans la cuisine,",
+                "au plafond.",
+                "à le plafond.",
+                "Dans le cuisine,",
+                "Sur la cuisine,"
+              ],
+              "accepted": [
+                [
+                  "Dans la cuisine,",
+                  "au plafond."
+                ]
+              ],
+              "model": "Dans la cuisine, au plafond."
+            }
+          ],
+          "followUp": "Merci. Je vous appelle tout de suite.",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_leak_s02",
+          "place": "Sur le palier · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "Say sorry to the neighbour from the flat below. She says vous to you. You're a woman.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "Ouais, une fuite, pas grave !",
+                "Salut ! Désolée pour la fuite !",
+                "Je suis désolée, madame, il y a une fuite chez nous."
+              ],
+              "correct": 2,
+              "why": [
+                "« Ouais » is for friends, and « pas grave » sounds rude: her ceiling is wet.",
+                "Good French, but « salut » is for friends. She says vous to you.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_12_leak_d05",
+          "place": "Sur le palier",
+          "cue": "Clarify: the neighbour from the flat below talks very fast. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Voisine",
+              "text": "Ça coule du plafond, dans ma cuisine !",
+              "voice": "female"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Ask her to repeat, politely.",
+              "bank": [
+                "Pardon ?",
+                "Vous pouvez répéter,",
+                "s'il vous plaît ?",
+                "Tu peux répéter,",
+                "s'il te plaît ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon ?",
+                  "Vous pouvez répéter,",
+                  "s'il vous plaît ?"
+                ],
+                [
+                  "Vous pouvez répéter,",
+                  "s'il vous plaît ?"
+                ]
+              ],
+              "model": "Pardon ? Vous pouvez répéter, s'il vous plaît ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « plafond » mean here?",
+              "choices": [
+                "floor",
+                "ceiling",
+                "wall"
+              ],
+              "correct": 1,
+              "why": [
+                "No: « plafond » is above your head.",
+                "",
+                "No: « plafond » is above your head, not beside you."
+              ],
+              "target": "plafond"
+            }
+          ],
+          "followUp": "Du plafond ! Ça coule dans ma cuisine !",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_leak_d06",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you from work. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "L'eau coule encore ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, un peu. Tu ___ appeler Mme Dumas ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "peut",
+                "pouvez",
+                "peux"
+              ],
+              "correct": 2,
+              "why": [
+                "« Peut » goes with « il » or « elle ». With « tu »: « peux ».",
+                "« Pouvez » goes with « vous ». Léa says tu: « peux ».",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa ask?",
+              "choices": [
+                "If the water is still running",
+                "If the water is cold"
+              ],
+              "correct": 0,
+              "miss": "Reread: « L'eau coule encore ? »"
+            }
+          ],
+          "followUp": "Oui, je lui écris tout de suite.",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_leak_s03",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Corriger",
+          "cue": "You write to Mme Dumas, your landlady, on WhatsApp. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Il y a une fuite, l'eau coulent du plafond de la cuisine.",
+              "error": {
+                "word": "coulent",
+                "fix": "coule",
+                "choices": [
+                  "couler",
+                  "coule",
+                  "coulez"
+                ],
+                "why": "« L'eau » is one thing (il, elle): « l'eau coule »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_12_leak_d07",
+          "place": "WhatsApp · Mme Dumas",
+          "cue": "Mme Dumas, your landlady, writes on WhatsApp an hour later. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Mme Dumas",
+              "text": "Ça coule toujours, madame ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, du ___ de la cuisine."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « coule » mean here?",
+              "choices": [
+                "is cold",
+                "is running, is dripping",
+                "is closed"
+              ],
+              "correct": 1,
+              "why": [
+                "No: cold is « froid ».",
+                "",
+                "No: closed is « fermé »."
+              ],
+              "target": "coule"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "plafonds",
+                "plat",
+                "plafond"
+              ],
+              "correct": 2,
+              "why": [
+                "« Du » is singular: « du plafond ».",
+                "« Plat » means dish. Water runs from the ceiling.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Merci, Robin. Je vous appelle ce soir.",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_leak_d08",
+          "place": "Texto · Théo",
+          "cue": "Théo, your friend, texts you and Léa. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Ça va chez vous ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say no: you've got a leak!",
+              "bank": [
+                "Non,",
+                "on a",
+                "une fuite !",
+                "un fuite !",
+                "Oui,",
+                "on est"
+              ],
+              "accepted": [
+                [
+                  "Non,",
+                  "on a",
+                  "une fuite !"
+                ]
+              ],
+              "model": "Non, on a une fuite !"
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo ask?",
+              "choices": [
+                "If you're at home",
+                "If things are OK at your place"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Ça va chez vous ? »"
+            }
+          ],
+          "followUp": "Oh non ! Je peux aider ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_leak_s04",
+          "place": "Texto · Inès · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You text Inès, your colleague, the next day. Tell her about yesterday, in the imparfait. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Il y a une fuite, l'eau coule du plafond.",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it in the imparfait. Start with « Hier ».",
+              "bank": [
+                "Hier,",
+                "il y avait",
+                "une fuite,",
+                "l'eau",
+                "coulait",
+                "du plafond.",
+                "il y a",
+                "coule",
+                "coulent"
+              ],
+              "accepted": [
+                [
+                  "Hier,",
+                  "il y avait",
+                  "une fuite,",
+                  "l'eau",
+                  "coulait",
+                  "du plafond."
+                ]
+              ],
+              "model": "Hier, il y avait une fuite, l'eau coulait du plafond."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_12_leak_d09",
+          "place": "Sur le palier",
+          "cue": "M. Ferrand, your neighbour, knocks on your door. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "De l'eau devant votre porte ! C'est une fuite ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, ___ la salle de bains."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does M. Ferrand see?",
+              "choices": [
+                "Water outside your door",
+                "Water on the ceiling"
+              ],
+              "correct": 0,
+              "miss": "Reread: « De l'eau devant votre porte ! »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "chez",
+                "dans",
+                "sur"
+              ],
+              "correct": 1,
+              "why": [
+                "« Chez » goes with a person (chez moi). For a room: « dans ».",
+                "",
+                "« Sur » means on top of. The leak is in the room: « dans »."
+              ]
+            }
+          ],
+          "followUp": "Ah ! Je peux vous aider, madame ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_leak_d10",
+          "place": "WhatsApp · Mme Dumas",
+          "cue": "Mme Dumas, your landlady, writes on WhatsApp. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Mme Dumas",
+              "text": "Et le plafond, ça va ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Mme Dumas ask about?",
+              "choices": [
+                "The door",
+                "The ceiling"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Et le plafond, ça va ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say no: the water is still running.",
+              "bank": [
+                "Non,",
+                "l'eau",
+                "coule encore.",
+                "coulent encore.",
+                "Oui,",
+                "le eau"
+              ],
+              "accepted": [
+                [
+                  "Non,",
+                  "l'eau",
+                  "coule encore."
+                ]
+              ],
+              "model": "Non, l'eau coule encore."
+            }
+          ],
+          "followUp": "Bon. J'arrive vers midi, Robin.",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_leak_s05",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Which French word means “leak”? You write to Mme Dumas, your landlady (vous).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Bonjour, madame, il y a une ___ dans la salle de bains, l'eau coule."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "leak",
+              "choices": [
+                "panne",
+                "fuite",
+                "erreur"
+              ],
+              "correct": 1,
+              "why": [
+                "« Panne » is a breakdown (en panne). Water running is a leak.",
+                "",
+                "« Erreur » means mistake."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_12_plumber",
+      "title": "Le plombier",
+      "note": "Mme Dumas sends « le plombier » (the plumber). Agree on a time, « cet après-midi » (this afternoon), for him to « réparer » (repair) the leak. After « venir » or « pour », the verb stays in the infinitive: « il vient réparer », « pour réparer ». The plumber says vous.",
+      "items": [
+        {
+          "id": "sit_12_plumber_d01",
+          "place": "WhatsApp · Mme Dumas",
+          "cue": "Mme Dumas, your landlady, answers your message about the leak. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Mme Dumas",
+              "text": "Je vais appeler le plombier tout de suite."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What is Mme Dumas going to do?",
+              "choices": [
+                "Come to your place",
+                "Call the plumber"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Je vais appeler le plombier »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Thank her very much, and say you're at home.",
+              "bank": [
+                "Merci beaucoup,",
+                "madame !",
+                "Je suis",
+                "à la maison.",
+                "monsieur !",
+                "Je es",
+                "au maison."
+              ],
+              "accepted": [
+                [
+                  "Merci beaucoup,",
+                  "madame !",
+                  "Je suis",
+                  "à la maison."
+                ],
+                [
+                  "Je suis",
+                  "à la maison.",
+                  "Merci beaucoup,",
+                  "madame !"
+                ]
+              ],
+              "model": "Merci beaucoup, madame ! Je suis à la maison."
+            }
+          ],
+          "followUp": "Parfait. Il vous appelle aujourd'hui.",
+          "newWords": [
+            "plombier"
+          ]
+        },
+        {
+          "id": "sit_12_plumber_d02",
+          "place": "Appel · plombier",
+          "cue": "A man calls you about the leak. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Plombier",
+              "text": "Bonjour, je suis le plombier. Je viens réparer la fuite."
+            },
+            {
+              "speaker": "learner",
+              "text": "Merci ! Vous venez ___ heure ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "Why is the man calling?",
+              "choices": [
+                "To sell you a new boiler",
+                "To come and fix the leak"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Je viens réparer la fuite »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "à quelle",
+                "quelle",
+                "à quel"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "For “at what time”, you need « à »: « à quelle heure ».",
+                "« Heure » is feminine: « quelle », not « quel »."
+              ]
+            }
+          ],
+          "followUp": "Vers quatre heures. Ça vous va ?",
+          "newWords": [
+            "réparer"
+          ]
+        },
+        {
+          "id": "sit_12_plumber_s01",
+          "place": "Texto · Léa · phrase seule",
+          "standalone": "Construire",
+          "cue": "Text Léa, your flatmate, about the plumber. She says tu to you.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say: the plumber is coming tomorrow morning to repair the leak.",
+              "bank": [
+                "Le plombier",
+                "vient",
+                "demain matin",
+                "pour",
+                "réparer",
+                "la fuite.",
+                "réparé",
+                "viens",
+                "le fuite."
+              ],
+              "accepted": [
+                [
+                  "Le plombier",
+                  "vient",
+                  "demain matin",
+                  "pour",
+                  "réparer",
+                  "la fuite."
+                ]
+              ],
+              "model": "Le plombier vient demain matin pour réparer la fuite."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_12_plumber_d03",
+          "place": "Appel · plombier",
+          "cue": "The plumber calls you back. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Plombier",
+              "text": "Je passe cet après-midi, vers quatre heures."
+            },
+            {
+              "speaker": "learner",
+              "text": "Parfait, je ___ là."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "seras",
+                "serai",
+                "sera"
+              ],
+              "correct": 1,
+              "why": [
+                "« Seras » goes with « tu ». With « je »: « serai ».",
+                "",
+                "« Sera » goes with « il » or « elle ». With « je »: « serai »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "When is the plumber coming?",
+              "choices": [
+                "This afternoon, around four",
+                "Tomorrow morning, around four"
+              ],
+              "correct": 0,
+              "miss": "Reread: « cet après-midi, vers quatre heures »."
+            }
+          ],
+          "followUp": "Très bien. À cet après-midi, madame.",
+          "newWords": [
+            "cet après-midi"
+          ]
+        },
+        {
+          "id": "sit_12_plumber_d04",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Le plombier vient quand ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « plombier » mean here?",
+              "choices": [
+                "delivery driver",
+                "plumber",
+                "landlord"
+              ],
+              "correct": 1,
+              "why": [
+                "No: a delivery driver is « un livreur ».",
+                "",
+                "No: « plombier » is the man who fixes pipes and leaks."
+              ],
+              "target": "plombier"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say: this afternoon, around four.",
+              "bank": [
+                "Cet après-midi,",
+                "vers quatre heures.",
+                "Ce après-midi,",
+                "vers quatre heure.",
+                "Demain,"
+              ],
+              "accepted": [
+                [
+                  "Cet après-midi,",
+                  "vers quatre heures."
+                ]
+              ],
+              "model": "Cet après-midi, vers quatre heures."
+            }
+          ],
+          "followUp": "Super ! Moi, je rentre ce soir.",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_plumber_s02",
+          "place": "Appel · plombier · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "You call the plumber about the leak. He says vous to you.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "Salut, tu peux réparer la fuite aujourd'hui ?",
+                "Bonjour, monsieur, vous pouvez réparer la fuite aujourd'hui ?",
+                "Ouais, la fuite, tu répares ça ?"
+              ],
+              "correct": 1,
+              "why": [
+                "Good French, but « salut » and « tu » are for friends. The plumber says vous to you.",
+                "",
+                "« Ouais » and « tu » are for friends, not for the plumber."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_12_plumber_d05",
+          "place": "Appel · plombier",
+          "cue": "Clarify: the plumber calls you. The line is bad. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Plombier",
+              "text": "Je peux réparer ça cet après-midi ou demain."
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say sorry, you can't hear him well, and ask him to repeat.",
+              "bank": [
+                "Pardon,",
+                "je vous entends mal.",
+                "Vous pouvez répéter ?",
+                "je t'entends mal.",
+                "Tu peux répéter ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon,",
+                  "je vous entends mal.",
+                  "Vous pouvez répéter ?"
+                ],
+                [
+                  "Vous pouvez répéter ?",
+                  "Pardon,",
+                  "je vous entends mal."
+                ]
+              ],
+              "model": "Pardon, je vous entends mal. Vous pouvez répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « réparer » mean here?",
+              "choices": [
+                "to prepare",
+                "to repair, fix",
+                "to replace"
+              ],
+              "correct": 1,
+              "why": [
+                "No: « réparer » looks like prepare, but it means to fix.",
+                "",
+                "No: he isn't changing it for a new one. He fixes it."
+              ],
+              "target": "réparer"
+            }
+          ],
+          "followUp": "Cet après-midi ! Ou demain, si vous voulez.",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_plumber_d06",
+          "place": "À l'appart",
+          "cue": "The plumber comes out of your bathroom. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Plombier",
+              "text": "C'est réparé ! La fuite, c'est fini."
+            },
+            {
+              "speaker": "learner",
+              "text": "Super ! Merci, ___ êtes très gentil."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "tu",
+                "vous",
+                "il"
+              ],
+              "correct": 1,
+              "why": [
+                "« Tu » takes « es », and the plumber says vous to you: « vous êtes ».",
+                "",
+                "« Il » takes « est ». You're talking to him: « vous êtes »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does the plumber say?",
+              "choices": [
+                "The leak is fixed",
+                "The leak is worse"
+              ],
+              "correct": 0,
+              "miss": "Reread: « C'est réparé ! La fuite, c'est fini. »"
+            }
+          ],
+          "followUp": "Merci, madame. Bonne journée !",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_plumber_s03",
+          "place": "Texto · Léa · phrase seule",
+          "standalone": "Corriger",
+          "cue": "You text Léa, your flatmate, about the plumber. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Le plombier vient cet après-midi pour réparé la fuite de la cuisine.",
+              "error": {
+                "word": "réparé",
+                "fix": "réparer",
+                "choices": [
+                  "répare",
+                  "réparer",
+                  "répares"
+                ],
+                "why": "After « pour », the verb stays in the infinitive: « pour réparer »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_12_plumber_d07",
+          "place": "WhatsApp · Mme Dumas",
+          "cue": "Mme Dumas, your landlady, writes on WhatsApp. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Mme Dumas",
+              "text": "Le plombier passe cet après-midi ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, il vient ___ la fuite."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « cet après-midi » mean here?",
+              "choices": [
+                "this evening",
+                "this afternoon",
+                "tomorrow morning"
+              ],
+              "correct": 1,
+              "why": [
+                "No: this evening is « ce soir ».",
+                "",
+                "No: tomorrow morning is « demain matin »."
+              ],
+              "target": "cet après-midi"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "réparé",
+                "répare",
+                "réparer"
+              ],
+              "correct": 2,
+              "why": [
+                "« Réparé » means repaired. After « il vient », use the infinitive: « réparer ».",
+                "After « il vient », the second verb stays in the infinitive: « réparer ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Parfait. Bon après-midi, Robin.",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_plumber_d08",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Tu viens au bureau cet après-midi ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say no: the plumber is coming to your place.",
+              "bank": [
+                "Non,",
+                "le plombier",
+                "vient chez moi.",
+                "viens chez moi.",
+                "vient chez toi.",
+                "Oui,"
+              ],
+              "accepted": [
+                [
+                  "Non,",
+                  "le plombier",
+                  "vient chez moi."
+                ]
+              ],
+              "model": "Non, le plombier vient chez moi."
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès ask?",
+              "choices": [
+                "If you're coming to the café tonight",
+                "If you're coming to the office this afternoon"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Tu viens au bureau cet après-midi ? »"
+            }
+          ],
+          "followUp": "D'accord ! On se voit demain, alors.",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_plumber_s04",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You write to Mme Dumas, your landlady, on WhatsApp. Say what is going to happen (futur proche). She says vous to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Le plombier répare la fuite de la cuisine cet après-midi.",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it with « aller » + infinitive.",
+              "bank": [
+                "Le plombier",
+                "va",
+                "réparer",
+                "la fuite",
+                "de la cuisine",
+                "cet après-midi.",
+                "vas",
+                "réparé",
+                "répare"
+              ],
+              "accepted": [
+                [
+                  "Le plombier",
+                  "va",
+                  "réparer",
+                  "la fuite",
+                  "de la cuisine",
+                  "cet après-midi."
+                ]
+              ],
+              "model": "Le plombier va réparer la fuite de la cuisine cet après-midi."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_12_plumber_d09",
+          "place": "À l'appart",
+          "cue": "The plumber rings at your door. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Plombier",
+              "text": "Bonjour, madame, je viens pour la fuite."
+            },
+            {
+              "speaker": "learner",
+              "text": "Entrez ! C'est ___ la cuisine."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "Why is the man here?",
+              "choices": [
+                "For the boiler",
+                "For the leak"
+              ],
+              "correct": 1,
+              "miss": "Reread: « je viens pour la fuite »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "dans",
+                "sur",
+                "en"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Sur » means on top of. The leak is in the room: « dans ».",
+                "« En » takes no article here. With « la cuisine »: « dans »."
+              ]
+            }
+          ],
+          "followUp": "Merci. Je regarde ça tout de suite.",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_plumber_d10",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Alors, le plombier a réparé la fuite ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa want to know?",
+              "choices": [
+                "If the plumber is coming",
+                "If the plumber fixed the leak"
+              ],
+              "correct": 1,
+              "miss": "Reread: « le plombier a réparé la fuite ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, it's fixed!",
+              "bank": [
+                "Oui,",
+                "c'est",
+                "réparé !",
+                "réparer !",
+                "Non,",
+                "pas"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "c'est",
+                  "réparé !"
+                ]
+              ],
+              "model": "Oui, c'est réparé !"
+            }
+          ],
+          "followUp": "Enfin ! Merci, Robin !",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_plumber_s05",
+          "place": "Texto · Léa · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Which French word means “plumber”? You text Léa, your flatmate (tu).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Le ___ vient cet après-midi pour réparer la fuite de la cuisine."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "plumber",
+              "choices": [
+                "livreur",
+                "plombier",
+                "voisin"
+              ],
+              "correct": 1,
+              "why": [
+                "« Livreur » means delivery driver.",
+                "",
+                "« Voisin » means neighbour."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_12_keys",
+      "title": "Les clés",
+      "note": "Locked out: « j'ai perdu mes clés ». The door is « fermée à clé » (locked; « fermée » agrees with « la porte »). M. Ferrand has « un double » (a spare key), or you call « le serrurier » (the locksmith).",
+      "items": [
+        {
+          "id": "sit_12_keys_d01",
+          "place": "Appel · Léa",
+          "cue": "Léa, your flatmate, calls you. She's outside your flat. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "La porte est fermée à clé. Tu as tes clés ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa say about the door?",
+              "choices": [
+                "It's locked",
+                "It's open"
+              ],
+              "correct": 0,
+              "miss": "Reread: « La porte est fermée à clé. »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, you're coming in ten minutes.",
+              "bank": [
+                "Oui,",
+                "j'arrive",
+                "dans dix minutes.",
+                "il y a dix minutes.",
+                "Non,",
+                "arrive"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "j'arrive",
+                  "dans dix minutes."
+                ]
+              ],
+              "model": "Oui, j'arrive dans dix minutes."
+            }
+          ],
+          "followUp": "Super ! Moi, je n'ai pas mes clés !",
+          "newWords": [
+            "à clé"
+          ]
+        },
+        {
+          "id": "sit_12_keys_d02",
+          "place": "Sur le palier",
+          "cue": "You've lost your keys. M. Ferrand, your neighbour, sees you on the landing. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Vos clés ? J'ai un double, madame."
+            },
+            {
+              "speaker": "learner",
+              "text": "Oh, merci, vous êtes très ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does M. Ferrand have?",
+              "choices": [
+                "The landlady's number",
+                "A spare key to your flat"
+              ],
+              "correct": 1,
+              "miss": "Reread: « J'ai un double »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "gentille",
+                "gentil",
+                "gentils"
+              ],
+              "correct": 1,
+              "why": [
+                "« Gentille » is feminine. M. Ferrand is a man: « gentil ».",
+                "",
+                "« Gentils » is plural. You're talking to one man: « gentil »."
+              ]
+            }
+          ],
+          "followUp": "Attendez ici, madame. Je le cherche.",
+          "newWords": [
+            "double"
+          ]
+        },
+        {
+          "id": "sit_12_keys_s01",
+          "place": "Sur le palier · phrase seule",
+          "standalone": "Construire",
+          "cue": "Ask M. Ferrand, your neighbour, on the landing. He says vous to you.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say hello, that you've lost your keys, and ask if he has a spare.",
+              "bank": [
+                "Bonjour, monsieur,",
+                "j'ai perdu",
+                "mes clés,",
+                "vous avez",
+                "un double ?",
+                "tu as",
+                "ma clés,",
+                "une double ?"
+              ],
+              "accepted": [
+                [
+                  "Bonjour, monsieur,",
+                  "j'ai perdu",
+                  "mes clés,",
+                  "vous avez",
+                  "un double ?"
+                ]
+              ],
+              "model": "Bonjour, monsieur, j'ai perdu mes clés, vous avez un double ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_12_keys_d03",
+          "place": "Appel · serrurier",
+          "cue": "You call a man about your door. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Serrurier",
+              "text": "Je suis serrurier. Je peux venir dans une heure."
+            },
+            {
+              "speaker": "learner",
+              "text": "Merci ! La porte est fermée ___ clé."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "de",
+                "en",
+                "à"
+              ],
+              "correct": 2,
+              "why": [
+                "Not French: the set phrase is « fermée à clé ».",
+                "Not French: the set phrase is « fermée à clé ».",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "When can the man come?",
+              "choices": [
+                "In an hour",
+                "In ten minutes"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Je peux venir dans une heure. »"
+            }
+          ],
+          "followUp": "Très bien. C'est quelle adresse, madame ?",
+          "newWords": [
+            "serrurier"
+          ]
+        },
+        {
+          "id": "sit_12_keys_d04",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you from work. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "La porte est fermée à clé ? Je suis au bureau."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « à clé » mean here?",
+              "choices": [
+                "inside",
+                "with a key",
+                "badly"
+              ],
+              "correct": 1,
+              "why": [
+                "No: « à clé » is about the key. « Fermée à clé » means locked.",
+                "",
+                "No: badly is « mal »."
+              ],
+              "target": "à clé"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, and you don't have your keys!",
+              "bank": [
+                "Oui,",
+                "et",
+                "je n'ai pas",
+                "mes clés !",
+                "je n'ai",
+                "mon clés !",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "et",
+                  "je n'ai pas",
+                  "mes clés !"
+                ],
+                [
+                  "Oui,",
+                  "je n'ai pas",
+                  "mes clés !"
+                ]
+              ],
+              "model": "Oui, et je n'ai pas mes clés !"
+            }
+          ],
+          "followUp": "Oh non ! Va voir M. Ferrand !",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_keys_s02",
+          "place": "Appel · serrurier · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "You're locked out. Call a locksmith. He says vous to you.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "Salut, tu peux venir ? J'ai perdu mes clés.",
+                "Ouais, viens vite, j'ai perdu mes clés !",
+                "Bonjour, monsieur, vous pouvez venir ? Je n'ai pas mes clés."
+              ],
+              "correct": 2,
+              "why": [
+                "Good French, but « salut » and « tu » are for friends. The locksmith says vous to you.",
+                "« Ouais » and « viens » are for friends, not for the locksmith.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_12_keys_d05",
+          "place": "Sur le palier",
+          "cue": "Clarify: M. Ferrand, your neighbour, mumbles on the landing. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Le double est chez Mme Dumas, pas chez moi."
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Ask him to repeat, politely.",
+              "bank": [
+                "Pardon ?",
+                "Vous pouvez répéter,",
+                "s'il vous plaît ?",
+                "Tu peux répéter,",
+                "s'il te plaît ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon ?",
+                  "Vous pouvez répéter,",
+                  "s'il vous plaît ?"
+                ],
+                [
+                  "Vous pouvez répéter,",
+                  "s'il vous plaît ?"
+                ]
+              ],
+              "model": "Pardon ? Vous pouvez répéter, s'il vous plaît ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « double » mean here?",
+              "choices": [
+                "spare key, copy",
+                "double room",
+                "twice"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "No: here « le double » is a thing: a copy of your key.",
+                "No: here « le double » is a thing: a copy of your key."
+              ],
+              "target": "double"
+            }
+          ],
+          "followUp": "Le double ! Il est chez Mme Dumas !",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_keys_d06",
+          "place": "WhatsApp · Mme Dumas",
+          "cue": "Mme Dumas, your landlady, writes on WhatsApp. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Mme Dumas",
+              "text": "Vous avez perdu vos clés ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, et la porte est ___ à clé."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "fermé",
+                "fermer",
+                "fermée"
+              ],
+              "correct": 2,
+              "why": [
+                "« Porte » is feminine: « fermée ».",
+                "« Fermer » is the infinitive. After « est »: « fermée ».",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Mme Dumas ask?",
+              "choices": [
+                "If you lost your keys",
+                "If you found your keys"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Vous avez perdu vos clés ? »"
+            }
+          ],
+          "followUp": "Pas de problème. M. Ferrand a un double.",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_keys_s03",
+          "place": "Texto · Léa · phrase seule",
+          "standalone": "Corriger",
+          "cue": "You text Léa, your flatmate. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "J'ai perdu mes clés, et le porte est fermée à clé.",
+              "error": {
+                "word": "le",
+                "fix": "la",
+                "choices": [
+                  "les",
+                  "la",
+                  "du"
+                ],
+                "why": "« Porte » is feminine: « la porte »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_12_keys_d07",
+          "place": "Texto · Théo",
+          "cue": "Théo, your friend, texts you. He says tu to you. He knows you're locked out.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Un serrurier ? C'est cher !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Je sais ! Mais M. Ferrand a un ___."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « serrurier » mean here?",
+              "choices": [
+                "plumber",
+                "taxi",
+                "locksmith"
+              ],
+              "correct": 2,
+              "why": [
+                "No: a plumber is « un plombier ».",
+                "No: « serrurier » is about locks and keys.",
+                ""
+              ],
+              "target": "serrurier"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "doubles",
+                "double",
+                "doublé"
+              ],
+              "correct": 1,
+              "why": [
+                "« Un » is singular: « un double ».",
+                "",
+                "« Doublé » means doubled. You need the noun: « un double »."
+              ]
+            }
+          ],
+          "followUp": "Ah, top ! Il est gentil, ton voisin !",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_keys_d08",
+          "place": "Sur le palier",
+          "cue": "The locksmith arrives on your landing. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Serrurier",
+              "text": "Bonjour ! C'est vous, la porte fermée à clé ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say yes, it's you, and thank him.",
+              "bank": [
+                "Oui,",
+                "c'est moi !",
+                "Merci,",
+                "monsieur.",
+                "madame.",
+                "c'est toi !"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "c'est moi !",
+                  "Merci,",
+                  "monsieur."
+                ],
+                [
+                  "Merci,",
+                  "monsieur.",
+                  "Oui,",
+                  "c'est moi !"
+                ]
+              ],
+              "model": "Oui, c'est moi ! Merci, monsieur."
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does the man ask?",
+              "choices": [
+                "If you have a spare key",
+                "If it's your door that's locked"
+              ],
+              "correct": 1,
+              "miss": "Reread: « C'est vous, la porte fermée à clé ? »"
+            }
+          ],
+          "followUp": "Pas de problème. Deux minutes, et c'est ouvert !",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_keys_s04",
+          "place": "Sur le palier · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You asked Léa, your flatmate (tu). Now ask M. Ferrand, your neighbour, the same thing. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Léa, tu as un double de mes clés ?",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Ask M. Ferrand, with vous. Start with « Monsieur ».",
+              "bank": [
+                "Monsieur,",
+                "vous avez",
+                "un double",
+                "de mes clés ?",
+                "tu as",
+                "Léa,",
+                "vous as"
+              ],
+              "accepted": [
+                [
+                  "Monsieur,",
+                  "vous avez",
+                  "un double",
+                  "de mes clés ?"
+                ]
+              ],
+              "model": "Monsieur, vous avez un double de mes clés ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_12_keys_d09",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "T'es où ? Tu as perdu tes clés ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui ! J'attends le ___ devant ma porte."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès ask?",
+              "choices": [
+                "Where your keys are",
+                "Where you are, and if you lost your keys"
+              ],
+              "correct": 1,
+              "miss": "Reread: « T'es où ? Tu as perdu tes clés ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "plombier",
+                "livreur",
+                "serrurier"
+              ],
+              "correct": 2,
+              "why": [
+                "A plumber fixes leaks. For a locked door, you wait for the locksmith.",
+                "A delivery driver brings parcels. For a locked door, you wait for the locksmith.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Oh non ! Tu arrives au bureau quand ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_keys_d10",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Le serrurier est venu ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa ask?",
+              "choices": [
+                "If the locksmith came",
+                "If the locksmith is expensive"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Le serrurier est venu ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say no: M. Ferrand has a spare!",
+              "bank": [
+                "Non,",
+                "M. Ferrand",
+                "a un double !",
+                "as un double !",
+                "Oui,",
+                "a une double !"
+              ],
+              "accepted": [
+                [
+                  "Non,",
+                  "M. Ferrand",
+                  "a un double !"
+                ]
+              ],
+              "model": "Non, M. Ferrand a un double !"
+            }
+          ],
+          "followUp": "Super ! Merci, M. Ferrand !",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_keys_s05",
+          "place": "Sur le palier · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Which French word means “spare (key)”? You talk to M. Ferrand, your neighbour (vous).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Monsieur, j'ai perdu mes clés. Vous avez un ___, s'il vous plaît ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "spare (key)",
+              "choices": [
+                "serrurier",
+                "double",
+                "code"
+              ],
+              "correct": 1,
+              "why": [
+                "« Serrurier » means locksmith, a person.",
+                "",
+                "« Code » is the door code. You need a copy of your key."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_12_neighbour",
+      "title": "M. Ferrand",
+      "note": "A social move with your neighbour on the landing. « Prêter » means to lend: « je peux vous prêter… », « vous pouvez me prêter… ? ». « Le bruit » is noise, and « le palier » is the landing. Say sorry politely with vous: « pardon pour le bruit, monsieur ».",
+      "items": [
+        {
+          "id": "sit_12_neighbour_d01",
+          "place": "Sur le palier",
+          "cue": "M. Ferrand, your neighbour, meets you on the landing. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Madame, je peux vous prêter mon vélo, si vous voulez."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does M. Ferrand offer?",
+              "choices": [
+                "To repair your bike",
+                "To lend you his bike"
+              ],
+              "correct": 1,
+              "miss": "Reread: « je peux vous prêter mon vélo »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Thank him (monsieur): it's very kind.",
+              "bank": [
+                "Merci,",
+                "monsieur,",
+                "c'est",
+                "très gentil !",
+                "madame,",
+                "très gentille !",
+                "tu es"
+              ],
+              "accepted": [
+                [
+                  "Merci,",
+                  "monsieur,",
+                  "c'est",
+                  "très gentil !"
+                ]
+              ],
+              "model": "Merci, monsieur, c'est très gentil !"
+            }
+          ],
+          "followUp": "De rien ! Il est en bas, devant l'immeuble.",
+          "newWords": [
+            "prêter"
+          ]
+        },
+        {
+          "id": "sit_12_neighbour_d02",
+          "place": "Sur le palier",
+          "cue": "Evening. M. Ferrand, your neighbour, knocks at your door. He says vous to you. You have friends over.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Bonsoir, madame. Il y a beaucoup de bruit chez vous !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Pardon, monsieur ! On fait ___ apéro avec des amis."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What is M. Ferrand unhappy about?",
+              "choices": [
+                "The noise at your place",
+                "Your bike in front of the building"
+              ],
+              "correct": 0,
+              "miss": "Reread: « il y a beaucoup de bruit chez vous »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "des",
+                "une",
+                "un"
+              ],
+              "correct": 2,
+              "why": [
+                "« Des » is plural: you have one apéro, « un apéro ».",
+                "« Apéro » is masculine: « un apéro ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Bon. Pas trop tard, alors, s'il vous plaît.",
+          "newWords": [
+            "bruit"
+          ]
+        },
+        {
+          "id": "sit_12_neighbour_s01",
+          "place": "Sur le palier · phrase seule",
+          "standalone": "Construire",
+          "cue": "You meet M. Ferrand, your neighbour, on the landing. He says vous to you. You need a bike this afternoon.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Greet him (monsieur) and ask if he can lend you his bike this afternoon.",
+              "bank": [
+                "Bonjour,",
+                "monsieur,",
+                "vous pouvez",
+                "me prêter",
+                "votre vélo",
+                "cet après-midi ?",
+                "tu peux",
+                "ton vélo",
+                "me prêté"
+              ],
+              "accepted": [
+                [
+                  "Bonjour,",
+                  "monsieur,",
+                  "vous pouvez",
+                  "me prêter",
+                  "votre vélo",
+                  "cet après-midi ?"
+                ]
+              ],
+              "model": "Bonjour, monsieur, vous pouvez me prêter votre vélo cet après-midi ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_12_neighbour_d03",
+          "place": "Sur le palier",
+          "cue": "M. Ferrand, your neighbour, knocks at your door. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Votre colis est sur le palier, madame."
+            },
+            {
+              "speaker": "learner",
+              "text": "Merci, monsieur ! Je le ___ tout de suite."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "prend",
+                "prendre",
+                "prends"
+              ],
+              "correct": 2,
+              "why": [
+                "« Prend » goes with « il, elle »: with « je », say « je le prends ».",
+                "After « je le », conjugate the verb: « je le prends ».",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "Where is the parcel?",
+              "choices": [
+                "In front of the building",
+                "On the landing"
+              ],
+              "correct": 1,
+              "miss": "Reread: « sur le palier »."
+            }
+          ],
+          "followUp": "De rien, madame. Bonne journée !",
+          "newWords": [
+            "palier"
+          ]
+        },
+        {
+          "id": "sit_12_neighbour_d04",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you. Both your bikes are broken.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "M. Ferrand peut nous prêter son vélo ce week-end ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « prêter » mean here?",
+              "choices": [
+                "to sell",
+                "to lend",
+                "to repair"
+              ],
+              "correct": 1,
+              "why": [
+                "To sell is « vendre ».",
+                "",
+                "To repair is « réparer »."
+              ],
+              "target": "prêter"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes: he's very kind.",
+              "bank": [
+                "Oui,",
+                "il est",
+                "très gentil !",
+                "très gentille !",
+                "elle est",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "il est",
+                  "très gentil !"
+                ]
+              ],
+              "model": "Oui, il est très gentil !"
+            }
+          ],
+          "followUp": "Top, je lui demande !",
+          "followUpBy": "Léa",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_neighbour_s02",
+          "place": "Sur le palier · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "Last night you had friends over. This morning you meet M. Ferrand, your neighbour, on the landing. He says vous to you. Apologise for the noise.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "Salut ! Désolée pour le bruit !",
+                "Pardon pour le bruit hier soir, monsieur.",
+                "Ouais, le bruit, c'est pas grave !"
+              ],
+              "correct": 1,
+              "why": [
+                "Good French, but « salut » is for friends, not M. Ferrand.",
+                "",
+                "Good French, but « ouais » is too casual, and it isn't an apology."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_12_neighbour_d05",
+          "place": "Sur le palier",
+          "cue": "Clarify: M. Ferrand, your neighbour, stops you on the landing. He says vous to you and mumbles.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Trop de bruit sur le palier, le soir, madame !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say sorry and ask him to repeat.",
+              "bank": [
+                "Pardon,",
+                "vous pouvez répéter ?",
+                "tu peux répéter ?",
+                "Merci,"
+              ],
+              "accepted": [
+                [
+                  "Pardon,",
+                  "vous pouvez répéter ?"
+                ]
+              ],
+              "model": "Pardon, vous pouvez répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « bruit » mean here?",
+              "choices": [
+                "smell",
+                "noise",
+                "music"
+              ],
+              "correct": 1,
+              "why": [
+                "A smell is « une odeur ».",
+                "",
+                "Music is « la musique »."
+              ],
+              "target": "bruit"
+            }
+          ],
+          "followUp": "J'ai dit : trop de bruit, le soir !",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_neighbour_d06",
+          "place": "Texto · Théo",
+          "cue": "Théo, your friend, texts you. He says tu to you. Your neighbour M. Ferrand is fussy.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "On fait l'apéro chez toi samedi ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, mais pas trop de ___, pour M. Ferrand !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "bruits",
+                "bruit",
+                "bureau"
+              ],
+              "correct": 1,
+              "why": [
+                "« Bruit » stays singular here: « pas trop de bruit ».",
+                "",
+                "« Bureau » means office: it makes no sense here."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo suggest?",
+              "choices": [
+                "Drinks at your place on Saturday",
+                "Dinner at his place on Saturday"
+              ],
+              "correct": 0,
+              "miss": "Reread: « on fait l'apéro chez toi samedi ? »"
+            }
+          ],
+          "followUp": "Ça marche, pas de musique, alors !",
+          "followUpBy": "Théo",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_neighbour_s03",
+          "place": "Sur le palier · phrase seule",
+          "standalone": "Corriger",
+          "cue": "You meet M. Ferrand, your neighbour, on the landing. He says vous to you. Ask to borrow his bike.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Monsieur, vous pouvez me prêté votre vélo cet après-midi ?",
+              "error": {
+                "word": "prêté",
+                "fix": "prêter",
+                "choices": [
+                  "prêtez",
+                  "prêter",
+                  "prêtes"
+                ],
+                "why": "After « vous pouvez », use the infinitive: « me prêter »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_12_neighbour_d07",
+          "place": "Sur le palier",
+          "cue": "M. Ferrand, your neighbour, is lending you his bike. He says vous to you. You're still in the flat.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Je vous attends sur le palier avec le vélo, madame ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, merci ! Je ___ tout de suite !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « palier » mean here?",
+              "choices": [
+                "street",
+                "garage",
+                "landing"
+              ],
+              "correct": 2,
+              "why": [
+                "A street is « une rue ».",
+                "A garage is « un garage ».",
+                ""
+              ],
+              "target": "palier"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "vient",
+                "viens",
+                "venir"
+              ],
+              "correct": 1,
+              "why": [
+                "« Vient » goes with « il, elle »: with « je », say « je viens ».",
+                "",
+                "After « je », conjugate: « je viens »."
+              ]
+            }
+          ],
+          "followUp": "Parfait. Il est vieux, mais il marche !",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_neighbour_d08",
+          "place": "WhatsApp · Mme Dumas",
+          "cue": "Mme Dumas, your landlady, writes on WhatsApp. She says vous to you. This evening you're celebrating Léa's birthday at home.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Mme Dumas",
+              "text": "M. Ferrand dit qu'il y a du bruit chez vous."
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say sorry (madame): it's Léa's birthday.",
+              "bank": [
+                "Désolée,",
+                "madame,",
+                "c'est",
+                "l'anniversaire",
+                "de Léa.",
+                "Désolé,",
+                "monsieur,",
+                "la anniversaire"
+              ],
+              "accepted": [
+                [
+                  "Désolée,",
+                  "madame,",
+                  "c'est",
+                  "l'anniversaire",
+                  "de Léa."
+                ]
+              ],
+              "model": "Désolée, madame, c'est l'anniversaire de Léa."
+            },
+            {
+              "type": "comprehend",
+              "prompt": "Who told Mme Dumas about the noise?",
+              "choices": [
+                "Léa",
+                "M. Ferrand"
+              ],
+              "correct": 1,
+              "miss": "Reread: « M. Ferrand dit qu'il y a du bruit »."
+            }
+          ],
+          "followUp": "Bon anniversaire à Léa ! Mais pas trop tard.",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_neighbour_s04",
+          "place": "Sur le palier · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You asked Léa this (tu). Now ask M. Ferrand, your neighbour, who says vous to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Léa, tu peux me prêter ton vélo cet après-midi ?",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Ask M. Ferrand the same, with vous.",
+              "bank": [
+                "Monsieur,",
+                "vous pouvez",
+                "me prêter",
+                "votre vélo",
+                "cet après-midi ?",
+                "tu peux",
+                "ton vélo",
+                "Léa,"
+              ],
+              "accepted": [
+                [
+                  "Monsieur,",
+                  "vous pouvez",
+                  "me prêter",
+                  "votre vélo",
+                  "cet après-midi ?"
+                ]
+              ],
+              "model": "Monsieur, vous pouvez me prêter votre vélo cet après-midi ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_12_neighbour_d09",
+          "place": "Sur le palier",
+          "cue": "M. Ferrand, your neighbour, knocks at your door. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Madame, vous pouvez me prêter votre vélo ce soir ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Bien sûr ! Il est sur le ___, devant ma porte."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does M. Ferrand want?",
+              "choices": [
+                "To borrow your bike tonight",
+                "To lend you his bike tonight"
+              ],
+              "correct": 0,
+              "miss": "Reread: « vous pouvez me prêter votre vélo ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "plafond",
+                "palier",
+                "quai"
+              ],
+              "correct": 1,
+              "why": [
+                "« Plafond » means ceiling: a bike isn't on the ceiling.",
+                "",
+                "« Quai » is a station platform."
+              ]
+            }
+          ],
+          "followUp": "Merci, madame, c'est très gentil.",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_neighbour_d10",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you. You're both at home.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Il y a du bruit sur le palier. C'est qui ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa ask?",
+              "choices": [
+                "Who is on the landing",
+                "Where the parcel is"
+              ],
+              "correct": 0,
+              "miss": "Reread: « il y a du bruit sur le palier. C'est qui ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say it's the delivery driver, with a parcel.",
+              "bank": [
+                "C'est",
+                "le livreur,",
+                "avec un colis !",
+                "la livreur,",
+                "avec une colis !",
+                "Ce sont"
+              ],
+              "accepted": [
+                [
+                  "C'est",
+                  "le livreur,",
+                  "avec un colis !"
+                ]
+              ],
+              "model": "C'est le livreur, avec un colis !"
+            }
+          ],
+          "followUp": "Ah, mon colis ! J'arrive !",
+          "followUpBy": "Léa",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_neighbour_s05",
+          "place": "Sur le palier · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "You see a parcel by M. Ferrand's door. He says vous to you. Which French word means “landing”?",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Monsieur, il y a un colis pour vous sur le ___, devant votre porte."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "landing",
+              "choices": [
+                "guichet",
+                "palier",
+                "plafond"
+              ],
+              "correct": 1,
+              "why": [
+                "« Guichet » is a ticket office.",
+                "",
+                "« Plafond » means ceiling."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_12_broken",
+      "title": "Ça ne marche plus",
+      "note": "More things break: « cassé » (broken) agrees with the item: « le frigo est cassé », « la porte est cassée ». « La machine à laver » is the washing machine and « la lumière » the light. « Ne… plus » means no longer: « elle ne marche plus ».",
+      "items": [
+        {
+          "id": "sit_12_broken_d01",
+          "place": "À l'appart",
+          "cue": "At home. Léa, your flatmate, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Robin, viens voir ! Le frigo est cassé !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What's the problem?",
+              "choices": [
+                "The fridge is empty",
+                "The fridge is broken"
+              ],
+              "correct": 1,
+              "miss": "Reread: « le frigo est cassé »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Say: again? You'll let Mme Dumas know.",
+              "bank": [
+                "Encore ?",
+                "Je préviens",
+                "Mme Dumas.",
+                "Je prévient",
+                "Tu préviens"
+              ],
+              "accepted": [
+                [
+                  "Encore ?",
+                  "Je préviens",
+                  "Mme Dumas."
+                ]
+              ],
+              "model": "Encore ? Je préviens Mme Dumas."
+            }
+          ],
+          "followUp": "Merci ! Et le fromage, alors ?",
+          "newWords": [
+            "cassé"
+          ]
+        },
+        {
+          "id": "sit_12_broken_d02",
+          "place": "À l'appart",
+          "cue": "At home. Léa, your flatmate, says tu to you. Things keep breaking.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Et la machine à laver ne marche plus !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Ah non ! Elle est en ___ aussi ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What's wrong with the washing machine?",
+              "choices": [
+                "It doesn't work any more",
+                "It makes a lot of noise"
+              ],
+              "correct": 0,
+              "miss": "Reread: « la machine à laver ne marche plus »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "panneau",
+                "place",
+                "panne"
+              ],
+              "correct": 2,
+              "why": [
+                "« Panneau » is a sign or board: « en panne » means out of order.",
+                "« En place » doesn't fit: « en panne » means out of order.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Oui ! Quelle journée !",
+          "newWords": [
+            "machine à laver"
+          ]
+        },
+        {
+          "id": "sit_12_broken_s01",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Construire",
+          "cue": "Write to Mme Dumas, your landlady, on WhatsApp. She says vous to you. The washing machine has been out of order since Monday.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Greet her (madame) and say the washing machine has been out of order since Monday.",
+              "bank": [
+                "Bonjour,",
+                "madame,",
+                "la machine à laver",
+                "est",
+                "en panne",
+                "depuis lundi.",
+                "dans lundi.",
+                "sont",
+                "le machine à laver"
+              ],
+              "accepted": [
+                [
+                  "Bonjour,",
+                  "madame,",
+                  "la machine à laver",
+                  "est",
+                  "en panne",
+                  "depuis lundi."
+                ]
+              ],
+              "model": "Bonjour, madame, la machine à laver est en panne depuis lundi."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_12_broken_d03",
+          "place": "Sur le palier",
+          "cue": "M. Ferrand, your neighbour, meets you on the landing. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Madame, la lumière du palier ne marche pas."
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, et la porte de l'immeuble est ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "cassé",
+                "cassée",
+                "casser"
+              ],
+              "correct": 1,
+              "why": [
+                "« Porte » is feminine: « la porte est cassée ».",
+                "",
+                "After « est », use the participle, not the infinitive: « cassée »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What doesn't work?",
+              "choices": [
+                "The light on the landing",
+                "The lift"
+              ],
+              "correct": 0,
+              "miss": "Reread: « la lumière du palier ne marche pas »."
+            }
+          ],
+          "followUp": "Ah, cet immeuble ! Je préviens Mme Dumas.",
+          "newWords": [
+            "lumière"
+          ]
+        },
+        {
+          "id": "sit_12_broken_d04",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Ton frigo est encore cassé ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « cassé » mean here?",
+              "choices": [
+                "empty",
+                "broken",
+                "closed"
+              ],
+              "correct": 1,
+              "why": [
+                "Empty is « vide ».",
+                "",
+                "Closed is « fermé »."
+              ],
+              "target": "cassé"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, and the washing machine too.",
+              "bank": [
+                "Oui,",
+                "et",
+                "la machine à laver",
+                "aussi !",
+                "le machine à laver",
+                "Non,",
+                "non plus !"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "et",
+                  "la machine à laver",
+                  "aussi !"
+                ]
+              ],
+              "model": "Oui, et la machine à laver aussi !"
+            }
+          ],
+          "followUp": "Oh non ! Viens chez moi, si tu veux.",
+          "followUpBy": "Inès",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_broken_s02",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "Write to Mme Dumas, your landlady, on WhatsApp. She says vous to you. Tell her the washing machine has stopped working.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "Salut ! La machine à laver est cassée, t'as vu ?",
+                "Bonjour, madame, la machine à laver ne marche plus.",
+                "La machine à laver ? Bref, cassée !"
+              ],
+              "correct": 1,
+              "why": [
+                "Good French, but « salut » and « t'as vu » are for friends.",
+                "",
+                "Good French, but « bref » is too casual for your landlady."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_12_broken_d05",
+          "place": "Appel · Mme Dumas",
+          "cue": "Clarify: Mme Dumas, your landlady, calls you about your message. She says vous to you. The line is bad.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Mme Dumas",
+              "text": "Allô ? La machine à laver fait du bruit, c'est ça ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say sorry, you can't hear her well, and ask her to repeat.",
+              "bank": [
+                "Pardon,",
+                "je vous entends mal.",
+                "Vous pouvez répéter ?",
+                "je t'entends mal.",
+                "Tu peux répéter ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon,",
+                  "je vous entends mal.",
+                  "Vous pouvez répéter ?"
+                ],
+                [
+                  "Vous pouvez répéter ?",
+                  "Pardon,",
+                  "je vous entends mal."
+                ]
+              ],
+              "model": "Pardon, je vous entends mal. Vous pouvez répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « machine à laver » mean here?",
+              "choices": [
+                "dishwasher",
+                "washing machine",
+                "coffee machine"
+              ],
+              "correct": 1,
+              "why": [
+                "A dishwasher is « un lave-vaisselle ».",
+                "",
+                "A coffee machine is « une machine à café »."
+              ],
+              "target": "machine à laver"
+            }
+          ],
+          "followUp": "J'ai dit : la machine à laver fait du bruit ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_broken_d06",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "La lumière de la cuisine ne marche pas !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Encore ? Je ___ Mme Dumas tout de suite."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "prévient",
+                "préviens",
+                "prévenir"
+              ],
+              "correct": 1,
+              "why": [
+                "« Prévient » goes with « il, elle »: with « je », say « je préviens ».",
+                "",
+                "After « je », conjugate: « je préviens »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "Which light doesn't work?",
+              "choices": [
+                "The bathroom light",
+                "The kitchen light"
+              ],
+              "correct": 1,
+              "miss": "Reread: « la lumière de la cuisine »."
+            }
+          ],
+          "followUp": "Merci, Robin !",
+          "followUpBy": "Léa",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_broken_s03",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Corriger",
+          "cue": "Write to Mme Dumas, your landlady, on WhatsApp. She says vous to you. Tell her about the bathroom door.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Bonjour, madame, la porte de la salle de bains est cassé depuis hier.",
+              "error": {
+                "word": "cassé",
+                "fix": "cassée",
+                "choices": [
+                  "cassés",
+                  "cassée",
+                  "casser"
+                ],
+                "why": "« Porte » is feminine, so the participle agrees: « la porte est cassée »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_12_broken_d07",
+          "place": "WhatsApp · Mme Dumas",
+          "cue": "Mme Dumas, your landlady, writes on WhatsApp. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Mme Dumas",
+              "text": "Et la lumière de la cuisine, elle marche ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, mais le frigo est encore ___."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « lumière » mean here?",
+              "choices": [
+                "oven",
+                "window",
+                "light"
+              ],
+              "correct": 2,
+              "why": [
+                "An oven is « un four ».",
+                "A window is « une fenêtre ».",
+                ""
+              ],
+              "target": "lumière"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "cassée",
+                "casser",
+                "cassé"
+              ],
+              "correct": 2,
+              "why": [
+                "« Frigo » is masculine: « le frigo est cassé ».",
+                "After « est », use the participle, not the infinitive: « cassé ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "D'accord. Je regarde ça demain.",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_broken_d08",
+          "place": "Texto · Théo",
+          "cue": "Théo, your friend, texts you. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Ta machine à laver est cassée ? Viens chez moi !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Thank him and say you'll drop by this evening.",
+              "bank": [
+                "Merci !",
+                "Je passe",
+                "ce soir.",
+                "Je passes",
+                "ce matin.",
+                "Tu passes"
+              ],
+              "accepted": [
+                [
+                  "Merci !",
+                  "Je passe",
+                  "ce soir."
+                ],
+                [
+                  "Je passe",
+                  "ce soir.",
+                  "Merci !"
+                ]
+              ],
+              "model": "Merci ! Je passe ce soir."
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo suggest?",
+              "choices": [
+                "Fixing your washing machine",
+                "Coming to his place"
+              ],
+              "correct": 1,
+              "miss": "Reread: « viens chez moi ! »"
+            }
+          ],
+          "followUp": "Top, à ce soir !",
+          "followUpBy": "Théo",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_broken_s04",
+          "place": "Texto · Léa · phrase seule",
+          "standalone": "Transformer",
+          "cue": "Léa, your flatmate, texts you. She says tu to you. Tell her about yesterday evening: put it in the imparfait.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "La lumière de la cuisine ne marche pas ce soir.",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it about yesterday evening, in the imparfait.",
+              "bank": [
+                "La lumière",
+                "de la cuisine",
+                "ne marchait pas",
+                "hier soir.",
+                "ne marche pas",
+                "ce soir.",
+                "ne marchent pas"
+              ],
+              "accepted": [
+                [
+                  "La lumière",
+                  "de la cuisine",
+                  "ne marchait pas",
+                  "hier soir."
+                ]
+              ],
+              "model": "La lumière de la cuisine ne marchait pas hier soir."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_12_broken_d09",
+          "place": "Sur le palier",
+          "cue": "M. Ferrand, your neighbour, meets you on the landing. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Bonjour, madame. Votre frigo est cassé ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, monsieur, depuis ___."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does M. Ferrand ask about?",
+              "choices": [
+                "Your fridge",
+                "Your washing machine"
+              ],
+              "correct": 0,
+              "miss": "Reread: « votre frigo est cassé ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "demain",
+                "hier",
+                "jamais"
+              ],
+              "correct": 1,
+              "why": [
+                "« Depuis » looks back: « depuis demain » makes no sense.",
+                "",
+                "« Depuis jamais » isn't French."
+              ]
+            }
+          ],
+          "followUp": "J'ai de la place dans mon frigo, madame.",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_broken_d10",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "La lumière de la cuisine est réparée !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What's the news?",
+              "choices": [
+                "The kitchen light works again",
+                "The washing machine works again"
+              ],
+              "correct": 0,
+              "miss": "Reread: « la lumière de la cuisine est réparée »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Say great, and ask about the washing machine.",
+              "bank": [
+                "Super !",
+                "Et",
+                "la machine à laver ?",
+                "le machine à laver ?",
+                "Dommage !",
+                "Ou"
+              ],
+              "accepted": [
+                [
+                  "Super !",
+                  "Et",
+                  "la machine à laver ?"
+                ]
+              ],
+              "model": "Super ! Et la machine à laver ?"
+            }
+          ],
+          "followUp": "Toujours en panne, malheureusement.",
+          "followUpBy": "Léa",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_broken_s05",
+          "place": "Texto · Léa · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Léa, your flatmate, texts you. She says tu to you. Which French word means “light”?",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "La ___ de la cuisine ne marche pas, et le frigo est cassé."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "light",
+              "choices": [
+                "lumières",
+                "plafond",
+                "lumière"
+              ],
+              "correct": 2,
+              "why": [
+                "« La » is singular: « la lumière ».",
+                "« Plafond » means ceiling, and it's masculine.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_12_landlady",
+      "title": "Écrire à Mme Dumas",
+      "note": "Writing to your landlady: short and polite. « Désolée de vous déranger » means sorry to bother you (you're a woman, so « désolée »). « C'est urgent », « une photo » and « dès que possible » (as soon as possible).",
+      "items": [
+        {
+          "id": "sit_12_landlady_d01",
+          "place": "WhatsApp · Mme Dumas",
+          "cue": "You write to Mme Dumas, your landlady, on WhatsApp. She says vous to you. The heating has broken down again.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Bonjour, madame, désolée de vous déranger."
+            },
+            {
+              "speaker": "server",
+              "name": "Mme Dumas",
+              "text": "Bonjour, Robin. Un problème ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Mme Dumas ask?",
+              "choices": [
+                "If there's a problem",
+                "If you're at home"
+              ],
+              "correct": 0,
+              "miss": "Reread: « un problème ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes: the heating is broken down again.",
+              "bank": [
+                "Oui,",
+                "le chauffage",
+                "est",
+                "encore",
+                "en panne.",
+                "la chauffage",
+                "sont",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "le chauffage",
+                  "est",
+                  "encore",
+                  "en panne."
+                ]
+              ],
+              "model": "Oui, le chauffage est encore en panne."
+            }
+          ],
+          "followUp": "J'appelle le plombier.",
+          "newWords": [
+            "déranger"
+          ]
+        },
+        {
+          "id": "sit_12_landlady_d02",
+          "place": "WhatsApp · Mme Dumas",
+          "cue": "Mme Dumas, your landlady, writes about the leak in your bathroom. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Mme Dumas",
+              "text": "C'est urgent ? J'appelle le plombier dès que possible."
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, l'eau coule ___ ce matin."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "When will Mme Dumas call the plumber?",
+              "choices": [
+                "Tomorrow evening",
+                "As soon as possible"
+              ],
+              "correct": 1,
+              "miss": "Reread: « dès que possible »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "dans",
+                "depuis",
+                "vers"
+              ],
+              "correct": 1,
+              "why": [
+                "« Dans » looks ahead: « dans ce matin » isn't French.",
+                "",
+                "« Vers » goes with a clock time: « vers ce matin » isn't French."
+              ]
+            }
+          ],
+          "followUp": "D'accord. Je vous écris ce soir.",
+          "newWords": [
+            "urgent",
+            "dès que possible"
+          ]
+        },
+        {
+          "id": "sit_12_landlady_s01",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Construire",
+          "cue": "Write to Mme Dumas, your landlady, on WhatsApp. She says vous to you. You're a woman. The washing machine is out of order.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Greet her (madame), say sorry to bother her, and say the washing machine is out of order.",
+              "bank": [
+                "Bonjour,",
+                "madame,",
+                "désolée de",
+                "vous déranger,",
+                "la machine à laver",
+                "est en panne.",
+                "désolé de",
+                "te déranger,",
+                "sont en panne."
+              ],
+              "accepted": [
+                [
+                  "Bonjour,",
+                  "madame,",
+                  "désolée de",
+                  "vous déranger,",
+                  "la machine à laver",
+                  "est en panne."
+                ]
+              ],
+              "model": "Bonjour, madame, désolée de vous déranger, la machine à laver est en panne."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_12_landlady_d03",
+          "place": "WhatsApp · Mme Dumas",
+          "cue": "Mme Dumas, your landlady, writes about the leak. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Mme Dumas",
+              "text": "Vous pouvez m'envoyer une photo de la fuite ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, je vous ___ une photo tout de suite."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "envoies",
+                "envoyer",
+                "envoie"
+              ],
+              "correct": 2,
+              "why": [
+                "« Envoies » goes with « tu »: « je vous envoie ».",
+                "After « je vous », conjugate: « je vous envoie ».",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Mme Dumas want?",
+              "choices": [
+                "A photo of the leak",
+                "The plumber's number"
+              ],
+              "correct": 0,
+              "miss": "Reread: « m'envoyer une photo de la fuite »."
+            }
+          ],
+          "followUp": "Merci, Robin.",
+          "newWords": [
+            "photo"
+          ]
+        },
+        {
+          "id": "sit_12_landlady_d04",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you. It's Sunday, and there's a leak at home.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "On peut déranger Mme Dumas le dimanche ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « déranger » mean here?",
+              "choices": [
+                "to call",
+                "to bother",
+                "to pay"
+              ],
+              "correct": 1,
+              "why": [
+                "To call is « appeler ».",
+                "",
+                "To pay is « payer »."
+              ],
+              "target": "déranger"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes: it's urgent.",
+              "bank": [
+                "Oui,",
+                "c'est",
+                "urgent !",
+                "urgente !",
+                "c'est pas"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "c'est",
+                  "urgent !"
+                ]
+              ],
+              "model": "Oui, c'est urgent !"
+            }
+          ],
+          "followUp": "D'accord, je lui écris.",
+          "followUpBy": "Léa",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_landlady_s02",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "Write to Mme Dumas, your landlady, on WhatsApp. She says vous to you. Tell her there's an urgent problem: a leak.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "Salut ! Urgent : une fuite !",
+                "Bonjour, madame, c'est urgent : il y a une fuite.",
+                "Une fuite, t'as vu ? C'est urgent !"
+              ],
+              "correct": 1,
+              "why": [
+                "Good French, but « salut » is for friends.",
+                "",
+                "Good French, but « t'as vu » is too casual for your landlady."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_12_landlady_d05",
+          "place": "Appel · Mme Dumas",
+          "cue": "Clarify: Mme Dumas, your landlady, calls you about the leak. She says vous to you. The line is bad.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Mme Dumas",
+              "text": "Le plombier passe dès que possible. C'est urgent ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say sorry, you can't hear her well, and ask her to repeat.",
+              "bank": [
+                "Pardon,",
+                "je vous entends mal.",
+                "Vous pouvez répéter ?",
+                "je t'entends mal.",
+                "Tu peux répéter ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon,",
+                  "je vous entends mal.",
+                  "Vous pouvez répéter ?"
+                ],
+                [
+                  "Vous pouvez répéter ?",
+                  "Pardon,",
+                  "je vous entends mal."
+                ]
+              ],
+              "model": "Pardon, je vous entends mal. Vous pouvez répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « urgent » mean here?",
+              "choices": [
+                "finished",
+                "urgent",
+                "expensive"
+              ],
+              "correct": 1,
+              "why": [
+                "Finished is « fini ».",
+                "",
+                "Expensive is « cher »."
+              ],
+              "target": "urgent"
+            }
+          ],
+          "followUp": "Je répète : c'est urgent, oui ou non ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_landlady_d06",
+          "place": "WhatsApp · Mme Dumas",
+          "cue": "Mme Dumas, your landlady, writes on WhatsApp. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Mme Dumas",
+              "text": "Merci pour la photo. Le plombier passe demain."
+            },
+            {
+              "speaker": "learner",
+              "text": "Merci, madame, et désolée de vous ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "dérange",
+                "déranger",
+                "dérangé"
+              ],
+              "correct": 1,
+              "why": [
+                "After « désolée de », use the infinitive: « de vous déranger ».",
+                "",
+                "After « désolée de », use the infinitive, not the participle."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "When is the plumber coming?",
+              "choices": [
+                "Tomorrow",
+                "This evening"
+              ],
+              "correct": 0,
+              "miss": "Reread: « le plombier passe demain »."
+            }
+          ],
+          "followUp": "Pas de problème. Bonne journée.",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_landlady_s03",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Corriger",
+          "cue": "Write to Mme Dumas, your landlady, on WhatsApp. She says vous to you. You're a woman.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Madame, vraiment désolé de vous déranger, mais la chaudière est en panne.",
+              "error": {
+                "word": "désolé",
+                "fix": "désolée",
+                "choices": [
+                  "désolés",
+                  "désolée",
+                  "désolées"
+                ],
+                "why": "You're a woman, and you speak for yourself: « désolée »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_12_landlady_d07",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Mme Dumas a vu ta photo de la fuite ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, elle appelle le plombier ___ que possible."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « photo » mean here?",
+              "choices": [
+                "message",
+                "photo",
+                "call"
+              ],
+              "correct": 1,
+              "why": [
+                "A message is « un message ».",
+                "",
+                "A call is « un appel »."
+              ],
+              "target": "photo"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "des",
+                "de",
+                "dès"
+              ],
+              "correct": 2,
+              "why": [
+                "« Des » means some: the phrase is « dès que possible ».",
+                "« De que possible » isn't French: say « dès que possible ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Ah, super !",
+          "followUpBy": "Inès",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_landlady_d08",
+          "place": "WhatsApp · Mme Dumas",
+          "cue": "Mme Dumas, your landlady, writes on WhatsApp on a Friday evening about the kitchen light. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Mme Dumas",
+              "text": "C'est urgent, ou ça peut attendre lundi ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say it can wait until Monday, no problem.",
+              "bank": [
+                "Ça peut",
+                "attendre",
+                "lundi,",
+                "pas de problème.",
+                "Ça peux",
+                "attendu",
+                "c'est urgent."
+              ],
+              "accepted": [
+                [
+                  "Ça peut",
+                  "attendre",
+                  "lundi,",
+                  "pas de problème."
+                ]
+              ],
+              "model": "Ça peut attendre lundi, pas de problème."
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Mme Dumas ask?",
+              "choices": [
+                "If it's urgent or can wait until Monday",
+                "If you're at home on Monday"
+              ],
+              "correct": 0,
+              "miss": "Reread: « c'est urgent, ou ça peut attendre lundi ? »"
+            }
+          ],
+          "followUp": "Merci, Robin. Bon week-end.",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_landlady_s04",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You asked Léa this (tu). Now ask Mme Dumas, your landlady, who says vous to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Léa, tu peux passer à la maison dès que possible ?",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Ask Mme Dumas the same, with vous.",
+              "bank": [
+                "Madame,",
+                "vous pouvez",
+                "passer",
+                "à la maison",
+                "dès que possible ?",
+                "tu peux",
+                "Léa,",
+                "passes"
+              ],
+              "accepted": [
+                [
+                  "Madame,",
+                  "vous pouvez",
+                  "passer",
+                  "à la maison",
+                  "dès que possible ?"
+                ]
+              ],
+              "model": "Madame, vous pouvez passer à la maison dès que possible ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_12_landlady_d09",
+          "place": "Sur le palier",
+          "cue": "M. Ferrand, your neighbour, meets you on the landing. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Vous avez prévenu Mme Dumas pour la lumière ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, hier soir, avec une ___."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does M. Ferrand ask?",
+              "choices": [
+                "If you told Mme Dumas about the light",
+                "If you repaired the light"
+              ],
+              "correct": 0,
+              "miss": "Reread: « vous avez prévenu Mme Dumas ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "photos",
+                "photo",
+                "porte"
+              ],
+              "correct": 1,
+              "why": [
+                "« Une » is singular: « une photo ».",
+                "",
+                "« Porte » means door: it makes no sense here."
+              ]
+            }
+          ],
+          "followUp": "Très bien. Le soir, on ne voit rien !",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_landlady_d10",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Mme Dumas vient quand pour la machine à laver ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa want to know?",
+              "choices": [
+                "When Mme Dumas is coming",
+                "Why the washing machine is broken"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Mme Dumas vient quand ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say as soon as possible, you think.",
+              "bank": [
+                "Dès que possible,",
+                "je crois.",
+                "La prochaine fois,",
+                "tu sais."
+              ],
+              "accepted": [
+                [
+                  "Dès que possible,",
+                  "je crois."
+                ]
+              ],
+              "model": "Dès que possible, je crois."
+            }
+          ],
+          "followUp": "Bon, je vais chez Théo, alors.",
+          "followUpBy": "Léa",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_landlady_s05",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Write to Mme Dumas, your landlady, on WhatsApp. She says vous to you. Which French words mean “as soon as possible”?",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Bonjour, madame, vous pouvez appeler le plombier ___ ? C'est urgent."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "as soon as possible",
+              "choices": [
+                "la prochaine fois",
+                "dès que possible",
+                "sur place"
+              ],
+              "correct": 1,
+              "why": [
+                "« La prochaine fois » means next time.",
+                "",
+                "« Sur place » means here, on the spot."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_12_visit",
+      "title": "La visite du plombier",
+      "note": "Arranging access while you're out: « je suis absente » (I'm away; you're a woman, so « absente »), « la gardienne » (the building's caretaker) and « la boîte aux lettres » (the letterbox).",
+      "items": [
+        {
+          "id": "sit_12_visit_d01",
+          "place": "WhatsApp · Mme Dumas",
+          "cue": "Mme Dumas, your landlady, writes on WhatsApp. She says vous to you. Tomorrow you're at the office all day.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Mme Dumas",
+              "text": "Vous êtes absente demain ? Le plombier passe à dix heures."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "When is the plumber coming?",
+              "choices": [
+                "Today at ten",
+                "Tomorrow at ten"
+              ],
+              "correct": 1,
+              "miss": "Reread: « vous êtes absente demain ? Le plombier passe à dix heures »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes: you're at the office all day.",
+              "bank": [
+                "Oui,",
+                "je suis",
+                "au bureau",
+                "toute la journée.",
+                "tout la journée.",
+                "à la bureau",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "je suis",
+                  "au bureau",
+                  "toute la journée."
+                ]
+              ],
+              "model": "Oui, je suis au bureau toute la journée."
+            }
+          ],
+          "followUp": "D'accord. Je regarde ça.",
+          "newWords": [
+            "absente"
+          ]
+        },
+        {
+          "id": "sit_12_visit_d02",
+          "place": "WhatsApp · Mme Dumas",
+          "cue": "Mme Dumas, your landlady, writes on WhatsApp. She says vous to you. You won't be home when the plumber comes.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Mme Dumas",
+              "text": "Pas de problème, la gardienne peut ouvrir au plombier."
+            },
+            {
+              "speaker": "learner",
+              "text": "Merci ! Je lui ___ mes clés ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "Who will let the plumber in?",
+              "choices": [
+                "The caretaker",
+                "M. Ferrand"
+              ],
+              "correct": 0,
+              "miss": "Reread: « la gardienne peut ouvrir au plombier »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "laisses",
+                "laisser",
+                "laisse"
+              ],
+              "correct": 2,
+              "why": [
+                "« Laisses » goes with « tu »: « je lui laisse ».",
+                "After « je lui », conjugate: « je lui laisse ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Oui, c'est parfait.",
+          "newWords": [
+            "gardienne"
+          ]
+        },
+        {
+          "id": "sit_12_visit_s01",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Construire",
+          "cue": "Write to Mme Dumas, your landlady, on WhatsApp. She says vous to you. You're a woman. You're away tomorrow, when the plumber comes.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say you're away tomorrow, and ask if the caretaker can open the door for the plumber.",
+              "bank": [
+                "Je suis",
+                "absente",
+                "demain,",
+                "la gardienne",
+                "peut ouvrir",
+                "au plombier ?",
+                "absent",
+                "peux ouvrir",
+                "le gardienne"
+              ],
+              "accepted": [
+                [
+                  "Je suis",
+                  "absente",
+                  "demain,",
+                  "la gardienne",
+                  "peut ouvrir",
+                  "au plombier ?"
+                ]
+              ],
+              "model": "Je suis absente demain, la gardienne peut ouvrir au plombier ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_12_visit_d03",
+          "place": "Sur le palier",
+          "cue": "The caretaker of your building stops you on the landing. She says vous to you. The plumber comes tomorrow while you're out.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Gardienne",
+              "voice": "female",
+              "text": "Vous laissez la clé dans la boîte aux lettres ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "D'accord. Je vous ___ ce soir."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "appelles",
+                "appelle",
+                "appeler"
+              ],
+              "correct": 1,
+              "why": [
+                "« Appelles » goes with « tu »: « je vous appelle ».",
+                "",
+                "After « je vous », conjugate: « je vous appelle »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "Where should you leave the key?",
+              "choices": [
+                "With M. Ferrand",
+                "In the letterbox"
+              ],
+              "correct": 1,
+              "miss": "Reread: « dans la boîte aux lettres »."
+            }
+          ],
+          "followUp": "Parfait, madame. À demain !",
+          "newWords": [
+            "boîte aux lettres"
+          ]
+        },
+        {
+          "id": "sit_12_visit_d04",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you. You're a woman.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Demain, la gardienne ouvre au plombier ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « gardienne » mean here?",
+              "choices": [
+                "neighbour",
+                "caretaker",
+                "landlady"
+              ],
+              "correct": 1,
+              "why": [
+                "A neighbour is « une voisine ».",
+                "",
+                "The landlady is « la propriétaire »: Mme Dumas."
+              ],
+              "target": "gardienne"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes: you're away tomorrow.",
+              "bank": [
+                "Oui,",
+                "je suis",
+                "absente",
+                "demain.",
+                "absent",
+                "tu es",
+                "hier."
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "je suis",
+                  "absente",
+                  "demain."
+                ]
+              ],
+              "model": "Oui, je suis absente demain."
+            }
+          ],
+          "followUp": "D'accord ! Moi, je suis là le soir.",
+          "followUpBy": "Léa",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_visit_s02",
+          "place": "Sur le palier · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "You meet the caretaker of your building on the landing. She says vous to you. Tell her where the key is.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "Salut ! La clé, c'est dans la boîte aux lettres !",
+                "Ouais, la clé est dans la boîte aux lettres !",
+                "Bonjour, madame, la clé est dans la boîte aux lettres."
+              ],
+              "correct": 2,
+              "why": [
+                "Good French, but « salut » is for friends.",
+                "Good French, but « ouais » is too casual for the caretaker.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_12_visit_d05",
+          "place": "Appel · plombier",
+          "cue": "Clarify: the plumber calls you. He says vous to you. The line is bad.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Plombier",
+              "text": "Allô ? Vous êtes absente demain ? Et la clé ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say sorry, you can't hear him well, and ask him to repeat.",
+              "bank": [
+                "Pardon,",
+                "je vous entends mal.",
+                "Vous pouvez répéter ?",
+                "je t'entends mal.",
+                "Tu peux répéter ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon,",
+                  "je vous entends mal.",
+                  "Vous pouvez répéter ?"
+                ],
+                [
+                  "Vous pouvez répéter ?",
+                  "Pardon,",
+                  "je vous entends mal."
+                ]
+              ],
+              "model": "Pardon, je vous entends mal. Vous pouvez répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « absente » mean here?",
+              "choices": [
+                "late",
+                "away, not in",
+                "busy"
+              ],
+              "correct": 1,
+              "why": [
+                "Late is « en retard ».",
+                "",
+                "Busy is « occupée »."
+              ],
+              "target": "absente"
+            }
+          ],
+          "followUp": "Je répète : vous êtes absente ? Et la clé ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_visit_d06",
+          "place": "Sur le palier",
+          "cue": "The caretaker of your building meets you on the landing. She says vous to you. You were out today.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Gardienne",
+              "voice": "female",
+              "text": "Le plombier est passé, madame. Tout est réparé !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Merci ! Vous êtes très ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "gentil",
+                "gentilles",
+                "gentille"
+              ],
+              "correct": 2,
+              "why": [
+                "The caretaker is a woman: « gentille ».",
+                "« Vous » is one woman here, not several: « gentille ».",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What happened?",
+              "choices": [
+                "The plumber fixed everything",
+                "The plumber didn't come"
+              ],
+              "correct": 0,
+              "miss": "Reread: « le plombier est passé. Tout est réparé ! »"
+            }
+          ],
+          "followUp": "De rien, madame. Bonne soirée !",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_visit_s03",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Corriger",
+          "cue": "Write to Mme Dumas, your landlady, on WhatsApp. She says vous to you. You're a woman.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Je suis absent demain, la clé est dans la boîte aux lettres.",
+              "error": {
+                "word": "absent",
+                "fix": "absente",
+                "choices": [
+                  "absents",
+                  "absente",
+                  "absentes"
+                ],
+                "why": "You're a woman: « je suis absente »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_12_visit_d07",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. She says tu to you. The plumber is coming to your flat tomorrow.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Tu laisses ta clé dans la boîte aux lettres ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, la gardienne ___ ouvrir au plombier."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « boîte aux lettres » mean here?",
+              "choices": [
+                "key ring",
+                "letterbox",
+                "doormat"
+              ],
+              "correct": 1,
+              "why": [
+                "A key ring is « un porte-clés ».",
+                "",
+                "A doormat is « un paillasson »."
+              ],
+              "target": "boîte aux lettres"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "peux",
+                "pouvoir",
+                "peut"
+              ],
+              "correct": 2,
+              "why": [
+                "« Peux » goes with « je » or « tu »: « elle peut ».",
+                "Conjugate « pouvoir »: « la gardienne peut ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Ah, top !",
+          "followUpBy": "Inès",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_visit_d08",
+          "place": "WhatsApp · Mme Dumas",
+          "cue": "Mme Dumas, your landlady, writes on WhatsApp. She says vous to you. You're away until Friday.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Mme Dumas",
+              "text": "La gardienne a la clé. Vous êtes absente jusqu'à quand ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say: until Friday (madame).",
+              "bank": [
+                "Jusqu'à",
+                "vendredi,",
+                "madame.",
+                "Depuis",
+                "samedi,",
+                "monsieur."
+              ],
+              "accepted": [
+                [
+                  "Jusqu'à",
+                  "vendredi,",
+                  "madame."
+                ]
+              ],
+              "model": "Jusqu'à vendredi, madame."
+            },
+            {
+              "type": "comprehend",
+              "prompt": "Who has the key?",
+              "choices": [
+                "Mme Dumas",
+                "The caretaker"
+              ],
+              "correct": 1,
+              "miss": "Reread: « la gardienne a la clé »."
+            }
+          ],
+          "followUp": "Très bien, merci.",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_visit_s04",
+          "place": "Texto · Léa · phrase seule",
+          "standalone": "Transformer",
+          "cue": "Léa, your flatmate, texts you. She says tu to you. Say what you're going to do, with « aller » + infinitive.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Je laisse la clé dans la boîte aux lettres demain matin.",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it with « je vais » + infinitive.",
+              "bank": [
+                "Je vais",
+                "laisser",
+                "la clé",
+                "dans la boîte aux lettres",
+                "demain matin.",
+                "laisse",
+                "laissé",
+                "Je vas"
+              ],
+              "accepted": [
+                [
+                  "Je vais",
+                  "laisser",
+                  "la clé",
+                  "dans la boîte aux lettres",
+                  "demain matin."
+                ]
+              ],
+              "model": "Je vais laisser la clé dans la boîte aux lettres demain matin."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_12_visit_d09",
+          "place": "Sur le palier",
+          "cue": "M. Ferrand, your neighbour, meets you on the landing. He says vous to you. He's watering your plants this weekend.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Vous êtes absente ce week-end, madame ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui. Et mes clés ___ dans la boîte aux lettres."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does M. Ferrand ask?",
+              "choices": [
+                "If you're away this weekend",
+                "If you're free this weekend"
+              ],
+              "correct": 0,
+              "miss": "Reread: « vous êtes absente ce week-end ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "est",
+                "ont",
+                "sont"
+              ],
+              "correct": 2,
+              "why": [
+                "« Clés » is plural: « mes clés sont ».",
+                "« Ont » is « avoir »: here you need « être », « mes clés sont ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Parfait. Bon week-end, madame !",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_visit_d10",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you. Today you were at the office; the caretaker let the plumber in.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Le plombier est venu ? C'est réparé ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa want to know?",
+              "choices": [
+                "If the plumber came and fixed it",
+                "When the plumber is coming"
+              ],
+              "correct": 0,
+              "miss": "Reread: « le plombier est venu ? C'est réparé ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes: the caretaker was there.",
+              "bank": [
+                "Oui,",
+                "la gardienne",
+                "était",
+                "là.",
+                "étais",
+                "le gardienne",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "la gardienne",
+                  "était",
+                  "là."
+                ]
+              ],
+              "model": "Oui, la gardienne était là."
+            }
+          ],
+          "followUp": "Super ! Enfin !",
+          "followUpBy": "Léa",
+          "newWords": []
+        },
+        {
+          "id": "sit_12_visit_s05",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Write to Mme Dumas, your landlady, on WhatsApp. She says vous to you. You're a woman. Which French word means “caretaker”?",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Je suis absente demain, mais la ___ peut ouvrir au plombier."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "caretaker",
+              "choices": [
+                "vendeuse",
+                "gardienne",
+                "pharmacie"
+              ],
+              "correct": 1,
+              "why": [
+                "« Vendeuse » means shop assistant.",
+                "",
+                "« Pharmacie » is a place, not a person."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    }
+  ]
+}

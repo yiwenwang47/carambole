@@ -1,0 +1,5372 @@
+{
+  "id": "sit_13",
+  "title": "Être en retard, annuler",
+  "arc": "Les imprévus",
+  "goal": "Say you're late, apologise and explain, cancel or postpone, and propose a new plan.",
+  "elements": [
+    {
+      "id": "sit_13_late",
+      "title": "Prévenir de son retard",
+      "note": "Warn people you're running late: « dans un quart d'heure » (in a quarter of an hour), « commencez sans moi » (start without me, to a group: vous) and « il y a des bouchons » (there are traffic jams). « En retard » and « j'arrive » come back.",
+      "items": [
+        {
+          "id": "sit_13_late_d01",
+          "place": "Appel · Inès",
+          "cue": "Inès, your colleague, calls you. You're meeting her for lunch. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Allô, Robin ? Tu arrives dans un quart d'heure ?",
+              "name": "Inès"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès ask?",
+              "choices": [
+                "If you'll be there in a quarter of an hour",
+                "If you're already at the restaurant"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Tu arrives dans un quart d'heure ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, sorry, you're late.",
+              "bank": [
+                "Oui,",
+                "désolée,",
+                "je suis",
+                "en retard !",
+                "désolé,",
+                "tu es"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "désolée,",
+                  "je suis",
+                  "en retard !"
+                ]
+              ],
+              "model": "Oui, désolée, je suis en retard !"
+            }
+          ],
+          "followUp": "Pas grave, je t'attends au restaurant.",
+          "newWords": [
+            "quart d'heure"
+          ]
+        },
+        {
+          "id": "sit_13_late_d02",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat « Les copains ». You're on your way to the cinema. Answer the whole group (vous = you all).",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Le film commence ! T'es où, Robin ?",
+              "name": "Théo"
+            },
+            {
+              "speaker": "learner",
+              "text": "Commencez sans moi, j'arrive dans un quart ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo say?",
+              "choices": [
+                "The film is starting",
+                "The film is sold out"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Le film commence ! »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "heure",
+                "d'heures",
+                "d'heure"
+              ],
+              "correct": 2,
+              "why": [
+                "Not French: you need « d' »: « un quart d'heure ».",
+                "One hour, so singular: « un quart d'heure ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "D'accord, on commence ! À tout à l'heure !",
+          "followUpBy": "Théo",
+          "newWords": [
+            "commencez sans moi"
+          ]
+        },
+        {
+          "id": "sit_13_late_s01",
+          "place": "Les copains · groupe · phrase seule",
+          "standalone": "Construire",
+          "cue": "Write to the group chat « Les copains » (vous = you all). You're a woman. Say sorry, you're late, start without you, you'll be there in a quarter of an hour.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Le film commence dans cinq minutes ! T'es où, Robin ?",
+              "name": "Théo"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Write your message to the group.",
+              "bank": [
+                "Désolée,",
+                "je suis",
+                "en retard,",
+                "commencez sans moi,",
+                "j'arrive",
+                "dans un",
+                "quart d'heure !",
+                "Désolé,",
+                "commence sans moi,",
+                "dans une"
+              ],
+              "accepted": [
+                [
+                  "Désolée,",
+                  "je suis",
+                  "en retard,",
+                  "commencez sans moi,",
+                  "j'arrive",
+                  "dans un",
+                  "quart d'heure !"
+                ],
+                [
+                  "Désolée,",
+                  "commencez sans moi,",
+                  "je suis",
+                  "en retard,",
+                  "j'arrive",
+                  "dans un",
+                  "quart d'heure !"
+                ]
+              ],
+              "model": "Désolée, je suis en retard, commencez sans moi, j'arrive dans un quart d'heure !"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_13_late_d03",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. You're on your way home in Théo's car. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Tu es où ? Le dîner est prêt !",
+              "name": "Léa"
+            },
+            {
+              "speaker": "learner",
+              "text": "Dans la voiture de Théo. Il y a ___ bouchons !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "de",
+                "des",
+                "du"
+              ],
+              "correct": 1,
+              "why": [
+                "After « il y a », a plural noun takes « des »: « il y a des bouchons ».",
+                "",
+                "« Du » is for one masculine thing. « Bouchons » is plural: « des »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "Why aren't you home yet?",
+              "choices": [
+                "Théo's car has broken down",
+                "There are traffic jams"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Il y a des bouchons ! » Bouchons are traffic jams."
+            }
+          ],
+          "followUp": "Oh non ! Bon, je t'attends.",
+          "followUpBy": "Léa",
+          "newWords": [
+            "bouchons"
+          ]
+        },
+        {
+          "id": "sit_13_late_d04",
+          "place": "Texto · Karim",
+          "cue": "Karim, your friend from the café, texts you. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "On se voit dans un quart d'heure au café ?",
+              "name": "Karim"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « quart d'heure » mean here?",
+              "choices": [
+                "half an hour",
+                "quarter of an hour",
+                "quarter past"
+              ],
+              "correct": 1,
+              "why": [
+                "No: half an hour is « une demi-heure ». A « quart » is a quarter.",
+                "",
+                "No: quarter past is « et quart ». « Un quart d'heure » is fifteen minutes."
+              ],
+              "target": "quart d'heure"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say: rather twenty minutes, sorry!",
+              "bank": [
+                "Plutôt",
+                "vingt",
+                "minutes.",
+                "Désolée !",
+                "Désolé !",
+                "minute.",
+                "Plus"
+              ],
+              "accepted": [
+                [
+                  "Plutôt",
+                  "vingt",
+                  "minutes.",
+                  "Désolée !"
+                ]
+              ],
+              "model": "Plutôt vingt minutes. Désolée !"
+            }
+          ],
+          "followUp": "Pas de souci, je t'attends !",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_late_s02",
+          "place": "Appel · responsable · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "You call your manager. You say vous to each other. Say you'll be a quarter of an hour late.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "Salut ! Un quart d'heure de retard, bref, à tout à l'heure !",
+                "Ouais, je suis en retard, commencez sans moi !",
+                "Bonjour, je suis désolée, je vais avoir un quart d'heure de retard."
+              ],
+              "correct": 2,
+              "why": [
+                "« Salut » and « bref » are for friends. Your manager says vous to you.",
+                "« Ouais » is too casual for your manager.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_13_late_d05",
+          "place": "Appel · Théo",
+          "cue": "Clarify: Théo, your friend, calls you. The line is bad. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Il y a des bouchons ? On commence sans toi ?",
+              "name": "Théo"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say you can't hear him well, and ask him to repeat.",
+              "bank": [
+                "Je t'entends mal.",
+                "Tu peux",
+                "répéter ?",
+                "Je vous entends mal.",
+                "Vous pouvez"
+              ],
+              "accepted": [
+                [
+                  "Je t'entends mal.",
+                  "Tu peux",
+                  "répéter ?"
+                ],
+                [
+                  "Tu peux",
+                  "répéter ?",
+                  "Je t'entends mal."
+                ]
+              ],
+              "model": "Je t'entends mal. Tu peux répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « bouchons » mean here?",
+              "choices": [
+                "roadworks",
+                "traffic jams",
+                "corks"
+              ],
+              "correct": 1,
+              "why": [
+                "No: roadworks are « des travaux ».",
+                "",
+                "A « bouchon » is also a cork, but on the road « des bouchons » are traffic jams."
+              ],
+              "target": "bouchons"
+            }
+          ],
+          "followUp": "Des bouchons ? On commence sans toi, alors ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_late_d06",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat « Les copains ». Answer the whole group (vous = you all).",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "On est au restaurant. Tu es où, Robin ?",
+              "name": "Théo"
+            },
+            {
+              "speaker": "learner",
+              "text": "Désolée ! ___ sans moi."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "Commence",
+                "Commencer",
+                "Commencez"
+              ],
+              "correct": 2,
+              "why": [
+                "« Commence » is for one friend (tu). You're telling the whole group: « Commencez ».",
+                "The infinitive doesn't tell people to do something: « Commencez sans moi ».",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "Where are your friends?",
+              "choices": [
+                "At the restaurant",
+                "At the cinema"
+              ],
+              "correct": 0,
+              "miss": "Reread: « On est au restaurant. »"
+            }
+          ],
+          "followUp": "D'accord ! À tout à l'heure, alors.",
+          "followUpBy": "Théo",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_late_s03",
+          "place": "Les copains · groupe · phrase seule",
+          "standalone": "Corriger",
+          "cue": "You write to the group chat « Les copains » (vous = you all).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Il y a des bouchons, commencez sans moi, j'arrive dans une quart d'heure.",
+              "error": {
+                "word": "une",
+                "fix": "un",
+                "choices": [
+                  "des",
+                  "un",
+                  "la"
+                ],
+                "why": "« Quart » is masculine: « un quart d'heure »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_13_late_d07",
+          "place": "Les copains · groupe",
+          "cue": "You write to the group chat « Les copains » (vous = you all). Léa, your flatmate, answers. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Commencez sans moi, il y a des bouchons."
+            },
+            {
+              "speaker": "server",
+              "text": "D'accord, on t'attend ___ le café !",
+              "name": "Léa"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « commencez sans moi » mean here?",
+              "choices": [
+                "wait for me",
+                "come without me",
+                "start without me"
+              ],
+              "correct": 2,
+              "why": [
+                "No: wait for me is « attendez-moi ».",
+                "No: « venez » is come. « Commencez » is start.",
+                ""
+              ],
+              "target": "commencez sans moi"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "par",
+                "pour",
+                "sur"
+              ],
+              "correct": 1,
+              "why": [
+                "« Par » means by. They're waiting for you for coffee: « pour le café ».",
+                "",
+                "« Sur » means on. They're waiting for you for coffee: « pour le café »."
+              ]
+            }
+          ],
+          "followUp": "À tout à l'heure, Robin !",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_late_d08",
+          "place": "WhatsApp · Mme Dumas",
+          "cue": "Mme Dumas, your landlady, writes on WhatsApp. You have an appointment with her. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Vous arrivez bientôt ? Je vous attends, madame.",
+              "name": "Mme Dumas"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Answer: in a quarter of an hour, there are traffic jams.",
+              "bank": [
+                "Dans un",
+                "quart d'heure,",
+                "il y a",
+                "des bouchons.",
+                "dans une",
+                "de bouchons.",
+                "il est"
+              ],
+              "accepted": [
+                [
+                  "Dans un",
+                  "quart d'heure,",
+                  "il y a",
+                  "des bouchons."
+                ]
+              ],
+              "model": "Dans un quart d'heure, il y a des bouchons."
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Mme Dumas want to know?",
+              "choices": [
+                "If you're at home",
+                "If you'll be there soon"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Vous arrivez bientôt ? »"
+            }
+          ],
+          "followUp": "Pas de problème. À tout à l'heure.",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_late_s04",
+          "place": "Les copains · groupe · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You told Léa, your flatmate (tu). Now tell the whole group chat (vous = you all).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Commence sans moi, j'arrive dans un quart d'heure.",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it for the whole group (vous).",
+              "bank": [
+                "Commencez sans moi,",
+                "j'arrive",
+                "dans un",
+                "quart d'heure.",
+                "Commence sans moi,",
+                "Commencer sans moi,",
+                "arrivez"
+              ],
+              "accepted": [
+                [
+                  "Commencez sans moi,",
+                  "j'arrive",
+                  "dans un",
+                  "quart d'heure."
+                ]
+              ],
+              "model": "Commencez sans moi, j'arrive dans un quart d'heure."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_13_late_d09",
+          "place": "Texto · Karim",
+          "cue": "Karim, your friend from the café, texts you. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Tu es encore dans les bouchons ?",
+              "name": "Karim"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui ! J'arrive dans ___ quart d'heure."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Karim ask?",
+              "choices": [
+                "If you're at the café",
+                "If you're still in traffic"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Tu es encore dans les bouchons ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "une",
+                "des",
+                "un"
+              ],
+              "correct": 2,
+              "why": [
+                "« Quart » is masculine: « un quart d'heure ».",
+                "One quarter of an hour, so singular: « un ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "D'accord, ton café est prêt !",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_late_d10",
+          "place": "Appel · Inès",
+          "cue": "Inès, your colleague, calls you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Il y a des bouchons ? Tu arrives quand ?",
+              "name": "Inès"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès want to know?",
+              "choices": [
+                "When you'll arrive",
+                "Where you are"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Tu arrives quand ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say: in a quarter of an hour, sorry!",
+              "bank": [
+                "Dans un",
+                "quart d'heure,",
+                "désolée !",
+                "désolé !",
+                "Dans une",
+                "quart d'heures,"
+              ],
+              "accepted": [
+                [
+                  "Dans un",
+                  "quart d'heure,",
+                  "désolée !"
+                ]
+              ],
+              "model": "Dans un quart d'heure, désolée !"
+            }
+          ],
+          "followUp": "Pas grave ! La réunion commence à dix heures.",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_late_s05",
+          "place": "Texto · Inès · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Which French word means “traffic jams”? You text Inès, your colleague (tu).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Désolée, il y a des ___, j'arrive dans un quart d'heure !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "traffic jams",
+              "choices": [
+                "billets",
+                "bouchons",
+                "bruits"
+              ],
+              "correct": 1,
+              "why": [
+                "« Billets » are (train) tickets.",
+                "",
+                "« Bruits » are noises."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_13_sorry",
+      "title": "S'excuser",
+      "note": "Say sorry and accept an apology: « je m'excuse » (I'm sorry, everyday French next to « excusez-moi »), « ce n'est pas ma faute » (it's not my fault) and the promise « promis ! ». Robin is « désolée »: feminine.",
+      "items": [
+        {
+          "id": "sit_13_sorry_d01",
+          "place": "Dans la rue",
+          "cue": "Karim, your friend, meets you outside the cinema. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Je m'excuse, je suis en retard !",
+              "name": "Karim"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Karim say?",
+              "choices": [
+                "He's sorry he's late",
+                "He can't come tonight"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Je m'excuse, je suis en retard ! »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say never mind, the film hasn't started.",
+              "bank": [
+                "Pas grave,",
+                "le film",
+                "n'a pas",
+                "commencé.",
+                "commencer.",
+                "n'est pas",
+                "la film"
+              ],
+              "accepted": [
+                [
+                  "Pas grave,",
+                  "le film",
+                  "n'a pas",
+                  "commencé."
+                ]
+              ],
+              "model": "Pas grave, le film n'a pas commencé."
+            }
+          ],
+          "followUp": "Ouf ! Alors, on y va ?",
+          "newWords": [
+            "je m'excuse"
+          ]
+        },
+        {
+          "id": "sit_13_sorry_d02",
+          "place": "Au bureau",
+          "cue": "Inès, your colleague, sees you arrive at the office. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Encore en retard, Robin ?",
+              "name": "Inès"
+            },
+            {
+              "speaker": "learner",
+              "text": "Ce n'est pas ma faute, il y a ___ grève !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès say?",
+              "choices": [
+                "You're early today",
+                "You're late again"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Encore en retard ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "un",
+                "une",
+                "des"
+              ],
+              "correct": 1,
+              "why": [
+                "« Grève » is feminine: « une grève ».",
+                "",
+                "« Des » is plural, but « grève » is singular here: « une grève »."
+              ]
+            }
+          ],
+          "followUp": "Ah oui, la grève ! Pas de souci.",
+          "newWords": [
+            "faute"
+          ]
+        },
+        {
+          "id": "sit_13_sorry_s01",
+          "place": "Au bureau · phrase seule",
+          "standalone": "Construire",
+          "cue": "Your manager is waiting for you at the office. You say vous to each other. Apologise for being late: it's not your fault, there's a strike.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Bonjour, Robin. Vous êtes en retard, la réunion a commencé.",
+              "role": "Responsable",
+              "voice": "female"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Apologise and explain.",
+              "bank": [
+                "Je m'excuse",
+                "pour le",
+                "retard,",
+                "ce n'est pas",
+                "ma faute,",
+                "il y a",
+                "grève.",
+                "mon faute,",
+                "pour la",
+                "c'est"
+              ],
+              "accepted": [
+                [
+                  "Je m'excuse",
+                  "pour le",
+                  "retard,",
+                  "ce n'est pas",
+                  "ma faute,",
+                  "il y a",
+                  "grève."
+                ]
+              ],
+              "model": "Je m'excuse pour le retard, ce n'est pas ma faute, il y a grève."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_13_sorry_d03",
+          "place": "À l'appart",
+          "cue": "Léa, your flatmate, has been waiting for you at home. She says tu to you. You're a woman.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Tu es encore en retard ! Tu as promis !",
+              "name": "Léa"
+            },
+            {
+              "speaker": "learner",
+              "text": "Je sais, je suis ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "désolé",
+                "désolés",
+                "désolée"
+              ],
+              "correct": 2,
+              "why": [
+                "You're a woman: « désolée ».",
+                "« Désolés » is plural. You're one woman: « désolée ».",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa remind you?",
+              "choices": [
+                "You promised (not to be late)",
+                "You forgot to call her"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Tu as promis ! »"
+            }
+          ],
+          "followUp": "Bon, pas grave. Le dîner est prêt !",
+          "newWords": [
+            "promis"
+          ]
+        },
+        {
+          "id": "sit_13_sorry_d04",
+          "place": "Texto · Théo",
+          "cue": "Théo, your friend, texts you. You and Inès are waiting for him at the café. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Je m'excuse, j'arrive dans dix minutes !",
+              "name": "Théo"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « je m'excuse » mean here?",
+              "choices": [
+                "I'm on my way",
+                "I'm sorry",
+                "I'm leaving"
+              ],
+              "correct": 1,
+              "why": [
+                "No: that's « j'arrive ». « Je m'excuse » means I'm sorry.",
+                "",
+                "No: I'm leaving is « je pars »."
+              ],
+              "target": "je m'excuse"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say it's no problem: you're all waiting for him.",
+              "bank": [
+                "Pas de problème,",
+                "Pas de souci,",
+                "on",
+                "t'attend !",
+                "t'attends !",
+                "nous"
+              ],
+              "accepted": [
+                [
+                  "Pas de problème,",
+                  "on",
+                  "t'attend !"
+                ],
+                [
+                  "Pas de souci,",
+                  "on",
+                  "t'attend !"
+                ]
+              ],
+              "model": "Pas de problème, on t'attend !"
+            }
+          ],
+          "followUp": "Top, merci ! À tout à l'heure !",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_sorry_s02",
+          "place": "Sur le palier · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "M. Ferrand, your neighbour, has been waiting for you on the landing. He says vous to you. Apologise.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "Salut ! Je suis en retard, mais c'est pas grave !",
+                "Je m'excuse, monsieur, je suis en retard.",
+                "Ouais, en retard, c'est pas ma faute !"
+              ],
+              "correct": 1,
+              "why": [
+                "« Salut » is for friends, and « c'est pas grave » brushes him off. M. Ferrand says vous to you.",
+                "",
+                "« Ouais » is too casual for M. Ferrand, and it doesn't say sorry."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_13_sorry_d05",
+          "place": "Au café",
+          "cue": "Clarify: you're at a noisy café with Inès, your colleague. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Ce n'est pas ta faute, tu sais !",
+              "name": "Inès"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say sorry, and ask her to repeat.",
+              "bank": [
+                "Pardon ?",
+                "Tu peux",
+                "répéter ?",
+                "Vous pouvez",
+                "répètes ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon ?",
+                  "Tu peux",
+                  "répéter ?"
+                ],
+                [
+                  "Tu peux",
+                  "répéter ?"
+                ]
+              ],
+              "model": "Pardon ? Tu peux répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « faute » mean here?",
+              "choices": [
+                "time",
+                "need",
+                "fault"
+              ],
+              "correct": 2,
+              "why": [
+                "No: a time (once, twice) is « fois ».",
+                "No: « il faut » means you need. « Faute » means fault.",
+                ""
+              ],
+              "target": "faute"
+            }
+          ],
+          "followUp": "Ce n'est pas ta faute ! Il y a grève.",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_sorry_d06",
+          "place": "Texto · Karim",
+          "cue": "Karim, your friend from the café, texts you. You were late today. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Demain, tu n'es pas en retard ?",
+              "name": "Karim"
+            },
+            {
+              "speaker": "learner",
+              "text": "Non, c'est ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "promis",
+                "promets",
+                "promise"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Promets » is a verb form (je promets). After « c'est », say « promis ».",
+                "After « c'est », « promis » doesn't change: « c'est promis »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Karim want?",
+              "choices": [
+                "You to come early today",
+                "You to be on time tomorrow"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Demain, tu n'es pas en retard ? »"
+            }
+          ],
+          "followUp": "Super ! Ton café t'attend à huit heures.",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_sorry_s03",
+          "place": "Texto · Théo · phrase seule",
+          "standalone": "Corriger",
+          "cue": "You text Théo, your friend (tu). You're late.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Je m'excuse, mais ce n'est pas mon faute, il y a des bouchons.",
+              "error": {
+                "word": "mon",
+                "fix": "ma",
+                "choices": [
+                  "mes",
+                  "me",
+                  "ma"
+                ],
+                "why": "« Faute » is feminine: « ma faute »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_13_sorry_d07",
+          "place": "À l'appart",
+          "cue": "Léa, your flatmate, says tu to you. You were late tonight because of the strike.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Samedi, tu n'es pas en retard, promis ?",
+              "name": "Léa"
+            },
+            {
+              "speaker": "learner",
+              "text": "Promis ! Et ce soir, ce n'est pas ma ___."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « promis » mean here?",
+              "choices": [
+                "maybe",
+                "promised, I promise",
+                "of course"
+              ],
+              "correct": 1,
+              "why": [
+                "No: maybe is « peut-être ».",
+                "",
+                "No: of course is « bien sûr »."
+              ],
+              "target": "promis"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "faut",
+                "fautes",
+                "faute"
+              ],
+              "correct": 2,
+              "why": [
+                "« Faut » is from « il faut » (you have to). The noun is « faute ».",
+                "One fault, so singular: « ma faute ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Je sais, je sais. C'est la grève !",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_sorry_d08",
+          "place": "WhatsApp · Mme Dumas",
+          "cue": "Mme Dumas, your landlady, writes on WhatsApp. You're late for an appointment at the flat. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Le plombier vous attend depuis dix minutes.",
+              "name": "Mme Dumas"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Apologise to her, and say there are traffic jams.",
+              "bank": [
+                "Je m'excuse,",
+                "madame,",
+                "il y a",
+                "des bouchons !",
+                "de bouchons !",
+                "il est"
+              ],
+              "accepted": [
+                [
+                  "Je m'excuse,",
+                  "madame,",
+                  "il y a",
+                  "des bouchons !"
+                ],
+                [
+                  "Je m'excuse,",
+                  "il y a",
+                  "des bouchons !"
+                ]
+              ],
+              "model": "Je m'excuse, madame, il y a des bouchons !"
+            },
+            {
+              "type": "comprehend",
+              "prompt": "Who is waiting for you?",
+              "choices": [
+                "Mme Dumas",
+                "The plumber"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Le plombier vous attend »"
+            }
+          ],
+          "followUp": "D'accord, je lui dis. Merci.",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_sorry_s04",
+          "place": "Au bureau · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You said this to Léa, your flatmate (tu). Now say it to your manager (vous).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Excuse-moi, je suis en retard, ce n'est pas ma faute !",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it with vous.",
+              "bank": [
+                "Excusez-moi,",
+                "je suis",
+                "en retard,",
+                "ce n'est pas",
+                "ma faute !",
+                "Excuse-moi,",
+                "mon faute !",
+                "tu es"
+              ],
+              "accepted": [
+                [
+                  "Excusez-moi,",
+                  "je suis",
+                  "en retard,",
+                  "ce n'est pas",
+                  "ma faute !"
+                ]
+              ],
+              "model": "Excusez-moi, je suis en retard, ce n'est pas ma faute !"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_13_sorry_d09",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat « Les copains ». He's teasing you. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Robin est encore en retard !",
+              "name": "Théo"
+            },
+            {
+              "speaker": "learner",
+              "text": "Ce n'est pas ma ___, il y a grève !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo say about you?",
+              "choices": [
+                "You're late again",
+                "You're not coming"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Robin est encore en retard ! »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "fois",
+                "faute",
+                "faut"
+              ],
+              "correct": 1,
+              "why": [
+                "« Fois » means time, as in once or twice.",
+                "",
+                "« Faut » is from « il faut » (you have to). The noun is « faute »."
+              ]
+            }
+          ],
+          "followUp": "Ah oui, la grève… On t'attend !",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_sorry_d10",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you in the evening. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Demain, réunion à huit heures. Pas de retard !",
+              "name": "Inès"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "When is the meeting?",
+              "choices": [
+                "Tonight at eight",
+                "Tomorrow at eight"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Demain, réunion à huit heures. »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Promise: you'll be there.",
+              "bank": [
+                "Promis,",
+                "je serai",
+                "là !",
+                "je seras",
+                "Promise,",
+                "tu seras"
+              ],
+              "accepted": [
+                [
+                  "Promis,",
+                  "je serai",
+                  "là !"
+                ]
+              ],
+              "model": "Promis, je serai là !"
+            }
+          ],
+          "followUp": "Top ! À demain, alors.",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_sorry_s05",
+          "place": "Appel · Mme Dumas · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Which French words mean “I'm sorry, I apologise”? You call Mme Dumas, your landlady (vous).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "___ pour le retard, madame, il y a des bouchons."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "I'm sorry, I apologise",
+              "choices": [
+                "Je m'appelle",
+                "Je vous remercie",
+                "Je m'excuse"
+              ],
+              "correct": 2,
+              "why": [
+                "« Je m'appelle » means my name is.",
+                "« Je vous remercie » means thank you.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_13_reason",
+      "title": "Expliquer pourquoi",
+      "note": "Explain why you're late: « j'ai raté le bus » (I missed the bus), « mon réveil n'a pas sonné » (my alarm didn't go off), « j'ai oublié » (I forgot) and « à cause de la grève » (because of the strike). With « avoir », the past participle doesn't agree with Robin: « j'ai raté », never « ratée ».",
+      "items": [
+        {
+          "id": "sit_13_reason_d01",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. You're late for work. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Tu as raté le bus à cause de la grève ?",
+              "name": "Inès"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès ask?",
+              "choices": [
+                "If you took the bus despite the strike",
+                "If you missed the bus because of the strike"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Tu as raté le bus à cause de la grève ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, you'll arrive at ten.",
+              "bank": [
+                "Oui,",
+                "j'arrive",
+                "à dix heures.",
+                "arrive",
+                "en dix heures.",
+                "Si,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "j'arrive",
+                  "à dix heures."
+                ]
+              ],
+              "model": "Oui, j'arrive à dix heures."
+            }
+          ],
+          "followUp": "D'accord, je le dis à la responsable.",
+          "newWords": [
+            "raté",
+            "à cause de"
+          ]
+        },
+        {
+          "id": "sit_13_reason_d02",
+          "place": "À l'appart",
+          "cue": "Léa, your flatmate, sees you rush out of your room, late. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Ton réveil n'a pas sonné ?",
+              "name": "Léa"
+            },
+            {
+              "speaker": "learner",
+              "text": "Non, et j'ai ___ le métro !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa ask?",
+              "choices": [
+                "If your alarm clock didn't go off",
+                "If your phone rang"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Ton réveil n'a pas sonné ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "ratée",
+                "raté",
+                "rater"
+              ],
+              "correct": 1,
+              "why": [
+                "With « avoir », there's no agreement with you: « j'ai raté ».",
+                "",
+                "After « j'ai », use the past participle: « raté »."
+              ]
+            }
+          ],
+          "followUp": "Oh non ! Prends le prochain, vite !",
+          "newWords": [
+            "réveil"
+          ]
+        },
+        {
+          "id": "sit_13_reason_s01",
+          "place": "Texto · Inès · phrase seule",
+          "standalone": "Construire",
+          "cue": "Inès, your colleague, texts you (tu). Explain: you missed the bus because of the strike, and you'll arrive at ten.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Salut, Robin ! Tu es où ? La réunion commence !",
+              "name": "Inès"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Explain why you're late.",
+              "bank": [
+                "J'ai",
+                "raté",
+                "le bus",
+                "à cause de",
+                "la grève,",
+                "j'arrive",
+                "à dix heures.",
+                "ratée",
+                "parce que",
+                "le grève,"
+              ],
+              "accepted": [
+                [
+                  "J'ai",
+                  "raté",
+                  "le bus",
+                  "à cause de",
+                  "la grève,",
+                  "j'arrive",
+                  "à dix heures."
+                ]
+              ],
+              "model": "J'ai raté le bus à cause de la grève, j'arrive à dix heures."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_13_reason_d03",
+          "place": "Texto · Théo",
+          "cue": "Théo, your friend, texts you. You're late for the cinema. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "T'as oublié ? On t'attend au cinéma !",
+              "name": "Théo"
+            },
+            {
+              "speaker": "learner",
+              "text": "Désolée, mon réveil n'a pas ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "sonné",
+                "sonner",
+                "sonnée"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "After « n'a pas », use the past participle: « sonné ».",
+                "« Réveil » is masculine, and with « avoir » there's no agreement: « sonné »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo think?",
+              "choices": [
+                "That you're ill",
+                "That you forgot"
+              ],
+              "correct": 1,
+              "miss": "Reread: « T'as oublié ? »"
+            }
+          ],
+          "followUp": "Bon, le film commence dans dix minutes !",
+          "newWords": [
+            "oublié"
+          ]
+        },
+        {
+          "id": "sit_13_reason_d04",
+          "place": "Texto · Karim",
+          "cue": "Karim, your friend from the café, texts you. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Tu as raté le tram ?",
+              "name": "Karim"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « raté » mean here?",
+              "choices": [
+                "taken",
+                "lost",
+                "missed"
+              ],
+              "correct": 2,
+              "why": [
+                "No: taken is « pris ».",
+                "No: lost is « perdu ».",
+                ""
+              ],
+              "target": "raté"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, you'll take the next one.",
+              "bank": [
+                "Oui,",
+                "je prends",
+                "le prochain.",
+                "la prochaine.",
+                "je prend",
+                "tu prends"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "je prends",
+                  "le prochain."
+                ]
+              ],
+              "model": "Oui, je prends le prochain."
+            }
+          ],
+          "followUp": "Pas grave, je t'attends au café !",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_reason_s02",
+          "place": "Texto · responsable · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "You text your manager. You say vous to each other. Explain why you're late.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "Désolée, j'ai raté le train, t'as vu la grève ?",
+                "Bref, train raté ! À tout à l'heure !",
+                "Excusez-moi, j'ai raté le train à cause de la grève."
+              ],
+              "correct": 2,
+              "why": [
+                "Good spoken French, but « t'as vu » is for friends. Your manager says vous to you.",
+                "Too short and casual for your manager: « bref » is for friends.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_13_reason_d05",
+          "place": "Appel · Inès",
+          "cue": "Clarify: Inès, your colleague, calls you. The line is bad. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Ton réveil ? Il n'a pas sonné ?",
+              "name": "Inès"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say you can't hear her well, and ask her to repeat.",
+              "bank": [
+                "Je t'entends mal.",
+                "Tu peux",
+                "répéter ?",
+                "Je vous entends mal.",
+                "Vous pouvez"
+              ],
+              "accepted": [
+                [
+                  "Je t'entends mal.",
+                  "Tu peux",
+                  "répéter ?"
+                ],
+                [
+                  "Tu peux",
+                  "répéter ?",
+                  "Je t'entends mal."
+                ]
+              ],
+              "model": "Je t'entends mal. Tu peux répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « réveil » mean here?",
+              "choices": [
+                "phone",
+                "alarm clock",
+                "watch"
+              ],
+              "correct": 1,
+              "why": [
+                "No: a phone is « téléphone ».",
+                "",
+                "No: a watch is « une montre ». « Réveil » is the alarm clock."
+              ],
+              "target": "réveil"
+            }
+          ],
+          "followUp": "Pardon ! Ton réveil n'a pas sonné ce matin ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_reason_d06",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Tu as oublié tes clés ?",
+              "name": "Léa"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, et je suis en retard à ___ de ça !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "chose",
+                "causes",
+                "cause"
+              ],
+              "correct": 2,
+              "why": [
+                "« Chose » means thing. Because of is « à cause de ».",
+                "The phrase is singular: « à cause de ».",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa ask?",
+              "choices": [
+                "If you forgot your keys",
+                "If you lost your phone"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Tu as oublié tes clés ? »"
+            }
+          ],
+          "followUp": "Pas de souci, je suis à la maison ce soir.",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_reason_s03",
+          "place": "Texto · Inès · phrase seule",
+          "standalone": "Corriger",
+          "cue": "You text Inès, your colleague (tu). You're a woman.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Désolée, j'ai ratée le train à cause de la grève.",
+              "error": {
+                "word": "ratée",
+                "fix": "raté",
+                "choices": [
+                  "raté",
+                  "rater",
+                  "ratés"
+                ],
+                "why": "With « avoir », the past participle doesn't agree with you: « j'ai raté »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_13_reason_d07",
+          "place": "WhatsApp · Mme Dumas",
+          "cue": "Mme Dumas, your landlady, writes on WhatsApp. You had an appointment with her this morning. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Vous avez oublié notre rendez-vous, madame ?",
+              "name": "Mme Dumas"
+            },
+            {
+              "speaker": "learner",
+              "text": "Pardon, madame ! Mon ___ n'a pas sonné."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « oublié » mean here?",
+              "choices": [
+                "cancelled",
+                "forgotten",
+                "moved"
+              ],
+              "correct": 1,
+              "why": [
+                "No: cancelled is « annulé ».",
+                "",
+                "No: « oublié » doesn't mean moved. It means forgotten."
+              ],
+              "target": "oublié"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "réveils",
+                "réveille",
+                "réveil"
+              ],
+              "correct": 2,
+              "why": [
+                "One alarm clock: « mon réveil », singular.",
+                "« Réveille » is a verb (wakes up). You need the noun: « réveil ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Bien. Demain, dix heures, alors.",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_reason_d08",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat « Les copains ». He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Robin, pourquoi tu es en retard ?",
+              "name": "Théo"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Answer: because of the strike!",
+              "bank": [
+                "À cause de",
+                "la grève !",
+                "Parce que",
+                "le grève !",
+                "À côté de"
+              ],
+              "accepted": [
+                [
+                  "À cause de",
+                  "la grève !"
+                ]
+              ],
+              "model": "À cause de la grève !"
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo ask?",
+              "choices": [
+                "Where you are",
+                "Why you're late"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Pourquoi tu es en retard ? »"
+            }
+          ],
+          "followUp": "Encore la grève ! Bon, on t'attend.",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_reason_s04",
+          "place": "Texto · Inès · phrase seule",
+          "standalone": "Transformer",
+          "cue": "Put it in the past. You're telling Inès, your colleague (tu), why you were late this morning.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Je rate le bus parce que mon réveil ne sonne pas.",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it in the past (passé composé).",
+              "bank": [
+                "J'ai raté",
+                "le bus",
+                "parce que",
+                "mon réveil",
+                "n'a pas",
+                "sonné.",
+                "J'ai ratée",
+                "n'est pas",
+                "sonner."
+              ],
+              "accepted": [
+                [
+                  "J'ai raté",
+                  "le bus",
+                  "parce que",
+                  "mon réveil",
+                  "n'a pas",
+                  "sonné."
+                ]
+              ],
+              "model": "J'ai raté le bus parce que mon réveil n'a pas sonné."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_13_reason_d09",
+          "place": "Au bureau",
+          "cue": "Inès, your colleague, sees you arrive late at the office. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Ah, Robin ! Pourquoi tu es en retard ?",
+              "name": "Inès"
+            },
+            {
+              "speaker": "learner",
+              "text": "J'ai ___ mon téléphone à la maison."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès ask?",
+              "choices": [
+                "Why you're late",
+                "Where your phone is"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Pourquoi tu es en retard ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "oubliée",
+                "oublier",
+                "oublié"
+              ],
+              "correct": 2,
+              "why": [
+                "With « avoir », there's no agreement with you: « j'ai oublié ».",
+                "After « j'ai », use the past participle: « oublié ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Oh non ! Bon, la réunion commence.",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_reason_d10",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Encore en retard ? C'est le réveil ?",
+              "name": "Léa"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa think?",
+              "choices": [
+                "The bus is the problem",
+                "Your alarm clock is the problem"
+              ],
+              "correct": 1,
+              "miss": "Reread: « C'est le réveil ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say no, it's because of the strike.",
+              "bank": [
+                "Non,",
+                "c'est",
+                "à cause de",
+                "la grève.",
+                "parce que",
+                "le grève.",
+                "ce n'est"
+              ],
+              "accepted": [
+                [
+                  "Non,",
+                  "c'est",
+                  "à cause de",
+                  "la grève."
+                ],
+                [
+                  "Non,",
+                  "à cause de",
+                  "la grève."
+                ]
+              ],
+              "model": "Non, c'est à cause de la grève."
+            }
+          ],
+          "followUp": "Encore la grève ! Bon, à ce soir.",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_reason_s05",
+          "place": "Texto · Inès · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Which French words mean “because of”? You text Inès, your colleague (tu).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Je suis en retard ___ la grève, j'ai raté le bus."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "because of",
+              "choices": [
+                "parce que",
+                "à cause de",
+                "à côté de"
+              ],
+              "correct": 1,
+              "why": [
+                "« Parce que » needs a whole clause after it (parce qu'il y a grève).",
+                "",
+                "« À côté de » means next to."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_13_wait",
+      "title": "Attendre quelqu'un",
+      "note": "Now someone else is late: « tu attends depuis longtemps ? » (have you been waiting long?), « je suis presque là » (I'm almost there) and the spoken reassurance « t'inquiète » (don't worry). The standard form is « ne t'inquiète pas ».",
+      "items": [
+        {
+          "id": "sit_13_wait_d01",
+          "place": "Au café",
+          "cue": "Léa, your flatmate, meets you at the café. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Pardon ! Tu attends depuis longtemps ?",
+              "name": "Léa"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa ask?",
+              "choices": [
+                "If you want a coffee",
+                "If you've been waiting long"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Tu attends depuis longtemps ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say no, ten minutes. It's fine!",
+              "bank": [
+                "Non,",
+                "dix minutes.",
+                "Ça va !",
+                "dix heures.",
+                "Ça vas !",
+                "Depuis"
+              ],
+              "accepted": [
+                [
+                  "Non,",
+                  "dix minutes.",
+                  "Ça va !"
+                ],
+                [
+                  "Ça va !",
+                  "Non,",
+                  "dix minutes."
+                ]
+              ],
+              "model": "Non, dix minutes. Ça va !"
+            }
+          ],
+          "followUp": "Ouf ! Je prends un café, alors.",
+          "newWords": [
+            "longtemps"
+          ]
+        },
+        {
+          "id": "sit_13_wait_d02",
+          "place": "Texto · Théo",
+          "cue": "Théo, your friend, is meeting you at the café. He texts you. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Je suis presque là ! Dans le tram.",
+              "name": "Théo"
+            },
+            {
+              "speaker": "learner",
+              "text": "D'accord, je ___ au café !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "Where is Théo?",
+              "choices": [
+                "At home, about to leave",
+                "In the tram, almost there"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Je suis presque là ! Dans le tram. »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "t'attends",
+                "t'attend",
+                "attendre"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "With « je », the verb ends in -s: « je t'attends ».",
+                "You need the verb with « je »: « je t'attends »."
+              ]
+            }
+          ],
+          "followUp": "Super, à tout à l'heure !",
+          "followUpBy": "Théo",
+          "newWords": [
+            "presque"
+          ]
+        },
+        {
+          "id": "sit_13_wait_s01",
+          "place": "Texto · Théo · phrase seule",
+          "standalone": "Construire",
+          "cue": "You're late to meet Théo, your friend (tu). You're a woman. Text him: sorry, you're almost there. Has he been waiting long?",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Salut, Robin ! Je suis au café. Tu es où ?",
+              "name": "Théo"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Write your text to Théo.",
+              "bank": [
+                "Désolée,",
+                "je suis",
+                "presque",
+                "là,",
+                "tu attends",
+                "depuis",
+                "longtemps ?",
+                "Désolé,",
+                "tu attend",
+                "temps ?"
+              ],
+              "accepted": [
+                [
+                  "Désolée,",
+                  "je suis",
+                  "presque",
+                  "là,",
+                  "tu attends",
+                  "depuis",
+                  "longtemps ?"
+                ]
+              ],
+              "model": "Désolée, je suis presque là, tu attends depuis longtemps ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_13_wait_d03",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, is meeting you at the café. She texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Désolée, j'arrive dans dix minutes !",
+              "name": "Inès"
+            },
+            {
+              "speaker": "learner",
+              "text": "T'inquiète, je ___ un café."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "prend",
+                "prends",
+                "prendre"
+              ],
+              "correct": 1,
+              "why": [
+                "With « je », the verb ends in -s: « je prends ».",
+                "",
+                "You need the verb with « je »: « je prends »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès say?",
+              "choices": [
+                "She can't come",
+                "She'll be there in ten minutes"
+              ],
+              "correct": 1,
+              "miss": "Reread: « J'arrive dans dix minutes ! »"
+            }
+          ],
+          "followUp": "Merci, tu es gentille !",
+          "followUpBy": "Inès",
+          "newWords": [
+            "t'inquiète"
+          ]
+        },
+        {
+          "id": "sit_13_wait_d04",
+          "place": "Texto · Karim",
+          "cue": "Karim, your friend from the café, is late to meet you. He texts you. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Pardon ! Tu m'attends depuis longtemps ?",
+              "name": "Karim"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « longtemps » mean here?",
+              "choices": [
+                "always",
+                "a long time",
+                "too early"
+              ],
+              "correct": 1,
+              "why": [
+                "No: always is « toujours ».",
+                "",
+                "No: too early is « trop tôt »."
+              ],
+              "target": "longtemps"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say no, five minutes, don't worry!",
+              "bank": [
+                "Non,",
+                "cinq minutes,",
+                "ne t'inquiète pas !",
+                "t'inquiète !",
+                "cinq heures,",
+                "t'inquiètes !"
+              ],
+              "accepted": [
+                [
+                  "Non,",
+                  "cinq minutes,",
+                  "ne t'inquiète pas !"
+                ],
+                [
+                  "Non,",
+                  "cinq minutes,",
+                  "t'inquiète !"
+                ]
+              ],
+              "model": "Non, cinq minutes, ne t'inquiète pas !"
+            }
+          ],
+          "followUp": "Ouf ! Merci, Robin.",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_wait_s02",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "Mme Dumas, your landlady, writes on WhatsApp: she's late for your appointment. She says vous to you. Reassure her.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "T'inquiète, je t'attends !",
+                "Ouais, pas grave, bref !",
+                "Pas de problème, madame, je vous attends."
+              ],
+              "correct": 2,
+              "why": [
+                "Good spoken French, but « t'inquiète » and « je t'attends » are for friends. Mme Dumas says vous to you.",
+                "« Ouais » and « bref » are too casual for your landlady.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_13_wait_d05",
+          "place": "Appel · Léa",
+          "cue": "Clarify: Léa, your flatmate, calls you. The line is bad. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Je suis presque là, dans le tram !",
+              "name": "Léa"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say you can't hear her well, and ask her to repeat.",
+              "bank": [
+                "Je t'entends mal.",
+                "Tu peux",
+                "répéter ?",
+                "Je vous entends mal.",
+                "Vous pouvez"
+              ],
+              "accepted": [
+                [
+                  "Je t'entends mal.",
+                  "Tu peux",
+                  "répéter ?"
+                ],
+                [
+                  "Tu peux",
+                  "répéter ?",
+                  "Je t'entends mal."
+                ]
+              ],
+              "model": "Je t'entends mal. Tu peux répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « presque » mean here?",
+              "choices": [
+                "already",
+                "almost",
+                "never"
+              ],
+              "correct": 1,
+              "why": [
+                "No: already is « déjà ».",
+                "",
+                "No: never is « jamais »."
+              ],
+              "target": "presque"
+            }
+          ],
+          "followUp": "Presque là ! Dans le tram !",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_wait_d06",
+          "place": "Texto · Théo",
+          "cue": "Théo, your friend, texts you before the cinema. You're there with Léa. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Je suis en retard, désolé !",
+              "name": "Théo"
+            },
+            {
+              "speaker": "learner",
+              "text": "___, on t'attend !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "Inquiète",
+                "T'inquiète",
+                "T'inquiètes"
+              ],
+              "correct": 1,
+              "why": [
+                "Without « t' », « inquiète » means worried. Say « t'inquiète ».",
+                "",
+                "No -s here: the spoken form is « t'inquiète » (from « ne t'inquiète pas »)."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo say?",
+              "choices": [
+                "He's late",
+                "He's not coming"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Je suis en retard, désolé ! »"
+            }
+          ],
+          "followUp": "Merci ! J'arrive dans un quart d'heure.",
+          "followUpBy": "Théo",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_wait_s03",
+          "place": "Texto · Théo · phrase seule",
+          "standalone": "Corriger",
+          "cue": "You text Théo, your friend (tu). You're a woman.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Désolée, je suis bloqué dans le tram, mais je suis presque là !",
+              "error": {
+                "word": "bloqué",
+                "fix": "bloquée",
+                "choices": [
+                  "bloqués",
+                  "bloquée",
+                  "bloquer"
+                ],
+                "why": "You're a woman, so it agrees: « je suis bloquée »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_13_wait_d07",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, is late to meet you. She texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "T'inquiète, je suis presque là !",
+              "name": "Inès"
+            },
+            {
+              "speaker": "learner",
+              "text": "Pas de souci, je suis ___ café."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « t'inquiète » mean here?",
+              "choices": [
+                "hurry up",
+                "don't worry",
+                "I'm sorry"
+              ],
+              "correct": 1,
+              "why": [
+                "No: hurry up is « dépêche-toi ».",
+                "",
+                "No: I'm sorry is « je m'excuse » or « désolée »."
+              ],
+              "target": "t'inquiète"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "à la",
+                "en",
+                "au"
+              ],
+              "correct": 2,
+              "why": [
+                "« Café » is masculine: « au café ».",
+                "Not French here: you're at a place, « au café ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Top ! J'arrive !",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_wait_d08",
+          "place": "WhatsApp · Mme Dumas",
+          "cue": "Mme Dumas, your landlady, is coming to see the flat. She writes on WhatsApp. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Je suis presque là. Vous attendez depuis longtemps ?",
+              "name": "Mme Dumas"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say no, madam, no problem.",
+              "bank": [
+                "Non,",
+                "madame,",
+                "pas de problème.",
+                "monsieur,",
+                "t'inquiète."
+              ],
+              "accepted": [
+                [
+                  "Non,",
+                  "madame,",
+                  "pas de problème."
+                ]
+              ],
+              "model": "Non, madame, pas de problème."
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Mme Dumas say?",
+              "choices": [
+                "She's almost there",
+                "She's already at the flat"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Je suis presque là. »"
+            }
+          ],
+          "followUp": "Merci. À tout à l'heure.",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_wait_s04",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You asked Léa, your flatmate (tu). Now ask Mme Dumas, your landlady (vous).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Tu attends depuis longtemps ? Je suis presque là.",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it with vous, and add « madame ».",
+              "bank": [
+                "Vous attendez",
+                "depuis",
+                "longtemps ?",
+                "Je suis",
+                "presque",
+                "là,",
+                "madame.",
+                "Tu attends",
+                "Vous attends",
+                "monsieur."
+              ],
+              "accepted": [
+                [
+                  "Vous attendez",
+                  "depuis",
+                  "longtemps ?",
+                  "Je suis",
+                  "presque",
+                  "là,",
+                  "madame."
+                ],
+                [
+                  "Je suis",
+                  "presque",
+                  "là,",
+                  "madame.",
+                  "Vous attendez",
+                  "depuis",
+                  "longtemps ?"
+                ]
+              ],
+              "model": "Vous attendez depuis longtemps ? Je suis presque là, madame."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_13_wait_d09",
+          "place": "Au café",
+          "cue": "Karim, your friend, works at the café. You're waiting there. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Léa est en retard ? Tu attends depuis quand ?",
+              "name": "Karim"
+            },
+            {
+              "speaker": "learner",
+              "text": "Depuis ___ ! Une heure !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Karim ask?",
+              "choices": [
+                "What you'd like to drink",
+                "How long you've been waiting"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Tu attends depuis quand ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "temps",
+                "toujours",
+                "longtemps"
+              ],
+              "correct": 2,
+              "why": [
+                "Not French: « depuis temps ». Say « depuis longtemps ».",
+                "« Depuis toujours » means forever, not one hour.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Une heure ! Un autre café, alors ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_wait_d10",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, is late to meet you. She texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Je suis presque là, pardon !",
+              "name": "Léa"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa say?",
+              "choices": [
+                "She's still at home",
+                "She's almost there"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Je suis presque là »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say don't worry, you're at the café.",
+              "bank": [
+                "Ne t'inquiète pas,",
+                "T'inquiète,",
+                "je suis",
+                "au café.",
+                "à la café.",
+                "je es"
+              ],
+              "accepted": [
+                [
+                  "Ne t'inquiète pas,",
+                  "je suis",
+                  "au café."
+                ],
+                [
+                  "T'inquiète,",
+                  "je suis",
+                  "au café."
+                ]
+              ],
+              "model": "Ne t'inquiète pas, je suis au café."
+            }
+          ],
+          "followUp": "Merci ! J'arrive dans cinq minutes.",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_wait_s05",
+          "place": "Texto · Léa · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Which French word means “almost”? You text Léa, your flatmate (tu).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Désolée, je suis en retard, mais je suis ___ là, dans le tram !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "almost",
+              "choices": [
+                "longtemps",
+                "trop",
+                "presque"
+              ],
+              "correct": 2,
+              "why": [
+                "« Longtemps » means a long time.",
+                "« Trop » means too (much).",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_13_cancel",
+      "title": "Annuler",
+      "note": "Cancelling without offending: « je dois annuler » (I have to cancel), « je suis obligée de » + infinitive (I have to; Robin is a woman, so « obligée »), and « j'ai un empêchement » (something came up). « Un empêchement » is the polite, vague French reason: nobody asks for details. After « je dois », « annuler » stays an infinitive; after « de » it elides: « obligée d'annuler ».",
+      "items": [
+        {
+          "id": "sit_13_cancel_d01",
+          "place": "Texto · Théo",
+          "cue": "Théo, your friend, texts you. He says tu to you. You had plans with him tonight.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Tu dois annuler ce soir ? Pourquoi ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo ask?",
+              "choices": [
+                "If you're coming late tonight",
+                "If you have to cancel tonight"
+              ],
+              "correct": 1,
+              "miss": "Reread: « tu dois annuler ce soir ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, sorry: you're too tired. You're a woman.",
+              "bank": [
+                "Oui,",
+                "désolée,",
+                "je suis",
+                "trop",
+                "fatiguée.",
+                "fatigué.",
+                "désolé,",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "désolée,",
+                  "je suis",
+                  "trop",
+                  "fatiguée."
+                ]
+              ],
+              "model": "Oui, désolée, je suis trop fatiguée."
+            }
+          ],
+          "followUp": "Pas grave, repose-toi !",
+          "newWords": [
+            "annuler"
+          ]
+        },
+        {
+          "id": "sit_13_cancel_d02",
+          "place": "Appel · Inès",
+          "cue": "Inès, your colleague, calls you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "On fait un apéro ce soir, tu viens ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Non, désolée, je suis obligée de ___ tard."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès ask?",
+              "choices": [
+                "If you're coming to an apéro tonight",
+                "If you're working late tonight"
+              ],
+              "correct": 0,
+              "miss": "Reread: « on fait un apéro ce soir, tu viens ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "travaille",
+                "travaillé",
+                "travailler"
+              ],
+              "correct": 2,
+              "why": [
+                "After « de », use the infinitive, not « travaille ».",
+                "« Travaillé » is the past participle: after « de », use the infinitive.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Dommage ! Une autre fois, alors.",
+          "newWords": [
+            "obligée"
+          ]
+        },
+        {
+          "id": "sit_13_cancel_s01",
+          "place": "Texto · Théo · phrase seule",
+          "standalone": "Construire",
+          "cue": "Théo, your friend, says tu to you. Cancel tonight: you have to work. You're a woman.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Robin, on se voit toujours ce soir au cinéma ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say sorry, you have to cancel tonight: you have to work.",
+              "bank": [
+                "Désolée,",
+                "je dois",
+                "annuler",
+                "ce soir,",
+                "je suis",
+                "obligée",
+                "de travailler.",
+                "obligé",
+                "annulé",
+                "Désolé,"
+              ],
+              "accepted": [
+                [
+                  "Désolée,",
+                  "je dois",
+                  "annuler",
+                  "ce soir,",
+                  "je suis",
+                  "obligée",
+                  "de travailler."
+                ]
+              ],
+              "model": "Désolée, je dois annuler ce soir, je suis obligée de travailler."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_13_cancel_d03",
+          "place": "Texto · Karim",
+          "cue": "Karim, your friend at the café, texts you. He says tu to you. You were meant to meet him tonight.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Tu ne viens pas ce soir ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Non, j'ai un empêchement. Je ___ annuler."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "dois",
+                "devoir",
+                "doit"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Devoir » is the infinitive: « je » needs « dois ».",
+                "« Doit » goes with il or elle: « je » takes « dois »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Karim ask?",
+              "choices": [
+                "If you're coming tonight",
+                "If you're free tomorrow"
+              ],
+              "correct": 0,
+              "miss": "Reread: « tu ne viens pas ce soir ? »"
+            }
+          ],
+          "followUp": "Pas de souci. Une autre fois !",
+          "newWords": [
+            "empêchement"
+          ]
+        },
+        {
+          "id": "sit_13_cancel_d04",
+          "place": "Les copains · groupe",
+          "cue": "Théo's group chat « Les copains ». Everyone says tu. You were going out with them tonight. You're a woman.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Robin, tu dois annuler ce soir ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « annuler » mean here?",
+              "choices": [
+                "to call",
+                "to cancel",
+                "to come back"
+              ],
+              "correct": 1,
+              "why": [
+                "« Appeler » means to call.",
+                "",
+                "« Revenir » means to come back."
+              ],
+              "target": "annuler"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, sorry: something came up.",
+              "bank": [
+                "Oui,",
+                "désolée,",
+                "j'ai",
+                "un",
+                "empêchement.",
+                "désolé,",
+                "une",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "désolée,",
+                  "j'ai",
+                  "un",
+                  "empêchement."
+                ]
+              ],
+              "model": "Oui, désolée, j'ai un empêchement."
+            }
+          ],
+          "followUp": "Dommage ! On se voit samedi, alors.",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_cancel_s02",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "Mme Dumas, your landlady, says vous to you. You can't make your appointment with her tomorrow. Cancel it.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "Désolée, j'annule demain, t'inquiète !",
+                "Je suis désolée, madame, je dois annuler, j'ai un empêchement.",
+                "Bref, j'annule demain, salut !"
+              ],
+              "correct": 1,
+              "why": [
+                "Good French, but « t'inquiète » is casual tu: say vous to your landlady.",
+                "",
+                "Good French, but « bref » and « salut » are too casual for your landlady."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_13_cancel_d05",
+          "place": "Au café",
+          "cue": "Clarify: Inès, your colleague, is with you in a noisy café. She says tu to you. You've just told her you can't come tonight.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Tu es obligée d'annuler ce soir ? Vraiment ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say sorry, you can't hear her well, and ask her to repeat.",
+              "bank": [
+                "Pardon,",
+                "je t'entends mal.",
+                "Tu peux répéter ?",
+                "je vous entends mal.",
+                "Vous pouvez répéter ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon,",
+                  "je t'entends mal.",
+                  "Tu peux répéter ?"
+                ],
+                [
+                  "Tu peux répéter ?",
+                  "Pardon,",
+                  "je t'entends mal."
+                ]
+              ],
+              "model": "Pardon, je t'entends mal. Tu peux répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « obligée » mean here?",
+              "choices": [
+                "tired",
+                "obliged, have to",
+                "ready"
+              ],
+              "correct": 1,
+              "why": [
+                "« Fatiguée » means tired.",
+                "",
+                "« Prête » means ready."
+              ],
+              "target": "obligée"
+            }
+          ],
+          "followUp": "Ce soir, tu annules ? Vraiment ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_cancel_d06",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you. You were going to have dinner together tonight.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Tu annules le dîner ? Pourquoi ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "J'ai un ___, désolée !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "enchanté",
+                "empêchement",
+                "empêchements"
+              ],
+              "correct": 1,
+              "why": [
+                "« Enchanté » means nice to meet you.",
+                "",
+                "After « un », use the singular: « un empêchement »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa want to know?",
+              "choices": [
+                "Who is coming to dinner",
+                "Why you're cancelling dinner"
+              ],
+              "correct": 1,
+              "miss": "Reread: « tu annules le dîner ? Pourquoi ? »"
+            }
+          ],
+          "followUp": "Pas grave ! Demain, alors ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_cancel_s03",
+          "place": "Texto · Karim · phrase seule",
+          "standalone": "Corriger",
+          "cue": "Text Karim, your friend (tu). Cancel tonight. You're a woman.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Désolée, Karim, je suis obligé d'annuler ce soir, j'ai un empêchement.",
+              "error": {
+                "word": "obligé",
+                "fix": "obligée",
+                "choices": [
+                  "obliger",
+                  "obligée",
+                  "obligés"
+                ],
+                "why": "Robin is a woman: « je suis obligée »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_13_cancel_d07",
+          "place": "Sur le palier",
+          "cue": "M. Ferrand, your neighbour, says vous to you. You had invited him to dinner tonight. You're a woman.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Vous avez un empêchement, madame ? Le dîner est annulé ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, je suis ___, monsieur."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « empêchement » mean here?",
+              "choices": [
+                "a dinner",
+                "something came up",
+                "a delay"
+              ],
+              "correct": 1,
+              "why": [
+                "« Un dîner » is a dinner.",
+                "",
+                "« Un retard » is a delay."
+              ],
+              "target": "empêchement"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "désolée",
+                "désolé",
+                "désolées"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "You're a woman: say « désolée ».",
+                "« Désolées » is plural: you're one person."
+              ]
+            }
+          ],
+          "followUp": "Ce n'est pas grave. Une autre fois !",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_cancel_d08",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. She says tu to you. You had lunch plans with her tomorrow.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Tu dois annuler notre déjeuner demain ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say yes: you have to work. You're a woman.",
+              "bank": [
+                "Oui,",
+                "je suis",
+                "obligée",
+                "de",
+                "travailler.",
+                "obligé",
+                "travaille.",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "je suis",
+                  "obligée",
+                  "de",
+                  "travailler."
+                ]
+              ],
+              "model": "Oui, je suis obligée de travailler."
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès ask?",
+              "choices": [
+                "If you have to cancel lunch tomorrow",
+                "If you can have lunch earlier tomorrow"
+              ],
+              "correct": 0,
+              "miss": "Reread: « tu dois annuler notre déjeuner demain ? »"
+            }
+          ],
+          "followUp": "D'accord, pas de souci !",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_cancel_s04",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You told Léa (tu) she could cancel. Now Mme Dumas, your landlady, wants to cancel too. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Pas de problème, tu peux annuler si tu as un empêchement.",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say the same to her, with vous.",
+              "bank": [
+                "Pas de problème,",
+                "vous pouvez",
+                "annuler",
+                "si vous avez",
+                "un empêchement.",
+                "tu peux",
+                "si tu as",
+                "annulé"
+              ],
+              "accepted": [
+                [
+                  "Pas de problème,",
+                  "vous pouvez",
+                  "annuler",
+                  "si vous avez",
+                  "un empêchement."
+                ]
+              ],
+              "model": "Pas de problème, vous pouvez annuler si vous avez un empêchement."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_13_cancel_d09",
+          "place": "Les copains · groupe",
+          "cue": "Théo's group chat « Les copains ». Everyone says tu.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Robin, t'es obligée d'annuler samedi ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, je ___ travailler, désolée !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo ask?",
+              "choices": [
+                "If you have to cancel on Saturday",
+                "If you can come early on Saturday"
+              ],
+              "correct": 0,
+              "miss": "Reread: « t'es obligée d'annuler samedi ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "doit",
+                "devons",
+                "dois"
+              ],
+              "correct": 2,
+              "why": [
+                "« Doit » goes with il or elle: « je » takes « dois ».",
+                "« Devons » goes with « nous ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Dommage ! À dimanche, alors.",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_cancel_d10",
+          "place": "Texto · Karim",
+          "cue": "Karim, your friend at the café, texts you. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Tu dois annuler demain ? Dommage !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Karim ask?",
+              "choices": [
+                "If you're late tomorrow",
+                "If you have to cancel tomorrow"
+              ],
+              "correct": 1,
+              "miss": "Reread: « tu dois annuler demain ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, sorry. Next time! You're a woman.",
+              "bank": [
+                "Oui,",
+                "désolée.",
+                "La prochaine fois !",
+                "désolé.",
+                "Non,",
+                "La semaine prochaine !"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "désolée.",
+                  "La prochaine fois !"
+                ]
+              ],
+              "model": "Oui, désolée. La prochaine fois !"
+            }
+          ],
+          "followUp": "Pas de souci. À bientôt !",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_cancel_s05",
+          "place": "Texto · Théo · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Which French word means “to cancel”?",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Désolée, je dois ___ ce soir, j'ai un empêchement."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "to cancel",
+              "choices": [
+                "annulé",
+                "payer",
+                "annuler"
+              ],
+              "correct": 2,
+              "why": [
+                "« Annulé » means cancelled: after « je dois », use the infinitive.",
+                "« Payer » means to pay.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_13_newplan",
+      "title": "Proposer autre chose",
+      "note": "The social repair after a cancellation: « on remet ça ? » (shall we do it another time?), « un autre jour » (another day) and « on se rattrape » (we'll make up for it). « Remet » and « rattrape » go with « on », like « on se voit ». « Jour » is masculine: « un autre jour ».",
+      "items": [
+        {
+          "id": "sit_13_newplan_d01",
+          "place": "Texto · Théo",
+          "cue": "Théo, your friend, texts you. He says tu to you. You've just cancelled tonight.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Pas grave, on remet ça ! Quel jour ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo suggest?",
+              "choices": [
+                "Doing it another time",
+                "Going without you"
+              ],
+              "correct": 0,
+              "miss": "Reread: « on remet ça ! Quel jour ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes: Saturday. Ask if that suits him.",
+              "bank": [
+                "Oui !",
+                "Samedi,",
+                "ça te va ?",
+                "ça vous va ?",
+                "Dimanche,",
+                "Non !"
+              ],
+              "accepted": [
+                [
+                  "Oui !",
+                  "Samedi,",
+                  "ça te va ?"
+                ]
+              ],
+              "model": "Oui ! Samedi, ça te va ?"
+            }
+          ],
+          "followUp": "Samedi, parfait !",
+          "newWords": [
+            "on remet ça"
+          ]
+        },
+        {
+          "id": "sit_13_newplan_d02",
+          "place": "À l'appart",
+          "cue": "Léa, your flatmate, says tu to you at home. You both cancelled the cinema tonight.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "On va au cinéma un autre jour ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, ___ dimanche ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa suggest?",
+              "choices": [
+                "Going to the cinema tonight",
+                "Going to the cinema another day"
+              ],
+              "correct": 1,
+              "miss": "Reread: « on va au cinéma un autre jour ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "plus",
+                "plutôt",
+                "trop"
+              ],
+              "correct": 1,
+              "why": [
+                "« Plus » means more: it doesn't go before a day.",
+                "",
+                "« Trop » means too much."
+              ]
+            }
+          ],
+          "followUp": "Dimanche, d'accord !",
+          "newWords": [
+            "un autre jour"
+          ]
+        },
+        {
+          "id": "sit_13_newplan_s01",
+          "place": "Texto · Karim · phrase seule",
+          "standalone": "Construire",
+          "cue": "Karim, your friend at the café, says tu to you. You cancelled tonight. You're a woman.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Tu ne viens pas ce soir ? Pas de souci, Robin !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say sorry about tonight, and ask if you can do it another day.",
+              "bank": [
+                "Désolée",
+                "pour ce soir,",
+                "on remet ça",
+                "un autre jour ?",
+                "Désolé",
+                "une autre jour ?",
+                "on remets ça"
+              ],
+              "accepted": [
+                [
+                  "Désolée",
+                  "pour ce soir,",
+                  "on remet ça",
+                  "un autre jour ?"
+                ]
+              ],
+              "model": "Désolée pour ce soir, on remet ça un autre jour ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_13_newplan_d03",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. She says tu to you. Your lunch together today didn't work out.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Dommage pour le déjeuner ! On se rattrape demain ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, demain ___ midi !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "au",
+                "à",
+                "en"
+              ],
+              "correct": 1,
+              "why": [
+                "« Au » is « à » + « le », but « midi » takes no article: « à midi ».",
+                "",
+                "« En » doesn't go before a time: « à midi »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès suggest?",
+              "choices": [
+                "Making up for it tomorrow",
+                "Having lunch at the office today"
+              ],
+              "correct": 0,
+              "miss": "Reread: « on se rattrape demain ? »"
+            }
+          ],
+          "followUp": "Top, à demain !",
+          "newWords": [
+            "on se rattrape"
+          ]
+        },
+        {
+          "id": "sit_13_newplan_d04",
+          "place": "Texto · Karim",
+          "cue": "Karim, your friend at the café, texts you. He says tu to you. You cancelled your plans with him tonight.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "On remet ça à samedi ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « on remet ça » mean here?",
+              "choices": [
+                "shall we start without you?",
+                "shall we do it another time?",
+                "shall we cancel?"
+              ],
+              "correct": 1,
+              "why": [
+                "That would be « on commence sans toi ? ».",
+                "",
+                "« Annuler » means to cancel."
+              ],
+              "target": "on remet ça"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes: Saturday is perfect.",
+              "bank": [
+                "Oui,",
+                "samedi,",
+                "c'est",
+                "parfait !",
+                "parfaite !",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "samedi,",
+                  "c'est",
+                  "parfait !"
+                ]
+              ],
+              "model": "Oui, samedi, c'est parfait !"
+            }
+          ],
+          "followUp": "Top ! À samedi, alors.",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_newplan_s02",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "Mme Dumas, your landlady, says vous to you. She had to cancel your meeting. Ask if she's free another day.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "On remet ça, ouais ?",
+                "Un autre jour, top ?",
+                "Vous êtes libre un autre jour, madame ?"
+              ],
+              "correct": 2,
+              "why": [
+                "Good French, but « ouais » and « on remet ça » are for friends: say vous to your landlady.",
+                "Good French, but « top » is too casual for your landlady.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_13_newplan_d05",
+          "place": "Appel · Théo",
+          "cue": "Clarify: Théo, your friend, calls you. He says tu to you. The line is bad.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "On se voit un autre jour ? Jeudi ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say sorry, you can't hear him well, and ask him to repeat.",
+              "bank": [
+                "Pardon,",
+                "je t'entends mal.",
+                "Tu peux répéter ?",
+                "je vous entends mal.",
+                "Vous pouvez répéter ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon,",
+                  "je t'entends mal.",
+                  "Tu peux répéter ?"
+                ],
+                [
+                  "Tu peux répéter ?",
+                  "Pardon,",
+                  "je t'entends mal."
+                ]
+              ],
+              "model": "Pardon, je t'entends mal. Tu peux répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « un autre jour » mean here?",
+              "choices": [
+                "the same day",
+                "every day",
+                "another day"
+              ],
+              "correct": 2,
+              "why": [
+                "« Le même jour » means the same day.",
+                "« Tous les jours » means every day.",
+                ""
+              ],
+              "target": "un autre jour"
+            }
+          ],
+          "followUp": "Un autre jour ! Jeudi, ça te va ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_newplan_d06",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Je suis désolée pour hier soir !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Pas grave ! On se ___ samedi ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "rattrapes",
+                "rattraper",
+                "rattrape"
+              ],
+              "correct": 2,
+              "why": [
+                "« Rattrapes » goes with « tu »: « on » takes « rattrape ».",
+                "After « on se », use a conjugated verb, not the infinitive.",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What is Léa sorry about?",
+              "choices": [
+                "Last night",
+                "Tomorrow evening"
+              ],
+              "correct": 0,
+              "miss": "Reread: « désolée pour hier soir ! »"
+            }
+          ],
+          "followUp": "Oui, samedi ! Merci, Robin.",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_newplan_s03",
+          "place": "Texto · Karim · phrase seule",
+          "standalone": "Corriger",
+          "cue": "Karim, your friend at the café, says tu to you. You cancelled tonight. Suggest another day.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Désolée, Karim, on remet ça une autre jour, samedi ou dimanche ?",
+              "error": {
+                "word": "une",
+                "fix": "un",
+                "choices": [
+                  "des",
+                  "un",
+                  "la"
+                ],
+                "why": "« Jour » is masculine: « un autre jour »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_13_newplan_d07",
+          "place": "Les copains · groupe",
+          "cue": "Théo's group chat « Les copains ». Everyone says tu. Your plans this week were cancelled.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "On se rattrape ce week-end !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui ! On ___ ça samedi ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « on se rattrape » mean here?",
+              "choices": [
+                "we'll see each other",
+                "we'll make up for it",
+                "we'll catch the train"
+              ],
+              "correct": 1,
+              "why": [
+                "« On se voit » means we'll see each other.",
+                "",
+                "That would be « on prend le train »."
+              ],
+              "target": "on se rattrape"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "remettre",
+                "remets",
+                "remet"
+              ],
+              "correct": 2,
+              "why": [
+                "After « on », use a conjugated verb, not the infinitive.",
+                "« Remets » goes with je or tu: « on » takes « remet ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Samedi, parfait !",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_newplan_d08",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. She says tu to you. Lunch today didn't work out.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "On déjeune ensemble un autre jour ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say yes: Thursday. Ask if that suits her.",
+              "bank": [
+                "Oui,",
+                "jeudi,",
+                "ça te va ?",
+                "ça vous va ?",
+                "mardi,",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "jeudi,",
+                  "ça te va ?"
+                ]
+              ],
+              "model": "Oui, jeudi, ça te va ?"
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès suggest?",
+              "choices": [
+                "Having lunch at the office",
+                "Having lunch another day"
+              ],
+              "correct": 1,
+              "miss": "Reread: « on déjeune ensemble un autre jour ? »"
+            }
+          ],
+          "followUp": "Jeudi, c'est noté !",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_newplan_s04",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You asked Léa (tu) if she's free another day. Now ask Mme Dumas, your landlady. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Léa, tu es libre un autre jour, cette semaine ?",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Ask her the same, with vous.",
+              "bank": [
+                "Madame,",
+                "vous êtes",
+                "libre",
+                "un autre jour,",
+                "cette semaine ?",
+                "tu es",
+                "Léa,",
+                "libres"
+              ],
+              "accepted": [
+                [
+                  "Madame,",
+                  "vous êtes",
+                  "libre",
+                  "un autre jour,",
+                  "cette semaine ?"
+                ]
+              ],
+              "model": "Madame, vous êtes libre un autre jour, cette semaine ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_13_newplan_d09",
+          "place": "Texto · Karim",
+          "cue": "Karim, your friend at the café, texts you. He says tu to you. You had plans with him.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Désolé pour ce soir !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Pas grave, on remet ça un ___ jour !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What is Karim sorry about?",
+              "choices": [
+                "This morning",
+                "Tonight"
+              ],
+              "correct": 1,
+              "miss": "Reread: « désolé pour ce soir ! »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "autre",
+                "autres",
+                "même"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Jour » is singular: « un autre jour ».",
+                "« Même » means same: you mean another day."
+              ]
+            }
+          ],
+          "followUp": "Merci ! On se rattrape samedi ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_newplan_d10",
+          "place": "À l'appart",
+          "cue": "Léa, your flatmate, says tu to you at home. You both cancelled the cinema.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "On remet ça à quand, le cinéma ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa want to know?",
+              "choices": [
+                "Which film to see",
+                "When to go to the cinema instead"
+              ],
+              "correct": 1,
+              "miss": "Reread: « on remet ça à quand ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say Sunday: you'll make up for it.",
+              "bank": [
+                "Dimanche !",
+                "On se rattrape.",
+                "On se rattrapes.",
+                "Samedi !",
+                "On se rattraper."
+              ],
+              "accepted": [
+                [
+                  "Dimanche !",
+                  "On se rattrape."
+                ],
+                [
+                  "On se rattrape.",
+                  "Dimanche !"
+                ]
+              ],
+              "model": "Dimanche ! On se rattrape."
+            }
+          ],
+          "followUp": "Dimanche, top !",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_newplan_s05",
+          "place": "Texto · Théo · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Which French words mean “let's do it another time”?",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Tu as un empêchement, Robin ? Pas grave, ___ samedi !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "let's do it another time",
+              "choices": [
+                "on est combien",
+                "on remet ça",
+                "ça fait"
+              ],
+              "correct": 1,
+              "why": [
+                "« On est combien ? » means how many of us are there?",
+                "",
+                "« Ça fait » gives a total, as in a price."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_13_react",
+      "title": "Réagir",
+      "note": "When someone else cancels: « rien de grave, j'espère ? » (nothing serious, I hope?) and « prends soin de toi » (take care of yourself); with vous, « prenez soin de vous ». « J'espère » never takes an s. « Dommage », « pas grave » and « la prochaine fois » come back from module 04.",
+      "items": [
+        {
+          "id": "sit_13_react_d01",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "J'annule ce soir, désolée. J'espère que tu comprends."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès say?",
+              "choices": [
+                "She's cancelling tonight",
+                "She's coming late tonight"
+              ],
+              "correct": 0,
+              "miss": "Reread: « j'annule ce soir »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Say of course, no problem.",
+              "bank": [
+                "Bien sûr,",
+                "pas de problème !",
+                "Non,",
+                "c'est",
+                "problème !"
+              ],
+              "accepted": [
+                [
+                  "Bien sûr,",
+                  "pas de problème !"
+                ]
+              ],
+              "model": "Bien sûr, pas de problème !"
+            }
+          ],
+          "followUp": "Merci, tu es gentille !",
+          "newWords": [
+            "j'espère"
+          ]
+        },
+        {
+          "id": "sit_13_react_d02",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Théo annule ce soir, il a un problème."
+            },
+            {
+              "speaker": "learner",
+              "text": "Oh non ! Rien de grave, ___ ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa say about Théo?",
+              "choices": [
+                "He's coming late tonight",
+                "He's cancelling tonight"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Théo annule ce soir »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "espère",
+                "j'espère",
+                "j'espères"
+              ],
+              "correct": 1,
+              "why": [
+                "« Espère » needs its subject here: « j'espère ».",
+                "",
+                "With « je », no s: « j'espère »."
+              ]
+            }
+          ],
+          "followUp": "Non, il est un peu fatigué.",
+          "newWords": [
+            "rien de grave"
+          ]
+        },
+        {
+          "id": "sit_13_react_s01",
+          "place": "Texto · Théo · phrase seule",
+          "standalone": "Construire",
+          "cue": "Théo, your friend, says tu to you. He cancels tonight.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Désolé, Robin, j'annule ce soir, j'ai un problème."
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say oh no, nothing serious, you hope? And suggest doing it another time.",
+              "bank": [
+                "Oh non !",
+                "Rien de grave,",
+                "j'espère ?",
+                "On remet ça !",
+                "j'espères ?",
+                "On remets ça !"
+              ],
+              "accepted": [
+                [
+                  "Oh non !",
+                  "Rien de grave,",
+                  "j'espère ?",
+                  "On remet ça !"
+                ],
+                [
+                  "Oh non !",
+                  "On remet ça !",
+                  "Rien de grave,",
+                  "j'espère ?"
+                ]
+              ],
+              "model": "Oh non ! Rien de grave, j'espère ? On remet ça !"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_13_react_d03",
+          "place": "À l'appart",
+          "cue": "Léa, your flatmate, says tu to you at home. You're cancelling your evening out: you're very tired.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Tu annules ? Prends soin de toi !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Merci, je ___ au lit."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "reste",
+                "restes",
+                "rester"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Restes » goes with « tu »: « je » takes « reste ».",
+                "After « je », use a conjugated verb, not the infinitive."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa tell you?",
+              "choices": [
+                "To call her later",
+                "To take care of yourself"
+              ],
+              "correct": 1,
+              "miss": "Reread: « prends soin de toi ! »"
+            }
+          ],
+          "followUp": "Bonne idée. Repose-toi !",
+          "newWords": [
+            "prends soin de toi"
+          ]
+        },
+        {
+          "id": "sit_13_react_d04",
+          "place": "Les copains · groupe",
+          "cue": "Théo's group chat « Les copains ». Everyone says tu. Théo can't come this week.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "J'espère être là samedi !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « j'espère » mean here?",
+              "choices": [
+                "I promise",
+                "I think",
+                "I hope"
+              ],
+              "correct": 2,
+              "why": [
+                "« Promis » means I promise.",
+                "« Je crois » means I think.",
+                ""
+              ],
+              "target": "j'espère"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say you hope so too.",
+              "bank": [
+                "Moi aussi,",
+                "j'espère !",
+                "j'espères !",
+                "Toi aussi,",
+                "espère !"
+              ],
+              "accepted": [
+                [
+                  "Moi aussi,",
+                  "j'espère !"
+                ]
+              ],
+              "model": "Moi aussi, j'espère !"
+            }
+          ],
+          "followUp": "Merci ! Je vous tiens au courant.",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_react_s02",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "Mme Dumas, your landlady, says vous to you. She cancels your appointment. Reply kindly.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "T'inquiète, prends soin de toi !",
+                "Pas de problème, madame. Rien de grave, j'espère ?",
+                "Bref, dommage !"
+              ],
+              "correct": 1,
+              "why": [
+                "Good French, but « t'inquiète » and « prends soin de toi » are tu: say vous to your landlady.",
+                "",
+                "Good French, but « bref » sounds cold and too casual for your landlady."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_13_react_d05",
+          "place": "Appel · Inès",
+          "cue": "Clarify: Inès, your colleague, calls you. She cancelled tonight. She says tu to you. The line is bad.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Rien de grave, je suis un peu fatiguée."
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say sorry, you can't hear her well, and ask her to repeat.",
+              "bank": [
+                "Pardon,",
+                "je t'entends mal.",
+                "Tu peux répéter ?",
+                "je vous entends mal.",
+                "Vous pouvez répéter ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon,",
+                  "je t'entends mal.",
+                  "Tu peux répéter ?"
+                ],
+                [
+                  "Tu peux répéter ?",
+                  "Pardon,",
+                  "je t'entends mal."
+                ]
+              ],
+              "model": "Pardon, je t'entends mal. Tu peux répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « rien de grave » mean here?",
+              "choices": [
+                "a serious problem",
+                "nothing serious",
+                "nothing to eat"
+              ],
+              "correct": 1,
+              "why": [
+                "That would be « un problème grave ».",
+                "",
+                "That would be « rien à manger »."
+              ],
+              "target": "rien de grave"
+            }
+          ],
+          "followUp": "Rien de grave ! Un peu fatiguée, c'est tout.",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_react_d06",
+          "place": "Texto · Karim",
+          "cue": "Karim, your friend at the café, texts you. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Je ne viens pas ce soir, je suis fatigué."
+            },
+            {
+              "speaker": "learner",
+              "text": "Pas de souci ! Prends ___ de toi !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "temps",
+                "soin",
+                "soins"
+              ],
+              "correct": 1,
+              "why": [
+                "« Prends ton temps » means take your time: it doesn't go with « de toi ».",
+                "",
+                "« Prendre soin de » takes « soin », singular."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "Why isn't Karim coming?",
+              "choices": [
+                "He's working",
+                "He's tired"
+              ],
+              "correct": 1,
+              "miss": "Reread: « je suis fatigué »."
+            }
+          ],
+          "followUp": "Merci, Robin. Bonne soirée !",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_react_s03",
+          "place": "Texto · Inès · phrase seule",
+          "standalone": "Corriger",
+          "cue": "Inès, your colleague, says tu to you. She cancelled tonight. Text her.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Oh non, rien de grave, j'espères ? Prends soin de toi, Inès !",
+              "error": {
+                "word": "j'espères",
+                "fix": "j'espère",
+                "choices": [
+                  "espères",
+                  "j'espère",
+                  "espérer"
+                ],
+                "why": "With « je », « espère » has no s: « j'espère »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_13_react_d07",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you. You stayed home tonight because you're tired.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Repose-toi et prends soin de toi !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Merci, tu es ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « prends soin de toi » mean here?",
+              "choices": [
+                "take your time",
+                "take care of yourself",
+                "make yourself at home"
+              ],
+              "correct": 1,
+              "why": [
+                "« Prends ton temps » means take your time.",
+                "",
+                "« Fais comme chez toi » means make yourself at home."
+              ],
+              "target": "prends soin de toi"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "gentil",
+                "gentils",
+                "gentille"
+              ],
+              "correct": 2,
+              "why": [
+                "Léa is a woman: « gentille ».",
+                "« Gentils » is plural: Léa is one person.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "De rien ! Bonne soirée.",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_react_d08",
+          "place": "Sur le palier",
+          "cue": "M. Ferrand, your neighbour, says vous to you on the landing. Your flatmate Léa was coming to his apéro, but she cancelled.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Votre amie annule ? Rien de grave, j'espère ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say no: she's a little tired.",
+              "bank": [
+                "Non,",
+                "elle est",
+                "un peu",
+                "fatiguée.",
+                "fatigué.",
+                "il est",
+                "Oui,"
+              ],
+              "accepted": [
+                [
+                  "Non,",
+                  "elle est",
+                  "un peu",
+                  "fatiguée."
+                ]
+              ],
+              "model": "Non, elle est un peu fatiguée."
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does M. Ferrand ask?",
+              "choices": [
+                "If it's nothing serious",
+                "If she's coming tomorrow"
+              ],
+              "correct": 0,
+              "miss": "Reread: « rien de grave, j'espère ? »"
+            }
+          ],
+          "followUp": "D'accord. Bonne soirée, madame.",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_react_s04",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You said this to Léa (tu). Now Mme Dumas, your landlady, cancels. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Rien de grave, j'espère ? Prends soin de toi, Léa !",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say the same to her, with vous.",
+              "bank": [
+                "Rien de grave,",
+                "j'espère ?",
+                "Prenez",
+                "soin de vous,",
+                "madame !",
+                "Prends",
+                "soin de toi,",
+                "Léa !"
+              ],
+              "accepted": [
+                [
+                  "Rien de grave,",
+                  "j'espère ?",
+                  "Prenez",
+                  "soin de vous,",
+                  "madame !"
+                ]
+              ],
+              "model": "Rien de grave, j'espère ? Prenez soin de vous, madame !"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_13_react_d09",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "J'annule le cinéma, je suis fatiguée. Désolée !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Pas grave ! ___ que ce n'est rien de grave."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "Why is Inès cancelling?",
+              "choices": [
+                "She has to work",
+                "She's tired"
+              ],
+              "correct": 1,
+              "miss": "Reread: « je suis fatiguée »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "J'espère",
+                "J'espères",
+                "Espère"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "With « je », no s: « j'espère ».",
+                "« Espère » needs its subject here: « j'espère »."
+              ]
+            }
+          ],
+          "followUp": "Non, rien de grave. Merci !",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_react_d10",
+          "place": "Les copains · groupe",
+          "cue": "Théo's group chat « Les copains ». Everyone says tu.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Je ne viens pas samedi, j'ai un empêchement."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo say?",
+              "choices": [
+                "He's coming late on Saturday",
+                "He isn't coming on Saturday"
+              ],
+              "correct": 1,
+              "miss": "Reread: « je ne viens pas samedi »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Say no problem, and that you hope it's nothing serious.",
+              "bank": [
+                "Pas de problème !",
+                "Pas de souci !",
+                "Rien de grave,",
+                "j'espère ?",
+                "j'espères ?",
+                "espère ?"
+              ],
+              "accepted": [
+                [
+                  "Pas de problème !",
+                  "Rien de grave,",
+                  "j'espère ?"
+                ],
+                [
+                  "Pas de souci !",
+                  "Rien de grave,",
+                  "j'espère ?"
+                ],
+                [
+                  "Rien de grave,",
+                  "j'espère ?",
+                  "Pas de problème !"
+                ],
+                [
+                  "Rien de grave,",
+                  "j'espère ?",
+                  "Pas de souci !"
+                ]
+              ],
+              "model": "Pas de problème ! Rien de grave, j'espère ?"
+            }
+          ],
+          "followUp": "Non, t'inquiète ! On se voit dimanche.",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_react_s05",
+          "place": "Texto · Léa · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Which French words mean “take care of yourself”?",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Tu es fatiguée ? Reste à la maison, et ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "take care of yourself",
+              "choices": [
+                "à tout à l'heure",
+                "fais comme chez toi",
+                "prends soin de toi"
+              ],
+              "correct": 2,
+              "why": [
+                "« À tout à l'heure » means see you later.",
+                "« Fais comme chez toi » means make yourself at home.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_13_formal",
+      "title": "Reporter un rendez-vous",
+      "note": "The vous version: « reporter » (to postpone) a booking or an appointment, « je ne pourrai pas » (I won't be able to: the future of « pouvoir ») and « un créneau » (a time slot). After « je voudrais » or « je peux », « reporter » stays an infinitive; « reporté » is the past participle: « j'ai reporté ».",
+      "items": [
+        {
+          "id": "sit_13_formal_d01",
+          "place": "Appel · restaurant",
+          "cue": "You call the restaurant about your booking. The waitress says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Serveuse",
+              "text": "Vous voulez annuler ou reporter votre réservation ?",
+              "voice": "female"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the waitress ask?",
+              "choices": [
+                "If you want a table inside or outside",
+                "If you want to cancel or postpone"
+              ],
+              "correct": 1,
+              "miss": "Reread: « annuler ou reporter votre réservation ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say: postpone it to Saturday, please.",
+              "bank": [
+                "Reporter",
+                "à samedi,",
+                "s'il vous plaît.",
+                "Annuler",
+                "s'il te plaît.",
+                "Reporté"
+              ],
+              "accepted": [
+                [
+                  "Reporter",
+                  "à samedi,",
+                  "s'il vous plaît."
+                ]
+              ],
+              "model": "Reporter à samedi, s'il vous plaît."
+            }
+          ],
+          "followUp": "Samedi, très bien. À quelle heure ?",
+          "newWords": [
+            "reporter"
+          ]
+        },
+        {
+          "id": "sit_13_formal_d02",
+          "place": "Appel · plombier",
+          "cue": "You call the plumber about his visit to your flat. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Plombier",
+              "text": "Bonjour, madame. Je passe demain matin, c'est ça ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Non, je ne pourrai pas être là. Jeudi, vous ___ libre ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the plumber check?",
+              "choices": [
+                "That he's coming tomorrow morning",
+                "That he's coming on Thursday"
+              ],
+              "correct": 0,
+              "miss": "Reread: « je passe demain matin, c'est ça ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "es",
+                "êtes",
+                "est"
+              ],
+              "correct": 1,
+              "why": [
+                "« Es » goes with « tu »: say vous to the plumber.",
+                "",
+                "« Est » goes with il or elle."
+              ]
+            }
+          ],
+          "followUp": "Jeudi, oui. Dix heures, ça vous va ?",
+          "newWords": [
+            "je ne pourrai pas"
+          ]
+        },
+        {
+          "id": "sit_13_formal_s01",
+          "place": "Appel · restaurant · phrase seule",
+          "standalone": "Construire",
+          "cue": "You call the restaurant. The waitress says vous to you. You booked for Thursday.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Serveuse",
+              "text": "Bonjour, madame, je vous écoute. C'est pour une réservation ?",
+              "voice": "female"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say you won't be able to come on Thursday: you'd like to postpone your booking.",
+              "bank": [
+                "Je ne pourrai pas",
+                "venir",
+                "jeudi,",
+                "je voudrais",
+                "reporter",
+                "ma",
+                "réservation.",
+                "reporté",
+                "mon",
+                "Je pourrai"
+              ],
+              "accepted": [
+                [
+                  "Je ne pourrai pas",
+                  "venir",
+                  "jeudi,",
+                  "je voudrais",
+                  "reporter",
+                  "ma",
+                  "réservation."
+                ]
+              ],
+              "model": "Je ne pourrai pas venir jeudi, je voudrais reporter ma réservation."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_13_formal_d03",
+          "place": "Appel · restaurant",
+          "cue": "You're postponing your booking by phone. The waitress says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Serveuse",
+              "text": "J'ai un créneau samedi, à vingt heures.",
+              "voice": "female"
+            },
+            {
+              "speaker": "learner",
+              "text": "Parfait, ça me ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "vas",
+                "vais",
+                "va"
+              ],
+              "correct": 2,
+              "why": [
+                "« Vas » goes with « tu »: here the subject is « ça ».",
+                "« Vais » goes with « je »: here the subject is « ça ».",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does the waitress offer?",
+              "choices": [
+                "Saturday at 8 p.m.",
+                "Sunday at 8 p.m."
+              ],
+              "correct": 0,
+              "miss": "Reread: « samedi, à vingt heures »."
+            }
+          ],
+          "followUp": "C'est noté. À samedi, madame !",
+          "newWords": [
+            "créneau"
+          ]
+        },
+        {
+          "id": "sit_13_formal_d04",
+          "place": "WhatsApp · Mme Dumas",
+          "cue": "Mme Dumas, your landlady, writes on WhatsApp. She says vous to you. The plumber is coming to your flat tomorrow.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Mme Dumas",
+              "text": "Vous voulez reporter le rendez-vous avec le plombier ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « reporter » mean here?",
+              "choices": [
+                "to cancel",
+                "to postpone",
+                "to book"
+              ],
+              "correct": 1,
+              "why": [
+                "« Annuler » means to cancel.",
+                "",
+                "« Réserver » means to book."
+              ],
+              "target": "reporter"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes: you won't be able to be there.",
+              "bank": [
+                "Oui,",
+                "je ne pourrai pas",
+                "être là.",
+                "je pourrai",
+                "Non,",
+                "pas"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "je ne pourrai pas",
+                  "être là."
+                ]
+              ],
+              "model": "Oui, je ne pourrai pas être là."
+            }
+          ],
+          "followUp": "Bien. J'appelle le plombier.",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_formal_s02",
+          "place": "Appel · plombier · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "You call the plumber. He says vous to you. Ask to postpone your appointment.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "Salut ! On remet ça à jeudi ?",
+                "Bonjour, monsieur, je voudrais reporter notre rendez-vous, s'il vous plaît.",
+                "Je ne pourrai pas être là, bref !"
+              ],
+              "correct": 1,
+              "why": [
+                "Good French, but « salut » and « on remet ça » are for friends: say vous to the plumber.",
+                "",
+                "Good French, but « bref » is casual and sounds rude to the plumber."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_13_formal_d05",
+          "place": "Appel · restaurant",
+          "cue": "Clarify: you call the restaurant to postpone your booking. The waitress says vous to you. The line is bad.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Serveuse",
+              "text": "Je ne pourrai pas vous donner un créneau ce soir.",
+              "voice": "female"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say sorry, you can't hear her well, and ask her to repeat.",
+              "bank": [
+                "Pardon,",
+                "je vous entends mal.",
+                "Vous pouvez répéter ?",
+                "je t'entends mal.",
+                "Tu peux répéter ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon,",
+                  "je vous entends mal.",
+                  "Vous pouvez répéter ?"
+                ],
+                [
+                  "Vous pouvez répéter ?",
+                  "Pardon,",
+                  "je vous entends mal."
+                ]
+              ],
+              "model": "Pardon, je vous entends mal. Vous pouvez répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « je ne pourrai pas » mean here?",
+              "choices": [
+                "I don't want to",
+                "I won't be able to",
+                "I couldn't"
+              ],
+              "correct": 1,
+              "why": [
+                "« Je ne veux pas » means I don't want to.",
+                "",
+                "« Je ne pouvais pas » means I couldn't."
+              ],
+              "target": "je ne pourrai pas"
+            }
+          ],
+          "followUp": "Je répète : pas de créneau ce soir, désolée.",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_formal_d06",
+          "place": "Appel · plombier",
+          "cue": "The plumber calls you about your appointment. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Plombier",
+              "text": "Je peux reporter à jeudi, madame ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, jeudi, c'est ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "parfait",
+                "parfaite",
+                "parfaits"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "After « c'est », use the masculine: « c'est parfait ».",
+                "« Parfaits » is plural: after « c'est », say « parfait »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does the plumber ask?",
+              "choices": [
+                "If he can come today",
+                "If he can postpone to Thursday"
+              ],
+              "correct": 1,
+              "miss": "Reread: « je peux reporter à jeudi ? »"
+            }
+          ],
+          "followUp": "Merci, madame. À jeudi !",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_formal_s03",
+          "place": "Appel · plombier · phrase seule",
+          "standalone": "Corriger",
+          "cue": "You call the plumber. He says vous to you. You can't be there tomorrow.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Bonjour, monsieur, je ne pourrai pas être là demain, je voudrais reporté notre rendez-vous.",
+              "error": {
+                "word": "reporté",
+                "fix": "reporter",
+                "choices": [
+                  "reportez",
+                  "reporter",
+                  "reportée"
+                ],
+                "why": "After « je voudrais », use the infinitive: « reporter »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_13_formal_d07",
+          "place": "Appel · restaurant",
+          "cue": "You're postponing your booking by phone. The waitress says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Serveuse",
+              "text": "Vous préférez quel créneau, midi ou le soir ?",
+              "voice": "female"
+            },
+            {
+              "speaker": "learner",
+              "text": "Le soir, ___ vous plaît."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « créneau » mean here?",
+              "choices": [
+                "table",
+                "menu",
+                "time slot"
+              ],
+              "correct": 2,
+              "why": [
+                "« Une table » is a table.",
+                "« Le menu » is the set menu.",
+                ""
+              ],
+              "target": "créneau"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "si il",
+                "s'il",
+                "s'ils"
+              ],
+              "correct": 1,
+              "why": [
+                "« Si » + « il » elides: « s'il ».",
+                "",
+                "« S'il vous plaît » is fixed: « s'ils » is plural."
+              ]
+            }
+          ],
+          "followUp": "Très bien : samedi soir, vingt heures.",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_formal_d08",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you. You had a restaurant booking together.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Tu as annulé le restaurant ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say no: you postponed it to Saturday.",
+              "bank": [
+                "Non,",
+                "j'ai reporté",
+                "à samedi.",
+                "j'ai reporter",
+                "Oui,",
+                "à samedi ?"
+              ],
+              "accepted": [
+                [
+                  "Non,",
+                  "j'ai reporté",
+                  "à samedi."
+                ]
+              ],
+              "model": "Non, j'ai reporté à samedi."
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa ask?",
+              "choices": [
+                "If you booked the restaurant",
+                "If you cancelled the restaurant"
+              ],
+              "correct": 1,
+              "miss": "Reread: « tu as annulé le restaurant ? »"
+            }
+          ],
+          "followUp": "Ah, super ! Samedi, ça me va.",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_formal_s04",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Transformer",
+          "cue": "Mme Dumas, your landlady, says vous to you. You're meant to see her tomorrow. Put your message in the future. You're a woman.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Je ne peux pas venir demain, désolée, madame.",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say it in the future.",
+              "bank": [
+                "Je ne pourrai pas",
+                "venir",
+                "demain,",
+                "désolée,",
+                "madame.",
+                "Je ne peux pas",
+                "désolé,",
+                "venu"
+              ],
+              "accepted": [
+                [
+                  "Je ne pourrai pas",
+                  "venir",
+                  "demain,",
+                  "désolée,",
+                  "madame."
+                ]
+              ],
+              "model": "Je ne pourrai pas venir demain, désolée, madame."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_13_formal_d09",
+          "place": "Appel · restaurant",
+          "cue": "You've just postponed your booking by phone. The waitress says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Serveuse",
+              "text": "Votre nouveau créneau, c'est samedi, vingt heures.",
+              "voice": "female"
+            },
+            {
+              "speaker": "learner",
+              "text": "Merci, c'est ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "When is your new slot?",
+              "choices": [
+                "Sunday at 8 p.m.",
+                "Saturday at 8 p.m."
+              ],
+              "correct": 1,
+              "miss": "Reread: « c'est samedi, vingt heures »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "noter",
+                "noté",
+                "notée"
+              ],
+              "correct": 1,
+              "why": [
+                "« Noter » is the infinitive: say « c'est noté ».",
+                "",
+                "After « c'est », use the masculine: « c'est noté »."
+              ]
+            }
+          ],
+          "followUp": "Merci à vous. Bonne soirée !",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_formal_d10",
+          "place": "WhatsApp · Mme Dumas",
+          "cue": "Mme Dumas, your landlady, writes on WhatsApp. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Mme Dumas",
+              "text": "Le plombier peut passer mardi matin. Ça vous va ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "When can the plumber come?",
+              "choices": [
+                "Tuesday morning",
+                "Thursday morning"
+              ],
+              "correct": 0,
+              "miss": "Reread: « mardi matin »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Say you won't be able to: you'll be at the office.",
+              "bank": [
+                "Je ne pourrai pas,",
+                "je serai",
+                "au bureau.",
+                "je suis",
+                "à la bureau.",
+                "Je pourrai,"
+              ],
+              "accepted": [
+                [
+                  "Je ne pourrai pas,",
+                  "je serai",
+                  "au bureau."
+                ],
+                [
+                  "Je ne pourrai pas,",
+                  "je suis",
+                  "au bureau."
+                ]
+              ],
+              "model": "Je ne pourrai pas, je serai au bureau."
+            }
+          ],
+          "followUp": "Bien. Je lui demande un autre créneau.",
+          "newWords": []
+        },
+        {
+          "id": "sit_13_formal_s05",
+          "place": "Appel · restaurant · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Which French word means “to postpone”?",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Je ne pourrai pas venir jeudi, je voudrais ___ ma réservation à samedi."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "to postpone",
+              "choices": [
+                "réserver",
+                "reporter",
+                "rapporter"
+              ],
+              "correct": 1,
+              "why": [
+                "« Réserver » means to book.",
+                "",
+                "« Rapporter » means to bring back."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    }
+  ]
+}
