@@ -461,3 +461,23 @@ enum SituationMastery {
         return kinds.count >= distinctKinds
     }
 }
+
+// MARK: - Retry gate
+
+/// Vérifier after a wrong Répondre. A miss keeps the reply's correct start
+/// placed (Book 1's second-try pattern), so the learner's answer is still on
+/// screen. Checking that same answer again must not spend the second try:
+/// Vérifier stays off until the learner changes the answer.
+enum SituationRetry {
+    /// Answers to refuse after `tiles` was graded wrong: the wrong reply itself
+    /// and the `keep` tiles left in place for the retry.
+    static func rejected(after tiles: [String], keep: Int) -> [[String]] {
+        [tiles, Array(tiles.prefix(max(0, keep)))]
+    }
+
+    /// Vérifier is on when something is placed and it differs from every
+    /// answer already refused for this drill.
+    static func canCheck(_ tiles: [String], rejected: [[String]]) -> Bool {
+        !tiles.isEmpty && !rejected.contains(tiles)
+    }
+}

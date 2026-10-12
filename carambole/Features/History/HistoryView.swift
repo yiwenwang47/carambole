@@ -17,6 +17,8 @@ import Combine
 final class HistoryViewModel: ObservableObject {
     /// One row per active day, newest first.
     @Published var days: [DayActivity] = []
+    /// *En situation* only: wrong attempts by day, newest first (`loadMistakes`).
+    @Published var mistakes: [MistakeDay] = []
 
     /// One calendar day's activity. Value type so the bucketing is pure + testable.
     struct DayActivity: Identifiable {
@@ -114,6 +116,73 @@ final class HistoryViewModel: ObservableObject {
 }
 
 
+// MARK: - Mistake log (*En situation*)
+
+extension HistoryViewModel {
+    /// One wrong attempt from `situation_attempt_log`, labelled for display.
+    struct MistakeEntry: Identifiable, Equatable {
+        let id: Int
+        let date: Date
+        /// Drill name as the session showed it ("Corriger", or a standalone label).
+        let title: String
+        /// The move (element) it belongs to.
+        let move: String
+        let given: String
+        let expected: String
+        let why: String?
+    }
+
+    /// One calendar day of mistakes, newest attempt first.
+    struct MistakeDay: Identifiable, Equatable {
+        let day: Date
+        let entries: [MistakeEntry]
+        var id: TimeInterval { day.timeIntervalSince1970 }
+    }
+
+    /// Whether this book keeps a mistake log (only *En situation* does).
+    var hasMistakeLog: Bool { descriptor.kind == .situation }
+
+    /// Loads the book's attempt log off-main. Called by the History page only,
+    /// so the shelf's ribbon models never pay for it.
+    func loadMistakes() {
+        guard hasMistakeLog else { return }
+        let descriptor = self.descriptor
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            let book = ContentLoader.loadBook(descriptor)
+            var moves: [String: String] = [:]
+            var standalone: [String: String] = [:]
+            for element in book.allElements {
+                moves[element.id] = element.label
+                for item in element.items { standalone[item.id] = item.standalone }
+            }
+            let result = HistoryViewModel.mistakeDays(
+                attempts: DataManager.shared.fetchSituationAttempts(bookID: descriptor.id),
+                moves: moves, standalone: standalone, calendar: .current)
+            DispatchQueue.main.async { self?.mistakes = result }
+        }
+    }
+
+    /// Buckets attempts (any order) into calendar days, newest day first and
+    /// newest attempt first within a day. The title matches the session's:
+    /// a standalone item's label, else the drill type's French name. Pure.
+    static func mistakeDays(attempts: [DataManager.SituationAttempt], moves: [String: String],
+                            standalone: [String: String], calendar: Calendar) -> [MistakeDay] {
+        let entries = attempts.enumerated().map { i, a in
+            MistakeEntry(
+                id: i, date: a.createdAt,
+                title: standalone[a.dialogueID] ?? SituationDrill.Kind(rawValue: a.drillType)?.title ?? a.drillType,
+                move: moves[a.elementID] ?? "",
+                given: a.given, expected: a.expected, why: a.reason)
+        }
+        let byDay = Dictionary(grouping: entries) { calendar.startOfDay(for: $0.date) }
+        return byDay
+            .map { day, list in
+                MistakeDay(day: day, entries: list.sorted { ($0.date, $1.id) > ($1.date, $0.id) })
+            }
+            .sorted { $0.day > $1.day }
+    }
+}
+
 // MARK: - Read-only helpers (history, ribbon window + streak)
 
 extension HistoryViewModel {
@@ -177,8 +246,12 @@ struct HistoryView: View {
     }
 
     var body: some View {
-        HistoryContent(days: viewModel.days, today: Date()) { dismiss() }
-            .onAppear { viewModel.load() }
+        HistoryContent(days: viewModel.days, today: Date(),
+                       mistakes: viewModel.hasMistakeLog ? viewModel.mistakes : nil) { dismiss() }
+            .onAppear {
+                viewModel.load()
+                viewModel.loadMistakes()
+            }
             .toolbar(.hidden, for: .navigationBar)
             .navigationBarBackButtonHidden(true)
     }
@@ -187,11 +260,17 @@ struct HistoryView: View {
 /// motion.html 09: `‹ Historique` · `Depuis le début`, the two totals, `Série N j`,
 /// an ink rule, then all recorded days newest first and the footnote pinned to
 /// the bottom. Data-in, so the layout is previewable with fixed days.
+/// *En situation* adds its mistake log: a `Jours · Erreurs` switch on the
+/// Série line swaps the day list for the wrong attempts, by day.
 struct HistoryContent: View {
     /// All active days, newest first (`HistoryViewModel.days`).
     let days: [HistoryViewModel.DayActivity]
     let today: Date
+    /// Wrong attempts by day, newest first; nil when the book keeps no log.
+    var mistakes: [HistoryViewModel.MistakeDay]? = nil
     let onBack: () -> Void
+
+    @State private var showMistakes = false
 
     /// Full recorded span, NEWEST first, rest days included.
     private var history: [HistoryViewModel.DayActivity] {
@@ -216,15 +295,27 @@ struct HistoryContent: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .allowsHitTesting(false)
             } else {
-                Text("Série \(HistoryViewModel.streak(days: days, today: today, calendar: .current)) j")
-                    .uppercaseLabel(AppColor.ink)
-                    .padding(.leading, Spacing.screenH)
-                    .padding(.top, 214)
-                    .accessibilityLabel("Série de \(HistoryViewModel.streak(days: days, today: today, calendar: .current)) jours")
+                HStack(alignment: .firstTextBaseline) {
+                    Text("Série \(HistoryViewModel.streak(days: days, today: today, calendar: .current)) j")
+                        .uppercaseLabel(AppColor.ink)
+                        .accessibilityLabel("Série de \(HistoryViewModel.streak(days: days, today: today, calendar: .current)) jours")
+                    Spacer()
+                    if let mistakes {
+                        listSwitch(mistakeCount: mistakes.reduce(0) { $0 + $1.entries.count })
+                    }
+                }
+                .padding(.horizontal, Spacing.screenH)
+                .padding(.top, 214)
 
-                dayList(rows)
-                    .padding(.top, 252)
-                    .padding(.bottom, 84)   // clears the two-line footnote
+                Group {
+                    if let mistakes, showMistakes {
+                        mistakeList(mistakes)
+                    } else {
+                        dayList(rows)
+                    }
+                }
+                .padding(.top, 252)
+                .padding(.bottom, 84)   // clears the two-line footnote
             }
 
             Text("Les révisions d'avant cette mise à jour sont approximatives.")
@@ -239,6 +330,14 @@ struct HistoryContent: View {
         .ignoresSafeArea()
         .contentShape(Rectangle())
         .swipeToGoBack { onBack() }
+        #if DEBUG
+        // Simulator checks: CB_HISTORY_TAB=erreurs opens the mistake log.
+        .onAppear {
+            if mistakes != nil, ProcessInfo.processInfo.environment["CB_HISTORY_TAB"] == "erreurs" {
+                showMistakes = true
+            }
+        }
+        #endif
     }
 
     /// `.days`: ink top rule, then one hairline-separated row per day.
@@ -249,6 +348,82 @@ struct HistoryContent: View {
                 LazyVStack(spacing: 0) {
                     ForEach(Array(rows.enumerated()), id: \.element.id) { index, day in
                         DayRow(activity: day, isToday: index == 0)
+                    }
+                }
+            }
+            .scrollIndicators(.hidden)
+            .scrollBounceBehavior(.basedOnSize)
+        }
+        .padding(.horizontal, Spacing.screenH)
+    }
+
+    /// `Jours · Erreurs N`: two quiet labels; the shown list is ink.
+    private func listSwitch(mistakeCount: Int) -> some View {
+        HStack(spacing: 14) {
+            switchLabel("Jours", selected: !showMistakes) { showMistakes = false }
+            switchLabel("Erreurs · \(mistakeCount)", selected: showMistakes) { showMistakes = true }
+                .accessibilityLabel("Erreurs, \(mistakeCount)")
+        }
+    }
+
+    private func switchLabel(_ title: String, selected: Bool, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Text(title)
+                .uppercaseLabel(selected ? AppColor.ink : AppColor.g2)
+                .padding(.vertical, 8)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .padding(.vertical, -8)
+        .accessibilityAddTraits(selected ? .isSelected : [])
+    }
+
+    /// The mistake log: same ink rule and hairline rows as the day list. Each
+    /// day reads `Ven. 9 oct.` · `N erreurs`, then its attempts, newest first,
+    /// each under its move's name.
+    private func mistakeList(_ mistakeDays: [HistoryViewModel.MistakeDay]) -> some View {
+        VStack(spacing: 0) {
+            Rectangle().fill(AppColor.ink).frame(height: 1)
+            if mistakeDays.isEmpty {
+                Text("Aucune erreur.")
+                    .font(.display(size: 15, wght: 400))
+                    .foregroundColor(AppColor.graphite)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.vertical, 11)
+            }
+            ScrollView {
+                LazyVStack(alignment: .leading, spacing: 0) {
+                    ForEach(mistakeDays) { day in
+                        HStack(alignment: .firstTextBaseline) {
+                            Text(DayRow.longDate(day.day))
+                                .font(.display(size: 15, wght: 400))
+                                .foregroundColor(AppColor.ink)
+                            Spacer(minLength: 12)
+                            Text(day.entries.count == 1 ? "1 erreur" : "\(day.entries.count) erreurs")
+                                .uppercaseLabel(AppColor.ink)
+                        }
+                        .lineLimit(1)
+                        .padding(.top, 14)
+                        .padding(.bottom, 4)
+                        .accessibilityElement(children: .combine)
+                        .accessibilityAddTraits(.isHeader)
+                        ForEach(day.entries) { entry in
+                            VStack(alignment: .leading, spacing: 4) {
+                                if !entry.move.isEmpty {
+                                    Text(entry.move)
+                                        .font(.display(size: 13, wght: 500))
+                                        .foregroundColor(AppColor.ink)
+                                }
+                                SituationMistakeRow(title: entry.title, given: entry.given,
+                                                    expected: entry.expected, why: entry.why)
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.vertical, 10)
+                            .overlay(alignment: .bottom) {
+                                Rectangle().fill(AppColor.hairline).frame(height: 1)
+                            }
+                            .accessibilityElement(children: .combine)
+                        }
                     }
                 }
             }
@@ -411,6 +586,32 @@ extension HistoryViewModel {
         let d2 = row(day2Start)
         assert(d2.learned == 0, "day2 learned=0, got \(d2.learned)")
         assert(d2.reviewed == 2, "day2 reviewed=2 (a,b), got \(d2.reviewed)")
+
+        _selfTestMistakes(cal)
+    }
+
+    /// Mistake log bucketing: days newest first, attempts newest first within
+    /// a day, standalone label over the drill name, unknown type kept raw.
+    private static func _selfTestMistakes(_ cal: Calendar) {
+        func attempt(_ t: TimeInterval, _ element: String, _ item: String, _ type: String) -> DataManager.SituationAttempt {
+            .init(bookID: "b", elementID: element, dialogueID: item, drillType: type,
+                  given: "g\(Int(t))", expected: "e", reason: nil, createdAt: Date(timeIntervalSince1970: t))
+        }
+        let attempts = [
+            attempt(100, "sit_m", "d01", "fix"),                 // day 0, earlier
+            attempt(86_400 + 50, "sit_m", "s01", "reply"),       // day 1 (standalone)
+            attempt(200, "sit_m", "d02", "pick"),                // day 0, later
+            attempt(300, "sit_x", "d03", "mystery"),             // day 0, unknown move + type
+        ]
+        let days = mistakeDays(attempts: attempts, moves: ["sit_m": "Commander"],
+                               standalone: ["s01": "Construire"], calendar: cal)
+        assert(days.count == 2, "two mistake days")
+        assert(days.first?.day == cal.startOfDay(for: Date(timeIntervalSince1970: 86_400)), "newest day first")
+        assert(days[0].entries.map(\.title) == ["Construire"], "standalone label wins")
+        assert(days[1].entries.map(\.given) == ["g300", "g200", "g100"], "newest attempt first in a day")
+        assert(days[1].entries.map(\.title) == ["mystery", "Choisir", "Corriger"], "drill names")
+        assert(days[1].entries[0].move.isEmpty && days[1].entries[1].move == "Commander", "move labels")
+        assert(mistakeDays(attempts: [], moves: [:], standalone: [:], calendar: cal).isEmpty, "no attempts → no days")
     }
 }
 #endif

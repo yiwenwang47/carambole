@@ -50,6 +50,10 @@ struct TodayView: View {
     /// False until the push has settled: the first drop waits for it, so the
     /// tokens fall on a still screen with its final size.
     @State private var settled = false
+    #if DEBUG
+    /// `DemoRemote.openHistory`: pushes History without a tap (simulator checks).
+    @State private var remoteHistory = false
+    #endif
     @AppStorage(AppPalette.storageKey) private var paletteID = AppPalette.fallback.rawValue
 
     private var scene: TokenPileScene { holder.scene }
@@ -124,6 +128,15 @@ struct TodayView: View {
             // A rightward token throw is not a back-swipe.
             if !scene.isHandlingTouch { dismiss() }
         }
+        #if DEBUG
+        .navigationDestination(isPresented: $remoteHistory) { HistoryView(book: viewModel.descriptor) }
+        .onReceive(NotificationCenter.default.publisher(for: DemoRemote.Action.openHistory.notification)) { _ in
+            remoteHistory = true
+        }
+        .onReceive(NotificationCenter.default.publisher(for: DemoRemote.Action.closeHistory.notification)) { _ in
+            remoteHistory = false
+        }
+        #endif
     }
 
     // MARK: Header
