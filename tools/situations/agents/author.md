@@ -24,7 +24,7 @@ Write only your two files. Other authors work on the other halves at the same ti
 
 - **Item order.** Each element is `sit_NN_<move>` with a `title`, a `note` (an English learner note) and 15 items in this order: `d01 d02 s01 d03 d04 s02 d05 d06 s03 d07 d08 s04 d09 d10 s05`.
 - **Standalones.** Each move has one Construire, one Choisir le ton, one Corriger, one Transformer and one Mot en retour. Each standalone's `place` names the setting its cue describes, plus « · phrase seule ».
-- **Cast.** Use the canonical names. Robin is a woman, so her lines are feminine only. Karim's, M. Ferrand's and Mme Dumas's *tu* / *vous* follow the judge spec.
+- **Cast.** Use the canonical names. Robin is a woman, so her lines are feminine only. Karim's, M. Ferrand's and Mme Dumas's *tu* / *vous* follow the judge spec. Give every unnamed server turn a `role`, the French label shown above its bubble (« Vendeuse », « Livreur », « Passante », « Messagerie »), in the gender of its `voice`.
 - **Line limits.** Dialogue lines have at most 10 words. A dialogue has at most 3 lines, including the built reply. Standalone lines have 8–14 words.
 - **Drills.** 1–2 per dialogue, no repeated type, no Répondre + Choisir together.
 - **Choices.** Vary the slot of the correct answer, and keep `why` lined up with `choices`.

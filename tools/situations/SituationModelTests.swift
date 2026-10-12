@@ -50,6 +50,24 @@ struct SituationModelTests {
         check(first?.turnAudioKey(0) == "sit_06_order_d01_t0", "turn audio key")
         check(first?.followUpAudioKey == "sit_06_order_d01_f", "follow-up audio key")
 
+        // Speaker labels: cast name, else the display role; never a "Serveur" fallback.
+        let servers = items.flatMap { $0.turns.filter { !$0.isLearner } }
+        check(servers.allSatisfy { $0.speakerLabel != nil }, "every bundled server turn has a name or role")
+        check(servers.allSatisfy { $0.name == nil || $0.role == nil }, "role only on unnamed server turns")
+        let byID = Dictionary(uniqueKeysWithValues: items.map { ($0.id, $0) })
+        check(byID["sit_07_bread_d01"]?.turns.first?.speakerLabel == "Boulangère", "baker's role label")
+        check(byID["sit_07_bread_d01"]?.followUpSpeaker == "Boulangère", "follow-up takes the first server's role")
+        check(byID["sit_10_address_d01"]?.turns.first?.speakerLabel == "Livreur", "delivery driver's role label")
+        check(byID["sit_09_voicemail_d01"]?.turns.first?.speakerLabel == "Messagerie", "voicemail role label")
+        check(byID["sit_09_voicemail_d01"]?.followUpSpeaker == "Serveur", "followUpRole overrides the voicemail")
+        check(byID["sit_06_order_d01"]?.followUpSpeaker == "Karim", "named server still labels the follow-up")
+        let bare = try decoder.decode(SituationItem.self, from: Data("""
+            {"id": "x", "cue": "c", "turns": [{"speaker": "server", "text": "Bonjour !"}],
+             "drills": [], "followUp": "Voilà.", "newWords": []}
+            """.utf8))
+        check(bare.turns[0].speakerLabel == nil, "no name and no role → no label")
+        check(bare.followUpSpeaker == nil, "no name and no role → no follow-up label")
+
         // Every accepted reply grades correct; the model is accepted; a one-tile
         // change grades wrong.
         for item in items {

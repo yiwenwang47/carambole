@@ -34,8 +34,11 @@ struct PilotDialogue: Decodable, Identifiable {
         }
         /// "server" or "learner". Any non-learner voice counts as "server".
         let speaker: String
-        /// Cast name shown above a server bubble ("Karim", "Léa"). Nil → "Serveur".
+        /// Cast name shown above a server bubble ("Karim", "Léa").
         let name: String?
+        /// Display-only French role for an unnamed server ("Vendeuse",
+        /// "Livreur", "Messagerie"). Never picks a voice.
+        let role: String?
         /// Transformer: the learner's earlier line, shown grey, to rewrite.
         let source: Bool?
         /// One line may hold a `___` gap (Compléter, Mot en retour).
@@ -45,6 +48,8 @@ struct PilotDialogue: Decodable, Identifiable {
 
         var isLearner: Bool { speaker == "learner" }
         var isSource: Bool { source == true }
+        /// Label above a server bubble: the cast name, else the role, else none.
+        var speakerLabel: String? { name ?? role }
     }
 
     let id: String
@@ -56,6 +61,8 @@ struct PilotDialogue: Decodable, Identifiable {
     let followUp: String?
     /// Who says the follow-up; defaults to the first named server turn.
     let followUpBy: String?
+    /// Display-only role for the follow-up when it is not the first server's.
+    let followUpRole: String?
     /// Label above the cue: place or channel ("Au café", "Texto · Léa").
     let place: String?
     /// Standalone sentence drill label ("Transformer", "Mot en retour"…).
@@ -64,7 +71,13 @@ struct PilotDialogue: Decodable, Identifiable {
     let newWords: [String]
 
     var isStandalone: Bool { standalone != nil }
-    var followUpSpeaker: String? { followUpBy ?? turns.first { !$0.isLearner && $0.name != nil }?.name }
+    /// Label above the follow-up: `followUpBy`, else the first named server,
+    /// else the first server's role (the same speaker the audio uses).
+    var followUpSpeaker: String? {
+        followUpBy ?? followUpRole
+            ?? turns.first { !$0.isLearner && $0.name != nil }?.name
+            ?? turns.first { !$0.isLearner }?.role
+    }
 
     var gapTurnIndex: Int? { turns.firstIndex { $0.text.contains("___") } }
     var errorTurnIndex: Int? { turns.firstIndex { $0.error != nil } }

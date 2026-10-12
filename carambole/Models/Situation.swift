@@ -42,8 +42,11 @@ struct SituationItem: Decodable, Equatable, Identifiable {
         }
         /// "server" or "learner".
         let speaker: String
-        /// Cast name above a server bubble ("Karim"). Nil → "Serveur".
+        /// Cast name above a server bubble ("Karim").
         let name: String?
+        /// Display-only French role for an unnamed server ("Vendeuse",
+        /// "Livreur", "Messagerie"). Never picks a voice.
+        let role: String?
         /// Transformer: the learner's earlier line, shown grey, to rewrite.
         let source: Bool?
         /// One line may hold a `___` gap (Compléter, Mot en retour).
@@ -53,6 +56,8 @@ struct SituationItem: Decodable, Equatable, Identifiable {
 
         var isLearner: Bool { speaker == "learner" }
         var isSource: Bool { source == true }
+        /// Label above a server bubble: the cast name, else the role, else none.
+        var speakerLabel: String? { name ?? role }
     }
 
     let id: String
@@ -63,13 +68,20 @@ struct SituationItem: Decodable, Equatable, Identifiable {
     /// Server's closing line. Standalone drills have none.
     let followUp: String?
     let followUpBy: String?
+    /// Display-only role for the follow-up when it is not the first server's
+    /// (a voicemail turn whose follow-up is the restaurant calling back).
+    let followUpRole: String?
     /// Standalone drill label ("Construire", "Corriger"…). Nil for a dialogue.
     let standalone: String?
     let newWords: [String]
 
     var isStandalone: Bool { standalone != nil }
+    /// Label above the follow-up bubble. Mirrors the audio voice choice:
+    /// `followUpBy`, else the first named server, else the first server's role.
     var followUpSpeaker: String? {
-        followUpBy ?? turns.first { !$0.isLearner && $0.name != nil }?.name
+        followUpBy ?? followUpRole
+            ?? turns.first { !$0.isLearner && $0.name != nil }?.name
+            ?? turns.first { !$0.isLearner }?.role
     }
     var gapTurnIndex: Int? { turns.firstIndex { $0.text.contains("___") } }
     var errorTurnIndex: Int? { turns.firstIndex { $0.error != nil } }

@@ -9,6 +9,8 @@ struct PilotScenarioTests {
         assert(review.validationErrors.isEmpty, review.validationErrors.joined(separator: "; "))
         assert(review.dialogues.count == 9)
         assert(review.dialogues.filter(\.isStandalone).count == 3)
+        // Every server bubble in the review set has a label (cast name or role).
+        assert(review.dialogues.allSatisfy { $0.turns.allSatisfy { $0.isLearner || $0.speakerLabel != nil } })
 
         // The checks below use the approved v2 pilot cards as a fixed fixture,
         // so any review set can be validated above without matching their IDs.
@@ -34,6 +36,18 @@ struct PilotScenarioTests {
         // Follow-up voice: explicit speaker wins over the first named turn.
         let chat = content.dialogues.first { $0.id == "sit_06_cafe_groupchat_01" }!
         assert(chat.followUpSpeaker == "Théo")
+
+        // Unnamed speakers show their role, or no label at all (no "Serveur" fallback).
+        let roled = try JSONDecoder().decode(PilotDialogue.self, from: Data("""
+            {"id": "r", "element": "e", "cue": "c", "newWords": [], "drills": [], "followUp": "Voilà.",
+             "turns": [{"speaker": "server", "role": "Livreur", "text": "Bonjour !"}]}
+            """.utf8))
+        assert(roled.turns[0].speakerLabel == "Livreur" && roled.followUpSpeaker == "Livreur")
+        let bare = try JSONDecoder().decode(PilotDialogue.self, from: Data("""
+            {"id": "b", "element": "e", "cue": "c", "newWords": [], "drills": [], "followUp": "Voilà.",
+             "turns": [{"speaker": "server", "text": "Bonjour !"}]}
+            """.utf8))
+        assert(bare.turns[0].speakerLabel == nil && bare.followUpSpeaker == nil)
 
         // Reply grading accepts every listed reply and nothing else.
         let usual = content.dialogues.first { $0.id == "sit_06_cafe_usual_01" }!

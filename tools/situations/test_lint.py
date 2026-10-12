@@ -75,6 +75,52 @@ class SituationLintTests(unittest.TestCase):
     def test_valid_module(self):
         self.assertEqual([], self.errors(draft=True))
 
+    def test_unnamed_server_needs_role_in_strict_mode(self):
+        turn = self.module["elements"][0]["items"][0]["turns"][0]
+        del turn["name"]
+        self.assert_bad("unnamed server turn needs a role")
+        self.assertEqual([], self.errors(draft=True))
+        turn["role"] = "Serveur"
+        self.assertNotIn("needs a role", "\n".join(self.errors()))
+
+    def test_role_only_on_unnamed_server_turns(self):
+        item = self.module["elements"][0]["items"][0]
+        item["turns"][0]["role"] = "Serveur"
+        self.assert_bad("role is only for an unnamed server turn")
+        del item["turns"][0]["role"]
+        item["turns"].append({"speaker": "learner", "role": "Cliente", "text": "Oui, café."})
+        self.assert_bad("role is only for an unnamed server turn")
+
+    def test_role_is_capitalised_french(self):
+        turn = self.module["elements"][0]["items"][0]["turns"][0]
+        del turn["name"]
+        for bad in ("serveur", "Waiter!", "SERVEUR", ""):
+            turn["role"] = bad
+            self.assert_bad("must be a capitalised French label")
+        for good in ("Boulangère", "Agent d'accueil", "Messagerie"):
+            turn["role"] = good
+            self.assertNotIn("capitalised French", "\n".join(self.errors()))
+
+    def test_role_gender_matches_voice(self):
+        turn = self.module["elements"][0]["items"][0]["turns"][0]
+        del turn["name"]
+        turn["role"] = "Vendeuse"
+        self.assert_bad("does not match the turn's male voice")
+        turn["voice"] = "female"
+        self.assertNotIn("does not match", "\n".join(self.errors()))
+        turn["role"] = "Livreur"
+        self.assert_bad("does not match the turn's female voice")
+
+    def test_follow_up_role(self):
+        item = self.module["elements"][0]["items"][0]
+        item["followUpRole"] = "Serveur"
+        self.assertNotIn("followUpRole", "\n".join(self.errors()))
+        item["followUpBy"] = "Karim"
+        self.assert_bad("followUpRole")
+        del item["followUpBy"]
+        item["followUpRole"] = "serveur"
+        self.assert_bad("followUpRole")
+
     def test_card_counts_and_order(self):
         self.module["elements"][0]["items"].pop()
         self.assert_bad("10 dialogues and 5 standalone")

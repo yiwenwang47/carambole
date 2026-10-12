@@ -31,6 +31,15 @@ SOCIAL_CAST = {"Léa", "Théo", "Inès", "M. Ferrand", "Mme Dumas"}
 CAST_ALIASES = {"Monsieur Ferrand": "M. Ferrand", "Madame Dumas": "Mme Dumas",
                 "Ines": "Inès", "Lea": "Léa", "Theo": "Théo"}
 VOICES = {"male", "female"}
+# `role` is the display-only French label above an unnamed server bubble
+# (« Vendeuse », « Livreur », « Messagerie »). One capitalised French noun
+# phrase: letters, spaces, apostrophes and hyphens.
+ROLE = re.compile(r"^[A-ZÀÂÇÉÈÊËÎÏÔÛÙÜŸŒÆ][a-zàâçéèêëîïôûùüÿœæ'’ -]*$")
+# Gendered roles must match the turn's voice (`voice: "female"` → feminine).
+FEMININE_ROLES = {"Vendeuse", "Serveuse", "Boulangère", "Marchande", "Voisine",
+                  "Passante", "Livreuse", "Pharmacienne", "Caissière"}
+MASCULINE_ROLES = {"Vendeur", "Serveur", "Boulanger", "Marchand", "Voisin",
+                   "Passant", "Livreur", "Pharmacien", "Caissier"}
 TEXTING = re.compile(r"(?i)(?<!\w)(?:mdr|stp|jsp|slt|svp|ptdr|bjr)(?!\w)")
 # Robin, the learner, is a woman (user decision 2026-10-11): her own lines use
 # feminine agreement only. Flags a masculine first-person form in a learner
@@ -194,6 +203,23 @@ def word_errors(word_data: dict, audio_dir: Path = AUDIO, *, check_audio: bool =
     return errors
 
 
+def _role_errors(iid: str, turn: dict, draft: bool) -> list[str]:
+    """`role` labels an unnamed server turn; strict mode requires one there."""
+    unnamed_server = turn.get("speaker") == "server" and not turn.get("name")
+    if "role" not in turn:
+        return [] if draft or not unnamed_server else [
+            f"{iid}: unnamed server turn needs a role (« Vendeuse », « Livreur »…)"]
+    role = turn["role"]
+    if not unnamed_server:
+        return [f"{iid}: role is only for an unnamed server turn"]
+    if not isinstance(role, str) or not ROLE.match(role):
+        return [f"{iid}: role '{role}' must be a capitalised French label"]
+    female = turn.get("voice") == "female"
+    if female and role in MASCULINE_ROLES or not female and role in FEMININE_ROLES:
+        return [f"{iid}: role '{role}' does not match the turn's {'female' if female else 'male'} voice"]
+    return []
+
+
 def lint_content(module: dict, word_data: dict, audio_dir: Path = AUDIO,
                  *, check_audio: bool = True, draft: bool = False,
                  other_ids: set[str] | None = None,
@@ -290,6 +316,7 @@ def lint_content(module: dict, word_data: dict, audio_dir: Path = AUDIO,
                 if "voice" in turn and (turn["voice"] not in VOICES or turn.get("name")
                                         or turn.get("speaker") != "server"):
                     errors.append(f"{iid}: voice is only 'male' or 'female' on an unnamed server turn")
+                errors += _role_errors(iid, turn, draft)
                 count = len(tokens(turn.get("text", "")))
                 if not solo and count > 10:
                     errors.append(f"{iid}: dialogue line over 10 words")
@@ -299,6 +326,9 @@ def lint_content(module: dict, word_data: dict, audio_dir: Path = AUDIO,
                     _audio(errors, audio_dir, f"{iid}_t{index}")
             if not solo and check_audio:
                 _audio(errors, audio_dir, f"{iid}_f")
+            if "followUpRole" in item and (solo or item.get("followUpBy")
+                                           or not ROLE.match(str(item["followUpRole"]))):
+                errors.append(f"{iid}: followUpRole is a capitalised French role on a dialogue without followUpBy")
             gaps = sum(t.get("text", "").count("___") for t in turns)
             if gaps != (1 if "complete" in kinds else 0):
                 errors.append(f"{iid}: complete needs exactly one gap")

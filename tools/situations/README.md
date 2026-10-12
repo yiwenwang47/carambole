@@ -14,8 +14,16 @@ dialogue and standalone fields use the shape decoded by
 Each turn has `speaker: "server" | "learner"`, `text`, optional cast `name`,
 optional `source: true` for Transformer, and optional `error` for Corriger.
 An unnamed server turn may set `voice: "female"` (or `"male"`, the default)
-to pick the anonymous Neural2 voice; a role label in `name` such as
-« Pharmacienne » also gets the male default unless it is in the cast table.
+to pick the anonymous Neural2 voice. Every unnamed server turn also needs a
+display-only `role`: the capitalised French label shown above its bubble
+(« Vendeuse », « Livreur », « Boulangère », « Passant », « Messagerie »). Its
+gender matches the voice (`voice: "female"` → « Serveuse », not « Serveur »).
+`role` never changes audio, and only unnamed server turns may carry it; the
+app shows `name ?? role` and no label at all when both are missing. The
+follow-up bubble takes `followUpBy`, else the first named server, else the
+first server's role; a dialogue may set `followUpRole` when its follow-up is
+someone else (a voicemail answered by the restaurant calling back). The strict
+lint requires `role`; `--draft` lets it wait.
 The `error` object has `word`, `fix`, three `choices`, and a single English
 `why` string. A line can contain one `___` gap for Compléter. Dialogue lines
 have at most ten words; standalone lines have eight to fourteen. A dialogue
@@ -79,7 +87,7 @@ the long forms (« Monsieur Ferrand », « Madame Dumas »). The voice map is
 | `M. Ferrand` | older neighbour, fussy | *vous* | `fr-FR-Chirp3-HD-Orus` |
 | `Inès` | young colleague | *tu* | `fr-FR-Chirp3-HD-Despina` |
 | `Mme Dumas` | older landlady, WhatsApp | *vous* | `fr-FR-Chirp3-HD-Gacrux` |
-| (no name or a role) | one-off staff | *vous* | `fr-FR-Neural2-G`; `voice: "female"` → `fr-FR-Neural2-F` |
+| (no name; set `role`) | one-off staff | *vous* | `fr-FR-Neural2-G`; `voice: "female"` → `fr-FR-Neural2-F` |
 
 The three new voices were checked against the live fr-FR voice list but not
 yet auditioned by the user. Word audio uses `fr-FR-Neural2-G`.
