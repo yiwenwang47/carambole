@@ -2,8 +2,10 @@
 
 > ## ▶ RECENT HANDOFFS
 >
-> **▶ BOOK 2 — START HERE: `docs/plans/2026-10-12-book-2-handoff.md`** (2026-10-12;
-> it points back to the 2026-10-11 handoff for decisions/pipeline/commands).
+> **▶ BOOK 2 — START HERE: `docs/plans/2026-10-13-book-2-next-session-handoff.md`**
+> (written 2026-10-12). 15 of 25 modules done; first task: Book 1 carousel for going
+> back in Book 2; then check 11–15 audio; then arc 4. Session log:
+> `docs/plans/2026-10-12-book-2-handoff.md`.
 >
 > **▶ BOOK 2 — previous: `docs/plans/2026-10-11-book-2-next-session-handoff.md`
 > (2026-10-11, `main`, not pushed).** Modules 01–06 are authored, reviewed and have

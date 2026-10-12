@@ -1,4 +1,6 @@
-# Book 2 handoff — 2026-10-12 session (start here)
+# Book 2 — 2026-10-12 session log
+
+> **Superseded as the starting point by [2026-10-13-book-2-next-session-handoff.md](2026-10-13-book-2-next-session-handoff.md).** The "Next session" list below is stale.
 
 Supersedes `2026-10-11-book-2-next-session-handoff.md` as the starting point (its §2 decisions, §4 pipeline and §6 commands still apply). Working on `main`, not pushed.
 
