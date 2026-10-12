@@ -64,7 +64,7 @@
             {
               "speaker": "server",
               "name": "Théo",
-              "text": "Ton pneu est crevé ? Tu es où ?"
+              "text": "Ton pneu est crevé ? Tu arrives quand ?"
             },
             {
               "speaker": "learner",
@@ -138,6 +138,13 @@
                   "est crevé,",
                   "je viens",
                   "au bureau",
+                  "à pied."
+                ],
+                [
+                  "Désolée,",
+                  "mon pneu",
+                  "est crevé,",
+                  "je viens",
                   "à pied."
                 ]
               ],
@@ -271,13 +278,13 @@
               "prompt": "Which one fits?",
               "choices": [
                 "Salut, mon pneu est crevé, tu peux le réparer ?",
-                "Ouais, bref, mon pneu est crevé, vous pouvez le réparer ?",
+                "Ouais, mon pneu est crevé, vous pouvez le réparer ?",
                 "Bonjour, monsieur, mon pneu est crevé, vous pouvez le réparer ?"
               ],
               "correct": 2,
               "why": [
                 "Good French, but « salut » and « tu » are for friends. Say vous to the mechanic.",
-                "Good French, but « ouais » and « bref » are too casual for a stranger.",
+                "Good French, but « ouais » with no « bonjour » is too casual for a stranger.",
                 ""
               ]
             }
@@ -779,22 +786,22 @@
           "id": "sit_15_repair_s01",
           "place": "À l'atelier · phrase seule",
           "standalone": "Construire",
-          "cue": "You're at the bike repair shop. Ask the mechanic (vous) how much the repair costs, and if he has a quote.",
+          "cue": "You're at the bike repair shop. Ask the mechanic (vous) how much the repair costs, and ask for a quote.",
           "turns": [],
           "drills": [
             {
               "type": "reply",
-              "prompt": "Say hello, sir, ask how much the repair costs, and if he has a quote.",
+              "prompt": "Say hello, sir, ask how much the repair costs, and ask him to make you a quote.",
               "bank": [
                 "Bonjour,",
                 "monsieur,",
                 "la réparation",
                 "coûte combien ?",
-                "Vous avez",
-                "un devis ?",
-                "une devis ?",
+                "Vous pouvez",
+                "me faire un devis ?",
+                "me faire une devis ?",
                 "coûte quand ?",
-                "Tu as"
+                "Tu peux"
               ],
               "accepted": [
                 [
@@ -802,18 +809,18 @@
                   "monsieur,",
                   "la réparation",
                   "coûte combien ?",
-                  "Vous avez",
-                  "un devis ?"
+                  "Vous pouvez",
+                  "me faire un devis ?"
                 ],
                 [
                   "Bonjour,",
                   "la réparation",
                   "coûte combien ?",
-                  "Vous avez",
-                  "un devis ?"
+                  "Vous pouvez",
+                  "me faire un devis ?"
                 ]
               ],
-              "model": "Bonjour, monsieur, la réparation coûte combien ? Vous avez un devis ?"
+              "model": "Bonjour, monsieur, la réparation coûte combien ? Vous pouvez me faire un devis ?"
             }
           ],
           "newWords": []
@@ -902,7 +909,7 @@
                 "une garantie !",
                 "un garantie !",
                 "Oui,",
-                "il a"
+                "il est"
               ],
               "accepted": [
                 [
@@ -929,13 +936,13 @@
               "type": "pick",
               "prompt": "Which one fits?",
               "choices": [
-                "Salut, t'as un devis pour la réparation ?",
+                "Salut, tu peux me faire un devis pour la réparation ?",
                 "Bonjour, monsieur, je voudrais un devis pour la réparation.",
                 "Ouais, un devis pour la réparation, vite !"
               ],
               "correct": 1,
               "why": [
-                "Good French, but « salut » and « t'as » are for friends. Say vous to the mechanic.",
+                "Good French, but « salut » and « tu » are for friends. Say vous to the mechanic.",
                 "",
                 "Good French, but « ouais » and « vite ! » sound rude to a stranger."
               ]
@@ -1119,7 +1126,7 @@
               ]
             }
           ],
-          "followUp": "Merci, madame. Je regarde ça.",
+          "followUp": "Merci, madame. C'est bon pour la garantie.",
           "newWords": []
         },
         {
@@ -1174,7 +1181,7 @@
           "id": "sit_15_repair_s04",
           "place": "À l'atelier · phrase seule",
           "standalone": "Transformer",
-          "cue": "You asked Léa, your flatmate (tu). Now ask the bike mechanic (vous) the same thing.",
+          "cue": "You wrote this as if to a friend (tu). Rewrite it for the bike mechanic, a stranger (vous).",
           "turns": [
             {
               "speaker": "learner",
@@ -1218,7 +1225,7 @@
             {
               "speaker": "server",
               "role": "Réparateur",
-              "text": "La réparation ? C'est avec la garantie, madame."
+              "text": "La réparation ? Votre garantie marche encore, madame."
             },
             {
               "speaker": "learner",
@@ -1230,11 +1237,11 @@
               "type": "comprehend",
               "prompt": "What does the mechanic say about the repair?",
               "choices": [
-                "It's under warranty",
+                "The warranty still covers it",
                 "It costs twenty euros"
               ],
               "correct": 0,
-              "miss": "Reread: « c'est avec la garantie »."
+              "miss": "Reread: « votre garantie marche encore »."
             },
             {
               "type": "complete",
@@ -1310,7 +1317,7 @@
           "turns": [
             {
               "speaker": "learner",
-              "text": "Mon vélo a une ___ de deux ans, la réparation n'est pas chère."
+              "text": "Mon vélo a une ___ de deux ans, alors la réparation n'est pas chère."
             }
           ],
           "drills": [
@@ -1492,7 +1499,7 @@
             },
             {
               "speaker": "learner",
-              "text": "Non, la dernière fois, il a réparé ___ freins."
+              "text": "Non, la dernière fois, vous avez réparé ___ freins."
             }
           ],
           "drills": [
@@ -1584,7 +1591,7 @@
           "id": "sit_15_again_s02",
           "place": "À l'atelier · phrase seule",
           "standalone": "Choisir le ton",
-          "cue": "You're back at the bike repair shop. The mechanic is a stranger: say vous. Say it's the same, and ask him to fix it again.",
+          "cue": "You're back at the bike repair shop. You don't know the mechanic well: say vous. Say it's the same, and ask him to fix it again.",
           "turns": [],
           "drills": [
             {
@@ -1697,7 +1704,7 @@
                 "If you bought a new bike"
               ],
               "correct": 0,
-              "miss": "Reread: « tu retournes au magasin ? »"
+              "miss": "Reread: « tu retournes au magasin avec ton vélo ? »"
             }
           ],
           "followUp": "Oh non… Bon, à demain, Robin !",
@@ -1781,7 +1788,7 @@
               ]
             }
           ],
-          "followUp": "Oh non… Tu veux mon vélo demain ?",
+          "followUp": "Oh non… Pas de chance !",
           "followUpBy": "Léa",
           "newWords": []
         },
@@ -1793,7 +1800,7 @@
             {
               "speaker": "server",
               "name": "Mme Dumas",
-              "text": "La chaudière ne marche toujours pas ? Comme la dernière fois ?"
+              "text": "La chaudière est encore en panne ? Comme la dernière fois ?"
             }
           ],
           "drills": [
@@ -1826,10 +1833,10 @@
               "prompt": "What does Mme Dumas ask?",
               "choices": [
                 "If the boiler is new",
-                "If the boiler still doesn't work"
+                "If the boiler is broken again"
               ],
               "correct": 1,
-              "miss": "Reread: « la chaudière ne marche toujours pas ? »"
+              "miss": "Reread: « la chaudière est encore en panne ? »"
             }
           ],
           "followUp": "Je vous envoie le plombier demain.",
@@ -1929,7 +1936,7 @@
             {
               "speaker": "server",
               "name": "Karim",
-              "text": "Et ta machine à laver, ça va ?"
+              "text": "Ta machine à laver est encore en panne ?"
             }
           ],
           "drills": [
@@ -1945,7 +1952,7 @@
             },
             {
               "type": "reply",
-              "prompt": "Say no: like last time.",
+              "prompt": "Say yes: like last time.",
               "bank": [
                 "Non,",
                 "comme",
@@ -1956,12 +1963,12 @@
               ],
               "accepted": [
                 [
-                  "Non,",
+                  "Oui,",
                   "comme",
                   "la dernière fois !"
                 ]
               ],
-              "model": "Non, comme la dernière fois !"
+              "model": "Oui, comme la dernière fois !"
             }
           ],
           "followUp": "Oh non ! Viens au café, alors.",
@@ -2397,14 +2404,14 @@
           "cue": "You call customer service about your parcel. The adviser says vous to you.",
           "turns": [
             {
+              "speaker": "learner",
+              "text": "Le colis est abîmé. Qu'est-ce que vous proposez ?"
+            },
+            {
               "speaker": "server",
               "role": "Conseillère",
               "voice": "female",
-              "text": "Je vous écoute, madame. Qu'est-ce que vous proposez ?"
-            },
-            {
-              "speaker": "learner",
-              "text": "Vous pouvez ___ le colis ?"
+              "text": "Je peux ___ le colis, madame."
             }
           ],
           "drills": [
@@ -2418,7 +2425,7 @@
               ],
               "correct": 1,
               "why": [
-                "Not this word: « proposez » asks for your idea.",
+                "Not this word: « vous proposez » asks what they suggest.",
                 "",
                 "To order is « commander »."
               ],
@@ -2435,12 +2442,12 @@
               "correct": 0,
               "why": [
                 "",
-                "« Remplacé » is the past participle. After « vous pouvez », use the infinitive.",
-                "« Remplace » is conjugated. After « vous pouvez », use the infinitive."
+                "« Remplacé » is the past participle. After « je peux », use the infinitive.",
+                "« Remplace » is conjugated. After « je peux », use the infinitive."
               ]
             }
           ],
-          "followUp": "Bien sûr. Le nouveau colis arrive demain.",
+          "followUp": "Le nouveau colis arrive demain.",
           "newWords": []
         },
         {
@@ -2494,18 +2501,18 @@
           "id": "sit_15_fix_s04",
           "place": "Appel · service client · phrase seule",
           "standalone": "Transformer",
-          "cue": "You said this to Léa, your flatmate (tu). Now say it to the customer service adviser (vous).",
+          "cue": "You wrote this to Théo, your friend (tu), by mistake. Now say it to the customer service adviser (vous).",
           "turns": [
             {
               "speaker": "learner",
-              "text": "Tu proposes quoi, Léa ? Tu peux remplacer le pull ?",
+              "text": "Tu proposes quoi ? Tu peux remplacer le pull ?",
               "source": true
             }
           ],
           "drills": [
             {
               "type": "reply",
-              "prompt": "Rewrite it with vous: « qu'est-ce que vous proposez ? »",
+              "prompt": "Rewrite it with vous, in standard French.",
               "bank": [
                 "Qu'est-ce que",
                 "vous proposez ?",
@@ -2629,7 +2636,7 @@
               "model": "Ils remplacent le pull, c'est gratuit !"
             }
           ],
-          "followUp": "Top ! C'est super, alors.",
+          "followUp": "Génial ! Et il arrive quand, le nouveau pull ?",
           "followUpBy": "Théo",
           "newWords": []
         },

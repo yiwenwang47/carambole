@@ -102,7 +102,7 @@
               ]
             }
           ],
-          "followUp": "Oui, madame. Pas de métro jusqu'à midi.",
+          "followUp": "Oui, madame. Perturbé jusqu'à midi.",
           "followUpRole": "Employée",
           "newWords": [
             "trafic",
@@ -203,7 +203,7 @@
         {
           "id": "sit_11_strike_d04",
           "place": "Les copains · groupe",
-          "cue": "Théo writes to the group chat « Les copains ». He says vous to you all.",
+          "cue": "Théo, your friend, writes to the group chat « Les copains ». He says vous to you all.",
           "turns": [
             {
               "speaker": "server",
@@ -263,13 +263,13 @@
               "type": "pick",
               "prompt": "Which one fits?",
               "choices": [
-                "Grève demain, t'as vu ? Pas de métro, bref !",
+                "Grève demain, t'as vu ? Du coup, pas de métro !",
                 "Salut ! Demain, grève, pas de métro !",
                 "Il y a grève demain, monsieur, le métro ne marche pas."
               ],
               "correct": 2,
               "why": [
-                "Good spoken French, but « t'as vu » and « bref » are for friends. M. Ferrand says vous to you.",
+                "Good spoken French, but « t'as vu » and « du coup » are for friends. M. Ferrand says vous to you.",
                 "Good French, but « Salut » is for friends. Say « monsieur » to M. Ferrand.",
                 ""
               ]
@@ -418,7 +418,7 @@
             },
             {
               "speaker": "learner",
-              "text": "Non, le trafic est ___ jusqu'à ce soir."
+              "text": "Non, aucun. Le trafic est ___ jusqu'à ce soir."
             }
           ],
           "drills": [
@@ -491,13 +491,13 @@
             },
             {
               "type": "comprehend",
-              "prompt": "What is Karim asking?",
+              "prompt": "Why does Karim ask?",
               "choices": [
-                "If you're working tomorrow",
-                "If you're coming to the café tomorrow"
+                "Because of the strike",
+                "Because of the rain"
               ],
-              "correct": 1,
-              "miss": "Reread: « Tu viens au café demain, avec la grève ? »"
+              "correct": 0,
+              "miss": "Reread: « avec la grève »"
             }
           ],
           "followUp": "Top ! Ton café t'attend.",
@@ -633,7 +633,7 @@
               "model": "Non, aucun métro. Je travaille à la maison."
             }
           ],
-          "followUp": "Ah, d'accord. Bonne journée !",
+          "followUp": "Ah, d'accord. Bonne soirée !",
           "newWords": []
         },
         {
@@ -814,7 +814,7 @@
         {
           "id": "sit_11_cancelled_d03",
           "place": "À la gare",
-          "cue": "A woman waiting for the same train talks to you. She says vous to you.",
+          "cue": "A woman waiting for the same train talks to you. The announcement said your train is cancelled. She says vous to you.",
           "turns": [
             {
               "speaker": "server",
@@ -862,7 +862,7 @@
         {
           "id": "sit_11_cancelled_d04",
           "place": "Les copains · groupe",
-          "cue": "Théo writes to the group chat « Les copains ». He says vous to you all.",
+          "cue": "Théo, your friend, writes to the group chat « Les copains ». He says vous to you all; you say tu to him.",
           "turns": [
             {
               "speaker": "server",
@@ -922,13 +922,13 @@
               "type": "pick",
               "prompt": "Which one fits?",
               "choices": [
-                "Ouais, c'est quel quai, le train pour Paris ?",
+                "Excuse-moi, le train pour Paris, c'est quel quai ?",
                 "Excusez-moi, monsieur, le train pour Paris, c'est quel quai ?",
                 "Salut ! Le quai pour Paris, c'est où ?"
               ],
               "correct": 1,
               "why": [
-                "Good spoken French, but « ouais » is for friends. Say « Excusez-moi, monsieur ».",
+                "Good French, but « excuse-moi » is for tu. The employee says vous to you: « Excusez-moi, monsieur ».",
                 "",
                 "Good French, but « Salut » is for friends. The employee says vous to you."
               ]
@@ -1068,7 +1068,7 @@
         {
           "id": "sit_11_cancelled_d07",
           "place": "À la gare",
-          "cue": "A woman waiting on the platform talks to you. She says vous to you.",
+          "cue": "A woman waiting on the platform talks to you. You think the announcement said the train to Paris is cancelled. She says vous to you.",
           "turns": [
             {
               "speaker": "server",
@@ -1125,7 +1125,7 @@
             {
               "speaker": "server",
               "name": "Léa",
-              "text": "T'es où ? Ton train part quand ?"
+              "text": "Ton train part quand ?"
             }
           ],
           "drills": [
@@ -1153,11 +1153,11 @@
               "type": "comprehend",
               "prompt": "What does Léa want to know?",
               "choices": [
-                "Where you are and when your train leaves",
-                "Where you are and who you're with"
+                "When your train leaves",
+                "If your train is cancelled"
               ],
               "correct": 0,
-              "miss": "Reread: « T'es où ? Ton train part quand ? »"
+              "miss": "Reread: « Ton train part quand ? »"
             }
           ],
           "followUp": "D'accord, à ce soir, alors !",
@@ -1210,11 +1210,11 @@
               "speaker": "server",
               "role": "Annonce",
               "voice": "female",
-              "text": "Le train pour Paris : départ quai deux."
+              "text": "Le train pour Paris part du quai deux."
             },
             {
               "speaker": "learner",
-              "text": "Vite, on ___ au quai deux !"
+              "text": "Vite, on ___ sur le quai !"
             }
           ],
           "drills": [
@@ -1226,7 +1226,7 @@
                 "Platform two"
               ],
               "correct": 1,
-              "miss": "Reread: « départ quai deux »."
+              "miss": "Reread: « part du quai deux »."
             },
             {
               "type": "complete",
@@ -1251,7 +1251,7 @@
         {
           "id": "sit_11_cancelled_d10",
           "place": "Texto · Inès",
-          "cue": "Inès, your colleague, texts you later in the day. She says tu to you.",
+          "cue": "Inès, your colleague, texts you in the morning. She says tu to you.",
           "turns": [
             {
               "speaker": "server",
@@ -1511,7 +1511,7 @@
               "miss": "Reread: « une heure de retard ! »"
             }
           ],
-          "followUp": "Oui ! Bon, on attend.",
+          "followUp": "Oui… Bon, on attend.",
           "newWords": [
             "panneau"
           ]
@@ -1524,7 +1524,7 @@
             {
               "speaker": "server",
               "name": "Inès",
-              "text": "Tu arrives quand ? Environ huit heures ?"
+              "text": "Tu arrives quand ? À huit heures environ ?"
             }
           ],
           "drills": [
@@ -1546,27 +1546,27 @@
             },
             {
               "type": "reply",
-              "prompt": "Say yes, around eight: the train is running late.",
+              "prompt": "Say no, around ten: the train is running late.",
               "bank": [
-                "Oui,",
-                "environ",
-                "huit heures,",
+                "Non,",
+                "à dix heures",
+                "environ,",
                 "il a",
                 "du retard.",
                 "il est",
                 "de retard.",
-                "Non,"
+                "Oui,"
               ],
               "accepted": [
                 [
-                  "Oui,",
-                  "environ",
-                  "huit heures,",
+                  "Non,",
+                  "à dix heures",
+                  "environ,",
                   "il a",
                   "du retard."
                 ]
               ],
-              "model": "Oui, environ huit heures, il a du retard."
+              "model": "Non, à dix heures environ, il a du retard."
             }
           ],
           "followUp": "Pas de souci, à tout à l'heure !",
@@ -1584,13 +1584,13 @@
               "prompt": "Which one fits?",
               "choices": [
                 "T'as vu ? Une heure de retard, le train !",
-                "Ouais, une heure de retard, bref.",
+                "Tu sais, le train a environ une heure de retard.",
                 "Le train a environ une heure de retard, monsieur."
               ],
               "correct": 2,
               "why": [
                 "Good spoken French, but « t'as vu » is for friends. The man says vous to you.",
-                "Good spoken French, but « ouais » and « bref » are for friends.",
+                "Good French, but « tu sais » is for friends. The man says vous to you.",
                 ""
               ]
             }
@@ -1729,7 +1729,7 @@
         {
           "id": "sit_11_delay_d07",
           "place": "À la gare",
-          "cue": "A woman waiting at the station talks to you. She says vous to you.",
+          "cue": "A woman waiting at the station talks to you. You heard an announcement about the delay. She says vous to you.",
           "turns": [
             {
               "speaker": "server",
@@ -1814,13 +1814,13 @@
             },
             {
               "type": "comprehend",
-              "prompt": "What does Karim ask?",
+              "prompt": "What does Karim ask first?",
               "choices": [
-                "When your train is due",
-                "If your train is cancelled"
+                "If you're coming home tonight",
+                "If you're at the café tonight"
               ],
               "correct": 0,
-              "miss": "Reread: « Ton train est prévu quand ? »"
+              "miss": "Reread: « Tu rentres ce soir ? »"
             }
           ],
           "followUp": "Pas de souci, le café ferme à huit heures.",
@@ -2247,13 +2247,13 @@
               "prompt": "Which one fits?",
               "choices": [
                 "Excusez-moi, madame, mon billet est valable pour demain ?",
-                "Mon billet, il marche demain, ouais ?",
+                "Tu peux voir si mon billet est bon pour demain ?",
                 "Salut ! Mon billet, c'est bon pour demain ?"
               ],
               "correct": 0,
               "why": [
                 "",
-                "Spoken and casual: « ouais » is for friends. The employee says vous to you.",
+                "Good French, but « tu » is for friends. The employee says vous to you.",
                 "Good French, but « Salut » is for friends. Say « Excusez-moi, madame »."
               ]
             }
@@ -2269,7 +2269,7 @@
               "speaker": "server",
               "role": "Employée",
               "voice": "female",
-              "text": "Votre billet est valable dans le train de midi."
+              "text": "Votre billet est valable pour le train de midi."
             }
           ],
           "drills": [
@@ -2365,11 +2365,11 @@
           "id": "sit_11_desk_s03",
           "place": "Au guichet · phrase seule",
           "standalone": "Corriger",
-          "cue": "At the ticket office, you tell the employee about your ticket. You say vous to her.",
+          "cue": "At the ticket office, you check what the employee just told you about your ticket. You say vous to her.",
           "turns": [
             {
               "speaker": "learner",
-              "text": "Mon billet est valables pour le train de midi, au quai deux.",
+              "text": "Alors, mon billet est valables pour le train de midi, au quai deux ?",
               "error": {
                 "word": "valables",
                 "fix": "valable",
@@ -2479,7 +2479,7 @@
               "type": "comprehend",
               "prompt": "What does Inès ask about?",
               "choices": [
-                "Your office",
+                "Your train",
                 "Your ticket"
               ],
               "correct": 1,
@@ -2904,13 +2904,13 @@
               "prompt": "Which one fits?",
               "choices": [
                 "Je suis bloquée, je te tiens au courant !",
-                "Salut ! Bloquée à la gare, t'as vu ?",
+                "Salut ! Je suis bloquée à la gare, du coup j'arrive plus tard.",
                 "Je suis bloquée à la gare, madame, je vous tiens au courant."
               ],
               "correct": 2,
               "why": [
                 "Good French, but « te » is tu. Say vous to Mme Dumas.",
-                "Good French, but « salut » and « t'as vu » are for friends.",
+                "Good French, but « salut » and « du coup » are for friends. Say vous to Mme Dumas, and keep it polite.",
                 ""
               ]
             }
@@ -2967,6 +2967,13 @@
                   "répéter ?",
                   "Je t'entends",
                   "mal."
+                ],
+                [
+                  "Je t'entends",
+                  "mal.",
+                  "Pardon ?",
+                  "Tu peux",
+                  "répéter ?"
                 ]
               ],
               "model": "Pardon ? Je t'entends mal. Tu peux répéter ?"
@@ -3068,7 +3075,7 @@
         {
           "id": "sit_11_group_d07",
           "place": "Les copains · groupe",
-          "cue": "Théo's group chat « Les copains ». Everyone says tu; « vous » = you all. Théo is organising a car-share for Saturday.",
+          "cue": "Théo's group chat « Les copains ». Everyone says tu; « vous » = you all. Théo is organising a trip for Saturday.",
           "turns": [
             {
               "speaker": "server",
@@ -3264,7 +3271,7 @@
             {
               "speaker": "server",
               "name": "Théo",
-              "text": "Robin, t'es encore bloquée à la gare ?"
+              "text": "Robin, tu es encore à la gare ?"
             }
           ],
           "drills": [
@@ -3272,11 +3279,11 @@
               "type": "comprehend",
               "prompt": "What does Théo ask?",
               "choices": [
-                "If you're still stuck at the station",
+                "If you're still at the station",
                 "If you've got a train ticket"
               ],
               "correct": 0,
-              "miss": "Reread: « t'es encore bloquée à la gare ? »"
+              "miss": "Reread: « tu es encore à la gare ? »"
             },
             {
               "type": "reply",
@@ -3405,12 +3412,12 @@
         {
           "id": "sit_11_another_d02",
           "place": "Au métro",
-          "cue": "There's a strike. A metro employee at the station entrance says vous to you.",
+          "cue": "There's a strike. A metro employee at the metro entrance next to the train station says vous to you.",
           "turns": [
             {
               "speaker": "server",
               "role": "Employé",
-              "text": "Il y a une navette, devant la gare."
+              "text": "Il y a une navette devant la gare."
             },
             {
               "speaker": "learner",
@@ -3468,7 +3475,7 @@
                 "s'il vous plaît ?",
                 "un navette",
                 "s'il te plaît ?",
-                "par"
+                "dans"
               ],
               "accepted": [
                 [
@@ -3628,7 +3635,7 @@
           "drills": [
             {
               "type": "reply",
-              "prompt": "Say sorry, ask her (vous) to repeat, and check: in front of the café?",
+              "prompt": "Say sorry, ask her (vous) to repeat, and check where the shuttle leaves from.",
               "bank": [
                 "Pardon,",
                 "vous pouvez répéter ?",
@@ -3847,9 +3854,9 @@
         },
         {
           "id": "sit_11_another_s04",
-          "place": "Sur le palier · phrase seule",
+          "place": "Dans la rue · phrase seule",
           "standalone": "Transformer",
-          "cue": "You told Léa, your flatmate (tu), what to do during the strike. Now M. Ferrand, your neighbour, asks. He says vous to you.",
+          "cue": "You told Léa, your flatmate (tu), what to do during the strike. Now M. Ferrand, your neighbour, is waiting with you at the shuttle stop. He says vous to you.",
           "turns": [
             {
               "speaker": "learner",
@@ -3958,9 +3965,10 @@
             },
             {
               "type": "reply",
-              "prompt": "Say: in a taxi, you're on your way!",
+              "prompt": "Say: you're in a taxi, you're on your way!",
               "bank": [
-                "Dans",
+                "Je suis",
+                "dans",
                 "un taxi,",
                 "une taxi,",
                 "j'arrive !",
@@ -3969,12 +3977,13 @@
               ],
               "accepted": [
                 [
-                  "Dans",
+                  "Je suis",
+                  "dans",
                   "un taxi,",
                   "j'arrive !"
                 ]
               ],
-              "model": "Dans un taxi, j'arrive !"
+              "model": "Je suis dans un taxi, j'arrive !"
             }
           ],
           "followUp": "Top, à tout de suite !",
@@ -4183,13 +4192,13 @@
             },
             {
               "type": "comprehend",
-              "prompt": "What does Inès suggest?",
+              "prompt": "Why does Inès suggest it?",
               "choices": [
-                "Taking a taxi",
-                "Working from home"
+                "There's no metro",
+                "The meeting is cancelled"
               ],
-              "correct": 1,
-              "miss": "Reread: « reste en télétravail »."
+              "correct": 0,
+              "miss": "Reread: « pas de métro ? »"
             }
           ],
           "followUp": "Top, à demain au bureau !",
@@ -4205,7 +4214,7 @@
             {
               "speaker": "server",
               "name": "Léa",
-              "text": "Il faut prévenir ton bureau, non ?"
+              "text": "Il faut prévenir le bureau, non ?"
             }
           ],
           "drills": [
@@ -4260,13 +4269,13 @@
               "type": "pick",
               "prompt": "Which one fits?",
               "choices": [
-                "Salut ! Je suis en télétravail, t'as vu ?",
+                "Salut ! Avec la grève, je suis en télétravail aujourd'hui.",
                 "En télétravail aujourd'hui, top !",
                 "Bonjour, avec la grève, je suis en télétravail aujourd'hui."
               ],
               "correct": 2,
               "why": [
-                "Good French, but « salut » and « t'as vu » are for friends.",
+                "Good French, but « salut » is for friends. Say « bonjour » to your manager.",
                 "Good French, but too casual for your manager.",
                 ""
               ]
@@ -4288,7 +4297,7 @@
           "drills": [
             {
               "type": "reply",
-              "prompt": "Say sorry, you can't hear her well, and check: at ten?",
+              "prompt": "Say sorry, you can't hear her well, and check the time she said.",
               "bank": [
                 "Pardon,",
                 "je t'entends",
@@ -4456,7 +4465,7 @@
               ]
             }
           ],
-          "followUp": "Parfait ! À dix heures, alors.",
+          "followUp": "Parfait ! À tout à l'heure, alors.",
           "newWords": []
         },
         {
@@ -4820,7 +4829,7 @@
         {
           "id": "sit_11_arrive_d03",
           "place": "Sur le palier",
-          "cue": "It's late in the evening. M. Ferrand, your neighbour, meets you outside your door. He says vous to you.",
+          "cue": "M. Ferrand, your neighbour, meets you on the landing. He says vous to you.",
           "turns": [
             {
               "speaker": "server",
@@ -4852,7 +4861,7 @@
               "type": "comprehend",
               "prompt": "What does M. Ferrand say?",
               "choices": [
-                "You're leaving early",
+                "You're coming home early",
                 "You're coming home late"
               ],
               "correct": 1,
@@ -4928,15 +4937,15 @@
               "type": "pick",
               "prompt": "Which one fits?",
               "choices": [
-                "Oui, monsieur, je suis enfin arrivée, heureusement !",
-                "Ouf, t'as vu, je suis enfin là !",
-                "Enfin ! Bref, salut !"
+                "Oui, monsieur, je suis enfin rentrée, heureusement !",
+                "Oui, je suis enfin là ! Et toi ?",
+                "Ouais, enfin ! Bonne soirée !"
               ],
               "correct": 0,
               "why": [
                 "",
-                "Good French, but « t'as vu » is for friends.",
-                "Good French, but « bref, salut » is too casual for your neighbour."
+                "Good French, but « toi » is tu. Say vous to M. Ferrand.",
+                "Good French, but « ouais » is too casual for your neighbour."
               ]
             }
           ],
@@ -5005,7 +5014,7 @@
             },
             {
               "speaker": "learner",
-              "text": "Ouf ! Moi, je suis ___ au bureau."
+              "text": "Ah ! Moi, je suis ___ au bureau."
             }
           ],
           "drills": [
@@ -5070,16 +5079,16 @@
         {
           "id": "sit_11_arrive_d07",
           "place": "Texto · Inès",
-          "cue": "Inès, your colleague, texts you. She says tu to you. She's at the office; you're on your way in.",
+          "cue": "Inès, your colleague, texts you. She says tu to you. She's at the office, and you've just arrived at the building after the strike chaos.",
           "turns": [
             {
               "speaker": "server",
               "name": "Inès",
-              "text": "Ouf ! Tu es enfin là ?"
+              "text": "Tu es enfin là ?"
             },
             {
               "speaker": "learner",
-              "text": "Oui, ___, le bus est arrivé !"
+              "text": "Ouf, oui ! ___, le bus est arrivé !"
             }
           ],
           "drills": [
@@ -5147,6 +5156,12 @@
                   "enfin !",
                   "Merci,",
                   "madame."
+                ],
+                [
+                  "Merci,",
+                  "madame.",
+                  "Oui,",
+                  "enfin !"
                 ]
               ],
               "model": "Oui, enfin ! Merci, madame."
@@ -5210,7 +5225,7 @@
         {
           "id": "sit_11_arrive_d09",
           "place": "Texto · Karim",
-          "cue": "Karim, the barista at your café, texts you. He says tu to you. The strike is over.",
+          "cue": "Karim, the barista at your café, texts you in the evening. He says tu to you.",
           "turns": [
             {
               "speaker": "server",
@@ -5227,7 +5242,7 @@
               "type": "comprehend",
               "prompt": "What does Karim say?",
               "choices": [
-                "The metro is on strike tomorrow",
+                "The metro is running tonight",
                 "The metro is running tomorrow"
               ],
               "correct": 1,

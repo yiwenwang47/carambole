@@ -261,7 +261,7 @@
           "id": "sit_15_parcel_s02",
           "place": "Appel · service client · phrase seule",
           "standalone": "Choisir le ton",
-          "cue": "You call customer service. The adviser says vous to you. Your parcel is marked as delivered.",
+          "cue": "You call customer service. The adviser, a woman, says vous to you. Your parcel is marked as delivered.",
           "turns": [],
           "drills": [
             {
@@ -335,7 +335,7 @@
               "target": "suivi"
             }
           ],
-          "followUp": "Pardon ! Votre numéro de suivi, madame ?",
+          "followUp": "Oui. Votre numéro de suivi, madame ?",
           "newWords": []
         },
         {
@@ -415,7 +415,7 @@
         {
           "id": "sit_15_parcel_d07",
           "place": "Appel · service client",
-          "cue": "You call customer service. The adviser says vous to you.",
+          "cue": "You call about your parcel. The adviser says vous to you.",
           "turns": [
             {
               "speaker": "server",
@@ -596,7 +596,7 @@
               ]
             }
           ],
-          "followUp": "D'accord. Je regarde avec le livreur, madame.",
+          "followUp": "D'accord. J'appelle le livreur, madame.",
           "newWords": []
         },
         {
@@ -616,7 +616,7 @@
               "prompt": "What does Léa ask about?",
               "choices": [
                 "The parcel",
-                "The rent"
+                "The delivery driver"
               ],
               "correct": 0,
               "miss": "Reread: « Alors, le colis ? »"
@@ -894,13 +894,13 @@
               "choices": [
                 "paid",
                 "ordered",
-                "sent back"
+                "taken back"
               ],
               "correct": 1,
               "why": [
                 "No: paid is « payé ».",
                 "",
-                "No: sent back is « rapporté »."
+                "No: taken back is « rapporté »."
               ],
               "target": "commandé"
             },
@@ -933,7 +933,7 @@
           "id": "sit_15_wrong_s02",
           "place": "Appel · service client · phrase seule",
           "standalone": "Choisir le ton",
-          "cue": "You call customer service. The adviser says vous to you. A jumper is missing from your parcel.",
+          "cue": "You call customer service. The adviser, a woman, says vous to you. A jumper is missing from your parcel.",
           "turns": [],
           "drills": [
             {
@@ -1337,13 +1337,13 @@
               "type": "complete",
               "prompt": "(cardboard) box",
               "choices": [
-                "caisse",
+                "sac",
                 "carton",
                 "quai"
               ],
               "correct": 1,
               "why": [
-                "« Caisse » means till, checkout.",
+                "« Sac » means bag.",
                 "",
                 "« Quai » means platform."
               ]
@@ -1473,27 +1473,28 @@
           "drills": [
             {
               "type": "reply",
-              "prompt": "Say hello: you're not satisfied, it's not right.",
+              "prompt": "Say yes: you're not satisfied, it's not right.",
               "bank": [
-                "Bonjour,",
+                "Oui,",
                 "je ne suis pas",
                 "satisfaite,",
                 "ce n'est pas",
                 "normal.",
                 "satisfait,",
                 "normale.",
-                "c'est"
+                "c'est",
+                "Non,"
               ],
               "accepted": [
                 [
-                  "Bonjour,",
+                  "Oui,",
                   "je ne suis pas",
                   "satisfaite,",
                   "ce n'est pas",
                   "normal."
                 ]
               ],
-              "model": "Bonjour, je ne suis pas satisfaite, ce n'est pas normal."
+              "model": "Oui, je ne suis pas satisfaite, ce n'est pas normal."
             }
           ],
           "newWords": []
@@ -1814,7 +1815,7 @@
             {
               "speaker": "server",
               "name": "Théo",
-              "text": "Alors, le restaurant ? T'es satisfaite ?"
+              "text": "Alors, le restaurant, c'est bien ?"
             }
           ],
           "drills": [
@@ -1850,10 +1851,10 @@
                 "If you're happy with the restaurant"
               ],
               "correct": 1,
-              "miss": "Reread: « T'es satisfaite ? »"
+              "miss": "Reread: « Alors, le restaurant, c'est bien ? »"
             }
           ],
-          "followUp": "Oh non ! Fais une réclamation, alors !",
+          "followUp": "Oh non ! Demande un autre plat, alors !",
           "followUpBy": "Théo",
           "newWords": []
         },
@@ -1900,7 +1901,7 @@
         {
           "id": "sit_15_complain_d09",
           "place": "Appel · service client",
-          "cue": "Customer service calls you about your complaint. The adviser says vous to you. You're a woman.",
+          "cue": "Customer service calls you back. The adviser says vous to you. You're a woman.",
           "turns": [
             {
               "speaker": "server",
@@ -2083,7 +2084,7 @@
         {
           "id": "sit_15_haircut_d02",
           "place": "Chez le coiffeur",
-          "cue": "You're at the hairdresser's. The hairdresser says vous to you.",
+          "cue": "You're at your usual hairdresser's. The hairdresser says vous to you.",
           "turns": [
             {
               "speaker": "server",
@@ -2144,27 +2145,25 @@
           "drills": [
             {
               "type": "reply",
-              "prompt": "Say hello: you have an appointment at ten for your hair; it's Robin.",
+              "prompt": "Say hello and give your name (Robin): you have an appointment at ten.",
               "bank": [
                 "Bonjour,",
+                "c'est Robin,",
                 "j'ai rendez-vous",
-                "à dix heures",
-                "pour les cheveux,",
-                "c'est Robin.",
-                "pour le cheveux,",
-                "à dix heure",
-                "je suis rendez-vous"
+                "à dix heures.",
+                "à dix heure.",
+                "je suis rendez-vous",
+                "ai rendez-vous"
               ],
               "accepted": [
                 [
                   "Bonjour,",
+                  "c'est Robin,",
                   "j'ai rendez-vous",
-                  "à dix heures",
-                  "pour les cheveux,",
-                  "c'est Robin."
+                  "à dix heures."
                 ]
               ],
-              "model": "Bonjour, j'ai rendez-vous à dix heures pour les cheveux, c'est Robin."
+              "model": "Bonjour, c'est Robin, j'ai rendez-vous à dix heures."
             }
           ],
           "newWords": []
@@ -2277,7 +2276,7 @@
           "id": "sit_15_haircut_s02",
           "place": "Chez le coiffeur · phrase seule",
           "standalone": "Choisir le ton",
-          "cue": "The hairdresser says vous to you. She has just cut your hair. Tell her it's a bit too short.",
+          "cue": "The hairdresser says vous to you. She has just cut your hair. Tell her, politely, that it's too short.",
           "turns": [],
           "drills": [
             {
@@ -2285,13 +2284,13 @@
               "prompt": "Which one fits?",
               "choices": [
                 "Ouais, c'est trop court, t'as vu ?",
-                "Bref, c'est trop court, ça !",
+                "Bon, c'est trop court, ça !",
                 "Excusez-moi, c'est un peu trop court, non ?"
               ],
               "correct": 2,
               "why": [
                 "Good spoken French, but « ouais » and « t'as » are for friends.",
-                "Good French, but it sounds rude to the hairdresser.",
+                "Good French, but it's too blunt for the hairdresser.",
                 ""
               ]
             }
@@ -2478,7 +2477,7 @@
               ]
             }
           ],
-          "followUp": "D'accord, un tout petit peu.",
+          "followUp": "D'accord, un peu, alors.",
           "newWords": []
         },
         {
@@ -2509,6 +2508,11 @@
                 [
                   "Oui,",
                   "mais",
+                  "c'est",
+                  "trop court !"
+                ],
+                [
+                  "Oui,",
                   "c'est",
                   "trop court !"
                 ]
@@ -2582,7 +2586,7 @@
             },
             {
               "speaker": "learner",
-              "text": "Oui, c'est parfait pour ___ les cheveux."
+              "text": "Oui, il sait très bien ___ les cheveux."
             }
           ],
           "drills": [
@@ -2606,9 +2610,9 @@
               ],
               "correct": 1,
               "why": [
-                "« Coupé » is the past participle. After « pour », use the infinitive « couper ».",
+                "« Coupé » is the past participle. After « sait », use the infinitive « couper ».",
                 "",
-                "« Coupe » is the present. After « pour », use the infinitive « couper »."
+                "« Coupe » is the present. After « sait », use the infinitive « couper »."
               ]
             }
           ],
@@ -2761,7 +2765,7 @@
             {
               "speaker": "server",
               "name": "Théo",
-              "text": "Ton pneu est crevé ? Tu es où ?"
+              "text": "Ton pneu est crevé ? Tu arrives quand ?"
             },
             {
               "speaker": "learner",
@@ -2836,6 +2840,13 @@
                   "je viens",
                   "au bureau",
                   "à pied."
+                ],
+                [
+                  "Désolée,",
+                  "mon pneu",
+                  "est crevé,",
+                  "je viens",
+                  "à pied."
                 ]
               ],
               "model": "Désolée, mon pneu est crevé, je viens au bureau à pied."
@@ -2878,8 +2889,8 @@
               "type": "comprehend",
               "prompt": "What else is wrong with your bike?",
               "choices": [
-                "The brakes don't work well",
-                "The light doesn't work"
+                "The light doesn't work",
+                "The brakes don't work well"
               ],
               "correct": 1,
               "miss": "Reread: « les freins marchent mal »."
@@ -2968,13 +2979,13 @@
               "prompt": "Which one fits?",
               "choices": [
                 "Salut, mon pneu est crevé, tu peux le réparer ?",
-                "Ouais, bref, mon pneu est crevé, vous pouvez le réparer ?",
+                "Ouais, mon pneu est crevé, vous pouvez le réparer ?",
                 "Bonjour, monsieur, mon pneu est crevé, vous pouvez le réparer ?"
               ],
               "correct": 2,
               "why": [
                 "Good French, but « salut » and « tu » are for friends. Say vous to the mechanic.",
-                "Good French, but « ouais » and « bref » are too casual for a stranger.",
+                "Good French, but « ouais » with no « bonjour » is too casual for a stranger.",
                 ""
               ]
             }
@@ -3072,8 +3083,8 @@
               "type": "comprehend",
               "prompt": "What does Léa ask?",
               "choices": [
-                "If your brakes stopped working",
-                "If your brakes are new"
+                "If your brakes are new",
+                "If your brakes stopped working"
               ],
               "correct": 1,
               "miss": "Reread: « tes freins ne marchent plus ? »"
@@ -3199,8 +3210,8 @@
               "type": "comprehend",
               "prompt": "What does Inès ask?",
               "choices": [
-                "If you're coming by bike",
-                "If your bike is fixed"
+                "If your bike is fixed",
+                "If you're coming by bike"
               ],
               "correct": 1,
               "miss": "Reread: « tu viens au bureau à vélo ? »"
@@ -3396,8 +3407,8 @@
               "type": "comprehend",
               "prompt": "When is the repair?",
               "choices": [
-                "Tomorrow",
-                "Today"
+                "Today",
+                "Tomorrow"
               ],
               "correct": 1,
               "miss": "Reread: « c'est pour demain »."
@@ -3445,8 +3456,8 @@
               "type": "comprehend",
               "prompt": "What does the mechanic offer?",
               "choices": [
-                "To give you a quote",
-                "To lend you a bike"
+                "To lend you a bike",
+                "To give you a quote"
               ],
               "correct": 1,
               "miss": "Reread: « je vous fais un devis ? »"
@@ -3476,22 +3487,22 @@
           "id": "sit_15_repair_s01",
           "place": "À l'atelier · phrase seule",
           "standalone": "Construire",
-          "cue": "You're at the bike repair shop. Ask the mechanic (vous) how much the repair costs, and if he has a quote.",
+          "cue": "You're at the bike repair shop. Ask the mechanic (vous) how much the repair costs, and ask for a quote.",
           "turns": [],
           "drills": [
             {
               "type": "reply",
-              "prompt": "Say hello, sir, ask how much the repair costs, and if he has a quote.",
+              "prompt": "Say hello, sir, ask how much the repair costs, and ask him to make you a quote.",
               "bank": [
                 "Bonjour,",
                 "monsieur,",
                 "la réparation",
                 "coûte combien ?",
-                "Vous avez",
-                "un devis ?",
-                "une devis ?",
+                "Vous pouvez",
+                "me faire un devis ?",
+                "me faire une devis ?",
                 "coûte quand ?",
-                "Tu as"
+                "Tu peux"
               ],
               "accepted": [
                 [
@@ -3499,18 +3510,18 @@
                   "monsieur,",
                   "la réparation",
                   "coûte combien ?",
-                  "Vous avez",
-                  "un devis ?"
+                  "Vous pouvez",
+                  "me faire un devis ?"
                 ],
                 [
                   "Bonjour,",
                   "la réparation",
                   "coûte combien ?",
-                  "Vous avez",
-                  "un devis ?"
+                  "Vous pouvez",
+                  "me faire un devis ?"
                 ]
               ],
-              "model": "Bonjour, monsieur, la réparation coûte combien ? Vous avez un devis ?"
+              "model": "Bonjour, monsieur, la réparation coûte combien ? Vous pouvez me faire un devis ?"
             }
           ],
           "newWords": []
@@ -3599,7 +3610,7 @@
                 "une garantie !",
                 "un garantie !",
                 "Oui,",
-                "il a"
+                "il est"
               ],
               "accepted": [
                 [
@@ -3626,13 +3637,13 @@
               "type": "pick",
               "prompt": "Which one fits?",
               "choices": [
-                "Salut, t'as un devis pour la réparation ?",
+                "Salut, tu peux me faire un devis pour la réparation ?",
                 "Bonjour, monsieur, je voudrais un devis pour la réparation.",
                 "Ouais, un devis pour la réparation, vite !"
               ],
               "correct": 1,
               "why": [
-                "Good French, but « salut » and « t'as » are for friends. Say vous to the mechanic.",
+                "Good French, but « salut » and « tu » are for friends. Say vous to the mechanic.",
                 "",
                 "Good French, but « ouais » and « vite ! » sound rude to a stranger."
               ]
@@ -3728,8 +3739,8 @@
               "type": "comprehend",
               "prompt": "What does Inès ask?",
               "choices": [
-                "If your bike has a warranty",
-                "If your bike is fixed"
+                "If your bike is fixed",
+                "If your bike has a warranty"
               ],
               "correct": 1,
               "miss": "Reread: « ton vélo a une garantie ? »"
@@ -3816,7 +3827,7 @@
               ]
             }
           ],
-          "followUp": "Merci, madame. Je regarde ça.",
+          "followUp": "Merci, madame. C'est bon pour la garantie.",
           "newWords": []
         },
         {
@@ -3871,7 +3882,7 @@
           "id": "sit_15_repair_s04",
           "place": "À l'atelier · phrase seule",
           "standalone": "Transformer",
-          "cue": "You asked Léa, your flatmate (tu). Now ask the bike mechanic (vous) the same thing.",
+          "cue": "You wrote this as if to a friend (tu). Rewrite it for the bike mechanic, a stranger (vous).",
           "turns": [
             {
               "speaker": "learner",
@@ -3915,7 +3926,7 @@
             {
               "speaker": "server",
               "role": "Réparateur",
-              "text": "La réparation ? C'est avec la garantie, madame."
+              "text": "La réparation ? Votre garantie marche encore, madame."
             },
             {
               "speaker": "learner",
@@ -3927,11 +3938,11 @@
               "type": "comprehend",
               "prompt": "What does the mechanic say about the repair?",
               "choices": [
-                "It's under warranty",
+                "The warranty still covers it",
                 "It costs twenty euros"
               ],
               "correct": 0,
-              "miss": "Reread: « c'est avec la garantie »."
+              "miss": "Reread: « votre garantie marche encore »."
             },
             {
               "type": "complete",
@@ -3968,8 +3979,8 @@
               "type": "comprehend",
               "prompt": "What does Léa ask?",
               "choices": [
-                "If your bike is ready",
-                "If your bike is expensive"
+                "If your bike is expensive",
+                "If your bike is ready"
               ],
               "correct": 1,
               "miss": "Reread: « ton vélo est prêt ? »"
@@ -4007,7 +4018,7 @@
           "turns": [
             {
               "speaker": "learner",
-              "text": "Mon vélo a une ___ de deux ans, la réparation n'est pas chère."
+              "text": "Mon vélo a une ___ de deux ans, alors la réparation n'est pas chère."
             }
           ],
           "drills": [
@@ -4107,8 +4118,8 @@
               "type": "comprehend",
               "prompt": "What does the mechanic do?",
               "choices": [
-                "He takes a look",
-                "He sends you home"
+                "He sends you home",
+                "He takes a look"
               ],
               "correct": 1,
               "miss": "Reread: « bon, je regarde »."
@@ -4189,7 +4200,7 @@
             },
             {
               "speaker": "learner",
-              "text": "Non, la dernière fois, il a réparé ___ freins."
+              "text": "Non, la dernière fois, vous avez réparé ___ freins."
             }
           ],
           "drills": [
@@ -4281,7 +4292,7 @@
           "id": "sit_15_again_s02",
           "place": "À l'atelier · phrase seule",
           "standalone": "Choisir le ton",
-          "cue": "You're back at the bike repair shop. The mechanic is a stranger: say vous. Say it's the same, and ask him to fix it again.",
+          "cue": "You're back at the bike repair shop. You don't know the mechanic well: say vous. Say it's the same, and ask him to fix it again.",
           "turns": [],
           "drills": [
             {
@@ -4394,7 +4405,7 @@
                 "If you bought a new bike"
               ],
               "correct": 0,
-              "miss": "Reread: « tu retournes au magasin ? »"
+              "miss": "Reread: « tu retournes au magasin avec ton vélo ? »"
             }
           ],
           "followUp": "Oh non… Bon, à demain, Robin !",
@@ -4478,7 +4489,7 @@
               ]
             }
           ],
-          "followUp": "Oh non… Tu veux mon vélo demain ?",
+          "followUp": "Oh non… Pas de chance !",
           "followUpBy": "Léa",
           "newWords": []
         },
@@ -4490,7 +4501,7 @@
             {
               "speaker": "server",
               "name": "Mme Dumas",
-              "text": "La chaudière ne marche toujours pas ? Comme la dernière fois ?"
+              "text": "La chaudière est encore en panne ? Comme la dernière fois ?"
             }
           ],
           "drills": [
@@ -4522,11 +4533,11 @@
               "type": "comprehend",
               "prompt": "What does Mme Dumas ask?",
               "choices": [
-                "If the boiler still doesn't work",
-                "If the boiler is new"
+                "If the boiler is new",
+                "If the boiler is broken again"
               ],
               "correct": 1,
-              "miss": "Reread: « la chaudière ne marche toujours pas ? »"
+              "miss": "Reread: « la chaudière est encore en panne ? »"
             }
           ],
           "followUp": "Je vous envoie le plombier demain.",
@@ -4593,8 +4604,8 @@
               "type": "comprehend",
               "prompt": "What does the mechanic ask?",
               "choices": [
-                "If it's the tyre again",
-                "If you have a quote"
+                "If you have a quote",
+                "If it's the tyre again"
               ],
               "correct": 1,
               "miss": "Reread: « c'est encore le pneu ? »"
@@ -4626,7 +4637,7 @@
             {
               "speaker": "server",
               "name": "Karim",
-              "text": "Et ta machine à laver, ça va ?"
+              "text": "Ta machine à laver est encore en panne ?"
             }
           ],
           "drills": [
@@ -4634,15 +4645,15 @@
               "type": "comprehend",
               "prompt": "What does Karim ask about?",
               "choices": [
-                "Your washing machine",
-                "Your bike"
+                "Your bike",
+                "Your washing machine"
               ],
               "correct": 1,
               "miss": "Reread: « ta machine à laver »."
             },
             {
               "type": "reply",
-              "prompt": "Say no: like last time.",
+              "prompt": "Say yes: like last time.",
               "bank": [
                 "Non,",
                 "comme",
@@ -4653,12 +4664,12 @@
               ],
               "accepted": [
                 [
-                  "Non,",
+                  "Oui,",
                   "comme",
                   "la dernière fois !"
                 ]
               ],
-              "model": "Non, comme la dernière fois !"
+              "model": "Oui, comme la dernière fois !"
             }
           ],
           "followUp": "Oh non ! Viens au café, alors.",
@@ -4768,8 +4779,8 @@
               "type": "comprehend",
               "prompt": "How much is the repair?",
               "choices": [
-                "Nothing: it's under warranty",
-                "Twenty euros"
+                "Twenty euros",
+                "Nothing: it's under warranty"
               ],
               "correct": 1,
               "miss": "Reread: « c'est gratuit, avec la garantie »."
@@ -5049,8 +5060,8 @@
               "type": "comprehend",
               "prompt": "What does the manager offer?",
               "choices": [
-                "A new jumper or your money back",
-                "A discount on a new jumper"
+                "A discount on a new jumper",
+                "A new jumper or your money back"
               ],
               "correct": 1,
               "miss": "Reread: « remplacer le pull ou vous rembourser »."
@@ -5094,14 +5105,14 @@
           "cue": "You call customer service about your parcel. The adviser says vous to you.",
           "turns": [
             {
+              "speaker": "learner",
+              "text": "Le colis est abîmé. Qu'est-ce que vous proposez ?"
+            },
+            {
               "speaker": "server",
               "role": "Conseillère",
               "voice": "female",
-              "text": "Je vous écoute, madame. Qu'est-ce que vous proposez ?"
-            },
-            {
-              "speaker": "learner",
-              "text": "Vous pouvez ___ le colis ?"
+              "text": "Je peux ___ le colis, madame."
             }
           ],
           "drills": [
@@ -5115,7 +5126,7 @@
               ],
               "correct": 1,
               "why": [
-                "Not this word: « proposez » asks for your idea.",
+                "Not this word: « vous proposez » asks what they suggest.",
                 "",
                 "To order is « commander »."
               ],
@@ -5132,12 +5143,12 @@
               "correct": 0,
               "why": [
                 "",
-                "« Remplacé » is the past participle. After « vous pouvez », use the infinitive.",
-                "« Remplace » is conjugated. After « vous pouvez », use the infinitive."
+                "« Remplacé » is the past participle. After « je peux », use the infinitive.",
+                "« Remplace » is conjugated. After « je peux », use the infinitive."
               ]
             }
           ],
-          "followUp": "Bien sûr. Le nouveau colis arrive demain.",
+          "followUp": "Le nouveau colis arrive demain.",
           "newWords": []
         },
         {
@@ -5176,8 +5187,8 @@
               "type": "comprehend",
               "prompt": "What does Inès want to know?",
               "choices": [
-                "What customer service is offering you",
-                "When the parcel arrives"
+                "When the parcel arrives",
+                "What customer service is offering you"
               ],
               "correct": 1,
               "miss": "Reread: « ils te proposent quoi ? »"
@@ -5191,18 +5202,18 @@
           "id": "sit_15_fix_s04",
           "place": "Appel · service client · phrase seule",
           "standalone": "Transformer",
-          "cue": "You said this to Léa, your flatmate (tu). Now say it to the customer service adviser (vous).",
+          "cue": "You wrote this to Théo, your friend (tu), by mistake. Now say it to the customer service adviser (vous).",
           "turns": [
             {
               "speaker": "learner",
-              "text": "Tu proposes quoi, Léa ? Tu peux remplacer le pull ?",
+              "text": "Tu proposes quoi ? Tu peux remplacer le pull ?",
               "source": true
             }
           ],
           "drills": [
             {
               "type": "reply",
-              "prompt": "Rewrite it with vous: « qu'est-ce que vous proposez ? »",
+              "prompt": "Rewrite it with vous, in standard French.",
               "bank": [
                 "Qu'est-ce que",
                 "vous proposez ?",
@@ -5299,8 +5310,8 @@
               "type": "comprehend",
               "prompt": "What does Théo ask about?",
               "choices": [
-                "Your damaged jumper",
-                "Your bike"
+                "Your bike",
+                "Your damaged jumper"
               ],
               "correct": 1,
               "miss": "Reread: « ton pull abîmé »."
@@ -5326,7 +5337,7 @@
               "model": "Ils remplacent le pull, c'est gratuit !"
             }
           ],
-          "followUp": "Top ! C'est super, alors.",
+          "followUp": "Génial ! Et il arrive quand, le nouveau pull ?",
           "followUpBy": "Théo",
           "newWords": []
         },
