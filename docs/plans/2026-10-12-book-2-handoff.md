@@ -39,3 +39,4 @@ Pipeline = 2026-10-11 handoff §4. Status:
 - 15 second half DONE (all OK). New base: réparée, crevés, pareilles, gratuits, gratuites; `sitw_remplace_past`.
 - Lint: MASC_SELF now checks Corriger error lines with the fix applied (`corrected()`, test added). Workarounds in 11/12/13 may be restored to matrix wording by fixers (optional).
 - 15 first half DONE. New base key « pas trop court » (else « pas trop » swallows it, « court » = runs); `sitw_coupe_past`.
+- [ ] Judges: 20 launched; findings → scratchpad/judges/NN_<m1>_<m2>.md, copied to docs/plans/arc3-judges/ when done
