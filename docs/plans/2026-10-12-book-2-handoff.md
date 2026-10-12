@@ -46,3 +46,4 @@ Pipeline = 2026-10-11 handoff §4. Status:
 - Coordinator gloss todos (apply book-wide after fixers): « place » → add seat/room; « regarder/regarde/regardes » → add "look (at), check"; « (wrong form of j'espère/t'inquiète) » → "(wrong form)"; « rapporte » narrow. Plus fixer reports' lists.
 - 15 second half: 15 Comprendre drills had correct=1 pointing at the false choice (author moved the index, not the choices). Coordinator swapped choices+why → true answer now at slot 1. Judges' MUSTs on these are DONE.
 - Gloss todo add: « fait » → add "done, made"; « un tout petit peu » key.
+- Fixer 14a DONE (23 findings applied, lint+Grammalecte clean).
