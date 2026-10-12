@@ -27,3 +27,14 @@ Pipeline = 2026-10-11 handoff §4. Status:
 - [ ] Author (2 agents/module) — 10 agents launched 2026-10-12; outputs `tools/situations/drafts/1[1-5]_*_{first,second}_half{,_words}.json`. If interrupted: rerun only halves whose files are missing/fail `lint.py --draft`  - [ ] Gloss scan + assemble  - [ ] Judges  - [ ] Fixers  - [ ] Vocab audit  - [ ] 9-card review set v8
 - User 2026-10-12: accept all arc-3 plan defaults; author all 5 modules then v8.
 - 2026-10-12 17:10: all 10 authors hit the usage limit mid-run; partial drafts on disk (11 both halves, 13 second, 14 first, 14 second w/o words, 15 first). Resumed all 10 with context. Drafts are untracked until assemble — if lost again, relaunch only halves whose files fail `lint.py --draft`.
+- 11 first half DONE (lint/full lint/Grammalecte OK). Coordinator todo: `partie` new base gloss; Compléter answer-slot bias (13/24 in slot 1) matters only for Test book pilot (no shuffle) — check before v8.
+- 14 first half DONE (all checks OK). New base: `j'étais`. Cross-module entries copied (t'inquiète, prends soin de toi, j'espère, soin, réunion, cet après-midi) — verify against 11/12/13 drafts in gloss scan.
+- 12 first half DONE (all OK). Matrix audio-key clash répare/réparé → `sitw_repare_past`; told 12b to do `sitw_derange_past`. New base: chaudes, chauds, couler, coulez, après-midi.
+- 11 second half DONE (all OK). New base: `télétravail` "remote work (en télétravail = working from home)".
+- 13 first half DONE. New base: `ne t'inquiète pas` (not spoken), bloqués/bloquer/ratés; audio-key clash commence/commencé → `sitw_commence_past`. Grammalecte false positive `late_d04` « Plutôt vingt minutes, désolée ! » (Robin) → needs a deep_lint suppression entry at assemble. Judges: « il y a une grève » vs 11's « il y a grève ».
+- 12 second half DONE (all OK; glosses consistent with 11 + 12a). 
+- Coordinator todo: lint `MASC_SELF` flags the masculine error word inside Corriger error lines, though decision §2.1 says Corriger may target Robin's agreement. Three authors worked around it (11 arrive_s03, 13 wait_s03, 12 landlady_s03 « vraiment désolé »). Plan: exempt the turn's `error` token from MASC_SELF (+ test); optionally restore matrix wording in fixer pass.
+- 14 second half DONE (all OK). New base: l'apportes, l'apporter, guéries. Judges: sick_s03 « mal » choice marginal.
+- 13 second half DONE (all OK). New base: pourrai, obligés, obliger, espères, espérer, reportez, reportée.
+- 15 second half DONE (all OK). New base: réparée, crevés, pareilles, gratuits, gratuites; `sitw_remplace_past`.
+- Lint: MASC_SELF now checks Corriger error lines with the fix applied (`corrected()`, test added). Workarounds in 11/12/13 may be restored to matrix wording by fixers (optional).

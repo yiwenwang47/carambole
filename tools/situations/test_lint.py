@@ -339,6 +339,15 @@ class SituationLintTests(unittest.TestCase):
         item["drills"][0]["accepted"] = [["Je suis arrivé."]]
         self.assert_bad("masculine first-person")
 
+    def test_masculine_self_guard_allows_corriger_error_word(self):
+        item = self.module["elements"][0]["items"][2]
+        item["turns"].append({"speaker": "learner", "text": "Je suis arrivé au bureau.",
+                              "error": {"word": "arrivé", "fix": "arrivée"}})
+        self.assertNotIn("masculine first-person", "\n".join(self.errors()))
+        item["turns"][-1]["error"]["fix"] = "partie"
+        item["turns"][-1]["text"] = "Je suis arrivé, je suis parti."
+        self.assert_bad("masculine first-person")
+
     def test_masculine_self_guard_catches_bare_enchante(self):
         item = self.module["elements"][0]["items"][2]
         item["turns"].append({"speaker": "learner", "text": "Bonjour ! Enchanté."})

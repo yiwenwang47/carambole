@@ -52,6 +52,14 @@ MASC_SELF = re.compile(r"(?:\b(?:je\s+(?:suis|me sens|serai)|j['’](?:étais|ai
                        r"|(?:^|[.!?,]\s*)(?:enchanté|désolé|ravi)s?)(?![\wé])", re.I)
 
 
+def corrected(turn: dict) -> str:
+    """A turn's text with its Corriger error word replaced by the fix."""
+    text, mark = turn.get("text", ""), turn.get("error")
+    if not mark:
+        return text
+    return re.sub(r"\b" + re.escape(mark.get("word", "")) + r"\b", mark.get("fix", ""), text, count=1)
+
+
 def norm(value: str) -> str:
     return value.lower().replace("’", "'").strip(".,!?;:«»… \t\n")
 
@@ -355,7 +363,9 @@ def lint_content(module: dict, word_data: dict, audio_dir: Path = AUDIO,
             surface = " ".join(exposure_lines(item))
             if TEXTING.search(surface):
                 errors.append(f"{iid}: texting abbreviation")
-            for line in [t.get("text", "") for t in turns if t.get("speaker") == "learner"] + [
+            # A Corriger error line may hold Robin's wrong (masculine) agreement on
+            # purpose: check it with the fix applied, so only the answer must be feminine.
+            for line in [corrected(t) for t in turns if t.get("speaker") == "learner"] + [
                 " ".join(a) for d in drills if d.get("type") == "reply" for a in d.get("accepted", [])] + [
                 d.get("choices", [""])[d["correct"]] for d in drills
                 if d.get("type") == "pick" and isinstance(d.get("correct"), int)
