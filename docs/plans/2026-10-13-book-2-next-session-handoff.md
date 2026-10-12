@@ -12,10 +12,7 @@
 1. **Carousel for going back (user decision; do it first).**
    - The user wants Book 1's real carousel in Book 2. They tried the one-card slide (option 2, now on the phone) and said "nah let's do 1".
    - The plan is in §3.
-2. **Audio for 11–15.**
-   - Production audio was still generating when the session ended. Modules 11–13 were done (572 clips); 14, 15 and the `firstSeen: null` base words were still running.
-   - Check that it finished: `python3 tools/situations/generate_audio.py --dry-run` should say 0 missing, and strict `lint.py` should pass.
-   - If it didn't finish, rerun as in §5, then commit `carambole/Resources/Audio`.
+2. **Audio for 11–15: done.** All 3,982 production clips are present, strict `lint.py` passes for 15 modules, and the clips are committed.
 3. **Arc 4 (modules 16–20)** comes after that, using the same pipeline (§4).
 
 ## 2. State
@@ -24,7 +21,7 @@
 |---|---|
 | Content | 15 of 25 modules (1,800 items). They are authored, judged, fixed and assembled. |
 | Checks | `lint.py --no-audio` OK. Grammalecte: 4,721 lines, 0 flags. 77+ Python tests OK. Swift model test PASS. Pilot tests PASS. |
-| Audio | 01–10 complete and committed. 11–15 were being generated at session end (see §1.2). |
+| Audio | Complete for all 15 modules (3,982 production clips). Strict lint passes. |
 | Review sets | v7 (arc 2) and v8 (arc 3) are approved. The user said v8 "sounds ok". |
 | Phone | The Test book has v8 plus going back (option 2 slide). The main Carambole app has NOT been reinstalled; install it only when the user asks. |
 | Going back | Built in both `SituationSessionView` and the Test book pilot (§3). The user wants the animation replaced. |
