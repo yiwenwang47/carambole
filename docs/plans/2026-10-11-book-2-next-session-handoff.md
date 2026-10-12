@@ -98,3 +98,17 @@ rtk python3 tools/situations/generate_audio.py --dry-run [--module NN]
 ```
 
 Stale-clip check: map each audio key to its text with `item_clips()` from `tools/situations/generate_audio.py` (plus `words.json` for `sitw_*` keys). Map before and after editing, then delete `Resources/Audio/<key>.mp3` for every key whose text changed or disappeared.
+
+## 7. Update, later on 2026-10-11 (arc 2 session)
+
+**User decisions:** review set v5 approved; audio approved (v6 audio check: all voices, *Eugene* fine); merge app-gap fixes (done); Écrire typing drill → its own new session later; swipe-up "trop facile" → yes in the main app (code has been on `main` since `0bfe5f4`; the phone's main app just needs a rebuild — install only when the user says so, it also brings Book 2 + schema v5 to their real data).
+
+**Done:**
+- App gaps fixed and merged: Vérifier stays off after a wrong reply until the answer changes; Book 2 History has a "Jours · Erreurs" mistake log; VoiceOver labels on the session card.
+- Arc 2 (modules 07–10) planned (`2026-10-11-book-2-arc2-plan.md` + 4 matrices), authored (8 agents), judged (16 judges), fixed, assembled: 1,200 items in 10 modules. The plan's 8 open questions were authored on Claude's recommended defaults (address « huit, rue Pasteur », 3rd floor, code 258, blue door; Lyon metro letters kept; one-off staff anonymous; etc.) — the user never answered them explicitly.
+- Book-wide gloss widenings (un/une, en, j'en, le/les, pas trop, regarde, ce sera tout, ici, bien, mon, vos, midi, ce, peux, ça te va / ça vous va, vous, bon, va). « au fond » is now taught in 08 browse.
+- Module 10 geography: one map (fixer's MAP: station across the river; first lights left, cross the bridge, second lights left, second street right = rue Pasteur; café on the corner, n° 8, then the bakery; pharmacy opposite on the corner; market on the square across). Module 03 still says « à côté de la gare » (left as "nearby"; ask the user if it should become « près de »).
+- New `role` field for unnamed speakers (Vendeur, Livreur, Boulangère…), no more « Serveur » fallback; strict lint requires it. Bank tray now shrinks/scrolls so the cue never overlaps the speaker label.
+- Review set v7 (arc 2 sample: `sit_07_bread_d02 sit_08_browse_d10 sit_07_errand_s02 sit_09_arrive_d03 sit_10_turn_d05 sit_08_gift_s03 sit_08_gift_d02 sit_10_door_d04 sit_09_voicemail_s05`) built, review audio generated, committed. **Not installed on the phone yet.**
+
+**Next:** user reviews v7 → production audio for 07–10 (`generate_audio.py --module NN` in a retry loop; strict lint currently fails only on missing 07–10 audio) → arc 3 (11–15) with the same pipeline. Coordinator decisions for fixers lived in a scratch `COORDINATOR_NOTES.md`; carry the reusable ones into the next batch's agent prompts (gloss list is now in words.json; « À l'appart » is the home label; avoid untaught phrase keys like « je veux bien »).
