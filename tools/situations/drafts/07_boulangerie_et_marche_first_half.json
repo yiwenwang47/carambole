@@ -3,7 +3,7 @@
     {
       "id": "sit_07_bread",
       "title": "Commander du pain",
-      "note": "Order bread at the bakery. A « tradition » is the baker's traditional baguette, and many people prefer it to a plain « baguette ». Say how you like it baked: « bien cuite » or « pas trop cuite » (« cuite » agrees with the feminine bread).",
+      "note": "Order bread at the bakery. A « tradition » is the baker's traditional baguette, and many people prefer it to a plain « baguette ». Say how you like it baked: « bien cuite » or « pas trop cuite » (« cuite » agrees with « baguette » and « tradition », which are feminine).",
       "items": [
         {
           "id": "sit_07_bread_d01",
@@ -471,8 +471,9 @@
           "drills": [
             {
               "type": "reply",
-              "prompt": "Say yes, and offer to get him a baguette.",
+              "prompt": "Greet him, say yes, and offer to get him a baguette.",
               "bank": [
+                "Bonjour !",
                 "Oui !",
                 "Je vous prends",
                 "une baguette ?",
@@ -481,12 +482,13 @@
               ],
               "accepted": [
                 [
+                  "Bonjour !",
                   "Oui !",
                   "Je vous prends",
                   "une baguette ?"
                 ]
               ],
-              "model": "Oui ! Je vous prends une baguette ?"
+              "model": "Bonjour ! Oui ! Je vous prends une baguette ?"
             },
             {
               "type": "comprehend",
@@ -506,7 +508,7 @@
           "id": "sit_07_bread_s04",
           "place": "Sur le palier · phrase seule",
           "standalone": "Transformer",
-          "cue": "You asked Léa, who says tu to you. Now ask M. Ferrand, your neighbour, who says vous to you.",
+          "cue": "You asked Léa, who says tu to you. Now, on the landing, ask M. Ferrand, your neighbour, who says vous to you.",
           "turns": [
             {
               "speaker": "learner",
@@ -884,7 +886,7 @@
               "target": "croissants",
               "choices": [
                 "chocolate croissants",
-                "croissants",
+                "crescent-shaped butter pastries",
                 "apple tarts"
               ],
               "correct": 1,
@@ -1239,7 +1241,7 @@
             },
             {
               "speaker": "learner",
-              "text": "Ah ! Un pain au chocolat, ___ la place."
+              "text": "Un pain au chocolat ___ la place, s'il vous plaît."
             }
           ],
           "drills": [
@@ -1372,7 +1374,7 @@
                 "Tomatoes"
               ],
               "correct": 1,
-              "miss": "Reread: « Des tomates ? »"
+              "miss": "Reread: « Des tomates, aujourd'hui ? »"
             },
             {
               "type": "reply",
@@ -1601,13 +1603,13 @@
               "prompt": "Which order fits the stallholder?",
               "choices": [
                 "Une barquette de fraises, s'il te plaît.",
-                "Ouais, des fraises.",
+                "Salut ! Une barquette de fraises.",
                 "Une barquette de fraises, s'il vous plaît."
               ],
               "correct": 2,
               "why": [
                 "Good French with a friend, but the stallholder says vous to you.",
-                "Good spoken French, but too casual for a stallholder.",
+                "Good French with a friend, but « salut » is too casual for a stallholder.",
                 ""
               ]
             }
@@ -1679,7 +1681,7 @@
             {
               "speaker": "server",
               "name": "Théo",
-              "text": "Une tarte ce soir ! Qui passe au marché ?"
+              "text": "Je fais une tarte ce soir ! Qui passe au marché ?"
             },
             {
               "speaker": "learner",
@@ -1890,7 +1892,7 @@
         {
           "id": "sit_07_quantity_d09",
           "place": "Au bureau",
-          "cue": "At the office, Inès, your colleague, says tu to you. You went to the market this morning.",
+          "cue": "At the office, Inès, your colleague, says tu to you.",
           "turns": [
             {
               "speaker": "server",
@@ -1960,7 +1962,7 @@
                 "Super !",
                 "Je la prends.",
                 "Je le prends.",
-                "Je les prends."
+                "Je la prend."
               ],
               "accepted": [
                 [
@@ -2158,7 +2160,7 @@
             },
             {
               "speaker": "learner",
-              "text": "Quatre euros la barquette. Pas ___ !"
+              "text": "Quatre euros la barquette, ce n'est pas ___ !"
             }
           ],
           "drills": [
@@ -2173,8 +2175,8 @@
               "correct": 0,
               "why": [
                 "",
-                "It's short for « ce n'est pas cher »: no plural.",
-                "It's short for « ce n'est pas cher »: « cher » stays masculine."
+                "After « ce n'est pas », no plural: « ce n'est pas cher ».",
+                "After « ce n'est pas », « cher » stays masculine."
               ]
             },
             {
@@ -2220,7 +2222,7 @@
               ],
               "correct": 1,
               "why": [
-                "No: you're asking about money.",
+                "No: « combien » asks how much.",
                 "",
                 "No: « où » would ask where."
               ]
@@ -2260,13 +2262,13 @@
               "choices": [
                 "Salut ! C'est combien, le fromage ?",
                 "Excusez-moi, c'est combien, le fromage ?",
-                "Le fromage, c'est combien, Léa ?"
+                "Pardon, c'est combien, le fromage, s'il te plaît ?"
               ],
               "correct": 1,
               "why": [
                 "Good French with a friend, but « salut » is too casual for a stallholder.",
                 "",
-                "Good French, but you're asking the stallholder, not Léa."
+                "Polite, but « s'il te plaît » is for a friend: the stallholder says vous to you."
               ]
             }
           ],
@@ -2407,7 +2409,7 @@
         {
           "id": "sit_07_price_d07",
           "place": "Au marché",
-          "cue": "At the market, the stallholder says vous to you. You can't read the little sign.",
+          "cue": "At the market, the stallholder says vous to you. You asked about the prices, but you can't read the little sign.",
           "turns": [
             {
               "speaker": "server",
@@ -2503,7 +2505,7 @@
           "id": "sit_07_price_s04",
           "place": "Au marché · phrase seule",
           "standalone": "Transformer",
-          "cue": "You asked like you would a friend. Ask the stallholder the same thing politely; she says vous to you.",
+          "cue": "At the market, you asked like you would a friend. Ask the stallholder the same thing politely; she says vous to you.",
           "turns": [
             {
               "speaker": "learner",
@@ -2634,7 +2636,7 @@
           "id": "sit_07_price_s05",
           "place": "Au marché · phrase seule",
           "standalone": "Mot en retour",
-          "cue": "At the market, you tell a stallholder, who says vous to you. Which French word means “prices”?",
+          "cue": "At the market, you compliment a stallholder, who says vous to you. Which French word means “prices”?",
           "turns": [
             {
               "speaker": "learner",

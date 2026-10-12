@@ -64,7 +64,7 @@
             {
               "speaker": "server",
               "voice": "female",
-              "text": "Pour quel jour ? Jeudi, ça vous va ?"
+              "text": "Jeudi, il reste une table. Ça vous va ?"
             },
             {
               "speaker": "learner",
@@ -80,7 +80,7 @@
                 "Thursday"
               ],
               "correct": 1,
-              "miss": "Reread: « Jeudi, ça vous va ? »"
+              "miss": "Reread: « Jeudi, il reste une table. »"
             },
             {
               "type": "complete",
@@ -111,7 +111,7 @@
           "turns": [
             {
               "speaker": "server",
-              "text": "Bonjour, madame ! Oui, je vous écoute, c'est pour une table ?"
+              "text": "Bonjour, madame, je vous écoute. C'est pour une table ?"
             }
           ],
           "drills": [
@@ -147,6 +147,14 @@
                   "pour quatre",
                   "personnes,",
                   "s'il vous plaît."
+                ],
+                [
+                  "Oui,",
+                  "je voudrais",
+                  "réserver",
+                  "pour quatre",
+                  "personnes,",
+                  "s'il vous plaît."
                 ]
               ],
               "model": "Oui, je voudrais réserver une table pour quatre personnes, s'il vous plaît."
@@ -170,6 +178,16 @@
           ],
           "drills": [
             {
+              "type": "comprehend",
+              "prompt": "What is the waiter doing?",
+              "choices": [
+                "Asking you to call back",
+                "Asking you to hold on"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Un instant, je vais voir. »"
+            },
+            {
               "type": "complete",
               "prompt": "Say you'll wait.",
               "choices": [
@@ -183,16 +201,6 @@
                 "« Attendre » is the infinitive; after « je vous », conjugate it.",
                 ""
               ]
-            },
-            {
-              "type": "comprehend",
-              "prompt": "What is the waiter doing?",
-              "choices": [
-                "Asking you to call back",
-                "Asking you to hold on"
-              ],
-              "correct": 1,
-              "miss": "Reread: « Un instant, je vais voir. »"
             }
           ],
           "followUp": "Oui, jeudi, c'est possible !",
@@ -330,7 +338,7 @@
               ],
               "correct": 1,
               "why": [
-                "Tuesday is « mardi ».",
+                "Tuesday is another day.",
                 "",
                 "Tonight is « ce soir »."
               ]
@@ -493,6 +501,12 @@
                   "Oui,",
                   "j'ai réservé",
                   "une table",
+                  "pour quatre",
+                  "personnes !"
+                ],
+                [
+                  "Oui,",
+                  "j'ai réservé",
                   "pour quatre",
                   "personnes !"
                 ]
@@ -776,7 +790,7 @@
           "id": "sit_09_slot_s01",
           "place": "Appel · restaurant · phrase seule",
           "standalone": "Construire",
-          "cue": "You call a restaurant. The waiter says vous to you. You think Saturday evening is full; Sunday lunch would suit you.",
+          "cue": "You call a restaurant. The waiter says vous to you. Saturday evening may be full; Sunday lunchtime would suit you too.",
           "turns": [
             {
               "speaker": "server",
@@ -949,7 +963,7 @@
           "drills": [
             {
               "type": "reply",
-              "prompt": "Say sorry, and ask her to repeat, please.",
+              "prompt": "Ask her to repeat, please.",
               "bank": [
                 "Pardon,",
                 "vous pouvez répéter,",
@@ -1203,6 +1217,13 @@
                   "madame ?",
                   "Je suis",
                   "à la maison."
+                ],
+                [
+                  "Je suis",
+                  "à la maison.",
+                  "Mercredi soir,",
+                  "ça vous irait,",
+                  "madame ?"
                 ]
               ],
               "model": "Mercredi soir, ça vous irait, madame ? Je suis à la maison."
@@ -1443,7 +1464,7 @@
           "turns": [
             {
               "speaker": "server",
-              "text": "Bonjour, madame ! Bienvenue au restaurant. Je peux vous aider ?"
+              "text": "Bonjour, madame ! Bienvenue chez nous. Je peux vous aider ?"
             }
           ],
           "drills": [
@@ -1518,7 +1539,7 @@
                 "Your phone number"
               ],
               "correct": 1,
-              "miss": "Reread: « Et votre numéro de téléphone ? »"
+              "miss": "Reread: « Et votre numéro de téléphone, s'il vous plaît ? »"
             }
           ],
           "followUp": "Merci, c'est noté.",
@@ -1663,7 +1684,7 @@
         {
           "id": "sit_09_name_d06",
           "place": "À l'appart",
-          "cue": "Léa, your flatmate, says tu to you at home. You booked the table.",
+          "cue": "Léa, your flatmate, says tu to you at home. You booked the table under Théo's name.",
           "turns": [
             {
               "speaker": "server",
@@ -1672,13 +1693,13 @@
             },
             {
               "speaker": "learner",
-              "text": "Au nom ___ Robin."
+              "text": "Au nom ___ Théo."
             }
           ],
           "drills": [
             {
               "type": "complete",
-              "prompt": "Say it's under your name.",
+              "prompt": "Say it's under Théo's name.",
               "choices": [
                 "à",
                 "du",
@@ -1788,7 +1809,7 @@
         {
           "id": "sit_09_name_d08",
           "place": "Les copains · groupe",
-          "cue": "Théo writes to the group chat. He says tu to you. You booked the table, and you're all arriving at eight.",
+          "cue": "Théo writes to the group chat. He says tu to you. You booked the table under Léa's name, and you're all arriving at eight.",
           "turns": [
             {
               "speaker": "server",
@@ -1799,28 +1820,28 @@
           "drills": [
             {
               "type": "reply",
-              "prompt": "Say it's under your name, and you're all arriving at eight.",
+              "prompt": "Say it's under Léa's name, and you're all arriving at eight.",
               "bank": [
-                "Au nom de Robin.",
+                "Au nom de Léa.",
                 "On arrive",
                 "à huit heures !",
                 "On arrives",
                 "à huit heure !",
-                "Au nom du Robin."
+                "Au nom du Léa."
               ],
               "accepted": [
                 [
-                  "Au nom de Robin.",
+                  "Au nom de Léa.",
                   "On arrive",
                   "à huit heures !"
                 ],
                 [
                   "On arrive",
                   "à huit heures !",
-                  "Au nom de Robin."
+                  "Au nom de Léa."
                 ]
               ],
-              "model": "Au nom de Robin. On arrive à huit heures !"
+              "model": "Au nom de Léa. On arrive à huit heures !"
             },
             {
               "type": "comprehend",
@@ -2110,7 +2131,7 @@
           "turns": [
             {
               "speaker": "server",
-              "text": "Bonjour, madame ! Pour ce soir, il reste encore des tables."
+              "text": "Bonjour, madame ! Pour ce soir ? Oui, il reste des tables."
             }
           ],
           "drills": [
@@ -2288,7 +2309,7 @@
           "drills": [
             {
               "type": "reply",
-              "prompt": "Say excuse me, and ask her to repeat.",
+              "prompt": "Ask her to repeat, politely.",
               "bank": [
                 "Excusez-moi,",
                 "vous pouvez répéter ?",
@@ -2408,7 +2429,7 @@
           "turns": [
             {
               "speaker": "server",
-              "text": "Végétarienne ? Pas de problème, on a un plat."
+              "text": "Végétarienne ? Pas de problème, on a un plat sans viande."
             },
             {
               "speaker": "learner",
@@ -2525,7 +2546,6 @@
                 "pour ce soir,",
                 "s'il vous plaît.",
                 "à l'intérieur",
-                "Je voudras",
                 "s'il te plaît."
               ],
               "accepted": [
@@ -2550,7 +2570,7 @@
             {
               "speaker": "server",
               "voice": "female",
-              "text": "Il pleut ce soir. Vous préférez à l'intérieur ?"
+              "text": "Il fait froid ce soir. Vous préférez à l'intérieur ?"
             },
             {
               "speaker": "learner",
@@ -2562,11 +2582,11 @@
               "type": "comprehend",
               "prompt": "What's the weather like tonight?",
               "choices": [
-                "It's raining",
+                "It's cold",
                 "It's sunny"
               ],
               "correct": 0,
-              "miss": "Reread: « Il pleut ce soir. »"
+              "miss": "Reread: « Il fait froid ce soir. »"
             },
             {
               "type": "complete",

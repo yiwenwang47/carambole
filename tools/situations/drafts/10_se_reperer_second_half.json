@@ -8,7 +8,7 @@
         {
           "id": "sit_10_straight_d01",
           "place": "Dans la rue",
-          "cue": "You asked a woman in the street the way to the station. She says vous to you.",
+          "cue": "In a part of town you don't know, you asked a woman the way to the museum. She says vous to you.",
           "turns": [
             {
               "speaker": "server",
@@ -19,7 +19,7 @@
           "drills": [
             {
               "type": "comprehend",
-              "prompt": "Where is the station?",
+              "prompt": "Where is the museum?",
               "choices": [
                 "At the corner of the street",
                 "At the end of the street"
@@ -67,7 +67,7 @@
           "turns": [
             {
               "speaker": "server",
-              "text": "Je suis au feu, devant la gare. Et maintenant ?"
+              "text": "Je suis au bout de votre rue. Et maintenant ?"
             },
             {
               "speaker": "learner",
@@ -80,10 +80,10 @@
               "prompt": "Where is the driver?",
               "choices": [
                 "At the bakery",
-                "At the traffic lights"
+                "At the end of your street"
               ],
               "correct": 1,
-              "miss": "Reread: « je suis au feu »."
+              "miss": "Reread: « je suis au bout de votre rue »."
             },
             {
               "type": "complete",
@@ -110,11 +110,11 @@
           "id": "sit_10_straight_s01",
           "place": "Dans la rue · phrase seule",
           "standalone": "Construire",
-          "cue": "A man in the street says vous to you. He's looking for the market.",
+          "cue": "A man in the street, just after the bridge, says vous to you. He's looking for the cinema.",
           "turns": [
             {
               "speaker": "server",
-              "text": "Excusez-moi, madame, je cherche le marché, s'il vous plaît."
+              "text": "Excusez-moi, madame, je cherche le cinéma, s'il vous plaît."
             }
           ],
           "drills": [
@@ -150,11 +150,11 @@
         {
           "id": "sit_10_straight_d03",
           "place": "Appel · livreur",
-          "cue": "The delivery driver calls you. He says vous to you. He's looking for your street.",
+          "cue": "The delivery driver calls you. He says vous to you. He's looking for your street. Your street is next to the market.",
           "turns": [
             {
               "speaker": "server",
-              "text": "Je suis derrière la gare. Je vais où ?"
+              "text": "Je suis derrière le marché. Je vais où ?"
             },
             {
               "speaker": "learner",
@@ -181,11 +181,11 @@
               "type": "comprehend",
               "prompt": "Where is the driver?",
               "choices": [
-                "Behind the station",
-                "In front of the station"
+                "Behind the market",
+                "In front of the market"
               ],
               "correct": 0,
-              "miss": "Reread: « je suis derrière la gare »."
+              "miss": "Reread: « je suis derrière le marché »."
             }
           ],
           "followUp": "D'accord, tout droit. J'arrive !",
@@ -195,13 +195,13 @@
         },
         {
           "id": "sit_10_straight_d04",
-          "place": "Texto · Léa",
-          "cue": "Léa, your flatmate, texts you. She says tu to you.",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. She says tu to you. She's coming to your place for the first time.",
           "turns": [
             {
               "speaker": "server",
-              "name": "Léa",
-              "text": "Le café de Karim, c'est au bout de la rue ?"
+              "name": "Inès",
+              "text": "Ton immeuble, c'est au bout de la rue ?"
             }
           ],
           "drills": [
@@ -223,34 +223,34 @@
             },
             {
               "type": "reply",
-              "prompt": "Say yes, right after the chemist's.",
+              "prompt": "Say no: right after the café.",
               "bank": [
-                "Oui,",
-                "juste après",
-                "la pharmacie.",
-                "le pharmacie.",
                 "Non,",
+                "juste après",
+                "le café.",
+                "la café.",
+                "Oui,",
                 "derrière"
               ],
               "accepted": [
                 [
-                  "Oui,",
+                  "Non,",
                   "juste après",
-                  "la pharmacie."
+                  "le café."
                 ]
               ],
-              "model": "Oui, juste après la pharmacie."
+              "model": "Non, juste après le café."
             }
           ],
           "followUp": "Top, merci !",
-          "followUpBy": "Léa",
+          "followUpBy": "Inès",
           "newWords": []
         },
         {
           "id": "sit_10_straight_s02",
-          "place": "Sur le palier · phrase seule",
+          "place": "Dans la rue · phrase seule",
           "standalone": "Choisir le ton",
-          "cue": "M. Ferrand, your neighbour, says vous to you. He asks where the café is. Tell him: straight on, at the end of the street.",
+          "cue": "A man in the street says vous to you. He asks the way to the cinema. Tell him: straight on, at the end of the street.",
           "turns": [],
           "drills": [
             {
@@ -258,13 +258,13 @@
               "prompt": "Which one fits?",
               "choices": [
                 "Continue tout droit, c'est au bout de la rue !",
-                "Tout droit, vite ! Au bout !",
+                "Ouais, tout droit, au bout de la rue !",
                 "Allez tout droit, monsieur, c'est au bout de la rue."
               ],
               "correct": 2,
               "why": [
-                "Good French, but « continue » is tu. Say vous to M. Ferrand.",
-                "Good French, but it's curt and rude to your neighbour.",
+                "Good French, but « continue » is tu. Say vous to a stranger.",
+                "Good French, but « ouais » is too casual for a stranger.",
                 ""
               ]
             }
@@ -274,7 +274,7 @@
         {
           "id": "sit_10_straight_d05",
           "place": "Dans la rue",
-          "cue": "Clarify: you asked a man in the street the way to the park. He says vous to you and talks fast.",
+          "cue": "Clarify: you asked a man in the street the way to the museum. He says vous to you and talks fast.",
           "turns": [
             {
               "speaker": "server",
@@ -282,6 +282,22 @@
             }
           ],
           "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « juste après » mean here?",
+              "choices": [
+                "just before",
+                "right after",
+                "right behind"
+              ],
+              "correct": 1,
+              "why": [
+                "« Juste avant » means just before.",
+                "",
+                "« Juste derrière » means right behind."
+              ],
+              "target": "juste après"
+            },
             {
               "type": "reply",
               "prompt": "Say sorry, ask him to repeat, and check: right after the bridge?",
@@ -308,22 +324,6 @@
                 ]
               ],
               "model": "Pardon, vous pouvez répéter ? Juste après le pont ?"
-            },
-            {
-              "type": "word",
-              "prompt": "What does « juste après » mean here?",
-              "choices": [
-                "just before",
-                "right after",
-                "right behind"
-              ],
-              "correct": 1,
-              "why": [
-                "« Juste avant » means just before.",
-                "",
-                "« Juste derrière » means right behind."
-              ],
-              "target": "juste après"
             }
           ],
           "followUp": "Oui, après le pont. Bonne journée !",
@@ -378,7 +378,7 @@
           "id": "sit_10_straight_s03",
           "place": "Dans la rue · phrase seule",
           "standalone": "Corriger",
-          "cue": "A woman in the street says vous to you. Tell her the way to the chemist's.",
+          "cue": "You're in your street. A woman says vous to you. Tell her the way to the tram stop.",
           "turns": [
             {
               "speaker": "learner",
@@ -419,6 +419,21 @@
           ],
           "drills": [
             {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "coin",
+                "côté",
+                "bout"
+              ],
+              "correct": 1,
+              "why": [
+                "« Coin » takes « au »: « au coin de ». After « à », only « à côté de » works.",
+                "",
+                "« Bout » takes « au »: « au bout de ». After « à », only « à côté de » works."
+              ]
+            },
+            {
               "type": "word",
               "prompt": "What does « derrière » mean here?",
               "choices": [
@@ -433,21 +448,6 @@
                 ""
               ],
               "target": "derrière"
-            },
-            {
-              "type": "complete",
-              "prompt": "Fill the gap.",
-              "choices": [
-                "côte",
-                "côté",
-                "coté"
-              ],
-              "correct": 1,
-              "why": [
-                "« Côte » (coast, rib) is another word: you need « à côté de ».",
-                "",
-                "« Coté » needs a circumflex: « côté »."
-              ]
             }
           ],
           "followUp": "Ah, la porte bleue ! Je vois.",
@@ -505,11 +505,11 @@
           "id": "sit_10_straight_s04",
           "place": "Dans la rue · phrase seule",
           "standalone": "Transformer",
-          "cue": "You told Léa, your flatmate, the way (tu). Now a man in the street asks, and he says vous to you.",
+          "cue": "You told Théo, your friend, the way to the cinema (tu). Now a man in the street asks, and he says vous to you.",
           "turns": [
             {
               "speaker": "learner",
-              "text": "Léa, continue tout droit jusqu'au bout de la rue, c'est à gauche.",
+              "text": "Théo, continue tout droit jusqu'au bout de la rue, c'est à gauche.",
               "source": true
             }
           ],
@@ -525,7 +525,7 @@
                 "bout de la rue,",
                 "c'est à gauche.",
                 "continue",
-                "Léa,",
+                "Théo,",
                 "continues"
               ],
               "accepted": [
@@ -546,15 +546,15 @@
         {
           "id": "sit_10_straight_d09",
           "place": "Appel · livreur",
-          "cue": "The delivery driver calls you. He says vous to you. Rue Pasteur is behind the station.",
+          "cue": "The delivery driver calls you. He says vous to you. Your building is opposite the pharmacy.",
           "turns": [
             {
               "speaker": "server",
-              "text": "Je suis devant la gare. Vous êtes où ?"
+              "text": "Je suis devant la pharmacie. Vous êtes où ?"
             },
             {
               "speaker": "learner",
-              "text": "Mon immeuble est ___ la gare, à côté de la boulangerie."
+              "text": "Mon immeuble est ___ vous, à côté de la boulangerie."
             }
           ],
           "drills": [
@@ -562,11 +562,11 @@
               "type": "comprehend",
               "prompt": "Where is the driver?",
               "choices": [
-                "In front of the station",
-                "Behind the station"
+                "In front of the pharmacy",
+                "Behind the pharmacy"
               ],
               "correct": 0,
-              "miss": "Reread: « je suis devant la gare »."
+              "miss": "Reread: « je suis devant la pharmacie »."
             },
             {
               "type": "complete",
@@ -584,13 +584,13 @@
               ]
             }
           ],
-          "followUp": "Derrière la gare ? D'accord, j'arrive !",
+          "followUp": "Derrière moi ? Ah oui, la porte bleue !",
           "newWords": []
         },
         {
           "id": "sit_10_straight_d10",
           "place": "Dans la rue",
-          "cue": "You asked a man in the street the way to a bakery. He says vous to you.",
+          "cue": "In a part of town you don't know, you asked a man the way to a bakery. He says vous to you.",
           "turns": [
             {
               "speaker": "server",
@@ -646,7 +646,7 @@
           "turns": [
             {
               "speaker": "learner",
-              "text": "La pharmacie ? Allez tout droit, c'est ___ la rue, à gauche."
+              "text": "Le cinéma ? Allez tout droit, c'est ___ la rue, à gauche."
             }
           ],
           "drills": [
@@ -919,7 +919,7 @@
               "model": "Merci, madame, c'est noté !"
             }
           ],
-          "followUp": "Pour le livreur, il y a l'interphone.",
+          "followUp": "Merci, Robin. Il y a l'interphone.",
           "followUpBy": "Mme Dumas",
           "newWords": []
         },
@@ -1231,12 +1231,12 @@
         {
           "id": "sit_10_door_d09",
           "place": "Sur le palier",
-          "cue": "M. Ferrand, your neighbour, says vous to you. He's going downstairs; you can't go down right now.",
+          "cue": "M. Ferrand, your neighbour, knocks on your door. He says vous to you. You can't go down right now.",
           "turns": [
             {
               "speaker": "server",
               "name": "M. Ferrand",
-              "text": "Madame, le livreur sonne à votre interphone !"
+              "text": "Le livreur est en bas. Votre interphone ne marche pas !"
             },
             {
               "speaker": "learner",
@@ -1246,13 +1246,13 @@
           "drills": [
             {
               "type": "comprehend",
-              "prompt": "What's happening?",
+              "prompt": "What's the problem?",
               "choices": [
-                "The delivery driver is calling your phone",
-                "The delivery driver is ringing your entry phone"
+                "Your entry phone doesn't work",
+                "The delivery driver is lost"
               ],
-              "correct": 1,
-              "miss": "Reread: « le livreur sonne à votre interphone »."
+              "correct": 0,
+              "miss": "Reread: « votre interphone ne marche pas »."
             },
             {
               "type": "complete",
@@ -1265,7 +1265,7 @@
               "correct": 2,
               "why": [
                 "« Leur » is plural, but there's one driver.",
-                "You open the door « to » him: « lui ».",
+                "You open the door « to » him: « lui ». (« Le » would also be « l' » before « ouvrir ».)",
                 ""
               ]
             }
@@ -1358,7 +1358,7 @@
         {
           "id": "sit_10_ask_d01",
           "place": "Dans la rue",
-          "cue": "You're looking for the station. You stop a woman in the street; she says vous to you.",
+          "cue": "In a part of town you don't know, you're looking for the station. You stop a woman in the street; she says vous to you.",
           "turns": [
             {
               "speaker": "learner",
@@ -1414,16 +1414,16 @@
         {
           "id": "sit_10_ask_d02",
           "place": "Appel · Léa",
-          "cue": "You call Léa, your flatmate. She says tu to you. You're a woman.",
+          "cue": "Léa, your flatmate, calls you: you're late to meet her in town. She says tu to you. You're a woman.",
           "turns": [
-            {
-              "speaker": "learner",
-              "text": "Léa, je me suis trompée ___ rue !"
-            },
             {
               "speaker": "server",
               "name": "Léa",
-              "text": "T'es où ? Devant le marché ?"
+              "text": "T'es où ? Devant le restaurant ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Non, je me suis trompée ___ rue !"
             }
           ],
           "drills": [
@@ -1453,7 +1453,7 @@
               ]
             }
           ],
-          "followUp": "Pas grave, je t'attends au café !",
+          "followUp": "Pas grave, je t'attends !",
           "newWords": [
             "je me suis trompée"
           ]
@@ -1462,7 +1462,7 @@
           "id": "sit_10_ask_s01",
           "place": "Dans la rue · phrase seule",
           "standalone": "Construire",
-          "cue": "You're looking for the park. Ask a man in the street the way; he says vous to you.",
+          "cue": "In a part of town you don't know, you're looking for the park. Ask a man in the street the way; he says vous to you.",
           "turns": [],
           "drills": [
             {
@@ -1485,6 +1485,41 @@
                   "le parc,",
                   "c'est par où,",
                   "s'il vous plaît ?"
+                ],
+                [
+                  "Excusez-moi,",
+                  "le parc,",
+                  "c'est par où,",
+                  "monsieur,",
+                  "s'il vous plaît ?"
+                ],
+                [
+                  "Excusez-moi,",
+                  "monsieur,",
+                  "c'est par où,",
+                  "le parc,",
+                  "s'il vous plaît ?"
+                ],
+                [
+                  "Excusez-moi,",
+                  "le parc,",
+                  "monsieur,",
+                  "c'est par où,",
+                  "s'il vous plaît ?"
+                ],
+                [
+                  "Excusez-moi,",
+                  "c'est par où,",
+                  "le parc,",
+                  "monsieur,",
+                  "s'il vous plaît ?"
+                ],
+                [
+                  "Excusez-moi,",
+                  "c'est par où,",
+                  "monsieur,",
+                  "le parc,",
+                  "s'il vous plaît ?"
                 ]
               ],
               "model": "Excusez-moi, monsieur, le parc, c'est par où, s'il vous plaît ?"
@@ -1495,7 +1530,7 @@
         {
           "id": "sit_10_ask_d03",
           "place": "Dans la rue",
-          "cue": "A man in the street says vous to you. You're a woman.",
+          "cue": "In a part of town you don't know, a man in the street says vous to you. You're a woman.",
           "turns": [
             {
               "speaker": "server",
@@ -1503,7 +1538,7 @@
             },
             {
               "speaker": "learner",
-              "text": "Oui, je suis ___ ! Le cinéma, c'est par où ?"
+              "text": "Oui, je suis ___ ! La piscine, c'est par où ?"
             }
           ],
           "drills": [
@@ -1533,7 +1568,7 @@
               "miss": "Reread: « vous cherchez votre chemin ? »"
             }
           ],
-          "followUp": "Le cinéma ? Tout droit, juste après le pont.",
+          "followUp": "La piscine ? Tout droit, au bout de la rue.",
           "newWords": [
             "chemin"
           ]
@@ -1541,12 +1576,12 @@
         {
           "id": "sit_10_ask_d04",
           "place": "Texto · Théo",
-          "cue": "Théo, your friend, texts you. He says tu to you.",
+          "cue": "Théo, your friend, texts you. He says tu to you. The cinema is in your part of town.",
           "turns": [
             {
               "speaker": "server",
               "name": "Théo",
-              "text": "Je suis à la gare. Le cinéma, c'est par où ?"
+              "text": "Je suis sur le pont. Le cinéma, c'est par où ?"
             }
           ],
           "drills": [
@@ -1596,7 +1631,7 @@
           "id": "sit_10_ask_s02",
           "place": "Dans la rue · phrase seule",
           "standalone": "Choisir le ton",
-          "cue": "You're lost. Ask a woman in the street, who says vous to you, which way the chemist's is.",
+          "cue": "You're lost in a part of town you don't know. Ask a woman in the street, who says vous to you, which way the chemist's is.",
           "turns": [],
           "drills": [
             {
@@ -1620,12 +1655,12 @@
         {
           "id": "sit_10_ask_d05",
           "place": "Dans la rue",
-          "cue": "Clarify: a woman in the street says vous to you. She talks fast.",
+          "cue": "Clarify: in a part of town you don't know, you asked a woman the way to the station. She says vous to you and talks fast.",
           "turns": [
             {
               "speaker": "server",
               "voice": "female",
-              "text": "Vous cherchez votre chemin ? Après le feu, à droite."
+              "text": "Le chemin pour la gare ? Après le feu, à droite."
             }
           ],
           "drills": [
@@ -1710,7 +1745,7 @@
               "miss": "Reread: « on est devant le restaurant »."
             }
           ],
-          "followUp": "Pas grave ! C'est juste après la gare.",
+          "followUp": "Pas grave ! On t'attend.",
           "followUpBy": "Inès",
           "newWords": []
         },
@@ -1718,7 +1753,7 @@
           "id": "sit_10_ask_s03",
           "place": "Dans la rue · phrase seule",
           "standalone": "Corriger",
-          "cue": "A woman in the street says vous to you. You're a woman. Ask her the way.",
+          "cue": "In a part of town you don't know, a woman in the street says vous to you. You're a woman. Ask her the way.",
           "turns": [
             {
               "speaker": "learner",
@@ -1746,7 +1781,7 @@
         {
           "id": "sit_10_ask_d07",
           "place": "Appel · Léa",
-          "cue": "You call Léa, your flatmate. She says tu to you. You're a woman.",
+          "cue": "You call Léa, your flatmate: you're meeting her in town. She says tu to you. You're a woman.",
           "turns": [
             {
               "speaker": "learner",
@@ -1786,19 +1821,19 @@
               ]
             }
           ],
-          "followUp": "Pas grave ! Je t'attends au café.",
+          "followUp": "Pas grave ! Je t'attends au restaurant.",
           "followUpBy": "Léa",
           "newWords": []
         },
         {
           "id": "sit_10_ask_d08",
           "place": "Dans la rue",
-          "cue": "You meet M. Ferrand, your neighbour, in town. He says vous to you. You're looking for the station.",
+          "cue": "You meet M. Ferrand, your neighbour, in a part of town you don't know. He says vous to you. You're looking for the station.",
           "turns": [
             {
               "speaker": "server",
               "name": "M. Ferrand",
-              "text": "Bonjour, madame ! Vous cherchez votre chemin ?"
+              "text": "Bonjour, madame ! Vous êtes perdue ?"
             }
           ],
           "drills": [
@@ -1829,10 +1864,10 @@
               "prompt": "What does M. Ferrand ask?",
               "choices": [
                 "If you're going to the station",
-                "If you're trying to find your way"
+                "If you're lost"
               ],
               "correct": 1,
-              "miss": "Reread: « vous cherchez votre chemin ? »"
+              "miss": "Reread: « vous êtes perdue ? »"
             }
           ],
           "followUp": "La gare ? Tout droit, au bout de la rue.",
@@ -1846,7 +1881,7 @@
           "turns": [
             {
               "speaker": "learner",
-              "text": "Léa, tu peux me dire le chemin pour la gare, s'il te plaît ?",
+              "text": "Léa, tu peux me dire le chemin pour la piscine, s'il te plaît ?",
               "source": true
             }
           ],
@@ -1859,7 +1894,7 @@
                 "vous pouvez",
                 "me dire",
                 "le chemin",
-                "pour la gare,",
+                "pour la piscine,",
                 "s'il vous plaît ?",
                 "tu peux",
                 "s'il te plaît ?",
@@ -1871,11 +1906,11 @@
                   "vous pouvez",
                   "me dire",
                   "le chemin",
-                  "pour la gare,",
+                  "pour la piscine,",
                   "s'il vous plaît ?"
                 ]
               ],
-              "model": "Monsieur, vous pouvez me dire le chemin pour la gare, s'il vous plaît ?"
+              "model": "Monsieur, vous pouvez me dire le chemin pour la piscine, s'il vous plaît ?"
             }
           ],
           "newWords": []
@@ -1883,7 +1918,7 @@
         {
           "id": "sit_10_ask_d09",
           "place": "Dans la rue",
-          "cue": "You asked a woman in the street the way to the station. She says vous to you. You're a woman.",
+          "cue": "In a part of town you don't know, you asked a woman the way to the station. She says vous to you. You're a woman.",
           "turns": [
             {
               "speaker": "server",
@@ -1933,7 +1968,7 @@
             {
               "speaker": "server",
               "name": "Théo",
-              "text": "Robin, t'es où ? Tu es perdue ?"
+              "text": "Robin, t'es où ? T'es perdue ?"
             }
           ],
           "drills": [
@@ -1945,7 +1980,7 @@
                 "If you're lost"
               ],
               "correct": 1,
-              "miss": "Reread: « tu es perdue ? »"
+              "miss": "Reread: « t'es perdue ? »"
             },
             {
               "type": "reply",
@@ -1983,7 +2018,7 @@
           "id": "sit_10_ask_s05",
           "place": "Dans la rue · phrase seule",
           "standalone": "Mot en retour",
-          "cue": "A woman in the street says vous to you. You're a woman. Which words mean “which way is it?”",
+          "cue": "In a part of town you don't know, a woman in the street says vous to you. You're a woman. Which words mean “which way is it?”",
           "turns": [
             {
               "speaker": "learner",
@@ -2120,7 +2155,7 @@
           "id": "sit_10_transit_s01",
           "place": "Dans la rue · phrase seule",
           "standalone": "Construire",
-          "cue": "You're going to the station. Ask a man in the street, who says vous to you, which metro line to take: A or B?",
+          "cue": "In town, you're going to the station. Ask a man in the street, who says vous to you, which metro line to take: A or B?",
           "turns": [],
           "drills": [
             {
@@ -2142,6 +2177,15 @@
                   "Pardon,",
                   "monsieur,",
                   "pour la gare,",
+                  "je prends",
+                  "la ligne A",
+                  "ou",
+                  "la ligne B ?"
+                ],
+                [
+                  "Pardon,",
+                  "pour la gare,",
+                  "monsieur,",
                   "je prends",
                   "la ligne A",
                   "ou",
@@ -2203,7 +2247,7 @@
         {
           "id": "sit_10_transit_d04",
           "place": "Dans la rue",
-          "cue": "A man in the street says vous to you. You're going to the station.",
+          "cue": "In town, you ask a man in the street if this metro is line A. He says vous to you. You're going to the station.",
           "turns": [
             {
               "speaker": "server",
@@ -2271,13 +2315,13 @@
               "choices": [
                 "Salut ! C'est quel arrêt pour Bellecour ?",
                 "Excusez-moi, madame, c'est quel arrêt pour Bellecour ?",
-                "Tu sais, c'est quel arrêt pour Bellecour ?"
+                "Dis, c'est quel arrêt pour Bellecour ?"
               ],
               "correct": 1,
               "why": [
                 "Good French, but « salut » is for friends.",
                 "",
-                "Good French, but « tu sais » is tu: say vous to a stranger."
+                "Good French, but « dis » is tu, for friends: say vous to a stranger."
               ]
             }
           ],
@@ -2286,7 +2330,7 @@
         {
           "id": "sit_10_transit_d05",
           "place": "Dans la rue",
-          "cue": "Clarify: you asked a woman in the street the way to Bellecour. She says vous to you and talks fast.",
+          "cue": "Clarify: in town, you asked a woman in the street the way to the museum. She says vous to you and talks fast.",
           "turns": [
             {
               "speaker": "server",
@@ -2527,11 +2571,11 @@
           "id": "sit_10_transit_s04",
           "place": "Dans la rue · phrase seule",
           "standalone": "Transformer",
-          "cue": "You told Léa the way (tu). Now tell a man in the street, who says vous to you.",
+          "cue": "You told Léa the way to Bellecour from the station (tu). Now a man in the street near the station asks; he says vous to you.",
           "turns": [
             {
               "speaker": "learner",
-              "text": "Léa, prends la ligne A et descends au troisième arrêt, c'est Bellecour.",
+              "text": "Léa, prends la ligne A et descends au deuxième arrêt, c'est Bellecour.",
               "source": true
             }
           ],
@@ -2545,7 +2589,7 @@
                 "la ligne A",
                 "et",
                 "descendez",
-                "au troisième arrêt,",
+                "au deuxième arrêt,",
                 "c'est Bellecour.",
                 "prends",
                 "descends",
@@ -2558,11 +2602,11 @@
                   "la ligne A",
                   "et",
                   "descendez",
-                  "au troisième arrêt,",
+                  "au deuxième arrêt,",
                   "c'est Bellecour."
                 ]
               ],
-              "model": "Monsieur, prenez la ligne A et descendez au troisième arrêt, c'est Bellecour."
+              "model": "Monsieur, prenez la ligne A et descendez au deuxième arrêt, c'est Bellecour."
             }
           ],
           "newWords": []
@@ -2570,12 +2614,12 @@
         {
           "id": "sit_10_transit_d09",
           "place": "Dans la rue",
-          "cue": "You asked a woman in the street for the tram. She says vous to you.",
+          "cue": "In a part of town you don't know, you asked a woman for the tram. She says vous to you.",
           "turns": [
             {
               "speaker": "server",
               "voice": "female",
-              "text": "Le tram ? L'arrêt est à côté, devant la boulangerie."
+              "text": "Le tram ? L'arrêt est à côté, devant le restaurant."
             },
             {
               "speaker": "learner",
@@ -2588,10 +2632,10 @@
               "prompt": "Where is the tram stop?",
               "choices": [
                 "Behind the station",
-                "Nearby, in front of the bakery"
+                "Nearby, in front of the restaurant"
               ],
               "correct": 1,
-              "miss": "Reread: « l'arrêt est à côté, devant la boulangerie »."
+              "miss": "Reread: « l'arrêt est à côté, devant le restaurant »."
             },
             {
               "type": "complete",
@@ -2615,7 +2659,7 @@
         {
           "id": "sit_10_transit_d10",
           "place": "Texto · Karim",
-          "cue": "Karim, the barista, texts you. He says tu to you.",
+          "cue": "Karim, the barista, texts you. He says tu to you. You're in town, at the office.",
           "turns": [
             {
               "speaker": "server",
@@ -2665,7 +2709,7 @@
           "id": "sit_10_transit_s05",
           "place": "Dans la rue · phrase seule",
           "standalone": "Mot en retour",
-          "cue": "Tell a visitor in the street, who says vous to you, how to get to Bellecour. Which word means “stop” (bus, tram)?",
+          "cue": "Tell a visitor in the street, who says vous to you, how to get to the museum. Which word means “stop” (bus, tram)?",
           "turns": [
             {
               "speaker": "learner",

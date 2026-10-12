@@ -3,7 +3,7 @@
   {
    "id": "sit_07_taste",
    "title": "Choisir et goûter",
-   "note": "Taste before you buy: stallholders offer « Vous voulez goûter ? », and you answer « Je veux bien en goûter un ». « Mûr » agrees with the fruit: « les fraises sont mûres », « les abricots sont mûrs ». Stallholders say vous; friends say tu.",
+   "note": "Taste before you buy: stallholders offer « Vous voulez goûter ? », and you answer « Oui, merci ! Je vais en goûter un ». « Mûr » agrees with the fruit: « les fraises sont mûres », « les abricots sont mûrs ». Stallholders say vous; friends say tu.",
    "items": [
     {
      "id": "sit_07_taste_d01",
@@ -29,7 +29,7 @@
       },
       {
        "type": "reply",
-       "prompt": "Accept with thanks, then say it's delicious.",
+       "prompt": "Say yes, thanks — then, once you've tasted it, say it's delicious.",
        "bank": [
         "Oui,",
         "merci !",
@@ -154,7 +154,7 @@
       },
       {
        "speaker": "learner",
-       "text": "Oui, je veux bien ___ goûter un."
+       "text": "Oui, merci ! Je vais ___ goûter un."
       }
      ],
      "drills": [
@@ -242,7 +242,7 @@
        "model": "Oui, très mûres ! Tu veux goûter ?"
       }
      ],
-     "followUp": "Oh oui ! Elles sont délicieuses !",
+     "followUp": "Oui, merci ! Oh, elles sont délicieuses !",
      "newWords": []
     },
     {
@@ -331,7 +331,7 @@
     {
      "id": "sit_07_taste_d06",
      "place": "Texto · Inès",
-     "cue": "Inès, your colleague, says tu to you. She texts you. You bought apricots this morning.",
+     "cue": "Inès, your colleague, says tu to you. She texts you. You went to the market this morning.",
      "turns": [
       {
        "speaker": "server",
@@ -505,11 +505,11 @@
      "id": "sit_07_taste_s04",
      "place": "À l'appart · phrase seule",
      "standalone": "Transformer",
-     "cue": "You said this to a stallholder. Say the same to Léa, your flatmate, who says tu to you.",
+     "cue": "You said this to M. Ferrand, your neighbour. Say the same to Léa, your flatmate, who says tu to you.",
      "turns": [
       {
        "speaker": "learner",
-       "text": "Vous voulez goûter, madame ? Elles sont très mûres, ces fraises.",
+       "text": "Vous voulez goûter, monsieur ? Elles sont très mûres, ces fraises.",
        "source": true
       }
      ],
@@ -529,7 +529,7 @@
         "ces fraises.",
         "Vous",
         "voulez",
-        "madame ?",
+        "monsieur ?",
         "mûrs,"
        ],
        "accepted": [
@@ -543,6 +543,17 @@
          "très",
          "mûres,",
          "ces fraises."
+        ],
+        [
+         "Elles",
+         "sont",
+         "très",
+         "mûres,",
+         "ces fraises.",
+         "Tu",
+         "veux",
+         "goûter,",
+         "Léa ?"
         ]
        ],
        "model": "Tu veux goûter, Léa ? Elles sont très mûres, ces fraises."
@@ -801,7 +812,7 @@
         "Bonne journée,",
         "madame !",
         "monsieur !",
-        "toute",
+        "C'est toute",
         "Salut !"
        ],
        "accepted": [
@@ -917,6 +928,11 @@
        "accepted": [
         [
          "Et",
+         "une tarte",
+         "aux pommes,",
+         "s'il vous plaît."
+        ],
+        [
          "une tarte",
          "aux pommes,",
          "s'il vous plaît."
@@ -1206,7 +1222,7 @@
      "turns": [
       {
        "speaker": "learner",
-       "text": "C'est tout, merci, monsieur. Bonne journée et à samedi !",
+       "text": "C'est tout, merci, monsieur. Bonne journée et à dimanche !",
        "source": true
       }
      ],
@@ -1220,7 +1236,7 @@
         "monsieur.",
         "Bonne journée",
         "et",
-        "à samedi !",
+        "à dimanche !",
         "Ce sera tous,",
         "madame.",
         "C'est tout,"
@@ -1232,10 +1248,10 @@
          "monsieur.",
          "Bonne journée",
          "et",
-         "à samedi !"
+         "à dimanche !"
         ]
        ],
-       "model": "Ce sera tout, merci, monsieur. Bonne journée et à samedi !"
+       "model": "Ce sera tout, merci, monsieur. Bonne journée et à dimanche !"
       }
      ],
      "newWords": []
@@ -1384,7 +1400,7 @@
     {
      "id": "sit_07_hours_d01",
      "place": "Sur le palier",
-     "cue": "M. Ferrand, your neighbour, says vous to you. You tell him you're going to the market.",
+     "cue": "M. Ferrand, your neighbour, says vous to you. You're on your way to the market.",
      "turns": [
       {
        "speaker": "server",
@@ -1678,7 +1694,7 @@
      "drills": [
       {
        "type": "reply",
-       "prompt": "You missed the time. Ask her to repeat it.",
+       "prompt": "You missed the time. Say sorry, and ask until what time.",
        "bank": [
         "Pardon ?",
         "Jusqu'à",
@@ -1692,13 +1708,6 @@
          "Pardon ?",
          "Jusqu'à",
          "quelle heure ?"
-        ],
-        [
-         "Jusqu'à",
-         "quelle heure ?"
-        ],
-        [
-         "Pardon ?"
         ]
        ],
        "model": "Pardon ? Jusqu'à quelle heure ?"
@@ -1751,18 +1760,18 @@
        "why": [
         "After « le dimanche », say « matin », with no s.",
         "",
-        "After « le dimanche », no s: and « soirs » is plural."
+        "« Soirs » is plural; after « le dimanche », use the singular."
        ]
       },
       {
        "type": "comprehend",
        "prompt": "What does Théo ask?",
        "choices": [
-        "Where the market is",
+        "If the market is closed on Sunday",
         "If the market is open on Sunday"
        ],
        "correct": 1,
-       "miss": "Reread: « c'est ouvert le dimanche ? »"
+       "miss": "Reread: « c'est ouvert le dimanche ? » — « ouvert » means open."
       }
      ],
      "followUp": "Top ! Rendez-vous dimanche à dix heures !",
@@ -1871,8 +1880,8 @@
         "jusqu'à",
         "quand ?",
         "T'es",
-        "Vous",
-        "êtes",
+        "est",
+        "ouverts",
         "ouverte"
        ],
        "accepted": [
@@ -1968,7 +1977,7 @@
       },
       {
        "speaker": "learner",
-       "text": "Oui, fermée ___ deux heures !"
+       "text": "Oui, ___ deux heures !"
       }
      ],
      "drills": [
@@ -1976,7 +1985,7 @@
        "type": "comprehend",
        "prompt": "What does Léa ask?",
        "choices": [
-        "If the bakery has bread",
+        "If the bakery is open",
         "If the bakery is closed"
        ],
        "correct": 1,
@@ -2224,6 +2233,15 @@
          "Tu",
          "veux",
          "quelque chose ?"
+        ],
+        [
+         "Tu",
+         "veux",
+         "quelque chose ?",
+         "Je",
+         "passe",
+         "au marché",
+         "ce matin."
         ]
        ],
        "model": "Je passe au marché ce matin. Tu veux quelque chose ?"
@@ -2350,13 +2368,13 @@
        "prompt": "Which one fits?",
        "choices": [
         "Je m'en occupe, madame. Bonne journée.",
-        "Très bien, je m'en occupe. Bonne journée.",
+        "Pas de problème, je m'en occupe pour vous.",
         "Pas de souci, je m'en occupe !"
        ],
        "correct": 2,
        "why": [
         "Good French, but « madame » is far too formal for your flatmate.",
-        "Good French, but « bonne journée » sounds like a shop, not a text to your flatmate.",
+        "Good French, but « vous » is for strangers; Léa says tu to you.",
         ""
        ]
       }
@@ -2402,6 +2420,18 @@
          "Tu peux",
          "répéter ?",
          "Je t'entends mal."
+        ],
+        [
+         "Pardon ?",
+         "Tu peux",
+         "répéter ?",
+         "Je t'entends mal."
+        ],
+        [
+         "Je t'entends mal.",
+         "Pardon ?",
+         "Tu peux",
+         "répéter ?"
         ]
        ],
        "model": "Je t'entends mal. Tu peux répéter ?"
@@ -2614,9 +2644,9 @@
     },
     {
      "id": "sit_07_errand_s04",
-     "place": "Texto · Léa · phrase seule",
+     "place": "Les copains · groupe · phrase seule",
      "standalone": "Transformer",
-     "cue": "You text Léa, your flatmate, who says tu to you. This week the shopping is your job, not hers. Rewrite it with je.",
+     "cue": "Théo's group chat « Les copains ». Everyone says tu. This week the shopping is your job, not Léa's. Rewrite it with je.",
      "turns": [
       {
        "speaker": "learner",
@@ -2646,6 +2676,14 @@
          "passe",
          "au marché",
          "ce soir",
+         "avec la liste."
+        ],
+        [
+         "Je m'en occupe,",
+         "je",
+         "passe",
+         "ce soir",
+         "au marché",
          "avec la liste."
         ]
        ],

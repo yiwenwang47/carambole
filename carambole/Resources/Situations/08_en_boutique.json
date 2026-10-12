@@ -63,7 +63,7 @@
           "turns": [
             {
               "speaker": "server",
-              "text": "Moi, je regarde juste ! Et toi ?",
+              "text": "Je regarde juste, moi ! Et toi ?",
               "name": "Léa"
             },
             {
@@ -111,7 +111,7 @@
           "turns": [
             {
               "speaker": "server",
-              "text": "Bonjour, madame ! Je peux vous aider avec quelque chose ?"
+              "text": "Bonjour, madame ! Je peux vous aider ? Vous cherchez un cadeau ?"
             }
           ],
           "drills": [
@@ -142,7 +142,7 @@
           "turns": [
             {
               "speaker": "server",
-              "text": "Bonjour ! Les pulls sont au fond, à gauche.",
+              "text": "Les pulls ? Ils sont au fond, à gauche.",
               "voice": "female"
             },
             {
@@ -179,7 +179,8 @@
           ],
           "followUp": "Très bien, les noirs sont là.",
           "newWords": [
-            "pull"
+            "pull",
+            "au fond"
           ]
         },
         {
@@ -254,7 +255,7 @@
               ],
               "correct": 1,
               "why": [
-                "Good French with a friend, but « toi » is for tu, and she says vous to you.",
+                "« Toi » is for tu, and the saleswoman says vous to you.",
                 "",
                 "Good French with a friend, but « ouais » is too casual for a saleswoman."
               ]
@@ -269,7 +270,7 @@
           "turns": [
             {
               "speaker": "server",
-              "text": "Vous cherchez un pull ou un cadeau ?",
+              "text": "Vous cherchez un pull pour vous ou un cadeau ?",
               "voice": "female"
             }
           ],
@@ -314,13 +315,13 @@
               ]
             }
           ],
-          "followUp": "Pardon ! Un pull ou un cadeau ?",
+          "followUp": "Pardon ! Un pull pour vous, ou un cadeau ?",
           "newWords": []
         },
         {
           "id": "sit_08_browse_d06",
-          "place": "Les copains · groupe",
-          "cue": "Théo writes to the group chat. He says tu to you.",
+          "place": "Texto · Théo",
+          "cue": "Théo, your friend, texts you. He says tu to you.",
           "turns": [
             {
               "speaker": "server",
@@ -456,10 +457,11 @@
           "drills": [
             {
               "type": "reply",
-              "prompt": "Say no thank you: you're just looking.",
+              "prompt": "Say no thank you, madam: you're just looking.",
               "bank": [
                 "Non merci,",
-                "je regarde juste.",
+                "je regarde juste,",
+                "madame.",
                 "Oui merci,",
                 "je cherche",
                 "un cadeau."
@@ -467,10 +469,11 @@
               "accepted": [
                 [
                   "Non merci,",
-                  "je regarde juste."
+                  "je regarde juste,",
+                  "madame."
                 ]
               ],
-              "model": "Non merci, je regarde juste."
+              "model": "Non merci, je regarde juste, madame."
             },
             {
               "type": "comprehend",
@@ -483,14 +486,14 @@
               "miss": "Reread: « Je peux vous aider ? »"
             }
           ],
-          "followUp": "D'accord, je suis là si vous voulez.",
+          "followUp": "D'accord ! Je suis au fond, si besoin.",
           "newWords": []
         },
         {
           "id": "sit_08_browse_s04",
           "place": "En boutique · phrase seule",
           "standalone": "Transformer",
-          "cue": "You asked Inès, who says tu to you, about a jumper. Now ask M. Ferrand, your neighbour, the same thing. He says vous to you.",
+          "cue": "In a shop, you asked Inès, who says tu to you, about a jumper. Now M. Ferrand, your neighbour, is there too: ask him the same thing. He says vous to you.",
           "turns": [
             {
               "speaker": "learner",
@@ -586,14 +589,20 @@
           ],
           "drills": [
             {
-              "type": "comprehend",
-              "prompt": "Where are the jumpers?",
+              "type": "word",
+              "prompt": "What does « au fond » mean here?",
+              "target": "au fond",
               "choices": [
-                "At the back",
-                "Near the door"
+                "at the back",
+                "at the front",
+                "on the left"
               ],
               "correct": 0,
-              "miss": "Reread: « Ils sont au fond »."
+              "why": [
+                "",
+                "At the front would be « devant ».",
+                "On the left would be « à gauche »."
+              ]
             },
             {
               "type": "reply",
@@ -692,6 +701,9 @@
                 [
                   "Non,",
                   "il est trop petit."
+                ],
+                [
+                  "il est trop petit."
                 ]
               ],
               "model": "Non, il est trop petit."
@@ -743,7 +755,7 @@
               ]
             }
           ],
-          "followUp": "Ah ! Je regarde en plus petit.",
+          "followUp": "Ah ! Je vous apporte un plus petit.",
           "newWords": [
             "pantalon"
           ]
@@ -756,7 +768,7 @@
           "turns": [
             {
               "speaker": "server",
-              "text": "Voilà le pull, madame. C'est bien votre taille ?",
+              "text": "Voilà le pull, madame. Alors, c'est votre taille ?",
               "voice": "female"
             }
           ],
@@ -874,6 +886,10 @@
                   "Non,",
                   "il est trop grand",
                   "pour moi."
+                ],
+                [
+                  "il est trop grand",
+                  "pour moi."
                 ]
               ],
               "model": "Non, il est trop grand pour moi."
@@ -968,7 +984,7 @@
           "turns": [
             {
               "speaker": "server",
-              "text": "Mon nouveau pantalon ! Il est bien à ma taille ?",
+              "text": "Ce pantalon ! Il est à ma taille ?",
               "name": "Inès"
             },
             {
@@ -1000,7 +1016,7 @@
                 "If the trousers are expensive"
               ],
               "correct": 0,
-              "miss": "Reread: « Il est bien à ma taille ? »"
+              "miss": "Reread: « Il est à ma taille ? »"
             }
           ],
           "followUp": "Super, merci ! Je le prends.",
@@ -1047,7 +1063,7 @@
             },
             {
               "speaker": "learner",
-              "text": "Oui, je veux bien ___ voir."
+              "text": "Oui, je voudrais ___ voir."
             }
           ],
           "drills": [
@@ -1077,7 +1093,7 @@
               ],
               "correct": 1,
               "why": [
-                "« Pantalon » is masculine: « le ».",
+                "« La » is feminine; « pantalon » is masculine, so the pronoun is « le ».",
                 "",
                 "It's one pair of trousers: « le », not « les »."
               ]
@@ -1138,7 +1154,7 @@
           "turns": [
             {
               "speaker": "learner",
-              "text": "Ce pull est trop grand, je voudrais la taille au-dessus.",
+              "text": "Ce pull est trop petit, je voudrais la taille au-dessus.",
               "source": true
             }
           ],
@@ -1148,22 +1164,22 @@
               "prompt": "Say the same about the dress.",
               "bank": [
                 "Cette robe",
-                "est trop grande,",
+                "est trop petite,",
                 "je voudrais",
                 "la taille au-dessus.",
                 "Ce robe",
-                "est trop grand,",
+                "est trop petit,",
                 "le taille au-dessus."
               ],
               "accepted": [
                 [
                   "Cette robe",
-                  "est trop grande,",
+                  "est trop petite,",
                   "je voudrais",
                   "la taille au-dessus."
                 ]
               ],
-              "model": "Cette robe est trop grande, je voudrais la taille au-dessus."
+              "model": "Cette robe est trop petite, je voudrais la taille au-dessus."
             }
           ],
           "newWords": []
@@ -1175,7 +1191,7 @@
           "turns": [
             {
               "speaker": "server",
-              "text": "Voilà la taille au-dessus. Alors ?"
+              "text": "Voilà le pantalon dans la taille au-dessus. Alors ?"
             },
             {
               "speaker": "learner",
@@ -1204,7 +1220,7 @@
               "correct": 0,
               "why": [
                 "",
-                "« Te » is for tu: the trousers fit you, so « me ».",
+                "« Te » means you (tu); here you mean yourself, so « me ».",
                 "« Se » would mean itself."
               ]
             }
@@ -1249,12 +1265,16 @@
                   "Oui,",
                   "il est parfait,",
                   "merci !"
+                ],
+                [
+                  "il est parfait,",
+                  "merci !"
                 ]
               ],
               "model": "Oui, il est parfait, merci !"
             }
           ],
-          "followUp": "Très bien ! Vous le prenez, alors ?",
+          "followUp": "Très bien ! Vous le prenez ?",
           "newWords": []
         },
         {
@@ -1320,18 +1340,18 @@
               "type": "reply",
               "prompt": "Accept, politely.",
               "bank": [
-                "Oui, je veux bien,",
-                "merci.",
-                "Non, je veux bien,",
+                "Oui,",
+                "merci !",
+                "Non,",
                 "s'il te plaît."
               ],
               "accepted": [
                 [
-                  "Oui, je veux bien,",
-                  "merci."
+                  "Oui,",
+                  "merci !"
                 ]
               ],
-              "model": "Oui, je veux bien, merci."
+              "model": "Oui, merci !"
             }
           ],
           "followUp": "Très bien. Venez avec moi.",
@@ -1440,6 +1460,16 @@
           ],
           "drills": [
             {
+              "type": "comprehend",
+              "prompt": "What does the saleswoman say?",
+              "choices": [
+                "The jumper is too big",
+                "The jumper looks good on you"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Ça vous va bien »."
+            },
+            {
               "type": "complete",
               "prompt": "Say you'll take it.",
               "choices": [
@@ -1453,16 +1483,6 @@
                 "« Prend » goes with il or elle.",
                 "« Prendre » is the infinitive; « je » needs « prends »."
               ]
-            },
-            {
-              "type": "comprehend",
-              "prompt": "What does the saleswoman say?",
-              "choices": [
-                "The jumper is too big",
-                "The jumper looks good on you"
-              ],
-              "correct": 1,
-              "miss": "Reread: « Ça vous va bien »."
             }
           ],
           "followUp": "Parfait ! Il est très beau.",
@@ -1481,7 +1501,7 @@
             },
             {
               "speaker": "server",
-              "text": "Oui ! Oh, ça te va bien !",
+              "text": "Oui, bien sûr… Oh, ça te va bien !",
               "name": "Léa"
             }
           ],
@@ -1603,9 +1623,9 @@
               ],
               "correct": 1,
               "why": [
-                "No: « la cabine » is where you try clothes on.",
+                "The till is where you pay; « la cabine » is where you try clothes on.",
                 "",
-                "No: « la cabine » is where you try clothes on."
+                "The window is at the front; « la cabine » is where you try clothes on."
               ]
             }
           ],
@@ -1772,13 +1792,13 @@
             },
             {
               "type": "comprehend",
-              "prompt": "What does Théo want to know?",
+              "prompt": "What is in Théo's photo?",
               "choices": [
-                "If you want his jumper",
-                "If his jumper looks good on him"
+                "His new trousers",
+                "His new jumper"
               ],
               "correct": 1,
-              "miss": "Reread: « Il me va ? »"
+              "miss": "Reread: « Mon nouveau pull ! »"
             }
           ],
           "followUp": "Merci ! Il est super, non ?",
@@ -1788,11 +1808,11 @@
           "id": "sit_08_fitting_s04",
           "place": "WhatsApp · Mme Dumas · phrase seule",
           "standalone": "Transformer",
-          "cue": "You told Léa, who says tu to you, that her dress looks good. Mme Dumas, your landlady, sends a WhatsApp photo of her new dress. She says vous to you.",
+          "cue": "You told Léa, who says tu to you, that her dress looks good. Mme Dumas, your landlady, sends a WhatsApp photo of herself in her new dress. She says vous to you.",
           "turns": [
             {
               "speaker": "learner",
-              "text": "Ça te va bien, Léa, cette robe est très belle.",
+              "text": "Ça te va bien, Léa ! Cette robe est très belle.",
               "source": true
             }
           ],
@@ -1802,27 +1822,22 @@
               "prompt": "Say the same to Mme Dumas.",
               "bank": [
                 "Ça vous va bien,",
-                "madame,",
-                "cette robe",
+                "madame !",
+                "Cette robe",
                 "est très belle.",
                 "Ça te va bien,",
-                "Léa,",
-                "ce robe"
+                "Léa !",
+                "Ce robe"
               ],
               "accepted": [
                 [
                   "Ça vous va bien,",
-                  "madame,",
-                  "cette robe",
-                  "est très belle."
-                ],
-                [
-                  "Ça vous va bien,",
-                  "cette robe",
+                  "madame !",
+                  "Cette robe",
                   "est très belle."
                 ]
               ],
-              "model": "Ça vous va bien, madame, cette robe est très belle."
+              "model": "Ça vous va bien, madame ! Cette robe est très belle."
             }
           ],
           "newWords": []
@@ -1830,7 +1845,7 @@
         {
           "id": "sit_08_fitting_d09",
           "place": "En boutique",
-          "cue": "A salesman says vous to you. The jumper looks nice, but it feels a little tight.",
+          "cue": "A salesman says vous to you. You hold a jumper up against you: it looks nice, but you think it will be a little tight.",
           "turns": [
             {
               "speaker": "server",
@@ -1932,13 +1947,13 @@
               "prompt": "it looks good on you (tu)",
               "choices": [
                 "ça vous va bien",
-                "ça te va",
+                "ça va bien",
                 "ça te va bien"
               ],
               "correct": 2,
               "why": [
                 "« Ça vous va bien » is for vous; you say tu to Léa.",
-                "« Ça te va ? » asks if something suits you; it isn't a compliment.",
+                "« Ça va bien » means things are going well; it says nothing about the jumper on Léa.",
                 ""
               ]
             }
@@ -1955,7 +1970,7 @@
         {
           "id": "sit_08_colour_d01",
           "place": "En boutique",
-          "cue": "You like a jumper, but you'd like it in black. The saleswoman says vous to you.",
+          "cue": "You're looking at a jumper you like. The saleswoman says vous to you.",
           "turns": [
             {
               "speaker": "server",
@@ -2009,7 +2024,7 @@
             },
             {
               "speaker": "learner",
-              "text": "D'accord, je ___ prends en bleu."
+              "text": "D'accord, je ___ prends."
             }
           ],
           "drills": [
@@ -2025,7 +2040,7 @@
             },
             {
               "type": "complete",
-              "prompt": "Say you'll take it in blue.",
+              "prompt": "Say you'll take it.",
               "choices": [
                 "le",
                 "la",
@@ -2052,7 +2067,7 @@
           "turns": [
             {
               "speaker": "server",
-              "text": "Voilà le pull, madame. C'est la bonne taille, non ?"
+              "text": "Voilà le pull, madame. Il est à votre taille, non ?"
             }
           ],
           "drills": [
@@ -2091,13 +2106,13 @@
             },
             {
               "speaker": "learner",
-              "text": "Oui ! Une chemise ___, c'est parfait."
+              "text": "Oui ! Elle est ___, c'est parfait."
             }
           ],
           "drills": [
             {
               "type": "complete",
-              "prompt": "Say a blue shirt is perfect.",
+              "prompt": "Say it's perfect in blue.",
               "choices": [
                 "bleu",
                 "bleus",
@@ -2156,21 +2171,21 @@
             },
             {
               "type": "reply",
-              "prompt": "Answer: blue, like the sky.",
+              "prompt": "Answer: it's blue, like the sky.",
               "bank": [
-                "Bleue,",
+                "Elle est bleue,",
                 "comme le ciel !",
-                "Bleu,",
+                "Elle est bleu,",
                 "comme la ciel !",
-                "Bleus,"
+                "Elle est bleus,"
               ],
               "accepted": [
                 [
-                  "Bleue,",
+                  "Elle est bleue,",
                   "comme le ciel !"
                 ]
               ],
-              "model": "Bleue, comme le ciel !"
+              "model": "Elle est bleue, comme le ciel !"
             }
           ],
           "followUp": "Super ! Et moi, en noir !",
@@ -2273,6 +2288,16 @@
           ],
           "drills": [
             {
+              "type": "comprehend",
+              "prompt": "What does Théo want for Saturday?",
+              "choices": [
+                "Everyone in blue",
+                "Everyone at his place"
+              ],
+              "correct": 0,
+              "miss": "Reread: « tout le monde en bleu »."
+            },
+            {
               "type": "complete",
               "prompt": "Say you don't have a blue shirt.",
               "choices": [
@@ -2286,16 +2311,6 @@
                 "",
                 "One shirt, so no -s, and it's feminine."
               ]
-            },
-            {
-              "type": "comprehend",
-              "prompt": "What does Théo want for Saturday?",
-              "choices": [
-                "Everyone in blue",
-                "Everyone at his place"
-              ],
-              "correct": 0,
-              "miss": "Reread: « tout le monde en bleu »."
             }
           ],
           "followUp": "Pas de souci, j'en ai une !",
@@ -2636,8 +2651,8 @@
         },
         {
           "id": "sit_08_gift_d02",
-          "place": "Les copains · groupe",
-          "cue": "Théo's group chat « Les copains ». Everyone says tu. Théo writes about Léa, your flatmate.",
+          "place": "Texto · Théo",
+          "cue": "Théo, a friend, texts you. He says tu to you. He writes about Léa, your flatmate.",
           "turns": [
             {
               "speaker": "server",
@@ -2728,7 +2743,7 @@
         {
           "id": "sit_08_gift_d03",
           "place": "En boutique",
-          "cue": "A salesman says vous to you. You're buying a jumper as a present.",
+          "cue": "A salesman says vous to you. You're at the till with a jumper.",
           "turns": [
             {
               "speaker": "server",
@@ -2774,7 +2789,7 @@
         {
           "id": "sit_08_gift_d04",
           "place": "En boutique",
-          "cue": "A saleswoman says vous to you. You're buying a present for a birthday.",
+          "cue": "A saleswoman says vous to you. You're at the till with a jumper.",
           "turns": [
             {
               "speaker": "server",
@@ -2899,7 +2914,7 @@
               "target": "paquet cadeau"
             }
           ],
-          "followUp": "Pardon ! Un paquet cadeau, c'est pour offrir ?",
+          "followUp": "Pardon ! Je vous fais un paquet cadeau ? C'est pour offrir ?",
           "newWords": []
         },
         {
@@ -2910,7 +2925,7 @@
             {
               "speaker": "server",
               "name": "Inès",
-              "text": "Samedi, c'est l'anniversaire de Théo. Une idée ?"
+              "text": "Samedi, c'est l'anniversaire de Théo. Une idée de cadeau ?"
             },
             {
               "speaker": "learner",
@@ -2941,7 +2956,7 @@
                 "An idea for Théo's present"
               ],
               "correct": 1,
-              "miss": "Reread: « l'anniversaire de Théo. Une idée ? »"
+              "miss": "Reread: « l'anniversaire de Théo. Une idée de cadeau ? »"
             }
           ],
           "followUp": "Bonne idée ! Tu viens avec moi ?",
@@ -3080,9 +3095,9 @@
         },
         {
           "id": "sit_08_gift_s04",
-          "place": "Les copains · groupe · phrase seule",
+          "place": "Texto · Théo · phrase seule",
           "standalone": "Transformer",
-          "cue": "Théo's group chat « Les copains ». Everyone says tu. Léa was just mentioned in the chat. Say « her » birthday instead.",
+          "cue": "You're texting Théo, a friend. He says tu to you. Léa was just mentioned. Say « her » birthday instead.",
           "turns": [
             {
               "speaker": "learner",
@@ -3121,8 +3136,8 @@
         },
         {
           "id": "sit_08_gift_d09",
-          "place": "Les copains · groupe",
-          "cue": "Théo's group chat « Les copains ». Everyone says tu. Théo writes about Léa's present.",
+          "place": "Texto · Théo",
+          "cue": "Théo, a friend, texts you. He says tu to you. He writes about Léa's present.",
           "turns": [
             {
               "speaker": "server",
@@ -3444,7 +3459,7 @@
             {
               "speaker": "server",
               "name": "Léa",
-              "text": "Tu peux payer mon pain ? Je n'ai pas de monnaie !"
+              "text": "Tu peux payer le pain ? Je n'ai pas de monnaie !"
             }
           ],
           "drills": [
@@ -3646,7 +3661,7 @@
         {
           "id": "sit_08_checkout_d07",
           "place": "En boutique",
-          "cue": "A saleswoman says vous to you. You've just paid for a jumper.",
+          "cue": "A saleswoman says vous to you. You're paying for a jumper. The price looks low.",
           "turns": [
             {
               "speaker": "server",
@@ -3970,7 +3985,7 @@
           "turns": [
             {
               "speaker": "server",
-              "text": "Le pull est abîmé ? Pas de problème."
+              "text": "Le pull est abîmé ? D'accord, pas de problème."
             },
             {
               "speaker": "learner",
@@ -4146,7 +4161,7 @@
               "model": "Oui, elle est abîmée."
             }
           ],
-          "followUp": "Pardon, madame ! Voilà une autre chemise.",
+          "followUp": "Désolée, madame ! Voilà une autre chemise.",
           "newWords": []
         },
         {
@@ -4177,7 +4192,7 @@
         {
           "id": "sit_08_exchange_d05",
           "place": "En boutique",
-          "cue": "Clarify: A salesman says vous to you. He talks fast, and you don't catch it.",
+          "cue": "Clarify: You're back at a shop with a jumper. A salesman says vous to you. He talks fast, and you don't catch it.",
           "turns": [
             {
               "speaker": "server",
@@ -4225,7 +4240,7 @@
               "target": "abîmé"
             }
           ],
-          "followUp": "Pardon ! Il est abîmé, le pull ?",
+          "followUp": "Pardon ! Le pull est abîmé ? Vous avez le ticket ?",
           "newWords": []
         },
         {
@@ -4356,7 +4371,7 @@
         {
           "id": "sit_08_exchange_d08",
           "place": "En boutique",
-          "cue": "A saleswoman says vous to you. You're back at the shop with a jumper.",
+          "cue": "A saleswoman says vous to you. You put a jumper and its shop bag on the counter.",
           "turns": [
             {
               "speaker": "server",
@@ -4413,7 +4428,7 @@
           "id": "sit_08_exchange_s04",
           "place": "À l'appart · phrase seule",
           "standalone": "Transformer",
-          "cue": "Léa, your flatmate, says tu to you. Tell her what you did this morning: put it in the past.",
+          "cue": "Léa, your flatmate, says tu to you. You're at home. Tell her what you did this morning: put it in the past.",
           "turns": [
             {
               "speaker": "learner",
@@ -4462,7 +4477,7 @@
             },
             {
               "speaker": "learner",
-              "text": "Oui, avec ton ___ !"
+              "text": "Oui, mais il faut le ___ !"
             }
           ],
           "drills": [
@@ -4486,9 +4501,9 @@
               ],
               "correct": 1,
               "why": [
-                "One receipt, so « ticket », with « ton ».",
+                "One receipt, so « ticket », with « le ».",
                 "",
-                "« La caisse » is the till, not the receipt."
+                "« La caisse » is the till, not the receipt, and it's feminine."
               ]
             }
           ],
@@ -4662,15 +4677,15 @@
               "type": "complete",
               "prompt": "Fill the gap.",
               "choices": [
-                "est",
                 "n'est",
-                "n'es"
+                "n'es",
+                "n'ai"
               ],
-              "correct": 1,
+              "correct": 0,
               "why": [
-                "With « pas », you need « ne »: « elle n'est pas ».",
                 "",
-                "« N'es » goes with « tu ». Here it's « elle »."
+                "« N'es » goes with « tu ». Here it's « elle ».",
+                "« N'ai » goes with « je ». Here it's « elle »."
               ]
             }
           ],
@@ -4972,7 +4987,7 @@
         {
           "id": "sit_08_refund_d07",
           "place": "En boutique",
-          "cue": "You're a woman. The shop manager, a man, says vous to you.",
+          "cue": "You're a woman. A man in the shop says vous to you.",
           "turns": [
             {
               "speaker": "server",
@@ -5063,7 +5078,7 @@
               "miss": "Reread: « on m'a remboursé mon pantalon »."
             }
           ],
-          "followUp": "Sans ticket ! La vendeuse est super sympa.",
+          "followUp": "Sans ticket ! La vendeuse est très sympa.",
           "newWords": []
         },
         {
