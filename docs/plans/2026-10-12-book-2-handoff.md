@@ -5,7 +5,7 @@ Supersedes `2026-10-11-book-2-next-session-handoff.md` as the starting point (it
 ## Progress this session
 - [x] 1. Gap clips voiced complete (hard rule)
 - [x] 2. Test book reinstall (done) — v7 verdict still pending
-- [ ] 3. Production audio 07–10 (after v7 approval)
+- [x] 3. Production audio 07–10: 799 clips + 248 glossed base-word clips (firstSeen null, missed by `--module`); strict lint OK, 10 modules
 - [x] 4. Ask user: gender decoys (« une / pull noire ») keep or drop?
 
 ## Log
@@ -18,3 +18,9 @@ Supersedes `2026-10-11-book-2-next-session-handoff.md` as the starting point (it
 2. On approval: production audio 07–10 — `for m in 7 8 9 10; do until python3 tools/situations/generate_audio.py --module $m; do sleep 5; done; done` (503 retries); then strict `lint.py` must pass. This also produces the 9 gap clips for 07–09 (complete by construction).
 3. Then arc 3 (modules 11–15), pipeline in the 2026-10-11 handoff §4.
 4. Main app reinstall only when the user says so.
+- **2026-10-12: user said v7 "works" → approved.** Production audio 07–10 started.
+
+## Arc 3 (modules 11–15) — started 2026-10-12
+Pipeline = 2026-10-11 handoff §4. Status:
+- [ ] Plan (planner agent → `docs/plans/2026-10-12-book-2-arc3-plan.md` + 5 matrices)
+- [ ] Author (2 agents/module)  - [ ] Gloss scan + assemble  - [ ] Judges  - [ ] Fixers  - [ ] Vocab audit  - [ ] 9-card review set v8
