@@ -132,12 +132,14 @@ class DialoguePilotContentTests(unittest.TestCase):
             with self.subTest(word):
                 self.assertTrue(self.glossary[word].startswith("* "))
 
-    def test_learner_lines_avoid_gendered_self_reference(self):
-        learner = [t["text"] for d in self.items for t in d["turns"] if t["speaker"] == "learner"]
+    def test_learner_lines_have_no_masculine_self_reference(self):
+        """Robin is a woman (2026-10-11): her lines may be feminine, never masculine."""
+        from tools.situations.lint import MASC_SELF, corrected
+        learner = [corrected(t) for d in self.items for t in d["turns"] if t["speaker"] == "learner"]
         learner += [x["model"] for d in self.items for x in d["drills"] if x["type"] == "reply"]
         learner += [x["choices"][x["correct"]] for d in self.items for x in d["drills"] if x["type"] == "pick"]
         for line in learner:
-            self.assertNotRegex(line.lower(), r"\b(désolée?|prête?|allée?)\b")
+            self.assertIsNone(MASC_SELF.search(line), line)
 
 
 if __name__ == "__main__":
