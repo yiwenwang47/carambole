@@ -28,6 +28,7 @@ from normalize_audio import process_file, require_codec  # noqa: E402
 WORDS = SITUATIONS / "words.json"
 PILOT = ROOT / "carambole/Debug/testbook_situation.json"
 OUT = ROOT / "carambole/Resources/Audio"
+OVERRIDES = ROOT / "tools/situations/tts_overrides.json"
 MALE = "fr-FR-Neural2-G"
 FEMALE = "fr-FR-Neural2-F"
 
@@ -98,8 +99,10 @@ def main() -> None:
     require_codec()
     OUT.mkdir(parents=True, exist_ok=True)
     token = access_token()
+    # Display text -> text sent to TTS, e.g. "!" -> "." where the exclamation came out too loud.
+    spoken = json.loads(OVERRIDES.read_text(encoding="utf-8")) if OVERRIDES.exists() else {}
     for stem, text, voice in todo:
-        audio = synthesize(text, voice, token)
+        audio = synthesize(spoken.get(text, text), voice, token)
         (OUT / f"{stem}.mp3").write_bytes(audio)
         result = process_file(OUT / f"{stem}.mp3")
         print(f"{stem}.mp3 {len(audio)} bytes; {result.before.lufs:.1f} LUFS -> {result.plan.gain_db:+.1f} dB"
