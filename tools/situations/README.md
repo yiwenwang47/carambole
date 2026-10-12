@@ -133,7 +133,9 @@ rtk python3 tools/situations/deep_lint.py [--module 07]   # Grammalecte on rende
 rtk python3 tools/situations/generate_audio.py --dry-run [--module 07] [--limit N]
 rtk python3 tools/situations/generate_audio.py --review   # pilot2_* clips for the review set
 rtk python3 tools/situations/review_set.py <nine item IDs from any modules>
-rtk python3 -m unittest tools/situations/test_lint.py tools/situations/test_tools.py tools/pilot/test_content.py
+rtk python3 tools/situations/normalize_audio.py --all --check   # loudness report, no changes
+rtk python3 tools/situations/normalize_audio.py --all           # normalise any new/untagged clip
+rtk python3 -m unittest tools/situations/test_lint.py tools/situations/test_tools.py tools/pilot/test_content.py tools/situations/test_normalize_audio.py
 ```
 
 `lint.py` without `--module` checks every manifest module in book order with
@@ -157,6 +159,34 @@ Inès, M. Ferrand or Mme Dumas. An author still needs to review whether the requ
 whether English cues hide a needed fact, whether gender and register are
 recoverable, whether distractors have unique reasons, and whether the French
 sounds natural. These judgments cannot be proven from this JSON alone.
+
+## Audio loudness
+
+Every bundled clip (Book 1, Book 2, Test book) is normalised by
+`normalize_audio.py`, and both `generate_audio.py` scripts call it on each new
+clip right after writing it. Needs macOS `afconvert`, numpy, scipy and
+`lameenc` (`pip install lameenc`); the generators stop before any TTS call if
+the codec is missing.
+
+- **Loudness:** -18 LUFS integrated (ITU-R BS.1770, gated), true peak
+  ≤ -1.5 dBTP (a 5 ms look-ahead limiter at -2 dBTP; then the decoded MP3 is
+  checked and re-encoded if the codec's ~-0.45 dB shift or overshoot moved it).
+  -18 rather than -16 because TTS speech peaks ~15 dB over its loudness, so
+  -16 would push most clips into the limiter.
+- **De-harsh:** a clip with more than -23 dB of its energy above 5 kHz (+1 dB
+  tolerance) gets a 6 kHz high shelf cut by the excess, at most 4 dB.
+  Despina, Gacrux, Orus and sibilant words are the usual cases. A word still
+  mostly hiss after that (above -12 dB, e.g. « ce », « six ») is aimed below
+  -18 by the remainder, at most 8 dB.
+- **Format:** same name, MP3, 24 kHz mono and CBR bitrate as the TTS output.
+  Silent codec delay/padding frames are trimmed so the decoded length and
+  timing match the original; an edge frame with sound is kept (24 ms longer).
+- **Idempotent:** a processed file carries an ID3 `TXXX` tag
+  `carambole-normalize` and is skipped next time. `--force` re-processes
+  tagged files; use it only on originals, or the shelf compounds.
+
+When a line's text changes, delete its clip and regenerate it; the new clip is
+normalised as it is written.
 
 ## Agent prompts
 

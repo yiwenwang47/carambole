@@ -3,7 +3,8 @@
 
 Uses the same Google French Neural2 voice family as Book 1. Credentials stay
 inside this process; no token or response body is printed. Existing files are
-left in place so an interrupted run can resume.
+left in place so an interrupted run can resume. Each new clip is
+loudness-normalised right after it is written (tools/situations/normalize_audio.py).
 """
 
 from __future__ import annotations
@@ -103,10 +104,16 @@ def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     todo = [(stem, text, voice) for stem, text, voice in rows
             if not (OUT / (stem + ".mp3")).exists()]
+    if todo:
+        import sys
+        sys.path.append(str(ROOT / "tools/situations"))
+        from normalize_audio import process_file, require_codec
+        require_codec()
     token = access_token() if todo else ""
     for stem, text, voice in todo:
         audio = synthesize(text, voice, token)
         (OUT / (stem + ".mp3")).write_bytes(audio)
+        process_file(OUT / (stem + ".mp3"))
         print(f"{stem}.mp3 {len(audio)} bytes")
     print(f"audio coverage: {len(rows) - len(todo) + len(todo)}/{len(rows)}")
 

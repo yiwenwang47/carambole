@@ -67,6 +67,10 @@ def main(argv: list[str]) -> int:
     todo = pick(rows, args.limit, args.spread)
     os.makedirs(args.out, exist_ok=True)
 
+    sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'situations'))
+    from normalize_audio import process_file, require_codec
+    require_codec()  # every new clip is loudness-normalised as it is written
+
     from google.cloud import texttospeech as tts
     client = tts.TextToSpeechClient()
     voice = tts.VoiceSelectionParams(language_code=LANG, name=VOICE)
@@ -82,6 +86,7 @@ def main(argv: list[str]) -> int:
         resp = client.synthesize_speech(
             input=tts.SynthesisInput(text=r['text']), voice=voice, audio_config=cfg)
         open(dest, 'wb').write(resp.audio_content)
+        process_file(dest)
         made += 1
         chars += len(r['text'])
         print(f'[{i}/{len(todo)}] {r["key"]}.mp3  {len(resp.audio_content):>6}B  '

@@ -4,7 +4,8 @@
 Production mode covers every module in situations_manifest.json (book order)
 plus the book-wide words.json; `--module NN` limits it to one module's turns,
 follow-ups and the words first taught in that module. Existing MP3 files are
-left in place. Credentials are read by the pilot TTS client in-process and are
+left in place. Each new clip is loudness-normalised and de-harshed right
+after it is written (`normalize_audio.py`). Credentials are read by the pilot TTS client in-process and are
 never printed.
 """
 
@@ -22,6 +23,7 @@ from generate_audio import CAST, access_token, synthesize  # noqa: E402
 
 sys.path.append(str(ROOT / "tools/situations"))
 from sitbook import SITUATIONS, load_manifest_modules, module_number  # noqa: E402
+from normalize_audio import process_file, require_codec  # noqa: E402
 
 WORDS = SITUATIONS / "words.json"
 PILOT = ROOT / "carambole/Debug/testbook_situation.json"
@@ -93,12 +95,15 @@ def main() -> None:
     print(f"audio: {len(rows) - len(todo)}/{len(rows)} present; {len(todo)} missing")
     if args.dry_run or not todo:
         return
+    require_codec()
     OUT.mkdir(parents=True, exist_ok=True)
     token = access_token()
     for stem, text, voice in todo:
         audio = synthesize(text, voice, token)
         (OUT / f"{stem}.mp3").write_bytes(audio)
-        print(f"{stem}.mp3 {len(audio)} bytes")
+        result = process_file(OUT / f"{stem}.mp3")
+        print(f"{stem}.mp3 {len(audio)} bytes; {result.before.lufs:.1f} LUFS -> {result.plan.gain_db:+.1f} dB"
+              + (f", shelf {result.plan.shelf_db:.1f} dB" if result.plan.shelf_db else ""))
 
 
 if __name__ == "__main__":
