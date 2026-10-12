@@ -52,3 +52,4 @@ Pipeline = 2026-10-11 handoff §4. Status:
 - Fixer 11b DONE. Gloss todo add: « j'arrive » → "I'm coming, I'm on my way / I arrive".
 - Fixer 13b DONE.
 - Fixer 13a DONE. Gloss todo add: « ça va » → "how are you? / I'm fine / it's fine".
+- Fixer 15a DONE.

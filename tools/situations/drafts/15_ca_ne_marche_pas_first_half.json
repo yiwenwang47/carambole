@@ -257,7 +257,7 @@
           "id": "sit_15_parcel_s02",
           "place": "Appel · service client · phrase seule",
           "standalone": "Choisir le ton",
-          "cue": "You call customer service. The adviser says vous to you. Your parcel is marked as delivered.",
+          "cue": "You call customer service. The adviser, a woman, says vous to you. Your parcel is marked as delivered.",
           "turns": [],
           "drills": [
             {
@@ -331,7 +331,7 @@
               "target": "suivi"
             }
           ],
-          "followUp": "Pardon ! Votre numéro de suivi, madame ?",
+          "followUp": "Oui. Votre numéro de suivi, madame ?",
           "newWords": []
         },
         {
@@ -411,7 +411,7 @@
         {
           "id": "sit_15_parcel_d07",
           "place": "Appel · service client",
-          "cue": "You call customer service. The adviser says vous to you.",
+          "cue": "You call about your parcel. The adviser says vous to you.",
           "turns": [
             {
               "speaker": "server",
@@ -592,7 +592,7 @@
               ]
             }
           ],
-          "followUp": "D'accord. Je regarde avec le livreur, madame.",
+          "followUp": "D'accord. J'appelle le livreur, madame.",
           "newWords": []
         },
         {
@@ -612,7 +612,7 @@
               "prompt": "What does Léa ask about?",
               "choices": [
                 "The parcel",
-                "The rent"
+                "The delivery driver"
               ],
               "correct": 0,
               "miss": "Reread: « Alors, le colis ? »"
@@ -890,13 +890,13 @@
               "choices": [
                 "paid",
                 "ordered",
-                "sent back"
+                "taken back"
               ],
               "correct": 1,
               "why": [
                 "No: paid is « payé ».",
                 "",
-                "No: sent back is « rapporté »."
+                "No: taken back is « rapporté »."
               ],
               "target": "commandé"
             },
@@ -929,7 +929,7 @@
           "id": "sit_15_wrong_s02",
           "place": "Appel · service client · phrase seule",
           "standalone": "Choisir le ton",
-          "cue": "You call customer service. The adviser says vous to you. A jumper is missing from your parcel.",
+          "cue": "You call customer service. The adviser, a woman, says vous to you. A jumper is missing from your parcel.",
           "turns": [],
           "drills": [
             {
@@ -1333,13 +1333,13 @@
               "type": "complete",
               "prompt": "(cardboard) box",
               "choices": [
-                "caisse",
+                "sac",
                 "carton",
                 "quai"
               ],
               "correct": 1,
               "why": [
-                "« Caisse » means till, checkout.",
+                "« Sac » means bag.",
                 "",
                 "« Quai » means platform."
               ]
@@ -1469,27 +1469,28 @@
           "drills": [
             {
               "type": "reply",
-              "prompt": "Say hello: you're not satisfied, it's not right.",
+              "prompt": "Say yes: you're not satisfied, it's not right.",
               "bank": [
-                "Bonjour,",
+                "Oui,",
                 "je ne suis pas",
                 "satisfaite,",
                 "ce n'est pas",
                 "normal.",
                 "satisfait,",
                 "normale.",
-                "c'est"
+                "c'est",
+                "Non,"
               ],
               "accepted": [
                 [
-                  "Bonjour,",
+                  "Oui,",
                   "je ne suis pas",
                   "satisfaite,",
                   "ce n'est pas",
                   "normal."
                 ]
               ],
-              "model": "Bonjour, je ne suis pas satisfaite, ce n'est pas normal."
+              "model": "Oui, je ne suis pas satisfaite, ce n'est pas normal."
             }
           ],
           "newWords": []
@@ -1810,7 +1811,7 @@
             {
               "speaker": "server",
               "name": "Théo",
-              "text": "Alors, le restaurant ? T'es satisfaite ?"
+              "text": "Alors, le restaurant, c'est bien ?"
             }
           ],
           "drills": [
@@ -1846,10 +1847,10 @@
                 "If you're happy with the restaurant"
               ],
               "correct": 1,
-              "miss": "Reread: « T'es satisfaite ? »"
+              "miss": "Reread: « Alors, le restaurant, c'est bien ? »"
             }
           ],
-          "followUp": "Oh non ! Fais une réclamation, alors !",
+          "followUp": "Oh non ! Demande un autre plat, alors !",
           "followUpBy": "Théo",
           "newWords": []
         },
@@ -1896,7 +1897,7 @@
         {
           "id": "sit_15_complain_d09",
           "place": "Appel · service client",
-          "cue": "Customer service calls you about your complaint. The adviser says vous to you. You're a woman.",
+          "cue": "Customer service calls you back. The adviser says vous to you. You're a woman.",
           "turns": [
             {
               "speaker": "server",
@@ -2079,7 +2080,7 @@
         {
           "id": "sit_15_haircut_d02",
           "place": "Chez le coiffeur",
-          "cue": "You're at the hairdresser's. The hairdresser says vous to you.",
+          "cue": "You're at your usual hairdresser's. The hairdresser says vous to you.",
           "turns": [
             {
               "speaker": "server",
@@ -2140,27 +2141,25 @@
           "drills": [
             {
               "type": "reply",
-              "prompt": "Say hello: you have an appointment at ten for your hair; it's Robin.",
+              "prompt": "Say hello and give your name (Robin): you have an appointment at ten.",
               "bank": [
                 "Bonjour,",
+                "c'est Robin,",
                 "j'ai rendez-vous",
-                "à dix heures",
-                "pour les cheveux,",
-                "c'est Robin.",
-                "pour le cheveux,",
-                "à dix heure",
-                "je suis rendez-vous"
+                "à dix heures.",
+                "à dix heure.",
+                "je suis rendez-vous",
+                "ai rendez-vous"
               ],
               "accepted": [
                 [
                   "Bonjour,",
+                  "c'est Robin,",
                   "j'ai rendez-vous",
-                  "à dix heures",
-                  "pour les cheveux,",
-                  "c'est Robin."
+                  "à dix heures."
                 ]
               ],
-              "model": "Bonjour, j'ai rendez-vous à dix heures pour les cheveux, c'est Robin."
+              "model": "Bonjour, c'est Robin, j'ai rendez-vous à dix heures."
             }
           ],
           "newWords": []
@@ -2273,7 +2272,7 @@
           "id": "sit_15_haircut_s02",
           "place": "Chez le coiffeur · phrase seule",
           "standalone": "Choisir le ton",
-          "cue": "The hairdresser says vous to you. She has just cut your hair. Tell her it's a bit too short.",
+          "cue": "The hairdresser says vous to you. She has just cut your hair. Tell her, politely, that it's too short.",
           "turns": [],
           "drills": [
             {
@@ -2281,13 +2280,13 @@
               "prompt": "Which one fits?",
               "choices": [
                 "Ouais, c'est trop court, t'as vu ?",
-                "Bref, c'est trop court, ça !",
+                "Bon, c'est trop court, ça !",
                 "Excusez-moi, c'est un peu trop court, non ?"
               ],
               "correct": 2,
               "why": [
                 "Good spoken French, but « ouais » and « t'as » are for friends.",
-                "Good French, but it sounds rude to the hairdresser.",
+                "Good French, but it's too blunt for the hairdresser.",
                 ""
               ]
             }
@@ -2474,7 +2473,7 @@
               ]
             }
           ],
-          "followUp": "D'accord, un tout petit peu.",
+          "followUp": "D'accord, un peu, alors.",
           "newWords": []
         },
         {
@@ -2505,6 +2504,11 @@
                 [
                   "Oui,",
                   "mais",
+                  "c'est",
+                  "trop court !"
+                ],
+                [
+                  "Oui,",
                   "c'est",
                   "trop court !"
                 ]
@@ -2578,7 +2582,7 @@
             },
             {
               "speaker": "learner",
-              "text": "Oui, c'est parfait pour ___ les cheveux."
+              "text": "Oui, il sait très bien ___ les cheveux."
             }
           ],
           "drills": [
@@ -2602,9 +2606,9 @@
               ],
               "correct": 1,
               "why": [
-                "« Coupé » is the past participle. After « pour », use the infinitive « couper ».",
+                "« Coupé » is the past participle. After « sait », use the infinitive « couper ».",
                 "",
-                "« Coupe » is the present. After « pour », use the infinitive « couper »."
+                "« Coupe » is the present. After « sait », use the infinitive « couper »."
               ]
             }
           ],
