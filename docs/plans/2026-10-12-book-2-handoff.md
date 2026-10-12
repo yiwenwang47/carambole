@@ -39,9 +39,10 @@ Pipeline = 2026-10-11 handoff §4. Status:
 - 15 second half DONE (all OK). New base: réparée, crevés, pareilles, gratuits, gratuites; `sitw_remplace_past`.
 - Lint: MASC_SELF now checks Corriger error lines with the fix applied (`corrected()`, test added). Workarounds in 11/12/13 may be restored to matrix wording by fixers (optional).
 - 15 first half DONE. New base key « pas trop court » (else « pas trop » swallows it, « court » = runs); `sitw_coupe_past`.
-- [ ] Judges: 20 launched; findings → scratchpad/judges/NN_<m1>_<m2>.md, copied to docs/plans/arc3-judges/ when done
+- [x] Judges: all 20 done (findings in docs/plans/arc3-judges/); 20 launched; findings → scratchpad/judges/NN_<m1>_<m2>.md, copied to docs/plans/arc3-judges/ when done
 - 2026-10-12 ~22:10: all 20 judges hit the usage limit before writing findings; resumed. If lost: relaunch judges per tools/situations/agents/judge.md, 2 moves each (list: 11 strike/cancelled, delay/desk, group/another, work/arrive; 12 boiler/leak, plumber/keys, neighbour/broken, landlady/visit; 13 late/sorry, reason/wait, cancel/newplan, react/formal; 14 symptom/cold, pharmacy/advice, appointment/doctor, sick/better; 15 parcel/wrong, complain/haircut, bike/repair, again/fix). Consider batches of ~7 to stay under limits.
 - Note: 13 late_d04 « Désolée ! Plutôt vingt minutes. » now buildable after my sentence split → fixer must add to accepted (judge MUST).
 - Fixers launched for 11, 12, 14 (both halves; judge reports in docs/plans/arc3-judges/). 13 + 15 fixers wait on remaining judges (13 reason/wait, 15 ×4).
 - Coordinator gloss todos (apply book-wide after fixers): « place » → add seat/room; « regarder/regarde/regardes » → add "look (at), check"; « (wrong form of j'espère/t'inquiète) » → "(wrong form)"; « rapporte » narrow. Plus fixer reports' lists.
 - 15 second half: 15 Comprendre drills had correct=1 pointing at the false choice (author moved the index, not the choices). Coordinator swapped choices+why → true answer now at slot 1. Judges' MUSTs on these are DONE.
+- Gloss todo add: « fait » → add "done, made"; « un tout petit peu » key.
