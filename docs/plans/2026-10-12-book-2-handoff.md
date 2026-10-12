@@ -51,3 +51,4 @@ Pipeline = 2026-10-11 handoff §4. Status:
 - Fixers 11a, 14b, 12b DONE (lint+Grammalecte clean). Gloss todos add: « place » → "place, room, space (à la place = instead)"; optional « pas trop » → "not really, not too (much)".
 - Fixer 11b DONE. Gloss todo add: « j'arrive » → "I'm coming, I'm on my way / I arrive".
 - Fixer 13b DONE.
+- Fixer 13a DONE. Gloss todo add: « ça va » → "how are you? / I'm fine / it's fine".

@@ -8,7 +8,7 @@
         {
           "id": "sit_13_late_d01",
           "place": "Appel · Inès",
-          "cue": "Inès, your colleague, calls you. You're meeting her for lunch. She says tu to you.",
+          "cue": "Inès, your colleague, calls you. You're meeting her for lunch. She says tu to you. You're a woman.",
           "turns": [
             {
               "speaker": "server",
@@ -57,11 +57,11 @@
         {
           "id": "sit_13_late_d02",
           "place": "Les copains · groupe",
-          "cue": "Théo writes to the group chat « Les copains ». You're on your way to the cinema. Answer the whole group (vous = you all).",
+          "cue": "Théo writes to the group chat « Les copains ». You're on your way to dinner at Théo's. Answer the whole group (vous = you all).",
           "turns": [
             {
               "speaker": "server",
-              "text": "Le film commence ! T'es où, Robin ?",
+              "text": "Le dîner est prêt ! T'es où, Robin ?",
               "name": "Théo"
             },
             {
@@ -74,11 +74,11 @@
               "type": "comprehend",
               "prompt": "What does Théo say?",
               "choices": [
-                "The film is starting",
-                "The film is sold out"
+                "Dinner is ready",
+                "Dinner is cancelled"
               ],
               "correct": 0,
-              "miss": "Reread: « Le film commence ! »"
+              "miss": "Reread: « Le dîner est prêt ! »"
             },
             {
               "type": "complete",
@@ -110,7 +110,7 @@
           "turns": [
             {
               "speaker": "server",
-              "text": "Le film commence dans cinq minutes ! T'es où, Robin ?",
+              "text": "On mange dans cinq minutes ! T'es où, Robin ?",
               "name": "Théo"
             }
           ],
@@ -188,10 +188,10 @@
             },
             {
               "type": "comprehend",
-              "prompt": "Why aren't you home yet?",
+              "prompt": "What do you tell Léa?",
               "choices": [
                 "Théo's car has broken down",
-                "There are traffic jams"
+                "You're stuck in traffic jams"
               ],
               "correct": 1,
               "miss": "Reread: « Il y a des bouchons ! » Bouchons are traffic jams."
@@ -206,7 +206,7 @@
         {
           "id": "sit_13_late_d04",
           "place": "Texto · Karim",
-          "cue": "Karim, your friend from the café, texts you. He says tu to you.",
+          "cue": "Karim, your friend from the café, texts you. He says tu to you. You're a woman.",
           "turns": [
             {
               "speaker": "server",
@@ -249,6 +249,12 @@
                   "vingt",
                   "minutes.",
                   "Désolée !"
+                ],
+                [
+                  "Désolée !",
+                  "Plutôt",
+                  "vingt",
+                  "minutes."
                 ]
               ],
               "model": "Plutôt vingt minutes. Désolée !"
@@ -268,13 +274,13 @@
               "type": "pick",
               "prompt": "Which one fits?",
               "choices": [
-                "Salut ! Un quart d'heure de retard, bref, à tout à l'heure !",
+                "Salut ! Un quart d'heure de retard, à tout à l'heure !",
                 "Ouais, je suis en retard, commencez sans moi !",
                 "Bonjour, je suis désolée, je vais avoir un quart d'heure de retard."
               ],
               "correct": 2,
               "why": [
-                "« Salut » and « bref » are for friends. Your manager says vous to you.",
+                "« Salut » is for friends. Your manager says vous to you.",
                 "« Ouais » is too casual for your manager.",
                 ""
               ]
@@ -335,7 +341,7 @@
               "target": "bouchons"
             }
           ],
-          "followUp": "Des bouchons ? On commence sans toi, alors ?",
+          "followUp": "Tu es dans les bouchons ? On commence sans toi ?",
           "newWords": []
         },
         {
@@ -481,22 +487,28 @@
               "prompt": "Answer: in a quarter of an hour, there are traffic jams.",
               "bank": [
                 "Dans un",
-                "quart d'heure,",
-                "il y a",
+                "quart d'heure.",
+                "Il y a",
                 "des bouchons.",
-                "dans une",
+                "Dans une",
                 "de bouchons.",
-                "il est"
+                "Il est"
               ],
               "accepted": [
                 [
                   "Dans un",
-                  "quart d'heure,",
-                  "il y a",
+                  "quart d'heure.",
+                  "Il y a",
                   "des bouchons."
+                ],
+                [
+                  "Il y a",
+                  "des bouchons.",
+                  "Dans un",
+                  "quart d'heure."
                 ]
               ],
-              "model": "Dans un quart d'heure, il y a des bouchons."
+              "model": "Dans un quart d'heure. Il y a des bouchons."
             },
             {
               "type": "comprehend",
@@ -592,13 +604,13 @@
               ]
             }
           ],
-          "followUp": "D'accord, ton café est prêt !",
+          "followUp": "D'accord, ton café t'attend !",
           "newWords": []
         },
         {
           "id": "sit_13_late_d10",
           "place": "Appel · Inès",
-          "cue": "Inès, your colleague, calls you. She says tu to you.",
+          "cue": "Inès, your colleague, calls you. She says tu to you. You're a woman.",
           "turns": [
             {
               "speaker": "server",
@@ -709,7 +721,7 @@
                 "n'a pas",
                 "commencé.",
                 "commencer.",
-                "n'est pas",
+                "n'ai pas",
                 "la film"
               ],
               "accepted": [
@@ -766,7 +778,7 @@
               "why": [
                 "« Grève » is feminine: « une grève ».",
                 "",
-                "« Des » is plural, but « grève » is singular here: « une grève »."
+                "« Grève » is singular here: « une grève » (you can also just say « il y a grève »)."
               ]
             }
           ],
@@ -936,7 +948,7 @@
               "prompt": "Which one fits?",
               "choices": [
                 "Salut ! Je suis en retard, mais c'est pas grave !",
-                "Je m'excuse, monsieur, je suis en retard.",
+                "Je m'excuse, monsieur, je suis en retard, il y a des bouchons.",
                 "Ouais, en retard, c'est pas ma faute !"
               ],
               "correct": 1,
@@ -952,7 +964,7 @@
         {
           "id": "sit_13_sorry_d05",
           "place": "Au café",
-          "cue": "Clarify: you're at a noisy café with Inès, your colleague. She says tu to you.",
+          "cue": "Clarify: you're at a noisy café with Inès, your colleague. You were late this morning because of the strike. She says tu to you.",
           "turns": [
             {
               "speaker": "server",
@@ -974,10 +986,6 @@
               "accepted": [
                 [
                   "Pardon ?",
-                  "Tu peux",
-                  "répéter ?"
-                ],
-                [
                   "Tu peux",
                   "répéter ?"
                 ]
@@ -1011,7 +1019,7 @@
           "turns": [
             {
               "speaker": "server",
-              "text": "Demain, tu n'es pas en retard ?",
+              "text": "Demain, tu ne seras pas en retard ?",
               "name": "Karim"
             },
             {
@@ -1025,13 +1033,13 @@
               "prompt": "Fill the gap.",
               "choices": [
                 "promis",
-                "promets",
+                "promises",
                 "promise"
               ],
               "correct": 0,
               "why": [
                 "",
-                "« Promets » is a verb form (je promets). After « c'est », say « promis ».",
+                "« Promis » doesn't change after « c'est »: not « promises ».",
                 "After « c'est », « promis » doesn't change: « c'est promis »."
               ]
             },
@@ -1043,7 +1051,7 @@
                 "You to be on time tomorrow"
               ],
               "correct": 1,
-              "miss": "Reread: « Demain, tu n'es pas en retard ? »"
+              "miss": "Reread: « Demain, tu ne seras pas en retard ? »"
             }
           ],
           "followUp": "Super ! Ton café t'attend à huit heures.",
@@ -1492,11 +1500,11 @@
         {
           "id": "sit_13_reason_d03",
           "place": "Texto · Théo",
-          "cue": "Théo, your friend, texts you. You're late for the cinema. He says tu to you.",
+          "cue": "Théo, your friend, texts you. You're late for a morning coffee with him and Léa at the café. He says tu to you.",
           "turns": [
             {
               "speaker": "server",
-              "text": "T'as oublié ? On t'attend au cinéma !",
+              "text": "T'as oublié ? On t'attend au café !",
               "name": "Théo"
             },
             {
@@ -1531,7 +1539,7 @@
               "miss": "Reread: « T'as oublié ? »"
             }
           ],
-          "followUp": "Bon, le film commence dans dix minutes !",
+          "followUp": "Bon, on prend un café en attendant !",
           "newWords": [
             "oublié"
           ]
@@ -1539,7 +1547,7 @@
         {
           "id": "sit_13_reason_d04",
           "place": "Texto · Karim",
-          "cue": "Karim, your friend from the café, texts you. He says tu to you.",
+          "cue": "Karim, your friend from the café, texts you. You're on your way to meet him there. He says tu to you.",
           "turns": [
             {
               "speaker": "server",
@@ -1828,11 +1836,11 @@
               "type": "comprehend",
               "prompt": "What does Théo ask?",
               "choices": [
-                "Where you are",
+                "Why you're not coming",
                 "Why you're late"
               ],
               "correct": 1,
-              "miss": "Reread: « Pourquoi tu es en retard ? »"
+              "miss": "Reread: « Robin, pourquoi tu es en retard ? »"
             }
           ],
           "followUp": "Encore la grève ! Bon, on t'attend.",
@@ -1892,7 +1900,7 @@
             },
             {
               "speaker": "learner",
-              "text": "J'ai ___ mon téléphone à la maison."
+              "text": "J'ai ___ mon téléphone, je suis rentrée."
             }
           ],
           "drills": [
@@ -2110,7 +2118,7 @@
               ]
             }
           ],
-          "followUp": "Super, à tout à l'heure !",
+          "followUp": "Super, j'arrive !",
           "followUpBy": "Théo",
           "newWords": [
             "presque"
@@ -2245,7 +2253,7 @@
                 "ne t'inquiète pas !",
                 "t'inquiète !",
                 "cinq heures,",
-                "t'inquiètes !"
+                "inquiète !"
               ],
               "accepted": [
                 [
@@ -2277,13 +2285,13 @@
               "prompt": "Which one fits?",
               "choices": [
                 "T'inquiète, je t'attends !",
-                "Ouais, pas grave, bref !",
+                "Ouais, pas grave, à tout à l'heure !",
                 "Pas de problème, madame, je vous attends."
               ],
               "correct": 2,
               "why": [
                 "Good spoken French, but « t'inquiète » and « je t'attends » are for friends. Mme Dumas says vous to you.",
-                "« Ouais » and « bref » are too casual for your landlady.",
+                "« Ouais » is too casual for your landlady. She says vous to you.",
                 ""
               ]
             }
@@ -2368,13 +2376,13 @@
               "choices": [
                 "Inquiète",
                 "T'inquiète",
-                "T'inquiètes"
+                "Ne t'inquiète"
               ],
               "correct": 1,
               "why": [
                 "Without « t' », « inquiète » means worried. Say « t'inquiète ».",
                 "",
-                "No -s here: the spoken form is « t'inquiète » (from « ne t'inquiète pas »)."
+                "« Ne » needs « pas »: « ne t'inquiète pas », or just « t'inquiète »."
               ]
             },
             {
@@ -2400,16 +2408,16 @@
           "turns": [
             {
               "speaker": "learner",
-              "text": "Désolée, je suis bloqué dans le tram, mais je suis presque là !",
+              "text": "Désolée, tu attends depuis longtemps ? Je suis presque arrivé.",
               "error": {
-                "word": "bloqué",
-                "fix": "bloquée",
+                "word": "arrivé",
+                "fix": "arrivée",
                 "choices": [
-                  "bloqués",
-                  "bloquée",
-                  "bloquer"
+                  "arrivés",
+                  "arrivée",
+                  "arriver"
                 ],
-                "why": "You're a woman, so it agrees: « je suis bloquée »."
+                "why": "You're a woman, so it agrees: « je suis arrivée »."
               }
             }
           ],
@@ -2514,7 +2522,7 @@
               "miss": "Reread: « Je suis presque là. »"
             }
           ],
-          "followUp": "Merci. À tout à l'heure.",
+          "followUp": "Merci. J'arrive.",
           "newWords": []
         },
         {
@@ -2573,7 +2581,7 @@
         {
           "id": "sit_13_wait_d09",
           "place": "Au café",
-          "cue": "Karim, your friend, works at the café. You're waiting there. He says tu to you.",
+          "cue": "Karim, your friend, works at the café. You're waiting there for Léa. He says tu to you.",
           "turns": [
             {
               "speaker": "server",
@@ -2601,13 +2609,13 @@
               "prompt": "Fill the gap.",
               "choices": [
                 "temps",
-                "toujours",
+                "beaucoup",
                 "longtemps"
               ],
               "correct": 2,
               "why": [
                 "Not French: « depuis temps ». Say « depuis longtemps ».",
-                "« Depuis toujours » means forever, not one hour.",
+                "Not French: « depuis beaucoup ». Say « depuis longtemps ».",
                 ""
               ]
             }
