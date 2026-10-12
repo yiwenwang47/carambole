@@ -6,7 +6,8 @@ import unittest
 from pathlib import Path
 
 from tools.situations.assemble import assemble, draft_files, merge_words
-from tools.situations.generate_audio import FEMALE, MALE, item_clips, production_clips
+from tools.situations.generate_audio import FEMALE, MALE, PILOT, item_clips, production_clips
+from tools.situations.sitbook import load_manifest_modules
 from tools.situations.review_set import export
 
 
@@ -68,6 +69,30 @@ class ReviewAdapterTests(unittest.TestCase):
                                       "sitw_a", "sitw_b", "sitw_c"])
         only = [key for key, _, _ in production_clips([module(3), module(6)], words, 6)]
         self.assertEqual(only, ["sit_06_order_d01_t0", "sit_06_order_d01_f", "sitw_c"])
+
+    def test_gap_line_is_voiced_with_its_answer(self):
+        item = {"id": "sit_01_bye_s05",
+                "turns": [{"speaker": "server", "text": "Je suis là ce soir. ___ !"}],
+                "drills": [{"type": "complete", "choices": ["Au revoir", "À tout à l'heure"], "correct": 1}]}
+        self.assertEqual(item_clips(item)[0][1], "Je suis là ce soir. À tout à l'heure !")
+        item["drills"] = []
+        with self.assertRaisesRegex(ValueError, "gap line"):
+            item_clips(item)
+
+    def test_no_shipped_clip_text_has_a_gap(self):
+        """HARD RULE: clips are complete lines, never « … » or ___ for the answer."""
+        modules = load_manifest_modules()
+        pilot = json.loads(PILOT.read_text(encoding="utf-8"))["dialogues"]
+        items = [it for m in modules for e in m["elements"] for it in e["items"]] + pilot
+        gaps = [it["id"] for it in items
+                if any("___" in t["text"] for t in it["turns"] if t["speaker"] == "server")]
+        self.assertTrue(gaps)
+        for item in items:
+            for key, text, _ in item_clips(item):
+                self.assertNotIn("___", text, key)
+                raw = [t["text"] for t in item["turns"]] + [item.get("followUp") or ""]
+                if "…" in text:
+                    self.assertTrue(any("…" in r for r in raw), f"{key}: « … » not in the authored line")
 
     def test_cast_and_anonymous_female_voices(self):
         item = {"id": "sit_12_leak_d01", "turns": [

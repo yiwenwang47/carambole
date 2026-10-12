@@ -40,10 +40,26 @@ def turn_voice(turn: dict) -> str:
     return FEMALE if turn.get("voice") == "female" else MALE
 
 
+def gap_answer(item: dict) -> str | None:
+    """The `complete` drill's correct choice: the word the app puts in the gap."""
+    drill = next((d for d in item.get("drills", []) if d.get("type") == "complete"), None)
+    return drill["choices"][drill["correct"]] if drill else None
+
+
+def spoken_line(item: dict, text: str) -> str:
+    """A clip is always the complete line: a `___` gap is voiced with its answer filled in."""
+    if "___" not in text:
+        return text
+    answer = gap_answer(item)
+    if answer is None:
+        raise ValueError(f"{item['id']}: gap line without a complete drill")
+    return text.replace("___", answer)
+
+
 def item_clips(item: dict, prefix: str = "") -> list[tuple[str, str, str]]:
     stem = prefix + item["id"]
     servers = [turn for turn in item["turns"] if turn["speaker"] == "server"]
-    rows = [(f"{stem}_t{i}", turn["text"].replace("___", "…"), turn_voice(turn))
+    rows = [(f"{stem}_t{i}", spoken_line(item, turn["text"]), turn_voice(turn))
             for i, turn in enumerate(item["turns"]) if turn["speaker"] == "server"]
     if item.get("followUp"):
         if item.get("followUpBy"):

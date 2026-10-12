@@ -243,7 +243,8 @@ struct SituationPilotView: View {
                                     learnerBubble(turnIndex: i, turn: turn)
                                 } else {
                                     serverBubble(id: "t\(i)", name: turn.speakerLabel, text: turn.text,
-                                                 audioKey: "pilot2_\(dialogue.id)_t\(i)")
+                                                 audioKey: "pilot2_\(dialogue.id)_t\(i)",
+                                                 locked: turn.text.contains("___") && !gapSettled)
                                 }
                             }
                             if slot != .hidden {
@@ -291,7 +292,9 @@ struct SituationPilotView: View {
         Text(text).font(.label(size: 10.5)).tracking(1.2).foregroundColor(AppColor.g2).padding(.horizontal, 6)
     }
 
-    private func serverBubble(id: String, name: String?, text: String, audioKey: String) -> some View {
+    /// `locked`: the clip voices the gap's answer, so it stays off until the gap is settled.
+    private func serverBubble(id: String, name: String?, text: String, audioKey: String,
+                              locked: Bool = false) -> some View {
         HStack {
             VStack(alignment: .leading, spacing: 3) {
                 if let name { speakerLabel(name.uppercased()) }
@@ -301,6 +304,8 @@ struct SituationPilotView: View {
                             .frame(width: 28, height: 28)
                             .background(Circle().fill(Color(hex: theme.quietFill)))
                     }
+                    .disabled(locked)
+                    .opacity(locked ? 0.35 : 1)
                     .accessibilityLabel(name.map { "Écouter \($0)" } ?? "Écouter")
                     lineText(id: id, text: text, turnIndex: nil)
                         .padding(.top, 2)

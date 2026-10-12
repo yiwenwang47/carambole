@@ -403,7 +403,8 @@ struct SituationSessionView: View {
                                     learnerBubble(turnIndex: i, turn: turn)
                                 } else {
                                     serverBubble(id: "t\(i)", name: turn.speakerLabel, text: turn.text,
-                                                 audioKey: item.turnAudioKey(i))
+                                                 audioKey: item.turnAudioKey(i),
+                                                 locked: i == item.gapTurnIndex && !gapSettled)
                                 }
                             }
                             if slot != .hidden {
@@ -452,8 +453,10 @@ struct SituationSessionView: View {
         Text(text).font(.label(size: 10.5)).tracking(1.2).foregroundColor(AppColor.g2).padding(.horizontal, 6)
     }
 
-    private func serverBubble(id: String, name: String?, text: String, audioKey: String) -> some View {
-        let hasAudio = Speaker.bundledAudioURL(key: audioKey) != nil
+    /// `locked`: the clip voices the gap's answer, so it stays off until the gap is settled.
+    private func serverBubble(id: String, name: String?, text: String, audioKey: String,
+                              locked: Bool = false) -> some View {
+        let hasAudio = Speaker.bundledAudioURL(key: audioKey) != nil && !locked
         return HStack {
             VStack(alignment: .leading, spacing: 3) {
                 if let name { speakerLabel(name.uppercased()) }
