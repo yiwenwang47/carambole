@@ -24,7 +24,7 @@ Supersedes `2026-10-11-book-2-next-session-handoff.md` as the starting point (it
 Pipeline = 2026-10-11 handoff §4. Status:
 - [x] Plan: `docs/plans/2026-10-12-book-2-arc3-plan.md` + 5 matrices (126 new words, 600 rows checked by planner script). Open questions in plan §12 (defaults given); `modules.json` entries in plan, not pasted yet
 - [x] Prep (`ae2a4a9`): modules.json 11–15, « mal » gloss widened, « t'inquiète » spoken, arc-3 roles
-- [ ] Author (2 agents/module) — 10 agents launched 2026-10-12; outputs `tools/situations/drafts/1[1-5]_*_{first,second}_half{,_words}.json`. If interrupted: rerun only halves whose files are missing/fail `lint.py --draft`  - [ ] Gloss scan + assemble  - [ ] Judges  - [ ] Fixers  - [ ] Vocab audit  - [ ] 9-card review set v8
+- [x] Author (2 agents/module) — all 10 halves done, drafts committed; 10 agents launched 2026-10-12; outputs `tools/situations/drafts/1[1-5]_*_{first,second}_half{,_words}.json`. If interrupted: rerun only halves whose files are missing/fail `lint.py --draft`  - [ ] Gloss scan + assemble  - [ ] Judges  - [ ] Fixers  - [ ] Vocab audit  - [ ] 9-card review set v8
 - User 2026-10-12: accept all arc-3 plan defaults; author all 5 modules then v8.
 - 2026-10-12 17:10: all 10 authors hit the usage limit mid-run; partial drafts on disk (11 both halves, 13 second, 14 first, 14 second w/o words, 15 first). Resumed all 10 with context. Drafts are untracked until assemble — if lost again, relaunch only halves whose files fail `lint.py --draft`.
 - 11 first half DONE (lint/full lint/Grammalecte OK). Coordinator todo: `partie` new base gloss; Compléter answer-slot bias (13/24 in slot 1) matters only for Test book pilot (no shuffle) — check before v8.
@@ -38,3 +38,4 @@ Pipeline = 2026-10-11 handoff §4. Status:
 - 13 second half DONE (all OK). New base: pourrai, obligés, obliger, espères, espérer, reportez, reportée.
 - 15 second half DONE (all OK). New base: réparée, crevés, pareilles, gratuits, gratuites; `sitw_remplace_past`.
 - Lint: MASC_SELF now checks Corriger error lines with the fix applied (`corrected()`, test added). Workarounds in 11/12/13 may be restored to matrix wording by fixers (optional).
+- 15 first half DONE. New base key « pas trop court » (else « pas trop » swallows it, « court » = runs); `sitw_coupe_past`.

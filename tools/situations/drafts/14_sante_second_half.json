@@ -1,0 +1,2669 @@
+{
+  "elements": [
+    {
+      "id": "sit_14_appointment",
+      "title": "Prendre rendez-vous",
+      "note": "Calling « le cabinet » (the doctor's surgery): the secretary offers « un rendez-vous » with « le docteur ». « Docteur » is also how you address a doctor: « Bonjour, docteur. » Culture: in France you always bring « la carte Vitale », the green health insurance card, to the appointment.",
+      "items": [
+        {
+          "id": "sit_14_appointment_d01",
+          "place": "Appel · cabinet médical",
+          "cue": "You call your doctor's for an appointment. The secretary answers. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Secrétaire",
+              "voice": "female",
+              "text": "Bonjour, ici le cabinet. Je peux vous aider ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the secretary ask?",
+              "choices": [
+                "If you have an appointment",
+                "If she can help you"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Je peux vous aider ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say hello and ask for an appointment, please.",
+              "bank": [
+                "Bonjour,",
+                "je voudrais",
+                "un",
+                "rendez-vous,",
+                "s'il vous plaît.",
+                "une",
+                "s'il te plaît."
+              ],
+              "accepted": [
+                [
+                  "Bonjour,",
+                  "je voudrais",
+                  "un",
+                  "rendez-vous,",
+                  "s'il vous plaît."
+                ]
+              ],
+              "model": "Bonjour, je voudrais un rendez-vous, s'il vous plaît."
+            }
+          ],
+          "followUp": "Bien sûr. Pour aujourd'hui ou pour demain ?",
+          "newWords": [
+            "cabinet"
+          ]
+        },
+        {
+          "id": "sit_14_appointment_d02",
+          "place": "Appel · cabinet médical",
+          "cue": "You call the doctor's surgery for an appointment. The secretary says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Secrétaire",
+              "voice": "female",
+              "text": "Le docteur peut vous voir demain à dix heures."
+            },
+            {
+              "speaker": "learner",
+              "text": "Demain ? C'est ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "When can the doctor see you?",
+              "choices": [
+                "Tomorrow at ten",
+                "Today at ten"
+              ],
+              "correct": 0,
+              "miss": "Reread: « demain à dix heures »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "parfaite",
+                "parfaits",
+                "parfait"
+              ],
+              "correct": 2,
+              "why": [
+                "« C'est » takes the masculine: « c'est parfait ».",
+                "« Parfaits » is plural: « c'est » takes the singular.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Très bien, c'est noté. À demain, madame !",
+          "newWords": [
+            "docteur"
+          ]
+        },
+        {
+          "id": "sit_14_appointment_s01",
+          "place": "Appel · cabinet médical · phrase seule",
+          "standalone": "Construire",
+          "cue": "You call the doctor's surgery. The secretary says vous to you. You need to see the doctor today.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Secrétaire",
+              "voice": "female",
+              "text": "Bonjour, ici le cabinet. Je peux vous aider, madame ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say hello, ask for an appointment with the doctor, and say it's urgent.",
+              "bank": [
+                "Bonjour,",
+                "je voudrais",
+                "un",
+                "rendez-vous",
+                "avec le docteur,",
+                "c'est urgent.",
+                "une",
+                "s'il te plaît."
+              ],
+              "accepted": [
+                [
+                  "Bonjour,",
+                  "je voudrais",
+                  "un",
+                  "rendez-vous",
+                  "avec le docteur,",
+                  "c'est urgent."
+                ]
+              ],
+              "model": "Bonjour, je voudrais un rendez-vous avec le docteur, c'est urgent."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_14_appointment_d03",
+          "place": "Appel · cabinet médical",
+          "cue": "You have an appointment at the doctor's tomorrow. The secretary says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Secrétaire",
+              "voice": "female",
+              "text": "N'oubliez pas votre carte Vitale, madame."
+            },
+            {
+              "speaker": "learner",
+              "text": "D'accord, je ___ demain."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "l'apporte",
+                "l'apportes",
+                "l'apporter"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« L'apportes » goes with « tu », not « je ».",
+                "« L'apporter » is the infinitive: after « je », conjugate the verb."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What must you not forget?",
+              "choices": [
+                "Your prescription",
+                "Your carte Vitale"
+              ],
+              "correct": 1,
+              "miss": "Reread: « N'oubliez pas votre carte Vitale »."
+            }
+          ],
+          "followUp": "Parfait. À demain, madame !",
+          "newWords": [
+            "carte vitale"
+          ]
+        },
+        {
+          "id": "sit_14_appointment_d04",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. She says tu to you. She's going to see your doctor.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Le cabinet du médecin, c'est où ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « cabinet » mean here?",
+              "choices": [
+                "chemist's",
+                "doctor's surgery",
+                "hospital"
+              ],
+              "correct": 1,
+              "why": [
+                "« Pharmacie » means chemist's.",
+                "",
+                "A hospital is « un hôpital »."
+              ],
+              "target": "cabinet"
+            },
+            {
+              "type": "reply",
+              "prompt": "Tell her: next to the pharmacy.",
+              "bank": [
+                "À côté de",
+                "la pharmacie.",
+                "le pharmacie.",
+                "En face de"
+              ],
+              "accepted": [
+                [
+                  "À côté de",
+                  "la pharmacie."
+                ]
+              ],
+              "model": "À côté de la pharmacie."
+            }
+          ],
+          "followUp": "Ah, à côté de la pharmacie ? Super, merci !",
+          "followUpBy": "Inès",
+          "newWords": []
+        },
+        {
+          "id": "sit_14_appointment_s02",
+          "place": "Appel · cabinet médical · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "You call the doctor's surgery. The secretary says vous to you. Ask for an appointment with the doctor.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "Salut, le docteur est là ?",
+                "Bonjour, madame, je voudrais un rendez-vous avec le docteur.",
+                "Ouais, un rendez-vous, vite !"
+              ],
+              "correct": 1,
+              "why": [
+                "Good French, but « salut » is for friends. Say « bonjour » to the secretary.",
+                "",
+                "Good French, but « ouais » and « vite ! » are far too casual and rude here."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_14_appointment_d05",
+          "place": "Appel · cabinet médical",
+          "cue": "Clarify: you call the doctor's surgery on a bad line. The secretary says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Secrétaire",
+              "voice": "female",
+              "text": "Le docteur ? Il n'est pas là avant jeudi."
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say sorry, you can't hear her well, and ask her to repeat.",
+              "bank": [
+                "Pardon,",
+                "je vous entends mal.",
+                "Vous pouvez répéter ?",
+                "je t'entends mal.",
+                "Tu peux répéter ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon,",
+                  "je vous entends mal.",
+                  "Vous pouvez répéter ?"
+                ],
+                [
+                  "Vous pouvez répéter ?",
+                  "Pardon,",
+                  "je vous entends mal."
+                ]
+              ],
+              "model": "Pardon, je vous entends mal. Vous pouvez répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « docteur » mean here?",
+              "choices": [
+                "secretary",
+                "pharmacist",
+                "doctor"
+              ],
+              "correct": 2,
+              "why": [
+                "The secretary is the one on the phone.",
+                "A pharmacist is « une pharmacienne ».",
+                ""
+              ],
+              "target": "docteur"
+            }
+          ],
+          "followUp": "Pardon ! Le docteur revient jeudi matin.",
+          "newWords": []
+        },
+        {
+          "id": "sit_14_appointment_d06",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you. You see the doctor tomorrow.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Tu as ta carte Vitale pour demain ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, elle est dans mon ___."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "sacs",
+                "sac",
+                "pied"
+              ],
+              "correct": 1,
+              "why": [
+                "« Mon » is singular: « mon sac ».",
+                "",
+                "« Pied » means foot: your card isn't in your foot."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa ask?",
+              "choices": [
+                "If you have your carte Vitale",
+                "If you have your keys"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Tu as ta carte Vitale ? »"
+            }
+          ],
+          "followUp": "Super ! À ce soir, alors.",
+          "followUpBy": "Léa",
+          "newWords": []
+        },
+        {
+          "id": "sit_14_appointment_s03",
+          "place": "Texto · Léa · phrase seule",
+          "standalone": "Corriger",
+          "cue": "You text Léa, your flatmate (tu), about tomorrow.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "J'ai un rendez-vous au cabinet demain, et j'ai mon carte Vitale.",
+              "error": {
+                "word": "mon",
+                "fix": "ma",
+                "choices": [
+                  "mes",
+                  "ta",
+                  "ma"
+                ],
+                "why": "« Carte » is feminine: « ma carte Vitale »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_14_appointment_d07",
+          "place": "Au cabinet médical",
+          "cue": "You arrive at the doctor's surgery. The secretary at the desk says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Secrétaire",
+              "voice": "female",
+              "text": "Bonjour, madame. Vous avez votre carte Vitale ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, ___ voilà."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « carte Vitale » mean here?",
+              "choices": [
+                "bank card",
+                "health insurance card",
+                "ID card"
+              ],
+              "correct": 1,
+              "why": [
+                "A bank card is « une carte bancaire ».",
+                "",
+                "An ID card is « une carte d'identité »."
+              ],
+              "target": "carte Vitale"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "le",
+                "les",
+                "la"
+              ],
+              "correct": 2,
+              "why": [
+                "« Carte » is feminine: not « le ».",
+                "One card: not « les ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Merci. Le docteur vous appelle dans cinq minutes.",
+          "newWords": []
+        },
+        {
+          "id": "sit_14_appointment_d08",
+          "place": "WhatsApp · Mme Dumas",
+          "cue": "Mme Dumas, your landlady, writes on WhatsApp. She says vous to you. She wants to send the plumber today.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Mme Dumas",
+              "text": "Vous allez chez le docteur ce matin ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say yes, at ten (madame).",
+              "bank": [
+                "Oui,",
+                "à",
+                "dix heures,",
+                "madame.",
+                "au",
+                "monsieur."
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "à",
+                  "dix heures,",
+                  "madame."
+                ]
+              ],
+              "model": "Oui, à dix heures, madame."
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Mme Dumas ask?",
+              "choices": [
+                "If you're going to the pharmacy this morning",
+                "If you're going to the doctor's this morning"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Vous allez chez le docteur ce matin ? »"
+            }
+          ],
+          "followUp": "Très bien. Le plombier passe cet après-midi, alors.",
+          "newWords": []
+        },
+        {
+          "id": "sit_14_appointment_s04",
+          "place": "Texto · Léa · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You text Léa, your flatmate (tu). Say what you're going to do, with « je vais » + infinitive.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "J'appelle le cabinet du docteur ce matin, pour un rendez-vous.",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say it with « je vais ».",
+              "bank": [
+                "Je vais",
+                "appeler",
+                "le cabinet",
+                "du docteur",
+                "ce matin,",
+                "pour un rendez-vous.",
+                "appelle",
+                "J'appelle"
+              ],
+              "accepted": [
+                [
+                  "Je vais",
+                  "appeler",
+                  "le cabinet",
+                  "du docteur",
+                  "ce matin,",
+                  "pour un rendez-vous."
+                ]
+              ],
+              "model": "Je vais appeler le cabinet du docteur ce matin, pour un rendez-vous."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_14_appointment_d09",
+          "place": "Appel · cabinet médical",
+          "cue": "You call the doctor's surgery for an appointment today. The secretary says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Secrétaire",
+              "voice": "female",
+              "text": "Le cabinet ferme à midi. Vous venez quand ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Je viens ___ dix heures."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "When does the surgery close?",
+              "choices": [
+                "At noon",
+                "At ten"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Le cabinet ferme à midi »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "à la",
+                "vers",
+                "au"
+              ],
+              "correct": 1,
+              "why": [
+                "Not French before a time: say « à dix heures ».",
+                "",
+                "Not French before a time: say « à dix heures »."
+              ]
+            }
+          ],
+          "followUp": "Parfait. À tout à l'heure, madame !",
+          "newWords": []
+        },
+        {
+          "id": "sit_14_appointment_d10",
+          "place": "Texto · Théo",
+          "cue": "Théo, your friend, texts you. He says tu to you. You're waiting at the doctor's.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Tu es chez le docteur ? On t'attend au café !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "Where are Théo and the others?",
+              "choices": [
+                "At the doctor's",
+                "At the café"
+              ],
+              "correct": 1,
+              "miss": "Reread: « On t'attend au café ! »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, at the surgery. You're waiting!",
+              "bank": [
+                "Oui,",
+                "au cabinet.",
+                "J'attends !",
+                "à la cabinet.",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "au cabinet.",
+                  "J'attends !"
+                ]
+              ],
+              "model": "Oui, au cabinet. J'attends !"
+            }
+          ],
+          "followUp": "Pas de souci ! À tout à l'heure.",
+          "newWords": []
+        },
+        {
+          "id": "sit_14_appointment_s05",
+          "place": "Appel · cabinet médical · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "The secretary at the doctor's says vous to you. Which French words mean “health insurance card”?",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Secrétaire",
+              "voice": "female",
+              "text": "Pour le rendez-vous chez le docteur, n'oubliez pas votre ___."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "health insurance card",
+              "choices": [
+                "ordonnance",
+                "carte Vitale",
+                "billet"
+              ],
+              "correct": 1,
+              "why": [
+                "« Ordonnance » means prescription.",
+                "",
+                "« Billet » means a train ticket."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_14_doctor",
+      "title": "Chez le médecin",
+      "note": "The consultation: the doctor asks « Qu'est-ce qui ne va pas ? » (what's wrong?) and « depuis quand ? ». Say where it hurts with « j'ai mal à » + the body part: « à la tête », but « au ventre », « au dos » (« à » + « le » always becomes « au »).",
+      "items": [
+        {
+          "id": "sit_14_doctor_d01",
+          "place": "Chez le médecin",
+          "cue": "You're at the doctor's. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Médecin",
+              "text": "Bonjour, madame. Qu'est-ce qui ne va pas ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the doctor ask?",
+              "choices": [
+                "What's wrong",
+                "Since when you've been ill"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Qu'est-ce qui ne va pas ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Tell him: your head hurts, and you have a fever.",
+              "bank": [
+                "J'ai mal",
+                "à la tête,",
+                "et j'ai",
+                "de la fièvre.",
+                "au tête,",
+                "du fièvre."
+              ],
+              "accepted": [
+                [
+                  "J'ai mal",
+                  "à la tête,",
+                  "et j'ai",
+                  "de la fièvre."
+                ]
+              ],
+              "model": "J'ai mal à la tête, et j'ai de la fièvre."
+            }
+          ],
+          "followUp": "D'accord. Depuis quand ?",
+          "newWords": [
+            "qu'est-ce qui ne va pas"
+          ]
+        },
+        {
+          "id": "sit_14_doctor_d02",
+          "place": "Chez le médecin",
+          "cue": "You're at the doctor's. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Médecin",
+              "text": "Et vous avez mal au ventre ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Non, j'ai mal ___ la gorge."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the doctor ask about?",
+              "choices": [
+                "Your head",
+                "Your stomach"
+              ],
+              "correct": 1,
+              "miss": "Reread: « vous avez mal au ventre ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "au",
+                "à",
+                "aux"
+              ],
+              "correct": 1,
+              "why": [
+                "« Au » is « à » + « le »: « gorge » is feminine, so « à la gorge ».",
+                "",
+                "« Aux » is plural: one throat, « à la gorge »."
+              ]
+            }
+          ],
+          "followUp": "Ah, la gorge. Vous avez de la toux ?",
+          "newWords": [
+            "ventre"
+          ]
+        },
+        {
+          "id": "sit_14_doctor_s01",
+          "place": "Chez le médecin · phrase seule",
+          "standalone": "Construire",
+          "cue": "You're at the doctor's. He says vous to you. Tell him what hurts, and since when.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Médecin",
+              "text": "Bonjour, madame. Alors, qu'est-ce qui ne va pas aujourd'hui ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say hello (docteur): your stomach and your head have hurt since yesterday.",
+              "bank": [
+                "Bonjour,",
+                "docteur,",
+                "j'ai mal",
+                "au ventre",
+                "et à la tête",
+                "depuis hier.",
+                "à le ventre",
+                "pendant hier."
+              ],
+              "accepted": [
+                [
+                  "Bonjour,",
+                  "docteur,",
+                  "j'ai mal",
+                  "au ventre",
+                  "et à la tête",
+                  "depuis hier."
+                ],
+                [
+                  "Bonjour,",
+                  "j'ai mal",
+                  "au ventre",
+                  "et à la tête",
+                  "depuis hier."
+                ]
+              ],
+              "model": "Bonjour, docteur, j'ai mal au ventre et à la tête depuis hier."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_14_doctor_d03",
+          "place": "À l'appart",
+          "cue": "Léa, your flatmate, says tu to you. You hurt your back at the weekend.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Ton dos, ça va ce matin ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Non, j'ai encore ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "mauvais",
+                "mal",
+                "bien"
+              ],
+              "correct": 1,
+              "why": [
+                "« Mauvais » means bad (an adjective): it hurts is « j'ai mal ».",
+                "",
+                "Not French: « non » says it still hurts, so « j'ai encore mal »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa ask about?",
+              "choices": [
+                "Your back",
+                "Your head"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Ton dos, ça va ? »"
+            }
+          ],
+          "followUp": "Oh non ! Reste au lit, alors.",
+          "followUpBy": "Léa",
+          "newWords": [
+            "dos"
+          ]
+        },
+        {
+          "id": "sit_14_doctor_d04",
+          "place": "Appel · Inès",
+          "cue": "Inès, your colleague, calls you. She says tu to you. You're not at the office today.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Pas au bureau ? Qu'est-ce qui ne va pas ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « qu'est-ce qui ne va pas » mean here?",
+              "choices": [
+                "where are you?",
+                "what are you doing?",
+                "what's wrong?"
+              ],
+              "correct": 2,
+              "why": [
+                "« Tu es où ? » means where are you?",
+                "« Tu fais quoi ? » means what are you doing?",
+                ""
+              ],
+              "target": "qu'est-ce qui ne va pas"
+            },
+            {
+              "type": "reply",
+              "prompt": "Tell her: your stomach hurts.",
+              "bank": [
+                "J'ai mal",
+                "au ventre.",
+                "à le ventre.",
+                "au dos."
+              ],
+              "accepted": [
+                [
+                  "J'ai mal",
+                  "au ventre."
+                ]
+              ],
+              "model": "J'ai mal au ventre."
+            }
+          ],
+          "followUp": "Oh non ! Tu vas chez le médecin ?",
+          "followUpBy": "Inès",
+          "newWords": []
+        },
+        {
+          "id": "sit_14_doctor_s02",
+          "place": "Chez le médecin · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "You're at the doctor's. He says vous to you. Tell him your back has hurt since Monday.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "T'inquiète, mal au dos, bref !",
+                "Salut ! J'ai mal au dos, t'as vu ?",
+                "Docteur, j'ai mal au dos depuis lundi."
+              ],
+              "correct": 2,
+              "why": [
+                "Good spoken French, but « t'inquiète » and « bref » are for friends, and they don't tell the doctor anything.",
+                "Good spoken French, but « salut » and « t'as vu » are for friends, not the doctor.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_14_doctor_d05",
+          "place": "Chez le médecin",
+          "cue": "Clarify: you're at the doctor's. He says vous to you and talks fast.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Médecin",
+              "text": "Vous avez mal au ventre depuis quand ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say sorry, and ask him to repeat.",
+              "bank": [
+                "Pardon,",
+                "vous pouvez",
+                "répéter ?",
+                "tu peux",
+                "répète ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon,",
+                  "vous pouvez",
+                  "répéter ?"
+                ],
+                [
+                  "vous pouvez",
+                  "répéter ?"
+                ]
+              ],
+              "model": "Pardon, vous pouvez répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « ventre » mean here?",
+              "choices": [
+                "back",
+                "stomach",
+                "head"
+              ],
+              "correct": 1,
+              "why": [
+                "« Dos » means back.",
+                "",
+                "« Tête » means head."
+              ],
+              "target": "ventre"
+            }
+          ],
+          "followUp": "Pardon ! Vous avez mal depuis quand ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_14_doctor_d06",
+          "place": "Texto · Théo",
+          "cue": "Théo, your friend, texts you. He says tu to you. Your back has hurt since the weekend.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Tu ne viens pas courir ? Tu as mal au dos ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, depuis ___ week-end."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "la",
+                "les",
+                "le"
+              ],
+              "correct": 2,
+              "why": [
+                "« Week-end » is masculine: « le week-end ».",
+                "« Les » is plural: one weekend, « le week-end ».",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo ask?",
+              "choices": [
+                "If your back hurts",
+                "If your head hurts"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Tu as mal au dos ? »"
+            }
+          ],
+          "followUp": "Ah, dommage ! Repose-toi bien, alors.",
+          "followUpBy": "Théo",
+          "newWords": []
+        },
+        {
+          "id": "sit_14_doctor_s03",
+          "place": "Chez le médecin · phrase seule",
+          "standalone": "Corriger",
+          "cue": "You're at the doctor's. He says vous to you. Tell him what hurts.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Bonjour, docteur, j'ai mal à ventre depuis hier soir.",
+              "error": {
+                "word": "à",
+                "fix": "au",
+                "choices": [
+                  "au",
+                  "à la",
+                  "aux"
+                ],
+                "why": "« Ventre » is masculine: « à » + « le » becomes « au »: « j'ai mal au ventre »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_14_doctor_d07",
+          "place": "Chez le médecin",
+          "cue": "You're at the doctor's. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Médecin",
+              "text": "Et le dos, ça va ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, le dos, ça va. Mais j'ai mal ___ ventre."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « dos » mean here?",
+              "choices": [
+                "throat",
+                "stomach",
+                "back"
+              ],
+              "correct": 2,
+              "why": [
+                "« Gorge » means throat.",
+                "« Ventre » means stomach.",
+                ""
+              ],
+              "target": "dos"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "au",
+                "à la",
+                "à"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Ventre » is masculine: not « à la ».",
+                "« À » + « le » always contracts to « au »."
+              ]
+            }
+          ],
+          "followUp": "Bon. Je vous donne un sirop, alors.",
+          "newWords": []
+        },
+        {
+          "id": "sit_14_doctor_d08",
+          "place": "Sur le palier",
+          "cue": "M. Ferrand, your neighbour, says vous to you. You meet on the landing on your way out.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Vous allez chez le médecin ? Qu'est-ce qui ne va pas ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Tell him (monsieur): your back hurts.",
+              "bank": [
+                "J'ai mal",
+                "au dos,",
+                "monsieur.",
+                "à le dos,",
+                "madame."
+              ],
+              "accepted": [
+                [
+                  "J'ai mal",
+                  "au dos,",
+                  "monsieur."
+                ]
+              ],
+              "model": "J'ai mal au dos, monsieur."
+            },
+            {
+              "type": "comprehend",
+              "prompt": "Where does M. Ferrand think you're going?",
+              "choices": [
+                "To the pharmacy",
+                "To the doctor's"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Vous allez chez le médecin ? »"
+            }
+          ],
+          "followUp": "Ah, le dos ! Moi aussi, madame.",
+          "newWords": []
+        },
+        {
+          "id": "sit_14_doctor_s04",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You asked Léa, your flatmate (tu). Now ask Mme Dumas, your landlady, on WhatsApp. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Qu'est-ce qui ne va pas ? Tu as mal au ventre ?",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Ask her the same, with vous.",
+              "bank": [
+                "Qu'est-ce qui ne va pas ?",
+                "Vous avez",
+                "mal",
+                "au ventre ?",
+                "Tu as",
+                "Vous as"
+              ],
+              "accepted": [
+                [
+                  "Qu'est-ce qui ne va pas ?",
+                  "Vous avez",
+                  "mal",
+                  "au ventre ?"
+                ],
+                [
+                  "Vous avez",
+                  "mal",
+                  "au ventre ?",
+                  "Qu'est-ce qui ne va pas ?"
+                ]
+              ],
+              "model": "Qu'est-ce qui ne va pas ? Vous avez mal au ventre ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_14_doctor_d09",
+          "place": "Chez le médecin",
+          "cue": "You're at the doctor's. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Médecin",
+              "text": "Vous avez de la fièvre ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Non, mais j'ai mal au ___ et au dos."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the doctor ask?",
+              "choices": [
+                "If you have a cough",
+                "If you have a fever"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Vous avez de la fièvre ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "ventres",
+                "vélo",
+                "ventre"
+              ],
+              "correct": 2,
+              "why": [
+                "« Au » is singular: « ventres » is plural.",
+                "« Vélo » means bike: it can't hurt you like a stomach.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Bon. Reposez-vous pendant deux jours.",
+          "newWords": []
+        },
+        {
+          "id": "sit_14_doctor_d10",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you. You saw the doctor this morning.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Alors, le médecin a dit quoi ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa want to know?",
+              "choices": [
+                "What the doctor said",
+                "When you see the doctor"
+              ],
+              "correct": 0,
+              "miss": "Reread: « le médecin a dit quoi ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Tell her: nothing serious, your back hurts.",
+              "bank": [
+                "Rien de grave,",
+                "j'ai mal",
+                "au dos.",
+                "à la dos.",
+                "Pas de"
+              ],
+              "accepted": [
+                [
+                  "Rien de grave,",
+                  "j'ai mal",
+                  "au dos."
+                ]
+              ],
+              "model": "Rien de grave, j'ai mal au dos."
+            }
+          ],
+          "followUp": "Ouf ! Repose-toi, alors.",
+          "followUpBy": "Léa",
+          "newWords": []
+        },
+        {
+          "id": "sit_14_doctor_s05",
+          "place": "Texto · Inès · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "You text Inès, your colleague (tu). Which French word means “back” (the body part)?",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "J'ai mal au ___ depuis dimanche, je ne peux pas aller au bureau."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "back (body)",
+              "choices": [
+                "deux",
+                "dos",
+                "bureau"
+              ],
+              "correct": 1,
+              "why": [
+                "« Deux » means two.",
+                "",
+                "« Bureau » means office."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_14_sick",
+      "title": "Malade",
+      "note": "Saying you're ill: « je suis malade » (no -e to add: « malade » is the same for a man and a woman). In France the doctor gives you « un arrêt maladie » (a sick note) for work. To wish someone well, say « Bon rétablissement ! » (get well soon).",
+      "items": [
+        {
+          "id": "sit_14_sick_d01",
+          "place": "À l'appart",
+          "cue": "Léa, your flatmate, says tu to you. You woke up ill this morning.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Tu es malade ? Tu restes au lit aujourd'hui !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa tell you?",
+              "choices": [
+                "To go to the office",
+                "To stay in bed today"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Tu restes au lit aujourd'hui ! »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, and that you'll let the office know.",
+              "bank": [
+                "Oui,",
+                "je préviens",
+                "le bureau.",
+                "je prévenir",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "je préviens",
+                  "le bureau."
+                ]
+              ],
+              "model": "Oui, je préviens le bureau."
+            }
+          ],
+          "followUp": "Bonne idée. Je te fais un thé ?",
+          "followUpBy": "Léa",
+          "newWords": [
+            "malade"
+          ]
+        },
+        {
+          "id": "sit_14_sick_d02",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. She says tu to you. You saw the doctor this morning.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Le médecin t'a donné un arrêt maladie ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, ___ trois jours."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès ask?",
+              "choices": [
+                "If the doctor gave you a sick note",
+                "If the doctor gave you a prescription"
+              ],
+              "correct": 0,
+              "miss": "Reread: « un arrêt maladie ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "sur",
+                "par",
+                "pour"
+              ],
+              "correct": 2,
+              "why": [
+                "« Sur » means on: say « pour trois jours ».",
+                "« Par » means per: « trois jours par semaine » is a different idea.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "D'accord, je le dis à la réunion.",
+          "followUpBy": "Inès",
+          "newWords": [
+            "arrêt maladie"
+          ]
+        },
+        {
+          "id": "sit_14_sick_s01",
+          "place": "Texto · responsable · phrase seule",
+          "standalone": "Construire",
+          "cue": "Your manager texts you. She says vous to you. You're ill, and the doctor gave you a sick note for three days.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Responsable",
+              "voice": "female",
+              "text": "Bonjour, Robin. Vous venez au bureau ce matin ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say hello: you're ill, you have a sick note for three days.",
+              "bank": [
+                "Bonjour,",
+                "je suis malade,",
+                "j'ai",
+                "un arrêt maladie",
+                "pour trois jours.",
+                "je suis malades,",
+                "une arrêt maladie",
+                "par trois jours."
+              ],
+              "accepted": [
+                [
+                  "Bonjour,",
+                  "je suis malade,",
+                  "j'ai",
+                  "un arrêt maladie",
+                  "pour trois jours."
+                ]
+              ],
+              "model": "Bonjour, je suis malade, j'ai un arrêt maladie pour trois jours."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_14_sick_d03",
+          "place": "Les copains · groupe",
+          "cue": "Théo's group chat « Les copains ». Everyone says tu. Léa told the group you're ill.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Robin, t'es malade ? Bon rétablissement !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Merci ! Je ___ au lit."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "restes",
+                "reste",
+                "rester"
+              ],
+              "correct": 1,
+              "why": [
+                "« Restes » goes with « tu », not « je ».",
+                "",
+                "« Rester » is the infinitive: after « je », conjugate the verb."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo say?",
+              "choices": [
+                "Have a good weekend",
+                "Get well soon"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Bon rétablissement ! »"
+            }
+          ],
+          "followUp": "Repose-toi bien, Robin !",
+          "newWords": [
+            "bon rétablissement"
+          ]
+        },
+        {
+          "id": "sit_14_sick_d04",
+          "place": "Texto · responsable",
+          "cue": "Your manager texts you. She says vous to you. You saw the doctor this morning.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Responsable",
+              "voice": "female",
+              "text": "Vous êtes malade, Robin ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « malade » mean here?",
+              "choices": [
+                "late",
+                "ill",
+                "tired"
+              ],
+              "correct": 1,
+              "why": [
+                "« En retard » means late.",
+                "",
+                "« Fatiguée » means tired."
+              ],
+              "target": "malade"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes: you have a sick note.",
+              "bank": [
+                "Oui,",
+                "j'ai",
+                "un arrêt maladie.",
+                "une arrêt maladie.",
+                "je suis"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "j'ai",
+                  "un arrêt maladie."
+                ]
+              ],
+              "model": "Oui, j'ai un arrêt maladie."
+            }
+          ],
+          "followUp": "D'accord. Bon rétablissement, Robin !",
+          "newWords": []
+        },
+        {
+          "id": "sit_14_sick_s02",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "Mme Dumas, your landlady, says vous to you. She's ill. Wish her well on WhatsApp.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "Bon rétablissement, repose-toi bien !",
+                "Ouais, t'es malade, bref !",
+                "Bon rétablissement, madame, et reposez-vous bien."
+              ],
+              "correct": 2,
+              "why": [
+                "Good French, but « repose-toi » is tu: Mme Dumas says vous.",
+                "Good spoken French, but « ouais », « t'es » and « bref » are far too casual, and unkind.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_14_sick_d05",
+          "place": "Appel · responsable",
+          "cue": "Clarify: your manager calls you on a bad line. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Responsable",
+              "voice": "female",
+              "text": "Un arrêt maladie ? Pour combien de jours ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say sorry, you can't hear her well, and ask her to repeat.",
+              "bank": [
+                "Pardon,",
+                "je vous entends mal.",
+                "Vous pouvez répéter ?",
+                "je t'entends mal.",
+                "Tu peux répéter ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon,",
+                  "je vous entends mal.",
+                  "Vous pouvez répéter ?"
+                ],
+                [
+                  "Vous pouvez répéter ?",
+                  "Pardon,",
+                  "je vous entends mal."
+                ]
+              ],
+              "model": "Pardon, je vous entends mal. Vous pouvez répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « arrêt maladie » mean here?",
+              "choices": [
+                "tram stop",
+                "appointment",
+                "sick note"
+              ],
+              "correct": 2,
+              "why": [
+                "A stop is « un arrêt » alone.",
+                "« Rendez-vous » means appointment.",
+                ""
+              ],
+              "target": "arrêt maladie"
+            }
+          ],
+          "followUp": "Pardon ! Votre arrêt maladie, c'est pour combien de jours ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_14_sick_d06",
+          "place": "Texto · Karim",
+          "cue": "Karim, the barista at your café, texts you. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "T'es malade ? Je t'apporte un thé ce soir ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oh, merci ! Tu es ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "gentil",
+                "gentille",
+                "gentils"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Gentille » is feminine: Karim is a man.",
+                "« Gentils » is plural: you're talking to Karim alone."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Karim offer?",
+              "choices": [
+                "To bring you a coffee tonight",
+                "To bring you a tea tonight"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Je t'apporte un thé ce soir ? »"
+            }
+          ],
+          "followUp": "Avec plaisir ! À ce soir.",
+          "followUpBy": "Karim",
+          "newWords": []
+        },
+        {
+          "id": "sit_14_sick_s03",
+          "place": "Texto · Inès · phrase seule",
+          "standalone": "Corriger",
+          "cue": "You text Inès, your colleague (tu).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Je suis malades, j'ai un arrêt maladie pour trois jours.",
+              "error": {
+                "word": "malades",
+                "fix": "malade",
+                "choices": [
+                  "malade",
+                  "mal",
+                  "malheureusement"
+                ],
+                "why": "One person: « je suis malade », with no -s."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_14_sick_d07",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. She says tu to you. You're ill this week.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Bon rétablissement ! Tu reviens quand ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Merci ! Je reviens la semaine ___."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « bon rétablissement » mean here?",
+              "choices": [
+                "good luck",
+                "get well soon",
+                "have a good day"
+              ],
+              "correct": 1,
+              "why": [
+                "Good luck is « bonne chance ».",
+                "",
+                "« Bonne journée » means have a good day."
+              ],
+              "target": "bon rétablissement"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "prochain",
+                "dernière",
+                "prochaine"
+              ],
+              "correct": 2,
+              "why": [
+                "« Semaine » is feminine: « la semaine prochaine ».",
+                "« Dernière » means last: you can't come back last week.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Super ! Repose-toi bien.",
+          "followUpBy": "Inès",
+          "newWords": []
+        },
+        {
+          "id": "sit_14_sick_d08",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you from work. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Tu es encore malade ? Je rentre à midi."
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say yes: you're staying in bed today.",
+              "bank": [
+                "Oui,",
+                "je reste",
+                "au lit",
+                "aujourd'hui.",
+                "je restes",
+                "à la lit"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "je reste",
+                  "au lit",
+                  "aujourd'hui."
+                ]
+              ],
+              "model": "Oui, je reste au lit aujourd'hui."
+            },
+            {
+              "type": "comprehend",
+              "prompt": "When is Léa coming home?",
+              "choices": [
+                "At noon",
+                "Tonight"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Je rentre à midi. »"
+            }
+          ],
+          "followUp": "D'accord. Je t'apporte de la soupe !",
+          "followUpBy": "Léa",
+          "newWords": []
+        },
+        {
+          "id": "sit_14_sick_s04",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You wrote this to Léa (tu). Now Mme Dumas, your landlady, is ill. Write to her on WhatsApp. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Tu es malade ? Bon rétablissement, et repose-toi bien !",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say the same to her, with vous.",
+              "bank": [
+                "Vous êtes",
+                "malade ?",
+                "Bon rétablissement,",
+                "et reposez-vous",
+                "bien !",
+                "Tu es",
+                "et repose-toi",
+                "malades ?"
+              ],
+              "accepted": [
+                [
+                  "Vous êtes",
+                  "malade ?",
+                  "Bon rétablissement,",
+                  "et reposez-vous",
+                  "bien !"
+                ]
+              ],
+              "model": "Vous êtes malade ? Bon rétablissement, et reposez-vous bien !"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_14_sick_d09",
+          "place": "WhatsApp · Mme Dumas",
+          "cue": "Mme Dumas, your landlady, writes on WhatsApp. She says vous to you. Léa is ill.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Mme Dumas",
+              "text": "Bonjour, Robin. Léa est malade, elle aussi ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, elle est ___ lit."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Mme Dumas ask?",
+              "choices": [
+                "If Léa is ill too",
+                "If Léa is at work"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Léa est malade, elle aussi ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "à la",
+                "au",
+                "en"
+              ],
+              "correct": 1,
+              "why": [
+                "« Lit » is masculine: « à » + « le » becomes « au ».",
+                "",
+                "Not French: you say « au lit »."
+              ]
+            }
+          ],
+          "followUp": "Oh ! Bon rétablissement à Léa, alors.",
+          "newWords": []
+        },
+        {
+          "id": "sit_14_sick_d10",
+          "place": "Texto · Théo",
+          "cue": "Théo, your friend, texts you. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Je suis malade, je ne viens pas samedi."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo say?",
+              "choices": [
+                "He's ill, but he's coming on Saturday",
+                "He's ill, and he isn't coming on Saturday"
+              ],
+              "correct": 1,
+              "miss": "Reread: « je ne viens pas samedi »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Say: oh no, get well soon!",
+              "bank": [
+                "Oh non !",
+                "Bon rétablissement !",
+                "Super !",
+                "Bonne journée !"
+              ],
+              "accepted": [
+                [
+                  "Oh non !",
+                  "Bon rétablissement !"
+                ]
+              ],
+              "model": "Oh non ! Bon rétablissement !"
+            }
+          ],
+          "followUp": "Merci, Robin. Et toi, ça va ?",
+          "followUpBy": "Théo",
+          "newWords": []
+        },
+        {
+          "id": "sit_14_sick_s05",
+          "place": "Texto · responsable · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "You text your manager. She says vous to you. Which French words mean “sick note”?",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Bonjour, je suis malade, le médecin me donne un ___ pour trois jours."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "sick note",
+              "choices": [
+                "rendez-vous",
+                "colis",
+                "arrêt maladie"
+              ],
+              "correct": 2,
+              "why": [
+                "« Rendez-vous » means appointment.",
+                "« Colis » means parcel.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_14_better",
+      "title": "Ça va mieux",
+      "note": "The happy end: « Ça va mieux ? » (are you feeling better?) and « Oui, ça va mieux ! ». After « ça va », say « mieux », never « meilleur ». Robin is a woman: « je suis guérie » (I'm better, recovered). « En forme » means fit, in good shape.",
+      "items": [
+        {
+          "id": "sit_14_better_d01",
+          "place": "À l'appart",
+          "cue": "Léa, your flatmate, says tu to you. You had a cold all week.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Salut ! Ça va mieux, ce matin ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa ask?",
+              "choices": [
+                "If you slept well",
+                "If you feel better this morning"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Ça va mieux, ce matin ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, much better, thank you.",
+              "bank": [
+                "Oui,",
+                "beaucoup mieux,",
+                "merci !",
+                "beaucoup meilleur,",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "beaucoup mieux,",
+                  "merci !"
+                ]
+              ],
+              "model": "Oui, beaucoup mieux, merci !"
+            }
+          ],
+          "followUp": "Super ! Je te fais un café ?",
+          "followUpBy": "Léa",
+          "newWords": [
+            "ça va mieux"
+          ]
+        },
+        {
+          "id": "sit_14_better_d02",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. She says tu to you. You were ill last week.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Tu es guérie ? On te voit lundi au bureau ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, je ___ au bureau lundi."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès want to know?",
+              "choices": [
+                "If you're going to the doctor on Monday",
+                "If you're back at the office on Monday"
+              ],
+              "correct": 1,
+              "miss": "Reread: « On te voit lundi au bureau ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "reviens",
+                "revient",
+                "revenir"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Revient » goes with « il » or « elle », not « je ».",
+                "« Revenir » is the infinitive: after « je », conjugate the verb."
+              ]
+            }
+          ],
+          "followUp": "Top ! On a une réunion à dix heures.",
+          "followUpBy": "Inès",
+          "newWords": [
+            "guérie"
+          ]
+        },
+        {
+          "id": "sit_14_better_s01",
+          "place": "Texto · Inès · phrase seule",
+          "standalone": "Construire",
+          "cue": "Inès, your colleague, texts you. She says tu to you. You're a woman. You're better now.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Salut, Robin ! Ça va mieux ? Tu reviens quand au bureau ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say yes: you feel better, you're recovered, you're back on Monday.",
+              "bank": [
+                "Oui,",
+                "ça va mieux,",
+                "je suis guérie,",
+                "je reviens lundi.",
+                "je suis guéri,",
+                "je revient lundi."
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "ça va mieux,",
+                  "je suis guérie,",
+                  "je reviens lundi."
+                ],
+                [
+                  "Oui,",
+                  "je suis guérie,",
+                  "ça va mieux,",
+                  "je reviens lundi."
+                ]
+              ],
+              "model": "Oui, ça va mieux, je suis guérie, je reviens lundi."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_14_better_d03",
+          "place": "Au café",
+          "cue": "Karim, the barista at your café, says tu to you. You were ill last week.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Toi, tu es en forme aujourd'hui !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, ça va ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "meilleur",
+                "mieux",
+                "meilleure"
+              ],
+              "correct": 1,
+              "why": [
+                "« Meilleur » is an adjective (a better coffee): after « ça va », say « mieux ».",
+                "",
+                "« Meilleure » is an adjective too: after « ça va », say « mieux »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Karim say?",
+              "choices": [
+                "You look tired today",
+                "You look in good shape today"
+              ],
+              "correct": 1,
+              "miss": "Reread: « tu es en forme aujourd'hui ! »"
+            }
+          ],
+          "followUp": "Super ! Un café, comme d'habitude ?",
+          "newWords": [
+            "en forme"
+          ]
+        },
+        {
+          "id": "sit_14_better_d04",
+          "place": "Les copains · groupe",
+          "cue": "Théo's group chat « Les copains ». Everyone says tu. You're a woman. You were ill.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Robin, ça va mieux ? Tu viens samedi ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « ça va mieux » mean here?",
+              "choices": [
+                "how are you?",
+                "are you feeling better?",
+                "are you coming?"
+              ],
+              "correct": 1,
+              "why": [
+                "« Ça va ? » alone means how are you? « Mieux » means better.",
+                "",
+                "« Tu viens ? » means are you coming?"
+              ],
+              "target": "ça va mieux"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes: you're better (recovered)!",
+              "bank": [
+                "Oui,",
+                "je suis",
+                "guérie !",
+                "guéri !",
+                "guéris !",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "je suis",
+                  "guérie !"
+                ]
+              ],
+              "model": "Oui, je suis guérie !"
+            }
+          ],
+          "followUp": "Top ! Alors à samedi, Robin !",
+          "newWords": []
+        },
+        {
+          "id": "sit_14_better_s02",
+          "place": "Sur le palier · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "M. Ferrand, your neighbour, says vous to you. On the landing, he asks how you are after your cold.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "Ouais, ça va mieux, t'inquiète !",
+                "Ça va mieux, merci, monsieur, c'est gentil.",
+                "Salut ! Ça va mieux, et toi ?"
+              ],
+              "correct": 1,
+              "why": [
+                "Good spoken French, but « ouais » and « t'inquiète » are for friends, not M. Ferrand.",
+                "",
+                "Good French, but « salut » and « et toi » are tu: M. Ferrand says vous."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_14_better_d05",
+          "place": "Appel · Mme Dumas",
+          "cue": "Clarify: Mme Dumas, your landlady, calls you on a bad line. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Mme Dumas",
+              "text": "Vous êtes guérie, madame ? Ça va mieux ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say sorry, you can't hear her well, and ask her to repeat.",
+              "bank": [
+                "Pardon,",
+                "je vous entends mal.",
+                "Vous pouvez répéter ?",
+                "je t'entends mal.",
+                "Tu peux répéter ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon,",
+                  "je vous entends mal.",
+                  "Vous pouvez répéter ?"
+                ],
+                [
+                  "Vous pouvez répéter ?",
+                  "Pardon,",
+                  "je vous entends mal."
+                ]
+              ],
+              "model": "Pardon, je vous entends mal. Vous pouvez répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « guérie » mean here?",
+              "choices": [
+                "tired",
+                "recovered",
+                "ill"
+              ],
+              "correct": 1,
+              "why": [
+                "« Fatiguée » means tired.",
+                "",
+                "« Malade » means ill."
+              ],
+              "target": "guérie"
+            }
+          ],
+          "followUp": "Pardon ! Vous allez mieux, madame ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_14_better_d06",
+          "place": "À l'appart",
+          "cue": "Léa, your flatmate, says tu to you. You're a woman. You were ill last week.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Tu es en forme pour samedi ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, je suis ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "guéri",
+                "guéris",
+                "guérie"
+              ],
+              "correct": 2,
+              "why": [
+                "You're a woman: « guérie », with an -e.",
+                "« Guéris » is plural: you're talking about yourself.",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa ask?",
+              "choices": [
+                "If you're fit for Saturday",
+                "If you're free on Saturday"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Tu es en forme pour samedi ? »"
+            }
+          ],
+          "followUp": "Super ! Alors on va courir ensemble.",
+          "followUpBy": "Léa",
+          "newWords": []
+        },
+        {
+          "id": "sit_14_better_s03",
+          "place": "Texto · Léa · phrase seule",
+          "standalone": "Corriger",
+          "cue": "You text Léa, your flatmate (tu). You're a woman.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Merci, ça va mieux, je suis guéri et en forme !",
+              "error": {
+                "word": "guéri",
+                "fix": "guérie",
+                "choices": [
+                  "guéris",
+                  "guérie",
+                  "guéries"
+                ],
+                "why": "You're a woman: « je suis guérie », with an -e."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_14_better_d07",
+          "place": "Au bureau",
+          "cue": "Inès, your colleague, says tu to you. You had a cold last week.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Tu es en forme ! Le rhume, c'est fini ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, ___ ! Merci."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « en forme » mean here?",
+              "choices": [
+                "late",
+                "ill",
+                "in good shape"
+              ],
+              "correct": 2,
+              "why": [
+                "« En retard » means late.",
+                "« Malade » means ill.",
+                ""
+              ],
+              "target": "en forme"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "malheureusement",
+                "heureusement",
+                "dommage"
+              ],
+              "correct": 1,
+              "why": [
+                "« Malheureusement » means unfortunately: not for good news.",
+                "",
+                "« Dommage » means what a shame: not for good news."
+              ]
+            }
+          ],
+          "followUp": "Super ! On a besoin de toi aujourd'hui.",
+          "followUpBy": "Inès",
+          "newWords": []
+        },
+        {
+          "id": "sit_14_better_d08",
+          "place": "Sur le palier",
+          "cue": "M. Ferrand, your neighbour, says vous to you. You meet on the landing. You were ill last week.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Bonjour, madame. Vous allez mieux ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say yes, you're in good shape, thank you.",
+              "bank": [
+                "Oui,",
+                "je suis",
+                "en forme,",
+                "merci !",
+                "en formes,",
+                "j'ai"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "je suis",
+                  "en forme,",
+                  "merci !"
+                ]
+              ],
+              "model": "Oui, je suis en forme, merci !"
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does M. Ferrand ask?",
+              "choices": [
+                "If you're going out",
+                "If you're feeling better"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Vous allez mieux ? »"
+            }
+          ],
+          "followUp": "Ah, très bien ! Bonne journée, madame.",
+          "newWords": []
+        },
+        {
+          "id": "sit_14_better_s04",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You asked Léa, your flatmate (tu). Now ask Mme Dumas, your landlady, on WhatsApp. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Ça va mieux ? Tu es en forme aujourd'hui ?",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Ask her the same, with vous (madame).",
+              "bank": [
+                "Ça va mieux,",
+                "madame ?",
+                "Vous êtes",
+                "en forme",
+                "aujourd'hui ?",
+                "Tu es",
+                "Vous es"
+              ],
+              "accepted": [
+                [
+                  "Ça va mieux,",
+                  "madame ?",
+                  "Vous êtes",
+                  "en forme",
+                  "aujourd'hui ?"
+                ],
+                [
+                  "Vous êtes",
+                  "en forme",
+                  "aujourd'hui ?",
+                  "Ça va mieux,",
+                  "madame ?"
+                ]
+              ],
+              "model": "Ça va mieux, madame ? Vous êtes en forme aujourd'hui ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_14_better_d09",
+          "place": "Texto · Théo",
+          "cue": "Théo, your friend, texts you. He says tu to you. You were ill last week.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Tu viens courir dimanche ? À dix heures !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui ! Je suis en ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "When does Théo want to go running?",
+              "choices": [
+                "On Saturday at ten",
+                "On Sunday at ten"
+              ],
+              "correct": 1,
+              "miss": "Reread: « dimanche ? À dix heures ! »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "formes",
+                "forme",
+                "fois"
+              ],
+              "correct": 1,
+              "why": [
+                "« En forme » never takes an -s.",
+                "",
+                "« Fois » means time (once, twice): « en forme » means fit."
+              ]
+            }
+          ],
+          "followUp": "Top ! À dimanche, alors.",
+          "followUpBy": "Théo",
+          "newWords": []
+        },
+        {
+          "id": "sit_14_better_d10",
+          "place": "Au café",
+          "cue": "Karim, the barista at your café, says tu to you. You're a woman. You were ill last week.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Ça va mieux ? Un café, comme d'habitude ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Karim offer?",
+              "choices": [
+                "Your usual coffee",
+                "A tea"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Un café, comme d'habitude ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, you're recovered, and yes to a coffee, thanks.",
+              "bank": [
+                "Oui,",
+                "je suis guérie !",
+                "Un café,",
+                "merci.",
+                "je suis guéri !",
+                "Une café,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "je suis guérie !",
+                  "Un café,",
+                  "merci."
+                ],
+                [
+                  "Un café,",
+                  "merci.",
+                  "Oui,",
+                  "je suis guérie !"
+                ]
+              ],
+              "model": "Oui, je suis guérie ! Un café, merci."
+            }
+          ],
+          "followUp": "Super ! Le café, c'est pour moi aujourd'hui.",
+          "newWords": []
+        },
+        {
+          "id": "sit_14_better_s05",
+          "place": "Texto · Théo · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "You text Théo, your friend (tu). You're a woman. Which French word means “recovered”?",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Ça va mieux, merci, je suis ___ et en forme pour samedi."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "recovered (feminine)",
+              "choices": [
+                "malade",
+                "guérie",
+                "fatiguée"
+              ],
+              "correct": 1,
+              "why": [
+                "« Malade » means ill: not with « ça va mieux ».",
+                "",
+                "« Fatiguée » means tired: not with « en forme »."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,2680 @@
+{
+  "elements": [
+    {
+      "id": "sit_11_group",
+      "title": "Bloquée !",
+      "note": "A strike day in the group chat. « Bloquée » means stuck: Robin is a woman, so « je suis bloquée », with -e. « Je vous tiens au courant » (I'll keep you posted) uses « vous » for the whole group and « te » for one friend: « je te tiens au courant ». « Un covoiturage » is a car-share, often booked on an app like BlaBlaCar: when the trains stop, the French share cars.",
+      "items": [
+        {
+          "id": "sit_11_group_d01",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you. There's a strike today.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Je suis bloquée à la gare ! Pas de train."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "Where is Léa?",
+              "choices": [
+                "At the office",
+                "At the station"
+              ],
+              "correct": 1,
+              "miss": "Reread: « je suis bloquée à la gare »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Say oh no, and ask (tu) if you can help her.",
+              "bank": [
+                "Oh non !",
+                "Je peux",
+                "t'aider ?",
+                "vous aider ?",
+                "Tu peux",
+                "Oh oui !"
+              ],
+              "accepted": [
+                [
+                  "Oh non !",
+                  "Je peux",
+                  "t'aider ?"
+                ]
+              ],
+              "model": "Oh non ! Je peux t'aider ?"
+            }
+          ],
+          "followUp": "Merci ! Mais non, je prends le bus.",
+          "newWords": [
+            "bloquée"
+          ]
+        },
+        {
+          "id": "sit_11_group_d02",
+          "place": "Les copains · groupe",
+          "cue": "Théo's group chat « Les copains ». Everyone says tu; « vous » = you all. There's a strike. You're a woman.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Pas de métro ce matin. Je vous tiens au courant !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Merci ! Moi, je suis ___ à la maison."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo say?",
+              "choices": [
+                "There's no metro this morning",
+                "The metro is late this morning"
+              ],
+              "correct": 0,
+              "miss": "Reread: « pas de métro ce matin »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "bloqué",
+                "bloquer",
+                "bloquée"
+              ],
+              "correct": 2,
+              "why": [
+                "You're a woman: « bloquée », with -e.",
+                "After « je suis », use the adjective, not the infinitive « bloquer ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Moi aussi. Quelle journée !",
+          "newWords": [
+            "tiens au courant"
+          ]
+        },
+        {
+          "id": "sit_11_group_s01",
+          "place": "Les copains · groupe · phrase seule",
+          "standalone": "Construire",
+          "cue": "Théo's group chat « Les copains ». Everyone says tu; « vous » = you all. You're a woman, and the strike has left you stuck at the station.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Robin, tu es où ? Tout le monde est au café !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Tell the group: you're stuck at the station, and you'll keep them posted.",
+              "bank": [
+                "Je suis",
+                "bloquée",
+                "à la gare,",
+                "je vous",
+                "tiens au courant !",
+                "bloqué",
+                "je te",
+                "tient au courant !"
+              ],
+              "accepted": [
+                [
+                  "Je suis",
+                  "bloquée",
+                  "à la gare,",
+                  "je vous",
+                  "tiens au courant !"
+                ]
+              ],
+              "model": "Je suis bloquée à la gare, je vous tiens au courant !"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_11_group_d03",
+          "place": "Les copains · groupe",
+          "cue": "Théo's group chat « Les copains ». Everyone says tu; « vous » = you all. There's a train strike this weekend.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Pas de train ? On part en covoiturage !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Super idée ! Il y a une place ___ moi ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "par",
+                "pour",
+                "dans"
+              ],
+              "correct": 1,
+              "why": [
+                "« Par moi » means by me. A seat for someone is « une place pour… ».",
+                "",
+                "« Dans moi » is not French. A seat for someone is « une place pour… »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo suggest?",
+              "choices": [
+                "Waiting for the train",
+                "Sharing a car"
+              ],
+              "correct": 1,
+              "miss": "Reread: « on part en covoiturage »."
+            }
+          ],
+          "followUp": "Oui, il reste une place !",
+          "newWords": [
+            "covoiturage"
+          ]
+        },
+        {
+          "id": "sit_11_group_d04",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you. There's a strike.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "T'es encore bloquée à la gare ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « bloquée » mean here?",
+              "choices": [
+                "late",
+                "stuck",
+                "lost"
+              ],
+              "correct": 1,
+              "why": [
+                "« En retard » means late.",
+                "",
+                "« Perdue » means lost."
+              ],
+              "target": "bloquée"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, and that you'll keep her posted (tu).",
+              "bank": [
+                "Oui !",
+                "Je te",
+                "tiens au courant.",
+                "Je vous",
+                "Non !",
+                "tient au courant."
+              ],
+              "accepted": [
+                [
+                  "Oui !",
+                  "Je te",
+                  "tiens au courant."
+                ]
+              ],
+              "model": "Oui ! Je te tiens au courant."
+            }
+          ],
+          "followUp": "D'accord. Moi, je suis à la maison !",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_group_s02",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "Mme Dumas, your landlady, says vous to you. You were meeting her at the flat today, but the strike has left you stuck at the station.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "Je suis bloquée, je te tiens au courant !",
+                "Salut ! Bloquée à la gare, t'as vu ?",
+                "Je suis bloquée à la gare, madame, je vous tiens au courant."
+              ],
+              "correct": 2,
+              "why": [
+                "Good French, but « te » is tu. Say vous to Mme Dumas.",
+                "Good French, but « salut » and « t'as vu » are for friends.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_11_group_d05",
+          "place": "Appel · Théo",
+          "cue": "Clarify: Théo, your friend, calls you on a bad line. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Le covoiturage part à huit heures, devant la gare."
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Tell him (tu) you can't hear him well, and ask him to repeat.",
+              "bank": [
+                "Pardon ?",
+                "Je t'entends",
+                "mal.",
+                "bien.",
+                "Tu peux",
+                "répéter ?",
+                "Vous pouvez"
+              ],
+              "accepted": [
+                [
+                  "Pardon ?",
+                  "Je t'entends",
+                  "mal.",
+                  "Tu peux",
+                  "répéter ?"
+                ],
+                [
+                  "Je t'entends",
+                  "mal.",
+                  "Tu peux",
+                  "répéter ?"
+                ],
+                [
+                  "Pardon ?",
+                  "Tu peux",
+                  "répéter ?",
+                  "Je t'entends",
+                  "mal."
+                ],
+                [
+                  "Tu peux",
+                  "répéter ?",
+                  "Je t'entends",
+                  "mal."
+                ]
+              ],
+              "model": "Pardon ? Je t'entends mal. Tu peux répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « covoiturage » mean here?",
+              "choices": [
+                "bus",
+                "car-share",
+                "taxi"
+              ],
+              "correct": 1,
+              "why": [
+                "A bus is « un bus ».",
+                "",
+                "Not a taxi: in a car-share, a driver shares his own car."
+              ],
+              "target": "covoiturage"
+            }
+          ],
+          "followUp": "Huit heures, devant la gare !",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_group_d06",
+          "place": "Texto · Karim",
+          "cue": "Karim, the barista at your café, texts you. He says tu to you. There's a strike. You're a woman.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Tu viens au café ce matin ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Désolée, je suis ___ à la gare !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "bloquée",
+                "bloqué",
+                "bloquées"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "You're a woman: « bloquée », with -e.",
+                "« Bloquées » is plural; you're one person."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Karim ask?",
+              "choices": [
+                "If you're coming to the café",
+                "If you're at the station"
+              ],
+              "correct": 0,
+              "miss": "Reread: « tu viens au café ce matin ? »"
+            }
+          ],
+          "followUp": "Pas grave, à demain !",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_group_s03",
+          "place": "Les copains · groupe · phrase seule",
+          "standalone": "Corriger",
+          "cue": "Théo's group chat « Les copains ». Everyone says tu; « vous » = you all. You tell everyone about the car-share.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Le covoiturage part à huit heures, je vous tient au courant !",
+              "error": {
+                "word": "tient",
+                "fix": "tiens",
+                "choices": [
+                  "tiennent",
+                  "tient",
+                  "tiens"
+                ],
+                "why": "With « je », the verb is « tiens »: je tiens, il tient."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_11_group_d07",
+          "place": "Les copains · groupe",
+          "cue": "Théo's group chat « Les copains ». Everyone says tu; « vous » = you all. Théo is organising a car-share for Saturday.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Je vous tiens au courant pour samedi !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Merci, Théo ! Le ___ part à quelle heure ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « je vous tiens au courant » mean here?",
+              "choices": [
+                "I'll pick you up",
+                "I'll call you back",
+                "I'll keep you posted"
+              ],
+              "correct": 2,
+              "why": [
+                "Not picking up: « au courant » means informed.",
+                "Not calling back: « tenir au courant » is keeping someone informed.",
+                ""
+              ],
+              "target": "tiens au courant"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "billet",
+                "covoiturage",
+                "quai"
+              ],
+              "correct": 1,
+              "why": [
+                "A ticket doesn't leave: « billet » means ticket.",
+                "",
+                "A platform doesn't leave: « quai » means platform."
+              ]
+            }
+          ],
+          "followUp": "Vers huit heures, je crois.",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_group_d08",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. She says tu to you. There's a strike.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Tu es bloquée ? Tu viens au bureau ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say yes, but you're taking a car-share.",
+              "bank": [
+                "Oui,",
+                "mais",
+                "je prends",
+                "un covoiturage.",
+                "une covoiturage.",
+                "je prend",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "mais",
+                  "je prends",
+                  "un covoiturage."
+                ],
+                [
+                  "Oui,",
+                  "je prends",
+                  "un covoiturage."
+                ]
+              ],
+              "model": "Oui, mais je prends un covoiturage."
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès want to know?",
+              "choices": [
+                "If you're working from home",
+                "If you're coming to the office"
+              ],
+              "correct": 1,
+              "miss": "Reread: « tu viens au bureau ? »"
+            }
+          ],
+          "followUp": "Top ! À tout à l'heure, alors.",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_group_s04",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You wrote this to Léa, your flatmate (tu). Now write the same to Mme Dumas, your landlady, on WhatsApp. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Je suis bloquée à la gare, je te tiens au courant, d'accord ?",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say the same to her, with vous.",
+              "bank": [
+                "Je suis",
+                "bloquée",
+                "à la gare,",
+                "je vous",
+                "tiens au courant,",
+                "d'accord ?",
+                "je te",
+                "bloqué",
+                "tient au courant,"
+              ],
+              "accepted": [
+                [
+                  "Je suis",
+                  "bloquée",
+                  "à la gare,",
+                  "je vous",
+                  "tiens au courant,",
+                  "d'accord ?"
+                ]
+              ],
+              "model": "Je suis bloquée à la gare, je vous tiens au courant, d'accord ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_11_group_d09",
+          "place": "Les copains · groupe",
+          "cue": "Théo's group chat « Les copains ». Léa writes; everyone says tu.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Un covoiturage pour Paris ? Il reste une place !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Super ! Je te ___ au courant."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa say about the car-share?",
+              "choices": [
+                "It's full",
+                "There's one seat left"
+              ],
+              "correct": 1,
+              "miss": "Reread: « il reste une place »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "tient",
+                "tiens",
+                "tiennent"
+              ],
+              "correct": 1,
+              "why": [
+                "« Tient » goes with il or elle; with « je », it's « tiens ».",
+                "",
+                "« Tiennent » is plural (ils, elles); with « je », it's « tiens »."
+              ]
+            }
+          ],
+          "followUp": "D'accord, mais vite !",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_group_d10",
+          "place": "Les copains · groupe",
+          "cue": "Théo's group chat « Les copains ». Everyone says tu. You found a car-share.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Robin, t'es encore bloquée à la gare ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo ask?",
+              "choices": [
+                "If you're still stuck at the station",
+                "If you've got a train ticket"
+              ],
+              "correct": 0,
+              "miss": "Reread: « t'es encore bloquée à la gare ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say no: you're in a car-share!",
+              "bank": [
+                "Non,",
+                "je suis",
+                "en",
+                "dans un",
+                "covoiturage !",
+                "Oui,",
+                "à"
+              ],
+              "accepted": [
+                [
+                  "Non,",
+                  "je suis",
+                  "en",
+                  "covoiturage !"
+                ],
+                [
+                  "Non,",
+                  "je suis",
+                  "dans un",
+                  "covoiturage !"
+                ]
+              ],
+              "model": "Non, je suis en covoiturage !"
+            }
+          ],
+          "followUp": "Top ! À ce soir, alors.",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_group_s05",
+          "place": "Texto · Léa · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Léa, your flatmate, says tu to you. Which French word means “car-share”?",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Pas de train, alors je prends un ___ avec Théo ce matin."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "car-share",
+              "choices": [
+                "billet",
+                "covoiturage",
+                "guichet"
+              ],
+              "correct": 1,
+              "why": [
+                "« Billet » means ticket.",
+                "",
+                "« Guichet » means ticket office."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_11_another",
+      "title": "Une autre solution",
+      "note": "No metro? Find another way: « un taxi » (expensive), « la navette » (the replacement bus laid on during a strike), « à pied » or « à vélo ». You say « en navette » and « en taxi », but « à pied » and « à vélo ». « En attendant » means in the meantime: while you wait, have a coffee.",
+      "items": [
+        {
+          "id": "sit_11_another_d01",
+          "place": "Au métro",
+          "cue": "There's a strike. A metro employee at the station entrance says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Employé",
+              "text": "Pas de métro aujourd'hui. Prenez un taxi ou le bus."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the employee suggest?",
+              "choices": [
+                "The tram or the bus",
+                "A taxi or the bus"
+              ],
+              "correct": 1,
+              "miss": "Reread: « prenez un taxi ou le bus »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Thank him, and say you'll take a taxi.",
+              "bank": [
+                "Merci,",
+                "monsieur,",
+                "je prends",
+                "un taxi.",
+                "une taxi.",
+                "madame,",
+                "je prend"
+              ],
+              "accepted": [
+                [
+                  "Merci,",
+                  "monsieur,",
+                  "je prends",
+                  "un taxi."
+                ],
+                [
+                  "Merci,",
+                  "je prends",
+                  "un taxi."
+                ]
+              ],
+              "model": "Merci, monsieur, je prends un taxi."
+            }
+          ],
+          "followUp": "Bonne journée, madame !",
+          "newWords": [
+            "taxi"
+          ]
+        },
+        {
+          "id": "sit_11_another_d02",
+          "place": "Au métro",
+          "cue": "There's a strike. A metro employee at the station entrance says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Employé",
+              "text": "Il y a une navette, devant la gare."
+            },
+            {
+              "speaker": "learner",
+              "text": "Merci ! Elle part ___ ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "Where is the shuttle?",
+              "choices": [
+                "In front of the station",
+                "Behind the station"
+              ],
+              "correct": 0,
+              "miss": "Reread: « devant la gare »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "combien",
+                "comment",
+                "quand"
+              ],
+              "correct": 2,
+              "why": [
+                "« Combien » asks how much; you want to know when.",
+                "« Comment » asks how; you want to know when.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Toutes les dix minutes, madame.",
+          "newWords": [
+            "navette"
+          ]
+        },
+        {
+          "id": "sit_11_another_s01",
+          "place": "Dans la rue · phrase seule",
+          "standalone": "Construire",
+          "cue": "The metro is on strike. In the street, you ask a man, who says vous to you, if there's a shuttle to Bellecour.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Ask him politely: is there a shuttle for Bellecour?",
+              "bank": [
+                "Excusez-moi,",
+                "il y a",
+                "une navette",
+                "pour",
+                "Bellecour,",
+                "s'il vous plaît ?",
+                "un navette",
+                "s'il te plaît ?",
+                "par"
+              ],
+              "accepted": [
+                [
+                  "Excusez-moi,",
+                  "il y a",
+                  "une navette",
+                  "pour",
+                  "Bellecour,",
+                  "s'il vous plaît ?"
+                ]
+              ],
+              "model": "Excusez-moi, il y a une navette pour Bellecour, s'il vous plaît ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_11_another_d03",
+          "place": "Appel · Léa",
+          "cue": "Léa, your flatmate, calls you. She says tu to you. You're both near the station, and the metro is on strike.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "La navette arrive dans vingt minutes. En attendant, un café ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, on va ___ café du coin !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "à la",
+                "au",
+                "à"
+              ],
+              "correct": 1,
+              "why": [
+                "« Café » is masculine: « à la » is for feminine nouns.",
+                "",
+                "« À » + « le » contracts to « au »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "When does the shuttle arrive?",
+              "choices": [
+                "In ten minutes",
+                "In twenty minutes"
+              ],
+              "correct": 1,
+              "miss": "Reread: « la navette arrive dans vingt minutes »."
+            }
+          ],
+          "followUp": "Top, j'arrive !",
+          "newWords": [
+            "en attendant"
+          ]
+        },
+        {
+          "id": "sit_11_another_d04",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. She says tu to you. The metro is on strike.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Tu prends un taxi pour venir au bureau ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « taxi » mean here?",
+              "choices": [
+                "a shuttle bus",
+                "a car-share",
+                "a taxi"
+              ],
+              "correct": 2,
+              "why": [
+                "« Une navette » is a shuttle bus.",
+                "« Un covoiturage » is a car-share.",
+                ""
+              ],
+              "target": "taxi"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say no: it's too expensive, you're coming on foot.",
+              "bank": [
+                "Non,",
+                "c'est",
+                "trop cher.",
+                "trop chère.",
+                "Je viens",
+                "à pied.",
+                "en pied.",
+                "Oui,"
+              ],
+              "accepted": [
+                [
+                  "Non,",
+                  "c'est",
+                  "trop cher.",
+                  "Je viens",
+                  "à pied."
+                ]
+              ],
+              "model": "Non, c'est trop cher. Je viens à pied."
+            }
+          ],
+          "followUp": "D'accord, à tout à l'heure !",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_another_s02",
+          "place": "Dans la rue · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "The metro is on strike. Ask a man in the street, who says vous to you, the way to the shuttle for Bellecour.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "Salut, la navette, c'est où ?",
+                "Pardon, monsieur, la navette pour Bellecour, c'est par où ?",
+                "Dis, tu sais où est la navette ?"
+              ],
+              "correct": 1,
+              "why": [
+                "Good French, but « salut » is for friends.",
+                "",
+                "Good French, but « dis » and « tu » are for friends. Say vous to a stranger."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_11_another_d05",
+          "place": "Au métro",
+          "cue": "Clarify: there's a strike. A metro employee, a woman, says vous to you. She talks fast.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Employée",
+              "voice": "female",
+              "text": "La navette part toutes les dix minutes, devant le café."
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say sorry, ask her (vous) to repeat, and check: in front of the café?",
+              "bank": [
+                "Pardon,",
+                "vous pouvez répéter ?",
+                "Devant",
+                "le café ?",
+                "tu peux répéter ?",
+                "Derrière",
+                "la gare ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon,",
+                  "vous pouvez répéter ?",
+                  "Devant",
+                  "le café ?"
+                ],
+                [
+                  "Devant",
+                  "le café ?",
+                  "Pardon,",
+                  "vous pouvez répéter ?"
+                ]
+              ],
+              "model": "Pardon, vous pouvez répéter ? Devant le café ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « navette » mean here?",
+              "choices": [
+                "train",
+                "taxi",
+                "shuttle bus"
+              ],
+              "correct": 2,
+              "why": [
+                "A train is « un train ».",
+                "A taxi is « un taxi ».",
+                ""
+              ],
+              "target": "navette"
+            }
+          ],
+          "followUp": "Oui, devant le café. Toutes les dix minutes.",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_another_d06",
+          "place": "Les copains · groupe",
+          "cue": "Théo's group chat « Les copains ». Everyone says tu. You're all at the station, and the metro is on strike.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Pas de métro ! On prend un taxi ensemble ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui ! En ___, on prend un café ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "attendu",
+                "attendant",
+                "attendre"
+              ],
+              "correct": 1,
+              "why": [
+                "« Attendu » is a past participle; the phrase is « en attendant ».",
+                "",
+                "After « en », use the -ant form: « en attendant »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo suggest?",
+              "choices": [
+                "Walking together",
+                "Sharing a taxi"
+              ],
+              "correct": 1,
+              "miss": "Reread: « on prend un taxi ensemble ? »"
+            }
+          ],
+          "followUp": "Bonne idée ! Le taxi arrive dans dix minutes.",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_another_s03",
+          "place": "Texto · Léa · phrase seule",
+          "standalone": "Corriger",
+          "cue": "Text Léa, your flatmate (tu): you're getting to Bellecour during the metro strike.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Un taxi, c'est trop cher, alors je prends le navette pour Bellecour.",
+              "error": {
+                "word": "le",
+                "fix": "la",
+                "choices": [
+                  "la",
+                  "les",
+                  "le"
+                ],
+                "why": "« Navette » is feminine: « la navette »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_11_another_d07",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you. The metro is on strike.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Navette en retard. En attendant, je suis au café."
+            },
+            {
+              "speaker": "learner",
+              "text": "J'arrive ! On prend ___ taxi, alors ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « en attendant » mean here?",
+              "choices": [
+                "instead",
+                "in the meantime",
+                "late"
+              ],
+              "correct": 1,
+              "why": [
+                "« À la place » means instead.",
+                "",
+                "« En retard » means late."
+              ],
+              "target": "en attendant"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "une",
+                "des",
+                "un"
+              ],
+              "correct": 2,
+              "why": [
+                "« Taxi » is masculine: « un taxi ».",
+                "« Des » is plural; you take one taxi.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Bonne idée, je t'attends !",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_another_d08",
+          "place": "Appel · Karim",
+          "cue": "Karim, the barista at your café, calls you. He says tu to you. There's a strike.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Pas de métro ? Tu viens comment au café ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say: by shuttle. It arrives in ten minutes.",
+              "bank": [
+                "En navette.",
+                "À navette.",
+                "Elle arrive",
+                "Il arrive",
+                "dans dix minutes.",
+                "dans dix minute."
+              ],
+              "accepted": [
+                [
+                  "En navette.",
+                  "Elle arrive",
+                  "dans dix minutes."
+                ]
+              ],
+              "model": "En navette. Elle arrive dans dix minutes."
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Karim want to know?",
+              "choices": [
+                "When you're arriving at the café",
+                "How you're getting to the café"
+              ],
+              "correct": 1,
+              "miss": "Reread: « tu viens comment au café ? »"
+            }
+          ],
+          "followUp": "Super, ton café t'attend !",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_another_s04",
+          "place": "Sur le palier · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You told Léa, your flatmate (tu), what to do during the strike. Now M. Ferrand, your neighbour, asks. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Léa, la navette arrive dans dix minutes : en attendant, prends un café !",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say the same to him, with vous.",
+              "bank": [
+                "Monsieur,",
+                "la navette",
+                "arrive",
+                "dans dix minutes :",
+                "en attendant,",
+                "prenez",
+                "un café !",
+                "prends",
+                "Léa,",
+                "Théo,"
+              ],
+              "accepted": [
+                [
+                  "Monsieur,",
+                  "la navette",
+                  "arrive",
+                  "dans dix minutes :",
+                  "en attendant,",
+                  "prenez",
+                  "un café !"
+                ]
+              ],
+              "model": "Monsieur, la navette arrive dans dix minutes : en attendant, prenez un café !"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_11_another_d09",
+          "place": "Dans la rue",
+          "cue": "There's a strike. A taxi driver says vous to you. You want to go to Bellecour.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Chauffeur",
+              "text": "Bellecour ? C'est vingt euros, madame."
+            },
+            {
+              "speaker": "learner",
+              "text": "Ah, c'est trop ___ ! Je prends la navette."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "How much is the taxi to Bellecour?",
+              "choices": [
+                "Twenty euros",
+                "Ten euros"
+              ],
+              "correct": 0,
+              "miss": "Reread: « c'est vingt euros »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "chère",
+                "cher",
+                "chers"
+              ],
+              "correct": 1,
+              "why": [
+                "After « c'est », use the masculine: « c'est trop cher ».",
+                "",
+                "« Chers » is plural; after « c'est », use « cher »."
+              ]
+            }
+          ],
+          "followUp": "Pas de problème, madame.",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_another_d10",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. She says tu to you. There's a strike and you're late.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "T'es où ? On t'attend !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès say?",
+              "choices": [
+                "They're leaving without you",
+                "They're waiting for you"
+              ],
+              "correct": 1,
+              "miss": "Reread: « on t'attend »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Say: in a taxi, you're on your way!",
+              "bank": [
+                "Dans",
+                "un taxi,",
+                "une taxi,",
+                "j'arrive !",
+                "j'attends !",
+                "Sur"
+              ],
+              "accepted": [
+                [
+                  "Dans",
+                  "un taxi,",
+                  "j'arrive !"
+                ]
+              ],
+              "model": "Dans un taxi, j'arrive !"
+            }
+          ],
+          "followUp": "Top, à tout de suite !",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_another_s05",
+          "place": "Texto · Léa · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Léa, your flatmate, says tu to you. Which French words mean “in the meantime”?",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "La navette arrive dans dix minutes, ___, je prends un café."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "in the meantime",
+              "choices": [
+                "à la place",
+                "en attendant",
+                "en retard"
+              ],
+              "correct": 1,
+              "why": [
+                "« À la place » means instead.",
+                "",
+                "« En retard » means late."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_11_work",
+      "title": "Prévenir le bureau",
+      "note": "Telling work you'll be late. « Prévenir » is to let someone know in advance: « je préviens le bureau », « tu peux me prévenir ? ». « La réunion » is a meeting. On strike days many French offices switch to « télétravail »: « je suis en télétravail » (I'm working from home). Robin's manager, « la responsable », gets vous.",
+      "items": [
+        {
+          "id": "sit_11_work_d01",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. She says tu to you. There's a strike, and you're stuck on the way to work.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Tu es en retard ? Il faut prévenir !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès say?",
+              "choices": [
+                "You have to hurry",
+                "You have to let them know"
+              ],
+              "correct": 1,
+              "miss": "Reread: « il faut prévenir »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes: you're calling the office right away.",
+              "bank": [
+                "Oui,",
+                "j'appelle",
+                "le bureau tout de suite.",
+                "la bureau tout de suite.",
+                "Non,",
+                "j'attends"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "j'appelle",
+                  "le bureau tout de suite."
+                ]
+              ],
+              "model": "Oui, j'appelle le bureau tout de suite."
+            }
+          ],
+          "followUp": "Bonne idée. À tout à l'heure !",
+          "newWords": [
+            "prévenir"
+          ]
+        },
+        {
+          "id": "sit_11_work_d02",
+          "place": "Appel · Inès",
+          "cue": "Inès, your colleague, calls you. She says tu to you. You're stuck in the strike.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "La réunion est à huit heures. Tu arrives ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Désolée, je ___ en retard."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "When is the meeting?",
+              "choices": [
+                "At eight",
+                "At ten"
+              ],
+              "correct": 0,
+              "miss": "Reread: « la réunion est à huit heures »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "seras",
+                "serai",
+                "sera"
+              ],
+              "correct": 1,
+              "why": [
+                "« Seras » goes with tu; with « je », it's « serai ».",
+                "",
+                "« Sera » goes with il or elle; with « je », it's « serai »."
+              ]
+            }
+          ],
+          "followUp": "Pas grave, je préviens la responsable.",
+          "newWords": [
+            "réunion"
+          ]
+        },
+        {
+          "id": "sit_11_work_s01",
+          "place": "Texto · Inès · phrase seule",
+          "standalone": "Construire",
+          "cue": "Text Inès, your colleague (tu). You're a woman, and the strike has left you stuck.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Tell her: there's a strike, you're stuck. Can she let the office know?",
+              "bank": [
+                "Il y a",
+                "grève,",
+                "je suis",
+                "bloquée,",
+                "tu peux",
+                "prévenir",
+                "le bureau ?",
+                "bloqué,",
+                "vous pouvez",
+                "prévenu"
+              ],
+              "accepted": [
+                [
+                  "Il y a",
+                  "grève,",
+                  "je suis",
+                  "bloquée,",
+                  "tu peux",
+                  "prévenir",
+                  "le bureau ?"
+                ]
+              ],
+              "model": "Il y a grève, je suis bloquée, tu peux prévenir le bureau ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_11_work_d03",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. She says tu to you. There's a strike.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Pas de métro ? Reste en télétravail !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Bonne idée, je travaille ___ la maison."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "au",
+                "à",
+                "en"
+              ],
+              "correct": 1,
+              "why": [
+                "« Au » is « à + le », but « maison » is feminine: « à la maison ».",
+                "",
+                "You say « à la maison », not « en la maison »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès suggest?",
+              "choices": [
+                "Taking a taxi",
+                "Working from home"
+              ],
+              "correct": 1,
+              "miss": "Reread: « reste en télétravail »."
+            }
+          ],
+          "followUp": "Top, à demain au bureau !",
+          "newWords": [
+            "en télétravail"
+          ]
+        },
+        {
+          "id": "sit_11_work_d04",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you. There's a strike, and you're late for work.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Il faut prévenir ton bureau, non ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « prévenir » mean here?",
+              "choices": [
+                "to come back",
+                "to let know",
+                "to stay"
+              ],
+              "correct": 1,
+              "why": [
+                "« Revenir » means to come back.",
+                "",
+                "« Rester » means to stay."
+              ],
+              "target": "prévenir"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes: you're calling Inès right away.",
+              "bank": [
+                "Oui,",
+                "j'appelle",
+                "Inès tout de suite.",
+                "Léa tout de suite.",
+                "Non,",
+                "j'attends"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "j'appelle",
+                  "Inès tout de suite."
+                ]
+              ],
+              "model": "Oui, j'appelle Inès tout de suite."
+            }
+          ],
+          "followUp": "D'accord ! Moi, je reste à la maison.",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_work_s02",
+          "place": "Texto · responsable · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "Your manager, a woman, says vous to you. Text her: because of the strike, you're working from home today.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "Salut ! Je suis en télétravail, t'as vu ?",
+                "En télétravail aujourd'hui, top !",
+                "Bonjour, avec la grève, je suis en télétravail aujourd'hui."
+              ],
+              "correct": 2,
+              "why": [
+                "Good French, but « salut » and « t'as vu » are for friends.",
+                "Good French, but too casual for your manager.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_11_work_d05",
+          "place": "Appel · Inès",
+          "cue": "Clarify: Inès, your colleague, calls you on a bad line. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "La réunion, c'est à dix heures, pas à huit !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say sorry, you can't hear her well, and check: at ten?",
+              "bank": [
+                "Pardon,",
+                "je t'entends",
+                "mal.",
+                "bien.",
+                "À dix heures ?",
+                "À huit heures ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon,",
+                  "je t'entends",
+                  "mal.",
+                  "À dix heures ?"
+                ],
+                [
+                  "À dix heures ?",
+                  "Pardon,",
+                  "je t'entends",
+                  "mal."
+                ]
+              ],
+              "model": "Pardon, je t'entends mal. À dix heures ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « réunion » mean here?",
+              "choices": [
+                "booking",
+                "meeting",
+                "strike"
+              ],
+              "correct": 1,
+              "why": [
+                "« Réservation » means booking.",
+                "",
+                "« Grève » means strike."
+              ],
+              "target": "réunion"
+            }
+          ],
+          "followUp": "Oui, à dix heures ! Pas à huit.",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_work_d06",
+          "place": "Texto · responsable",
+          "cue": "Your manager, a woman, texts you. She says vous to you. There's a strike.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Responsable",
+              "voice": "female",
+              "text": "Merci de prévenir si vous êtes en retard."
+            },
+            {
+              "speaker": "learner",
+              "text": "Bien sûr. Je suis ___ télétravail aujourd'hui."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "en",
+                "au",
+                "à"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "You say « en télétravail », not « au télétravail ».",
+                "You say « en télétravail », not « à télétravail »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does your manager ask?",
+              "choices": [
+                "To come in early",
+                "To let her know if you're late"
+              ],
+              "correct": 1,
+              "miss": "Reread: « merci de prévenir si vous êtes en retard »."
+            }
+          ],
+          "followUp": "Très bien, merci. Bonne journée !",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_work_s03",
+          "place": "Texto · Inès · phrase seule",
+          "standalone": "Corriger",
+          "cue": "Text Inès, your colleague (tu). You're working from home today.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Je suis en télétravail aujourd'hui, tu peux prévenu le bureau ?",
+              "error": {
+                "word": "prévenu",
+                "fix": "prévenir",
+                "choices": [
+                  "préviens",
+                  "prévenu",
+                  "prévenir"
+                ],
+                "why": "After « tu peux », use the infinitive: « prévenir »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_11_work_d07",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. She says tu to you. The meeting is today.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Tu es en télétravail ? Et la réunion ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Pas de souci, je ___ fais de chez moi."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « en télétravail » mean here?",
+              "choices": [
+                "on holiday",
+                "working from home",
+                "on strike"
+              ],
+              "correct": 1,
+              "why": [
+                "Not on holiday: « télétravail » is remote work.",
+                "",
+                "« En grève » means on strike."
+              ],
+              "target": "en télétravail"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "le",
+                "lui",
+                "la"
+              ],
+              "correct": 2,
+              "why": [
+                "« Réunion » is feminine, so the pronoun is « la ».",
+                "« Lui » means to him or to her; « faire » takes « la » here.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Parfait ! À dix heures, alors.",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_work_d08",
+          "place": "Texto · Karim",
+          "cue": "Karim, the barista at your café, texts you. He says tu to you. There's a strike.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Tu passes au café avant le bureau ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say no: you're working from home today.",
+              "bank": [
+                "Non,",
+                "je suis",
+                "en télétravail aujourd'hui.",
+                "au télétravail aujourd'hui.",
+                "Oui,",
+                "tu es"
+              ],
+              "accepted": [
+                [
+                  "Non,",
+                  "je suis",
+                  "en télétravail aujourd'hui."
+                ]
+              ],
+              "model": "Non, je suis en télétravail aujourd'hui."
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Karim ask?",
+              "choices": [
+                "If you'll drop by the café before work",
+                "If you'll drop by the café after work"
+              ],
+              "correct": 0,
+              "miss": "Reread: « avant le bureau »."
+            }
+          ],
+          "followUp": "Dommage ! À demain, alors.",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_work_s04",
+          "place": "Texto · Inès · phrase seule",
+          "standalone": "Transformer",
+          "cue": "Text Inès, your colleague (tu). Say what you're going to do: use « je vais ».",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Je préviens le bureau et je reste en télétravail aujourd'hui.",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say it with « je vais » + the infinitive.",
+              "bank": [
+                "Je vais",
+                "prévenir",
+                "le bureau",
+                "et rester",
+                "en télétravail aujourd'hui.",
+                "préviens",
+                "et reste",
+                "prévenu"
+              ],
+              "accepted": [
+                [
+                  "Je vais",
+                  "prévenir",
+                  "le bureau",
+                  "et rester",
+                  "en télétravail aujourd'hui."
+                ]
+              ],
+              "model": "Je vais prévenir le bureau et rester en télétravail aujourd'hui."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_11_work_d09",
+          "place": "Appel · responsable",
+          "cue": "Your manager, a woman, calls you. She says vous to you. There's a strike.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Responsable",
+              "voice": "female",
+              "text": "La réunion est à dix heures. Vous êtes en télétravail ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, ___ la grève."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does your manager ask?",
+              "choices": [
+                "If you're on the train",
+                "If you're working from home"
+              ],
+              "correct": 1,
+              "miss": "Reread: « vous êtes en télétravail ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "avec",
+                "sans",
+                "chez"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Sans » means without; the strike is why you're at home.",
+                "« Chez » goes with a person or a home: « chez moi »."
+              ]
+            }
+          ],
+          "followUp": "Très bien. À dix heures, alors.",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_work_d10",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. She says tu to you. The strike may go on tomorrow.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Tu peux me prévenir pour la réunion de demain ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès ask?",
+              "choices": [
+                "To come to tomorrow's meeting",
+                "To let her know about tomorrow's meeting"
+              ],
+              "correct": 1,
+              "miss": "Reread: « tu peux me prévenir pour la réunion de demain ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, of course: you'll let her know.",
+              "bank": [
+                "Oui,",
+                "bien sûr,",
+                "je te",
+                "préviens.",
+                "je vous",
+                "prévenu.",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "bien sûr,",
+                  "je te",
+                  "préviens."
+                ]
+              ],
+              "model": "Oui, bien sûr, je te préviens."
+            }
+          ],
+          "followUp": "Merci, t'es top !",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_work_s05",
+          "place": "Texto · Inès · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Inès, your colleague, says tu to you. Which French word means “meeting”?",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Avec la grève, je suis en télétravail pour la ___ de dix heures."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "meeting",
+              "choices": [
+                "réservation",
+                "grève",
+                "réunion"
+              ],
+              "correct": 2,
+              "why": [
+                "« Réservation » means booking.",
+                "« Grève » means strike.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_11_arrive",
+      "title": "Enfin arrivée",
+      "note": "The end of a strike day: « enfin » (at last), « heureusement » (fortunately) and the sigh « ouf ! » (phew). Robin is a woman: « je suis arrivée », « je suis rentrée », with -e. « Malheureusement » is the opposite of « heureusement ».",
+      "items": [
+        {
+          "id": "sit_11_arrive_d01",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you. There's a strike, and you left for work early.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Alors, t'es enfin au bureau ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa ask?",
+              "choices": [
+                "If you're still at home",
+                "If you're finally at the office"
+              ],
+              "correct": 1,
+              "miss": "Reread: « t'es enfin au bureau ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes: after two hours on the bus!",
+              "bank": [
+                "Oui,",
+                "après",
+                "deux heures",
+                "de bus !",
+                "du bus !",
+                "avant",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "après",
+                  "deux heures",
+                  "de bus !"
+                ]
+              ],
+              "model": "Oui, après deux heures de bus !"
+            }
+          ],
+          "followUp": "Deux heures ? Oh non !",
+          "newWords": [
+            "enfin"
+          ]
+        },
+        {
+          "id": "sit_11_arrive_d02",
+          "place": "Au bureau",
+          "cue": "You've just arrived at the office after the strike chaos. Inès, your colleague, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Tu es là ! Heureusement, la réunion est à dix heures."
+            },
+            {
+              "speaker": "learner",
+              "text": "Super ! Je ___ un café, alors."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What's lucky, according to Inès?",
+              "choices": [
+                "The meeting is at ten",
+                "The metro is running"
+              ],
+              "correct": 0,
+              "miss": "Reread: « heureusement, la réunion est à dix heures »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "prend",
+                "prends",
+                "prendre"
+              ],
+              "correct": 1,
+              "why": [
+                "« Prend » goes with il or elle; with « je », it's « prends ».",
+                "",
+                "After « je », conjugate the verb: « je prends »."
+              ]
+            }
+          ],
+          "followUp": "Bonne idée. Moi aussi !",
+          "newWords": [
+            "heureusement"
+          ]
+        },
+        {
+          "id": "sit_11_arrive_s01",
+          "place": "Texto · Léa · phrase seule",
+          "standalone": "Construire",
+          "cue": "Léa, your flatmate, texts you during the strike. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Alors, t'es où ? Toujours dans le bus avec la grève ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Tell her: you're finally at the office, and fortunately the meeting is at ten!",
+              "bank": [
+                "Je suis",
+                "enfin",
+                "au bureau,",
+                "et",
+                "heureusement,",
+                "la réunion",
+                "est à dix heures !",
+                "malheureusement,",
+                "à la bureau,",
+                "est à huit heures !"
+              ],
+              "accepted": [
+                [
+                  "Je suis",
+                  "enfin",
+                  "au bureau,",
+                  "et",
+                  "heureusement,",
+                  "la réunion",
+                  "est à dix heures !"
+                ]
+              ],
+              "model": "Je suis enfin au bureau, et heureusement, la réunion est à dix heures !"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_11_arrive_d03",
+          "place": "Sur le palier",
+          "cue": "It's late in the evening. M. Ferrand, your neighbour, meets you outside your door. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Vous rentrez tard, madame ! La grève ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui ! Ouf, je suis enfin ___ moi."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "à",
+                "dans",
+                "chez"
+              ],
+              "correct": 2,
+              "why": [
+                "« À moi » means mine; at home is « chez moi ».",
+                "« Dans moi » is not French; at home is « chez moi ».",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does M. Ferrand say?",
+              "choices": [
+                "You're leaving early",
+                "You're coming home late"
+              ],
+              "correct": 1,
+              "miss": "Reread: « vous rentrez tard »."
+            }
+          ],
+          "followUp": "Quelle journée ! Bonne soirée, madame.",
+          "newWords": [
+            "ouf"
+          ]
+        },
+        {
+          "id": "sit_11_arrive_d04",
+          "place": "Les copains · groupe",
+          "cue": "Théo's group chat « Les copains ». Everyone says tu; « vous » = you all. It's the evening after the strike.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Tout le monde est enfin à la maison ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « enfin » mean here?",
+              "choices": [
+                "still",
+                "at last",
+                "fortunately"
+              ],
+              "correct": 1,
+              "why": [
+                "« Encore » means still.",
+                "",
+                "« Heureusement » means fortunately."
+              ],
+              "target": "enfin"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes: phew, you're home.",
+              "bank": [
+                "Oui !",
+                "Ouf,",
+                "je suis",
+                "à la maison.",
+                "au maison.",
+                "Non !"
+              ],
+              "accepted": [
+                [
+                  "Oui !",
+                  "Ouf,",
+                  "je suis",
+                  "à la maison."
+                ]
+              ],
+              "model": "Oui ! Ouf, je suis à la maison."
+            }
+          ],
+          "followUp": "Top ! Bonne soirée, tout le monde.",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_arrive_s02",
+          "place": "Sur le palier · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "It's the evening after the strike. M. Ferrand, your neighbour, says vous to you and asks if you're home at last. You're a woman.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "Oui, monsieur, je suis enfin arrivée, heureusement !",
+                "Ouf, t'as vu, je suis enfin là !",
+                "Enfin ! Bref, salut !"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "Good French, but « t'as vu » is for friends.",
+                "Good French, but « bref, salut » is too casual for your neighbour."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_11_arrive_d05",
+          "place": "Au café",
+          "cue": "Clarify: you're at your café, and it's noisy. Karim, the barista, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Heureusement, le métro marche ce soir !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say sorry, and ask him (tu) to repeat.",
+              "bank": [
+                "Pardon,",
+                "tu peux",
+                "répéter ?",
+                "vous pouvez",
+                "tu peut"
+              ],
+              "accepted": [
+                [
+                  "Pardon,",
+                  "tu peux",
+                  "répéter ?"
+                ]
+              ],
+              "model": "Pardon, tu peux répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « heureusement » mean here?",
+              "choices": [
+                "unfortunately",
+                "fortunately",
+                "finally"
+              ],
+              "correct": 1,
+              "why": [
+                "« Malheureusement » means unfortunately.",
+                "",
+                "« Enfin » means finally."
+              ],
+              "target": "heureusement"
+            }
+          ],
+          "followUp": "Le métro ! Il marche ce soir, heureusement !",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_arrive_d06",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you. It's the evening after the strike, and you're still at work.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Je suis enfin à la maison !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Ouf ! Moi, je suis ___ au bureau."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "aussi",
+                "encore",
+                "non plus"
+              ],
+              "correct": 1,
+              "why": [
+                "« Aussi » means too, but Léa is at home, not at the office.",
+                "",
+                "« Non plus » goes with a negative: « moi non plus »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "Where is Léa?",
+              "choices": [
+                "At home",
+                "At the office"
+              ],
+              "correct": 0,
+              "miss": "Reread: « je suis enfin à la maison »."
+            }
+          ],
+          "followUp": "D'accord. Je fais le dîner !",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_arrive_s03",
+          "place": "Texto · Inès · phrase seule",
+          "standalone": "Corriger",
+          "cue": "Text Inès, your colleague (tu). You're a woman.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Ouf, enfin arrivé au bureau ! Et heureusement, la réunion est à dix heures.",
+              "error": {
+                "word": "arrivé",
+                "fix": "arrivée",
+                "choices": [
+                  "arrivée",
+                  "arrivé",
+                  "arrive"
+                ],
+                "why": "You're a woman: « arrivée », with -e."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_11_arrive_d07",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. She says tu to you. She's at the office; you're on your way in.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Ouf ! Tu es enfin là ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, ___, le bus est arrivé !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « ouf » mean here?",
+              "choices": [
+                "oops",
+                "phew",
+                "wow"
+              ],
+              "correct": 1,
+              "why": [
+                "Not oops: « ouf » is a sigh of relief.",
+                "",
+                "Not wow: « ouf » is a sigh of relief."
+              ],
+              "target": "ouf"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "malheureusement",
+                "encore",
+                "heureusement"
+              ],
+              "correct": 2,
+              "why": [
+                "« Malheureusement » means unfortunately, but the bus came: good news.",
+                "« Encore » means still or again; it doesn't fit here.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Top ! La réunion est à dix heures.",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_arrive_d08",
+          "place": "WhatsApp · Mme Dumas",
+          "cue": "Mme Dumas, your landlady, writes to you on WhatsApp in the evening. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Mme Dumas",
+              "text": "Vous êtes bien rentrée, avec la grève ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say yes, at last, and thank her (madame).",
+              "bank": [
+                "Oui,",
+                "enfin !",
+                "Merci,",
+                "madame.",
+                "monsieur.",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "enfin !",
+                  "Merci,",
+                  "madame."
+                ]
+              ],
+              "model": "Oui, enfin ! Merci, madame."
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Mme Dumas want to know?",
+              "choices": [
+                "If you got home all right",
+                "If you're going out tonight"
+              ],
+              "correct": 0,
+              "miss": "Reread: « vous êtes bien rentrée ? »"
+            }
+          ],
+          "followUp": "Parfait. Bonne soirée !",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_arrive_s04",
+          "place": "Texto · Léa · phrase seule",
+          "standalone": "Transformer",
+          "cue": "Text Léa, your flatmate (tu). You're a woman. Put your message in the past.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "J'arrive enfin à la maison, heureusement, après trois heures de bus !",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say it in the passé composé: you've arrived.",
+              "bank": [
+                "Je suis",
+                "enfin",
+                "arrivée",
+                "à la maison,",
+                "heureusement,",
+                "après trois heures de bus !",
+                "arrivé",
+                "J'ai",
+                "arrive"
+              ],
+              "accepted": [
+                [
+                  "Je suis",
+                  "enfin",
+                  "arrivée",
+                  "à la maison,",
+                  "heureusement,",
+                  "après trois heures de bus !"
+                ]
+              ],
+              "model": "Je suis enfin arrivée à la maison, heureusement, après trois heures de bus !"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_11_arrive_d09",
+          "place": "Texto · Karim",
+          "cue": "Karim, the barista at your café, texts you. He says tu to you. The strike is over.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Ouf, le métro marche demain !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Super ! ___, la grève est finie."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Karim say?",
+              "choices": [
+                "The metro is on strike tomorrow",
+                "The metro is running tomorrow"
+              ],
+              "correct": 1,
+              "miss": "Reread: « le métro marche demain »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "Malheureusement",
+                "Heureusement",
+                "Dommage"
+              ],
+              "correct": 1,
+              "why": [
+                "« Malheureusement » means unfortunately, but the end of the strike is good news.",
+                "",
+                "« Dommage » means what a shame, but the end of the strike is good news."
+              ]
+            }
+          ],
+          "followUp": "Oui ! À demain, au café ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_arrive_d10",
+          "place": "Les copains · groupe",
+          "cue": "Théo's group chat « Les copains ». Everyone says tu. It's late, after the strike.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Robin, t'es enfin chez toi ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo ask?",
+              "choices": [
+                "If you're coming tomorrow",
+                "If you're home at last"
+              ],
+              "correct": 1,
+              "miss": "Reread: « t'es enfin chez toi ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, phew, and see you tomorrow!",
+              "bank": [
+                "Oui !",
+                "Ouf,",
+                "à demain !",
+                "Non !",
+                "à hier !"
+              ],
+              "accepted": [
+                [
+                  "Oui !",
+                  "Ouf,",
+                  "à demain !"
+                ]
+              ],
+              "model": "Oui ! Ouf, à demain !"
+            }
+          ],
+          "followUp": "Top ! À demain, Robin.",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_arrive_s05",
+          "place": "Texto · Léa · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Léa, your flatmate, says tu to you. Which French word means “fortunately”?",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Le bus est en retard, mais ___, Théo a une place dans son covoiturage."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "fortunately",
+              "choices": [
+                "malheureusement",
+                "heureusement",
+                "dommage"
+              ],
+              "correct": 1,
+              "why": [
+                "« Malheureusement » means unfortunately.",
+                "",
+                "« Dommage » means what a shame."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    }
+  ]
+}

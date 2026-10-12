@@ -1,0 +1,2697 @@
+{
+  "elements": [
+    {
+      "id": "sit_15_parcel",
+      "title": "Le colis n'arrive pas",
+      "note": "Your parcel says « livré » (delivered), but it never came. You call « le service client » (customer service) with « le numéro de suivi » (the tracking number). The adviser says vous; friends say tu. « Je vous le donne » : « vous » comes before « le ».",
+      "items": [
+        {
+          "id": "sit_15_parcel_d01",
+          "place": "Texto · Théo",
+          "cue": "Théo, your friend, texts you. He says tu to you. You're waiting for a parcel.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Alors, ton colis est livré ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo want to know?",
+              "choices": [
+                "If you sent your parcel",
+                "If your parcel has been delivered"
+              ],
+              "correct": 1,
+              "miss": "Reread: « ton colis est livré ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say no, still not.",
+              "bank": [
+                "Non,",
+                "toujours",
+                "pas !",
+                "Oui,",
+                "jamais",
+                "déjà !"
+              ],
+              "accepted": [
+                [
+                  "Non,",
+                  "toujours",
+                  "pas !"
+                ]
+              ],
+              "model": "Non, toujours pas !"
+            }
+          ],
+          "followUp": "Ah, dommage ! Il arrive bientôt, alors.",
+          "newWords": [
+            "livré"
+          ]
+        },
+        {
+          "id": "sit_15_parcel_d02",
+          "place": "Appel · service client",
+          "cue": "You call customer service about your parcel. The adviser says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Conseillère",
+              "voice": "female",
+              "text": "Vous avez le numéro de suivi, madame ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, je ___ donne."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the adviser ask for?",
+              "choices": [
+                "The tracking number",
+                "Your phone number"
+              ],
+              "correct": 0,
+              "miss": "Reread: « le numéro de suivi »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "le vous",
+                "vous la",
+                "vous le"
+              ],
+              "correct": 2,
+              "why": [
+                "Wrong order: « vous » comes before « le »: « je vous le donne ».",
+                "« Le numéro » is masculine: « le », not « la ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Merci. Un instant, je regarde.",
+          "newWords": [
+            "suivi"
+          ]
+        },
+        {
+          "id": "sit_15_parcel_s01",
+          "place": "Appel · service client · phrase seule",
+          "standalone": "Construire",
+          "cue": "You call customer service about your parcel. The adviser says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Conseillère",
+              "voice": "female",
+              "text": "Bonjour, madame ! Je peux vous aider ? C'est pour quoi ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say hello: your parcel hasn't been delivered, here's the tracking number.",
+              "bank": [
+                "Bonjour,",
+                "mon colis",
+                "n'est pas",
+                "livré,",
+                "voici",
+                "le numéro",
+                "de suivi.",
+                "livrée,",
+                "ma colis",
+                "est pas"
+              ],
+              "accepted": [
+                [
+                  "Bonjour,",
+                  "mon colis",
+                  "n'est pas",
+                  "livré,",
+                  "voici",
+                  "le numéro",
+                  "de suivi."
+                ]
+              ],
+              "model": "Bonjour, mon colis n'est pas livré, voici le numéro de suivi."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_15_parcel_d03",
+          "place": "À l'appart",
+          "cue": "Léa, your flatmate, is at home with you. She says tu to you. Your parcel hasn't come.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Ton colis ? Tu appelles le service client ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, je les ___ tout de suite."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "appeler",
+                "appelle",
+                "appelles"
+              ],
+              "correct": 1,
+              "why": [
+                "« Appeler » is the infinitive. With « je »: « j'appelle », here « je les appelle ».",
+                "",
+                "« Appelles » is for « tu ». With « je »: « appelle »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa suggest?",
+              "choices": [
+                "Waiting for the delivery driver",
+                "Calling customer service"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Tu appelles le service client ? »"
+            }
+          ],
+          "followUp": "Bonne idée. Bon, moi, je vais au bureau.",
+          "followUpBy": "Léa",
+          "newWords": [
+            "service client"
+          ]
+        },
+        {
+          "id": "sit_15_parcel_d04",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Le livreur dit que ton colis est livré ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « livré » mean here?",
+              "choices": [
+                "delivered",
+                "lost",
+                "sent back"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "No: lost is « perdu ».",
+                "No: « livré » means it reached your address."
+              ],
+              "target": "livré"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, but you don't have it.",
+              "bank": [
+                "Oui,",
+                "mais",
+                "je",
+                "ne",
+                "l'ai",
+                "pas !",
+                "Non,",
+                "la",
+                "ai"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "mais",
+                  "je",
+                  "ne",
+                  "l'ai",
+                  "pas !"
+                ]
+              ],
+              "model": "Oui, mais je ne l'ai pas !"
+            }
+          ],
+          "followUp": "Ah bon ? Appelle le service client, alors !",
+          "followUpBy": "Inès",
+          "newWords": []
+        },
+        {
+          "id": "sit_15_parcel_s02",
+          "place": "Appel · service client · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "You call customer service. The adviser says vous to you. Your parcel is marked as delivered.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "Salut ! Mon colis est livré, mais il est où ?",
+                "Bonjour, madame, mon colis est livré, mais je ne l'ai pas.",
+                "Ouais, bref, mon colis est livré, mais il est où ?"
+              ],
+              "correct": 1,
+              "why": [
+                "Good French, but « salut » is for friends. The adviser says vous to you.",
+                "",
+                "Good spoken French, but « ouais » and « bref » are for friends."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_15_parcel_d05",
+          "place": "Appel · service client",
+          "cue": "Clarify: you're on the phone with customer service and the line is bad. The adviser says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Conseillère",
+              "voice": "female",
+              "text": "Votre numéro de suivi, s'il vous plaît ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Ask her to repeat, politely.",
+              "bank": [
+                "Pardon ?",
+                "Vous pouvez répéter,",
+                "s'il vous plaît ?",
+                "Tu peux répéter,",
+                "s'il te plaît ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon ?",
+                  "Vous pouvez répéter,",
+                  "s'il vous plaît ?"
+                ],
+                [
+                  "Vous pouvez répéter,",
+                  "s'il vous plaît ?"
+                ]
+              ],
+              "model": "Pardon ? Vous pouvez répéter, s'il vous plaît ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « suivi » mean here?",
+              "choices": [
+                "order",
+                "tracking",
+                "customer"
+              ],
+              "correct": 1,
+              "why": [
+                "No: « suivi » is how you follow the parcel, not the order.",
+                "",
+                "No: customer is « client »."
+              ],
+              "target": "suivi"
+            }
+          ],
+          "followUp": "Pardon ! Votre numéro de suivi, madame ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_15_parcel_d06",
+          "place": "Sur le palier",
+          "cue": "M. Ferrand, your neighbour, knocks on your door. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Un colis pour vous ! Le livreur l'a laissé chez moi."
+            },
+            {
+              "speaker": "learner",
+              "text": "Ah, il est ___ chez vous !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "livrer",
+                "livré",
+                "livrée"
+              ],
+              "correct": 1,
+              "why": [
+                "« Livrer » is the infinitive. After « il est », use « livré ».",
+                "",
+                "« Le colis » is masculine: « livré », not « livrée »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "Where was the parcel?",
+              "choices": [
+                "At M. Ferrand's",
+                "With Mme Dumas"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Le livreur l'a laissé chez moi »."
+            }
+          ],
+          "followUp": "Oui. Le voilà, madame. Bonne journée !",
+          "newWords": []
+        },
+        {
+          "id": "sit_15_parcel_s03",
+          "place": "Texto · Léa · phrase seule",
+          "standalone": "Corriger",
+          "cue": "You text Léa, your flatmate. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Je vais appeler le service client, mon colis n'est pas livrée.",
+              "error": {
+                "word": "livrée",
+                "fix": "livré",
+                "choices": [
+                  "livrer",
+                  "livré",
+                  "livreur"
+                ],
+                "why": "« Mon colis » is masculine singular: « livré »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_15_parcel_d07",
+          "place": "Appel · service client",
+          "cue": "You call customer service. The adviser says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Conseillère",
+              "voice": "female",
+              "text": "Service client, bonjour ! Je vous écoute."
+            },
+            {
+              "speaker": "learner",
+              "text": "Bonjour, j'ai un problème ___ mon colis."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « service client » mean here?",
+              "choices": [
+                "delivery service",
+                "customer service",
+                "post office"
+              ],
+              "correct": 1,
+              "why": [
+                "No: the delivery is the « livreur »'s job.",
+                "",
+                "No: « service client » helps customers."
+              ],
+              "target": "service client"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "de",
+                "à",
+                "avec"
+              ],
+              "correct": 2,
+              "why": [
+                "Not French here: a problem with something is « un problème avec ».",
+                "Not French here: say « un problème avec mon colis ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "D'accord. Votre numéro de suivi, madame ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_15_parcel_d08",
+          "place": "Texto · Théo",
+          "cue": "Théo, your friend, texts you. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Le service client t'a répondu ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say yes: the parcel arrives tomorrow.",
+              "bank": [
+                "Oui,",
+                "le colis",
+                "arrive",
+                "demain.",
+                "arrives",
+                "hier.",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "le colis",
+                  "arrive",
+                  "demain."
+                ]
+              ],
+              "model": "Oui, le colis arrive demain."
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What did Théo ask?",
+              "choices": [
+                "If customer service replied",
+                "If the delivery driver came"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Le service client t'a répondu ? »"
+            }
+          ],
+          "followUp": "Top ! Tu me dis demain, alors.",
+          "followUpBy": "Théo",
+          "newWords": []
+        },
+        {
+          "id": "sit_15_parcel_s04",
+          "place": "Texto · Léa · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You text Léa, your flatmate. She says tu to you. It happened yesterday: put it in the past.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Le livreur laisse mon colis chez M. Ferrand, sur le palier.",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it in the passé composé.",
+              "bank": [
+                "Le livreur",
+                "a laissé",
+                "mon colis",
+                "chez M. Ferrand,",
+                "sur le palier.",
+                "a laissée",
+                "est laissé",
+                "laisse"
+              ],
+              "accepted": [
+                [
+                  "Le livreur",
+                  "a laissé",
+                  "mon colis",
+                  "chez M. Ferrand,",
+                  "sur le palier."
+                ]
+              ],
+              "model": "Le livreur a laissé mon colis chez M. Ferrand, sur le palier."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_15_parcel_d09",
+          "place": "Appel · service client",
+          "cue": "You're on the phone with customer service. The adviser says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Conseillère",
+              "voice": "female",
+              "text": "Je regarde le suivi : il est livré depuis hier."
+            },
+            {
+              "speaker": "learner",
+              "text": "Mais je n'ai ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the tracking say?",
+              "choices": [
+                "It's arriving today",
+                "It was delivered yesterday"
+              ],
+              "correct": 1,
+              "miss": "Reread: « il est livré depuis hier »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "jamais",
+                "personne",
+                "rien"
+              ],
+              "correct": 2,
+              "why": [
+                "« Je n'ai jamais » needs more: never what? Say you have nothing: « rien ».",
+                "« Personne » means nobody. You don't have the parcel: nothing, « rien ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "D'accord. Je regarde avec le livreur, madame.",
+          "newWords": []
+        },
+        {
+          "id": "sit_15_parcel_d10",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Alors, le colis ? Il est livré ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa ask about?",
+              "choices": [
+                "The parcel",
+                "The rent"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Alors, le colis ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, at last: it's at M. Ferrand's.",
+              "bank": [
+                "Oui,",
+                "enfin !",
+                "Il est",
+                "chez M. Ferrand.",
+                "Elle est",
+                "chez Mme Dumas.",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "enfin !",
+                  "Il est",
+                  "chez M. Ferrand."
+                ]
+              ],
+              "model": "Oui, enfin ! Il est chez M. Ferrand."
+            }
+          ],
+          "followUp": "Ah, top ! Il est gentil, M. Ferrand.",
+          "followUpBy": "Léa",
+          "newWords": []
+        },
+        {
+          "id": "sit_15_parcel_s05",
+          "place": "Texto · Léa · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Which French words mean “customer service”? You text Léa, your flatmate (tu).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Mon colis n'est pas livré, je vais appeler le ___ tout de suite."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "customer service",
+              "choices": [
+                "quartier",
+                "prix",
+                "service client"
+              ],
+              "correct": 2,
+              "why": [
+                "« Quartier » means neighbourhood.",
+                "« Prix » means price.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_15_wrong",
+      "title": "Ce n'est pas ce que j'ai commandé",
+      "note": "The order is wrong or incomplete: « ce n'est pas ce que j'ai commandé » (that's not what I ordered), « il manque un pull » (a jumper is missing) and « le carton est abîmé » (the box is damaged). With « avoir », « commandé » doesn't agree with you.",
+      "items": [
+        {
+          "id": "sit_15_wrong_d01",
+          "place": "À l'appart",
+          "cue": "Léa, your flatmate, opens your parcel with you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "C'est quoi, ce pull ? Tu as commandé ça ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa ask?",
+              "choices": [
+                "If you like the jumper",
+                "If you ordered the jumper"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Tu as commandé ça ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say no, it's not your jumper.",
+              "bank": [
+                "Non,",
+                "ce n'est pas",
+                "mon pull !",
+                "ma",
+                "pull !",
+                "c'est",
+                "Oui,"
+              ],
+              "accepted": [
+                [
+                  "Non,",
+                  "ce n'est pas",
+                  "mon pull !"
+                ]
+              ],
+              "model": "Non, ce n'est pas mon pull !"
+            }
+          ],
+          "followUp": "Ah ! Il est pour qui, alors ?",
+          "followUpBy": "Léa",
+          "newWords": [
+            "commandé"
+          ]
+        },
+        {
+          "id": "sit_15_wrong_d02",
+          "place": "Appel · service client",
+          "cue": "You call customer service about your order. The adviser says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Conseillère",
+              "voice": "female",
+              "text": "Il manque quelque chose dans le colis, madame ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, il manque ___ chemise."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the adviser ask?",
+              "choices": [
+                "If something is missing from the parcel",
+                "If the parcel is damaged"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Il manque quelque chose dans le colis ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "un",
+                "des",
+                "une"
+              ],
+              "correct": 2,
+              "why": [
+                "« Chemise » is feminine: « une », not « un ».",
+                "« Des » is for several: « des chemises ». Here it's one shirt.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "D'accord. Je suis désolée, madame.",
+          "newWords": [
+            "il manque"
+          ]
+        },
+        {
+          "id": "sit_15_wrong_s01",
+          "place": "Appel · service client · phrase seule",
+          "standalone": "Construire",
+          "cue": "You call customer service about your order. The adviser says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Conseillère",
+              "voice": "female",
+              "text": "Bonjour, madame ! Il y a un problème avec votre colis ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say hello: it's not what you ordered, a jumper is missing.",
+              "bank": [
+                "Bonjour,",
+                "ce n'est pas",
+                "ce que",
+                "j'ai",
+                "commandé,",
+                "il manque",
+                "un pull.",
+                "commandée,",
+                "une pull.",
+                "ce qui"
+              ],
+              "accepted": [
+                [
+                  "Bonjour,",
+                  "ce n'est pas",
+                  "ce que",
+                  "j'ai",
+                  "commandé,",
+                  "il manque",
+                  "un pull."
+                ]
+              ],
+              "model": "Bonjour, ce n'est pas ce que j'ai commandé, il manque un pull."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_15_wrong_d03",
+          "place": "À l'appart",
+          "cue": "You open your parcel with Léa, your flatmate. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Regarde, le carton est abîmé !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, et il manque ___ pantalon !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "la",
+                "le",
+                "les"
+              ],
+              "correct": 1,
+              "why": [
+                "« Pantalon » is masculine: « le », not « la ».",
+                "",
+                "One pair of trousers: « le pantalon », singular."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa notice?",
+              "choices": [
+                "The box is empty",
+                "The box is damaged"
+              ],
+              "correct": 1,
+              "miss": "Reread: « le carton est abîmé »."
+            }
+          ],
+          "followUp": "Oh non ! Tu appelles le service client ?",
+          "followUpBy": "Léa",
+          "newWords": [
+            "carton"
+          ]
+        },
+        {
+          "id": "sit_15_wrong_d04",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Ton colis est arrivé ? Tu as commandé quoi ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « commandé » mean here?",
+              "choices": [
+                "paid",
+                "ordered",
+                "sent back"
+              ],
+              "correct": 1,
+              "why": [
+                "No: paid is « payé ».",
+                "",
+                "No: sent back is « rapporté »."
+              ],
+              "target": "commandé"
+            },
+            {
+              "type": "reply",
+              "prompt": "Answer: a blue shirt.",
+              "bank": [
+                "Une",
+                "chemise",
+                "bleue.",
+                "bleu.",
+                "Un",
+                "pull"
+              ],
+              "accepted": [
+                [
+                  "Une",
+                  "chemise",
+                  "bleue."
+                ]
+              ],
+              "model": "Une chemise bleue."
+            }
+          ],
+          "followUp": "Ah, top ! C'est pour le bureau ?",
+          "followUpBy": "Inès",
+          "newWords": []
+        },
+        {
+          "id": "sit_15_wrong_s02",
+          "place": "Appel · service client · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "You call customer service. The adviser says vous to you. A jumper is missing from your parcel.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "Salut ! Il manque mon pull, t'as vu ?",
+                "Ouais, bref, il manque un pull dans le colis.",
+                "Bonjour, madame, il manque un pull dans mon colis."
+              ],
+              "correct": 2,
+              "why": [
+                "Good spoken French, but « salut » and « t'as » are for friends. The adviser says vous to you.",
+                "Good spoken French, but « ouais » and « bref » are for friends.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_15_wrong_d05",
+          "place": "Appel · service client",
+          "cue": "Clarify: the customer service adviser talks very fast. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Conseillère",
+              "voice": "female",
+              "text": "Alors, il manque quoi dans votre colis, madame ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Ask her to repeat, politely.",
+              "bank": [
+                "Pardon ?",
+                "Vous pouvez répéter,",
+                "s'il vous plaît ?",
+                "Tu peux répéter,",
+                "s'il te plaît ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon ?",
+                  "Vous pouvez répéter,",
+                  "s'il vous plaît ?"
+                ],
+                [
+                  "Vous pouvez répéter,",
+                  "s'il vous plaît ?"
+                ]
+              ],
+              "model": "Pardon ? Vous pouvez répéter, s'il vous plaît ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « il manque » mean here?",
+              "choices": [
+                "… is missing",
+                "… is damaged",
+                "… is late"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "No: damaged is « abîmé ».",
+                "No: late is « en retard »."
+              ],
+              "target": "il manque"
+            }
+          ],
+          "followUp": "Pardon ! Il manque quoi dans le colis ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_15_wrong_d06",
+          "place": "Texto · Théo",
+          "cue": "Théo, your friend, texts you. He says tu to you. You're a woman.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Ton carton est arrivé ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, mais ce n'est pas ce que j'ai ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "commandée",
+                "commander",
+                "commandé"
+              ],
+              "correct": 2,
+              "why": [
+                "With « avoir », the past participle doesn't agree with you: « j'ai commandé ».",
+                "« Commander » is the infinitive. After « j'ai »: « commandé ».",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo ask?",
+              "choices": [
+                "If your box has arrived",
+                "If you've sent your box"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Ton carton est arrivé ? »"
+            }
+          ],
+          "followUp": "Oh non ! Tu fais quoi, alors ?",
+          "followUpBy": "Théo",
+          "newWords": []
+        },
+        {
+          "id": "sit_15_wrong_s03",
+          "place": "Appel · service client · phrase seule",
+          "standalone": "Corriger",
+          "cue": "You call customer service. The adviser says vous to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Ce n'est pas ce que j'ai commander, il manque une chemise.",
+              "error": {
+                "word": "commander",
+                "fix": "commandé",
+                "choices": [
+                  "commande",
+                  "commandé",
+                  "commandés"
+                ],
+                "why": "After « j'ai », use the past participle: « commandé »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_15_wrong_d07",
+          "place": "Appel · service client",
+          "cue": "You're on the phone with customer service. The adviser says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Conseillère",
+              "voice": "female",
+              "text": "Le carton est abîmé, madame ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, et il ___ un pull."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « carton » mean here?",
+              "choices": [
+                "bag",
+                "receipt",
+                "(cardboard) box"
+              ],
+              "correct": 2,
+              "why": [
+                "No: a bag is « un sac ».",
+                "No: a receipt is « un ticket ».",
+                ""
+              ],
+              "target": "carton"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "manques",
+                "manque",
+                "manquer"
+              ],
+              "correct": 1,
+              "why": [
+                "« Manques » is for « tu ». With « il »: « il manque ».",
+                "",
+                "« Manquer » is the infinitive. Say « il manque »."
+              ]
+            }
+          ],
+          "followUp": "Je suis désolée. Je regarde tout de suite.",
+          "newWords": []
+        },
+        {
+          "id": "sit_15_wrong_d08",
+          "place": "WhatsApp · Mme Dumas",
+          "cue": "Mme Dumas, your landlady, writes on WhatsApp. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Mme Dumas",
+              "text": "Il y a un carton pour vous devant ma porte."
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Thank her and say you're coming down.",
+              "bank": [
+                "Merci,",
+                "madame,",
+                "je descends !",
+                "monsieur,",
+                "je descend !"
+              ],
+              "accepted": [
+                [
+                  "Merci,",
+                  "madame,",
+                  "je descends !"
+                ],
+                [
+                  "Merci,",
+                  "je descends !"
+                ]
+              ],
+              "model": "Merci, madame, je descends !"
+            },
+            {
+              "type": "comprehend",
+              "prompt": "Where is the box?",
+              "choices": [
+                "In your letterbox",
+                "Outside Mme Dumas's door"
+              ],
+              "correct": 1,
+              "miss": "Reread: « devant ma porte »."
+            }
+          ],
+          "followUp": "Très bien. Je vous attends.",
+          "newWords": []
+        },
+        {
+          "id": "sit_15_wrong_s04",
+          "place": "Appel · service client · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You asked Léa, your flatmate (tu). Now ask the customer service adviser, who says vous to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Il manque un pull dans le carton, tu peux regarder ?",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it with « vous ».",
+              "bank": [
+                "Il manque",
+                "un pull",
+                "dans le carton,",
+                "vous pouvez",
+                "regarder ?",
+                "tu peux",
+                "regardé ?",
+                "vous peux"
+              ],
+              "accepted": [
+                [
+                  "Il manque",
+                  "un pull",
+                  "dans le carton,",
+                  "vous pouvez",
+                  "regarder ?"
+                ]
+              ],
+              "model": "Il manque un pull dans le carton, vous pouvez regarder ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_15_wrong_d09",
+          "place": "À l'appart",
+          "cue": "Léa, your flatmate, helps you check the box. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Alors, il manque quoi ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Il manque le pull que j'ai ___."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa ask?",
+              "choices": [
+                "What's missing",
+                "What you paid"
+              ],
+              "correct": 0,
+              "miss": "Reread: « il manque quoi ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "commandés",
+                "commandé",
+                "commande"
+              ],
+              "correct": 1,
+              "why": [
+                "One jumper, « le pull »: « commandé », not plural.",
+                "",
+                "« Commande » is the present (or the noun, order). After « j'ai »: « commandé »."
+              ]
+            }
+          ],
+          "followUp": "Ah, le pull ! Dommage.",
+          "followUpBy": "Léa",
+          "newWords": []
+        },
+        {
+          "id": "sit_15_wrong_d10",
+          "place": "Texto · Théo",
+          "cue": "Théo, your friend, texts you. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Et le carton, tu le rapportes ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo ask?",
+              "choices": [
+                "If you're keeping the box",
+                "If you're taking the box back"
+              ],
+              "correct": 1,
+              "miss": "Reread: « tu le rapportes ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, you're taking it back tomorrow.",
+              "bank": [
+                "Oui,",
+                "je le",
+                "rapporte",
+                "demain.",
+                "rapportes",
+                "je la",
+                "hier."
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "je le",
+                  "rapporte",
+                  "demain."
+                ]
+              ],
+              "model": "Oui, je le rapporte demain."
+            }
+          ],
+          "followUp": "Top ! Bonne chance, alors !",
+          "followUpBy": "Théo",
+          "newWords": []
+        },
+        {
+          "id": "sit_15_wrong_s05",
+          "place": "Appel · service client · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Which French word means “(cardboard) box”? You're on the phone with customer service (vous).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Le ___ est abîmé, et il manque une chemise dans le colis."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "(cardboard) box",
+              "choices": [
+                "caisse",
+                "carton",
+                "quai"
+              ],
+              "correct": 1,
+              "why": [
+                "« Caisse » means till, checkout.",
+                "",
+                "« Quai » means platform."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_15_complain",
+      "title": "Se plaindre poliment",
+      "note": "Complain politely: « je ne suis pas satisfaite » (I'm not satisfied; Robin is a woman, so « satisfaite »), « ce n'est pas normal » (that's not right) and « faire une réclamation » (to make a complaint). Stay polite: vous, « madame », « monsieur ».",
+      "items": [
+        {
+          "id": "sit_15_complain_d01",
+          "place": "En boutique",
+          "cue": "You're back at the clothes shop. The shop assistant says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Vendeuse",
+              "voice": "female",
+              "text": "Vous êtes satisfaite de votre pull, madame ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the shop assistant ask?",
+              "choices": [
+                "If you want another jumper",
+                "If you're happy with your jumper"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Vous êtes satisfaite de votre pull ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say no: the jumper is damaged.",
+              "bank": [
+                "Non,",
+                "le pull",
+                "est",
+                "abîmé.",
+                "abîmée.",
+                "la pull",
+                "Oui,"
+              ],
+              "accepted": [
+                [
+                  "Non,",
+                  "le pull",
+                  "est",
+                  "abîmé."
+                ]
+              ],
+              "model": "Non, le pull est abîmé."
+            }
+          ],
+          "followUp": "Oh, pardon ! Le responsable arrive.",
+          "newWords": [
+            "satisfaite"
+          ]
+        },
+        {
+          "id": "sit_15_complain_d02",
+          "place": "Appel · service client",
+          "cue": "You call customer service: your parcel is very late. The adviser says vous to you. You're a woman.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Conseillère",
+              "voice": "female",
+              "text": "Trois semaines ? Ce n'est pas normal, madame."
+            },
+            {
+              "speaker": "learner",
+              "text": "Non, et je ne suis pas ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the adviser think?",
+              "choices": [
+                "Three weeks is too long",
+                "Three weeks is normal"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Ce n'est pas normal »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "satisfait",
+                "satisfaite",
+                "satisfaites"
+              ],
+              "correct": 1,
+              "why": [
+                "You're a woman: « satisfaite », not « satisfait ».",
+                "",
+                "« Satisfaites » is plural. You're one woman: « satisfaite »."
+              ]
+            }
+          ],
+          "followUp": "Je comprends. Je regarde tout de suite.",
+          "newWords": [
+            "normal"
+          ]
+        },
+        {
+          "id": "sit_15_complain_s01",
+          "place": "Appel · service client · phrase seule",
+          "standalone": "Construire",
+          "cue": "You call customer service about a late parcel. The adviser says vous to you. You're a woman.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Conseillère",
+              "voice": "female",
+              "text": "Service client, bonjour ! Votre colis est en retard, madame ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say hello: you're not satisfied, it's not right.",
+              "bank": [
+                "Bonjour,",
+                "je ne suis pas",
+                "satisfaite,",
+                "ce n'est pas",
+                "normal.",
+                "satisfait,",
+                "normale.",
+                "c'est"
+              ],
+              "accepted": [
+                [
+                  "Bonjour,",
+                  "je ne suis pas",
+                  "satisfaite,",
+                  "ce n'est pas",
+                  "normal."
+                ]
+              ],
+              "model": "Bonjour, je ne suis pas satisfaite, ce n'est pas normal."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_15_complain_d03",
+          "place": "En boutique",
+          "cue": "You talk to the shop manager about a damaged jumper. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Responsable",
+              "text": "Vous voulez faire une réclamation, madame ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, s'il vous ___."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "plais",
+                "plaire",
+                "plaît"
+              ],
+              "correct": 2,
+              "why": [
+                "« Plais » is for « je » or « tu ». The set phrase is « s'il vous plaît ».",
+                "« Plaire » is the infinitive. The set phrase is « s'il vous plaît ».",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does the manager offer?",
+              "choices": [
+                "To make a complaint",
+                "To give you a new jumper"
+              ],
+              "correct": 0,
+              "miss": "Reread: « faire une réclamation »."
+            }
+          ],
+          "followUp": "Très bien. Vous avez le ticket ?",
+          "newWords": [
+            "réclamation"
+          ]
+        },
+        {
+          "id": "sit_15_complain_d04",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you. You bought a jumper.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "T'es satisfaite de ton pull ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « satisfaite » mean here?",
+              "choices": [
+                "tired",
+                "satisfied, happy",
+                "surprised"
+              ],
+              "correct": 1,
+              "why": [
+                "No: tired is « fatiguée ».",
+                "",
+                "No: « satisfaite » is about being happy with something."
+              ],
+              "target": "satisfaite"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say no, it's too small.",
+              "bank": [
+                "Non,",
+                "il est",
+                "trop",
+                "petit.",
+                "petite.",
+                "elle est",
+                "Oui,"
+              ],
+              "accepted": [
+                [
+                  "Non,",
+                  "il est",
+                  "trop",
+                  "petit."
+                ]
+              ],
+              "model": "Non, il est trop petit."
+            }
+          ],
+          "followUp": "Oh non ! Tu peux l'échanger, non ?",
+          "followUpBy": "Léa",
+          "newWords": []
+        },
+        {
+          "id": "sit_15_complain_s02",
+          "place": "En boutique · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "You talk to the shop manager. He says vous to you. You're a woman. You want to make a complaint.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "Je ne suis pas satisfaite, monsieur, je voudrais faire une réclamation.",
+                "Salut ! C'est pas normal, ça, je veux faire une réclamation !",
+                "Ouais, bref, je fais une réclamation, moi !"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "Good spoken French, but « salut » is for friends, and it sounds rude to a manager.",
+                "Good spoken French, but « ouais » and « bref » are for friends."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_15_complain_d05",
+          "place": "En boutique",
+          "cue": "Clarify: the shop manager talks very fast. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Responsable",
+              "text": "Ce n'est pas normal ? Vous avez le ticket ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Ask him to repeat, politely.",
+              "bank": [
+                "Pardon ?",
+                "Vous pouvez répéter,",
+                "s'il vous plaît ?",
+                "Tu peux répéter,",
+                "s'il te plaît ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon ?",
+                  "Vous pouvez répéter,",
+                  "s'il vous plaît ?"
+                ],
+                [
+                  "Vous pouvez répéter,",
+                  "s'il vous plaît ?"
+                ]
+              ],
+              "model": "Pardon ? Vous pouvez répéter, s'il vous plaît ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « normal » mean here?",
+              "choices": [
+                "new",
+                "normal, OK",
+                "cheap"
+              ],
+              "correct": 1,
+              "why": [
+                "No: new is « nouveau ».",
+                "",
+                "No: cheap is « pas cher »."
+              ],
+              "target": "normal"
+            }
+          ],
+          "followUp": "Pardon ! Vous avez le ticket, madame ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_15_complain_d06",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Tu as fait une réclamation ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, ce n'est pas ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "normaux",
+                "normal",
+                "normale"
+              ],
+              "correct": 1,
+              "why": [
+                "« Normaux » is plural. « Ce » is singular: « normal ».",
+                "",
+                "After « ce n'est pas », use the masculine: « normal »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès ask?",
+              "choices": [
+                "If you got a refund",
+                "If you made a complaint"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Tu as fait une réclamation ? »"
+            }
+          ],
+          "followUp": "Super ! C'est bien, ça.",
+          "followUpBy": "Inès",
+          "newWords": []
+        },
+        {
+          "id": "sit_15_complain_s03",
+          "place": "En boutique · phrase seule",
+          "standalone": "Corriger",
+          "cue": "You talk to the shop manager. He says vous to you. You're a woman.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Je ne suis pas satisfait, je voudrais faire une réclamation.",
+              "error": {
+                "word": "satisfait",
+                "fix": "satisfaite",
+                "choices": [
+                  "satisfaites",
+                  "satisfaite",
+                  "normal"
+                ],
+                "why": "You're a woman: « je ne suis pas satisfaite »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_15_complain_d07",
+          "place": "En boutique",
+          "cue": "You talk to the shop manager. He says vous to you. You bought a jumper here.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Responsable",
+              "text": "Votre réclamation, c'est pour quoi, madame ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Ce pull est ___."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « réclamation » mean here?",
+              "choices": [
+                "receipt",
+                "booking",
+                "complaint"
+              ],
+              "correct": 2,
+              "why": [
+                "No: a receipt is « un ticket ».",
+                "No: a booking is « une réservation ».",
+                ""
+              ],
+              "target": "réclamation"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "abîmer",
+                "abîmée",
+                "abîmé"
+              ],
+              "correct": 2,
+              "why": [
+                "« Abîmer » is the infinitive. After « est », use « abîmé ».",
+                "« Le pull » is masculine: « abîmé », not « abîmée ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Ah oui, je vois. Désolé, madame.",
+          "newWords": []
+        },
+        {
+          "id": "sit_15_complain_d08",
+          "place": "Texto · Théo",
+          "cue": "Théo, your friend, texts you. He says tu to you. You're at a restaurant.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Alors, le restaurant ? T'es satisfaite ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say no: it's not right, it's cold!",
+              "bank": [
+                "Non,",
+                "ce n'est pas",
+                "normal,",
+                "c'est",
+                "froid !",
+                "froide !",
+                "Oui,",
+                "normale,"
+              ],
+              "accepted": [
+                [
+                  "Non,",
+                  "ce n'est pas",
+                  "normal,",
+                  "c'est",
+                  "froid !"
+                ]
+              ],
+              "model": "Non, ce n'est pas normal, c'est froid !"
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo ask?",
+              "choices": [
+                "If the restaurant is expensive",
+                "If you're happy with the restaurant"
+              ],
+              "correct": 1,
+              "miss": "Reread: « T'es satisfaite ? »"
+            }
+          ],
+          "followUp": "Oh non ! Fais une réclamation, alors !",
+          "followUpBy": "Théo",
+          "newWords": []
+        },
+        {
+          "id": "sit_15_complain_s04",
+          "place": "Texto · Léa · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You text Léa, your flatmate. She says tu to you. It was yesterday: rewrite it.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Aujourd'hui, je fais une réclamation au service client pour mon colis.",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it for yesterday, in the passé composé.",
+              "bank": [
+                "Hier,",
+                "j'ai fait",
+                "une réclamation",
+                "au service client",
+                "pour mon colis.",
+                "je suis fait",
+                "j'ai fais",
+                "je fais"
+              ],
+              "accepted": [
+                [
+                  "Hier,",
+                  "j'ai fait",
+                  "une réclamation",
+                  "au service client",
+                  "pour mon colis."
+                ]
+              ],
+              "model": "Hier, j'ai fait une réclamation au service client pour mon colis."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_15_complain_d09",
+          "place": "Appel · service client",
+          "cue": "Customer service calls you about your complaint. The adviser says vous to you. You're a woman.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Conseillère",
+              "voice": "female",
+              "text": "Nous avons votre réclamation, madame."
+            },
+            {
+              "speaker": "learner",
+              "text": "Merci. Et je suis ___ quand ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the adviser say?",
+              "choices": [
+                "They have your complaint",
+                "Your complaint is lost"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Nous avons votre réclamation »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "remboursé",
+                "rembourser",
+                "remboursée"
+              ],
+              "correct": 2,
+              "why": [
+                "You're a woman: « remboursée ».",
+                "« Rembourser » is the infinitive. After « je suis »: « remboursée ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Dans dix jours, madame.",
+          "newWords": []
+        },
+        {
+          "id": "sit_15_complain_d10",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Alors, ta réclamation ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa ask about?",
+              "choices": [
+                "Your booking",
+                "Your complaint"
+              ],
+              "correct": 1,
+              "miss": "Reread: « ta réclamation ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say they're going to refund you.",
+              "bank": [
+                "Ils",
+                "vont",
+                "me",
+                "rembourser !",
+                "remboursé !",
+                "vais",
+                "te"
+              ],
+              "accepted": [
+                [
+                  "Ils",
+                  "vont",
+                  "me",
+                  "rembourser !"
+                ]
+              ],
+              "model": "Ils vont me rembourser !"
+            }
+          ],
+          "followUp": "Super ! Enfin une bonne chose !",
+          "followUpBy": "Léa",
+          "newWords": []
+        },
+        {
+          "id": "sit_15_complain_s05",
+          "place": "En boutique · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Which French word means “complaint”? You talk to the shop manager (vous). You're a woman.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Je ne suis pas satisfaite, je voudrais faire une ___, s'il vous plaît."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "complaint",
+              "choices": [
+                "réservation",
+                "réunion",
+                "réclamation"
+              ],
+              "correct": 2,
+              "why": [
+                "« Réservation » means booking.",
+                "« Réunion » means meeting.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_15_haircut",
+      "title": "Chez le coiffeur",
+      "note": "At the hairdresser's: « le coiffeur » (the hairdresser, and « chez le coiffeur », the salon), « les cheveux » (hair, always plural), « couper » (to cut) and the complaint « trop court » (too short). « Pas trop court ! » is the polite way to ask before she cuts.",
+      "items": [
+        {
+          "id": "sit_15_haircut_d01",
+          "place": "À l'appart",
+          "cue": "Léa, your flatmate, chats with you at home. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Tu vas chez le coiffeur samedi ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa ask?",
+              "choices": [
+                "If you're going to the hairdresser's on Saturday",
+                "If you're working on Saturday"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Tu vas chez le coiffeur samedi ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, at ten.",
+              "bank": [
+                "Oui,",
+                "à",
+                "dix",
+                "heures.",
+                "heure.",
+                "au",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "à",
+                  "dix",
+                  "heures."
+                ]
+              ],
+              "model": "Oui, à dix heures."
+            }
+          ],
+          "followUp": "Super ! Moi, c'est lundi.",
+          "followUpBy": "Léa",
+          "newWords": [
+            "coiffeur"
+          ]
+        },
+        {
+          "id": "sit_15_haircut_d02",
+          "place": "Chez le coiffeur",
+          "cue": "You're at the hairdresser's. The hairdresser says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Coiffeuse",
+              "voice": "female",
+              "text": "Bonjour ! On fait quoi, pour les cheveux ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Comme ___, s'il vous plaît."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the hairdresser ask?",
+              "choices": [
+                "When your appointment is",
+                "What to do with your hair"
+              ],
+              "correct": 1,
+              "miss": "Reread: « On fait quoi, pour les cheveux ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "habitude",
+                "d'habitude",
+                "habituel"
+              ],
+              "correct": 1,
+              "why": [
+                "Not French: the set phrase is « comme d'habitude ».",
+                "",
+                "« Habituel » is an adjective. The set phrase is « comme d'habitude »."
+              ]
+            }
+          ],
+          "followUp": "Très bien. Venez, madame.",
+          "newWords": [
+            "cheveux"
+          ]
+        },
+        {
+          "id": "sit_15_haircut_s01",
+          "place": "Appel · coiffeur · phrase seule",
+          "standalone": "Construire",
+          "cue": "You call the hairdresser's. The hairdresser says vous to you. Your appointment is at ten.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Coiffeuse",
+              "voice": "female",
+              "text": "Bonjour, c'est le coiffeur ! Je peux vous aider ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say hello: you have an appointment at ten for your hair; it's Robin.",
+              "bank": [
+                "Bonjour,",
+                "j'ai rendez-vous",
+                "à dix heures",
+                "pour les cheveux,",
+                "c'est Robin.",
+                "pour le cheveux,",
+                "à dix heure",
+                "je suis rendez-vous"
+              ],
+              "accepted": [
+                [
+                  "Bonjour,",
+                  "j'ai rendez-vous",
+                  "à dix heures",
+                  "pour les cheveux,",
+                  "c'est Robin."
+                ]
+              ],
+              "model": "Bonjour, j'ai rendez-vous à dix heures pour les cheveux, c'est Robin."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_15_haircut_d03",
+          "place": "Chez le coiffeur",
+          "cue": "You're at the hairdresser's. The hairdresser says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Coiffeuse",
+              "voice": "female",
+              "text": "Je peux couper un peu ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, mais ___ trop court, s'il vous plaît !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "ne",
+                "non",
+                "pas"
+              ],
+              "correct": 2,
+              "why": [
+                "« Ne » needs a verb after it. Without a verb, say « pas trop court ».",
+                "Not French here: say « pas trop court ».",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does the hairdresser ask?",
+              "choices": [
+                "If you want a colour",
+                "If she can cut a little"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Je peux couper un peu ? »"
+            }
+          ],
+          "followUp": "Promis, pas trop court !",
+          "newWords": [
+            "couper",
+            "trop court"
+          ]
+        },
+        {
+          "id": "sit_15_haircut_d04",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Tu as un bon coiffeur ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « coiffeur » mean here?",
+              "choices": [
+                "barber shop only",
+                "hairdresser",
+                "shop assistant"
+              ],
+              "correct": 1,
+              "why": [
+                "No: « coiffeur » is any hairdresser, for women too.",
+                "",
+                "No: a shop assistant is « vendeur » or « vendeuse »."
+              ],
+              "target": "coiffeur"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, next to the station.",
+              "bank": [
+                "Oui,",
+                "à côté",
+                "de la",
+                "gare.",
+                "du",
+                "de",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "à côté",
+                  "de la",
+                  "gare."
+                ]
+              ],
+              "model": "Oui, à côté de la gare."
+            }
+          ],
+          "followUp": "Merci ! Je vais aller voir.",
+          "followUpBy": "Inès",
+          "newWords": []
+        },
+        {
+          "id": "sit_15_haircut_s02",
+          "place": "Chez le coiffeur · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "The hairdresser says vous to you. She has just cut your hair. Tell her it's a bit too short.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "Ouais, c'est trop court, t'as vu ?",
+                "Bref, c'est trop court, ça !",
+                "Excusez-moi, c'est un peu trop court, non ?"
+              ],
+              "correct": 2,
+              "why": [
+                "Good spoken French, but « ouais » and « t'as » are for friends.",
+                "Good French, but it sounds rude to the hairdresser.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_15_haircut_d05",
+          "place": "Chez le coiffeur",
+          "cue": "Clarify: the hairdryer is very loud. The hairdresser says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Coiffeuse",
+              "voice": "female",
+              "text": "Vos cheveux, je les coupe comment ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Ask her to repeat, politely.",
+              "bank": [
+                "Pardon ?",
+                "Vous pouvez répéter,",
+                "s'il vous plaît ?",
+                "Tu peux répéter,",
+                "s'il te plaît ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon ?",
+                  "Vous pouvez répéter,",
+                  "s'il vous plaît ?"
+                ],
+                [
+                  "Vous pouvez répéter,",
+                  "s'il vous plaît ?"
+                ]
+              ],
+              "model": "Pardon ? Vous pouvez répéter, s'il vous plaît ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « cheveux » mean here?",
+              "choices": [
+                "hair",
+                "head",
+                "hat"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "No: the head is « la tête ».",
+                "No: a hat is « un chapeau »."
+              ],
+              "target": "cheveux"
+            }
+          ],
+          "followUp": "Pardon ! Je coupe comment, vos cheveux ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_15_haircut_d06",
+          "place": "À l'appart",
+          "cue": "Léa, your flatmate, sees you after the hairdresser's. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Oh ! Tes cheveux sont très courts !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, c'est ___ trop court !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "très",
+                "beaucoup",
+                "un"
+              ],
+              "correct": 1,
+              "why": [
+                "Not French: « très » can't go before « trop ». Say « beaucoup trop ».",
+                "",
+                "Not French: « un » goes before a noun. Say « beaucoup trop »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa say?",
+              "choices": [
+                "Your hair is very short",
+                "Your hair looks the same"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Tes cheveux sont très courts ! »"
+            }
+          ],
+          "followUp": "Mais non, c'est très bien, promis !",
+          "followUpBy": "Léa",
+          "newWords": []
+        },
+        {
+          "id": "sit_15_haircut_s03",
+          "place": "Chez le coiffeur · phrase seule",
+          "standalone": "Corriger",
+          "cue": "You're at the hairdresser's. The hairdresser says vous to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Vous pouvez me couper les cheveu, mais pas trop court ?",
+              "error": {
+                "word": "cheveu",
+                "fix": "cheveux",
+                "choices": [
+                  "coiffeur",
+                  "cheveux",
+                  "courts"
+                ],
+                "why": "Hair is plural in French: « les cheveux »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_15_haircut_d07",
+          "place": "Chez le coiffeur",
+          "cue": "You're at the hairdresser's. The hairdresser says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Coiffeuse",
+              "voice": "female",
+              "text": "Je peux couper ici, sur le côté ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, mais pas trop court, s'il ___ plaît !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « couper » mean here?",
+              "choices": [
+                "to wash",
+                "to cut",
+                "to dry"
+              ],
+              "correct": 1,
+              "why": [
+                "No: to wash is « laver ».",
+                "",
+                "No: « couper » is what the scissors do."
+              ],
+              "target": "couper"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "te",
+                "vous",
+                "me"
+              ],
+              "correct": 1,
+              "why": [
+                "« S'il te plaît » is for friends. The hairdresser says vous to you.",
+                "",
+                "Not French: the set phrase is « s'il vous plaît »."
+              ]
+            }
+          ],
+          "followUp": "D'accord, un tout petit peu.",
+          "newWords": []
+        },
+        {
+          "id": "sit_15_haircut_d08",
+          "place": "Au café",
+          "cue": "Karim, the barista, sees you at the café. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Tes cheveux ! Tu es allée chez le coiffeur ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say yes, but it's too short.",
+              "bank": [
+                "Oui,",
+                "mais",
+                "c'est",
+                "trop court !",
+                "trop courts !",
+                "pas",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "mais",
+                  "c'est",
+                  "trop court !"
+                ]
+              ],
+              "model": "Oui, mais c'est trop court !"
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Karim notice?",
+              "choices": [
+                "Your new jumper",
+                "Your hair"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Tes cheveux ! »"
+            }
+          ],
+          "followUp": "Mais non, c'est très bien ! Un café ?",
+          "followUpBy": "Karim",
+          "newWords": []
+        },
+        {
+          "id": "sit_15_haircut_s04",
+          "place": "Chez le coiffeur · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You asked Léa, your flatmate (tu). Now ask the hairdresser, who says vous to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Tu peux couper un peu, mais pas trop court ?",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it with « vous ».",
+              "bank": [
+                "Vous pouvez",
+                "couper",
+                "un peu,",
+                "mais pas",
+                "trop court ?",
+                "Tu peux",
+                "coupé",
+                "vous peux"
+              ],
+              "accepted": [
+                [
+                  "Vous pouvez",
+                  "couper",
+                  "un peu,",
+                  "mais pas",
+                  "trop court ?"
+                ]
+              ],
+              "model": "Vous pouvez couper un peu, mais pas trop court ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_15_haircut_d09",
+          "place": "Texto · Théo",
+          "cue": "Théo, your friend, texts you. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Ton coiffeur, c'est bien ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, c'est parfait pour ___ les cheveux."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo ask?",
+              "choices": [
+                "If your hairdresser's is good",
+                "If your hairdresser's is expensive"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Ton coiffeur, c'est bien ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "coupé",
+                "couper",
+                "coupe"
+              ],
+              "correct": 1,
+              "why": [
+                "« Coupé » is the past participle. After « pour », use the infinitive « couper ».",
+                "",
+                "« Coupe » is the present. After « pour », use the infinitive « couper »."
+              ]
+            }
+          ],
+          "followUp": "Top ! Tu me donnes l'adresse ?",
+          "followUpBy": "Théo",
+          "newWords": []
+        },
+        {
+          "id": "sit_15_haircut_d10",
+          "place": "Chez le coiffeur",
+          "cue": "The hairdresser has finished. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Coiffeuse",
+              "voice": "female",
+              "text": "Voilà ! Ça vous plaît ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the hairdresser ask?",
+              "choices": [
+                "If you want to pay",
+                "If you like it"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Ça vous plaît ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say politely: it's a bit too short, isn't it?",
+              "bank": [
+                "C'est",
+                "un peu",
+                "trop court,",
+                "non ?",
+                "trop",
+                "oui ?",
+                "Ce sont"
+              ],
+              "accepted": [
+                [
+                  "C'est",
+                  "un peu",
+                  "trop court,",
+                  "non ?"
+                ]
+              ],
+              "model": "C'est un peu trop court, non ?"
+            }
+          ],
+          "followUp": "Oh, pardon ! La prochaine fois, je coupe moins.",
+          "newWords": []
+        },
+        {
+          "id": "sit_15_haircut_s05",
+          "place": "Chez le coiffeur · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Which French words mean “too short”? You talk to the hairdresser (vous).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Vous pouvez couper un peu, mais pas ___, s'il vous plaît ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "too short",
+              "choices": [
+                "trop tard",
+                "trop cher",
+                "trop court"
+              ],
+              "correct": 2,
+              "why": [
+                "« Trop tard » means too late.",
+                "« Trop cher » means too expensive.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    }
+  ]
+}

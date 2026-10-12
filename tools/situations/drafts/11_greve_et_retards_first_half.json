@@ -1,0 +1,2653 @@
+{
+  "elements": [
+    {
+      "id": "sit_11_strike",
+      "title": "Il y a grève",
+      "note": "A strike (« la grève ») is part of French life. Say « il y a grève », with no article. « Le trafic est perturbé » means the trains and metros are disrupted, and « aucun métro » means not a single metro.",
+      "items": [
+        {
+          "id": "sit_11_strike_d01",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Demain, il y a grève. Pas de métro !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What is Léa telling you?",
+              "choices": [
+                "There's a strike tomorrow: no metro",
+                "The metro is late tomorrow"
+              ],
+              "correct": 0,
+              "miss": "Reread: « il y a grève. Pas de métro ! »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say oh no, and that you'll go to the office by bike.",
+              "bank": [
+                "Oh non !",
+                "Je vais",
+                "au bureau",
+                "à vélo.",
+                "Je vas",
+                "à le bureau",
+                "Oui !"
+              ],
+              "accepted": [
+                [
+                  "Oh non !",
+                  "Je vais",
+                  "au bureau",
+                  "à vélo."
+                ]
+              ],
+              "model": "Oh non ! Je vais au bureau à vélo."
+            }
+          ],
+          "followUp": "Bonne idée ! Moi, je reste à la maison.",
+          "newWords": [
+            "grève"
+          ]
+        },
+        {
+          "id": "sit_11_strike_d02",
+          "place": "À la gare",
+          "cue": "At the station, you hear an announcement. Then you ask a station employee. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Annonce",
+              "voice": "female",
+              "text": "Le trafic est très perturbé ce matin."
+            },
+            {
+              "speaker": "learner",
+              "text": "Excusez-moi, il y a ___ ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the announcement say?",
+              "choices": [
+                "All trains are on time this morning",
+                "Service is very disrupted this morning"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Le trafic est très perturbé ce matin. »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "grave",
+                "grève",
+                "grèves"
+              ],
+              "correct": 1,
+              "why": [
+                "« Grave » means serious. You're asking about a strike: « grève ».",
+                "",
+                "« Il y a grève » takes no article and stays singular: « grève »."
+              ]
+            }
+          ],
+          "followUp": "Oui, madame. Pas de métro jusqu'à midi.",
+          "followUpRole": "Employée",
+          "newWords": [
+            "trafic",
+            "perturbé"
+          ]
+        },
+        {
+          "id": "sit_11_strike_s01",
+          "place": "Texto · Léa · phrase seule",
+          "standalone": "Construire",
+          "cue": "Léa, your flatmate, texts you. She says tu to you. Tell her there's a strike tomorrow, so you'll walk to the office.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Demain, tu vas au bureau comment ? En métro ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say: there's a strike tomorrow, so you're going to the office on foot.",
+              "bank": [
+                "Il y a",
+                "grève",
+                "demain,",
+                "alors",
+                "je vais",
+                "au bureau",
+                "à pied.",
+                "grave",
+                "je vas",
+                "à vélo."
+              ],
+              "accepted": [
+                [
+                  "Il y a",
+                  "grève",
+                  "demain,",
+                  "alors",
+                  "je vais",
+                  "au bureau",
+                  "à pied."
+                ]
+              ],
+              "model": "Il y a grève demain, alors je vais au bureau à pied."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_11_strike_d03",
+          "place": "Appel · Inès",
+          "cue": "Inès, your colleague, calls you in the morning. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Grève ! Aucun métro ce matin."
+            },
+            {
+              "speaker": "learner",
+              "text": "Ah bon ? Et le tram, il ___ ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "marches",
+                "marcher",
+                "marche"
+              ],
+              "correct": 2,
+              "why": [
+                "« Marches » goes with « tu ». The tram is « il »: « il marche ».",
+                "« Marcher » is the infinitive. After « il », say « il marche ».",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What did Inès say?",
+              "choices": [
+                "There's no metro at all this morning",
+                "The metro is late this morning"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Aucun métro ce matin. »"
+            }
+          ],
+          "followUp": "Oui, le tram marche. À tout à l'heure !",
+          "newWords": [
+            "aucun"
+          ]
+        },
+        {
+          "id": "sit_11_strike_d04",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat « Les copains ». He says vous to you all.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "La grève, c'est jusqu'à quand ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « grève » mean here?",
+              "choices": [
+                "delay",
+                "strike",
+                "holiday"
+              ],
+              "correct": 1,
+              "why": [
+                "No: a delay is « retard ».",
+                "",
+                "No: « grève » is when workers stop work, not a holiday."
+              ],
+              "target": "grève"
+            },
+            {
+              "type": "reply",
+              "prompt": "Answer: until Friday, you think.",
+              "bank": [
+                "Jusqu'à",
+                "vendredi,",
+                "je crois.",
+                "Depuis",
+                "Jusque",
+                "mardi,"
+              ],
+              "accepted": [
+                [
+                  "Jusqu'à",
+                  "vendredi,",
+                  "je crois."
+                ]
+              ],
+              "model": "Jusqu'à vendredi, je crois."
+            }
+          ],
+          "followUp": "Ah, d'accord. Merci, Robin !",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_strike_s02",
+          "place": "Sur le palier · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "On the landing, tell M. Ferrand, your older neighbour, about tomorrow's strike. He says vous to you.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "Grève demain, t'as vu ? Pas de métro, bref !",
+                "Salut ! Demain, grève, pas de métro !",
+                "Il y a grève demain, monsieur, le métro ne marche pas."
+              ],
+              "correct": 2,
+              "why": [
+                "Good spoken French, but « t'as vu » and « bref » are for friends. M. Ferrand says vous to you.",
+                "Good French, but « Salut » is for friends. Say « monsieur » to M. Ferrand.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_11_strike_d05",
+          "place": "À la gare",
+          "cue": "Clarify: at the station, an employee answers you very fast. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Employé",
+              "text": "Le trafic est perturbé jusqu'à midi."
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Ask him to repeat, politely.",
+              "bank": [
+                "Pardon ?",
+                "Vous pouvez répéter,",
+                "s'il vous plaît ?",
+                "Tu peux répéter,",
+                "s'il te plaît ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon ?",
+                  "Vous pouvez répéter,",
+                  "s'il vous plaît ?"
+                ],
+                [
+                  "Vous pouvez répéter,",
+                  "s'il vous plaît ?"
+                ]
+              ],
+              "model": "Pardon ? Vous pouvez répéter, s'il vous plaît ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « trafic » mean here?",
+              "choices": [
+                "the ticket",
+                "the timetable",
+                "the service (trains, metro)"
+              ],
+              "correct": 2,
+              "why": [
+                "No: « trafic » is the trains and metros running, not a ticket.",
+                "No: « trafic » is the service itself, not its timetable.",
+                ""
+              ],
+              "target": "trafic"
+            }
+          ],
+          "followUp": "Pardon ! Perturbé jusqu'à midi, madame.",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_strike_d06",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you on the strike morning. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Le trafic est perturbé, je vais être en retard."
+            },
+            {
+              "speaker": "learner",
+              "text": "Moi aussi ! ___ métro ce matin."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "Aucune",
+                "Aucun",
+                "Pas"
+              ],
+              "correct": 1,
+              "why": [
+                "« Métro » is masculine: « aucun métro ».",
+                "",
+                "« Pas métro » is not French; you'd need « pas de métro »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa say?",
+              "choices": [
+                "She's already at work",
+                "She'll be late"
+              ],
+              "correct": 1,
+              "miss": "Reread: « je vais être en retard »."
+            }
+          ],
+          "followUp": "Bon, à ce soir, alors !",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_strike_s03",
+          "place": "Texto · Inès · phrase seule",
+          "standalone": "Corriger",
+          "cue": "You text Inès, your colleague, about the strike. You say tu to her.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Il y a grève, le trafic est perturbée, aucun métro ce matin.",
+              "error": {
+                "word": "perturbée",
+                "fix": "perturbé",
+                "choices": [
+                  "perturbés",
+                  "perturbé",
+                  "grève"
+                ],
+                "why": "« Trafic » is masculine singular: « le trafic est perturbé »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_11_strike_d07",
+          "place": "Sur le palier",
+          "cue": "M. Ferrand, your neighbour, meets you on the landing. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Aucun métro aujourd'hui, madame ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Non, le trafic est ___ jusqu'à ce soir."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « aucun » mean here?",
+              "choices": [
+                "only one",
+                "the next",
+                "not a single, no"
+              ],
+              "correct": 2,
+              "why": [
+                "No: « aucun » means not even one.",
+                "No: the next is « prochain ».",
+                ""
+              ],
+              "target": "aucun"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "perturbée",
+                "perturbés",
+                "perturbé"
+              ],
+              "correct": 2,
+              "why": [
+                "« Trafic » is masculine: « perturbé », no e.",
+                "« Trafic » is singular: no s.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Ah, la grève ! Bonne journée, madame.",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_strike_d08",
+          "place": "Texto · Karim",
+          "cue": "Karim, the barista at your café, texts you. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Tu viens au café demain, avec la grève ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say yes, you're coming on foot.",
+              "bank": [
+                "Oui,",
+                "je viens",
+                "à pied !",
+                "je vient",
+                "Non,",
+                "à vélo !"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "je viens",
+                  "à pied !"
+                ]
+              ],
+              "model": "Oui, je viens à pied !"
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What is Karim asking?",
+              "choices": [
+                "If you're working tomorrow",
+                "If you're coming to the café tomorrow"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Tu viens au café demain, avec la grève ? »"
+            }
+          ],
+          "followUp": "Top ! Ton café t'attend.",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_strike_s04",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You wrote this to Léa (tu). Now write it to Mme Dumas, your landlady, on WhatsApp. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Il y a grève, aucun métro ce matin, tu as vu ?",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it with « vous ».",
+              "bank": [
+                "Il y a grève,",
+                "aucun métro",
+                "ce matin,",
+                "vous avez vu ?",
+                "tu as vu ?",
+                "vous as vu ?",
+                "aucune métro"
+              ],
+              "accepted": [
+                [
+                  "Il y a grève,",
+                  "aucun métro",
+                  "ce matin,",
+                  "vous avez vu ?"
+                ]
+              ],
+              "model": "Il y a grève, aucun métro ce matin, vous avez vu ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_11_strike_d09",
+          "place": "À la gare",
+          "cue": "At the station, you hear an announcement. You ask a station employee about the train to Paris. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Annonce",
+              "voice": "female",
+              "text": "Grève : le trafic est très perturbé aujourd'hui."
+            },
+            {
+              "speaker": "learner",
+              "text": "Et le train pour Paris, il ___ ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the announcement say?",
+              "choices": [
+                "Strike: the station is closed today",
+                "Strike: service is very disrupted today"
+              ],
+              "correct": 1,
+              "miss": "Reread: « le trafic est très perturbé aujourd'hui »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "pars",
+                "part",
+                "partir"
+              ],
+              "correct": 1,
+              "why": [
+                "« Pars » goes with « je » or « tu ». The train is « il »: « il part ».",
+                "",
+                "« Partir » is the infinitive. After « il », say « il part »."
+              ]
+            }
+          ],
+          "followUp": "Oui, il part, mais en retard.",
+          "followUpRole": "Employée",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_strike_d10",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you the night before. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Demain, grève ! Tu viens au bureau ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What is Inès asking?",
+              "choices": [
+                "If you're coming to the office tomorrow",
+                "If you're coming to the café tomorrow"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Tu viens au bureau ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say no: not a single metro, so you're working at home.",
+              "bank": [
+                "Non,",
+                "aucun métro.",
+                "Je travaille",
+                "à la maison.",
+                "aucune métro.",
+                "Je travailles",
+                "Oui,"
+              ],
+              "accepted": [
+                [
+                  "Non,",
+                  "aucun métro.",
+                  "Je travaille",
+                  "à la maison."
+                ]
+              ],
+              "model": "Non, aucun métro. Je travaille à la maison."
+            }
+          ],
+          "followUp": "Ah, d'accord. Bonne journée !",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_strike_s05",
+          "place": "Texto · Léa · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Which French word means “disrupted”? You're texting Léa, your flatmate (tu).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Avec la grève, le trafic est ___ toute la journée sur la ligne A."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "disrupted",
+              "choices": [
+                "ouvert",
+                "perturbé",
+                "complet"
+              ],
+              "correct": 1,
+              "why": [
+                "« Ouvert » means open.",
+                "",
+                "« Complet » means full, fully booked."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_11_cancelled",
+      "title": "Un train annulé",
+      "note": "At the station, an announcement (« une annonce ») says your train is « annulé », cancelled. Ask about « le prochain départ », the next departure, and « le quai », the platform. « Annulé » agrees like an adjective: « le train est annulé ».",
+      "items": [
+        {
+          "id": "sit_11_cancelled_d01",
+          "place": "À la gare",
+          "cue": "At the station, you hear an announcement. Then you speak to a station employee. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Annonce",
+              "voice": "female",
+              "text": "Le train de dix heures pour Paris est annulé."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the announcement say?",
+              "choices": [
+                "The ten o'clock train to Paris is late",
+                "The ten o'clock train to Paris is cancelled"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Le train de dix heures pour Paris est annulé. »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say excuse me, and ask the employee if there's another train.",
+              "bank": [
+                "Excusez-moi,",
+                "il y a",
+                "un autre",
+                "train ?",
+                "une autre",
+                "Excuse-moi,",
+                "Salut,"
+              ],
+              "accepted": [
+                [
+                  "Excusez-moi,",
+                  "il y a",
+                  "un autre",
+                  "train ?"
+                ]
+              ],
+              "model": "Excusez-moi, il y a un autre train ?"
+            }
+          ],
+          "followUp": "Oui, madame, à midi.",
+          "followUpRole": "Employée",
+          "newWords": [
+            "annulé"
+          ]
+        },
+        {
+          "id": "sit_11_cancelled_d02",
+          "place": "À la gare",
+          "cue": "A station employee answers your question about the next train to Paris. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Employé",
+              "text": "Le prochain départ est au quai trois."
+            },
+            {
+              "speaker": "learner",
+              "text": "Merci ! Il part à quelle ___ ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "Where does the next train leave from?",
+              "choices": [
+                "Platform three",
+                "Platform ten"
+              ],
+              "correct": 0,
+              "miss": "Reread: « au quai trois »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "heures",
+                "heure",
+                "l'heure"
+              ],
+              "correct": 1,
+              "why": [
+                "« À quelle heure ? » is singular: « heure ».",
+                "",
+                "No article here: « à quelle heure », not « à quelle l'heure »."
+              ]
+            }
+          ],
+          "followUp": "À midi, madame.",
+          "newWords": [
+            "départ",
+            "quai"
+          ]
+        },
+        {
+          "id": "sit_11_cancelled_s01",
+          "place": "À la gare · phrase seule",
+          "standalone": "Construire",
+          "cue": "You go up to a station employee. He says vous to you. Tell him the train to Paris is cancelled, and ask about another departure.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say excuse me: the train to Paris is cancelled; is there another departure?",
+              "bank": [
+                "Excusez-moi,",
+                "le train",
+                "pour Paris",
+                "est annulé,",
+                "il y a",
+                "un autre",
+                "départ ?",
+                "est annulée,",
+                "une autre",
+                "Excuse-moi,"
+              ],
+              "accepted": [
+                [
+                  "Excusez-moi,",
+                  "le train",
+                  "pour Paris",
+                  "est annulé,",
+                  "il y a",
+                  "un autre",
+                  "départ ?"
+                ]
+              ],
+              "model": "Excusez-moi, le train pour Paris est annulé, il y a un autre départ ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_11_cancelled_d03",
+          "place": "À la gare",
+          "cue": "A woman waiting for the same train talks to you. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Voyageuse",
+              "voice": "female",
+              "text": "Il y a une annonce. Vous avez compris ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, notre train est ___."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "annulés",
+                "annulée",
+                "annulé"
+              ],
+              "correct": 2,
+              "why": [
+                "« Train » is singular: no s.",
+                "« Train » is masculine: « annulé », no e.",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does the woman ask?",
+              "choices": [
+                "If you understood the announcement",
+                "If you saw the train"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Il y a une annonce. Vous avez compris ? »"
+            }
+          ],
+          "followUp": "Oh non ! Et le prochain ?",
+          "newWords": [
+            "annonce"
+          ]
+        },
+        {
+          "id": "sit_11_cancelled_d04",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat « Les copains ». He says vous to you all.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Mon train est annulé ! Je suis à la gare."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « annulé » mean here?",
+              "choices": [
+                "full",
+                "cancelled",
+                "late"
+              ],
+              "correct": 1,
+              "why": [
+                "No: full is « complet ».",
+                "",
+                "No: late is « en retard »."
+              ],
+              "target": "annulé"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say oh no, and ask Théo if he's taking the next one.",
+              "bank": [
+                "Oh non !",
+                "Tu prends",
+                "le prochain ?",
+                "la prochaine ?",
+                "Tu prend",
+                "Vous prenez"
+              ],
+              "accepted": [
+                [
+                  "Oh non !",
+                  "Tu prends",
+                  "le prochain ?"
+                ]
+              ],
+              "model": "Oh non ! Tu prends le prochain ?"
+            }
+          ],
+          "followUp": "Oui, à midi, je crois.",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_cancelled_s02",
+          "place": "À la gare · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "Ask a station employee which platform the train to Paris leaves from. He says vous to you.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "Ouais, c'est quel quai, le train pour Paris ?",
+                "Excusez-moi, monsieur, le train pour Paris, c'est quel quai ?",
+                "Salut ! Le quai pour Paris, c'est où ?"
+              ],
+              "correct": 1,
+              "why": [
+                "Good spoken French, but « ouais » is for friends. Say « Excusez-moi, monsieur ».",
+                "",
+                "Good French, but « Salut » is for friends. The employee says vous to you."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_11_cancelled_d05",
+          "place": "À la gare",
+          "cue": "Clarify: the station is noisy, and the employee answers very fast. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Employé",
+              "text": "Le départ pour Paris, c'est au quai six."
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Ask him to repeat, politely.",
+              "bank": [
+                "Pardon ?",
+                "Vous pouvez répéter,",
+                "s'il vous plaît ?",
+                "Tu peux répéter,",
+                "s'il te plaît ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon ?",
+                  "Vous pouvez répéter,",
+                  "s'il vous plaît ?"
+                ],
+                [
+                  "Vous pouvez répéter,",
+                  "s'il vous plaît ?"
+                ]
+              ],
+              "model": "Pardon ? Vous pouvez répéter, s'il vous plaît ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « quai » mean here?",
+              "choices": [
+                "exit",
+                "train",
+                "platform"
+              ],
+              "correct": 2,
+              "why": [
+                "No: « quai » is where you get on the train, not the way out.",
+                "No: the train is « train ».",
+                ""
+              ],
+              "target": "quai"
+            }
+          ],
+          "followUp": "Pardon ! Quai six, madame.",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_cancelled_d06",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Ton train pour Paris, il est annulé ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui ! Il y a une ___ à la gare."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "annonce",
+                "annonces",
+                "quai"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "After « une », singular: « annonce ».",
+                "« Quai » is masculine (« un quai »), and a platform doesn't tell you anything."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès want to know?",
+              "choices": [
+                "If your train is full",
+                "If your train is cancelled"
+              ],
+              "correct": 1,
+              "miss": "Reread: « il est annulé ? »"
+            }
+          ],
+          "followUp": "Oh non ! Tu rentres à la maison ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_cancelled_s03",
+          "place": "Texto · Léa · phrase seule",
+          "standalone": "Corriger",
+          "cue": "You text Léa, your flatmate, from the station. You say tu to her.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Mon train est annulée, le prochain départ est au quai trois.",
+              "error": {
+                "word": "annulée",
+                "fix": "annulé",
+                "choices": [
+                  "annulés",
+                  "annulé",
+                  "annonce"
+                ],
+                "why": "« Train » is masculine singular: « mon train est annulé »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_11_cancelled_d07",
+          "place": "À la gare",
+          "cue": "A woman waiting on the platform talks to you. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Voyageuse",
+              "voice": "female",
+              "text": "Pardon, cette annonce, c'est pour quel train ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Pour Paris. Le train est ___, je crois."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « annonce » mean here?",
+              "choices": [
+                "departure",
+                "announcement",
+                "platform"
+              ],
+              "correct": 1,
+              "why": [
+                "No: departure is « départ ».",
+                "",
+                "No: platform is « quai »."
+              ],
+              "target": "annonce"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "annulés",
+                "annulé",
+                "annulée"
+              ],
+              "correct": 1,
+              "why": [
+                "« Train » is singular: no s.",
+                "",
+                "« Train » is masculine: « annulé », no e."
+              ]
+            }
+          ],
+          "followUp": "Ah, merci. Quelle journée !",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_cancelled_d08",
+          "place": "Appel · Léa",
+          "cue": "Léa, your flatmate, calls you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "T'es où ? Ton train part quand ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say it's cancelled, and the next departure is at noon.",
+              "bank": [
+                "Il est annulé,",
+                "le prochain départ",
+                "est à midi.",
+                "Il est annulée,",
+                "la prochaine départ",
+                "est au midi."
+              ],
+              "accepted": [
+                [
+                  "Il est annulé,",
+                  "le prochain départ",
+                  "est à midi."
+                ]
+              ],
+              "model": "Il est annulé, le prochain départ est à midi."
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa want to know?",
+              "choices": [
+                "Where you are and when your train leaves",
+                "Where you are and who you're with"
+              ],
+              "correct": 0,
+              "miss": "Reread: « T'es où ? Ton train part quand ? »"
+            }
+          ],
+          "followUp": "D'accord, à ce soir, alors !",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_cancelled_s04",
+          "place": "Texto · Léa · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You're texting Léa, your flatmate (tu). The train has already left: put the sentence in the past (passé composé).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Le train part du quai trois à midi.",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it in the passé composé.",
+              "bank": [
+                "Le train",
+                "est parti",
+                "du quai trois",
+                "à midi.",
+                "a parti",
+                "est partie",
+                "de le quai trois"
+              ],
+              "accepted": [
+                [
+                  "Le train",
+                  "est parti",
+                  "du quai trois",
+                  "à midi."
+                ]
+              ],
+              "model": "Le train est parti du quai trois à midi."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_11_cancelled_d09",
+          "place": "À la gare",
+          "cue": "You're at the station with Léa, your flatmate. You say tu to each other. An announcement plays.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Annonce",
+              "voice": "female",
+              "text": "Le train pour Paris : départ quai deux."
+            },
+            {
+              "speaker": "learner",
+              "text": "Vite, on ___ au quai deux !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "Where does the train to Paris leave from?",
+              "choices": [
+                "Platform ten",
+                "Platform two"
+              ],
+              "correct": 1,
+              "miss": "Reread: « départ quai deux »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "vas",
+                "allons",
+                "va"
+              ],
+              "correct": 2,
+              "why": [
+                "« Vas » goes with « tu ». With « on », say « on va ».",
+                "« Allons » goes with « nous ». With « on », say « on va ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Oui, j'arrive !",
+          "followUpBy": "Léa",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_cancelled_d10",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you later in the day. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Ton train est encore annulé ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès ask?",
+              "choices": [
+                "If your train is cancelled again",
+                "If your train is late again"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Ton train est encore annulé ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say no: it leaves at noon, from platform three.",
+              "bank": [
+                "Non,",
+                "il part",
+                "à midi,",
+                "quai trois.",
+                "il pars",
+                "Oui,",
+                "à la midi,"
+              ],
+              "accepted": [
+                [
+                  "Non,",
+                  "il part",
+                  "à midi,",
+                  "quai trois."
+                ]
+              ],
+              "model": "Non, il part à midi, quai trois."
+            }
+          ],
+          "followUp": "Super ! À demain, alors.",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_cancelled_s05",
+          "place": "À la gare · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Which French word means “departure”? A station employee is talking to you (vous).",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Employé",
+              "text": "Le train pour Paris est annulé, le prochain ___ est à midi."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "departure",
+              "choices": [
+                "quai",
+                "départ",
+                "annonce"
+              ],
+              "correct": 1,
+              "why": [
+                "« Quai » means platform.",
+                "",
+                "« Annonce » means announcement, and it's feminine."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_11_delay",
+      "title": "Le retard",
+      "note": "How late is the train? « Environ » means about: « environ vingt minutes de retard ». « Prévu » means due, planned: « le train est prévu à six heures ». « Le panneau » is the departures board.",
+      "items": [
+        {
+          "id": "sit_11_delay_d01",
+          "place": "À la gare",
+          "cue": "A station employee tells you about your train. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Employé",
+              "text": "Le train a environ vingt minutes de retard."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "How late is the train?",
+              "choices": [
+                "About twenty minutes",
+                "About two hours"
+              ],
+              "correct": 0,
+              "miss": "Reread: « environ vingt minutes de retard »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Thank him, and say you'll wait at the café.",
+              "bank": [
+                "Merci,",
+                "j'attends",
+                "au café.",
+                "à le café.",
+                "attends",
+                "Pardon,"
+              ],
+              "accepted": [
+                [
+                  "Merci,",
+                  "j'attends",
+                  "au café."
+                ]
+              ],
+              "model": "Merci, j'attends au café."
+            }
+          ],
+          "followUp": "Très bien. Bonne journée, madame.",
+          "newWords": [
+            "environ"
+          ]
+        },
+        {
+          "id": "sit_11_delay_d02",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Ton train est prévu à quelle heure ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "À six heures, mais il est ___ retard."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa want to know?",
+              "choices": [
+                "Where your train leaves from",
+                "What time your train is due"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Ton train est prévu à quelle heure ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "à",
+                "en",
+                "au"
+              ],
+              "correct": 1,
+              "why": [
+                "Late is « en retard », not « à retard ».",
+                "",
+                "Late is « en retard », not « au retard »."
+              ]
+            }
+          ],
+          "followUp": "Pas grave, je t'attends !",
+          "newWords": [
+            "prévu"
+          ]
+        },
+        {
+          "id": "sit_11_delay_s01",
+          "place": "Texto · Léa · phrase seule",
+          "standalone": "Construire",
+          "cue": "Léa, your flatmate, texts you. She says tu to you. Your train is about twenty minutes late. You're a woman.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Tu arrives à quelle heure ce soir ? Je fais le dîner."
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say: my train is about twenty minutes late, sorry!",
+              "bank": [
+                "Mon train",
+                "a environ",
+                "vingt minutes",
+                "de retard,",
+                "désolée !",
+                "désolé !",
+                "est environ",
+                "en retard,"
+              ],
+              "accepted": [
+                [
+                  "Mon train",
+                  "a environ",
+                  "vingt minutes",
+                  "de retard,",
+                  "désolée !"
+                ]
+              ],
+              "model": "Mon train a environ vingt minutes de retard, désolée !"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_11_delay_d03",
+          "place": "À la gare",
+          "cue": "A man waiting at the station talks to you. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Voyageur",
+              "text": "Regardez le panneau : une heure de retard !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oh non ! Le train était ___ à midi."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "prévue",
+                "prévu",
+                "prévoir"
+              ],
+              "correct": 1,
+              "why": [
+                "« Train » is masculine: « prévu », no e.",
+                "",
+                "« Prévoir » is the infinitive. After « était », use « prévu »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does the board say?",
+              "choices": [
+                "The train is cancelled",
+                "The train is an hour late"
+              ],
+              "correct": 1,
+              "miss": "Reread: « une heure de retard ! »"
+            }
+          ],
+          "followUp": "Oui ! Bon, on attend.",
+          "newWords": [
+            "panneau"
+          ]
+        },
+        {
+          "id": "sit_11_delay_d04",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Tu arrives quand ? Environ huit heures ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « environ » mean here?",
+              "choices": [
+                "exactly",
+                "about, roughly",
+                "after"
+              ],
+              "correct": 1,
+              "why": [
+                "No: « environ » is not exact. It means about.",
+                "",
+                "No: after is « après »."
+              ],
+              "target": "environ"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, around eight: the train is running late.",
+              "bank": [
+                "Oui,",
+                "environ",
+                "huit heures,",
+                "il a",
+                "du retard.",
+                "il est",
+                "de retard.",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "environ",
+                  "huit heures,",
+                  "il a",
+                  "du retard."
+                ]
+              ],
+              "model": "Oui, environ huit heures, il a du retard."
+            }
+          ],
+          "followUp": "Pas de souci, à tout à l'heure !",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_delay_s02",
+          "place": "À la gare · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "Tell the older man waiting next to you that the train is about an hour late. He says vous to you.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "T'as vu ? Une heure de retard, le train !",
+                "Ouais, une heure de retard, bref.",
+                "Le train a environ une heure de retard, monsieur."
+              ],
+              "correct": 2,
+              "why": [
+                "Good spoken French, but « t'as vu » is for friends. The man says vous to you.",
+                "Good spoken French, but « ouais » and « bref » are for friends.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_11_delay_d05",
+          "place": "À la gare",
+          "cue": "Clarify: at the station, an employee answers you very fast. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Employé",
+              "text": "Le train de Paris est prévu à dix heures environ."
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Ask him to repeat, politely.",
+              "bank": [
+                "Pardon ?",
+                "Vous pouvez répéter,",
+                "s'il vous plaît ?",
+                "Tu peux répéter,",
+                "s'il te plaît ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon ?",
+                  "Vous pouvez répéter,",
+                  "s'il vous plaît ?"
+                ],
+                [
+                  "Vous pouvez répéter,",
+                  "s'il vous plaît ?"
+                ]
+              ],
+              "model": "Pardon ? Vous pouvez répéter, s'il vous plaît ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « prévu » mean here?",
+              "choices": [
+                "cancelled",
+                "late",
+                "due, planned"
+              ],
+              "correct": 2,
+              "why": [
+                "No: cancelled is « annulé ».",
+                "No: late is « en retard ».",
+                ""
+              ],
+              "target": "prévu"
+            }
+          ],
+          "followUp": "Pardon ! Prévu à dix heures, madame.",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_delay_d06",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat « Les copains ». He says vous to you all. You're all taking the same train.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Le panneau dit : vingt minutes de retard !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Pas grave, on ___ au café !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "attends",
+                "attendre",
+                "attend"
+              ],
+              "correct": 2,
+              "why": [
+                "« Attends » goes with « je » or « tu ». With « on », say « on attend ».",
+                "« Attendre » is the infinitive. With « on », say « on attend ».",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "How late is the train?",
+              "choices": [
+                "Twenty minutes",
+                "Two hours"
+              ],
+              "correct": 0,
+              "miss": "Reread: « vingt minutes de retard ! »"
+            }
+          ],
+          "followUp": "Top, j'arrive !",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_delay_s03",
+          "place": "Texto · Léa · phrase seule",
+          "standalone": "Corriger",
+          "cue": "You text Léa, your flatmate, from the station. You say tu to her.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Mon train est prévue à six heures, il a du retard.",
+              "error": {
+                "word": "prévue",
+                "fix": "prévu",
+                "choices": [
+                  "prévu",
+                  "prévoir",
+                  "panneau"
+                ],
+                "why": "« Train » is masculine: « prévu », no e."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_11_delay_d07",
+          "place": "À la gare",
+          "cue": "A woman waiting at the station talks to you. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Voyageuse",
+              "voice": "female",
+              "text": "Le panneau ne marche pas. Le train est en retard ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, il a ___ dix minutes de retard."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « panneau » mean here?",
+              "choices": [
+                "platform",
+                "board, sign",
+                "announcement"
+              ],
+              "correct": 1,
+              "why": [
+                "No: platform is « quai ».",
+                "",
+                "No: announcement is « annonce »."
+              ],
+              "target": "panneau"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "vers",
+                "environ",
+                "depuis"
+              ],
+              "correct": 1,
+              "why": [
+                "« Vers » is for a time on the clock (« vers midi »), not an amount of delay.",
+                "",
+                "« Depuis » means since. « Il a depuis dix minutes de retard » is not French."
+              ]
+            }
+          ],
+          "followUp": "Merci, madame. Bon, on attend !",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_delay_d08",
+          "place": "Texto · Karim",
+          "cue": "Karim, the barista at your café, texts you. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Tu rentres ce soir ? Ton train est prévu quand ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say at five o'clock, but it's late.",
+              "bank": [
+                "À cinq heures,",
+                "mais",
+                "il est",
+                "en retard.",
+                "il a",
+                "à retard.",
+                "À cinq heure,"
+              ],
+              "accepted": [
+                [
+                  "À cinq heures,",
+                  "mais",
+                  "il est",
+                  "en retard."
+                ]
+              ],
+              "model": "À cinq heures, mais il est en retard."
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Karim ask?",
+              "choices": [
+                "When your train is due",
+                "If your train is cancelled"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Ton train est prévu quand ? »"
+            }
+          ],
+          "followUp": "Pas de souci, le café ferme à huit heures.",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_delay_s04",
+          "place": "À la gare · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You asked Léa (tu) this. Now ask the older man waiting next to you. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Ton train est prévu à quelle heure, Léa ?",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it with « vous », and say « monsieur ».",
+              "bank": [
+                "Votre train",
+                "est prévu",
+                "à quelle heure,",
+                "monsieur ?",
+                "Ton train",
+                "Vos train",
+                "est prévue",
+                "Léa ?"
+              ],
+              "accepted": [
+                [
+                  "Votre train",
+                  "est prévu",
+                  "à quelle heure,",
+                  "monsieur ?"
+                ]
+              ],
+              "model": "Votre train est prévu à quelle heure, monsieur ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_11_delay_d09",
+          "place": "À la gare",
+          "cue": "You ask a station employee about the departures board. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Employé",
+              "text": "Le panneau ? Il y a vingt minutes de retard."
+            },
+            {
+              "speaker": "learner",
+              "text": "Merci ! Je vais ___ un café, alors."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "How late is the train?",
+              "choices": [
+                "Ten minutes",
+                "Twenty minutes"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Il y a vingt minutes de retard. »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "prendre",
+                "prends",
+                "pris"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "After « je vais », use the infinitive: « prendre ».",
+                "« Pris » is the past participle. After « je vais », use « prendre »."
+              ]
+            }
+          ],
+          "followUp": "Bonne idée, madame.",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_delay_d10",
+          "place": "Appel · Léa",
+          "cue": "Léa, your flatmate, calls you. She says tu to you. You're a woman.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Ton train a combien de retard ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa ask?",
+              "choices": [
+                "How much your ticket was",
+                "How late your train is"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Ton train a combien de retard ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say about an hour, and that you're sorry.",
+              "bank": [
+                "Environ",
+                "une heure,",
+                "désolée !",
+                "désolé !",
+                "Vers",
+                "une heures,"
+              ],
+              "accepted": [
+                [
+                  "Environ",
+                  "une heure,",
+                  "désolée !"
+                ]
+              ],
+              "model": "Environ une heure, désolée !"
+            }
+          ],
+          "followUp": "Oh non ! Bon, je t'attends.",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_delay_s05",
+          "place": "Texto · Inès · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Which French word means “about, roughly”? You're texting Inès, your colleague (tu). You're a woman.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Le train de Paris a ___ une heure de retard, je suis désolée."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "about, roughly",
+              "choices": [
+                "déjà",
+                "vers",
+                "environ"
+              ],
+              "correct": 2,
+              "why": [
+                "« Déjà » means already.",
+                "« Vers » is for a time on the clock (« vers midi »), not an amount of delay.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_11_desk",
+      "title": "Au guichet",
+      "note": "At the ticket office (« le guichet »), you change your train ticket. A train ticket is « un billet »; « un ticket » is a receipt or a metro ticket. « Valable » means valid: « mon billet est valable demain ».",
+      "items": [
+        {
+          "id": "sit_11_desk_d01",
+          "place": "Au guichet",
+          "cue": "You go to the ticket office at the station. The employee says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Employée",
+              "voice": "female",
+              "text": "Bonjour ! Le guichet ferme dans cinq minutes."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the employee tell you?",
+              "choices": [
+                "The ticket office opens in five minutes",
+                "The ticket office closes in five minutes"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Le guichet ferme dans cinq minutes. »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say hello: your train is cancelled.",
+              "bank": [
+                "Bonjour !",
+                "Mon train",
+                "est annulé.",
+                "est annulée.",
+                "Ma train",
+                "Salut !"
+              ],
+              "accepted": [
+                [
+                  "Bonjour !",
+                  "Mon train",
+                  "est annulé."
+                ]
+              ],
+              "model": "Bonjour ! Mon train est annulé."
+            }
+          ],
+          "followUp": "Ah, la grève ! Je regarde, madame.",
+          "newWords": [
+            "guichet"
+          ]
+        },
+        {
+          "id": "sit_11_desk_d02",
+          "place": "Au guichet",
+          "cue": "The employee at the ticket office says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Employée",
+              "voice": "female",
+              "text": "Votre billet, s'il vous plaît."
+            },
+            {
+              "speaker": "learner",
+              "text": "Voilà ___ billet. Mon train est annulé."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the employee ask for?",
+              "choices": [
+                "Your ticket",
+                "Your name"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Votre billet, s'il vous plaît. »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "ma",
+                "mon",
+                "mes"
+              ],
+              "correct": 1,
+              "why": [
+                "« Billet » is masculine: « mon billet ».",
+                "",
+                "« Mes » is for several tickets. Here « billet » is singular."
+              ]
+            }
+          ],
+          "followUp": "Merci. Un instant, madame.",
+          "newWords": [
+            "billet"
+          ]
+        },
+        {
+          "id": "sit_11_desk_s01",
+          "place": "Au guichet · phrase seule",
+          "standalone": "Construire",
+          "cue": "At the ticket office, tell the employee your train is cancelled, and ask if you can exchange your ticket. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Employée",
+              "voice": "female",
+              "text": "Bonjour, madame ! Qu'est-ce que je peux faire pour vous ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say: hello, madam, my train is cancelled; can I exchange my ticket?",
+              "bank": [
+                "Bonjour, madame,",
+                "mon train",
+                "est annulé,",
+                "je peux",
+                "échanger",
+                "mon billet ?",
+                "ma billet ?",
+                "est annulée,",
+                "je peut"
+              ],
+              "accepted": [
+                [
+                  "Bonjour, madame,",
+                  "mon train",
+                  "est annulé,",
+                  "je peux",
+                  "échanger",
+                  "mon billet ?"
+                ]
+              ],
+              "model": "Bonjour, madame, mon train est annulé, je peux échanger mon billet ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_11_desk_d03",
+          "place": "Au guichet",
+          "cue": "The employee at the ticket office looks at your ticket. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Employée",
+              "voice": "female",
+              "text": "Votre billet est valable demain."
+            },
+            {
+              "speaker": "learner",
+              "text": "Ah bon ? Pour ___ train ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "quelle",
+                "quels",
+                "quel"
+              ],
+              "correct": 2,
+              "why": [
+                "« Train » is masculine: « quel ».",
+                "« Train » is singular here: « quel ».",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does the employee say about your ticket?",
+              "choices": [
+                "You can use it tomorrow",
+                "You need a new one"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Votre billet est valable demain. »"
+            }
+          ],
+          "followUp": "Le train de midi, madame.",
+          "newWords": [
+            "valable"
+          ]
+        },
+        {
+          "id": "sit_11_desk_d04",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you while you're at the station. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "T'es où ? Au guichet ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « guichet » mean here?",
+              "choices": [
+                "platform",
+                "ticket office",
+                "waiting room"
+              ],
+              "correct": 1,
+              "why": [
+                "No: platform is « quai ».",
+                "",
+                "No: « guichet » is where you buy or change tickets, not where you wait."
+              ],
+              "target": "guichet"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes: there are a lot of people.",
+              "bank": [
+                "Oui,",
+                "il y a",
+                "beaucoup",
+                "de monde !",
+                "des monde !",
+                "Non,",
+                "très"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "il y a",
+                  "beaucoup",
+                  "de monde !"
+                ]
+              ],
+              "model": "Oui, il y a beaucoup de monde !"
+            }
+          ],
+          "followUp": "Ah, la grève ! À ce soir, alors.",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_desk_s02",
+          "place": "Au guichet · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "Ask the employee at the ticket office if your ticket is valid for tomorrow. She says vous to you.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "Excusez-moi, madame, mon billet est valable pour demain ?",
+                "Mon billet, il marche demain, ouais ?",
+                "Salut ! Mon billet, c'est bon pour demain ?"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "Spoken and casual: « ouais » is for friends. The employee says vous to you.",
+                "Good French, but « Salut » is for friends. Say « Excusez-moi, madame »."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_11_desk_d05",
+          "place": "Au guichet",
+          "cue": "Clarify: the employee at the ticket office talks very fast. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Employée",
+              "voice": "female",
+              "text": "Votre billet est valable dans le train de midi."
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Ask her to repeat, politely.",
+              "bank": [
+                "Pardon ?",
+                "Vous pouvez répéter,",
+                "s'il vous plaît ?",
+                "Tu peux répéter,",
+                "s'il te plaît ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon ?",
+                  "Vous pouvez répéter,",
+                  "s'il vous plaît ?"
+                ],
+                [
+                  "Vous pouvez répéter,",
+                  "s'il vous plaît ?"
+                ]
+              ],
+              "model": "Pardon ? Vous pouvez répéter, s'il vous plaît ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « billet » mean here?",
+              "choices": [
+                "receipt",
+                "seat",
+                "ticket (train)"
+              ],
+              "correct": 2,
+              "why": [
+                "No: a receipt is « ticket ».",
+                "No: a seat is « place ».",
+                ""
+              ],
+              "target": "billet"
+            }
+          ],
+          "followUp": "Pardon ! Le train de midi, madame.",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_desk_d06",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat « Les copains ». He says vous to you all. His train was cancelled too.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Et mon billet ? Il est encore valable ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Je crois. Demande au ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "quai",
+                "guichet",
+                "gare"
+              ],
+              "correct": 1,
+              "why": [
+                "The platform (« quai ») is where trains leave, not where you ask about tickets.",
+                "",
+                "« Gare » is feminine: « à la gare », not « au gare »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo want to know?",
+              "choices": [
+                "If his train is still cancelled",
+                "If his ticket is still valid"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Il est encore valable ? »"
+            }
+          ],
+          "followUp": "Bonne idée, merci !",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_desk_s03",
+          "place": "Au guichet · phrase seule",
+          "standalone": "Corriger",
+          "cue": "At the ticket office, you tell the employee about your ticket. You say vous to her.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Mon billet est valables pour le train de midi, au quai deux.",
+              "error": {
+                "word": "valables",
+                "fix": "valable",
+                "choices": [
+                  "valable",
+                  "guichet",
+                  "billets"
+                ],
+                "why": "One ticket, so singular: « valable », no s."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_11_desk_d07",
+          "place": "Au guichet",
+          "cue": "A man in the queue at the ticket office talks to you. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Voyageur",
+              "text": "Il est valable, votre billet ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, ___ demain matin."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « valable » mean here?",
+              "choices": [
+                "cheap",
+                "full",
+                "valid"
+              ],
+              "correct": 2,
+              "why": [
+                "No: cheap is « pas cher ».",
+                "No: full is « complet ».",
+                ""
+              ],
+              "target": "valable"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "depuis",
+                "jusqu'à",
+                "vers"
+              ],
+              "correct": 1,
+              "why": [
+                "« Depuis » means since. A ticket is valid until a time: « jusqu'à ».",
+                "",
+                "« Vers » means around a time. It doesn't say how long the ticket is valid."
+              ]
+            }
+          ],
+          "followUp": "Ah, super ! Bonne journée, madame.",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_desk_d08",
+          "place": "Appel · Inès",
+          "cue": "Inès, your colleague, calls you. She says tu to you. She knows your train was cancelled.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Alors, ton billet ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say it's valid tomorrow, and that's great.",
+              "bank": [
+                "Il est",
+                "valable",
+                "demain,",
+                "c'est super !",
+                "valables",
+                "Elle est",
+                "hier,"
+              ],
+              "accepted": [
+                [
+                  "Il est",
+                  "valable",
+                  "demain,",
+                  "c'est super !"
+                ]
+              ],
+              "model": "Il est valable demain, c'est super !"
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès ask about?",
+              "choices": [
+                "Your office",
+                "Your ticket"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Alors, ton billet ? »"
+            }
+          ],
+          "followUp": "Top ! Alors, à demain !",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_desk_s04",
+          "place": "Texto · Léa · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You're texting Léa, your flatmate (tu). Say what you're going to do (futur proche).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Demain matin, j'échange mon billet au guichet de la gare.",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it with « je vais ».",
+              "bank": [
+                "Demain matin,",
+                "je vais",
+                "échanger",
+                "mon billet",
+                "au guichet de la gare.",
+                "je vas",
+                "échangé",
+                "mes billet"
+              ],
+              "accepted": [
+                [
+                  "Demain matin,",
+                  "je vais",
+                  "échanger",
+                  "mon billet",
+                  "au guichet de la gare."
+                ]
+              ],
+              "model": "Demain matin, je vais échanger mon billet au guichet de la gare."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_11_desk_d09",
+          "place": "Au guichet",
+          "cue": "The employee at the ticket office is closing. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Employée",
+              "voice": "female",
+              "text": "Le guichet ferme. Revenez demain, madame."
+            },
+            {
+              "speaker": "learner",
+              "text": "D'accord. Mon billet est ___ demain ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the employee tell you?",
+              "choices": [
+                "Come back in an hour",
+                "Come back tomorrow"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Revenez demain, madame. »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "valables",
+                "possible",
+                "valable"
+              ],
+              "correct": 2,
+              "why": [
+                "One ticket: singular « valable », no s.",
+                "« Possible » doesn't describe a ticket. A ticket is « valable ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Oui, jusqu'à midi. Bonne soirée !",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_desk_d10",
+          "place": "Texto · Karim",
+          "cue": "Karim, the barista at your café, texts you. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "T'as échangé ton billet ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Karim ask?",
+              "choices": [
+                "If you exchanged your ticket",
+                "If you lost your ticket"
+              ],
+              "correct": 0,
+              "miss": "Reread: « T'as échangé ton billet ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, at the ticket office: it's all fine.",
+              "bank": [
+                "Oui,",
+                "au guichet,",
+                "c'est bon !",
+                "à le guichet,",
+                "Non,",
+                "c'est bonne !"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "au guichet,",
+                  "c'est bon !"
+                ]
+              ],
+              "model": "Oui, au guichet, c'est bon !"
+            }
+          ],
+          "followUp": "Super ! Alors, un café ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_11_desk_s05",
+          "place": "À la gare · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Which French word means “ticket office”? You ask a woman at the station. You say vous to her.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Bonjour, madame, le ___ est ouvert jusqu'à quelle heure, s'il vous plaît ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "ticket office",
+              "choices": [
+                "guichet",
+                "billet",
+                "quai"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Billet » means ticket, and a ticket isn't open or closed.",
+                "« Quai » means platform."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    }
+  ]
+}
