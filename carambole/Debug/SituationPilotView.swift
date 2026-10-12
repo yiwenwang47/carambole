@@ -49,6 +49,11 @@ struct SituationPilotView: View {
     /// Dialogue change: old content fades out, then the new one rises in.
     @State private var contentOpacity: Double = 1
     @State private var contentOffset: CGFloat = 0
+    /// Natural height of the reply tiles, so the tray can shrink and scroll.
+    @State private var trayContentHeight: CGFloat = 0
+    /// Card fit (shared with the production card): the dialogue keeps its
+    /// height and the reply tray gives up space instead.
+    @State private var fit = SituationCardFit()
     /// The reply bubble swaps tiles → text in place, without a crossfade.
     @State private var slotSwapInstant = false
     // Tap-to-show English.
@@ -125,9 +130,16 @@ struct SituationPilotView: View {
 
     private var card: some View {
         VStack(spacing: 0) {
-            topBar
-            cueBlock
+            VStack(spacing: 0) {
+                topBar
+                cueBlock
+            }
+            .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { fit.header = $0 }
+            // With a word tray below, the chat keeps room for all its bubbles
+            // and the tray shrinks (its tiles scroll) instead; the card itself
+            // never scrolls, and the cue never covers a speaker label.
             chat
+                .frame(minHeight: fit.chatFloor(trayShown: drill?.type == .reply))
                 .opacity(contentOpacity)
                 .offset(y: contentOffset)
             Rectangle().fill(AppColor.hairline).frame(height: 1).padding(.top, 10)
@@ -140,12 +152,18 @@ struct SituationPilotView: View {
             .offset(y: contentOffset)
             .padding(.horizontal, 18)
             .padding(.top, 22)
+            .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { fit.zone = $0 }
+            .layoutPriority(1)
             Spacer(minLength: 0).frame(maxHeight: 4)
             footer
                 .padding(.horizontal, 18)
                 .padding(.top, 12)
                 .padding(.bottom, 8)
+                .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { fit.footer = $0 }
+                .layoutPriority(2)
         }
+        .frame(minHeight: 0, maxHeight: .infinity)
+        .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { fit.card = $0 }
         .overlayPreferenceValue(TipAnchorKey.self) { anchors in
             GeometryReader { proxy in
                 if let tip, let anchor = anchors[tip.id] {
@@ -224,7 +242,7 @@ struct SituationPilotView: View {
                                 if turn.isLearner {
                                     learnerBubble(turnIndex: i, turn: turn)
                                 } else {
-                                    serverBubble(id: "t\(i)", name: turn.name, text: turn.text,
+                                    serverBubble(id: "t\(i)", name: turn.speakerLabel, text: turn.text,
                                                  audioKey: "pilot2_\(dialogue.id)_t\(i)")
                                 }
                             }
@@ -237,6 +255,10 @@ struct SituationPilotView: View {
                                     .transition(Self.swap)
                             }
                         }
+                        // The bubbles' own height (the spacer above would grow with
+                        // the chat and feed back into the fit), plus the top
+                        // padding, the end marker and its spacing.
+                        .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { fit.chatContent = $0 + 19 }
                         .id(index)
                         .transition(.identity)
                         Color.clear.frame(height: 1).id("end")
@@ -272,14 +294,14 @@ struct SituationPilotView: View {
     private func serverBubble(id: String, name: String?, text: String, audioKey: String) -> some View {
         HStack {
             VStack(alignment: .leading, spacing: 3) {
-                speakerLabel((name ?? "Serveur").uppercased())
+                if let name { speakerLabel(name.uppercased()) }
                 HStack(alignment: .top, spacing: 10) {
                     Button { Speaker.shared.speak(text, key: audioKey) } label: {
                         Image(systemName: "play.fill").font(.system(size: 10)).foregroundColor(AppColor.ink)
                             .frame(width: 28, height: 28)
                             .background(Circle().fill(Color(hex: theme.quietFill)))
                     }
-                    .accessibilityLabel("Écouter")
+                    .accessibilityLabel(name.map { "Écouter \($0)" } ?? "Écouter")
                     lineText(id: id, text: text, turnIndex: nil)
                         .padding(.top, 2)
                 }
@@ -529,21 +551,28 @@ struct SituationPilotView: View {
                 choiceGrid(mark.choices, columns: 3, stacked: false) { c in withAnimation(Self.motion) { if !locked { selected = c } } }
             }
         case .reply:
-            FlowLayout(spacing: 8, lineSpacing: 8) {
-                ForEach(bankOrder, id: \.self) { i in
-                    let used = placed.contains(i)
-                    Button { guard !locked else { return }; withAnimation(Self.tileSpring) { placed.append(i) } } label: { MagnetTile(text: bank[i]) }
-                        .buttonStyle(.plain)
-                        .opacity(used ? 0.25 : 1)
-                        .disabled(used)
+            // The tray asks for its full height; when the dialogue above needs
+            // the room, it shrinks and its tiles scroll inside it, clipped to
+            // its rounded edge. The card itself never scrolls.
+            ScrollView(.vertical, showsIndicators: false) {
+                FlowLayout(spacing: 8, lineSpacing: 8) {
+                    ForEach(bankOrder, id: \.self) { i in
+                        let used = placed.contains(i)
+                        Button { guard !locked else { return }; withAnimation(Self.tileSpring) { placed.append(i) } } label: { MagnetTile(text: bank[i]) }
+                            .buttonStyle(.plain)
+                            .opacity(used ? 0.25 : 1)
+                            .disabled(used)
+                    }
                 }
+                .padding(14)
+                .frame(maxWidth: .infinity, minHeight: 96)
+                .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { trayContentHeight = $0 }
             }
-            .padding(14)
-            .frame(maxWidth: .infinity, minHeight: 96)
-            // Never let the locked card squeeze the tray below its tiles; the
-            // chat above gives up the space and scrolls instead.
-            .fixedSize(horizontal: false, vertical: true)
+            .scrollBounceBehavior(.basedOnSize)
+            .frame(minHeight: SituationCardFit.trayMin, maxHeight: max(96, trayContentHeight))
+            .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { fit.tray = $0 }
             .background(RoundedRectangle(cornerRadius: 22, style: .continuous).fill(Color(hex: theme.tint)))
+            .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
         }
     }
 
@@ -682,6 +711,7 @@ struct SituationPilotView: View {
     private func startDrill() {
         tries = 0; selected = nil; wrongChoices = []; rightChoice = nil
         placed = []; rejectedReplies = []; note = ""; fixPhase = .find; flashedWord = nil
+        trayContentHeight = 0
         guard let drill else { return }
         if drill.type == .reply || drill.type == .pick { slot = .building }
         if drill.type == .reply { bankOrder = Array((drill.bank ?? []).indices).shuffled() }

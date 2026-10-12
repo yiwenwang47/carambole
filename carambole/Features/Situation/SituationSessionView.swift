@@ -103,6 +103,9 @@ struct SituationSessionView: View {
     /// Natural height of the reply tiles, so the tray can shrink below it and
     /// scroll when the card is short.
     @State private var trayContentHeight: CGFloat = 0
+    /// Card fit (the card never scrolls): the dialogue keeps its full height and
+    /// the reply tray gives up space instead. Measured heights, in points.
+    @State private var fit = SituationCardFit()
     // Tap-to-show English.
     @State private var tip: Tip?
     @State private var tipToken = 0
@@ -291,12 +294,17 @@ struct SituationSessionView: View {
 
     private var cardView: some View {
         VStack(spacing: 0) {
-            topBar
-            cueBlock
-            // The chat takes what is left and scrolls inside itself; it gives up
-            // space before the drill area does.
+            VStack(spacing: 0) {
+                topBar
+                cueBlock
+            }
+            .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { fit.header = $0 }
+            // The chat takes what is left and scrolls inside itself. With a word
+            // tray below, the chat keeps room for all its bubbles and the tray
+            // shrinks (its tiles scroll) instead, so the cue never covers a
+            // speaker label.
             chat
-                .frame(minHeight: 64)
+                .frame(minHeight: fit.chatFloor(trayShown: drill?.type == .reply))
                 .opacity(contentOpacity)
                 .offset(y: contentOffset)
             Rectangle().fill(AppColor.hairline).frame(height: 1).padding(.top, 10)
@@ -309,13 +317,17 @@ struct SituationSessionView: View {
             .offset(y: contentOffset)
             .padding(.horizontal, 18)
             .padding(.top, 22)
+            .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { fit.zone = $0 }
             .layoutPriority(1)
             footer
                 .padding(.horizontal, 18)
                 .padding(.top, 12)
                 .padding(.bottom, 8)
+                .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { fit.footer = $0 }
                 .layoutPriority(2)
         }
+        .frame(minHeight: 0, maxHeight: .infinity)
+        .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { fit.card = $0 }
         .overlayPreferenceValue(SituationTipAnchorKey.self) { anchors in
             GeometryReader { proxy in
                 if let tip, let anchor = anchors[tip.id] {
@@ -390,7 +402,7 @@ struct SituationSessionView: View {
                                 if turn.isLearner {
                                     learnerBubble(turnIndex: i, turn: turn)
                                 } else {
-                                    serverBubble(id: "t\(i)", name: turn.name, text: turn.text,
+                                    serverBubble(id: "t\(i)", name: turn.speakerLabel, text: turn.text,
                                                  audioKey: item.turnAudioKey(i))
                                 }
                             }
@@ -403,6 +415,10 @@ struct SituationSessionView: View {
                                     .transition(Self.swap)
                             }
                         }
+                        // The bubbles' own height (the spacer above would grow with
+                        // the chat and feed back into the fit), plus the top
+                        // padding, the end marker and its spacing.
+                        .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { fit.chatContent = $0 + 19 }
                         .id(index)
                         .transition(.identity)
                         Color.clear.frame(height: 1).id("end")
@@ -440,7 +456,7 @@ struct SituationSessionView: View {
         let hasAudio = Speaker.bundledAudioURL(key: audioKey) != nil
         return HStack {
             VStack(alignment: .leading, spacing: 3) {
-                speakerLabel((name ?? "Serveur").uppercased())
+                if let name { speakerLabel(name.uppercased()) }
                 HStack(alignment: .top, spacing: 10) {
                     // Replay only. A missing clip leaves the text and a dimmed button.
                     Button { Speaker.shared.playBundled(key: audioKey) } label: {
@@ -451,7 +467,7 @@ struct SituationSessionView: View {
                     .buttonStyle(.plain)
                     .disabled(!hasAudio)
                     .opacity(hasAudio ? 1 : 0.35)
-                    .accessibilityLabel("Écouter \(name ?? "le serveur")")
+                    .accessibilityLabel(name.map { "Écouter \($0)" } ?? "Écouter")
                     lineText(id: id, text: text, turnIndex: nil)
                         .padding(.top, 2)
                 }
@@ -777,7 +793,8 @@ struct SituationSessionView: View {
             .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { trayContentHeight = $0 }
         }
         .scrollBounceBehavior(.basedOnSize)
-        .frame(minHeight: 60, maxHeight: max(96, trayContentHeight))
+        .frame(minHeight: SituationCardFit.trayMin, maxHeight: max(96, trayContentHeight))
+        .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { fit.tray = $0 }
         .background(RoundedRectangle(cornerRadius: 22, style: .continuous).fill(Color(hex: theme.tint)))
         .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
     }
@@ -1379,5 +1396,32 @@ private struct SituationShake: GeometryEffect {
     }
     func effectValue(size: CGSize) -> ProjectionTransform {
         ProjectionTransform(CGAffineTransform(translationX: 4 * sin(amount * .pi * 4), y: 0))
+    }
+}
+
+/// Vertical fit for a dialogue card that never scrolls as a whole. The chat
+/// keeps the height of all its bubbles while a word tray is on screen; the tray
+/// takes the rest and scrolls its tiles inside itself (down to `trayMin`).
+/// Every input is a measured height in points. The tray's own height is
+/// subtracted from the drill zone, so the result never feeds back into itself.
+struct SituationCardFit: Equatable {
+    static let trayMin: CGFloat = 60
+    static let chatMin: CGFloat = 64
+    /// The hairline between chat and drill zone, with its top padding.
+    static let divider: CGFloat = 11
+
+    var card: CGFloat = 0
+    var header: CGFloat = 0
+    var chatContent: CGFloat = 0
+    var zone: CGFloat = 0
+    var tray: CGFloat = 0
+    var footer: CGFloat = 0
+
+    /// Height the chat and the tray share.
+    var shared: CGFloat { card - header - Self.divider - (zone - tray) - footer }
+
+    func chatFloor(trayShown: Bool) -> CGFloat {
+        guard trayShown, card > 0, chatContent > 0 else { return Self.chatMin }
+        return max(Self.chatMin, min(chatContent, shared - Self.trayMin))
     }
 }
