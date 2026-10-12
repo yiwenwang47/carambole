@@ -2,7 +2,10 @@
 
 > ## ▶ RECENT HANDOFFS
 >
-> **▶ BOOK 2 — START HERE: `docs/plans/2026-10-11-book-2-next-session-handoff.md`
+> **▶ BOOK 2 — START HERE: `docs/plans/2026-10-12-book-2-handoff.md`** (2026-10-12;
+> it points back to the 2026-10-11 handoff for decisions/pipeline/commands).
+>
+> **▶ BOOK 2 — previous: `docs/plans/2026-10-11-book-2-next-session-handoff.md`
 > (2026-10-11, `main`, not pushed).** Modules 01–06 are authored, reviewed and have
 > full audio (1,751 clips). Robin, the learner, is a woman from Eugene, Oregon; her
 > lines are feminine only. M. Ferrand's voice is Orus. Agent prompts for the next
