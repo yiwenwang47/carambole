@@ -19,6 +19,16 @@
 - `2c7d38b9`: a gloss's last bracket group shows as a small grey second line without brackets (867 of 2,194 glosses). The user checked it on the simulator and approved it.
 - Open, offered and not yet chosen: trim the 19 glosses over 60 characters (re-check each with `gloss_dump.py`).
 - The History page already lists wrong attempts by day (`HistoryViewModel.loadMistakes`), so §5's "doesn't show attempt-log rows" looks stale. Check it on the simulator.
+- `98a11554`: VoiceOver gaps fixed (cue and Leçon title are headings, decorative module number hidden, speaker names read as written). Everything else was already labelled.
+- `f5598a6c`: the 19 glosses over 60 characters trimmed, each checked against every line that uses it. Spec: `docs/plans/2026-10-13-gloss-trim-spec.json`.
+- **Release check (Task 7), simulator only:**
+  - Pass: Book 1 lints (lint_topics, deep_lint, bank_lint); Book 2 strict lint; 88 + 57 Python tests; pilot tests; Swift model test (3,000 items); pilot scenario test; Debug and Release builds.
+  - Pass: the real v4 export (`~/Downloads/carambole-progress.sqlite`) upgrades to v5 with all Book 1 rows kept (492 / 4,348 / 389).
+  - Pass: both books' home, Apprendre, Réviser and Réglages; Book 2 History "Erreurs" tab lists attempts (§5's History item was stale); offline (no network code); iPhone SE layout (card stays locked).
+  - The Release binary has no `CB_*` flag strings, but the Test book JSONs and 118 `pilot2_` clips (about 1.8 MB) still ship in it.
+  - Open: `Speaker` sets `.duckOthers` and never deactivates the session, so other audio may stay ducked after the first clip. Check on the phone before changing it.
+  - Open: on small screens the oldest chat bubble is cut mid-line under the cue, with no fade.
+  - Book 2 Réglages reuses Book 1's English copy ("New grammar elements per day").
 - Simulator: Test book with all of the above. Phone: still v10. `main` not pushed.
 
 ## 1. (Done, see §0) Production audio: production audio for 21–25
