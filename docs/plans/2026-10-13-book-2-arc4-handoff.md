@@ -90,3 +90,10 @@ Read the lessons in the next-session handoff §4 before you write the author pro
 - Écrire typing drill: later, in its own session.
 - History page does not yet show attempt-log rows. VoiceOver is only partly labelled.
 - `main` is not pushed.
+
+## 5. Arc 4 progress log (2026-10-12 session)
+
+- [x] Planner: `2026-10-13-book-2-arc4-plan.md` + 5 matrices. User accepted all §12 defaults.
+- [x] Prep (`3702e9a`): modules.json 16–20; lint roles « Agent immobilier / Agente immobilière »; `MASC_SELF` + « je me suis » and couché, tombé, épuisé, trempé, convaincu, sûr (test added).
+- **Gloss decision (Claude, user delegated):** existing glosses are correct for every line in 01–15 (checked by scan). Keep them; arc 4 avoids the plan §2.8 trap senses or adds longer phrase keys. Widen book-wide only where a new line truly needs the sense. User rule: **every gloss must be correct in every drill** — authors self-check; judges and a coordinator gloss-in-context pass verify.
+- [ ] Authors: batch 1 launched (16a, 16b, 17a, 17b, 18a, 18b, 19a). Batch 2 (19b, 20a, 20b) launches as batch 1 finishes. If interrupted: relaunch halves whose drafts are missing or fail `lint.py --draft`.
