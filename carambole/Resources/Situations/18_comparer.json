@@ -199,7 +199,7 @@
               "miss": "Reread: « Le premier appartement a un balcon ! »"
             }
           ],
-          "followUp": "Non, il est plus petit. Mais il a un balcon !",
+          "followUp": "Non, il est plus petit. Mais il est lumineux !",
           "followUpBy": "Inès",
           "newWords": [
             "balcon"
@@ -208,7 +208,7 @@
         {
           "id": "sit_18_flats_d04",
           "place": "À l'appart",
-          "cue": "Léa, your flatmate, is at home with you. She says tu to you. Inès wants a flat with a balcony.",
+          "cue": "Léa, your flatmate, is at home with you. She says tu to you. Inès told you she wants a balcony.",
           "turns": [
             {
               "speaker": "server",
@@ -269,13 +269,13 @@
               "type": "pick",
               "prompt": "Which one fits?",
               "choices": [
-                "Salut ! Il est lumineux, ton appartement ? Il a un balcon ?",
+                "Salut ! Il est lumineux, cet appartement ? Il a un balcon ?",
                 "Excusez-moi, monsieur, cet appartement est lumineux ? Il y a un balcon ?",
                 "Tu sais si cet appartement est lumineux ? Il a un balcon ?"
               ],
               "correct": 1,
               "why": [
-                "Good French, but « salut » and « ton » are for friends. Say vous to the agent.",
+                "Good French, but « salut » is for friends. Say vous to the agent.",
                 "",
                 "Good French, but « tu sais » is for friends. Say vous to the agent."
               ]
@@ -833,7 +833,7 @@
             {
               "speaker": "server",
               "role": "Agent immobilier",
-              "text": "C'est un loyer charges comprises, madame."
+              "text": "Le loyer ? Charges comprises, madame."
             },
             {
               "speaker": "learner",
@@ -864,7 +864,7 @@
                 "The furniture"
               ],
               "correct": 0,
-              "miss": "Reread: « un loyer charges comprises »: bills included."
+              "miss": "Reread: « Le loyer ? Charges comprises »: bills included."
             }
           ],
           "followUp": "Oui, madame, il est beaucoup moins cher.",
@@ -1182,10 +1182,10 @@
             },
             {
               "type": "comprehend",
-              "prompt": "What does Théo ask about?",
+              "prompt": "What does Théo want to know?",
               "choices": [
-                "The size of your flat",
-                "Your rent"
+                "What you pay a year",
+                "What you pay a month"
               ],
               "correct": 1,
               "miss": "Reread: « Ton loyer, c'est combien par mois ? »"
@@ -1247,7 +1247,7 @@
             {
               "speaker": "server",
               "name": "Inès",
-              "text": "Karim paie moins cher par mois, tu sais."
+              "text": "Le loyer de Karim est moins cher, tu sais."
             },
             {
               "speaker": "learner",
@@ -1257,13 +1257,13 @@
           "drills": [
             {
               "type": "comprehend",
-              "prompt": "What does Inès say about Karim?",
+              "prompt": "What does Inès say about Karim's rent?",
               "choices": [
-                "He pays less a month",
-                "He pays more a month"
+                "It's cheaper",
+                "It's more expensive"
               ],
               "correct": 0,
-              "miss": "Reread: « Karim paie moins cher par mois »."
+              "miss": "Reread: « Le loyer de Karim est moins cher »."
             },
             {
               "type": "complete",
@@ -1443,7 +1443,7 @@
               "type": "comprehend",
               "prompt": "What's good about this flat?",
               "choices": [
-                "It's near the station",
+                "It's near a park",
                 "It's near the metro"
               ],
               "correct": 1,
@@ -1631,14 +1631,14 @@
               "prompt": "Which one fits?",
               "choices": [
                 "Excusez-moi, monsieur, cet appartement est près du métro ?",
-                "Il est près du métro, ton appartement ?",
-                "Salut ! C'est près du métro, ton appartement ?"
+                "Excuse-moi, cet appartement est près du métro ?",
+                "Salut ! Il est près du métro, cet appartement ?"
               ],
               "correct": 0,
               "why": [
                 "",
-                "Good French, but « ton » is for friends. Say vous to the agent.",
-                "Good French, but « salut » and « ton » are for friends. Say vous to the agent."
+                "Good French, but « excuse-moi » is for friends. Say « excusez-moi » to the agent.",
+                "Good French, but « salut » is for friends. Say vous to the agent."
               ]
             }
           ],
@@ -1763,7 +1763,7 @@
           "turns": [
             {
               "speaker": "learner",
-              "text": "Le centre-ville est plus bruyante que notre quartier, mais il est près de tout.",
+              "text": "Le centre-ville est plus bruyante que mon quartier, mais il est près de tout.",
               "error": {
                 "word": "bruyante",
                 "fix": "bruyant",
@@ -1796,7 +1796,7 @@
             },
             {
               "speaker": "learner",
-              "text": "Moi aussi, je préfère ___ quartier."
+              "text": "Pour moi aussi ! Je préfère ___ quartier."
             }
           ],
           "drills": [
@@ -1894,7 +1894,7 @@
           "turns": [
             {
               "speaker": "learner",
-              "text": "Le centre-ville est bruyant. Notre quartier est calme.",
+              "text": "Le centre-ville est bruyant. Mon quartier est calme.",
               "source": true
             }
           ],
@@ -1908,7 +1908,7 @@
                 "plus",
                 "bruyant",
                 "que",
-                "notre quartier.",
+                "mon quartier.",
                 "bruyante",
                 "qui",
                 "de"
@@ -1920,10 +1920,10 @@
                   "plus",
                   "bruyant",
                   "que",
-                  "notre quartier."
+                  "mon quartier."
                 ]
               ],
-              "model": "Le centre-ville est plus bruyant que notre quartier."
+              "model": "Le centre-ville est plus bruyant que mon quartier."
             }
           ],
           "newWords": []
@@ -2303,7 +2303,7 @@
               "model": "Dix euros, ce n'est pas cher !"
             }
           ],
-          "followUp": "Dix euros ? C'est le moins cher, alors !",
+          "followUp": "Dix euros ? C'est moins cher que mon forfait !",
           "followUpBy": "Inès",
           "newWords": []
         },
@@ -2318,13 +2318,13 @@
               "type": "pick",
               "prompt": "Which one fits?",
               "choices": [
-                "Il est illimité, ton forfait ?",
+                "Excuse-moi, ce forfait est illimité ?",
                 "Salut ! Il est illimité, ce forfait ?",
                 "Excusez-moi, madame, ce forfait est illimité ?"
               ],
               "correct": 2,
               "why": [
-                "Good French, but « ton » is for friends. Say vous to the saleswoman.",
+                "Good French, but « excuse-moi » is for friends. Say « excusez-moi » to the saleswoman.",
                 "Good French, but « salut » is for friends. Say vous to the saleswoman.",
                 ""
               ]
@@ -2678,18 +2678,16 @@
               "type": "reply",
               "prompt": "Ask if it's more expensive.",
               "bank": [
-                "Et",
-                "il est",
+                "Et il est",
                 "plus",
                 "cher ?",
-                "elle est",
+                "Et elle est",
                 "chère ?",
                 "meilleur ?"
               ],
               "accepted": [
                 [
-                  "Et",
-                  "il est",
+                  "Et il est",
                   "plus",
                   "cher ?"
                 ]
@@ -2746,7 +2744,7 @@
             {
               "speaker": "server",
               "role": "Vendeur",
-              "text": "Ce vélo électrique est d'occasion, et pas cher."
+              "text": "Ce vélo électrique est d'occasion et pas cher."
             }
           ],
           "drills": [
@@ -2758,7 +2756,7 @@
                 "It's second-hand, and not expensive"
               ],
               "correct": 1,
-              "miss": "Reread: « d'occasion, et pas cher »."
+              "miss": "Reread: « d'occasion et pas cher »."
             },
             {
               "type": "reply",
@@ -2843,7 +2841,7 @@
             {
               "speaker": "server",
               "role": "Vendeur",
-              "text": "Bonjour, madame, je peux vous aider pour un vélo ?"
+              "text": "Bonjour, madame, vous cherchez un vélo ? Je peux vous aider ?"
             }
           ],
           "drills": [
@@ -2958,22 +2956,24 @@
             },
             {
               "type": "reply",
-              "prompt": "Say no: not a second-hand one!",
+              "prompt": "Say yes, but not a second-hand one!",
               "bank": [
-                "Non,",
+                "Oui,",
+                "mais",
                 "pas",
                 "d'occasion !",
-                "Oui,",
+                "Non,",
                 "des"
               ],
               "accepted": [
                 [
-                  "Non,",
+                  "Oui,",
+                  "mais",
                   "pas",
                   "d'occasion !"
                 ]
               ],
-              "model": "Non, pas d'occasion !"
+              "model": "Oui, mais pas d'occasion !"
             }
           ],
           "followUp": "Ah bon ? Alors je cherche un vélo d'occasion !",
@@ -3143,7 +3143,7 @@
             {
               "speaker": "server",
               "name": "Théo",
-              "text": "J'ai un vélo électrique, mais il est très lourd !"
+              "text": "Mon vieux vélo électrique est très lourd !"
             },
             {
               "speaker": "learner",
@@ -3318,7 +3318,7 @@
               ]
             }
           ],
-          "followUp": "Super, je cherche ça ce week-end !",
+          "followUp": "Super, je cherche un vélo ce week-end !",
           "followUpBy": "Inès",
           "newWords": []
         },
@@ -3378,7 +3378,7 @@
           "turns": [
             {
               "speaker": "learner",
-              "text": "Je cherche un vélo électrique ___, il est moins cher et assez léger."
+              "text": "Je cherche un vélo électrique ___, pas trop cher et assez léger."
             }
           ],
           "drills": [
@@ -3554,7 +3554,7 @@
             {
               "speaker": "server",
               "name": "Inès",
-              "text": "Les vélos sont en promo, ce week-end !"
+              "text": "Les vélos sont en promo ce week-end !"
             },
             {
               "speaker": "learner",
@@ -3914,7 +3914,7 @@
           "turns": [
             {
               "speaker": "learner",
-              "text": "Ce forfait a un bon rapport qualité-prix, et il est en promo.",
+              "text": "Ce forfait a un bon rapport qualité-prix et il est en promo.",
               "source": true
             }
           ],
@@ -3925,7 +3925,7 @@
               "bank": [
                 "Ce forfait a",
                 "le meilleur",
-                "rapport qualité-prix,",
+                "rapport qualité-prix",
                 "et il est",
                 "en promo.",
                 "la meilleure",
@@ -3936,12 +3936,12 @@
                 [
                   "Ce forfait a",
                   "le meilleur",
-                  "rapport qualité-prix,",
+                  "rapport qualité-prix",
                   "et il est",
                   "en promo."
                 ]
               ],
-              "model": "Ce forfait a le meilleur rapport qualité-prix, et il est en promo."
+              "model": "Ce forfait a le meilleur rapport qualité-prix et il est en promo."
             }
           ],
           "newWords": []
@@ -3954,7 +3954,7 @@
             {
               "speaker": "server",
               "name": "Théo",
-              "text": "Le cinéma est en promo mardi !"
+              "text": "Mardi, c'est en promo au cinéma !"
             },
             {
               "speaker": "learner",
@@ -3970,7 +3970,7 @@
                 "It has an offer on Tuesday"
               ],
               "correct": 1,
-              "miss": "Reread: « le cinéma est en promo mardi »."
+              "miss": "Reread: « c'est en promo au cinéma »."
             },
             {
               "type": "complete",
@@ -4084,7 +4084,7 @@
             {
               "speaker": "server",
               "name": "Inès",
-              "text": "Le centre-ville, c'est un avantage !"
+              "text": "Habiter au centre-ville, c'est un avantage !"
             }
           ],
           "drills": [
@@ -4183,15 +4183,15 @@
             {
               "speaker": "server",
               "name": "Inès",
-              "text": "Tu as visité l'appartement de Karim ? Il est comment ?"
+              "text": "Tu as visité un appartement ce matin ? Il est comment ?"
             }
           ],
           "drills": [
             {
               "type": "reply",
-              "prompt": "Say the flat has one advantage: it's near the metro, but it's small.",
+              "prompt": "Say it has one advantage: it's near the metro, but it's small.",
               "bank": [
-                "Cet appartement",
+                "Il",
                 "a",
                 "un avantage :",
                 "il est",
@@ -4205,7 +4205,7 @@
               ],
               "accepted": [
                 [
-                  "Cet appartement",
+                  "Il",
                   "a",
                   "un avantage :",
                   "il est",
@@ -4215,7 +4215,7 @@
                   "petit."
                 ]
               ],
-              "model": "Cet appartement a un avantage : il est près du métro, mais il est petit."
+              "model": "Il a un avantage : il est près du métro, mais il est petit."
             }
           ],
           "newWords": []
@@ -4276,7 +4276,7 @@
             {
               "speaker": "server",
               "name": "Karim",
-              "text": "Le vélo, c'est un avantage pour toi !"
+              "text": "Venir à vélo, c'est un avantage pour toi !"
             }
           ],
           "drills": [
@@ -4356,7 +4356,7 @@
             {
               "speaker": "server",
               "role": "Agent immobilier",
-              "text": "Il y a un inconvénient : pas de balcon."
+              "text": "Un inconvénient : il n'y a pas de balcon."
             }
           ],
           "drills": [
@@ -4675,7 +4675,7 @@
             {
               "speaker": "server",
               "name": "Inès",
-              "text": "Un inconvénient de ton quartier ?"
+              "text": "Et ton quartier, il a un inconvénient ?"
             }
           ],
           "drills": [
@@ -4687,7 +4687,7 @@
                 "A drawback of your neighbourhood"
               ],
               "correct": 1,
-              "miss": "Reread: « un inconvénient de ton quartier ? »"
+              "miss": "Reread: « ton quartier, il a un inconvénient ? »"
             },
             {
               "type": "reply",
@@ -5010,7 +5010,7 @@
               "prompt": "Which one fits?",
               "choices": [
                 "J'hésite encore, tu sais ! Ça dépend du prix.",
-                "J'hésite encore, madame. Ça dépend du prix, je crois.",
+                "J'hésite encore, madame. Ça dépend du prix.",
                 "Ça dépend, il coûte combien, ton forfait ?"
               ],
               "correct": 1,
@@ -5246,7 +5246,7 @@
                 "If Inès is visiting the flat"
               ],
               "correct": 0,
-              "miss": "Reread: « Inès prend l'appartement ? »"
+              "miss": "Reread: « Votre amie Inès prend l'appartement, madame ? »"
             }
           ],
           "followUp": "Je comprends. Elle peut m'appeler, si elle veut.",
@@ -5255,9 +5255,9 @@
         },
         {
           "id": "sit_18_decide_s04",
-          "place": "À l'agence · phrase seule",
+          "place": "Appel · agence · phrase seule",
           "standalone": "Transformer",
-          "cue": "You texted this to Inès (tu) about photos of a flat. Now say it to the estate agent (vous).",
+          "cue": "You texted this to Inès (tu) about photos of a flat. Now say it to the estate agent (vous) on the phone.",
           "turns": [
             {
               "speaker": "learner",

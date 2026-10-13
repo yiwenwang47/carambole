@@ -57,7 +57,7 @@
         {
           "id": "sit_20_ask_d02",
           "place": "Texto · Inès",
-          "cue": "Inès, your colleague, texts you. She says tu to you. She sends you a photo of a flat.",
+          "cue": "Inès, your colleague, texts you. She says tu to you. She sends you a photo of a flat, with its price.",
           "turns": [
             {
               "speaker": "server",
@@ -116,36 +116,30 @@
           "drills": [
             {
               "type": "reply",
-              "prompt": "Offer her some advice, ask her to send you the photos, and say you'll let her know tonight.",
+              "prompt": "Offer her some advice, and say you'll let her know tonight.",
               "bank": [
                 "Tu veux",
                 "un conseil ?",
-                "Envoie-moi",
-                "les photos,",
-                "je te dis",
+                "Je te dis",
                 "ce soir.",
                 "une conseil ?",
-                "je vous dis"
+                "Je vous dis"
               ],
               "accepted": [
                 [
                   "Tu veux",
                   "un conseil ?",
-                  "Envoie-moi",
-                  "les photos,",
-                  "je te dis",
+                  "Je te dis",
                   "ce soir."
                 ],
                 [
-                  "Envoie-moi",
-                  "les photos,",
-                  "je te dis",
+                  "Je te dis",
                   "ce soir.",
                   "Tu veux",
                   "un conseil ?"
                 ]
               ],
-              "model": "Tu veux un conseil ? Envoie-moi les photos, je te dis ce soir."
+              "model": "Tu veux un conseil ? Je te dis ce soir."
             }
           ],
           "newWords": []
@@ -397,7 +391,7 @@
           "turns": [
             {
               "speaker": "learner",
-              "text": "J'ai le choix entre deux appartement, qu'est-ce que tu en penses ?",
+              "text": "Tu as le choix entre deux appartement ? Qu'est-ce que tu en penses ?",
               "error": {
                 "word": "appartement",
                 "fix": "appartements",
@@ -440,13 +434,13 @@
               "target": "choix",
               "choices": [
                 "choice",
-                "cheese",
+                "voice",
                 "change"
               ],
               "correct": 0,
               "why": [
                 "",
-                "No: cheese is « fromage ».",
+                "No: voice is « voix ».",
                 "No: change is « monnaie »."
               ]
             },
@@ -477,7 +471,7 @@
             {
               "speaker": "server",
               "name": "Mme Dumas",
-              "text": "Madame, un conseil : quel forfait pour moi ?"
+              "text": "Madame, un conseil, s'il vous plaît : quel forfait je prends ?"
             }
           ],
           "drills": [
@@ -508,7 +502,7 @@
                 "Which phone plan you'd advise for her"
               ],
               "correct": 1,
-              "miss": "Reread: « un conseil : quel forfait pour moi ? »"
+              "miss": "Reread: « un conseil, s'il vous plaît : quel forfait je prends ? »"
             }
           ],
           "followUp": "Merci beaucoup, madame !",
@@ -609,7 +603,7 @@
         {
           "id": "sit_20_ask_d10",
           "place": "Texto · Théo",
-          "cue": "Théo, your friend, texts you. He says tu to you. He wants a new bike.",
+          "cue": "Théo, your friend, texts you. He says tu to you. He wants to buy a bike.",
           "turns": [
             {
               "speaker": "server",
@@ -648,7 +642,7 @@
               "model": "D'occasion, c'est moins cher !"
             }
           ],
-          "followUp": "D'accord, merci du conseil !",
+          "followUp": "D'accord, merci pour le conseil !",
           "newWords": []
         },
         {
@@ -659,7 +653,7 @@
           "turns": [
             {
               "speaker": "learner",
-              "text": "J'ai le ___ entre deux appartements, qu'est-ce que tu en penses ?"
+              "text": "Tu as le ___ entre deux appartements ? Qu'est-ce que tu en penses ?"
             }
           ],
           "drills": [
@@ -777,7 +771,7 @@
               ]
             }
           ],
-          "followUp": "Un film français, il est génial !",
+          "followUp": "Un film français ! Je te dis le nom ce soir.",
           "newWords": [
             "je te recommande"
           ]
@@ -1352,7 +1346,7 @@
             {
               "speaker": "server",
               "name": "Inès",
-              "text": "Je prends le premier appartement, sans hésiter ?"
+              "text": "Le premier appartement, tu le prendrais sans hésiter ?"
             }
           ],
           "drills": [
@@ -1361,10 +1355,10 @@
               "prompt": "What is Inès asking?",
               "choices": [
                 "If you want to visit the first flat",
-                "If she should take the first flat without hesitating"
+                "If you'd take the first flat without hesitating"
               ],
               "correct": 1,
-              "miss": "Reread: « Je prends le premier appartement, sans hésiter ? »"
+              "miss": "Reread: « tu le prendrais sans hésiter ? »"
             },
             {
               "type": "reply",
@@ -1478,7 +1472,7 @@
         {
           "id": "sit_20_inplace_d03",
           "place": "Texto · Théo",
-          "cue": "Théo, your friend, texts you. He says tu to you. He's choosing a new bike.",
+          "cue": "Théo, your friend, texts you. He says tu to you. He's choosing a new bike, and you've just given him your advice.",
           "turns": [
             {
               "speaker": "server",
@@ -1517,7 +1511,7 @@
               "miss": "Reread: « Le vélo électrique ? Tu es sûre ? »"
             }
           ],
-          "followUp": "D'accord, merci du conseil !",
+          "followUp": "D'accord, merci pour le conseil !",
           "newWords": [
             "sûre"
           ]
@@ -1706,7 +1700,7 @@
           "turns": [
             {
               "speaker": "learner",
-              "text": "Je suis sûr, à ta place, je prendrais le forfait illimité sans hésiter.",
+              "text": "Je suis sûr : à ta place, je prendrais le forfait illimité sans hésiter.",
               "error": {
                 "word": "sûr",
                 "fix": "sûre",
@@ -1749,13 +1743,13 @@
               "target": "sûre",
               "choices": [
                 "sure",
-                "safe",
+                "ready",
                 "sour"
               ],
               "correct": 0,
               "why": [
                 "",
-                "No: safe is « sans danger ».",
+                "No: ready is « prête ».",
                 "No: sour is « acide »."
               ]
             },
@@ -1781,7 +1775,7 @@
         {
           "id": "sit_20_inplace_d08",
           "place": "WhatsApp · Mme Dumas",
-          "cue": "Mme Dumas, your landlady, writes to you on WhatsApp. She says vous to you.",
+          "cue": "Mme Dumas, your landlady, writes to you on WhatsApp. She says vous to you. She's checking a day you gave her.",
           "turns": [
             {
               "speaker": "server",
@@ -1962,7 +1956,7 @@
           "turns": [
             {
               "speaker": "learner",
-              "text": "À ta place, je prendrais le vélo électrique, ___, il est super !"
+              "text": "À ta place, je prendrais le vélo électrique ___ : il est super !"
             }
           ],
           "drills": [
@@ -2080,7 +2074,7 @@
               ]
             }
           ],
-          "followUp": "Et pas de bouchons !",
+          "followUp": "Et en plus, c'est sympa !",
           "newWords": [
             "pratique",
             "économiser"
@@ -2231,7 +2225,7 @@
               "prompt": "Which answer fits your manager?",
               "choices": [
                 "À vélo, c'est pratique, tu sais !",
-                "Je viens à vélo, madame, c'est pratique, et surtout, c'est rapide.",
+                "Je viens à vélo, c'est pratique, et surtout, c'est rapide.",
                 "Le vélo, c'est top, et toi ?"
               ],
               "correct": 1,
@@ -2395,7 +2389,7 @@
             {
               "speaker": "server",
               "name": "Léa",
-              "text": "Je fais les courses lundi. Comme ça, on économise !"
+              "text": "Je fais les courses au marché. Comme ça, on économise !"
             },
             {
               "speaker": "learner",
@@ -2850,13 +2844,13 @@
               "prompt": "What does « fais attention » mean here?",
               "target": "fais attention",
               "choices": [
-                "enjoy (tu)",
+                "enjoy your meal",
                 "take your time (tu)",
                 "be careful (tu)"
               ],
               "correct": 2,
               "why": [
-                "No: enjoy is « bonne dégustation ».",
+                "No: enjoy your meal is « bon appétit ».",
                 "No: take your time is « prends ton temps ».",
                 ""
               ]
@@ -3200,7 +3194,7 @@
         {
           "id": "sit_20_warn_d09",
           "place": "Texto · Inès",
-          "cue": "You want a quiet café to read in. Inès, your colleague, texts you. She says tu to you.",
+          "cue": "You're looking for a café to read in. Inès, your colleague, texts you. She says tu to you.",
           "turns": [
             {
               "speaker": "server",
@@ -3209,7 +3203,7 @@
             },
             {
               "speaker": "learner",
-              "text": "Merci du ___ !"
+              "text": "Merci pour le ___ !"
             }
           ],
           "drills": [
@@ -3235,7 +3229,7 @@
               "why": [
                 "« Choix » means choice: Inès gave you advice.",
                 "",
-                "« Conseils » is plural, but « du » goes with one: « merci du conseil »."
+                "« Conseils » is plural, but « le » goes with one: « merci pour le conseil »."
               ]
             }
           ],
@@ -3380,7 +3374,7 @@
         {
           "id": "sit_20_weigh_d02",
           "place": "Texto · Théo",
-          "cue": "Théo, your friend, texts you. He says tu to you.",
+          "cue": "You asked Théo, your friend, if he's buying the electric bike. He texts back. He says tu to you.",
           "turns": [
             {
               "speaker": "server",
@@ -3559,7 +3553,7 @@
               "model": "Oui, elle hésite !"
             }
           ],
-          "followUp": "Elle a raison, c'est un grand choix !",
+          "followUp": "Elle a raison, c'est un choix difficile !",
           "newWords": [
             "le pour et le contre"
           ]
@@ -4027,7 +4021,7 @@
               "prompt": "What does Mme Dumas recommend?",
               "choices": [
                 "The new plumber",
-                "The new baker"
+                "Her usual plumber"
               ],
               "correct": 0,
               "miss": "Reread: « le nouveau plombier »."
@@ -4145,6 +4139,13 @@
                   "le forfait illimité,",
                   "il est",
                   "moins cher."
+                ],
+                [
+                  "À votre place,",
+                  "je prendrais",
+                  "le forfait illimité,",
+                  "il est",
+                  "moins cher."
                 ]
               ],
               "model": "À votre place, je prendrais le forfait illimité, monsieur, il est moins cher."
@@ -4194,7 +4195,7 @@
               "miss": "Reread: « renseignez-vous à l'agence »."
             }
           ],
-          "followUp": "Avec plaisir. Bonne chance à votre amie !",
+          "followUp": "De rien. Bonne chance à votre amie !",
           "newWords": [
             "renseignez-vous"
           ]
@@ -4323,13 +4324,13 @@
               "choices": [
                 "at your home",
                 "if I were you (vous)",
-                "in your seat"
+                "in your opinion"
               ],
               "correct": 1,
               "why": [
                 "No: at your home is « chez vous ».",
                 "",
-                "No: in your seat is « à votre siège »."
+                "No: in your opinion is « à votre avis »."
               ]
             }
           ],
@@ -4340,14 +4341,13 @@
         },
         {
           "id": "sit_20_formal_d06",
-          "place": "En boutique",
-          "cue": "You're in a phone shop. The saleswoman says vous to you.",
+          "place": "Dans la rue",
+          "cue": "You meet M. Ferrand, your neighbour, in the street. He tells you about a phone plan. He says vous to you.",
           "turns": [
             {
               "speaker": "server",
-              "text": "Renseignez-vous, madame, ce forfait est en promo.",
-              "role": "Vendeuse",
-              "voice": "female"
+              "text": "Renseignez-vous, madame : ce forfait est en promo.",
+              "name": "M. Ferrand"
             },
             {
               "speaker": "learner",
@@ -4372,7 +4372,7 @@
             },
             {
               "type": "comprehend",
-              "prompt": "What does the saleswoman say about the plan?",
+              "prompt": "What does M. Ferrand say about the plan?",
               "choices": [
                 "It's on offer",
                 "It's sold out"
@@ -4381,7 +4381,7 @@
               "miss": "Reread: « ce forfait est en promo »."
             }
           ],
-          "followUp": "Dix euros par mois, madame.",
+          "followUp": "Dix euros par mois, je crois.",
           "newWords": [
             "renseignez-vous"
           ]
@@ -4463,7 +4463,7 @@
               ]
             }
           ],
-          "followUp": "De rien. C'est près de la gare.",
+          "followUp": "De rien. Il y a un magasin près de la gare.",
           "newWords": [
             "renseignez-vous"
           ]
@@ -4793,7 +4793,7 @@
           "turns": [
             {
               "speaker": "server",
-              "text": "Voilà, j'ai pris le premier appartement ! Tu es contente ?",
+              "text": "Voilà, j'ai pris le premier appartement, c'est une bonne idée ?",
               "name": "Inès"
             }
           ],
@@ -4896,7 +4896,7 @@
               "correct": 2,
               "why": [
                 "No: you were lucky is « tu as eu de la chance ».",
-                "No: he isn't asking about a reason.",
+                "No: « avoir raison » means to be right, not to have a reason.",
                 ""
               ]
             },
@@ -5065,7 +5065,7 @@
               "miss": "Reread: « J'ai un nouveau travail ! »"
             }
           ],
-          "followUp": "Lundi ! On fait un apéro samedi ?",
+          "followUp": "Lundi ! Merci, les copains !",
           "newWords": [
             "félicitations"
           ]
@@ -5159,7 +5159,7 @@
           "turns": [
             {
               "speaker": "server",
-              "text": "Vous avez pris le vélo électrique ? Vous avez eu raison.",
+              "text": "Ah, le vélo électrique ! Vous avez eu raison.",
               "name": "M. Ferrand"
             }
           ],
@@ -5196,7 +5196,7 @@
               "miss": "Reread: « Vous avez eu raison »."
             }
           ],
-          "followUp": "Avec plaisir, madame !",
+          "followUp": "De rien, madame !",
           "newWords": []
         },
         {
@@ -5252,7 +5252,7 @@
           "turns": [
             {
               "speaker": "server",
-              "text": "Mon nouvel appartement : tu as eu raison !",
+              "text": "Mon nouvel appartement est super, tu as eu raison !",
               "name": "Inès"
             },
             {
