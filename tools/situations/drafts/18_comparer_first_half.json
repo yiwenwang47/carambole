@@ -195,7 +195,7 @@
               "miss": "Reread: « Le premier appartement a un balcon ! »"
             }
           ],
-          "followUp": "Non, il est plus petit. Mais il a un balcon !",
+          "followUp": "Non, il est plus petit. Mais il est lumineux !",
           "followUpBy": "Inès",
           "newWords": [
             "balcon"
@@ -204,7 +204,7 @@
         {
           "id": "sit_18_flats_d04",
           "place": "À l'appart",
-          "cue": "Léa, your flatmate, is at home with you. She says tu to you. Inès wants a flat with a balcony.",
+          "cue": "Léa, your flatmate, is at home with you. She says tu to you. Inès told you she wants a balcony.",
           "turns": [
             {
               "speaker": "server",
@@ -265,13 +265,13 @@
               "type": "pick",
               "prompt": "Which one fits?",
               "choices": [
-                "Salut ! Il est lumineux, ton appartement ? Il a un balcon ?",
+                "Salut ! Il est lumineux, cet appartement ? Il a un balcon ?",
                 "Excusez-moi, monsieur, cet appartement est lumineux ? Il y a un balcon ?",
                 "Tu sais si cet appartement est lumineux ? Il a un balcon ?"
               ],
               "correct": 1,
               "why": [
-                "Good French, but « salut » and « ton » are for friends. Say vous to the agent.",
+                "Good French, but « salut » is for friends. Say vous to the agent.",
                 "",
                 "Good French, but « tu sais » is for friends. Say vous to the agent."
               ]
@@ -829,7 +829,7 @@
             {
               "speaker": "server",
               "role": "Agent immobilier",
-              "text": "C'est un loyer charges comprises, madame."
+              "text": "Le loyer ? Charges comprises, madame."
             },
             {
               "speaker": "learner",
@@ -860,7 +860,7 @@
                 "The furniture"
               ],
               "correct": 0,
-              "miss": "Reread: « un loyer charges comprises »: bills included."
+              "miss": "Reread: « Le loyer ? Charges comprises »: bills included."
             }
           ],
           "followUp": "Oui, madame, il est beaucoup moins cher.",
@@ -1178,10 +1178,10 @@
             },
             {
               "type": "comprehend",
-              "prompt": "What does Théo ask about?",
+              "prompt": "What does Théo want to know?",
               "choices": [
-                "The size of your flat",
-                "Your rent"
+                "What you pay a year",
+                "What you pay a month"
               ],
               "correct": 1,
               "miss": "Reread: « Ton loyer, c'est combien par mois ? »"
@@ -1243,7 +1243,7 @@
             {
               "speaker": "server",
               "name": "Inès",
-              "text": "Karim paie moins cher par mois, tu sais."
+              "text": "Le loyer de Karim est moins cher, tu sais."
             },
             {
               "speaker": "learner",
@@ -1253,13 +1253,13 @@
           "drills": [
             {
               "type": "comprehend",
-              "prompt": "What does Inès say about Karim?",
+              "prompt": "What does Inès say about Karim's rent?",
               "choices": [
-                "He pays less a month",
-                "He pays more a month"
+                "It's cheaper",
+                "It's more expensive"
               ],
               "correct": 0,
-              "miss": "Reread: « Karim paie moins cher par mois »."
+              "miss": "Reread: « Le loyer de Karim est moins cher »."
             },
             {
               "type": "complete",
@@ -1439,7 +1439,7 @@
               "type": "comprehend",
               "prompt": "What's good about this flat?",
               "choices": [
-                "It's near the station",
+                "It's near a park",
                 "It's near the metro"
               ],
               "correct": 1,
@@ -1627,14 +1627,14 @@
               "prompt": "Which one fits?",
               "choices": [
                 "Excusez-moi, monsieur, cet appartement est près du métro ?",
-                "Il est près du métro, ton appartement ?",
-                "Salut ! C'est près du métro, ton appartement ?"
+                "Excuse-moi, cet appartement est près du métro ?",
+                "Salut ! Il est près du métro, cet appartement ?"
               ],
               "correct": 0,
               "why": [
                 "",
-                "Good French, but « ton » is for friends. Say vous to the agent.",
-                "Good French, but « salut » and « ton » are for friends. Say vous to the agent."
+                "Good French, but « excuse-moi » is for friends. Say « excusez-moi » to the agent.",
+                "Good French, but « salut » is for friends. Say vous to the agent."
               ]
             }
           ],
@@ -1759,7 +1759,7 @@
           "turns": [
             {
               "speaker": "learner",
-              "text": "Le centre-ville est plus bruyante que notre quartier, mais il est près de tout.",
+              "text": "Le centre-ville est plus bruyante que mon quartier, mais il est près de tout.",
               "error": {
                 "word": "bruyante",
                 "fix": "bruyant",
@@ -1792,7 +1792,7 @@
             },
             {
               "speaker": "learner",
-              "text": "Moi aussi, je préfère ___ quartier."
+              "text": "Pour moi aussi ! Je préfère ___ quartier."
             }
           ],
           "drills": [
@@ -1890,7 +1890,7 @@
           "turns": [
             {
               "speaker": "learner",
-              "text": "Le centre-ville est bruyant. Notre quartier est calme.",
+              "text": "Le centre-ville est bruyant. Mon quartier est calme.",
               "source": true
             }
           ],
@@ -1904,7 +1904,7 @@
                 "plus",
                 "bruyant",
                 "que",
-                "notre quartier.",
+                "mon quartier.",
                 "bruyante",
                 "qui",
                 "de"
@@ -1916,10 +1916,10 @@
                   "plus",
                   "bruyant",
                   "que",
-                  "notre quartier."
+                  "mon quartier."
                 ]
               ],
-              "model": "Le centre-ville est plus bruyant que notre quartier."
+              "model": "Le centre-ville est plus bruyant que mon quartier."
             }
           ],
           "newWords": []
@@ -2299,7 +2299,7 @@
               "model": "Dix euros, ce n'est pas cher !"
             }
           ],
-          "followUp": "Dix euros ? C'est le moins cher, alors !",
+          "followUp": "Dix euros ? C'est moins cher que mon forfait !",
           "followUpBy": "Inès",
           "newWords": []
         },
@@ -2314,13 +2314,13 @@
               "type": "pick",
               "prompt": "Which one fits?",
               "choices": [
-                "Il est illimité, ton forfait ?",
+                "Excuse-moi, ce forfait est illimité ?",
                 "Salut ! Il est illimité, ce forfait ?",
                 "Excusez-moi, madame, ce forfait est illimité ?"
               ],
               "correct": 2,
               "why": [
-                "Good French, but « ton » is for friends. Say vous to the saleswoman.",
+                "Good French, but « excuse-moi » is for friends. Say « excusez-moi » to the saleswoman.",
                 "Good French, but « salut » is for friends. Say vous to the saleswoman.",
                 ""
               ]
@@ -2674,18 +2674,16 @@
               "type": "reply",
               "prompt": "Ask if it's more expensive.",
               "bank": [
-                "Et",
-                "il est",
+                "Et il est",
                 "plus",
                 "cher ?",
-                "elle est",
+                "Et elle est",
                 "chère ?",
                 "meilleur ?"
               ],
               "accepted": [
                 [
-                  "Et",
-                  "il est",
+                  "Et il est",
                   "plus",
                   "cher ?"
                 ]

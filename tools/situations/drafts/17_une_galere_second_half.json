@@ -8,7 +8,7 @@
         {
           "id": "sit_17_story_d01",
           "place": "Texto · Théo",
-          "cue": "Théo, your friend, texts you. He says tu to you. He's on his way to meet you.",
+          "cue": "Théo, your friend, texts you. He says tu to you. You're already at the café, and he's on his way.",
           "turns": [
             {
               "speaker": "server",
@@ -29,23 +29,23 @@
             },
             {
               "type": "reply",
-              "prompt": "Tell him: come to the café, it's warm.",
+              "prompt": "Tell him: come to the café, it's warm in here.",
               "bank": [
                 "Viens",
                 "au café,",
-                "il fait chaud !",
+                "il fait chaud ici !",
                 "Venez",
                 "à la café,",
-                "il fait froid !"
+                "il fait froid ici !"
               ],
               "accepted": [
                 [
                   "Viens",
                   "au café,",
-                  "il fait chaud !"
+                  "il fait chaud ici !"
                 ]
               ],
-              "model": "Viens au café, il fait chaud !"
+              "model": "Viens au café, il fait chaud ici !"
             }
           ],
           "followUp": "Bonne idée ! J'arrive dans cinq minutes.",
@@ -106,12 +106,12 @@
           "id": "sit_17_story_s01",
           "place": "Texto · Inès · phrase seule",
           "standalone": "Construire",
-          "cue": "Inès, your colleague, texts you. She says tu to you. You've just got to the office after the rain. You're a woman.",
+          "cue": "Inès, your colleague, texts you. She says tu to you. You're late for work after the rain. You're a woman.",
           "turns": [
             {
               "speaker": "server",
               "name": "Inès",
-              "text": "Tu es au bureau ? Qu'est-ce qui s'est passé ce matin ?"
+              "text": "Tu es en retard ! Qu'est-ce qui s'est passé ce matin ?"
             }
           ],
           "drills": [
@@ -191,7 +191,7 @@
         {
           "id": "sit_17_story_d04",
           "place": "Au café",
-          "cue": "Karim, the barista, says tu to you. Théo has just come in.",
+          "cue": "Karim, the barista, says tu to you. You've just come in from outside, a minute after Théo.",
           "turns": [
             {
               "speaker": "server",
@@ -420,7 +420,7 @@
         {
           "id": "sit_17_story_d07",
           "place": "Les copains · groupe",
-          "cue": "Théo writes to the group chat « Les copains ». Here vous = you all. He says tu to you.",
+          "cue": "Théo writes to the group chat « Les copains ». Here vous = you all. He says tu to you. It's evening.",
           "turns": [
             {
               "speaker": "server",
@@ -472,7 +472,7 @@
         {
           "id": "sit_17_story_d08",
           "place": "Sur le palier",
-          "cue": "M. Ferrand, your neighbour, says vous to you. You come home in the rain.",
+          "cue": "M. Ferrand, your neighbour, says vous to you. You've come home soaked, and you have to go out again.",
           "turns": [
             {
               "speaker": "server",
@@ -533,8 +533,7 @@
               "prompt": "Write the same to her, with vous.",
               "bank": [
                 "Mon portable",
-                "n'a presque plus",
-                "de batterie.",
+                "n'a presque plus de batterie.",
                 "Vous pouvez",
                 "m'appeler",
                 "demain, madame ?",
@@ -544,8 +543,7 @@
               "accepted": [
                 [
                   "Mon portable",
-                  "n'a presque plus",
-                  "de batterie.",
+                  "n'a presque plus de batterie.",
                   "Vous pouvez",
                   "m'appeler",
                   "demain, madame ?"
@@ -555,8 +553,7 @@
                   "m'appeler",
                   "demain, madame ?",
                   "Mon portable",
-                  "n'a presque plus",
-                  "de batterie."
+                  "n'a presque plus de batterie."
                 ]
               ],
               "model": "Mon portable n'a presque plus de batterie. Vous pouvez m'appeler demain, madame ?"
@@ -634,25 +631,25 @@
             },
             {
               "type": "reply",
-              "prompt": "Say yes, and tell him to come to the café.",
+              "prompt": "Say no, but tell him to come to the café.",
               "bank": [
-                "Oui,",
-                "viens",
+                "Non,",
+                "mais viens",
                 "au café !",
-                "venez",
+                "mais venez",
                 "à le café !"
               ],
               "accepted": [
                 [
-                  "Oui,",
-                  "viens",
+                  "Non,",
+                  "mais viens",
                   "au café !"
                 ]
               ],
-              "model": "Oui, viens au café !"
+              "model": "Non, mais viens au café !"
             }
           ],
-          "followUp": "Super, j'arrive !",
+          "followUp": "D'accord, j'arrive !",
           "followUpBy": "Théo",
           "newWords": []
         },
@@ -935,7 +932,7 @@
             {
               "speaker": "server",
               "name": "M. Ferrand",
-              "text": "Bonsoir, madame ! Alors, comment était votre journée aujourd'hui ?"
+              "text": "Bonsoir, madame ! Alors, ça s'est bien passé, votre journée ?"
             }
           ],
           "drills": [
@@ -945,7 +942,7 @@
               "choices": [
                 "Pas terrible ! Et toi, ta journée ?",
                 "Pas terrible. Et toi, ça s'est bien passé ?",
-                "Pas terrible, monsieur, mais au moins, il fait beau."
+                "Pas terrible, monsieur, mais au moins, il fait beau. Et vous ?"
               ],
               "correct": 2,
               "why": [
@@ -1076,16 +1073,16 @@
           "turns": [
             {
               "speaker": "learner",
-              "text": "Ma journée n'étais pas terrible, mais au moins, c'est vendredi.",
+              "text": "Pas terrible, ma journée ! Mon bus étais en retard, mais au moins, c'est vendredi.",
               "error": {
-                "word": "n'étais",
-                "fix": "n'était",
+                "word": "étais",
+                "fix": "était",
                 "choices": [
-                  "n'étiez",
-                  "n'étaient",
-                  "n'était"
+                  "étiez",
+                  "étaient",
+                  "était"
                 ],
-                "why": "The subject is « ma journée » (elle): « n'était »."
+                "why": "The subject is « mon bus » (il): « était »."
               }
             }
           ],
@@ -1152,7 +1149,7 @@
         {
           "id": "sit_17_askback_d08",
           "place": "WhatsApp · Mme Dumas",
-          "cue": "Mme Dumas, your landlady, writes to you on WhatsApp. She says vous to you.",
+          "cue": "Mme Dumas, your landlady, writes to you on WhatsApp. She says vous to you. She has just told you about her week.",
           "turns": [
             {
               "speaker": "server",
@@ -1297,7 +1294,7 @@
         {
           "id": "sit_17_askback_d10",
           "place": "Au bureau",
-          "cue": "Inès, your colleague, says tu to you. It's Friday.",
+          "cue": "Inès, your colleague, says tu to you. It's Friday, and the sun is out.",
           "turns": [
             {
               "speaker": "server",
@@ -1318,22 +1315,22 @@
             },
             {
               "type": "reply",
-              "prompt": "Say no, but at least it's Friday.",
+              "prompt": "Say no, but at least the weather's nice.",
               "bank": [
                 "Non,",
                 "mais au moins,",
-                "c'est vendredi !",
-                "c'est lundi !",
+                "il fait beau !",
+                "il fait froid !",
                 "mais au plus,"
               ],
               "accepted": [
                 [
                   "Non,",
                   "mais au moins,",
-                  "c'est vendredi !"
+                  "il fait beau !"
                 ]
               ],
-              "model": "Non, mais au moins, c'est vendredi !"
+              "model": "Non, mais au moins, il fait beau !"
             }
           ],
           "followUp": "Oui ! Bon week-end, alors !",
@@ -1974,7 +1971,7 @@
         {
           "id": "sit_17_cheer_d10",
           "place": "Au bureau",
-          "cue": "Inès, your colleague, says tu to you. It's only Tuesday.",
+          "cue": "Inès, your colleague, says tu to you. She looks down.",
           "turns": [
             {
               "speaker": "server",
@@ -2106,7 +2103,7 @@
             {
               "speaker": "server",
               "name": "Léa",
-              "text": "Je suis triste, ce soir…"
+              "text": "Je suis triste ce soir…"
             },
             {
               "speaker": "learner",
@@ -2294,7 +2291,7 @@
             {
               "speaker": "server",
               "name": "M. Ferrand",
-              "text": "Ouf, mes courses ! Et il y a trois étages, madame !"
+              "text": "Aïe, mes courses ! Et il y a trois étages, madame !"
             }
           ],
           "drills": [
@@ -2384,7 +2381,7 @@
         {
           "id": "sit_17_help_d06",
           "place": "À l'appart",
-          "cue": "Léa, your flatmate, says tu to you. You helped her this week.",
+          "cue": "Léa, your flatmate, says tu to you.",
           "turns": [
             {
               "speaker": "server",
@@ -2608,7 +2605,7 @@
             {
               "speaker": "server",
               "name": "Théo",
-              "text": "Je suis triste… On fait quelque chose ce soir ?"
+              "text": "Quelle journée horrible… On fait quelque chose ce soir ?"
             },
             {
               "speaker": "learner",
@@ -2618,13 +2615,13 @@
           "drills": [
             {
               "type": "comprehend",
-              "prompt": "How is Théo?",
+              "prompt": "How was Théo's day?",
               "choices": [
-                "Busy",
-                "Sad"
+                "Great",
+                "Awful"
               ],
               "correct": 1,
-              "miss": "Reread: « Je suis triste… »"
+              "miss": "Reread: « Quelle journée horrible… »"
             },
             {
               "type": "complete",
@@ -2654,7 +2651,7 @@
             {
               "speaker": "server",
               "name": "Inès",
-              "text": "Viens chez moi, pour te changer les idées !"
+              "text": "Viens chez moi ce soir, pour te changer les idées !"
             }
           ],
           "drills": [
