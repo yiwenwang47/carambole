@@ -1858,419 +1858,400 @@
   },
   "dialogues": [
     {
-      "id": "sit_16_dinner_d01",
-      "place": "Texto · Léa",
-      "cue": "Léa, your flatmate, texts you. You had dinner out with Inès. Léa's vous means you and Inès.",
-      "turns": [
-        {
-          "speaker": "server",
-          "name": "Léa",
-          "text": "Vous avez mangé où ? Dans un bouchon lyonnais ?"
-        }
-      ],
-      "drills": [
-        {
-          "type": "comprehend",
-          "prompt": "What does Léa ask?",
-          "choices": [
-            "Where you ate",
-            "What you ate"
-          ],
-          "correct": 0,
-          "miss": "Reread: « Vous avez mangé où ? »"
-        },
-        {
-          "type": "reply",
-          "prompt": "Say yes, it was delicious.",
-          "bank": [
-            "Oui,",
-            "c'était",
-            "délicieux !",
-            "c'est",
-            "délicieuse !",
-            "Non,"
-          ],
-          "accepted": [
-            [
-              "Oui,",
-              "c'était",
-              "délicieux !"
-            ]
-          ],
-          "model": "Oui, c'était délicieux !"
-        }
-      ],
-      "followUp": "Top ! Tu me donnes l'adresse ?",
-      "newWords": [
-        "bouchon lyonnais"
-      ],
-      "element": "Au bouchon lyonnais"
-    },
-    {
-      "id": "sit_17_what_d03",
-      "place": "Au café",
-      "cue": "Théo, your friend, sits down at the café. He says tu to you.",
-      "turns": [
-        {
-          "speaker": "server",
-          "name": "Théo",
-          "text": "Je suis tombé devant la boulangerie !"
-        },
-        {
-          "speaker": "learner",
-          "text": "Oh non ! Tu as ___ ?"
-        }
-      ],
-      "drills": [
-        {
-          "type": "complete",
-          "prompt": "Fill the gap.",
-          "choices": [
-            "mieux",
-            "mal",
-            "mauvais"
-          ],
-          "correct": 1,
-          "why": [
-            "« Tu as mieux » isn't French. Does it hurt? « Tu as mal ? »",
-            "",
-            "« Mauvais » means bad (an adjective). It hurts: « avoir mal »."
-          ]
-        },
-        {
-          "type": "comprehend",
-          "prompt": "Where did Théo fall?",
-          "choices": [
-            "Outside the bakery",
-            "In the metro"
-          ],
-          "correct": 0,
-          "miss": "Reread: « devant la boulangerie »."
-        }
-      ],
-      "followUp": "Un peu… Mais rien de grave !",
-      "followUpBy": "Théo",
-      "newWords": [
-        "tombé"
-      ],
-      "element": "Qu'est-ce qui s'est passé ?"
-    },
-    {
-      "id": "sit_16_late_s03",
-      "place": "À l'appart · phrase seule",
-      "standalone": "Corriger",
-      "cue": "You tell Léa, your flatmate (tu), about last night. You're a woman.",
-      "turns": [
-        {
-          "speaker": "learner",
-          "text": "Je suis rentrée à minuit et je me suis couché tout de suite.",
-          "error": {
-            "word": "couché",
-            "fix": "couchée",
-            "choices": [
-              "coucher",
-              "couchée",
-              "couchés"
-            ],
-            "why": "« Se coucher » takes « être »: the participle agrees with you, a woman: « couchée »."
-          }
-        }
-      ],
-      "drills": [
-        {
-          "type": "fix",
-          "prompt": "Tap the wrong word and fix it."
-        }
-      ],
-      "newWords": [],
-      "element": "Rentrer tard"
-    },
-    {
-      "id": "sit_18_bike_d04",
-      "place": "Au bureau",
-      "cue": "Inès, your colleague, wants a bike too. She says tu to you.",
+      "id": "sit_17_cheer_d06",
+      "place": "Texto · Inès",
+      "cue": "Inès, your colleague, texts you. She says tu to you.",
       "turns": [
         {
           "speaker": "server",
           "name": "Inès",
-          "text": "Un vélo électrique, c'est cher ?"
+          "text": "Je suis malade, et demain, j'ai une réunion !"
+        },
+        {
+          "speaker": "learner",
+          "text": "Oh non ! Bon ___ !"
         }
       ],
       "drills": [
         {
-          "type": "word",
-          "prompt": "What does « électrique » mean here?",
+          "type": "complete",
+          "prompt": "Fill the gap.",
           "choices": [
-            "second-hand",
-            "electric",
-            "folding"
+            "courages",
+            "courage",
+            "chance"
           ],
           "correct": 1,
           "why": [
-            "Second-hand is « d'occasion ».",
+            "« Bon » is singular: « bon courage ».",
             "",
-            "Not this word: « électrique » means it has a motor."
-          ],
-          "target": "électrique"
+            "« Chance » is feminine: it would be « bonne chance », not « bon »."
+          ]
         },
         {
+          "type": "comprehend",
+          "prompt": "What does Inès have tomorrow?",
+          "choices": [
+            "A meeting",
+            "A day off"
+          ],
+          "correct": 0,
+          "miss": "Reread: « demain, j'ai une réunion ! »"
+        }
+      ],
+      "followUp": "Merci ! Ce soir, je reste à la maison.",
+      "followUpBy": "Inès",
+      "newWords": [],
+      "element": "Remonter le moral"
+    },
+    {
+      "id": "sit_19_compromise_d08",
+      "place": "Texto · Inès",
+      "cue": "Inès, your colleague, texts you. She says tu to you.",
+      "turns": [
+        {
+          "speaker": "server",
+          "name": "Inès",
+          "text": "Ce soir, chacun paie son repas ?"
+        }
+      ],
+      "drills": [
+        {
           "type": "reply",
-          "prompt": "Say yes, but not a second-hand one!",
+          "prompt": "Say yes, repeat her idea, and add that it's better.",
           "bank": [
             "Oui,",
-            "mais",
-            "pas",
-            "d'occasion !",
-            "Non,",
-            "des"
+            "chacun",
+            "paie,",
+            "c'est",
+            "mieux.",
+            "paies,",
+            "plus."
           ],
           "accepted": [
             [
               "Oui,",
-              "mais",
-              "pas",
-              "d'occasion !"
+              "chacun",
+              "paie,",
+              "c'est",
+              "mieux."
             ]
           ],
-          "model": "Oui, mais pas d'occasion !"
-        }
-      ],
-      "followUp": "Ah bon ? Alors je cherche un vélo d'occasion !",
-      "followUpBy": "Inès",
-      "newWords": [],
-      "element": "Les vélos"
-    },
-    {
-      "id": "sit_19_vote_d03",
-      "place": "Les copains · groupe",
-      "cue": "Théo writes to the group chat « Les copains ». His vous means you all; you say tu to him.",
-      "turns": [
-        {
-          "speaker": "server",
-          "name": "Théo",
-          "text": "Égalité ! Pas de majorité !"
-        },
-        {
-          "speaker": "learner",
-          "text": "Alors, on ___ encore une fois ?"
-        }
-      ],
-      "drills": [
-        {
-          "type": "complete",
-          "prompt": "Fill the gap.",
-          "choices": [
-            "votes",
-            "voter",
-            "vote"
-          ],
-          "correct": 2,
-          "why": [
-            "« Votes » goes with « tu ». « On » takes « vote ».",
-            "« Voter » is the infinitive. « On » takes « vote ».",
-            ""
-          ]
+          "model": "Oui, chacun paie, c'est mieux."
         },
         {
           "type": "comprehend",
-          "prompt": "What is the result of the poll?",
+          "prompt": "What does Inès suggest?",
           "choices": [
-            "A big majority for the picnic",
-            "A tie: no majority"
+            "She pays for everyone",
+            "Each person pays for their own meal"
           ],
           "correct": 1,
-          "miss": "Reread: « Égalité ! Pas de majorité ! »"
+          "miss": "Reread: « chacun paie son repas »."
         }
       ],
-      "followUp": "Oui ! Nouveau sondage ce soir !",
-      "newWords": [
-        "majorité",
-        "égalité"
-      ],
-      "element": "Voter"
-    },
-    {
-      "id": "sit_20_should_s02",
-      "place": "Sur le palier · phrase seule",
-      "standalone": "Choisir le ton",
-      "cue": "On the landing, recommend the bouchon lyonnais near the station to M. Ferrand, your neighbour. He says vous to you.",
-      "turns": [],
-      "drills": [
-        {
-          "type": "pick",
-          "prompt": "Which line fits M. Ferrand?",
-          "choices": [
-            "Je te recommande le bouchon lyonnais de la gare !",
-            "Vous devriez essayer le bouchon lyonnais de la gare, monsieur.",
-            "Franchement, va au bouchon lyonnais de la gare !"
-          ],
-          "correct": 1,
-          "why": [
-            "Good French with a friend, but « te » is tu: M. Ferrand says vous to you.",
-            "",
-            "Good French with a friend, but « va » is a blunt tu command for your older neighbour."
-          ]
-        }
-      ],
+      "followUp": "Parfait, c'est plus simple.",
       "newWords": [],
-      "element": "Tu devrais"
+      "element": "Trouver un compromis"
     },
     {
-      "id": "sit_17_story_d05",
-      "place": "Appel · Léa",
-      "cue": "Clarify: Léa, your flatmate, calls you from the street on a bad line. She says tu to you.",
-      "turns": [
-        {
-          "speaker": "server",
-          "name": "Léa",
-          "text": "Il pleut ! Tu peux m'apporter mon parapluie ?"
-        }
-      ],
-      "drills": [
-        {
-          "type": "reply",
-          "prompt": "Say you can't hear her well and ask her to repeat.",
-          "bank": [
-            "Pardon ?",
-            "Je t'entends mal.",
-            "Tu peux répéter ?",
-            "Je vous entends mal.",
-            "Vous pouvez répéter ?"
-          ],
-          "accepted": [
-            [
-              "Pardon ?",
-              "Je t'entends mal.",
-              "Tu peux répéter ?"
-            ],
-            [
-              "Pardon ?",
-              "Tu peux répéter ?",
-              "Je t'entends mal."
-            ],
-            [
-              "Je t'entends mal.",
-              "Tu peux répéter ?"
-            ],
-            [
-              "Tu peux répéter ?",
-              "Je t'entends mal."
-            ]
-          ],
-          "model": "Pardon ? Je t'entends mal. Tu peux répéter ?"
-        },
-        {
-          "type": "word",
-          "prompt": "What does « parapluie » mean here?",
-          "choices": [
-            "coat",
-            "phone",
-            "umbrella"
-          ],
-          "correct": 2,
-          "why": [
-            "A coat is « un manteau ».",
-            "A phone is « un portable ».",
-            ""
-          ],
-          "target": "parapluie"
-        }
-      ],
-      "followUp": "Pardon ! Mon parapluie, il est devant la porte.",
-      "followUpBy": "Léa",
-      "newWords": [],
-      "element": "Les détails"
-    },
-    {
-      "id": "sit_19_options_d02",
-      "place": "Les copains · groupe",
-      "cue": "Théo writes to the group chat « Les copains ». His vous means you all; you say tu to him.",
-      "turns": [
-        {
-          "speaker": "server",
-          "name": "Théo",
-          "text": "Un pique-nique au bord de la Saône, samedi ?"
-        },
-        {
-          "speaker": "learner",
-          "text": "Super ! On se retrouve ___ midi ?"
-        }
-      ],
-      "drills": [
-        {
-          "type": "comprehend",
-          "prompt": "Where does Théo suggest the picnic?",
-          "choices": [
-            "By the Saône, the river",
-            "In a park in the city centre"
-          ],
-          "correct": 0,
-          "miss": "Reread: « au bord de la Saône »."
-        },
-        {
-          "type": "complete",
-          "prompt": "Fill the gap.",
-          "choices": [
-            "au",
-            "à",
-            "en"
-          ],
-          "correct": 1,
-          "why": [
-            "Clock times take « à »: « à midi ».",
-            "",
-            "« En » doesn't go before a time: « à midi »."
-          ]
-        }
-      ],
-      "followUp": "Oui, à midi, au bord de l'eau !",
-      "newWords": [
-        "au bord de"
-      ],
-      "element": "Les options"
-    },
-    {
-      "id": "sit_16_order_s04",
-      "place": "Au bureau · phrase seule",
+      "id": "sit_17_galere_s04",
+      "place": "Texto · Théo · phrase seule",
       "standalone": "Transformer",
-      "cue": "You tell Inès, your colleague, about Saturday. She says tu to you. You're a woman. It happened on Saturday: put it in the past.",
+      "cue": "You text Théo, your friend (tu). It all happened today: put it in the past.",
       "turns": [
         {
           "speaker": "learner",
-          "text": "D'abord, je vais au marché, puis je rentre à la maison.",
+          "text": "Ma journée est horrible, et en plus, je rate le bus.",
           "source": true
         }
       ],
       "drills": [
         {
           "type": "reply",
-          "prompt": "Rewrite it in the passé composé.",
+          "prompt": "Rewrite it in the past: « était » for the day, the passé composé for the bus.",
           "bank": [
-            "D'abord,",
-            "je suis allée",
-            "au marché,",
-            "puis",
-            "je suis rentrée",
-            "à la maison.",
-            "je suis allé",
-            "je suis rentré",
-            "j'ai rentré"
+            "Ma journée",
+            "était",
+            "horrible,",
+            "et en plus,",
+            "j'ai raté",
+            "le bus.",
+            "étais",
+            "je rate"
           ],
           "accepted": [
             [
-              "D'abord,",
-              "je suis allée",
-              "au marché,",
-              "puis",
-              "je suis rentrée",
-              "à la maison."
+              "Ma journée",
+              "était",
+              "horrible,",
+              "et en plus,",
+              "j'ai raté",
+              "le bus."
             ]
           ],
-          "model": "D'abord, je suis allée au marché, puis je suis rentrée à la maison."
+          "model": "Ma journée était horrible, et en plus, j'ai raté le bus."
         }
       ],
       "newWords": [],
-      "element": "D'abord, ensuite"
+      "element": "Quelle galère !"
+    },
+    {
+      "id": "sit_16_out_d02",
+      "place": "Texto · Inès",
+      "cue": "Inès, your colleague, texts you. She says tu to you.",
+      "turns": [
+        {
+          "speaker": "server",
+          "name": "Inès",
+          "text": "On sort en boîte ce soir ?"
+        },
+        {
+          "speaker": "learner",
+          "text": "Oui ! On se retrouve ___ métro ?"
+        }
+      ],
+      "drills": [
+        {
+          "type": "comprehend",
+          "prompt": "What does Inès suggest?",
+          "choices": [
+            "Going to a club tonight",
+            "Going to a concert tonight"
+          ],
+          "correct": 0,
+          "miss": "Reread: « On sort en boîte ce soir ? »"
+        },
+        {
+          "type": "complete",
+          "prompt": "Fill the gap.",
+          "choices": [
+            "à la",
+            "au",
+            "en"
+          ],
+          "correct": 1,
+          "why": [
+            "« Métro » is masculine: « au métro ».",
+            "",
+            "« En métro » means by metro. To meet there, say « au métro »."
+          ]
+        }
+      ],
+      "followUp": "Oui, à dix heures. À ce soir !",
+      "newWords": [
+        "en boîte"
+      ],
+      "element": "Je suis sortie"
+    },
+    {
+      "id": "sit_20_should_d10",
+      "place": "Texto · Théo",
+      "cue": "Théo, your friend, texts you. He says tu to you.",
+      "turns": [
+        {
+          "speaker": "server",
+          "name": "Théo",
+          "text": "Je te recommande mon coiffeur !"
+        }
+      ],
+      "drills": [
+        {
+          "type": "comprehend",
+          "prompt": "What does Théo recommend?",
+          "choices": [
+            "His hairdresser",
+            "His dentist"
+          ],
+          "correct": 0,
+          "miss": "Reread: « mon coiffeur »."
+        },
+        {
+          "type": "reply",
+          "prompt": "Say thanks, and ask if he's expensive.",
+          "bank": [
+            "Merci !",
+            "Il est",
+            "cher ?",
+            "chère ?",
+            "Elle est"
+          ],
+          "accepted": [
+            [
+              "Merci !",
+              "Il est",
+              "cher ?"
+            ],
+            [
+              "Il est",
+              "cher ?",
+              "Merci !"
+            ]
+          ],
+          "model": "Merci ! Il est cher ?"
+        }
+      ],
+      "followUp": "Non, et il est très sympa !",
+      "newWords": [],
+      "element": "Tu devrais"
+    },
+    {
+      "id": "sit_18_better_s02",
+      "place": "Sur le palier · phrase seule",
+      "standalone": "Choisir le ton",
+      "cue": "M. Ferrand, your neighbour, wants a new bike. He says vous to you. Tell him the bike shop has offers this week.",
+      "turns": [],
+      "drills": [
+        {
+          "type": "pick",
+          "prompt": "Which one fits?",
+          "choices": [
+            "Tu sais, les vélos sont en promo cette semaine !",
+            "Salut ! Les vélos sont en promo, tu viens voir ?",
+            "Vous savez, monsieur, les vélos sont en promo cette semaine."
+          ],
+          "correct": 2,
+          "why": [
+            "Good French, but say vous to M. Ferrand, not tu.",
+            "Good French, but « salut » and « tu » are for friends. Say vous to M. Ferrand.",
+            ""
+          ]
+        }
+      ],
+      "newWords": [],
+      "element": "Le meilleur choix"
+    },
+    {
+      "id": "sit_18_rent_d03",
+      "place": "À l'agence",
+      "cue": "You're at an estate agency, asking about a flat. The agent says vous to you.",
+      "turns": [
+        {
+          "speaker": "server",
+          "role": "Agent immobilier",
+          "text": "Le loyer ? Charges comprises, madame."
+        },
+        {
+          "speaker": "learner",
+          "text": "Et il est moins cher ___ l'autre ?"
+        }
+      ],
+      "drills": [
+        {
+          "type": "complete",
+          "prompt": "Fill the gap.",
+          "choices": [
+            "qui",
+            "de",
+            "que"
+          ],
+          "correct": 2,
+          "why": [
+            "« Qui » means who: after « moins cher », use « que » (than).",
+            "« Moins cher de » isn't French here: use « que » (than).",
+            ""
+          ]
+        },
+        {
+          "type": "comprehend",
+          "prompt": "What's included in the rent?",
+          "choices": [
+            "The bills",
+            "The furniture"
+          ],
+          "correct": 0,
+          "miss": "Reread: « Le loyer ? Charges comprises »: bills included."
+        }
+      ],
+      "followUp": "Oui, madame, il est beaucoup moins cher.",
+      "newWords": [
+        "charges comprises"
+      ],
+      "element": "Le loyer"
+    },
+    {
+      "id": "sit_16_dinner_d04",
+      "place": "Au bureau",
+      "cue": "Inès, your colleague, wants a good place for dinner. She says tu to you.",
+      "turns": [
+        {
+          "speaker": "server",
+          "name": "Inès",
+          "text": "Tu connais un bon bouchon lyonnais ?"
+        }
+      ],
+      "drills": [
+        {
+          "type": "word",
+          "prompt": "What does « bouchon lyonnais » mean here?",
+          "choices": [
+            "Lyon cheese",
+            "traditional Lyon bistro",
+            "traffic jam in Lyon"
+          ],
+          "correct": 1,
+          "why": [
+            "No: it's a place to eat, not a cheese.",
+            "",
+            "No: « un bouchon lyonnais » is a restaurant. Only « bouchons » alone means traffic jams."
+          ],
+          "target": "bouchon lyonnais"
+        },
+        {
+          "type": "reply",
+          "prompt": "Say yes, next to the station.",
+          "bank": [
+            "Oui,",
+            "à côté de",
+            "la gare !",
+            "à côté du",
+            "le gare !",
+            "Non,"
+          ],
+          "accepted": [
+            [
+              "Oui,",
+              "à côté de",
+              "la gare !"
+            ]
+          ],
+          "model": "Oui, à côté de la gare !"
+        }
+      ],
+      "followUp": "Super ! Tu me donnes l'adresse ?",
+      "newWords": [],
+      "element": "Au bouchon lyonnais"
+    },
+    {
+      "id": "sit_17_react_s05",
+      "place": "Texto · Théo · phrase seule",
+      "standalone": "Mot en retour",
+      "cue": "Which French word means “darn”? You text Théo, your friend (tu).",
+      "turns": [
+        {
+          "speaker": "learner",
+          "text": "___ ! J'ai oublié mes clés, et Léa n'est pas à la maison !"
+        }
+      ],
+      "drills": [
+        {
+          "type": "complete",
+          "prompt": "darn",
+          "choices": [
+            "Merci",
+            "Mince",
+            "Super"
+          ],
+          "correct": 1,
+          "why": [
+            "« Merci » means thank you.",
+            "",
+            "« Super » means great: no keys isn't great."
+          ]
+        }
+      ],
+      "newWords": [],
+      "element": "Réagir"
     }
   ]
 }
