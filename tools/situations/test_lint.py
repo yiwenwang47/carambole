@@ -353,6 +353,19 @@ class SituationLintTests(unittest.TestCase):
         item["turns"].append({"speaker": "learner", "text": "Bonjour ! Enchanté."})
         self.assert_bad("masculine first-person")
 
+    def test_arc4_roles_and_masculine_self_forms(self):
+        from tools.situations.lint import FEMININE_ROLES, MASCULINE_ROLES, MASC_SELF
+        self.assertIn("Agente immobilière", FEMININE_ROLES)
+        self.assertIn("Agent immobilier", MASCULINE_ROLES)
+        for line in ("Je me suis couché tard.", "Je suis tombé dans la rue.",
+                     "Je suis épuisé.", "J'étais trempé !", "Je suis convaincu.",
+                     "Tu sais, je suis pas sûr."):
+            self.assertIsNotNone(MASC_SELF.search(line), line)
+        for line in ("Je me suis couchée tard.", "Je suis tombée dans la rue.",
+                     "Je suis épuisée.", "J'étais trempée !", "Je suis convaincue.",
+                     "Je suis sûre.", "Bien sûr !", "Il est tombé."):
+            self.assertIsNone(MASC_SELF.search(line), line)
+
     def test_feminine_self_forms_pass(self):
         from tools.situations.lint import MASC_SELF
         for line in ("Je suis arrivée.", "Bonjour ! Enchantée.", "Désolée, je suis en retard.",

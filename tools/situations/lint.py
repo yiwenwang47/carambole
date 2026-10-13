@@ -38,17 +38,20 @@ ROLE = re.compile(r"^[A-ZÀÂÇÉÈÊËÎÏÔÛÙÜŸŒÆ][a-zàâçéèêëîï
 # Gendered roles must match the turn's voice (`voice: "female"` → feminine).
 FEMININE_ROLES = {"Vendeuse", "Serveuse", "Boulangère", "Marchande", "Voisine",
                   "Passante", "Livreuse", "Pharmacienne", "Caissière",
-                  "Conseillère", "Coiffeuse", "Employée", "Voyageuse", "Gardienne"}
+                  "Conseillère", "Coiffeuse", "Employée", "Voyageuse", "Gardienne",
+                  "Agente immobilière"}
 MASCULINE_ROLES = {"Vendeur", "Serveur", "Boulanger", "Marchand", "Voisin",
                    "Passant", "Livreur", "Pharmacien", "Caissier",
-                   "Conseiller", "Coiffeur", "Employé", "Voyageur", "Gardien"}
+                   "Conseiller", "Coiffeur", "Employé", "Voyageur", "Gardien",
+                   "Agent immobilier"}
 TEXTING = re.compile(r"(?i)(?<!\w)(?:mdr|stp|jsp|slt|svp|ptdr|bjr)(?!\w)")
 # Robin, the learner, is a woman (user decision 2026-10-11): her own lines use
 # feminine agreement only. Flags a masculine first-person form in a learner
 # line, an accepted reply, or a correct pick.
-MASC_SELF = re.compile(r"(?:\b(?:je\s+(?:suis|me sens|serai)|j['’](?:étais|ai été))\s+"
+MASC_SELF = re.compile(r"(?:\b(?:je\s+(?:suis|me\s+suis|me sens|serai)|j['’](?:étais|ai été))\s+"
                        r"(?:\w+\s+){0,3}(?:désolé|prêt|allé|arrivé|passé|parti|venu|"
-                       r"content|fatigué|sorti|rentré|resté|occupé|ravi|américain)s?"
+                       r"content|fatigué|sorti|rentré|resté|occupé|ravi|américain|"
+                       r"couché|tombé|épuisé|trempé|convaincu|sûr)s?"
                        r"|(?:^|[.!?,]\s*)(?:enchanté|désolé|ravi)s?)(?![\wé])", re.I)
 
 
