@@ -25,7 +25,7 @@ STANDALONE = {"Construire": "reply", "Choisir le ton": "pick",
               "Corriger": "fix", "Transformer": "reply", "Mot en retour": "complete"}
 SPOKEN = {"je sais pas", "t'as", "t'es", "y a", "y a encore", "ouais", "du coup",
           "carrément", "bref", "pas de souci", "top", "ça marche", "on",
-          "dispo", "dispos", "boulot", "t'inquiète"}
+          "dispo", "dispos", "boulot", "t'inquiète", "t'as raison"}
 # Canonical cast `name` strings; the audio CAST map uses the same keys.
 SOCIAL_CAST = {"Léa", "Théo", "Inès", "M. Ferrand", "Mme Dumas"}
 CAST_ALIASES = {"Monsieur Ferrand": "M. Ferrand", "Madame Dumas": "Mme Dumas",
@@ -51,7 +51,7 @@ TEXTING = re.compile(r"(?i)(?<!\w)(?:mdr|stp|jsp|slt|svp|ptdr|bjr)(?!\w)")
 MASC_SELF = re.compile(r"(?:\b(?:je\s+(?:suis|me\s+suis|me sens|serai)|j['’](?:étais|ai été))\s+"
                        r"(?:\w+\s+){0,3}(?:désolé|prêt|allé|arrivé|passé|parti|venu|"
                        r"content|fatigué|sorti|rentré|resté|occupé|ravi|américain|"
-                       r"couché|tombé|épuisé|trempé|convaincu|sûr)s?"
+                       r"couché|tombé|épuisé|trempé|convaincu|sûr|déçu)s?"
                        r"|(?:^|[.!?,]\s*)(?:enchanté|désolé|ravi)s?)(?![\wé])", re.I)
 
 

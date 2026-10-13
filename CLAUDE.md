@@ -2,12 +2,14 @@
 
 > ## ▶ RECENT HANDOFFS
 >
-> **▶ BOOK 2 — START HERE: `docs/plans/2026-10-13-book-2-arc5-handoff.md`**
-> (written 2026-10-13). Arc 4 (16–20) complete: production audio 5,278/5,278,
-> v10 approved on the phone. Arc 5 (21–25, the last arc) is PLANNED
-> (`docs/plans/2026-10-13-book-2-arc5-plan.md` + 5 matrices). Next: user OKs
-> the plan §12 defaults, then authoring (plan §11). User rule: every gloss
-> correct in every drill — `tools/situations/gloss_dump.py`.
+> **▶ BOOK 2 — START HERE: `docs/plans/2026-10-13-book-2-arc5-done-handoff.md`**
+> (written 2026-10-13). ALL 25 modules authored, judged, fixed, assembled
+> (3,000 items). Review set v11 (arc 5) approved in the simulator ("works").
+> Next: production audio for 21–25 (`generate_audio.py --module 21…25`, then a
+> plain run, strict lint, `normalize_audio.py`), then release work. User rule:
+> every gloss correct in every drill — `tools/situations/gloss_dump.py`.
+>
+> **▶ BOOK 2 — arc 5 plan + approved defaults:** `docs/plans/2026-10-13-book-2-arc5-handoff.md`, `docs/plans/2026-10-13-book-2-arc5-plan.md`.
 >
 > **▶ BOOK 2 — arc 4 audio + gloss decisions:** `docs/plans/2026-10-13-book-2-audio-handoff.md`.
 >

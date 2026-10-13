@@ -1,0 +1,5287 @@
+{
+  "id": "sit_22",
+  "title": "D'accord ou pas",
+  "arc": "Échanger",
+  "goal": "Share the chores with Léa: agree, disagree, soften, take turns and settle a deal.",
+  "elements": [
+    {
+      "id": "sit_22_chores",
+      "title": "Les tâches",
+      "note": "Chores. « Faire le ménage » is to do the cleaning, « faire la lessive » the laundry and « faire la vaisselle » the dishes. « Sortir les poubelles » is to take the bins out. With a pronoun: « je la fais » (la vaisselle), « je le fais » (the task).",
+      "items": [
+        {
+          "id": "sit_22_chores_d01",
+          "place": "À l'appart",
+          "cue": "At home. Léa, your flatmate, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Samedi, on fait le ménage et la lessive ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa suggest for Saturday?",
+              "choices": [
+                "Going to the market together",
+                "Doing the cleaning and the laundry"
+              ],
+              "correct": 1,
+              "miss": "Reread: « on fait le ménage et la lessive ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say OK, in the morning.",
+              "bank": [
+                "D'accord,",
+                "le matin !",
+                "la matin !",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "D'accord,",
+                  "le matin !"
+                ]
+              ],
+              "model": "D'accord, le matin !"
+            }
+          ],
+          "followUp": "Parfait ! Moi, je fais le café.",
+          "newWords": [
+            "ménage",
+            "lessive"
+          ]
+        },
+        {
+          "id": "sit_22_chores_d02",
+          "place": "À l'appart",
+          "cue": "At home. Léa, your flatmate, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Tu peux faire la vaisselle ce soir ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, je la fais ___ le dîner."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa ask?",
+              "choices": [
+                "Whether you can do the dishes tonight",
+                "Whether you can make dinner tonight"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Tu peux faire la vaisselle ce soir ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "près",
+                "prêt",
+                "après"
+              ],
+              "correct": 2,
+              "why": [
+                "« Près » means near: it is about a place, not a time.",
+                "« Prêt » means ready; « je la fais prêt le dîner » isn't French.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Merci, Robin !",
+          "newWords": [
+            "vaisselle"
+          ]
+        },
+        {
+          "id": "sit_22_chores_s01",
+          "place": "Texto · Léa · phrase seule",
+          "standalone": "Construire",
+          "cue": "Léa, your flatmate, asks about the chores. Text her back (tu).",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "On fait comment pour le ménage et la vaisselle cette semaine ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say you're doing the dishes tonight, and on Saturday you'll both do the cleaning together.",
+              "bank": [
+                "Ce soir,",
+                "je fais la vaisselle,",
+                "et samedi,",
+                "on fait le ménage",
+                "ensemble.",
+                "je fait la vaisselle,",
+                "on fais le ménage"
+              ],
+              "accepted": [
+                [
+                  "Ce soir,",
+                  "je fais la vaisselle,",
+                  "et samedi,",
+                  "on fait le ménage",
+                  "ensemble."
+                ]
+              ],
+              "model": "Ce soir, je fais la vaisselle, et samedi, on fait le ménage ensemble."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_22_chores_d03",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Tu peux sortir les poubelles, s'il te plaît ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Pas de souci, je le fais ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "tout à coup",
+                "tout de suite",
+                "tout près"
+              ],
+              "correct": 1,
+              "why": [
+                "« Tout à coup » means suddenly: it tells a story, not a promise.",
+                "",
+                "« Tout près » means very near: it is about a place."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa ask you to do?",
+              "choices": [
+                "Take the bins out",
+                "Go out with her tonight"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Tu peux sortir les poubelles, s'il te plaît ? »"
+            }
+          ],
+          "followUp": "Merci beaucoup !",
+          "newWords": [
+            "sortir les poubelles"
+          ]
+        },
+        {
+          "id": "sit_22_chores_d04",
+          "place": "Texto · Théo",
+          "cue": "Théo, your friend, texts you. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Tu viens au cinéma ? Ou tu fais le ménage ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « ménage » mean here?",
+              "target": "ménage",
+              "choices": [
+                "food shopping",
+                "housework, cleaning",
+                "moving house"
+              ],
+              "correct": 1,
+              "why": [
+                "No: food shopping is « les courses ».",
+                "",
+                "No: moving house is « déménager »."
+              ]
+            },
+            {
+              "type": "reply",
+              "prompt": "Say not now: you're doing the cleaning.",
+              "bank": [
+                "Pas maintenant,",
+                "je fais le ménage !",
+                "je fait le ménage !",
+                "Oui,"
+              ],
+              "accepted": [
+                [
+                  "Pas maintenant,",
+                  "je fais le ménage !"
+                ]
+              ],
+              "model": "Pas maintenant, je fais le ménage !"
+            }
+          ],
+          "followUp": "D'accord, ce soir, alors !",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_chores_s02",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "Ask Mme Dumas, your landlady, on WhatsApp which day the bins go out. She says vous to you.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which message fits Mme Dumas?",
+              "choices": [
+                "Tu sais quel jour on sort les poubelles ?",
+                "Excusez-moi, madame, on sort les poubelles quel jour ?",
+                "Salut ! C'est quel jour, les poubelles ?"
+              ],
+              "correct": 1,
+              "why": [
+                "Good French with a friend, but « tu sais » is tu: Mme Dumas says vous to you.",
+                "",
+                "Good French with a friend, but « Salut ! » is too familiar for your landlady."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_22_chores_d05",
+          "place": "Appel · Léa",
+          "cue": "Clarify: Léa, your flatmate, calls you. The line is bad. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Tu fais la vaisselle ce soir ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say you can't hear her well, and ask her to repeat.",
+              "bank": [
+                "Pardon ?",
+                "Je t'entends mal.",
+                "Tu peux répéter ?",
+                "Je vous entends mal.",
+                "Vous pouvez répéter ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon ?",
+                  "Je t'entends mal.",
+                  "Tu peux répéter ?"
+                ],
+                [
+                  "Je t'entends mal.",
+                  "Tu peux répéter ?"
+                ],
+                [
+                  "Pardon ?",
+                  "Tu peux répéter ?",
+                  "Je t'entends mal."
+                ],
+                [
+                  "Tu peux répéter ?",
+                  "Je t'entends mal."
+                ],
+                [
+                  "Je t'entends mal.",
+                  "Pardon ?",
+                  "Tu peux répéter ?"
+                ]
+              ],
+              "model": "Pardon ? Je t'entends mal. Tu peux répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « vaisselle » mean here?",
+              "target": "vaisselle",
+              "choices": [
+                "laundry",
+                "suitcase",
+                "dishes, washing-up"
+              ],
+              "correct": 2,
+              "why": [
+                "No: laundry is « la lessive ».",
+                "No: a suitcase is « une valise ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "La vaisselle ! Tu la fais ce soir ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_chores_d06",
+          "place": "Au bureau",
+          "cue": "At the office. Inès, your colleague, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Moi, je déteste faire la lessive !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Moi aussi, c'est ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "ennuyeuses",
+                "ennuyeux",
+                "ennuyeuse"
+              ],
+              "correct": 1,
+              "why": [
+                "« Ennuyeuses » is feminine plural; after « c'est », use the masculine: « ennuyeux ».",
+                "",
+                "After « c'est », the adjective stays masculine: « c'est ennuyeux »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès say about the laundry?",
+              "choices": [
+                "She hates doing it",
+                "She likes doing it"
+              ],
+              "correct": 0,
+              "miss": "Reread: « je déteste faire la lessive ! »"
+            }
+          ],
+          "followUp": "Et la vaisselle aussi !",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_chores_s03",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Corriger",
+          "cue": "At home, you share the chores with Léa, your flatmate. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Samedi, je fais le ménage, et toi, tu fais la vaisselles ?",
+              "error": {
+                "word": "vaisselles",
+                "fix": "vaisselle",
+                "choices": [
+                  "la vaisselle",
+                  "vaisselle",
+                  "les vaisselles"
+                ],
+                "why": "« La vaisselle » is always singular: « tu fais la vaisselle »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_22_chores_d07",
+          "place": "À l'appart",
+          "cue": "At home. Léa, your flatmate, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Qui va sortir les poubelles ce soir ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Moi, je ___ fais !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « sortir les poubelles » mean here?",
+              "target": "sortir les poubelles",
+              "choices": [
+                "go out tonight",
+                "clean the bins",
+                "take the bins out"
+              ],
+              "correct": 2,
+              "why": [
+                "No: going out is just « sortir ».",
+                "No: cleaning is « nettoyer ».",
+                ""
+              ]
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "la",
+                "le",
+                "les"
+              ],
+              "correct": 1,
+              "why": [
+                "« La » stands for a feminine noun; here « le » stands for the whole task.",
+                "",
+                "« Les » would stand for the bins themselves; the task is one thing: « je le fais »."
+              ]
+            }
+          ],
+          "followUp": "Merci ! Moi, je fais la vaisselle.",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_chores_d08",
+          "place": "Sur le palier",
+          "cue": "On the landing. M. Ferrand, your neighbour, says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Il faut sortir les poubelles mardi soir, madame."
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say OK, it's noted, sir.",
+              "bank": [
+                "D'accord,",
+                "c'est noté,",
+                "monsieur.",
+                "madame.",
+                "c'est notée,"
+              ],
+              "accepted": [
+                [
+                  "D'accord,",
+                  "c'est noté,",
+                  "monsieur."
+                ]
+              ],
+              "model": "D'accord, c'est noté, monsieur."
+            },
+            {
+              "type": "comprehend",
+              "prompt": "When do the bins go out?",
+              "choices": [
+                "On Thursday morning",
+                "On Tuesday evening"
+              ],
+              "correct": 1,
+              "miss": "Reread: « sortir les poubelles mardi soir »"
+            }
+          ],
+          "followUp": "Merci, madame. Bonne soirée !",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_chores_s04",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Transformer",
+          "cue": "Tell Léa, your flatmate, your plan for the weekend, in the future (tu).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Je fais la lessive samedi et je fais le ménage dimanche.",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it in the future.",
+              "bank": [
+                "Je ferai",
+                "la lessive",
+                "samedi",
+                "et je ferai",
+                "le ménage",
+                "dimanche.",
+                "Je fais",
+                "et je vais"
+              ],
+              "accepted": [
+                [
+                  "Je ferai",
+                  "la lessive",
+                  "samedi",
+                  "et je ferai",
+                  "le ménage",
+                  "dimanche."
+                ]
+              ],
+              "model": "Je ferai la lessive samedi et je ferai le ménage dimanche."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_22_chores_d09",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "La lessive est finie !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Merci, tu es ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa tell you?",
+              "choices": [
+                "The laundry is done",
+                "She hasn't started the laundry yet"
+              ],
+              "correct": 0,
+              "miss": "Reread: « La lessive est finie ! »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "génial",
+                "géniaux",
+                "géniale"
+              ],
+              "correct": 2,
+              "why": [
+                "Léa is a woman: « tu es géniale ».",
+                "« Géniaux » is plural, but you're talking to Léa alone.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "De rien ! Et toi, la vaisselle ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_chores_d10",
+          "place": "Au café",
+          "cue": "At the café. Théo, your friend, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Tu fais le ménage et la lessive ce week-end ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo ask about?",
+              "choices": [
+                "Your plans for tonight",
+                "Your chores this weekend"
+              ],
+              "correct": 1,
+              "miss": "Reread: « le ménage et la lessive ce week-end ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, with Léa.",
+              "bank": [
+                "Oui,",
+                "avec Léa !",
+                "avec Théo !",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "avec Léa !"
+                ]
+              ],
+              "model": "Oui, avec Léa !"
+            }
+          ],
+          "followUp": "Bon courage, alors !",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_chores_s05",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Which French word means “laundry”? At home, you ask Léa, your flatmate (tu).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Ce soir, je fais la ___, et toi, tu fais la vaisselle ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "laundry",
+              "choices": [
+                "liste",
+                "lessive",
+                "ligne"
+              ],
+              "correct": 1,
+              "why": [
+                "« Liste » means list.",
+                "",
+                "« Ligne » means line."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_22_agree",
+      "title": "Je suis d'accord",
+      "note": "Agreeing. « Je suis d'accord » is I agree; add « avec toi » or « avec vous ». « Tout à fait ! » and « Exactement ! » mean absolutely, exactly. « Tu as tout à fait raison » means you're quite right.",
+      "items": [
+        {
+          "id": "sit_22_agree_d01",
+          "place": "À l'appart",
+          "cue": "At home. Léa, your flatmate, says tu to you. You talked about the cleaning.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Je suis d'accord, le ménage ensemble, c'est mieux !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa say about the cleaning?",
+              "choices": [
+                "It's better to do it together",
+                "She'd rather do it alone"
+              ],
+              "correct": 0,
+              "miss": "Reread: « le ménage ensemble, c'est mieux ! »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say great, Saturday then.",
+              "bank": [
+                "Super,",
+                "samedi,",
+                "alors !",
+                "Non,",
+                "dimanche,"
+              ],
+              "accepted": [
+                [
+                  "Super,",
+                  "samedi,",
+                  "alors !"
+                ]
+              ],
+              "model": "Super, samedi, alors !"
+            }
+          ],
+          "followUp": "Oui, le matin, d'accord ?",
+          "newWords": [
+            "je suis d'accord"
+          ]
+        },
+        {
+          "id": "sit_22_agree_d02",
+          "place": "Au bureau",
+          "cue": "At the office. Inès, your colleague, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "La réunion était trop longue, non ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Tout à fait ! Elle était ___."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès say about the meeting?",
+              "choices": [
+                "It was too short",
+                "It was too long"
+              ],
+              "correct": 1,
+              "miss": "Reread: « La réunion était trop longue, non ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "ennuyeuse",
+                "ennuyeux",
+                "ennuyeuses"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Réunion » is feminine: « elle était ennuyeuse ».",
+                "« Ennuyeuses » is plural, but it's one meeting."
+              ]
+            }
+          ],
+          "followUp": "Oui, et demain, encore une réunion !",
+          "newWords": [
+            "tout à fait"
+          ]
+        },
+        {
+          "id": "sit_22_agree_s01",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Construire",
+          "cue": "At home, Léa, your flatmate, talks about the dishes. Answer her (tu).",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Pour la vaisselle, ensemble, c'est plus rapide, non ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say you agree with her: you'll do the dishes together every evening.",
+              "bank": [
+                "Je suis d'accord",
+                "avec toi,",
+                "on fait",
+                "la vaisselle",
+                "ensemble",
+                "tous les soirs !",
+                "avec vous,",
+                "on fais"
+              ],
+              "accepted": [
+                [
+                  "Je suis d'accord",
+                  "avec toi,",
+                  "on fait",
+                  "la vaisselle",
+                  "ensemble",
+                  "tous les soirs !"
+                ],
+                [
+                  "Je suis d'accord",
+                  "avec toi,",
+                  "on fait",
+                  "ensemble",
+                  "la vaisselle",
+                  "tous les soirs !"
+                ]
+              ],
+              "model": "Je suis d'accord avec toi, on fait la vaisselle ensemble tous les soirs !"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_22_agree_d03",
+          "place": "Texto · Théo",
+          "cue": "Théo, your friend, texts you. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Le vélo, c'est mieux que le métro !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Exactement ! Et c'est ___ cher."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "moi",
+                "mon",
+                "moins"
+              ],
+              "correct": 2,
+              "why": [
+                "« Moi » means me; it can't go before « cher ».",
+                "« Mon » means my; it needs a noun after it.",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo think?",
+              "choices": [
+                "The bike is better than the metro",
+                "The metro is better than the bike"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Le vélo, c'est mieux que le métro ! »"
+            }
+          ],
+          "followUp": "Et c'est plus rapide !",
+          "newWords": [
+            "exactement"
+          ]
+        },
+        {
+          "id": "sit_22_agree_d04",
+          "place": "Au café",
+          "cue": "At the café. Karim, the barista and your friend, says tu to you. You said the neighbourhood has changed.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Je suis d'accord, le quartier est très animé !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « je suis d'accord » mean here?",
+              "target": "je suis d'accord",
+              "choices": [
+                "I'm ready",
+                "I agree",
+                "I'm fine"
+              ],
+              "correct": 1,
+              "why": [
+                "No: I'm ready is « je suis prête ».",
+                "",
+                "No: I'm fine is « je vais bien »."
+              ]
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, there are lots of people now.",
+              "bank": [
+                "Oui,",
+                "il y a",
+                "plein de monde",
+                "maintenant !",
+                "il a",
+                "plein monde"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "il y a",
+                  "plein de monde",
+                  "maintenant !"
+                ]
+              ],
+              "model": "Oui, il y a plein de monde maintenant !"
+            }
+          ],
+          "followUp": "Oui, mais mon café est le meilleur !",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_agree_s02",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "Mme Dumas, your landlady, writes that the new caretaker is very nice. Agree with her on WhatsApp. She says vous to you.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which message fits Mme Dumas?",
+              "choices": [
+                "Carrément, elle est top, ta gardienne !",
+                "Exactement, t'as raison, elle est géniale !",
+                "Tout à fait, madame, la gardienne est très gentille."
+              ],
+              "correct": 2,
+              "why": [
+                "Good French with a friend, but « ta » is tu, and « top » is too casual for your landlady.",
+                "Good French with a friend, but « t'as » is tu: Mme Dumas says vous to you.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_22_agree_d05",
+          "place": "Au bureau",
+          "cue": "Clarify: at the office, it's very noisy. You and Inès looked at flats online. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Tout à fait, le premier appartement est le meilleur !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say you can't hear her well, and ask her to repeat.",
+              "bank": [
+                "Pardon ?",
+                "Je t'entends mal.",
+                "Tu peux répéter ?",
+                "Je vous entends mal.",
+                "Vous pouvez répéter ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon ?",
+                  "Je t'entends mal.",
+                  "Tu peux répéter ?"
+                ],
+                [
+                  "Je t'entends mal.",
+                  "Tu peux répéter ?"
+                ],
+                [
+                  "Pardon ?",
+                  "Tu peux répéter ?",
+                  "Je t'entends mal."
+                ],
+                [
+                  "Tu peux répéter ?",
+                  "Je t'entends mal."
+                ],
+                [
+                  "Je t'entends mal.",
+                  "Pardon ?",
+                  "Tu peux répéter ?"
+                ]
+              ],
+              "model": "Pardon ? Je t'entends mal. Tu peux répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « tout à fait » mean here?",
+              "target": "tout à fait",
+              "choices": [
+                "all of a sudden",
+                "absolutely, exactly",
+                "right away"
+              ],
+              "correct": 1,
+              "why": [
+                "No: all of a sudden is « tout à coup ».",
+                "",
+                "No: right away is « tout de suite »."
+              ]
+            }
+          ],
+          "followUp": "Tout à fait ! Le premier appartement est le meilleur !",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_agree_d06",
+          "place": "À l'appart",
+          "cue": "At home. Léa, your flatmate, says tu to you. You said the cupboard is almost empty.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Exactement, il faut acheter du café !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Je vais au ___ demain."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "marcher",
+                "marché",
+                "marche"
+              ],
+              "correct": 1,
+              "why": [
+                "« Marcher » is a verb (to walk); after « au », you need a place.",
+                "",
+                "« Marche » is a verb form; the place is « le marché »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa say you need?",
+              "choices": [
+                "Some coffee",
+                "Some milk"
+              ],
+              "correct": 0,
+              "miss": "Reread: « il faut acheter du café ! »"
+            }
+          ],
+          "followUp": "Super ! Et du lait, aussi.",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_agree_s03",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Corriger",
+          "cue": "At home, you agree with Léa, your flatmate. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Tout à fait, je suis d'accord avec toi, la cuisine est trop petit.",
+              "error": {
+                "word": "petit",
+                "fix": "petite",
+                "choices": [
+                  "petites",
+                  "petite",
+                  "grand"
+                ],
+                "why": "« Cuisine » is feminine: « la cuisine est trop petite »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_22_agree_d07",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat « Les copains » (vous = you all). Inès suggested a picnic.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Exactement, un pique-nique dimanche, c'est parfait !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Moi, je ___ les chips !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « exactement » mean here?",
+              "target": "exactement",
+              "choices": [
+                "exactly",
+                "of course",
+                "maybe"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "No: of course is « bien sûr ».",
+                "No: maybe is « peut-être »."
+              ]
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "prendre",
+                "prends",
+                "prend"
+              ],
+              "correct": 1,
+              "why": [
+                "« Prendre » is the infinitive; after « je », conjugate it: « je prends ».",
+                "",
+                "« Prend » goes with « il » or « elle »; with « je », it's « prends »."
+              ]
+            }
+          ],
+          "followUp": "Super ! Moi, j'apporte une tarte.",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_agree_d08",
+          "place": "Sur le palier",
+          "cue": "On the landing. M. Ferrand, your neighbour, says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Le bruit, le soir, c'est trop !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say you agree with him, politely.",
+              "bank": [
+                "Je suis d'accord",
+                "avec vous,",
+                "monsieur.",
+                "avec toi,",
+                "madame."
+              ],
+              "accepted": [
+                [
+                  "Je suis d'accord",
+                  "avec vous,",
+                  "monsieur."
+                ]
+              ],
+              "model": "Je suis d'accord avec vous, monsieur."
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What bothers M. Ferrand?",
+              "choices": [
+                "The bins on the landing",
+                "The noise in the evening"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Le bruit, le soir, c'est trop ! »"
+            }
+          ],
+          "followUp": "Merci, madame. Vous êtes gentille.",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_agree_s04",
+          "place": "Sur le palier · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You told Léa (tu). Now tell M. Ferrand, your neighbour, on the landing. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Je suis d'accord avec toi, tu as tout à fait raison !",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it for M. Ferrand (vous), and call him « monsieur ».",
+              "bank": [
+                "Je suis d'accord",
+                "avec vous,",
+                "monsieur,",
+                "vous avez",
+                "tout à fait",
+                "raison.",
+                "avec toi,",
+                "tu as"
+              ],
+              "accepted": [
+                [
+                  "Je suis d'accord",
+                  "avec vous,",
+                  "monsieur,",
+                  "vous avez",
+                  "tout à fait",
+                  "raison."
+                ]
+              ],
+              "model": "Je suis d'accord avec vous, monsieur, vous avez tout à fait raison."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_22_agree_d09",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. She says tu to you. You wrote that you both need to leave early tomorrow.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Tout à fait, le train est à six heures !"
+            },
+            {
+              "speaker": "learner",
+              "text": "D'accord, on se retrouve ___ la gare ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "When is the train?",
+              "choices": [
+                "At ten",
+                "At six"
+              ],
+              "correct": 1,
+              "miss": "Reread: « le train est à six heures ! »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "devant",
+                "avant",
+                "pendant"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Avant la gare » means before you reach the station, not a place to meet; to meet outside it, use « devant ».",
+                "« Pendant » means during (a time); it can't go before « la gare »."
+              ]
+            }
+          ],
+          "followUp": "Oui, à cinq heures, devant la gare !",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_agree_d10",
+          "place": "À l'appart",
+          "cue": "At home. Léa, your flatmate, says tu to you. You talked about the weekend.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Exactement, le dimanche, on se repose !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa say about Sundays?",
+              "choices": [
+                "You do the cleaning",
+                "You rest"
+              ],
+              "correct": 1,
+              "miss": "Reread: « le dimanche, on se repose ! »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes: no housework!",
+              "bank": [
+                "Oui,",
+                "pas de ménage !",
+                "pas du ménage !",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "pas de ménage !"
+                ]
+              ],
+              "model": "Oui, pas de ménage !"
+            }
+          ],
+          "followUp": "Et pas de vaisselle !",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_agree_s05",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Which French words mean “absolutely”? At home, you answer Léa, your flatmate (tu).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "___, Léa, je suis d'accord avec toi, on fait la vaisselle ensemble."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "absolutely",
+              "choices": [
+                "Tout à coup",
+                "Tout de suite",
+                "Tout à fait"
+              ],
+              "correct": 2,
+              "why": [
+                "« Tout à coup » means suddenly.",
+                "« Tout de suite » means right away.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_22_disagree",
+      "title": "Pas d'accord",
+      "note": "Disagreeing. « Je ne suis pas d'accord » is I don't agree. « Tu as tort » is you're wrong (with vous: « vous avez tort »), the opposite of « tu as raison ». « Pas question ! » means no way.",
+      "items": [
+        {
+          "id": "sit_22_disagree_d01",
+          "place": "À l'appart",
+          "cue": "At home. Léa, your flatmate, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Le ménage, c'est toujours moi ! Je ne suis pas d'accord !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "Why is Léa unhappy?",
+              "choices": [
+                "She always does the cleaning",
+                "The flat is too small"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Le ménage, c'est toujours moi ! »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say OK, you'll do it on Saturday.",
+              "bank": [
+                "D'accord,",
+                "je le fais",
+                "samedi !",
+                "je la fais",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "D'accord,",
+                  "je le fais",
+                  "samedi !"
+                ]
+              ],
+              "model": "D'accord, je le fais samedi !"
+            }
+          ],
+          "followUp": "Merci ! Et moi, la vaisselle.",
+          "newWords": [
+            "je ne suis pas d'accord"
+          ]
+        },
+        {
+          "id": "sit_22_disagree_d02",
+          "place": "Texto · Théo",
+          "cue": "Théo, your friend, texts you. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Le métro est plus rapide que le vélo !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Tu as tort, le vélo est plus ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo think?",
+              "choices": [
+                "The bike is faster",
+                "The metro is faster"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Le métro est plus rapide que le vélo ! »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "rapide",
+                "rapides",
+                "rapidement"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Rapides » is plural, but it's one bike.",
+                "« Rapidement » means quickly; after « est plus », you need an adjective."
+              ]
+            }
+          ],
+          "followUp": "Ah bon ? Demain, je viens à vélo, alors !",
+          "newWords": [
+            "tu as tort"
+          ]
+        },
+        {
+          "id": "sit_22_disagree_s01",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Construire",
+          "cue": "At home, Léa, your flatmate, complains about the dishes. Answer her (tu).",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Encore la vaisselle pour moi, tu ne la fais jamais !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say you don't agree: you do the dishes every evening.",
+              "bank": [
+                "Je ne suis pas d'accord,",
+                "je fais",
+                "la vaisselle",
+                "tous les soirs !",
+                "Je suis d'accord,",
+                "je fait"
+              ],
+              "accepted": [
+                [
+                  "Je ne suis pas d'accord,",
+                  "je fais",
+                  "la vaisselle",
+                  "tous les soirs !"
+                ]
+              ],
+              "model": "Je ne suis pas d'accord, je fais la vaisselle tous les soirs !"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_22_disagree_d03",
+          "place": "À l'appart",
+          "cue": "At home. Léa, your flatmate, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Une fête ici samedi ? Pas question !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Mais ___ ? On fait le ménage après !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "parce que",
+                "pourquoi",
+                "pour"
+              ],
+              "correct": 1,
+              "why": [
+                "« Parce que » means because; here you're asking why.",
+                "",
+                "« Pour » means for; « Mais pour ? » isn't a question."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa say about a party here?",
+              "choices": [
+                "Good idea",
+                "No way"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Une fête ici samedi ? Pas question ! »"
+            }
+          ],
+          "followUp": "Bon, d'accord, mais une petite fête !",
+          "newWords": [
+            "pas question"
+          ]
+        },
+        {
+          "id": "sit_22_disagree_d04",
+          "place": "Au bureau",
+          "cue": "At the office. Inès, your colleague, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Je ne suis pas d'accord avec la responsable."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « je ne suis pas d'accord » mean here?",
+              "target": "je ne suis pas d'accord",
+              "choices": [
+                "I'm not ready",
+                "I don't agree",
+                "I'm not well"
+              ],
+              "correct": 1,
+              "why": [
+                "No: I'm not ready is « je ne suis pas prête ».",
+                "",
+                "No: I'm not well is « je ne vais pas bien »."
+              ]
+            },
+            {
+              "type": "reply",
+              "prompt": "Ask: oh really? Why?",
+              "bank": [
+                "Ah bon ?",
+                "Pourquoi ?",
+                "Parce que",
+                "Quand ?"
+              ],
+              "accepted": [
+                [
+                  "Ah bon ?",
+                  "Pourquoi ?"
+                ]
+              ],
+              "model": "Ah bon ? Pourquoi ?"
+            }
+          ],
+          "followUp": "Son projet est trop long !",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_disagree_s02",
+          "place": "Sur le palier · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "On the landing, M. Ferrand, your neighbour, says the neighbourhood is too noisy. Disagree politely. He says vous to you.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which answer fits M. Ferrand?",
+              "choices": [
+                "Tu as tort, il est super calme !",
+                "Je ne suis pas d'accord, monsieur, le quartier est très calme.",
+                "Ah non, le quartier est super calme, tu sais !"
+              ],
+              "correct": 1,
+              "why": [
+                "Good French with a friend, but « tu as tort » is tu: M. Ferrand says vous to you.",
+                "",
+                "Good French with a friend, but « tu sais » is tu: M. Ferrand says vous to you."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_22_disagree_d05",
+          "place": "Appel · Théo",
+          "cue": "Clarify: Théo, your friend, calls you. The line is bad. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Tu as tort, le concert est samedi !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say you can't hear him well, and ask him to repeat.",
+              "bank": [
+                "Pardon ?",
+                "Je t'entends mal.",
+                "Tu peux répéter ?",
+                "Je vous entends mal.",
+                "Vous pouvez répéter ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon ?",
+                  "Je t'entends mal.",
+                  "Tu peux répéter ?"
+                ],
+                [
+                  "Je t'entends mal.",
+                  "Tu peux répéter ?"
+                ],
+                [
+                  "Pardon ?",
+                  "Tu peux répéter ?",
+                  "Je t'entends mal."
+                ],
+                [
+                  "Tu peux répéter ?",
+                  "Je t'entends mal."
+                ],
+                [
+                  "Je t'entends mal.",
+                  "Pardon ?",
+                  "Tu peux répéter ?"
+                ]
+              ],
+              "model": "Pardon ? Je t'entends mal. Tu peux répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « tu as tort » mean here?",
+              "target": "tu as tort",
+              "choices": [
+                "you're right",
+                "you're wrong",
+                "you're late"
+              ],
+              "correct": 1,
+              "why": [
+                "No: you're right is « tu as raison ».",
+                "",
+                "No: you're late is « tu es en retard »."
+              ]
+            }
+          ],
+          "followUp": "Le concert est samedi, pas dimanche !",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_disagree_d06",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. You asked her to do the dishes tonight. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Pas question, je ne fais pas la vaisselle ce soir !"
+            },
+            {
+              "speaker": "learner",
+              "text": "D'accord, je la fais ___ toi."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "par",
+                "pas",
+                "pour"
+              ],
+              "correct": 2,
+              "why": [
+                "« Par » means by; « je la fais par toi » isn't French.",
+                "« Pas » is the negation; it can't go before « toi » here.",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa say?",
+              "choices": [
+                "She won't do the dishes tonight",
+                "She'll do the dishes tonight"
+              ],
+              "correct": 0,
+              "miss": "Reread: « je ne fais pas la vaisselle ce soir ! »"
+            }
+          ],
+          "followUp": "Merci, tu es géniale !",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_disagree_s03",
+          "place": "Texto · Théo · phrase seule",
+          "standalone": "Corriger",
+          "cue": "Théo, your friend, suggests a restaurant. Text him back (tu).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Pas question, Théo, ce restaurant est trop chère pour nous !",
+              "error": {
+                "word": "chère",
+                "fix": "cher",
+                "choices": [
+                  "chères",
+                  "chers",
+                  "cher"
+                ],
+                "why": "« Restaurant » is masculine singular: « trop cher »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_22_disagree_d07",
+          "place": "Au café",
+          "cue": "At the café. Karim, the barista and your friend, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Tu veux payer ? Pas question, je t'invite !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Merci, Karim, tu es trop ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « pas question » mean here?",
+              "target": "pas question",
+              "choices": [
+                "no problem",
+                "good question",
+                "no way"
+              ],
+              "correct": 2,
+              "why": [
+                "No: no problem is « pas de problème ».",
+                "No: a good question is « une bonne question ».",
+                ""
+              ]
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "gentil",
+                "gentille",
+                "gentils"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Gentille » is feminine; Karim is a man: « gentil ».",
+                "« Gentils » is plural, but you're talking to Karim alone."
+              ]
+            }
+          ],
+          "followUp": "De rien ! C'est normal.",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_disagree_d08",
+          "place": "WhatsApp · Mme Dumas",
+          "cue": "Mme Dumas, your landlady, writes to you on WhatsApp. You asked her about getting a pet. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Mme Dumas",
+              "text": "Je ne suis pas d'accord, madame, pas de chat !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say OK, no problem, madam.",
+              "bank": [
+                "D'accord,",
+                "pas de problème,",
+                "madame.",
+                "monsieur.",
+                "pas question,"
+              ],
+              "accepted": [
+                [
+                  "D'accord,",
+                  "pas de problème,",
+                  "madame."
+                ]
+              ],
+              "model": "D'accord, pas de problème, madame."
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Mme Dumas not allow?",
+              "choices": [
+                "A dog in the flat",
+                "A cat in the flat"
+              ],
+              "correct": 1,
+              "miss": "Reread: « pas de chat ! »"
+            }
+          ],
+          "followUp": "Merci, madame. Bonne journée !",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_disagree_s04",
+          "place": "Sur le palier · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You told Théo (tu). Now tell M. Ferrand, your neighbour, on the landing. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Tu as tort, je ne suis pas d'accord avec toi.",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it for M. Ferrand (vous), and call him « monsieur ».",
+              "bank": [
+                "Vous avez tort,",
+                "monsieur,",
+                "je ne suis pas d'accord",
+                "avec vous.",
+                "Tu as tort,",
+                "avec toi."
+              ],
+              "accepted": [
+                [
+                  "Vous avez tort,",
+                  "monsieur,",
+                  "je ne suis pas d'accord",
+                  "avec vous."
+                ]
+              ],
+              "model": "Vous avez tort, monsieur, je ne suis pas d'accord avec vous."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_22_disagree_d09",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. You suggested the exhibition on Monday. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Tu as tort, l'expo est fermée lundi !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Ah bon ? On y va ___, alors."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What's the problem with Monday?",
+              "choices": [
+                "The exhibition is closed",
+                "The exhibition is too expensive"
+              ],
+              "correct": 0,
+              "miss": "Reread: « l'expo est fermée lundi ! »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "mardis",
+                "marché",
+                "mardi"
+              ],
+              "correct": 2,
+              "why": [
+                "« Mardis » is plural; you mean one day.",
+                "« Marché » means market, not a day.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Oui, mardi après le travail !",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_disagree_d10",
+          "place": "Texto · Théo",
+          "cue": "Théo, your friend, texts you. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "On ne sort pas ce soir ? Pas question !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo want?",
+              "choices": [
+                "To stay home tonight",
+                "To go out tonight"
+              ],
+              "correct": 1,
+              "miss": "Reread: « On ne sort pas ce soir ? Pas question ! »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say OK, you're coming.",
+              "bank": [
+                "D'accord,",
+                "je viens !",
+                "je vais !",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "D'accord,",
+                  "je viens !"
+                ]
+              ],
+              "model": "D'accord, je viens !"
+            }
+          ],
+          "followUp": "Super ! Rendez-vous à huit heures.",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_disagree_s05",
+          "place": "Texto · Théo · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Which French words mean “you're wrong”? You text Théo, your friend (tu).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Non, Théo, ___, le pique-nique est dimanche, pas samedi !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "you're wrong",
+              "choices": [
+                "tu as raison",
+                "tu as tort",
+                "tu as eu raison"
+              ],
+              "correct": 1,
+              "why": [
+                "« Tu as raison » means you're right.",
+                "",
+                "« Tu as eu raison » means you were right."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_22_soften",
+      "title": "Adoucir",
+      "note": "Softening. « Pas forcément » means not necessarily. « Tu as raison en partie » means you're partly right. « Je vois ce que tu veux dire » means I see what you mean.",
+      "items": [
+        {
+          "id": "sit_22_soften_d01",
+          "place": "À l'appart",
+          "cue": "At home. Léa, your flatmate, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Un grand appartement ? Pas forcément mieux !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa think of a big flat?",
+              "choices": [
+                "It isn't necessarily better",
+                "It's always better"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Un grand appartement ? Pas forcément mieux ! »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say it's true, and it's more expensive.",
+              "bank": [
+                "C'est vrai,",
+                "et c'est",
+                "plus cher.",
+                "plus chère.",
+                "moins cher."
+              ],
+              "accepted": [
+                [
+                  "C'est vrai,",
+                  "et c'est",
+                  "plus cher."
+                ]
+              ],
+              "model": "C'est vrai, et c'est plus cher."
+            }
+          ],
+          "followUp": "Exactement ! Notre appartement est parfait.",
+          "newWords": [
+            "pas forcément"
+          ]
+        },
+        {
+          "id": "sit_22_soften_d02",
+          "place": "Au bureau",
+          "cue": "At the office. Inès, your colleague, says tu to you. You showed her a flat and said it's great.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Cet appartement ? Tu as raison, en partie."
+            },
+            {
+              "speaker": "learner",
+              "text": "Il est ___, mais cher."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "Does Inès agree with you about the flat?",
+              "choices": [
+                "Completely",
+                "Partly"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Tu as raison, en partie. »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "lumineuse",
+                "lumineux",
+                "lumineuses"
+              ],
+              "correct": 1,
+              "why": [
+                "« Appartement » is masculine: « il est lumineux ».",
+                "",
+                "« Lumineuses » is feminine plural, but it's one flat."
+              ]
+            }
+          ],
+          "followUp": "Oui, trop cher pour moi !",
+          "newWords": [
+            "en partie"
+          ]
+        },
+        {
+          "id": "sit_22_soften_s01",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Construire",
+          "cue": "At home, Léa, your flatmate, talks about getting to work. Answer her (tu).",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Le métro, c'est mieux que le vélo pour aller au bureau !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say she's partly right, but the bike is faster.",
+              "bank": [
+                "Tu as raison,",
+                "en partie,",
+                "mais le vélo,",
+                "c'est plus rapide !",
+                "Tu as tort,",
+                "c'est plus cher !"
+              ],
+              "accepted": [
+                [
+                  "Tu as raison,",
+                  "en partie,",
+                  "mais le vélo,",
+                  "c'est plus rapide !"
+                ]
+              ],
+              "model": "Tu as raison, en partie, mais le vélo, c'est plus rapide !"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_22_soften_d03",
+          "place": "Texto · Théo",
+          "cue": "Théo, your friend, texts you. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Le ménage ? Il faut le faire, mais c'est long !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Je vois ce que tu veux dire, c'est ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "ennuyeuse",
+                "ennuyeuses",
+                "ennuyeux"
+              ],
+              "correct": 2,
+              "why": [
+                "After « c'est », the adjective stays masculine: « c'est ennuyeux ».",
+                "« Ennuyeuses » is feminine plural; after « c'est », use « ennuyeux ».",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo say about housework?",
+              "choices": [
+                "It's quick, so it's no problem",
+                "It has to be done, but it takes a long time"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Il faut le faire, mais c'est long ! »"
+            }
+          ],
+          "followUp": "Oui ! Mais après, cinéma !",
+          "newWords": [
+            "je vois ce que tu veux dire"
+          ]
+        },
+        {
+          "id": "sit_22_soften_d04",
+          "place": "Au café",
+          "cue": "At the café. Karim, the barista and your friend, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Le café cher, c'est le meilleur ? Pas forcément !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « pas forcément » mean here?",
+              "target": "pas forcément",
+              "choices": [
+                "not at all",
+                "not necessarily",
+                "no problem"
+              ],
+              "correct": 1,
+              "why": [
+                "No: not at all is « pas du tout ».",
+                "",
+                "No: no problem is « pas de problème »."
+              ]
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes: his coffee is the best.",
+              "bank": [
+                "Oui,",
+                "ton café",
+                "est le meilleur !",
+                "ta café",
+                "votre café"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "ton café",
+                  "est le meilleur !"
+                ]
+              ],
+              "model": "Oui, ton café est le meilleur !"
+            }
+          ],
+          "followUp": "Merci ! Et il n'est pas cher !",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_soften_s02",
+          "place": "Au bureau · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "At the office, your manager says the project is easy. Disagree gently. She says vous to you.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which answer fits your manager?",
+              "choices": [
+                "T'as raison en partie, mais c'est dur !",
+                "Pas forcément, tu sais, c'est difficile !",
+                "Vous avez raison en partie, madame, mais le projet est difficile."
+              ],
+              "correct": 2,
+              "why": [
+                "Good French with a friend, but « t'as » is tu: your manager says vous to you.",
+                "Good French with a friend, but « tu sais » is tu, too familiar for your manager.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_22_soften_d05",
+          "place": "Appel · Inès",
+          "cue": "Clarify: Inès, your colleague, calls you. The line is bad. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "C'est vrai en partie, le quartier est bruyant."
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say you can't hear her well, and ask her to repeat.",
+              "bank": [
+                "Pardon ?",
+                "Je t'entends mal.",
+                "Tu peux répéter ?",
+                "Je vous entends mal.",
+                "Vous pouvez répéter ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon ?",
+                  "Je t'entends mal.",
+                  "Tu peux répéter ?"
+                ],
+                [
+                  "Je t'entends mal.",
+                  "Tu peux répéter ?"
+                ],
+                [
+                  "Pardon ?",
+                  "Tu peux répéter ?",
+                  "Je t'entends mal."
+                ],
+                [
+                  "Tu peux répéter ?",
+                  "Je t'entends mal."
+                ],
+                [
+                  "Je t'entends mal.",
+                  "Pardon ?",
+                  "Tu peux répéter ?"
+                ]
+              ],
+              "model": "Pardon ? Je t'entends mal. Tu peux répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « en partie » mean here?",
+              "target": "en partie",
+              "choices": [
+                "at a party",
+                "partly, in part",
+                "on the way"
+              ],
+              "correct": 1,
+              "why": [
+                "No: a party is « une fête ».",
+                "",
+                "No: on the way is « en route »."
+              ]
+            }
+          ],
+          "followUp": "C'est vrai en partie : le quartier est bruyant !",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_soften_d06",
+          "place": "À l'appart",
+          "cue": "At home. You told Léa you're very tired tonight. Léa, your flatmate, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Je vois ce que tu veux dire."
+            },
+            {
+              "speaker": "learner",
+              "text": "Alors, je fais la vaisselle ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "demande",
+                "devant",
+                "demain"
+              ],
+              "correct": 2,
+              "why": [
+                "« Demande » is a verb (ask); you need a time.",
+                "« Devant » means in front of; it needs a place after it.",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa say?",
+              "choices": [
+                "She understands your point",
+                "She doesn't understand you"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Je vois ce que tu veux dire. »"
+            }
+          ],
+          "followUp": "D'accord, et ce soir, je la fais !",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_soften_s03",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Corriger",
+          "cue": "At home, Léa, your flatmate, likes a flat online. Answer her (tu).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Je vois ce que tu veux dire, mais l'appartement est petite.",
+              "error": {
+                "word": "petite",
+                "fix": "petit",
+                "choices": [
+                  "petites",
+                  "petit",
+                  "petits"
+                ],
+                "why": "« Appartement » is masculine singular: « l'appartement est petit »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_22_soften_d07",
+          "place": "Au café",
+          "cue": "At the café. You told Théo you're busy today. Théo, your friend, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Je vois ce que tu veux dire. Demain, alors ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, ___ six heures ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « je vois ce que tu veux dire » mean here?",
+              "target": "je vois ce que tu veux dire",
+              "choices": [
+                "I see what you mean",
+                "I'll see what you want",
+                "I know what you said"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "No: I'll see is « je verrai ».",
+                "No: I know what you said is « je sais ce que tu as dit »."
+              ]
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "verre",
+                "vert",
+                "vers"
+              ],
+              "correct": 2,
+              "why": [
+                "« Verre » means glass; it's a noun.",
+                "« Vert » means green.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Parfait, à demain !",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_soften_d08",
+          "place": "Sur le palier",
+          "cue": "On the landing. M. Ferrand, your neighbour, says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Le quartier était mieux avant, non ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say not necessarily, sir.",
+              "bank": [
+                "Pas forcément,",
+                "monsieur.",
+                "madame.",
+                "Pas question,"
+              ],
+              "accepted": [
+                [
+                  "Pas forcément,",
+                  "monsieur."
+                ]
+              ],
+              "model": "Pas forcément, monsieur."
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does M. Ferrand think?",
+              "choices": [
+                "The neighbourhood is better now",
+                "The neighbourhood was better before"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Le quartier était mieux avant, non ? »"
+            }
+          ],
+          "followUp": "Peut-être, madame. Vous avez raison !",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_soften_s04",
+          "place": "Au bureau · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You told Inès, your colleague, she's wrong about a flat (tu). Make it softer.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Tu as tort, le premier appartement n'est pas mieux.",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say she's partly right, but the first flat isn't better.",
+              "bank": [
+                "Tu as raison",
+                "en partie,",
+                "mais le premier appartement",
+                "n'est pas mieux.",
+                "Tu as tort",
+                "ne sont pas mieux."
+              ],
+              "accepted": [
+                [
+                  "Tu as raison",
+                  "en partie,",
+                  "mais le premier appartement",
+                  "n'est pas mieux."
+                ]
+              ],
+              "model": "Tu as raison en partie, mais le premier appartement n'est pas mieux."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_22_soften_d09",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you about a flat you both saw online. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Le loyer est cher ? Pas forcément trop cher !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, et l'appartement est ___ du métro !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès say about the rent?",
+              "choices": [
+                "It isn't necessarily too expensive",
+                "It's far too expensive"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Pas forcément trop cher ! »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "prêt",
+                "près",
+                "plein"
+              ],
+              "correct": 1,
+              "why": [
+                "« Prêt » means ready.",
+                "",
+                "« Plein » means full; « plein du métro » isn't what you mean."
+              ]
+            }
+          ],
+          "followUp": "Exactement ! Je vais le voir samedi.",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_soften_d10",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Tu as raison en partie. On fait le ménage dimanche ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa suggest?",
+              "choices": [
+                "Doing the cleaning on Saturday",
+                "Doing the cleaning on Sunday"
+              ],
+              "correct": 1,
+              "miss": "Reread: « On fait le ménage dimanche ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say OK, Sunday afternoon.",
+              "bank": [
+                "D'accord,",
+                "dimanche",
+                "après-midi !",
+                "matin !",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "D'accord,",
+                  "dimanche",
+                  "après-midi !"
+                ]
+              ],
+              "model": "D'accord, dimanche après-midi !"
+            }
+          ],
+          "followUp": "Parfait ! Et après, on se repose.",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_soften_s05",
+          "place": "Au bureau · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Which French words mean “not necessarily”? At the office, you answer Inès, your colleague (tu).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Un appartement cher, c'est mieux ? ___, regarde le quartier !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "not necessarily",
+              "choices": [
+                "Pas question",
+                "Pas forcément",
+                "Pas de problème"
+              ],
+              "correct": 1,
+              "why": [
+                "« Pas question » means no way.",
+                "",
+                "« Pas de problème » means no problem."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_22_turns",
+      "title": "Chacun son tour",
+      "note": "Taking turns. « C'est ton tour » means it's your turn; « tour » is masculine here: « mon tour, ton tour ». « À tour de rôle » means in turns, one after the other. « Ce n'est pas juste ! » means it's not fair. With vous: « c'est votre tour ».",
+      "items": [
+        {
+          "id": "sit_22_turns_d01",
+          "place": "À l'appart",
+          "cue": "At home. Léa, your flatmate, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "La vaisselle ? C'est ton tour, ce soir !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa say?",
+              "choices": [
+                "It's your turn to do the dishes tonight",
+                "She'll do the dishes tonight"
+              ],
+              "correct": 0,
+              "miss": "Reread: « La vaisselle ? C'est ton tour, ce soir ! »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say OK, you'll do them after dinner.",
+              "bank": [
+                "D'accord,",
+                "je la fais",
+                "après le dîner.",
+                "je les fais",
+                "avant le dîner."
+              ],
+              "accepted": [
+                [
+                  "D'accord,",
+                  "je la fais",
+                  "après le dîner."
+                ]
+              ],
+              "model": "D'accord, je la fais après le dîner."
+            }
+          ],
+          "followUp": "Merci ! Et demain, c'est mon tour.",
+          "newWords": [
+            "tour"
+          ]
+        },
+        {
+          "id": "sit_22_turns_d02",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat « Les copains » (vous = you all). He says tu to you. It's about your film nights.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "On choisit le film à tour de rôle ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Bonne idée ! Qui ___ ce soir ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo suggest?",
+              "choices": [
+                "Watching two films each evening",
+                "Choosing the film in turns"
+              ],
+              "correct": 1,
+              "miss": "Reread: « On choisit le film à tour de rôle ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "choisis",
+                "choisi",
+                "choisit"
+              ],
+              "correct": 2,
+              "why": [
+                "« Choisis » is the je / tu form; after « qui », use the il / elle form: « qui choisit ».",
+                "« Choisi » is the past participle; you need the present: « qui choisit ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Toi, Robin ! Ce soir, c'est ton tour !",
+          "newWords": [
+            "à tour de rôle"
+          ]
+        },
+        {
+          "id": "sit_22_turns_s01",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Construire",
+          "cue": "At home. Léa, your flatmate, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Le ménage, c'est toujours moi ! Comment on fait, alors ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say you do the cleaning in turns, and this week it's your turn.",
+              "bank": [
+                "On fait le ménage",
+                "à tour de rôle,",
+                "et cette semaine,",
+                "c'est ton tour !",
+                "c'est mon tour !",
+                "à côté,"
+              ],
+              "accepted": [
+                [
+                  "On fait le ménage",
+                  "à tour de rôle,",
+                  "et cette semaine,",
+                  "c'est mon tour !"
+                ]
+              ],
+              "model": "On fait le ménage à tour de rôle, et cette semaine, c'est mon tour !"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_22_turns_d03",
+          "place": "À l'appart",
+          "cue": "At home. Léa, your flatmate, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Encore moi, la vaisselle ? Ce n'est pas juste !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Pardon, c'est ___ tour !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "ma",
+                "mon",
+                "mes"
+              ],
+              "correct": 1,
+              "why": [
+                "« Tour » (turn) is masculine: « mon tour ».",
+                "",
+                "« Mes » is plural, but « tour » is singular: « mon tour »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "Why is Léa unhappy?",
+              "choices": [
+                "She doesn't like your cooking",
+                "She thinks it isn't fair: she did the dishes before"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Encore moi, la vaisselle ? Ce n'est pas juste ! »"
+            }
+          ],
+          "followUp": "Ah, merci, Robin !",
+          "newWords": [
+            "ce n'est pas juste"
+          ]
+        },
+        {
+          "id": "sit_22_turns_d04",
+          "place": "Au bureau",
+          "cue": "At the office. Inès, your colleague, says tu to you. You're at the coffee machine.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Le café ? C'est ton tour de payer !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « tour » mean here?",
+              "target": "tour",
+              "choices": [
+                "tower",
+                "turn",
+                "trip, tour"
+              ],
+              "correct": 1,
+              "why": [
+                "No: a tower is « une tour » (feminine); here it's « ton tour ».",
+                "",
+                "No: here « ton tour de payer » says whose turn it is to pay."
+              ]
+            },
+            {
+              "type": "reply",
+              "prompt": "Say OK, you're paying.",
+              "bank": [
+                "D'accord,",
+                "je paie !",
+                "tu paies !",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "D'accord,",
+                  "je paie !"
+                ]
+              ],
+              "model": "D'accord, je paie !"
+            }
+          ],
+          "followUp": "Super ! Un café au lait, s'il te plaît.",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_turns_s02",
+          "place": "Sur le palier · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "On the landing, suggest to M. Ferrand, your neighbour, that you take the bins out in turns. He says vous to you.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which suggestion fits M. Ferrand?",
+              "choices": [
+                "Dis, on sort les poubelles à tour de rôle, toi et moi ?",
+                "Monsieur, on pourrait sortir les poubelles à tour de rôle ?",
+                "Tu sors les poubelles cette semaine, et moi, la semaine prochaine ?"
+              ],
+              "correct": 1,
+              "why": [
+                "Good French with a friend, but « dis » and « toi » are tu: M. Ferrand says vous to you.",
+                "",
+                "Good French with a friend, but « tu sors » is tu: M. Ferrand says vous to you."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_22_turns_d05",
+          "place": "Appel · Théo",
+          "cue": "Clarify: Théo, your friend, calls you. The line is bad. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Au restaurant, on paie à tour de rôle, d'accord ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say you can't hear him well, and ask him to repeat.",
+              "bank": [
+                "Pardon ?",
+                "Je t'entends mal.",
+                "Tu peux répéter ?",
+                "Je vous entends mal.",
+                "Vous pouvez répéter ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon ?",
+                  "Je t'entends mal.",
+                  "Tu peux répéter ?"
+                ],
+                [
+                  "Je t'entends mal.",
+                  "Tu peux répéter ?"
+                ],
+                [
+                  "Pardon ?",
+                  "Tu peux répéter ?",
+                  "Je t'entends mal."
+                ],
+                [
+                  "Tu peux répéter ?",
+                  "Je t'entends mal."
+                ],
+                [
+                  "Je t'entends mal.",
+                  "Pardon ?",
+                  "Tu peux répéter ?"
+                ]
+              ],
+              "model": "Pardon ? Je t'entends mal. Tu peux répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « à tour de rôle » mean here?",
+              "target": "à tour de rôle",
+              "choices": [
+                "all together",
+                "at the table",
+                "in turns"
+              ],
+              "correct": 2,
+              "why": [
+                "No: all together is « tous ensemble ».",
+                "No: at the table is « à table ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "On paie à tour de rôle ! Samedi, c'est moi !",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_turns_d06",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Ce n'est pas juste, le ménage, c'est ton tour !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Désolée, je le fais ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "demande",
+                "devant",
+                "demain"
+              ],
+              "correct": 2,
+              "why": [
+                "« Demande » means request or asks; it doesn't say when.",
+                "« Devant » means in front of; it doesn't say when.",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa say?",
+              "choices": [
+                "It's your turn to do the cleaning",
+                "The flat is very clean"
+              ],
+              "correct": 0,
+              "miss": "Reread: « le ménage, c'est ton tour ! »"
+            }
+          ],
+          "followUp": "D'accord, merci !",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_turns_s03",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Corriger",
+          "cue": "At home, you tell Léa, your flatmate, whose turn it is. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Ce n'est pas juste, c'est ta tour de faire la vaisselle ce soir !",
+              "error": {
+                "word": "ta",
+                "fix": "ton",
+                "choices": [
+                  "ma",
+                  "ton",
+                  "tes"
+                ],
+                "why": "« Tour » (turn) is masculine: « c'est ton tour »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_22_turns_d07",
+          "place": "Au café",
+          "cue": "At the café. Karim, the barista and your friend, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Ce n'est pas juste, je travaille encore samedi !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Ah, c'est ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « ce n'est pas juste » mean here?",
+              "target": "ce n'est pas juste",
+              "choices": [
+                "it's not true",
+                "it's not far",
+                "it's not fair"
+              ],
+              "correct": 2,
+              "why": [
+                "No: it's not true is « ce n'est pas vrai ».",
+                "No: it's not far is « ce n'est pas loin ».",
+                ""
+              ]
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "énervant",
+                "énervante",
+                "énervants"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "After « c'est », the adjective stays masculine: « c'est énervant ».",
+                "« Énervants » is plural; « c'est » needs the singular: « c'est énervant »."
+              ]
+            }
+          ],
+          "followUp": "Oui ! Mais dimanche, je suis libre !",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_turns_d08",
+          "place": "WhatsApp · Mme Dumas",
+          "cue": "Mme Dumas, your landlady, writes to you on WhatsApp. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Mme Dumas",
+              "text": "Les poubelles, à tour de rôle avec M. Ferrand, d'accord ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say yes, of course, madam, and that this week it's your turn.",
+              "bank": [
+                "Oui, bien sûr,",
+                "madame.",
+                "Cette semaine,",
+                "c'est mon tour.",
+                "c'est ton tour.",
+                "monsieur."
+              ],
+              "accepted": [
+                [
+                  "Oui, bien sûr,",
+                  "madame.",
+                  "Cette semaine,",
+                  "c'est mon tour."
+                ],
+                [
+                  "Cette semaine,",
+                  "c'est mon tour.",
+                  "Oui, bien sûr,",
+                  "madame."
+                ]
+              ],
+              "model": "Oui, bien sûr, madame. Cette semaine, c'est mon tour."
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Mme Dumas ask?",
+              "choices": [
+                "Whether M. Ferrand can take out your bins",
+                "Whether you'll take out the bins in turns with M. Ferrand"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Les poubelles, à tour de rôle avec M. Ferrand, d'accord ? »"
+            }
+          ],
+          "followUp": "Parfait, merci beaucoup, madame.",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_turns_s04",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You told Léa (tu). Now tell Léa and Théo together (vous, you both).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "C'est ton tour, tu fais la vaisselle ce soir, d'accord ?",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it for Léa and Théo (vous).",
+              "bank": [
+                "C'est votre tour,",
+                "vous faites",
+                "la vaisselle",
+                "ce soir,",
+                "d'accord ?",
+                "C'est ton tour,",
+                "tu fais",
+                "vous fais"
+              ],
+              "accepted": [
+                [
+                  "C'est votre tour,",
+                  "vous faites",
+                  "la vaisselle",
+                  "ce soir,",
+                  "d'accord ?"
+                ]
+              ],
+              "model": "C'est votre tour, vous faites la vaisselle ce soir, d'accord ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_22_turns_d09",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "On choisit le restaurant à tour de rôle ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui ! Ce soir, c'est ___ tour !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès suggest?",
+              "choices": [
+                "Choosing the restaurant in turns",
+                "Going to the same restaurant every week"
+              ],
+              "correct": 0,
+              "miss": "Reread: « On choisit le restaurant à tour de rôle ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "ta",
+                "tes",
+                "ton"
+              ],
+              "correct": 2,
+              "why": [
+                "« Tour » (turn) is masculine: « ton tour ».",
+                "« Tes » is plural, but « tour » is singular: « ton tour ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "D'accord ! Alors, ce soir, je choisis !",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_turns_d10",
+          "place": "À l'appart",
+          "cue": "At home. Léa, your flatmate, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Ce n'est pas juste, tu fais toujours la vaisselle !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa say?",
+              "choices": [
+                "She always does the dishes",
+                "You always do the dishes, and that's not fair"
+              ],
+              "correct": 1,
+              "miss": "Reread: « tu fais toujours la vaisselle ! »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say it's no big deal, you like it.",
+              "bank": [
+                "Pas grave,",
+                "j'aime bien !",
+                "je n'aime pas !",
+                "C'est grave,"
+              ],
+              "accepted": [
+                [
+                  "Pas grave,",
+                  "j'aime bien !"
+                ]
+              ],
+              "model": "Pas grave, j'aime bien !"
+            }
+          ],
+          "followUp": "Alors, moi, je fais le ménage !",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_turns_s05",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Which French words mean “in turns”? You tell Léa, your flatmate (tu).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "On fait le ménage ___, cette semaine, c'est toi, et après, c'est moi."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "in turns",
+              "choices": [
+                "à la place",
+                "à tour de rôle",
+                "à côté"
+              ],
+              "correct": 1,
+              "why": [
+                "« À la place » means instead.",
+                "",
+                "« À côté » means next door or nearby."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_22_deal",
+      "title": "Un arrangement",
+      "note": "Making a deal. « Je veux bien » means I'm happy to, or yes, I'd like that. « En échange » means in return. « Ça te dérange ? » asks do you mind? or does it bother you?; with vous: « Ça vous dérange ? ». « Pas du tout » (not at all) means you don't mind.",
+      "items": [
+        {
+          "id": "sit_22_deal_d01",
+          "place": "À l'appart",
+          "cue": "At home. Léa, your flatmate, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Tu fais les courses ? Je veux bien faire la vaisselle."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa offer to do?",
+              "choices": [
+                "The shopping",
+                "The dishes"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Je veux bien faire la vaisselle. »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say OK, you're going to the market.",
+              "bank": [
+                "D'accord,",
+                "je vais",
+                "au marché !",
+                "à la marché !",
+                "tu vas"
+              ],
+              "accepted": [
+                [
+                  "D'accord,",
+                  "je vais",
+                  "au marché !"
+                ]
+              ],
+              "model": "D'accord, je vais au marché !"
+            }
+          ],
+          "followUp": "Super ! Prends du fromage, s'il te plaît.",
+          "newWords": [
+            "je veux bien"
+          ]
+        },
+        {
+          "id": "sit_22_deal_d02",
+          "place": "Texto · Théo",
+          "cue": "Théo, your friend, texts you about Saturday. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Je t'aide samedi, et en échange, tu fais une tarte ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "D'accord, une tarte aux ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo want in return for his help?",
+              "choices": [
+                "A tart",
+                "Lunch at a restaurant"
+              ],
+              "correct": 0,
+              "miss": "Reread: « en échange, tu fais une tarte ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "praline",
+                "pralines",
+                "prix"
+              ],
+              "correct": 1,
+              "why": [
+                "After « aux », the noun is plural: « aux pralines ».",
+                "",
+                "« Prix » means price; a tart isn't made of prices."
+              ]
+            }
+          ],
+          "followUp": "Génial ! À samedi, alors !",
+          "newWords": [
+            "en échange"
+          ]
+        },
+        {
+          "id": "sit_22_deal_s01",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Construire",
+          "cue": "At home. Léa, your flatmate, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Le ménage et la lessive, ce week-end, qui fait quoi ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say you're happy to do the cleaning, and in return ask her to do the laundry.",
+              "bank": [
+                "Je veux bien",
+                "faire le ménage,",
+                "et en échange,",
+                "tu fais la lessive ?",
+                "tu fait la lessive ?",
+                "je fais la lessive ?"
+              ],
+              "accepted": [
+                [
+                  "Je veux bien",
+                  "faire le ménage,",
+                  "et en échange,",
+                  "tu fais la lessive ?"
+                ]
+              ],
+              "model": "Je veux bien faire le ménage, et en échange, tu fais la lessive ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_22_deal_d03",
+          "place": "Au bureau",
+          "cue": "At the office. Inès, your colleague, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Ça te dérange si je pars plus tôt ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Pas du tout, ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "allez-y",
+                "vas-y",
+                "allons-y"
+              ],
+              "correct": 1,
+              "why": [
+                "« Allez-y » is vous, but Inès says tu to you: « vas-y ».",
+                "",
+                "« Allons-y » means let's go, but only Inès is leaving."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès ask?",
+              "choices": [
+                "If you can leave earlier with her",
+                "If you mind her leaving earlier"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Ça te dérange si je pars plus tôt ? »"
+            }
+          ],
+          "followUp": "Merci ! À demain !",
+          "newWords": [
+            "ça te dérange"
+          ]
+        },
+        {
+          "id": "sit_22_deal_d04",
+          "place": "Au café",
+          "cue": "At the café. Karim, the barista and your friend, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Ton vélo est en panne ? Je veux bien t'aider !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « je veux bien » mean here?",
+              "target": "je veux bien",
+              "choices": [
+                "I can't",
+                "I'm happy to",
+                "I have to"
+              ],
+              "correct": 1,
+              "why": [
+                "No: I can't is « je ne peux pas ».",
+                "",
+                "No: I have to is « je dois »."
+              ]
+            },
+            {
+              "type": "reply",
+              "prompt": "Say thanks, and ask if Saturday suits him.",
+              "bank": [
+                "Merci !",
+                "Samedi,",
+                "ça te va ?",
+                "ça vous va ?",
+                "Dimanche,"
+              ],
+              "accepted": [
+                [
+                  "Merci !",
+                  "Samedi,",
+                  "ça te va ?"
+                ],
+                [
+                  "Samedi,",
+                  "ça te va ?",
+                  "Merci !"
+                ]
+              ],
+              "model": "Merci ! Samedi, ça te va ?"
+            }
+          ],
+          "followUp": "Parfait, à samedi !",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_deal_s02",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "Ask Mme Dumas, your landlady, on WhatsApp if she minds a friend staying this weekend. She says vous to you.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which message fits Mme Dumas?",
+              "choices": [
+                "Ça te dérange si une amie dort ici ce week-end ?",
+                "Une amie dort ici ce week-end, d'accord ?",
+                "Ça vous dérange si une amie dort ici ce week-end, madame ?"
+              ],
+              "correct": 2,
+              "why": [
+                "Good French with a friend, but « ça te dérange » is tu: Mme Dumas says vous to you.",
+                "Good French with a friend, but it announces instead of asking: too blunt for your landlady.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_22_deal_d05",
+          "place": "Appel · Théo",
+          "cue": "Clarify: Théo, your friend, calls you. He's moving flat on Saturday. The line is bad. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Tu m'aides ? En échange, je t'invite au restaurant !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say you can't hear him well, and ask him to repeat.",
+              "bank": [
+                "Pardon ?",
+                "Je t'entends mal.",
+                "Tu peux répéter ?",
+                "Je vous entends mal.",
+                "Vous pouvez répéter ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon ?",
+                  "Je t'entends mal.",
+                  "Tu peux répéter ?"
+                ],
+                [
+                  "Je t'entends mal.",
+                  "Tu peux répéter ?"
+                ],
+                [
+                  "Pardon ?",
+                  "Tu peux répéter ?",
+                  "Je t'entends mal."
+                ],
+                [
+                  "Tu peux répéter ?",
+                  "Je t'entends mal."
+                ],
+                [
+                  "Je t'entends mal.",
+                  "Pardon ?",
+                  "Tu peux répéter ?"
+                ]
+              ],
+              "model": "Pardon ? Je t'entends mal. Tu peux répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « en échange » mean here?",
+              "target": "en échange",
+              "choices": [
+                "quickly",
+                "in return",
+                "in the end"
+              ],
+              "correct": 1,
+              "why": [
+                "No: quickly is « vite ».",
+                "",
+                "No: in the end is « à la fin »."
+              ]
+            }
+          ],
+          "followUp": "Tu m'aides samedi ? En échange, je t'invite au restaurant !",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_deal_d06",
+          "place": "À l'appart",
+          "cue": "At home. Léa, your flatmate, says tu to you. She's playing music in the living room.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Ça te dérange, la musique ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Un peu, elle est ___ forte !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "tard",
+                "trop",
+                "tôt"
+              ],
+              "correct": 1,
+              "why": [
+                "« Tard » means late; it doesn't go with « forte ».",
+                "",
+                "« Tôt » means early; it doesn't go with « forte »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa ask?",
+              "choices": [
+                "If her music bothers you",
+                "If you like her music"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Ça te dérange, la musique ? »"
+            }
+          ],
+          "followUp": "Oh, pardon, Robin !",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_deal_s03",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Corriger",
+          "cue": "At home, you make a deal with Léa, your flatmate. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Je veux bien faire les courses, et en échange, tu fait la vaisselle ?",
+              "error": {
+                "word": "fait",
+                "fix": "fais",
+                "choices": [
+                  "faites",
+                  "fais",
+                  "faire"
+                ],
+                "why": "With « tu », faire is « tu fais »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_22_deal_d07",
+          "place": "Texto · Théo",
+          "cue": "Théo, your friend, texts you about your dinner tonight. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Ça te dérange si je viens avec Inès ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Non, elle est très ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « ça te dérange » mean here?",
+              "target": "ça te dérange",
+              "choices": [
+                "are you coming?",
+                "do you mind?",
+                "are you ready?"
+              ],
+              "correct": 1,
+              "why": [
+                "No: are you coming? is « tu viens ? ».",
+                "",
+                "No: are you ready? is « tu es prête ? »."
+              ]
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "gentil",
+                "gentils",
+                "gentille"
+              ],
+              "correct": 2,
+              "why": [
+                "Inès is a woman: « elle est gentille ».",
+                "« Gentils » is plural, but Inès is one person.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Super, à ce soir !",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_deal_d08",
+          "place": "Au bureau",
+          "cue": "At the office. Inès, your colleague, says tu to you. She sees your long to-do list.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Je veux bien t'aider demain, si tu veux !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say great, thank you very much.",
+              "bank": [
+                "Super,",
+                "merci beaucoup !",
+                "Dommage,",
+                "de rien !"
+              ],
+              "accepted": [
+                [
+                  "Super,",
+                  "merci beaucoup !"
+                ]
+              ],
+              "model": "Super, merci beaucoup !"
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès offer?",
+              "choices": [
+                "To take your place tomorrow",
+                "To help you tomorrow"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Je veux bien t'aider demain »"
+            }
+          ],
+          "followUp": "De rien ! À demain, alors.",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_deal_s04",
+          "place": "Sur le palier · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You asked Léa (tu). Now ask M. Ferrand, your neighbour, on the landing. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Ça te dérange si je laisse mon vélo ici, ce soir ?",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it for M. Ferrand (vous), and add « monsieur » at the end.",
+              "bank": [
+                "Ça vous dérange",
+                "si je laisse",
+                "mon vélo ici,",
+                "ce soir,",
+                "monsieur ?",
+                "Ça te dérange",
+                "si tu laisses"
+              ],
+              "accepted": [
+                [
+                  "Ça vous dérange",
+                  "si je laisse",
+                  "mon vélo ici,",
+                  "ce soir,",
+                  "monsieur ?"
+                ]
+              ],
+              "model": "Ça vous dérange si je laisse mon vélo ici, ce soir, monsieur ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_22_deal_d09",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Je cuisine, et en échange, tu fais la vaisselle ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "D'accord, c'est ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa suggest?",
+              "choices": [
+                "You cook, and she does the dishes",
+                "She cooks, and you do the dishes"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Je cuisine, et en échange, tu fais la vaisselle ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "noter",
+                "notée",
+                "noté"
+              ],
+              "correct": 2,
+              "why": [
+                "« Noter » is the infinitive; after « c'est », you need « noté ».",
+                "After « c'est », the form stays masculine: « c'est noté ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Super ! Le dîner est à huit heures.",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_deal_d10",
+          "place": "Texto · Théo",
+          "cue": "Théo, your friend, texts you about your trip tomorrow. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Ça te dérange si on part à sept heures ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo ask?",
+              "choices": [
+                "If you mind leaving at seven",
+                "If you can leave at six"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Ça te dérange si on part à sept heures ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say no, not at all.",
+              "bank": [
+                "Non,",
+                "pas du tout !",
+                "pas encore !",
+                "Oui,"
+              ],
+              "accepted": [
+                [
+                  "Non,",
+                  "pas du tout !"
+                ]
+              ],
+              "model": "Non, pas du tout !"
+            }
+          ],
+          "followUp": "Parfait, à demain !",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_deal_s05",
+          "place": "Texto · Théo · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Which French words mean “in return”? You text Théo, your friend (tu).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Je t'aide avec ton vélo, et ___, tu m'invites au café ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "in return",
+              "choices": [
+                "en ligne",
+                "en panne",
+                "en échange"
+              ],
+              "correct": 2,
+              "why": [
+                "« En ligne » means online.",
+                "« En panne » means broken down.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_22_complain",
+      "title": "Se plaindre gentiment",
+      "note": "Complaining kindly. « Ranger » means to tidy (up) or to put away: « je range ma chambre ». « Sale » means dirty. « Ça m'énerve ! » means it annoys me. Answer a complaint with « Désolée » (Robin is a woman) and a fix: « je le range ce soir ».",
+      "items": [
+        {
+          "id": "sit_22_complain_d01",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you. You're a woman.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Tu peux ranger ton vélo, s'il te plaît ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa ask?",
+              "choices": [
+                "To lend her your bike",
+                "To put your bike away"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Tu peux ranger ton vélo, s'il te plaît ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say sorry, you'll put it away tonight.",
+              "bank": [
+                "Désolée,",
+                "je le range",
+                "ce soir !",
+                "Désolé,",
+                "je la range"
+              ],
+              "accepted": [
+                [
+                  "Désolée,",
+                  "je le range",
+                  "ce soir !"
+                ]
+              ],
+              "model": "Désolée, je le range ce soir !"
+            }
+          ],
+          "followUp": "Merci ! L'entrée est trop petite !",
+          "newWords": [
+            "ranger"
+          ]
+        },
+        {
+          "id": "sit_22_complain_d02",
+          "place": "À l'appart",
+          "cue": "At home. Léa, your flatmate, says tu to you. You're a woman.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Regarde, la cuisine est sale !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Désolée, je fais la vaisselle ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What's the problem?",
+              "choices": [
+                "The kitchen is dirty",
+                "The kitchen is too small"
+              ],
+              "correct": 0,
+              "miss": "Reread: « la cuisine est sale ! »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "tout à coup",
+                "tout de suite",
+                "tout à fait"
+              ],
+              "correct": 1,
+              "why": [
+                "« Tout à coup » means suddenly; it tells a story, it doesn't promise.",
+                "",
+                "« Tout à fait » means absolutely; it doesn't say when."
+              ]
+            }
+          ],
+          "followUp": "Merci ! Moi, je range l'entrée.",
+          "newWords": [
+            "sale"
+          ]
+        },
+        {
+          "id": "sit_22_complain_s01",
+          "place": "Texto · Léa · phrase seule",
+          "standalone": "Construire",
+          "cue": "Léa, your flatmate, texts you about the kitchen. She says tu to you. You're a woman.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Robin, la cuisine est très sale, et Théo arrive ce soir !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say sorry about the kitchen: you're going to tidy up and do the dishes right away.",
+              "bank": [
+                "Désolée",
+                "pour la cuisine,",
+                "je vais ranger",
+                "et faire la vaisselle",
+                "tout de suite.",
+                "Désolé",
+                "tout à coup."
+              ],
+              "accepted": [
+                [
+                  "Désolée",
+                  "pour la cuisine,",
+                  "je vais ranger",
+                  "et faire la vaisselle",
+                  "tout de suite."
+                ]
+              ],
+              "model": "Désolée pour la cuisine, je vais ranger et faire la vaisselle tout de suite."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_22_complain_d03",
+          "place": "Au bureau",
+          "cue": "At the office. Inès, your colleague, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Le bruit du bureau, ça m'énerve !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Moi aussi, c'est trop ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "bruyante",
+                "bruyant",
+                "bruyants"
+              ],
+              "correct": 1,
+              "why": [
+                "After « c'est », the adjective stays masculine: « c'est bruyant ».",
+                "",
+                "« Bruyants » is plural; « c'est » needs the singular: « c'est bruyant »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What annoys Inès?",
+              "choices": [
+                "Her new desk",
+                "The noise in the office"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Le bruit du bureau, ça m'énerve ! »"
+            }
+          ],
+          "followUp": "On va travailler au café ?",
+          "newWords": [
+            "ça m'énerve"
+          ]
+        },
+        {
+          "id": "sit_22_complain_d04",
+          "place": "Texto · Théo",
+          "cue": "Théo, your friend, texts you on Saturday morning. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Ce matin, je dois ranger ma chambre !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « ranger » mean here?",
+              "target": "ranger",
+              "choices": [
+                "to paint",
+                "to tidy (up)",
+                "to leave"
+              ],
+              "correct": 1,
+              "why": [
+                "No: to paint is « peindre ».",
+                "",
+                "No: to leave is « partir »."
+              ]
+            },
+            {
+              "type": "reply",
+              "prompt": "Say good luck, and that you're tidying up too.",
+              "bank": [
+                "Bon courage !",
+                "Moi aussi,",
+                "je range.",
+                "Moi non plus,",
+                "je ranges."
+              ],
+              "accepted": [
+                [
+                  "Bon courage !",
+                  "Moi aussi,",
+                  "je range."
+                ],
+                [
+                  "Moi aussi,",
+                  "je range.",
+                  "Bon courage !"
+                ]
+              ],
+              "model": "Bon courage ! Moi aussi, je range."
+            }
+          ],
+          "followUp": "Merci ! Bon courage à toi aussi !",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_complain_s02",
+          "place": "Sur le palier · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "On the landing, M. Ferrand's bike is in your way. Complain politely. He says vous to you.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits M. Ferrand?",
+              "choices": [
+                "Ton vélo devant ma porte, ça m'énerve !",
+                "Range ton vélo, s'il te plaît !",
+                "Excusez-moi, monsieur, votre vélo est devant ma porte."
+              ],
+              "correct": 2,
+              "why": [
+                "Good French with a friend, but « ton » is tu, and « ça m'énerve » is too blunt for a neighbour.",
+                "Good French with a friend, but « range » and « s'il te plaît » are tu: M. Ferrand says vous to you.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_22_complain_d05",
+          "place": "Appel · Léa",
+          "cue": "Clarify: Léa, your flatmate, calls you. The line is bad. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Le frigo est sale, tu sais !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say you can't hear her well, and ask her to repeat.",
+              "bank": [
+                "Pardon ?",
+                "Je t'entends mal.",
+                "Tu peux répéter ?",
+                "Je vous entends mal.",
+                "Vous pouvez répéter ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon ?",
+                  "Je t'entends mal.",
+                  "Tu peux répéter ?"
+                ],
+                [
+                  "Je t'entends mal.",
+                  "Tu peux répéter ?"
+                ],
+                [
+                  "Pardon ?",
+                  "Tu peux répéter ?",
+                  "Je t'entends mal."
+                ],
+                [
+                  "Tu peux répéter ?",
+                  "Je t'entends mal."
+                ],
+                [
+                  "Je t'entends mal.",
+                  "Pardon ?",
+                  "Tu peux répéter ?"
+                ]
+              ],
+              "model": "Pardon ? Je t'entends mal. Tu peux répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « sale » mean here?",
+              "target": "sale",
+              "choices": [
+                "empty",
+                "for sale",
+                "dirty"
+              ],
+              "correct": 2,
+              "why": [
+                "No: empty is « vide ».",
+                "No: for sale is « à vendre ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Le frigo ! Il est sale !",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_complain_d06",
+          "place": "Texto · Théo",
+          "cue": "Théo, your friend, texts you. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Le métro est encore en retard, ça m'énerve !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Moi aussi ! ___ le vélo !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "Prend",
+                "Prenez",
+                "Prends"
+              ],
+              "correct": 2,
+              "why": [
+                "« Prend » is the il / elle form; to a friend (tu), say « prends ».",
+                "« Prenez » is vous, but Théo says tu to you: « prends ».",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What annoys Théo?",
+              "choices": [
+                "The metro is late again",
+                "His bike is broken"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Le métro est encore en retard, ça m'énerve ! »"
+            }
+          ],
+          "followUp": "Bonne idée ! Demain, je prends le vélo.",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_complain_s03",
+          "place": "Texto · Léa · phrase seule",
+          "standalone": "Corriger",
+          "cue": "You text Léa, your flatmate, about the kitchen. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Ça m'énerve, la cuisine est encore sales, tu peux ranger ?",
+              "error": {
+                "word": "sales",
+                "fix": "sale",
+                "choices": [
+                  "salé",
+                  "sale",
+                  "salée"
+                ],
+                "why": "« Cuisine » is one room, so the adjective is singular: « sale » (dirty)."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_22_complain_d07",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you. You're a woman.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Ton vélo dans l'entrée, ça m'énerve !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Désolée, je le ___ tout de suite !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « ça m'énerve » mean here?",
+              "target": "ça m'énerve",
+              "choices": [
+                "it makes me happy",
+                "it annoys me",
+                "it scares me"
+              ],
+              "correct": 1,
+              "why": [
+                "No: it makes me happy is « ça me fait plaisir ».",
+                "",
+                "No: it scares me is « ça me fait peur »."
+              ]
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "range",
+                "ranges",
+                "ranger"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Ranges » is the tu form; with « je », say « je range ».",
+                "« Ranger » is the infinitive; after « je le », you need « range »."
+              ]
+            }
+          ],
+          "followUp": "Merci, c'est gentil !",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_complain_d08",
+          "place": "WhatsApp · Mme Dumas",
+          "cue": "Mme Dumas, your landlady, writes to you on WhatsApp. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Mme Dumas",
+              "text": "Désolée, madame, le palier est sale cette semaine."
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say no problem, madam.",
+              "bank": [
+                "Pas de problème,",
+                "madame.",
+                "monsieur.",
+                "Pas question,"
+              ],
+              "accepted": [
+                [
+                  "Pas de problème,",
+                  "madame."
+                ]
+              ],
+              "model": "Pas de problème, madame."
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Mme Dumas say?",
+              "choices": [
+                "The landing is closed this week",
+                "The landing is dirty this week"
+              ],
+              "correct": 1,
+              "miss": "Reread: « le palier est sale cette semaine. »"
+            }
+          ],
+          "followUp": "Merci, madame. Le ménage, c'est jeudi.",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_complain_s04",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You told Léa (tu). Now Théo is staying the weekend: tell Léa and Théo together (vous, you both).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Range la cuisine, s'il te plaît, elle est très sale !",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it for Léa and Théo (vous).",
+              "bank": [
+                "Rangez",
+                "la cuisine,",
+                "s'il vous plaît,",
+                "elle est très sale !",
+                "Range",
+                "s'il te plaît,",
+                "elle est très sales !"
+              ],
+              "accepted": [
+                [
+                  "Rangez",
+                  "la cuisine,",
+                  "s'il vous plaît,",
+                  "elle est très sale !"
+                ]
+              ],
+              "model": "Rangez la cuisine, s'il vous plaît, elle est très sale !"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_22_complain_d09",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Mon voisin fait du bruit le soir, ça m'énerve !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Tu ___ lui parler !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What annoys Inès?",
+              "choices": [
+                "Her neighbour's dog",
+                "Her neighbour's noise in the evening"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Mon voisin fait du bruit le soir »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "devrais",
+                "devrait",
+                "devriez"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Devrait » is the il / elle form; with « tu », say « tu devrais ».",
+                "« Devriez » is the vous form; with « tu », say « tu devrais »."
+              ]
+            }
+          ],
+          "followUp": "Tu as raison, je lui parle demain.",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_complain_d10",
+          "place": "À l'appart",
+          "cue": "At home. Léa, your flatmate, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Tu peux ranger la cuisine avant samedi ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa ask?",
+              "choices": [
+                "To cook on Saturday",
+                "To tidy the kitchen before Saturday"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Tu peux ranger la cuisine avant samedi ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, tomorrow morning.",
+              "bank": [
+                "Oui,",
+                "demain matin !",
+                "demain soir !",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "demain matin !"
+                ]
+              ],
+              "model": "Oui, demain matin !"
+            }
+          ],
+          "followUp": "Merci ! Samedi, mes parents viennent.",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_complain_s05",
+          "place": "Texto · Léa · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Which French word means “to tidy”? You text Léa, your flatmate (tu).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Je vais ___ la cuisine, elle est un peu sale, et après, on mange."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "to tidy",
+              "choices": [
+                "rentrer",
+                "ranger",
+                "rester"
+              ],
+              "correct": 1,
+              "why": [
+                "« Rentrer » means to go back home.",
+                "",
+                "« Rester » means to stay."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_22_settle",
+      "title": "On est d'accord",
+      "note": "Settling it. « On est d'accord ? » asks are we agreed?; « On est d'accord » says we agree. « Marché conclu ! » means it's a deal! « Le planning » is the rota or schedule, here on the fridge.",
+      "items": [
+        {
+          "id": "sit_22_settle_d01",
+          "place": "À l'appart",
+          "cue": "At home. Léa, your flatmate, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Moi la vaisselle, toi le ménage, on est d'accord ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa suggest?",
+              "choices": [
+                "She does the dishes, and you do the cleaning",
+                "You do the dishes, and she does the cleaning"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Moi la vaisselle, toi le ménage »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, you agree.",
+              "bank": [
+                "Oui,",
+                "on est d'accord !",
+                "je suis d'accord !",
+                "Non,",
+                "je ne suis pas d'accord !"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "on est d'accord !"
+                ],
+                [
+                  "Oui,",
+                  "je suis d'accord !"
+                ]
+              ],
+              "model": "Oui, on est d'accord !"
+            }
+          ],
+          "followUp": "Super ! Je commence ce soir.",
+          "newWords": [
+            "on est d'accord"
+          ]
+        },
+        {
+          "id": "sit_22_settle_d02",
+          "place": "Texto · Théo",
+          "cue": "Théo, your friend, texts you about Sunday's picnic. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Je fais la tarte, et toi, tu apportes le café ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Marché conclu ! Elle est ___ quoi, la tarte ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo suggest?",
+              "choices": [
+                "You make the tart, and he brings the coffee",
+                "He makes the tart, and you bring the coffee"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Je fais la tarte, et toi, tu apportes le café ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "au",
+                "à",
+                "aux"
+              ],
+              "correct": 1,
+              "why": [
+                "« Au » is « à + le » before a masculine noun; before « quoi », just « à ».",
+                "",
+                "« Aux » is « à + les » before a plural noun; before « quoi », just « à »."
+              ]
+            }
+          ],
+          "followUp": "Aux pralines, bien sûr !",
+          "newWords": [
+            "marché conclu"
+          ]
+        },
+        {
+          "id": "sit_22_settle_s01",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Construire",
+          "cue": "At home. Léa, your flatmate, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Je fais le dîner ce soir, et toi, la vaisselle ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say it's a deal: you do the dishes, and she takes out the bins.",
+              "bank": [
+                "Marché conclu,",
+                "je fais la vaisselle,",
+                "et toi,",
+                "tu sors les poubelles !",
+                "tu sort les poubelles !",
+                "je fait la vaisselle,"
+              ],
+              "accepted": [
+                [
+                  "Marché conclu,",
+                  "je fais la vaisselle,",
+                  "et toi,",
+                  "tu sors les poubelles !"
+                ]
+              ],
+              "model": "Marché conclu, je fais la vaisselle, et toi, tu sors les poubelles !"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_22_settle_d03",
+          "place": "À l'appart",
+          "cue": "At home. Léa, your flatmate, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Regarde, j'ai fait un planning pour le ménage !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Super, bonne ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "idées",
+                "idée",
+                "idéal"
+              ],
+              "correct": 1,
+              "why": [
+                "« Idées » is plural, but « bonne » is singular: « bonne idée ».",
+                "",
+                "« Idéal » is an adjective (ideal), not a noun: « bonne idée »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa show you?",
+              "choices": [
+                "A shopping list",
+                "A rota for the cleaning"
+              ],
+              "correct": 1,
+              "miss": "Reread: « j'ai fait un planning pour le ménage ! »"
+            }
+          ],
+          "followUp": "Merci ! Il est sur le frigo.",
+          "newWords": [
+            "planning"
+          ]
+        },
+        {
+          "id": "sit_22_settle_d04",
+          "place": "Au bureau",
+          "cue": "At the office. Inès, your colleague, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Réunion lundi à dix heures, on est d'accord ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « on est d'accord » mean here?",
+              "target": "on est d'accord",
+              "choices": [
+                "are we late?",
+                "are we together?",
+                "are we agreed?"
+              ],
+              "correct": 2,
+              "why": [
+                "No: are we late? is « on est en retard ? ».",
+                "No: are we together? is « on est ensemble ? ».",
+                ""
+              ]
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, it's noted.",
+              "bank": [
+                "Oui,",
+                "c'est noté !",
+                "c'est notée !",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "c'est noté !"
+                ]
+              ],
+              "model": "Oui, c'est noté !"
+            }
+          ],
+          "followUp": "Parfait, merci !",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_settle_s02",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "On WhatsApp, confirm the plumber's visit with Mme Dumas, your landlady. She says vous to you.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which message fits Mme Dumas?",
+              "choices": [
+                "Alors, madame, on est d'accord pour jeudi, dix heures ?",
+                "Jeudi, dix heures, ça te va ?",
+                "Bon, toi et moi, on est d'accord pour jeudi ?"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "Good French with a friend, but « ça te va » is tu: Mme Dumas says vous to you.",
+                "Good French with a friend, but « toi et moi » is tu: Mme Dumas says vous to you."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_22_settle_d05",
+          "place": "Au café",
+          "cue": "Clarify: at the café, it's very noisy. Théo, your friend, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Marché conclu, je t'aide samedi !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say you can't hear him well, and ask him to repeat.",
+              "bank": [
+                "Pardon ?",
+                "Je t'entends mal.",
+                "Tu peux répéter ?",
+                "Je vous entends mal.",
+                "Vous pouvez répéter ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon ?",
+                  "Je t'entends mal.",
+                  "Tu peux répéter ?"
+                ],
+                [
+                  "Je t'entends mal.",
+                  "Tu peux répéter ?"
+                ],
+                [
+                  "Pardon ?",
+                  "Tu peux répéter ?",
+                  "Je t'entends mal."
+                ],
+                [
+                  "Tu peux répéter ?",
+                  "Je t'entends mal."
+                ],
+                [
+                  "Je t'entends mal.",
+                  "Pardon ?",
+                  "Tu peux répéter ?"
+                ]
+              ],
+              "model": "Pardon ? Je t'entends mal. Tu peux répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « marché conclu » mean here?",
+              "target": "marché conclu",
+              "choices": [
+                "the market is closed",
+                "it's a deal",
+                "see you at the market"
+              ],
+              "correct": 1,
+              "why": [
+                "No: « marché » alone is a market, but « marché conclu » means it's a deal.",
+                "",
+                "No: see you at the market is « à tout à l'heure au marché »."
+              ]
+            }
+          ],
+          "followUp": "Marché conclu ! Samedi, je t'aide !",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_settle_d06",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Le planning est sur le frigo !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Super ! Je ___ quoi, samedi ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "fait",
+                "fais",
+                "faire"
+              ],
+              "correct": 1,
+              "why": [
+                "« Fait » is the il / elle form; with « je », say « je fais ».",
+                "",
+                "« Faire » is the infinitive; with « je », say « je fais »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "Where is the rota?",
+              "choices": [
+                "On the fridge",
+                "On the kitchen door"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Le planning est sur le frigo ! »"
+            }
+          ],
+          "followUp": "Samedi, toi, c'est la lessive !",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_settle_s03",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Corriger",
+          "cue": "At home, you tell Léa, your flatmate, about the rota. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "On est d'accord, le planning est sur le frigo, et c'est ma tour samedi.",
+              "error": {
+                "word": "ma",
+                "fix": "mon",
+                "choices": [
+                  "ta",
+                  "mes",
+                  "mon"
+                ],
+                "why": "« Tour » (turn) is masculine: « c'est mon tour »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_22_settle_d07",
+          "place": "Au bureau",
+          "cue": "At the office. Inès, your colleague, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Tu as vu le nouveau planning ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, je travaille ___ samedi."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « planning » mean here?",
+              "target": "planning",
+              "choices": [
+                "map",
+                "schedule, rota",
+                "meeting"
+              ],
+              "correct": 1,
+              "why": [
+                "No: a map is « un plan ».",
+                "",
+                "No: a meeting is « une réunion »."
+              ]
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "non plus",
+                "pareil",
+                "aussi"
+              ],
+              "correct": 2,
+              "why": [
+                "« Non plus » goes with a negative: « je ne travaille pas non plus ».",
+                "« Pareil » means the same; it doesn't go before a day.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Moi aussi ! On mange ensemble ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_settle_d08",
+          "place": "Au café",
+          "cue": "At the café. Karim, the barista and your friend, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Un café demain à huit heures, on est d'accord ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say yes, it's a deal.",
+              "bank": [
+                "Oui,",
+                "marché conclu !",
+                "marché fermé !",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "marché conclu !"
+                ]
+              ],
+              "model": "Oui, marché conclu !"
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Karim suggest?",
+              "choices": [
+                "A coffee tonight at eight",
+                "A coffee tomorrow at eight"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Un café demain à huit heures »"
+            }
+          ],
+          "followUp": "Super, à demain !",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_settle_s04",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You told Léa (tu). Now Théo is staying the weekend: tell Léa and Théo together (vous, you both).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Regarde le planning, et dis-moi si tu es d'accord.",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it for Léa and Théo (vous).",
+              "bank": [
+                "Regardez",
+                "le planning,",
+                "et dites-moi",
+                "si vous êtes d'accord.",
+                "Regarde",
+                "et dis-moi",
+                "si tu es d'accord."
+              ],
+              "accepted": [
+                [
+                  "Regardez",
+                  "le planning,",
+                  "et dites-moi",
+                  "si vous êtes d'accord."
+                ]
+              ],
+              "model": "Regardez le planning, et dites-moi si vous êtes d'accord."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_22_settle_d09",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat « Les copains » (vous = you all). He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Un planning pour le week-end, on est d'accord ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, ___ une bonne idée !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo suggest?",
+              "choices": [
+                "A weekend in Paris",
+                "A schedule for the weekend"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Un planning pour le week-end »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "s'est",
+                "ces",
+                "c'est"
+              ],
+              "correct": 2,
+              "why": [
+                "« S'est » is a reflexive verb form (« ça s'est bien passé »), not it is.",
+                "« Ces » means these; you need « c'est » (it is).",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Super ! Je l'envoie ce soir.",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_settle_d10",
+          "place": "À l'appart",
+          "cue": "At home. Léa, your flatmate, says tu to you. She's looking at the rota.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Toi samedi, moi dimanche, marché conclu ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa suggest?",
+              "choices": [
+                "Both of you on Sunday",
+                "You on Saturday, her on Sunday"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Toi samedi, moi dimanche »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, OK, that's perfect.",
+              "bank": [
+                "Oui, d'accord,",
+                "c'est parfait !",
+                "c'est parfaite !",
+                "Non, merci,"
+              ],
+              "accepted": [
+                [
+                  "Oui, d'accord,",
+                  "c'est parfait !"
+                ]
+              ],
+              "model": "Oui, d'accord, c'est parfait !"
+            }
+          ],
+          "followUp": "Super ! Le planning est prêt.",
+          "newWords": []
+        },
+        {
+          "id": "sit_22_settle_s05",
+          "place": "À l'appart · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Which French words mean “it's a deal”? You answer Léa, your flatmate (tu).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "___, Léa : tu fais le dîner, et moi, je fais la vaisselle !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "it's a deal",
+              "choices": [
+                "C'est combien",
+                "Marché conclu",
+                "Ça fait"
+              ],
+              "correct": 1,
+              "why": [
+                "« C'est combien » asks the price.",
+                "",
+                "« Ça fait » gives a total (that comes to)."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    }
+  ]
+}

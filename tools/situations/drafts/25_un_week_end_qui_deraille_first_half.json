@@ -1,0 +1,2712 @@
+{
+  "elements": [
+    {
+      "id": "sit_25_annonce",
+      "title": "L'annonce",
+      "note": "Station announcements. « La voie » is the track (« voie trois » = platform three). « Supprimé » means cancelled. « En raison de » is the formal « à cause de » (due to). « La correspondance » is your connecting train.",
+      "items": [
+        {
+          "id": "sit_25_annonce_d01",
+          "place": "À la gare",
+          "cue": "At the station with Inès, your colleague. You say tu to each other. An announcement plays.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Annonce",
+              "voice": "female",
+              "text": "Train pour Annecy, voie trois. Correspondance à Chambéry."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "Where do you change trains?",
+              "choices": [
+                "In Annecy",
+                "In Chambéry"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Correspondance à Chambéry. »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Tell Inès to hurry, and say where the train leaves from.",
+              "bank": [
+                "Vite, Inès !",
+                "Le train part",
+                "Le train pars",
+                "voie trois !",
+                "voie deux !"
+              ],
+              "accepted": [
+                [
+                  "Vite, Inès !",
+                  "Le train part",
+                  "voie trois !"
+                ],
+                [
+                  "Le train part",
+                  "voie trois !",
+                  "Vite, Inès !"
+                ]
+              ],
+              "model": "Vite, Inès ! Le train part voie trois !"
+            }
+          ],
+          "followUp": "J'arrive, j'arrive !",
+          "followUpBy": "Inès",
+          "newWords": [
+            "voie",
+            "correspondance"
+          ]
+        },
+        {
+          "id": "sit_25_annonce_d02",
+          "place": "À la gare",
+          "cue": "At the station with Inès, your colleague. You say tu to each other. An announcement plays.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Annonce",
+              "voice": "female",
+              "text": "Le train de huit heures est supprimé."
+            },
+            {
+              "speaker": "learner",
+              "text": "Supprimé ? On prend le ___, alors !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the announcement say?",
+              "choices": [
+                "The eight o'clock train is late",
+                "The eight o'clock train is cancelled"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Le train de huit heures est supprimé. »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "prochaine",
+                "prochain",
+                "prochains"
+              ],
+              "correct": 1,
+              "why": [
+                "« Train » is masculine: « le prochain », with no e.",
+                "",
+                "« Le » is singular: « le prochain », with no s."
+              ]
+            }
+          ],
+          "followUp": "Oui, il part à dix heures.",
+          "followUpBy": "Inès",
+          "newWords": [
+            "supprimé"
+          ]
+        },
+        {
+          "id": "sit_25_annonce_s01",
+          "place": "Texto · Théo · phrase seule",
+          "standalone": "Construire",
+          "cue": "Théo, your friend, is waiting for you and Inès in Annecy. Text him back (tu).",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Alors, Inès et toi, vous êtes dans le train ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say your train is cancelled: you're taking the next one, from track three.",
+              "bank": [
+                "Notre train",
+                "est supprimé,",
+                "on prend",
+                "le prochain,",
+                "voie trois !",
+                "est supprimée,",
+                "la prochaine,"
+              ],
+              "accepted": [
+                [
+                  "Notre train",
+                  "est supprimé,",
+                  "on prend",
+                  "le prochain,",
+                  "voie trois !"
+                ]
+              ],
+              "model": "Notre train est supprimé, on prend le prochain, voie trois !"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_25_annonce_d03",
+          "place": "À la gare",
+          "cue": "At the station with Inès, your colleague. You say tu to each other. An announcement plays.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Annonce",
+              "voice": "female",
+              "text": "En raison de la grève, le trafic est perturbé."
+            },
+            {
+              "speaker": "learner",
+              "text": "On ___ en retard, alors !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "seras",
+                "sera",
+                "serons"
+              ],
+              "correct": 1,
+              "why": [
+                "« Seras » goes with « tu ». With « on », say « on sera ».",
+                "",
+                "« Serons » goes with « nous ». With « on », say « on sera »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "Why is service disrupted?",
+              "choices": [
+                "Because of a strike",
+                "Because of a storm"
+              ],
+              "correct": 0,
+              "miss": "Reread: « En raison de la grève »."
+            }
+          ],
+          "followUp": "Oui… J'appelle Théo.",
+          "followUpBy": "Inès",
+          "newWords": [
+            "en raison de"
+          ]
+        },
+        {
+          "id": "sit_25_annonce_d04",
+          "place": "À la gare",
+          "cue": "At the station. Inès, your colleague, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "C'est la voie trois ou la voie quatre ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « voie » mean here?",
+              "target": "voie",
+              "choices": [
+                "way out, exit",
+                "carriage",
+                "track, platform"
+              ],
+              "correct": 2,
+              "why": [
+                "No: the way out is « la sortie ».",
+                "No: a carriage is « une voiture ».",
+                ""
+              ]
+            },
+            {
+              "type": "reply",
+              "prompt": "Say it's track three, and tell her to look at the board.",
+              "bank": [
+                "C'est la voie trois,",
+                "C'est la voie quatre,",
+                "regarde le panneau !",
+                "regardez le panneau !"
+              ],
+              "accepted": [
+                [
+                  "C'est la voie trois,",
+                  "regarde le panneau !"
+                ]
+              ],
+              "model": "C'est la voie trois, regarde le panneau !"
+            }
+          ],
+          "followUp": "Ah oui ! Merci, on y va.",
+          "newWords": []
+        },
+        {
+          "id": "sit_25_annonce_s02",
+          "place": "Au guichet · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "At the ticket desk, ask the clerk which track the train to Annecy leaves from. He says vous to you.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which question fits the clerk?",
+              "choices": [
+                "Dis, le train pour Annecy, c'est quelle voie ?",
+                "Excusez-moi, monsieur, le train pour Annecy part de quelle voie ?",
+                "Tu peux me dire la voie du train pour Annecy ?"
+              ],
+              "correct": 1,
+              "why": [
+                "Good French with a friend, but « dis » is tu: the clerk says vous to you.",
+                "",
+                "Good French with a friend, but « tu peux » is tu: use vous with the clerk."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_25_annonce_d05",
+          "place": "À la gare",
+          "cue": "Clarify: on a noisy platform, a station employee speaks to you. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Employé",
+              "text": "Le train est supprimé, madame. Prenez le bus."
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say you can't hear well, and ask to repeat (vous).",
+              "bank": [
+                "Pardon ?",
+                "Je vous entends mal.",
+                "Vous pouvez répéter ?",
+                "Je t'entends mal.",
+                "Tu peux répéter ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon ?",
+                  "Je vous entends mal.",
+                  "Vous pouvez répéter ?"
+                ],
+                [
+                  "Je vous entends mal.",
+                  "Vous pouvez répéter ?"
+                ],
+                [
+                  "Pardon ?",
+                  "Vous pouvez répéter ?",
+                  "Je vous entends mal."
+                ],
+                [
+                  "Vous pouvez répéter ?",
+                  "Je vous entends mal."
+                ],
+                [
+                  "Je vous entends mal.",
+                  "Pardon ?",
+                  "Vous pouvez répéter ?"
+                ]
+              ],
+              "model": "Pardon ? Je vous entends mal. Vous pouvez répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « supprimé » mean here?",
+              "target": "supprimé",
+              "choices": [
+                "full",
+                "cancelled",
+                "delayed"
+              ],
+              "correct": 1,
+              "why": [
+                "No: full is « complet ».",
+                "",
+                "No: delayed is « en retard »."
+              ]
+            }
+          ],
+          "followUp": "Votre train est supprimé, madame. Prenez le bus.",
+          "newWords": []
+        },
+        {
+          "id": "sit_25_annonce_d06",
+          "place": "Appel · Théo",
+          "cue": "Théo, your friend, calls you. He says tu to you. He knows you're changing trains in Chambéry.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Allô ? Il y a un problème à Chambéry ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, notre correspondance est ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "supprimés",
+                "supprimé",
+                "supprimée"
+              ],
+              "correct": 2,
+              "why": [
+                "« Correspondance » is one thing: no s.",
+                "« Correspondance » is feminine: add an e, « supprimée ».",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo ask?",
+              "choices": [
+                "If there's a problem in Chambéry",
+                "If you're already in Annecy"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Il y a un problème à Chambéry ? »"
+            }
+          ],
+          "followUp": "Oh non ! Et il y a un bus ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_25_annonce_s03",
+          "place": "À la gare · phrase seule",
+          "standalone": "Corriger",
+          "cue": "At the station, you tell Inès, your colleague, the news (tu).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "À cause de la grève, notre train est supprimée, on prend le bus.",
+              "error": {
+                "word": "supprimée",
+                "fix": "supprimé",
+                "choices": [
+                  "supprimés",
+                  "supprimé",
+                  "supprimées"
+                ],
+                "why": "« Train » is masculine and singular: « notre train est supprimé »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_25_annonce_d07",
+          "place": "À la gare",
+          "cue": "At the station with Inès, your colleague. You say tu to each other. An announcement plays.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Annonce",
+              "voice": "female",
+              "text": "En raison de l'orage, le train est en retard."
+            },
+            {
+              "speaker": "learner",
+              "text": "Encore ? On ___ un café, alors ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « en raison de » mean here?",
+              "target": "en raison de",
+              "choices": [
+                "instead of",
+                "due to, because of",
+                "in spite of"
+              ],
+              "correct": 1,
+              "why": [
+                "No: instead of is « au lieu de ».",
+                "",
+                "No: in spite of is « malgré »."
+              ]
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "prends",
+                "prendre",
+                "prend"
+              ],
+              "correct": 2,
+              "why": [
+                "« Prends » goes with « je » or « tu ». With « on », say « on prend ».",
+                "« Prendre » is the infinitive. After « on », say « on prend ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Oui, bonne idée !",
+          "followUpBy": "Inès",
+          "newWords": []
+        },
+        {
+          "id": "sit_25_annonce_d08",
+          "place": "À la gare",
+          "cue": "At the station. Inès, your colleague, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Oh non… On a raté la correspondance ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say no: it leaves at ten.",
+              "bank": [
+                "Non,",
+                "elle part",
+                "elle pars",
+                "à dix heures.",
+                "à deux heures."
+              ],
+              "accepted": [
+                [
+                  "Non,",
+                  "elle part",
+                  "à dix heures."
+                ]
+              ],
+              "model": "Non, elle part à dix heures."
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What is Inès worried about?",
+              "choices": [
+                "Losing the tickets",
+                "Missing the connection"
+              ],
+              "correct": 1,
+              "miss": "Reread: « On a raté la correspondance ? »"
+            }
+          ],
+          "followUp": "Ah, super ! On a le temps, alors.",
+          "newWords": []
+        },
+        {
+          "id": "sit_25_annonce_s04",
+          "place": "Texto · Léa · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You're texting Léa, your flatmate (tu), about the announcement you just heard.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "En raison de la grève, le train de huit heures est supprimé.",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say it in everyday French, with « à cause de » and « notre ».",
+              "bank": [
+                "À cause de",
+                "En raison de",
+                "la grève,",
+                "notre train",
+                "de huit heures",
+                "est supprimé.",
+                "est supprimée."
+              ],
+              "accepted": [
+                [
+                  "À cause de",
+                  "la grève,",
+                  "notre train",
+                  "de huit heures",
+                  "est supprimé."
+                ]
+              ],
+              "model": "À cause de la grève, notre train de huit heures est supprimé."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_25_annonce_d09",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat « Les copains ». Here vous = you all. You reply to him (tu).",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "En raison de la grève, mon train est supprimé !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oh non ! Tu ___ où ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What happened to Théo's train?",
+              "choices": [
+                "It's cancelled",
+                "It's late"
+              ],
+              "correct": 0,
+              "miss": "Reread: « mon train est supprimé ! »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "et",
+                "est",
+                "es"
+              ],
+              "correct": 2,
+              "why": [
+                "« Et » means and. « Tu es où ? » asks where he is.",
+                "« Est » goes with il or elle. With « tu », say « tu es ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Encore à Lyon ! Je prends le bus.",
+          "newWords": []
+        },
+        {
+          "id": "sit_25_annonce_d10",
+          "place": "À la gare",
+          "cue": "At Chambéry station with Inès, your colleague. You say tu to each other. An announcement plays.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Annonce",
+              "voice": "female",
+              "text": "Correspondance pour Annecy, voie deux."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "Where does the connection to Annecy leave from?",
+              "choices": [
+                "Track three",
+                "Track two"
+              ],
+              "correct": 1,
+              "miss": "Reread: « voie deux »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Tell Inès to hurry, and say which track it is.",
+              "bank": [
+                "Vite, Inès,",
+                "c'est la voie",
+                "deux !",
+                "trois !",
+                "c'est le voie"
+              ],
+              "accepted": [
+                [
+                  "Vite, Inès,",
+                  "c'est la voie",
+                  "deux !"
+                ]
+              ],
+              "model": "Vite, Inès, c'est la voie deux !"
+            }
+          ],
+          "followUp": "Super, j'arrive !",
+          "followUpBy": "Inès",
+          "newWords": []
+        },
+        {
+          "id": "sit_25_annonce_s05",
+          "place": "À la gare · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Which French word means “connection (train)”? At the station, you tell Inès, your colleague (tu).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Le train est en retard, on va rater notre ___ pour Annecy !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "connection (train)",
+              "choices": [
+                "conseil",
+                "correspondance",
+                "correspondances"
+              ],
+              "correct": 1,
+              "why": [
+                "« Conseil » means advice.",
+                "",
+                "« Notre » is singular: « notre correspondance »."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_25_repair",
+      "title": "Un malentendu",
+      "note": "Clear up a misunderstanding. « Je croyais que… » means I thought (that)…, with the imparfait after it: « je croyais que le train était à dix heures ». « Un malentendu » is a misunderstanding. « Autrement dit » (in other words) checks that you've understood.",
+      "items": [
+        {
+          "id": "sit_25_repair_d01",
+          "place": "Appel · Théo",
+          "cue": "Théo, your friend, calls you. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Je croyais que le train était à huit heures !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What did Théo think?",
+              "choices": [
+                "The train was at eight",
+                "The train was cancelled"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Je croyais que le train était à huit heures ! »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say no, it's at ten.",
+              "bank": [
+                "Non,",
+                "il est",
+                "il es",
+                "à dix heures !",
+                "à huit heures !"
+              ],
+              "accepted": [
+                [
+                  "Non,",
+                  "il est",
+                  "à dix heures !"
+                ],
+                [
+                  "Non,",
+                  "à dix heures !"
+                ]
+              ],
+              "model": "Non, il est à dix heures !"
+            }
+          ],
+          "followUp": "Ah bon ? Alors, à tout à l'heure !",
+          "newWords": [
+            "je croyais que"
+          ]
+        },
+        {
+          "id": "sit_25_repair_d02",
+          "place": "À la gare",
+          "cue": "At the station. Inès, your colleague, says tu to you. You're a woman.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Le gîte, c'est vendredi, pas jeudi ! C'est un malentendu."
+            },
+            {
+              "speaker": "learner",
+              "text": "Ah, un malentendu ! Je ___ désolée."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What's the problem with the gîte?",
+              "choices": [
+                "It's closed on Thursday",
+                "It's booked from Friday, not Thursday"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Le gîte, c'est vendredi, pas jeudi ! »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "es",
+                "est",
+                "suis"
+              ],
+              "correct": 2,
+              "why": [
+                "« Es » goes with « tu ». With « je », say « je suis ».",
+                "« Est » goes with il or elle. With « je », say « je suis ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Pas grave ! On appelle la propriétaire.",
+          "newWords": [
+            "malentendu"
+          ]
+        },
+        {
+          "id": "sit_25_repair_s01",
+          "place": "Appel · Théo · phrase seule",
+          "standalone": "Construire",
+          "cue": "Théo, your friend, calls you (tu). Here his vous means you and Inès. You thought he was taking the train with you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Je ne prends pas le train avec vous, je viens en voiture !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say sorry, it's a misunderstanding: you thought he was coming with you.",
+              "bank": [
+                "Pardon,",
+                "c'est un malentendu,",
+                "je croyais que",
+                "je crois que",
+                "tu venais",
+                "tu viens",
+                "avec nous !"
+              ],
+              "accepted": [
+                [
+                  "Pardon,",
+                  "c'est un malentendu,",
+                  "je croyais que",
+                  "tu venais",
+                  "avec nous !"
+                ]
+              ],
+              "model": "Pardon, c'est un malentendu, je croyais que tu venais avec nous !"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_25_repair_d03",
+          "place": "Appel · gîte",
+          "cue": "You're on the phone with the owner of your gîte about your arrival. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Bonjour, madame. Notre train est en retard."
+            },
+            {
+              "speaker": "server",
+              "role": "Propriétaire",
+              "voice": "female",
+              "text": "Autrement dit, vous arrivez demain, madame ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Non, madame, ___ soir !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "cet",
+                "cette",
+                "ce"
+              ],
+              "correct": 2,
+              "why": [
+                "« Cet » goes before a vowel sound. Before « soir », say « ce soir ».",
+                "« Cette » is feminine; « soir » is masculine: « ce soir ».",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does the owner want to check?",
+              "choices": [
+                "When you leave",
+                "When you arrive"
+              ],
+              "correct": 1,
+              "miss": "Reread: « vous arrivez demain, madame ? »"
+            }
+          ],
+          "followUp": "Ah, ce soir ! À ce soir, alors.",
+          "newWords": [
+            "autrement dit"
+          ]
+        },
+        {
+          "id": "sit_25_repair_d04",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Je croyais que tu partais samedi !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « je croyais que » mean here?",
+              "target": "je croyais que",
+              "choices": [
+                "I knew (that)",
+                "I believe (that)",
+                "I thought (that)"
+              ],
+              "correct": 2,
+              "why": [
+                "No: I knew is « je savais que ».",
+                "No: that's « je crois que », now. « Je croyais » is in the past.",
+                ""
+              ]
+            },
+            {
+              "type": "reply",
+              "prompt": "Say no, you're leaving on Thursday.",
+              "bank": [
+                "Non,",
+                "je pars",
+                "tu pars",
+                "jeudi !",
+                "samedi !"
+              ],
+              "accepted": [
+                [
+                  "Non,",
+                  "je pars",
+                  "jeudi !"
+                ],
+                [
+                  "Non,",
+                  "jeudi !"
+                ]
+              ],
+              "model": "Non, je pars jeudi !"
+            }
+          ],
+          "followUp": "Ah bon ? Alors, bon week-end !",
+          "newWords": []
+        },
+        {
+          "id": "sit_25_repair_s02",
+          "place": "Appel · gîte · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "On the phone with the owner of your gîte, clear up a mix-up about the date. She says vous to you.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which sentence fits the owner?",
+              "choices": [
+                "Attends, il y a un malentendu, je crois !",
+                "Non, non, tu te trompes, c'est jeudi !",
+                "Pardon, madame, je crois qu'il y a un malentendu sur la date."
+              ],
+              "correct": 2,
+              "why": [
+                "Good French with a friend, but « attends » is tu, and blunt with the owner.",
+                "Good French with a friend, but « tu te trompes » is tu, and rude to the owner.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_25_repair_d05",
+          "place": "Appel · Théo",
+          "cue": "Clarify: Théo, your friend, calls you. The line is bad. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "C'est un malentendu, je suis à la gare !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say you can't hear well, and ask to repeat (tu).",
+              "bank": [
+                "Pardon ?",
+                "Je t'entends mal.",
+                "Tu peux répéter ?",
+                "Je vous entends mal.",
+                "Vous pouvez répéter ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon ?",
+                  "Je t'entends mal.",
+                  "Tu peux répéter ?"
+                ],
+                [
+                  "Je t'entends mal.",
+                  "Tu peux répéter ?"
+                ],
+                [
+                  "Pardon ?",
+                  "Tu peux répéter ?",
+                  "Je t'entends mal."
+                ],
+                [
+                  "Tu peux répéter ?",
+                  "Je t'entends mal."
+                ],
+                [
+                  "Je t'entends mal.",
+                  "Pardon ?",
+                  "Tu peux répéter ?"
+                ]
+              ],
+              "model": "Pardon ? Je t'entends mal. Tu peux répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « malentendu » mean here?",
+              "target": "malentendu",
+              "choices": [
+                "wrong number",
+                "misunderstanding",
+                "bad news"
+              ],
+              "correct": 1,
+              "why": [
+                "No: a wrong number is « un faux numéro ».",
+                "",
+                "No: bad news is « une mauvaise nouvelle »."
+              ]
+            }
+          ],
+          "followUp": "Un malentendu ! Je suis à la gare, pas chez moi !",
+          "newWords": []
+        },
+        {
+          "id": "sit_25_repair_d06",
+          "place": "À la gare",
+          "cue": "At the station at eight o'clock. Inès, your colleague, says tu to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Le prochain train est à dix heures."
+            },
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Autrement dit, le train part dans deux heures ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, ___ on prend un café !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "allô",
+                "allons",
+                "alors"
+              ],
+              "correct": 2,
+              "why": [
+                "« Allô » is for answering the phone.",
+                "« Allons » is the nous form of aller; it can't go before « on prend ».",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès check?",
+              "choices": [
+                "The train leaves in two hours",
+                "The train leaves at two o'clock"
+              ],
+              "correct": 0,
+              "miss": "Reread: « le train part dans deux heures ? »"
+            }
+          ],
+          "followUp": "Bonne idée ! Et un croissant.",
+          "newWords": []
+        },
+        {
+          "id": "sit_25_repair_s03",
+          "place": "Appel · Théo · phrase seule",
+          "standalone": "Corriger",
+          "cue": "On the phone with Théo, your friend (tu).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Je croyais que tu étais à la gare, c'était un malentendus !",
+              "error": {
+                "word": "malentendus",
+                "fix": "malentendu",
+                "choices": [
+                  "malentendue",
+                  "malentendu",
+                  "mal"
+                ],
+                "why": "After « un », the noun is singular: « un malentendu »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_25_repair_d07",
+          "place": "Appel · M. Ferrand",
+          "cue": "You're on the phone with M. Ferrand, your neighbour, about your weekend away. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Je pars jeudi, monsieur, pour quatre jours."
+            },
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Autrement dit, vous rentrez lundi, madame ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, monsieur, lundi ___."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « autrement dit » mean here?",
+              "target": "autrement dit",
+              "choices": [
+                "by the way",
+                "on the other hand",
+                "in other words"
+              ],
+              "correct": 2,
+              "why": [
+                "No: by the way is « au fait ».",
+                "No: on the other hand is « d'un autre côté ».",
+                ""
+              ]
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "soir",
+                "soif",
+                "soirée"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Soif » means thirst.",
+                "After a day, say « lundi soir », not « lundi soirée »."
+              ]
+            }
+          ],
+          "followUp": "Très bien. Bon week-end, madame !",
+          "newWords": []
+        },
+        {
+          "id": "sit_25_repair_d08",
+          "place": "Appel · Théo",
+          "cue": "Théo, your friend, calls you. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Je croyais que tu avais les billets !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say no, Inès has them.",
+              "bank": [
+                "Non,",
+                "c'est Inès !",
+                "c'est moi !"
+              ],
+              "accepted": [
+                [
+                  "Non,",
+                  "c'est Inès !"
+                ]
+              ],
+              "model": "Non, c'est Inès !"
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What did Théo think?",
+              "choices": [
+                "That you lost the tickets",
+                "That you had the tickets"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Je croyais que tu avais les billets ! »"
+            }
+          ],
+          "followUp": "Ah, d'accord ! Elle est où, Inès ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_25_repair_s04",
+          "place": "Appel · gîte · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You said this to Théo (tu). Now say it to the owner of your gîte on the phone. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Je croyais que tu arrivais à six heures, c'est un malentendu.",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it for the owner (vous).",
+              "bank": [
+                "Je croyais que",
+                "vous arriviez",
+                "vous arrivais",
+                "tu arrivais",
+                "à six heures,",
+                "madame,",
+                "c'est un malentendu."
+              ],
+              "accepted": [
+                [
+                  "Je croyais que",
+                  "vous arriviez",
+                  "à six heures,",
+                  "madame,",
+                  "c'est un malentendu."
+                ],
+                [
+                  "Je croyais que",
+                  "vous arriviez",
+                  "à six heures,",
+                  "c'est un malentendu."
+                ]
+              ],
+              "model": "Je croyais que vous arriviez à six heures, madame, c'est un malentendu."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_25_repair_d09",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, is in the station café; you're in the queue at the ticket desk. She texts you (tu).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Le train de huit heures est supprimé !"
+            },
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Autrement dit, on reste à la gare ce soir ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Mais non, on ___ le train de dix heures !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès joke about?",
+              "choices": [
+                "Staying at the station tonight",
+                "Going back home"
+              ],
+              "correct": 0,
+              "miss": "Reread: « on reste à la gare ce soir ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "prendre",
+                "prends",
+                "prend"
+              ],
+              "correct": 2,
+              "why": [
+                "« Prendre » is the infinitive. After « on », say « on prend ».",
+                "« Prends » goes with « je » or « tu ». With « on », say « on prend ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Ouf ! Super !",
+          "newWords": []
+        },
+        {
+          "id": "sit_25_repair_d10",
+          "place": "Appel · Léa",
+          "cue": "Léa, your flatmate, calls you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Il y a un malentendu ? Tu n'es pas à Annecy ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa ask?",
+              "choices": [
+                "If you're in Annecy or not",
+                "If you're at the gîte"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Tu n'es pas à Annecy ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say no: the train is late.",
+              "bank": [
+                "Non,",
+                "Si,",
+                "le train",
+                "est en retard !",
+                "sont en retard !"
+              ],
+              "accepted": [
+                [
+                  "Non,",
+                  "le train",
+                  "est en retard !"
+                ]
+              ],
+              "model": "Non, le train est en retard !"
+            }
+          ],
+          "followUp": "Oh non ! Quelle galère !",
+          "newWords": []
+        },
+        {
+          "id": "sit_25_repair_s05",
+          "place": "Appel · gîte · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Which French word means “misunderstanding”? On the phone with the owner of your gîte (vous).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Pardon, madame, c'est un ___, je croyais que le gîte était libre jeudi."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "misunderstanding",
+              "choices": [
+                "malheureusement",
+                "malentendu",
+                "mal"
+              ],
+              "correct": 1,
+              "why": [
+                "« Malheureusement » means unfortunately; it can't follow « un ».",
+                "",
+                "« Mal » means badly; « c'est un mal » doesn't fit here."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_25_gite",
+      "title": "Au gîte",
+      "note": "Sort out problems at the gîte. « La boîte à clés » is a small coded box for the keys. « Les draps » are the sheets. « Ça ne fonctionne pas » is a little more formal than « ça ne marche pas »: both mean it doesn't work.",
+      "items": [
+        {
+          "id": "sit_25_gite_d01",
+          "place": "Appel · gîte",
+          "cue": "The owner of your gîte calls you. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Propriétaire",
+              "voice": "female",
+              "text": "Les clés sont dans la boîte à clés, madame."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "Where are the keys?",
+              "choices": [
+                "In the key box",
+                "Under the door mat"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Les clés sont dans la boîte à clés »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Thank her, and ask what the code is.",
+              "bank": [
+                "Merci,",
+                "madame,",
+                "quel est",
+                "quelle est",
+                "le code ?"
+              ],
+              "accepted": [
+                [
+                  "Merci,",
+                  "quel est",
+                  "le code ?"
+                ],
+                [
+                  "Merci,",
+                  "madame,",
+                  "quel est",
+                  "le code ?"
+                ]
+              ],
+              "model": "Merci, quel est le code ?"
+            }
+          ],
+          "followUp": "Le code, c'est deux, trois, huit.",
+          "newWords": [
+            "boîte à clés"
+          ]
+        },
+        {
+          "id": "sit_25_gite_d02",
+          "place": "Au gîte",
+          "cue": "At the gîte. Inès, your colleague, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Il n'y a pas de draps dans les chambres !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Mince ! On ___ la propriétaire ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What's missing?",
+              "choices": [
+                "The keys",
+                "The sheets"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Il n'y a pas de draps dans les chambres ! »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "appelles",
+                "appelle",
+                "appeler"
+              ],
+              "correct": 1,
+              "why": [
+                "« Appelles » goes with « tu ». With « on », say « on appelle ».",
+                "",
+                "« Appeler » is the infinitive. After « on », say « on appelle »."
+              ]
+            }
+          ],
+          "followUp": "Oui ! Tu as son numéro ?",
+          "newWords": [
+            "draps"
+          ]
+        },
+        {
+          "id": "sit_25_gite_s01",
+          "place": "Appel · gîte · phrase seule",
+          "standalone": "Construire",
+          "cue": "Call the owner of your gîte (vous): the key box won't open.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Propriétaire",
+              "voice": "female",
+              "text": "Allô, oui ? Vous êtes bien arrivée au gîte, madame ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say hello: the key box is locked. Ask if she has the code.",
+              "bank": [
+                "Bonjour, madame,",
+                "la boîte à clés",
+                "est fermée,",
+                "est fermé,",
+                "vous avez",
+                "tu as",
+                "le code ?"
+              ],
+              "accepted": [
+                [
+                  "Bonjour, madame,",
+                  "la boîte à clés",
+                  "est fermée,",
+                  "vous avez",
+                  "le code ?"
+                ]
+              ],
+              "model": "Bonjour, madame, la boîte à clés est fermée, vous avez le code ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_25_gite_d03",
+          "place": "Au gîte",
+          "cue": "At the gîte. Théo, your friend, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Le chauffage ne fonctionne pas !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oh non, il fait ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "froide",
+                "froids",
+                "froid"
+              ],
+              "correct": 2,
+              "why": [
+                "« Il fait froid » never changes: no e.",
+                "« Il fait froid » never changes: no s.",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What's the problem?",
+              "choices": [
+                "The heating doesn't work",
+                "The shower doesn't work"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Le chauffage ne fonctionne pas ! »"
+            }
+          ],
+          "followUp": "Oui ! J'appelle la propriétaire.",
+          "newWords": [
+            "fonctionne"
+          ]
+        },
+        {
+          "id": "sit_25_gite_d04",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, went to the shops and is coming back to the gîte. She texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "La boîte à clés, elle est où ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « boîte à clés » mean here?",
+              "target": "boîte à clés",
+              "choices": [
+                "letter box",
+                "toolbox",
+                "key box"
+              ],
+              "correct": 2,
+              "why": [
+                "No: a letter box is « une boîte aux lettres ».",
+                "No: a toolbox is « une boîte à outils ».",
+                ""
+              ]
+            },
+            {
+              "type": "reply",
+              "prompt": "Say it's next to the door.",
+              "bank": [
+                "Elle est",
+                "Il est",
+                "à côté de",
+                "la porte !",
+                "le porte !"
+              ],
+              "accepted": [
+                [
+                  "Elle est",
+                  "à côté de",
+                  "la porte !"
+                ],
+                [
+                  "à côté de",
+                  "la porte !"
+                ]
+              ],
+              "model": "Elle est à côté de la porte !"
+            }
+          ],
+          "followUp": "Merci ! Et le code ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_25_gite_s02",
+          "place": "Appel · gîte · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "Call the owner of your gîte: there are no sheets. She says vous to you.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which sentence fits the owner?",
+              "choices": [
+                "Les draps, ils sont où, dis ?",
+                "Excusez-moi, madame, il n'y a pas de draps dans les chambres.",
+                "Il n'y a pas de draps, tu peux venir ?"
+              ],
+              "correct": 1,
+              "why": [
+                "Good French with a friend, but « dis » is tu, and blunt with the owner.",
+                "",
+                "Good French with a friend, but « tu peux » is tu: the owner says vous to you."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_25_gite_d05",
+          "place": "Appel · gîte",
+          "cue": "Clarify: the owner of your gîte calls you. The line is bad. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Propriétaire",
+              "voice": "female",
+              "text": "Les draps sont dans la chambre bleue."
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say you can't hear well, and ask to repeat (vous).",
+              "bank": [
+                "Pardon ?",
+                "Je vous entends mal.",
+                "Vous pouvez répéter ?",
+                "Je t'entends mal.",
+                "Tu peux répéter ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon ?",
+                  "Je vous entends mal.",
+                  "Vous pouvez répéter ?"
+                ],
+                [
+                  "Je vous entends mal.",
+                  "Vous pouvez répéter ?"
+                ],
+                [
+                  "Pardon ?",
+                  "Vous pouvez répéter ?",
+                  "Je vous entends mal."
+                ],
+                [
+                  "Vous pouvez répéter ?",
+                  "Je vous entends mal."
+                ],
+                [
+                  "Je vous entends mal.",
+                  "Pardon ?",
+                  "Vous pouvez répéter ?"
+                ]
+              ],
+              "model": "Pardon ? Je vous entends mal. Vous pouvez répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « draps » mean here?",
+              "target": "draps",
+              "choices": [
+                "towels",
+                "sheets, bedding",
+                "blankets"
+              ],
+              "correct": 1,
+              "why": [
+                "No: towels are « des serviettes ».",
+                "",
+                "No: blankets are « des couvertures »."
+              ]
+            }
+          ],
+          "followUp": "Les draps ? Dans la chambre bleue, madame.",
+          "newWords": []
+        },
+        {
+          "id": "sit_25_gite_d06",
+          "place": "Au gîte",
+          "cue": "At the gîte. Inès, your colleague, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "La machine à laver ne fonctionne pas !"
+            },
+            {
+              "speaker": "learner",
+              "text": "C'est ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "énervant",
+                "énervante",
+                "énervants"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "After « c'est », the adjective stays masculine: « c'est énervant ».",
+                "« C'est » is singular: « énervant », with no s."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What doesn't work?",
+              "choices": [
+                "The heating",
+                "The washing machine"
+              ],
+              "correct": 1,
+              "miss": "Reread: « La machine à laver ne fonctionne pas ! »"
+            }
+          ],
+          "followUp": "Oui ! Bon, tant pis.",
+          "newWords": []
+        },
+        {
+          "id": "sit_25_gite_s03",
+          "place": "Appel · gîte · phrase seule",
+          "standalone": "Corriger",
+          "cue": "On the phone with the owner of your gîte (vous).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Le chauffage ne fonctionnent pas, et il n'y a pas de draps, madame.",
+              "error": {
+                "word": "fonctionnent",
+                "fix": "fonctionne",
+                "choices": [
+                  "fonctionnes",
+                  "fonctionner",
+                  "fonctionne"
+                ],
+                "why": "« Le chauffage » is one thing (il): « ne fonctionne pas »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_25_gite_d07",
+          "place": "Appel · gîte",
+          "cue": "The owner of your gîte calls you back. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Propriétaire",
+              "voice": "female",
+              "text": "Le chauffage fonctionne, maintenant, madame ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, madame, il ___ bien."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « fonctionne » mean here?",
+              "target": "fonctionne",
+              "choices": [
+                "is broken",
+                "works (a machine)",
+                "is too hot"
+              ],
+              "correct": 1,
+              "why": [
+                "No: broken is « en panne ».",
+                "",
+                "No: too hot is « trop chaud »."
+              ]
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "marches",
+                "marcher",
+                "marche"
+              ],
+              "correct": 2,
+              "why": [
+                "« Marches » goes with « tu ». The heating is « il »: « il marche ».",
+                "« Marcher » is the infinitive. After « il », say « il marche ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Parfait ! Bonne soirée, madame.",
+          "newWords": []
+        },
+        {
+          "id": "sit_25_gite_d08",
+          "place": "Au gîte",
+          "cue": "At the gîte. Théo, your friend, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Les draps sont là, dans la chambre bleue !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say great, thanks, Théo.",
+              "bank": [
+                "Super,",
+                "pardon,",
+                "merci,",
+                "Théo !",
+                "Inès !"
+              ],
+              "accepted": [
+                [
+                  "Super,",
+                  "merci,",
+                  "Théo !"
+                ]
+              ],
+              "model": "Super, merci, Théo !"
+            },
+            {
+              "type": "comprehend",
+              "prompt": "Where are the sheets?",
+              "choices": [
+                "In the blue bedroom",
+                "In the car"
+              ],
+              "correct": 0,
+              "miss": "Reread: « dans la chambre bleue ! »"
+            }
+          ],
+          "followUp": "De rien ! Ce soir, on va bien dormir.",
+          "newWords": []
+        },
+        {
+          "id": "sit_25_gite_s04",
+          "place": "Appel · gîte · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You said this to Théo (tu), who is in the next room. Now say it to the owner of your gîte on the phone. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Le chauffage ne fonctionne pas, tu peux venir voir ?",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it for the owner (vous).",
+              "bank": [
+                "Le chauffage",
+                "ne fonctionne pas,",
+                "madame,",
+                "vous pouvez",
+                "tu peux",
+                "vous peux",
+                "venir voir ?"
+              ],
+              "accepted": [
+                [
+                  "Le chauffage",
+                  "ne fonctionne pas,",
+                  "madame,",
+                  "vous pouvez",
+                  "venir voir ?"
+                ],
+                [
+                  "Le chauffage",
+                  "ne fonctionne pas,",
+                  "vous pouvez",
+                  "venir voir ?"
+                ]
+              ],
+              "model": "Le chauffage ne fonctionne pas, madame, vous pouvez venir voir ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_25_gite_d09",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Le gîte est bien ? Tout fonctionne ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Presque ! Le chauffage ___ en panne."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa ask?",
+              "choices": [
+                "If the gîte is far",
+                "If everything works at the gîte"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Tout fonctionne ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "et",
+                "est",
+                "es"
+              ],
+              "correct": 1,
+              "why": [
+                "« Et » means and.",
+                "",
+                "« Es » goes with « tu ». The heating is « il »: « il est »."
+              ]
+            }
+          ],
+          "followUp": "Oh non ! Il fait froid, alors ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_25_gite_d10",
+          "place": "Au gîte",
+          "cue": "At the gîte. Inès, your colleague, says tu to you. The owner of the gîte is a woman.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "La boîte à clés est fermée ! Tu as le code ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What's the problem?",
+              "choices": [
+                "The keys are lost",
+                "The key box is locked"
+              ],
+              "correct": 1,
+              "miss": "Reread: « La boîte à clés est fermée ! »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say wait, you're calling the owner.",
+              "bank": [
+                "Attends,",
+                "attendez,",
+                "j'appelle",
+                "la propriétaire !",
+                "le propriétaire !"
+              ],
+              "accepted": [
+                [
+                  "Attends,",
+                  "j'appelle",
+                  "la propriétaire !"
+                ]
+              ],
+              "model": "Attends, j'appelle la propriétaire !"
+            }
+          ],
+          "followUp": "D'accord. Moi, j'attends ici.",
+          "newWords": []
+        },
+        {
+          "id": "sit_25_gite_s05",
+          "place": "Au gîte · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Which French word means “sheets”? At the gîte, you tell Inès, your colleague (tu).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Il fait froid, et il n'y a pas de ___ dans la deuxième chambre !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "sheets",
+              "choices": [
+                "drôles",
+                "dos",
+                "draps"
+              ],
+              "correct": 2,
+              "why": [
+                "« Drôles » means funny; it describes, it isn't a thing.",
+                "« Dos » means back (body).",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_25_lost",
+      "title": "Objets perdus",
+      "note": "Robin leaves her rucksack on the train. « Un sac à dos » is a rucksack, « les objets trouvés » is lost property, and « récupérer » means to get back, to collect. With « l' » before the verb, the past participle agrees: the bag is masculine, so « je l'ai oublié ».",
+      "items": [
+        {
+          "id": "sit_25_lost_d01",
+          "place": "À la gare",
+          "cue": "At the station, you tell a station employee your bag is missing. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Employée",
+              "voice": "female",
+              "text": "Votre sac ? Allez aux objets trouvés, madame."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "Where does she send you?",
+              "choices": [
+                "To the ticket desk",
+                "To lost property"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Allez aux objets trouvés »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Thank her, and ask where it is.",
+              "bank": [
+                "Merci,",
+                "madame,",
+                "c'est où ?",
+                "c'est qui ?",
+                "c'est quand ?"
+              ],
+              "accepted": [
+                [
+                  "Merci,",
+                  "c'est où ?"
+                ],
+                [
+                  "Merci,",
+                  "madame,",
+                  "c'est où ?"
+                ]
+              ],
+              "model": "Merci, c'est où ?"
+            }
+          ],
+          "followUp": "À côté du guichet, madame.",
+          "newWords": [
+            "objets trouvés"
+          ]
+        },
+        {
+          "id": "sit_25_lost_d02",
+          "place": "À la gare",
+          "cue": "At the station. Inès, your colleague, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Ton sac à dos ? Il est dans le train ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, je l'ai ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès ask?",
+              "choices": [
+                "If your rucksack is on the train",
+                "If your rucksack is heavy"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Il est dans le train ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "oubliée",
+                "oublier",
+                "oublié"
+              ],
+              "correct": 2,
+              "why": [
+                "The bag is masculine (« le sac »): no e, « je l'ai oublié ».",
+                "« Oublier » is the infinitive. After « je l'ai », use « oublié ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Oh non ! Viens, on va au guichet.",
+          "newWords": [
+            "sac à dos"
+          ]
+        },
+        {
+          "id": "sit_25_lost_s01",
+          "place": "À la gare · phrase seule",
+          "standalone": "Construire",
+          "cue": "At the station, tell the employee (vous) what you lost.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Employé",
+              "text": "Bonjour, madame, je peux vous aider ? Un problème ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say hello: you forgot your rucksack on the eight o'clock train.",
+              "bank": [
+                "Bonjour, monsieur,",
+                "j'ai oublié",
+                "j'ai oubliée",
+                "mon sac à dos",
+                "ma sac à dos",
+                "dans le train",
+                "de huit heures."
+              ],
+              "accepted": [
+                [
+                  "Bonjour, monsieur,",
+                  "j'ai oublié",
+                  "mon sac à dos",
+                  "dans le train",
+                  "de huit heures."
+                ]
+              ],
+              "model": "Bonjour, monsieur, j'ai oublié mon sac à dos dans le train de huit heures."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_25_lost_d03",
+          "place": "À la gare",
+          "cue": "At lost property. The employee says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Employé",
+              "text": "Vous pouvez récupérer votre sac demain, madame."
+            },
+            {
+              "speaker": "learner",
+              "text": "D'accord, ___ quelle heure ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "au",
+                "a",
+                "à"
+              ],
+              "correct": 2,
+              "why": [
+                "« Au » is « à le »; before « quelle heure », just « à ».",
+                "Without an accent, « a » is the verb (has). Here you need « à ».",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "When can you get your bag back?",
+              "choices": [
+                "Tonight",
+                "Tomorrow"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Vous pouvez récupérer votre sac demain »."
+            }
+          ],
+          "followUp": "À dix heures, madame.",
+          "newWords": [
+            "récupérer"
+          ]
+        },
+        {
+          "id": "sit_25_lost_d04",
+          "place": "Appel · Théo",
+          "cue": "Théo, your friend, calls you. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Les objets trouvés sont ouverts le dimanche ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « objets trouvés » mean here?",
+              "target": "objets trouvés",
+              "choices": [
+                "second-hand shop",
+                "lost property (office)",
+                "ticket office"
+              ],
+              "correct": 1,
+              "why": [
+                "No: a second-hand shop is « une friperie ».",
+                "",
+                "No: the ticket office is « le guichet »."
+              ]
+            },
+            {
+              "type": "reply",
+              "prompt": "Say no, on Monday morning.",
+              "bank": [
+                "Non,",
+                "Oui,",
+                "lundi matin !",
+                "dimanche matin !"
+              ],
+              "accepted": [
+                [
+                  "Non,",
+                  "lundi matin !"
+                ]
+              ],
+              "model": "Non, lundi matin !"
+            }
+          ],
+          "followUp": "Lundi ? Bon, pas de problème.",
+          "newWords": []
+        },
+        {
+          "id": "sit_25_lost_s02",
+          "place": "À la gare · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "At lost property, describe your rucksack to the employee. He says vous to you.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which sentence fits the employee?",
+              "choices": [
+                "C'est mon sac à dos bleu, monsieur, avec mon portable et mes clés.",
+                "Mon sac à dos bleu, tu l'as vu ?",
+                "Mon sac bleu, il est où, dis ?"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "Good French with a friend, but « tu l'as vu » is tu: the employee says vous to you.",
+                "Good French with a friend, but « dis » is tu, and too blunt for the employee."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_25_lost_d05",
+          "place": "À la gare",
+          "cue": "Clarify: at the noisy lost-property office, the employee speaks to you. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Employé",
+              "text": "Votre sac à dos bleu ? Il est ici, madame !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say you can't hear well, and ask to repeat (vous).",
+              "bank": [
+                "Pardon ?",
+                "Je vous entends mal.",
+                "Vous pouvez répéter ?",
+                "Je t'entends mal.",
+                "Tu peux répéter ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon ?",
+                  "Je vous entends mal.",
+                  "Vous pouvez répéter ?"
+                ],
+                [
+                  "Je vous entends mal.",
+                  "Vous pouvez répéter ?"
+                ],
+                [
+                  "Pardon ?",
+                  "Vous pouvez répéter ?",
+                  "Je vous entends mal."
+                ],
+                [
+                  "Vous pouvez répéter ?",
+                  "Je vous entends mal."
+                ],
+                [
+                  "Je vous entends mal.",
+                  "Pardon ?",
+                  "Vous pouvez répéter ?"
+                ]
+              ],
+              "model": "Pardon ? Je vous entends mal. Vous pouvez répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « sac à dos » mean here?",
+              "target": "sac à dos",
+              "choices": [
+                "suitcase",
+                "handbag",
+                "rucksack, backpack"
+              ],
+              "correct": 2,
+              "why": [
+                "No: a suitcase is « une valise ».",
+                "No: a handbag is « un sac à main ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Le sac à dos bleu ! Il est ici, madame.",
+          "newWords": []
+        },
+        {
+          "id": "sit_25_lost_d06",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Tu vas récupérer ton sac quand ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Demain ! Il ___ aux objets trouvés."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "est",
+                "es",
+                "et"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Es » goes with « tu ». The bag is « il »: « il est ».",
+                "« Et » means and."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa ask?",
+              "choices": [
+                "Where your bag is",
+                "When you'll get your bag back"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Tu vas récupérer ton sac quand ? »"
+            }
+          ],
+          "followUp": "Ouf ! Super !",
+          "newWords": []
+        },
+        {
+          "id": "sit_25_lost_s03",
+          "place": "À la gare · phrase seule",
+          "standalone": "Corriger",
+          "cue": "At lost property, you speak to the employee (vous).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "J'ai oublié mon sac à dos dans le train, je peux le récupéré lundi ?",
+              "error": {
+                "word": "récupéré",
+                "fix": "récupérer",
+                "choices": [
+                  "récupère",
+                  "récupérer",
+                  "récupérés"
+                ],
+                "why": "After « je peux », use the infinitive: « je peux le récupérer »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_25_lost_d07",
+          "place": "À la gare",
+          "cue": "At the station. Inès, your colleague, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "On va récupérer ton sac maintenant ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, il est ___ guichet deux !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « récupérer » mean here?",
+              "target": "récupérer",
+              "choices": [
+                "to pay for",
+                "to get back, collect",
+                "to look for"
+              ],
+              "correct": 1,
+              "why": [
+                "No: to pay for is « payer ».",
+                "",
+                "No: to look for is « chercher »."
+              ]
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "à",
+                "aux",
+                "au"
+              ],
+              "correct": 2,
+              "why": [
+                "« À le » becomes « au »: « au guichet ».",
+                "« Aux » is plural; « guichet deux » is one desk.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Super, on y va !",
+          "newWords": []
+        },
+        {
+          "id": "sit_25_lost_d08",
+          "place": "WhatsApp · Mme Dumas",
+          "cue": "Mme Dumas, your landlady, writes to you on WhatsApp. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Mme Dumas",
+              "text": "Vous avez perdu votre sac à dos, madame ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say yes, but it's at lost property.",
+              "bank": [
+                "Oui,",
+                "mais",
+                "il est",
+                "elle est",
+                "aux objets trouvés.",
+                "au objets trouvés."
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "mais",
+                  "il est",
+                  "aux objets trouvés."
+                ]
+              ],
+              "model": "Oui, mais il est aux objets trouvés."
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Mme Dumas ask?",
+              "choices": [
+                "If you found a rucksack",
+                "If you lost your rucksack"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Vous avez perdu votre sac à dos, madame ? »"
+            }
+          ],
+          "followUp": "Ah, ouf ! Bon week-end, madame.",
+          "newWords": []
+        },
+        {
+          "id": "sit_25_lost_s04",
+          "place": "Au bureau · phrase seule",
+          "standalone": "Transformer",
+          "cue": "On Tuesday at the office, you tell Inès, your colleague (tu), what you did on Monday morning.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Je récupère mon sac aux objets trouvés lundi matin.",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Make it past.",
+              "bank": [
+                "J'ai récupéré",
+                "Je récupère",
+                "mon sac",
+                "ma sac",
+                "aux objets trouvés",
+                "lundi matin."
+              ],
+              "accepted": [
+                [
+                  "J'ai récupéré",
+                  "mon sac",
+                  "aux objets trouvés",
+                  "lundi matin."
+                ]
+              ],
+              "model": "J'ai récupéré mon sac aux objets trouvés lundi matin."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_25_lost_d09",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat « Les copains ». Here vous = you all. You reply to him (tu).",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Robin a récupéré son sac à dos ! Bravo !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, avec mon ___ et mes clés !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo announce?",
+              "choices": [
+                "You got your rucksack back",
+                "You lost your rucksack"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Robin a récupéré son sac à dos ! »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "portables",
+                "porte",
+                "portable"
+              ],
+              "correct": 2,
+              "why": [
+                "« Mon » is singular: « mon portable », with no s.",
+                "« Porte » means door, and it's feminine: « mon porte » isn't French.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Super ! Tout va bien, alors !",
+          "newWords": []
+        },
+        {
+          "id": "sit_25_lost_d10",
+          "place": "À la gare",
+          "cue": "At lost property, an employee speaks to you. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Employée",
+              "voice": "female",
+              "text": "Vous pouvez récupérer votre sac au guichet deux."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "Where can you collect your bag?",
+              "choices": [
+                "At desk ten",
+                "At desk two"
+              ],
+              "correct": 1,
+              "miss": "Reread: « au guichet deux »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Thank her very much.",
+              "bank": [
+                "Merci beaucoup,",
+                "Merci,",
+                "madame !",
+                "monsieur !"
+              ],
+              "accepted": [
+                [
+                  "Merci beaucoup,",
+                  "madame !"
+                ]
+              ],
+              "model": "Merci beaucoup, madame !"
+            }
+          ],
+          "followUp": "De rien, madame. Bonne journée !",
+          "newWords": []
+        },
+        {
+          "id": "sit_25_lost_s05",
+          "place": "À la gare · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Which French word means “to get back”? At the station, you tell Inès, your colleague (tu).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Mon sac à dos est aux objets trouvés, je vais le ___ lundi matin."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "to get back",
+              "choices": [
+                "rester",
+                "récupérer",
+                "regretter"
+              ],
+              "correct": 1,
+              "why": [
+                "« Rester » means to stay; you can't « rester » a bag.",
+                "",
+                "« Regretter » means to regret."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    }
+  ]
+}

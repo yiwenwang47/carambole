@@ -1,4 +1,6 @@
-# Book 2 handoff: start here (arc 5)
+# Book 2 handoff: arc 5 (superseded)
+
+> **Superseded 2026-10-13 by [arc 5 done handoff](2026-10-13-book-2-arc5-done-handoff.md).** Arc 5 content is finished; the plan §12 defaults were all approved.
 
 **Written:** 2026-10-13, end of session.
 **Repo:** `carambole/`, branch `main`, **not pushed**.
