@@ -9,7 +9,7 @@ import Foundation
 //
 //  Element IDs never collide across books (Book 2 IDs start with `sit_`), so
 //  the shared SQLite tables stay correct as long as every reader filters by
-//  the selected book's IDs. See docs/plans/2026-10-11-book-2-action-plan.md
+//  the selected book's IDs. See docs/archive/plans/2026-10-11-book-2-action-plan.md
 //  (Task 2).
 
 /// How a book's content is shaped and drilled.

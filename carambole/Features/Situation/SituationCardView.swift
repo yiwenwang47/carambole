@@ -8,7 +8,7 @@
 //  session keeps that state, which lets a finished card be shown again exactly
 //  as it ended, and lets the card in play be rebuilt after it leaves the screen.
 //
-//  Binding UI rules (docs/plans/2026-10-11-book-2-pilot-v2-handoff.md):
+//  Binding UI rules (docs/archive/plans/2026-10-11-book-2-pilot-v2-handoff.md):
 //  - The card never scrolls as a whole. Only the chat scrolls; when space is
 //    short the chat gives up room first, then the word tray shrinks and its
 //    tiles scroll inside it.

@@ -318,4 +318,4 @@ rAF loops).
 ## References
 
 - `../../img/IMG_0940–0943.PNG`: moodboard (chrome star, edge type around an object).
-- Build plan + control inventory: `docs/plans/2026-10-09-ui-redesign-implementation.md`.
+- Build plan + control inventory: `docs/archive/plans/2026-10-09-ui-redesign-implementation.md`.
