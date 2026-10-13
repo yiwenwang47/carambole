@@ -4,8 +4,9 @@
 >
 > **▶ BOOK 2 — START HERE: `docs/plans/2026-10-13-book-2-audio-handoff.md`**
 > (written 2026-10-12). Arc 4 (modules 16–20) authored, judged, fixed,
-> assembled; review set v9 approved on the phone. Next: production audio for
-> 16–20 + ~126 new phrase-key clips (commands in §1). User rule: every gloss
+> assembled; review set v9 approved on the phone. Production audio DONE
+> 2026-10-13: 5,278/5,278 clips, strict `lint.py` OK, all clips normalised.
+> Next: arc 5 (modules 21–25), handoff §5. User rule: every gloss
 > correct in every drill — `tools/situations/gloss_dump.py`; two book-wide
 > gloss passes over 01–20 (`docs/plans/arc4-judges/`, `docs/plans/gloss-sweep/`).
 >
