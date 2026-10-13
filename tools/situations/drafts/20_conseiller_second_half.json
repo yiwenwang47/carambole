@@ -1,0 +1,2732 @@
+{
+  "elements": [
+    {
+      "id": "sit_20_warn",
+      "title": "Mettre en garde",
+      "note": "Warn someone. « Fais attention ! » means be careful, and « évite… » means avoid…: both are tu imperatives. With vous, say « faites attention » and « évitez ». « Une arnaque » is a scam: a flat you must pay for before the viewing, or a fake text from the bank.",
+      "items": [
+        {
+          "id": "sit_20_warn_d01",
+          "place": "À l'appart",
+          "cue": "Léa, your flatmate, sees you leave with your bike. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Tu sors à vélo ? Fais attention, il pleut !",
+              "name": "Léa"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "Why does Léa warn you?",
+              "choices": [
+                "It's raining",
+                "Your bike has a flat tyre"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Fais attention, il pleut ! »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Thank her, and say you're going to be careful!",
+              "bank": [
+                "Merci,",
+                "je vais",
+                "faire",
+                "attention !",
+                "fais",
+                "vas"
+              ],
+              "accepted": [
+                [
+                  "Merci,",
+                  "je vais",
+                  "faire",
+                  "attention !"
+                ]
+              ],
+              "model": "Merci, je vais faire attention !"
+            }
+          ],
+          "followUp": "Super. À ce soir, alors !",
+          "newWords": [
+            "fais attention"
+          ]
+        },
+        {
+          "id": "sit_20_warn_d02",
+          "place": "Texto · Théo",
+          "cue": "Théo, your friend, texts you. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Évite le bus huit, il est toujours en retard !",
+              "name": "Théo"
+            },
+            {
+              "speaker": "learner",
+              "text": "Merci ! Je ___ le tram, alors."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo say about bus eight?",
+              "choices": [
+                "It's always late",
+                "It's always full"
+              ],
+              "correct": 0,
+              "miss": "Reread: « il est toujours en retard »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "prend",
+                "prendre",
+                "prends"
+              ],
+              "correct": 2,
+              "why": [
+                "« Prend » goes with il or elle. With « je », it's « prends ».",
+                "« Prendre » is the infinitive: after « je », conjugate it.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Bonne idée, le tram est plus rapide !",
+          "newWords": [
+            "évite"
+          ]
+        },
+        {
+          "id": "sit_20_warn_s01",
+          "place": "Texto · Inès · phrase seule",
+          "standalone": "Construire",
+          "cue": "Inès, your colleague, is looking for a flat. Text her a warning. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "L'agence demande de payer avant la visite, c'est normal ?",
+              "name": "Inès"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Tell her to be careful, and to avoid paying before the viewing of the flat.",
+              "bank": [
+                "Fais attention,",
+                "évite",
+                "de payer",
+                "avant",
+                "la visite",
+                "de l'appartement !",
+                "Fait attention,",
+                "évitez",
+                "après"
+              ],
+              "accepted": [
+                [
+                  "Fais attention,",
+                  "évite",
+                  "de payer",
+                  "avant",
+                  "la visite",
+                  "de l'appartement !"
+                ]
+              ],
+              "model": "Fais attention, évite de payer avant la visite de l'appartement !"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_20_warn_d03",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Payer avant la visite ? C'est une arnaque ?",
+              "name": "Inès"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, ___ attention !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "fait",
+                "fais",
+                "faire"
+              ],
+              "correct": 1,
+              "why": [
+                "« Fait » goes with il or elle. To tell Inès, the tu imperative is « fais ».",
+                "",
+                "« Faire » is the infinitive. The phrase is « fais attention »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What is Inès asking?",
+              "choices": [
+                "If paying before the viewing is a scam",
+                "If the viewing is free"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Payer avant la visite ? C'est une arnaque ? »"
+            }
+          ],
+          "followUp": "D'accord, je ne paie rien avant !",
+          "newWords": [
+            "arnaque"
+          ]
+        },
+        {
+          "id": "sit_20_warn_d04",
+          "place": "Au café",
+          "cue": "Karim, the barista and your friend, brings your coffee. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Fais attention, le café est très chaud !",
+              "name": "Karim"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « fais attention » mean here?",
+              "target": "fais attention",
+              "choices": [
+                "enjoy (tu)",
+                "take your time (tu)",
+                "be careful (tu)"
+              ],
+              "correct": 2,
+              "why": [
+                "No: enjoy is « bonne dégustation ».",
+                "No: take your time is « prends ton temps ».",
+                ""
+              ]
+            },
+            {
+              "type": "reply",
+              "prompt": "Say OK, you'll wait a little.",
+              "bank": [
+                "D'accord,",
+                "j'attends",
+                "un peu.",
+                "Non,",
+                "beaucoup."
+              ],
+              "accepted": [
+                [
+                  "D'accord,",
+                  "j'attends",
+                  "un peu."
+                ]
+              ],
+              "model": "D'accord, j'attends un peu."
+            }
+          ],
+          "followUp": "Bonne idée. Tu veux un verre d'eau ?",
+          "newWords": [
+            "fais attention"
+          ]
+        },
+        {
+          "id": "sit_20_warn_s02",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "Mme Dumas, your landlady, got a strange text asking for her bank details. Warn her that it's a scam. She says vous to you.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which message fits Mme Dumas?",
+              "choices": [
+                "Fais attention, ce message, c'est une arnaque !",
+                "Attention, arnaque ! Surtout, ne réponds pas !",
+                "Faites attention, madame, ce message est une arnaque."
+              ],
+              "correct": 2,
+              "why": [
+                "Good French with a friend, but « fais » is tu: Mme Dumas says vous to you.",
+                "Good French with a friend, but « réponds » is tu, and it's too blunt for your landlady.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_20_warn_d05",
+          "place": "Appel · Inès",
+          "cue": "Clarify: Inès, your colleague, calls you about her flat hunt. The line is bad. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Évite le centre-ville, c'est trop cher !",
+              "name": "Inès"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say you can't hear her well, and ask her to repeat.",
+              "bank": [
+                "Pardon ?",
+                "Je t'entends mal.",
+                "Tu peux répéter ?",
+                "Je vous entends mal.",
+                "Vous pouvez répéter ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon ?",
+                  "Je t'entends mal.",
+                  "Tu peux répéter ?"
+                ],
+                [
+                  "Je t'entends mal.",
+                  "Tu peux répéter ?"
+                ],
+                [
+                  "Pardon ?",
+                  "Tu peux répéter ?",
+                  "Je t'entends mal."
+                ],
+                [
+                  "Tu peux répéter ?",
+                  "Je t'entends mal."
+                ],
+                [
+                  "Je t'entends mal.",
+                  "Pardon ?",
+                  "Tu peux répéter ?"
+                ]
+              ],
+              "model": "Pardon ? Je t'entends mal. Tu peux répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « évite » mean here?",
+              "target": "évite",
+              "choices": [
+                "visit (tu)",
+                "avoid (tu)",
+                "leave (tu)"
+              ],
+              "correct": 1,
+              "why": [
+                "No: visit is « visite ».",
+                "",
+                "No: leave is « pars »."
+              ]
+            }
+          ],
+          "followUp": "Je dis : évite le centre-ville, c'est trop cher !",
+          "newWords": [
+            "évite"
+          ]
+        },
+        {
+          "id": "sit_20_warn_d06",
+          "place": "Texto · Théo",
+          "cue": "Théo, your friend, texts you. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Un vélo électrique à vingt euros, c'est une arnaque ?",
+              "name": "Théo"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, fais ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "attentions",
+                "attends",
+                "attention"
+              ],
+              "correct": 2,
+              "why": [
+                "The phrase takes no s: « fais attention ».",
+                "« Fais attends » is not French: « attends » means wait.",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What is Théo asking about?",
+              "choices": [
+                "A bike repair for twenty euros",
+                "An electric bike for twenty euros"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Un vélo électrique à vingt euros »."
+            }
+          ],
+          "followUp": "Tu as raison. Je cherche un autre vélo !",
+          "newWords": [
+            "arnaque"
+          ]
+        },
+        {
+          "id": "sit_20_warn_s03",
+          "place": "Texto · Inès · phrase seule",
+          "standalone": "Corriger",
+          "cue": "You text Inès, your colleague, a warning. You say tu to her. Fix the mistake.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Fait attention, c'est une arnaque, évite de payer avant la visite.",
+              "error": {
+                "word": "Fait",
+                "fix": "Fais",
+                "choices": [
+                  "Faire",
+                  "Fais",
+                  "Faites"
+                ],
+                "why": "To tell Inès (tu), the imperative is « fais attention ». « Fait » is the il / elle form."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_20_warn_d07",
+          "place": "Texto · Léa",
+          "cue": "You told Léa, your flatmate, about a strange text from the bank. She texts back. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Un message de la banque ? C'est une arnaque !",
+              "name": "Léa"
+            },
+            {
+              "speaker": "learner",
+              "text": "Ah bon ? Je ne ___ pas, alors."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « arnaque » mean here?",
+              "target": "arnaque",
+              "choices": [
+                "bill",
+                "scam",
+                "mistake"
+              ],
+              "correct": 1,
+              "why": [
+                "No: a bill is « une facture ».",
+                "",
+                "No: a mistake is « une erreur »."
+              ]
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "répond",
+                "réponds",
+                "répondre"
+              ],
+              "correct": 1,
+              "why": [
+                "« Répond » goes with il or elle. With « je », it's « réponds ».",
+                "",
+                "« Répondre » is the infinitive: after « je ne », conjugate it."
+              ]
+            }
+          ],
+          "followUp": "Voilà ! La banque ne demande jamais ça.",
+          "newWords": [
+            "arnaque"
+          ]
+        },
+        {
+          "id": "sit_20_warn_d08",
+          "place": "Sur le palier",
+          "cue": "M. Ferrand, your neighbour, shows you a text on his phone. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Ce message, c'est une arnaque, madame ?",
+              "name": "M. Ferrand"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say yes, and tell him to be careful.",
+              "bank": [
+                "Oui,",
+                "faites attention,",
+                "monsieur !",
+                "fais attention,",
+                "madame !"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "faites attention,",
+                  "monsieur !"
+                ]
+              ],
+              "model": "Oui, faites attention, monsieur !"
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does M. Ferrand want to know?",
+              "choices": [
+                "If you sent him a message",
+                "If a message is a scam"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Ce message, c'est une arnaque ? »"
+            }
+          ],
+          "followUp": "Merci, madame. Je ne réponds pas, alors.",
+          "newWords": [
+            "arnaque"
+          ]
+        },
+        {
+          "id": "sit_20_warn_s04",
+          "place": "Sur le palier · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You warned Léa (tu) about a scam text. Now warn M. Ferrand, your neighbour (vous).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Fais attention, c'est une arnaque, évite de répondre.",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it for M. Ferrand.",
+              "bank": [
+                "Faites attention,",
+                "c'est une arnaque,",
+                "évitez",
+                "de répondre,",
+                "monsieur.",
+                "Fais attention,",
+                "évite"
+              ],
+              "accepted": [
+                [
+                  "Faites attention,",
+                  "c'est une arnaque,",
+                  "évitez",
+                  "de répondre,",
+                  "monsieur."
+                ]
+              ],
+              "model": "Faites attention, c'est une arnaque, évitez de répondre, monsieur."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_20_warn_d09",
+          "place": "Texto · Inès",
+          "cue": "You want a quiet café to read in. Inès, your colleague, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Évite le café de la gare, c'est bruyant !",
+              "name": "Inès"
+            },
+            {
+              "speaker": "learner",
+              "text": "Merci du ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès say about the café at the station?",
+              "choices": [
+                "It's noisy",
+                "It's expensive"
+              ],
+              "correct": 0,
+              "miss": "Reread: « c'est bruyant »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "choix",
+                "conseil",
+                "conseils"
+              ],
+              "correct": 1,
+              "why": [
+                "« Choix » means choice: Inès gave you advice.",
+                "",
+                "« Conseils » is plural, but « du » goes with one: « merci du conseil »."
+              ]
+            }
+          ],
+          "followUp": "De rien ! Le café de Karim est plus calme.",
+          "newWords": [
+            "évite"
+          ]
+        },
+        {
+          "id": "sit_20_warn_d10",
+          "place": "Texto · Théo",
+          "cue": "Théo, your friend, is lending you his bike. He texts you. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Fais attention, les freins ne marchent pas bien !",
+              "name": "Théo"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What's the problem with Théo's bike?",
+              "choices": [
+                "The tyre is flat",
+                "The brakes don't work well"
+              ],
+              "correct": 1,
+              "miss": "Reread: « les freins ne marchent pas bien »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Say OK, you'll walk, then.",
+              "bank": [
+                "D'accord,",
+                "je vais",
+                "à pied,",
+                "alors !",
+                "à vélo,",
+                "vas"
+              ],
+              "accepted": [
+                [
+                  "D'accord,",
+                  "je vais",
+                  "à pied,",
+                  "alors !"
+                ]
+              ],
+              "model": "D'accord, je vais à pied, alors !"
+            }
+          ],
+          "followUp": "Bonne idée. Je les répare demain !",
+          "newWords": [
+            "fais attention"
+          ]
+        },
+        {
+          "id": "sit_20_warn_s05",
+          "place": "Texto · Inès · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "You text Inès, your colleague (tu). Which French words mean “be careful”?",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "___, Inès : ce message est une arnaque, évite de répondre !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "be careful (tu)",
+              "choices": [
+                "Fais comme chez toi",
+                "Fais attention",
+                "Prends soin de toi"
+              ],
+              "correct": 1,
+              "why": [
+                "« Fais comme chez toi » means make yourself at home.",
+                "",
+                "« Prends soin de toi » means take care of yourself."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_20_weigh",
+      "title": "Le pour et le contre",
+      "note": "Think it through before you choose. « Faire le pour et le contre » is to weigh the pros and cons, « réfléchir » is to think it over (« je vais réfléchir »), and « d'un côté… de l'autre… » means on the one hand… on the other.",
+      "items": [
+        {
+          "id": "sit_20_weigh_d01",
+          "place": "Au bureau",
+          "cue": "Inès, your colleague, talks to you at the office. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Je fais le pour et le contre des deux appartements.",
+              "name": "Inès"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What is Inès doing?",
+              "choices": [
+                "Visiting the two flats",
+                "Weighing up the two flats"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Je fais le pour et le contre des deux appartements »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Say good idea, and tell her to take her time.",
+              "bank": [
+                "Bonne idée,",
+                "prends",
+                "ton temps !",
+                "Bon idée,",
+                "prenez"
+              ],
+              "accepted": [
+                [
+                  "Bonne idée,",
+                  "prends",
+                  "ton temps !"
+                ]
+              ],
+              "model": "Bonne idée, prends ton temps !"
+            }
+          ],
+          "followUp": "Merci ! C'est difficile, les deux sont bien.",
+          "newWords": [
+            "le pour et le contre"
+          ]
+        },
+        {
+          "id": "sit_20_weigh_d02",
+          "place": "Texto · Théo",
+          "cue": "Théo, your friend, texts you. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Le vélo électrique ? Je vais réfléchir.",
+              "name": "Théo"
+            },
+            {
+              "speaker": "learner",
+              "text": "D'accord, ___ me dis !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo say about the electric bike?",
+              "choices": [
+                "He's going to think it over",
+                "He's going to buy it today"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Je vais réfléchir »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "te",
+                "toi",
+                "tu"
+              ],
+              "correct": 2,
+              "why": [
+                "« Te » is an object pronoun: the subject here is « tu ».",
+                "« Toi » can't be the subject before « me dis ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Oui, je te dis samedi !",
+          "newWords": [
+            "réfléchir"
+          ]
+        },
+        {
+          "id": "sit_20_weigh_s01",
+          "place": "Au bureau · phrase seule",
+          "standalone": "Construire",
+          "cue": "Inès, your colleague, can't choose between two flats. Advise her. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Deux appartements, deux prix… je ne sais pas quoi choisir !",
+              "name": "Inès"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Tell her to weigh the pros and cons, and to take time to think it over.",
+              "bank": [
+                "Fais",
+                "le pour et le contre,",
+                "et prends",
+                "le temps",
+                "de réfléchir.",
+                "Fait",
+                "et prenez",
+                "réfléchi."
+              ],
+              "accepted": [
+                [
+                  "Fais",
+                  "le pour et le contre,",
+                  "et prends",
+                  "le temps",
+                  "de réfléchir."
+                ]
+              ],
+              "model": "Fais le pour et le contre, et prends le temps de réfléchir."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_20_weigh_d03",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "D'un côté, il est grand ; de l'autre, il est cher.",
+              "name": "Inès"
+            },
+            {
+              "speaker": "learner",
+              "text": "Et il est ___ du métro ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "prêt",
+                "près",
+                "plein"
+              ],
+              "correct": 1,
+              "why": [
+                "« Prêt » means ready.",
+                "",
+                "« Plein » means full."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès say about the flat?",
+              "choices": [
+                "It's big, but expensive",
+                "It's small, but cheap"
+              ],
+              "correct": 0,
+              "miss": "Reread: « il est grand ; de l'autre, il est cher »."
+            }
+          ],
+          "followUp": "Oui, à cinq minutes à pied !",
+          "newWords": [
+            "d'un côté"
+          ]
+        },
+        {
+          "id": "sit_20_weigh_d04",
+          "place": "À l'appart",
+          "cue": "Léa, your flatmate, asks you about Inès, your colleague. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Inès fait le pour et le contre ? Encore ?",
+              "name": "Léa"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « le pour et le contre » mean here?",
+              "target": "le pour et le contre",
+              "choices": [
+                "the price and the rent",
+                "the pros and cons",
+                "the first and the second"
+              ],
+              "correct": 1,
+              "why": [
+                "No: the rent is « le loyer ».",
+                "",
+                "No: the first and the second is « le premier et le deuxième »."
+              ]
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, she can't decide!",
+              "bank": [
+                "Oui,",
+                "elle",
+                "hésite !",
+                "il",
+                "j'hésite !"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "elle",
+                  "hésite !"
+                ]
+              ],
+              "model": "Oui, elle hésite !"
+            }
+          ],
+          "followUp": "Elle a raison, c'est un grand choix !",
+          "newWords": [
+            "le pour et le contre"
+          ]
+        },
+        {
+          "id": "sit_20_weigh_s02",
+          "place": "Au bureau · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "Your manager asks what you think of her plan. Say you'll think it over and let her know tomorrow. She says vous to you.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which answer fits your manager?",
+              "choices": [
+                "Je vais réfléchir, je te dis demain !",
+                "Je vais réfléchir, madame, et je vous dis demain.",
+                "Bon, je réfléchis, et je te dis demain !"
+              ],
+              "correct": 1,
+              "why": [
+                "Good French with a friend, but « je te dis » is tu: your manager says vous to you.",
+                "",
+                "Good French with a friend, but « te » is tu, and it's too casual for your manager."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_20_weigh_d05",
+          "place": "Appel · Inès",
+          "cue": "Clarify: Inès, your colleague, calls you about the flats. The line is bad. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Je dois réfléchir encore un peu.",
+              "name": "Inès"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say you can't hear her well, and ask her to repeat.",
+              "bank": [
+                "Pardon ?",
+                "Je t'entends mal.",
+                "Tu peux répéter ?",
+                "Je vous entends mal.",
+                "Vous pouvez répéter ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon ?",
+                  "Je t'entends mal.",
+                  "Tu peux répéter ?"
+                ],
+                [
+                  "Je t'entends mal.",
+                  "Tu peux répéter ?"
+                ],
+                [
+                  "Pardon ?",
+                  "Tu peux répéter ?",
+                  "Je t'entends mal."
+                ],
+                [
+                  "Tu peux répéter ?",
+                  "Je t'entends mal."
+                ],
+                [
+                  "Je t'entends mal.",
+                  "Pardon ?",
+                  "Tu peux répéter ?"
+                ]
+              ],
+              "model": "Pardon ? Je t'entends mal. Tu peux répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « réfléchir » mean here?",
+              "target": "réfléchir",
+              "choices": [
+                "to pay",
+                "to think (it over)",
+                "to look again"
+              ],
+              "correct": 1,
+              "why": [
+                "No: to pay is « payer ».",
+                "",
+                "No: to look again is « regarder encore »."
+              ]
+            }
+          ],
+          "followUp": "Je dis : je dois encore réfléchir un peu !",
+          "newWords": [
+            "réfléchir"
+          ]
+        },
+        {
+          "id": "sit_20_weigh_d06",
+          "place": "Au café",
+          "cue": "Karim, the barista and your friend, talks about his café. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "D'un côté, c'est petit ; de l'autre, c'est sympa !",
+              "name": "Karim"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, et le café est ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "bonne",
+                "bons",
+                "bon"
+              ],
+              "correct": 2,
+              "why": [
+                "« Bonne » is feminine: « le café » is masculine.",
+                "« Bons » is plural: there's one café.",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "How does Karim describe his café?",
+              "choices": [
+                "Big, but noisy",
+                "Small, but nice"
+              ],
+              "correct": 1,
+              "miss": "Reread: « c'est petit ; de l'autre, c'est sympa »."
+            }
+          ],
+          "followUp": "Merci, c'est gentil !",
+          "newWords": [
+            "d'un côté"
+          ]
+        },
+        {
+          "id": "sit_20_weigh_s03",
+          "place": "Au bureau · phrase seule",
+          "standalone": "Corriger",
+          "cue": "You tell Inès, your colleague, about a choice you have to make. Fix the mistake.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Je fais le pour et le contre, je dois réfléchi encore un peu.",
+              "error": {
+                "word": "réfléchi",
+                "fix": "réfléchir",
+                "choices": [
+                  "réfléchis",
+                  "réfléchir",
+                  "réfléchit"
+                ],
+                "why": "After « je dois », use the infinitive: « je dois réfléchir »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_20_weigh_d07",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat « Les copains ». His vous means you all; you say tu to him.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "D'un côté le pique-nique, de l'autre le cinéma…",
+              "name": "Théo"
+            },
+            {
+              "speaker": "learner",
+              "text": "Moi, je ___ le pique-nique !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « d'un côté » mean here?",
+              "target": "d'un côté",
+              "choices": [
+                "on the one hand",
+                "next to",
+                "first of all"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "No: next to is « à côté de ».",
+                "No: first of all is « d'abord »."
+              ]
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "préfères",
+                "préfère",
+                "préférer"
+              ],
+              "correct": 1,
+              "why": [
+                "« Préfères » goes with tu. With « je », it's « préfère ».",
+                "",
+                "« Préférer » is the infinitive: after « je », conjugate it."
+              ]
+            }
+          ],
+          "followUp": "Super ! Et vous, les autres ?",
+          "newWords": [
+            "d'un côté"
+          ]
+        },
+        {
+          "id": "sit_20_weigh_d08",
+          "place": "WhatsApp · Mme Dumas",
+          "cue": "You asked Mme Dumas, your landlady, if you can keep your bike in the hall. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Je vais réfléchir à votre question, madame.",
+              "name": "Mme Dumas"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say of course, no problem.",
+              "bank": [
+                "Bien sûr,",
+                "madame,",
+                "pas de problème.",
+                "monsieur,",
+                "pas de chance."
+              ],
+              "accepted": [
+                [
+                  "Bien sûr,",
+                  "madame,",
+                  "pas de problème."
+                ],
+                [
+                  "Bien sûr,",
+                  "pas de problème."
+                ]
+              ],
+              "model": "Bien sûr, madame, pas de problème."
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What will Mme Dumas do?",
+              "choices": [
+                "Answer your question right away",
+                "Think about your question"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Je vais réfléchir à votre question »."
+            }
+          ],
+          "followUp": "Merci. Je vous dis demain.",
+          "newWords": [
+            "réfléchir"
+          ]
+        },
+        {
+          "id": "sit_20_weigh_s04",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You gave Inès (tu) this advice. Now Mme Dumas, your landlady, can't choose a phone plan. Tell her the same (vous).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Prends le temps de réfléchir, et fais le pour et le contre.",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it for Mme Dumas.",
+              "bank": [
+                "Prenez",
+                "le temps",
+                "de réfléchir,",
+                "et faites",
+                "le pour et le contre.",
+                "Prends",
+                "et fais"
+              ],
+              "accepted": [
+                [
+                  "Prenez",
+                  "le temps",
+                  "de réfléchir,",
+                  "et faites",
+                  "le pour et le contre."
+                ]
+              ],
+              "model": "Prenez le temps de réfléchir, et faites le pour et le contre."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_20_weigh_d09",
+          "place": "Au bureau",
+          "cue": "Inès, your colleague, talks to you at the office. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Le pour et le contre ? C'est difficile !",
+              "name": "Inès"
+            },
+            {
+              "speaker": "learner",
+              "text": "On le fait ensemble, ___ midi ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès find difficult?",
+              "choices": [
+                "Weighing the pros and cons",
+                "Finding the office"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Le pour et le contre ? C'est difficile ! »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "au",
+                "en",
+                "à"
+              ],
+              "correct": 2,
+              "why": [
+                "« Au » is « à + le »: with « midi », just say « à midi ».",
+                "« En midi » is not French: it's « à midi ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Super, merci ! On mange ensemble, alors.",
+          "newWords": [
+            "le pour et le contre"
+          ]
+        },
+        {
+          "id": "sit_20_weigh_d10",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you about a party tonight. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "D'un côté, j'ai envie ; de l'autre, je suis fatiguée.",
+              "name": "Léa"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What's Léa's problem?",
+              "choices": [
+                "She's ill",
+                "She wants to go, but she's tired"
+              ],
+              "correct": 1,
+              "miss": "Reread: « j'ai envie ; de l'autre, je suis fatiguée »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Tell her to stay at home and rest.",
+              "bank": [
+                "Reste",
+                "à la maison,",
+                "repose-toi !",
+                "Rester",
+                "reposez-vous !"
+              ],
+              "accepted": [
+                [
+                  "Reste",
+                  "à la maison,",
+                  "repose-toi !"
+                ]
+              ],
+              "model": "Reste à la maison, repose-toi !"
+            }
+          ],
+          "followUp": "Tu as raison, je reste ici ce soir.",
+          "newWords": [
+            "d'un côté"
+          ]
+        },
+        {
+          "id": "sit_20_weigh_s05",
+          "place": "Au bureau · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "You advise Inès, your colleague (tu). Which French words mean “the pros and cons”?",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Pour choisir un appartement, fais ___, et prends ton temps."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "the pros and cons",
+              "choices": [
+                "la bise",
+                "le moins cher",
+                "le pour et le contre"
+              ],
+              "correct": 2,
+              "why": [
+                "« Fais la bise » means give a cheek kiss.",
+                "« Le moins cher » means the cheapest.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_20_formal",
+      "title": "Conseiller en vous",
+      "note": "Give and take advice with vous. « Je vous recommande… » is I recommend…, « à votre place » is if I were you (the vous form of « à ta place »), and « renseignez-vous » means look into it, ask for details.",
+      "items": [
+        {
+          "id": "sit_20_formal_d01",
+          "place": "WhatsApp · Mme Dumas",
+          "cue": "Your sink leaks. Mme Dumas, your landlady, writes to you on WhatsApp. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Je vous recommande le nouveau plombier, madame.",
+              "name": "Mme Dumas"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Mme Dumas recommend?",
+              "choices": [
+                "The new plumber",
+                "The new baker"
+              ],
+              "correct": 0,
+              "miss": "Reread: « le nouveau plombier »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Thank her, and say you'll call him.",
+              "bank": [
+                "Merci, madame,",
+                "je l'appelle.",
+                "Merci, monsieur,",
+                "je t'appelle."
+              ],
+              "accepted": [
+                [
+                  "Merci, madame,",
+                  "je l'appelle."
+                ]
+              ],
+              "model": "Merci, madame, je l'appelle."
+            }
+          ],
+          "followUp": "Parfait. Il est très bien.",
+          "newWords": [
+            "je vous recommande"
+          ]
+        },
+        {
+          "id": "sit_20_formal_d02",
+          "place": "Sur le palier",
+          "cue": "You can't choose between two bikes. M. Ferrand, your neighbour, says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "À votre place, je prendrais le vélo électrique.",
+              "name": "M. Ferrand"
+            },
+            {
+              "speaker": "learner",
+              "text": "Vous ___ raison, monsieur."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does M. Ferrand advise?",
+              "choices": [
+                "The second-hand bike",
+                "The electric bike"
+              ],
+              "correct": 1,
+              "miss": "Reread: « je prendrais le vélo électrique »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "avons",
+                "as",
+                "avez"
+              ],
+              "correct": 2,
+              "why": [
+                "« Avons » goes with nous.",
+                "« As » goes with tu: you say vous to M. Ferrand.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Bien sûr ! Il est plus rapide.",
+          "newWords": [
+            "à votre place"
+          ]
+        },
+        {
+          "id": "sit_20_formal_s01",
+          "place": "Sur le palier · phrase seule",
+          "standalone": "Construire",
+          "cue": "M. Ferrand, your neighbour, can't choose a phone plan. Advise him. You say vous to each other.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Madame, je ne sais pas quel forfait prendre.",
+              "name": "M. Ferrand"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say that if you were him, you'd take the unlimited plan: it's cheaper.",
+              "bank": [
+                "À votre place,",
+                "je prendrais",
+                "le forfait illimité,",
+                "monsieur,",
+                "il est",
+                "moins cher.",
+                "À ta place,",
+                "moins chère.",
+                "madame,"
+              ],
+              "accepted": [
+                [
+                  "À votre place,",
+                  "je prendrais",
+                  "le forfait illimité,",
+                  "monsieur,",
+                  "il est",
+                  "moins cher."
+                ],
+                [
+                  "À votre place,",
+                  "monsieur,",
+                  "je prendrais",
+                  "le forfait illimité,",
+                  "il est",
+                  "moins cher."
+                ]
+              ],
+              "model": "À votre place, je prendrais le forfait illimité, monsieur, il est moins cher."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_20_formal_d03",
+          "place": "WhatsApp · Mme Dumas",
+          "cue": "You told Mme Dumas, your landlady, that your friend Inès needs a flat. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Pour votre amie, renseignez-vous à l'agence.",
+              "name": "Mme Dumas"
+            },
+            {
+              "speaker": "learner",
+              "text": "Merci, madame, je lui ___."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "dit",
+                "dire",
+                "dis"
+              ],
+              "correct": 2,
+              "why": [
+                "« Dit » goes with il or elle. With « je », it's « dis ».",
+                "« Dire » is the infinitive: after « je lui », conjugate it.",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Mme Dumas suggest for your friend?",
+              "choices": [
+                "To ask at the agency",
+                "To call her"
+              ],
+              "correct": 0,
+              "miss": "Reread: « renseignez-vous à l'agence »."
+            }
+          ],
+          "followUp": "Avec plaisir. Bonne chance à votre amie !",
+          "newWords": [
+            "renseignez-vous"
+          ]
+        },
+        {
+          "id": "sit_20_formal_d04",
+          "place": "À l'agence",
+          "cue": "You're at the estate agency with Inès, your colleague. The agent talks to you. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Je vous recommande cet appartement, madame.",
+              "role": "Agent immobilier"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « je vous recommande » mean here?",
+              "target": "je vous recommande",
+              "choices": [
+                "I'll show you",
+                "I recommend (to you, vous)",
+                "I thank you"
+              ],
+              "correct": 1,
+              "why": [
+                "No: I'll show you is « je vous montre ».",
+                "",
+                "No: I thank you is « je vous remercie »."
+              ]
+            },
+            {
+              "type": "reply",
+              "prompt": "Ask if it's near the metro.",
+              "bank": [
+                "Il est",
+                "près",
+                "du métro ?",
+                "Elle est",
+                "prêt",
+                "de la"
+              ],
+              "accepted": [
+                [
+                  "Il est",
+                  "près",
+                  "du métro ?"
+                ]
+              ],
+              "model": "Il est près du métro ?"
+            }
+          ],
+          "followUp": "Oui, à deux minutes à pied.",
+          "newWords": [
+            "je vous recommande"
+          ]
+        },
+        {
+          "id": "sit_20_formal_s02",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "Mme Dumas, your landlady, asks which phone plan to take. Advise her. She says vous to you.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which message fits Mme Dumas?",
+              "choices": [
+                "À ta place, je prendrais un forfait illimité !",
+                "Franchement, prends le forfait illimité !",
+                "À votre place, madame, je prendrais un forfait illimité."
+              ],
+              "correct": 2,
+              "why": [
+                "Good French with a friend, but « à ta place » is tu: Mme Dumas says vous to you.",
+                "Good French with a friend, but « prends » is tu, and it's too blunt for your landlady.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_20_formal_d05",
+          "place": "Sur le palier",
+          "cue": "Clarify: M. Ferrand, your neighbour, talks fast on the landing. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "À votre place, je ferais le pour et le contre.",
+              "name": "M. Ferrand"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Ask him, politely, to repeat.",
+              "bank": [
+                "Pardon, monsieur ?",
+                "Vous pouvez",
+                "répéter,",
+                "s'il vous plaît ?",
+                "Tu peux",
+                "répète,"
+              ],
+              "accepted": [
+                [
+                  "Pardon, monsieur ?",
+                  "Vous pouvez",
+                  "répéter,",
+                  "s'il vous plaît ?"
+                ],
+                [
+                  "Vous pouvez",
+                  "répéter,",
+                  "s'il vous plaît ?"
+                ]
+              ],
+              "model": "Pardon, monsieur ? Vous pouvez répéter, s'il vous plaît ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « à votre place » mean here?",
+              "target": "à votre place",
+              "choices": [
+                "at your home",
+                "if I were you (vous)",
+                "in your seat"
+              ],
+              "correct": 1,
+              "why": [
+                "No: at your home is « chez vous ».",
+                "",
+                "No: in your seat is « à votre siège »."
+              ]
+            }
+          ],
+          "followUp": "Pardon ! Je dis : faites le pour et le contre.",
+          "newWords": [
+            "à votre place"
+          ]
+        },
+        {
+          "id": "sit_20_formal_d06",
+          "place": "En boutique",
+          "cue": "You're in a phone shop. The saleswoman says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Renseignez-vous, madame, ce forfait est en promo.",
+              "role": "Vendeuse",
+              "voice": "female"
+            },
+            {
+              "speaker": "learner",
+              "text": "Il coûte ___ par mois ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "comment",
+                "combien",
+                "quand"
+              ],
+              "correct": 1,
+              "why": [
+                "« Comment » means how: for a price, ask « combien ».",
+                "",
+                "« Quand » means when: for a price, ask « combien »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does the saleswoman say about the plan?",
+              "choices": [
+                "It's on offer",
+                "It's sold out"
+              ],
+              "correct": 0,
+              "miss": "Reread: « ce forfait est en promo »."
+            }
+          ],
+          "followUp": "Dix euros par mois, madame.",
+          "newWords": [
+            "renseignez-vous"
+          ]
+        },
+        {
+          "id": "sit_20_formal_s03",
+          "place": "Sur le palier · phrase seule",
+          "standalone": "Corriger",
+          "cue": "You advise M. Ferrand, your neighbour (vous), about a bike. Fix the mistake.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "À votre place, je prendrais le vélo électrique, il est très pratiques.",
+              "error": {
+                "word": "pratiques",
+                "fix": "pratique",
+                "choices": [
+                  "chers",
+                  "pratique",
+                  "bons"
+                ],
+                "why": "« Le vélo » is one thing: the adjective is singular, « pratique »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_20_formal_d07",
+          "place": "WhatsApp · Mme Dumas",
+          "cue": "Mme Dumas, your landlady, knows you want a new bike. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Renseignez-vous, il y a des vélos en promo !",
+              "name": "Mme Dumas"
+            },
+            {
+              "speaker": "learner",
+              "text": "Merci, madame, c'est ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « renseignez-vous » mean here?",
+              "target": "renseignez-vous",
+              "choices": [
+                "hurry up (vous)",
+                "sit down (vous)",
+                "look into it, ask for details (vous)"
+              ],
+              "correct": 2,
+              "why": [
+                "No: hurry up is « dépêchez-vous ».",
+                "No: sit down is « asseyez-vous ».",
+                ""
+              ]
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "noter",
+                "noté",
+                "notée"
+              ],
+              "correct": 1,
+              "why": [
+                "« Noter » is the infinitive: the phrase is « c'est noté ».",
+                "",
+                "« Notée » is feminine: the phrase is « c'est noté »."
+              ]
+            }
+          ],
+          "followUp": "De rien. C'est près de la gare.",
+          "newWords": [
+            "renseignez-vous"
+          ]
+        },
+        {
+          "id": "sit_20_formal_d08",
+          "place": "Sur le palier",
+          "cue": "M. Ferrand, your neighbour, says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Je vous recommande la boulangerie en face.",
+              "name": "M. Ferrand"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Thank him, and say you'll try it.",
+              "bank": [
+                "Merci, monsieur,",
+                "je vais",
+                "essayer.",
+                "Merci, madame,",
+                "essayé."
+              ],
+              "accepted": [
+                [
+                  "Merci, monsieur,",
+                  "je vais",
+                  "essayer."
+                ]
+              ],
+              "model": "Merci, monsieur, je vais essayer."
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does M. Ferrand recommend?",
+              "choices": [
+                "The café on the corner",
+                "The bakery opposite"
+              ],
+              "correct": 1,
+              "miss": "Reread: « la boulangerie en face »."
+            }
+          ],
+          "followUp": "Les croissants sont délicieux !",
+          "newWords": [
+            "je vous recommande"
+          ]
+        },
+        {
+          "id": "sit_20_formal_s04",
+          "place": "Sur le palier · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You told Inès (tu) about a bike. Now tell M. Ferrand, your neighbour (vous).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Je te recommande ce vélo, et à ta place, je le prendrais.",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it for M. Ferrand.",
+              "bank": [
+                "Je vous recommande",
+                "ce vélo,",
+                "et à votre place,",
+                "je le prendrais.",
+                "Je te recommande",
+                "et à ta place,",
+                "je la prendrais."
+              ],
+              "accepted": [
+                [
+                  "Je vous recommande",
+                  "ce vélo,",
+                  "et à votre place,",
+                  "je le prendrais."
+                ]
+              ],
+              "model": "Je vous recommande ce vélo, et à votre place, je le prendrais."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_20_formal_d09",
+          "place": "À l'agence",
+          "cue": "You're at the estate agency with Inès, your colleague. The agent says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Renseignez-vous sur le quartier, madame.",
+              "role": "Agent immobilier"
+            },
+            {
+              "speaker": "learner",
+              "text": "Il est ___ ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the agent suggest?",
+              "choices": [
+                "Visiting the flat again",
+                "Finding out about the neighbourhood"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Renseignez-vous sur le quartier »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "bruyante",
+                "bruyants",
+                "bruyant"
+              ],
+              "correct": 2,
+              "why": [
+                "« Bruyante » is feminine: « le quartier » is masculine.",
+                "« Bruyants » is plural: there's one neighbourhood.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Non, il est très calme.",
+          "newWords": [
+            "renseignez-vous"
+          ]
+        },
+        {
+          "id": "sit_20_formal_d10",
+          "place": "WhatsApp · Mme Dumas",
+          "cue": "You told Mme Dumas, your landlady, about a concert you'd like to go to. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Le concert ? À votre place, je réserverais vite.",
+              "name": "Mme Dumas"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Mme Dumas advise?",
+              "choices": [
+                "To wait a little",
+                "To book quickly"
+              ],
+              "correct": 1,
+              "miss": "Reread: « je réserverais vite »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Thank her, and say you'll book online.",
+              "bank": [
+                "Merci,",
+                "madame,",
+                "je réserve",
+                "en ligne.",
+                "je réserverais",
+                "monsieur,"
+              ],
+              "accepted": [
+                [
+                  "Merci,",
+                  "madame,",
+                  "je réserve",
+                  "en ligne."
+                ],
+                [
+                  "Merci,",
+                  "je réserve",
+                  "en ligne."
+                ]
+              ],
+              "model": "Merci, madame, je réserve en ligne."
+            }
+          ],
+          "followUp": "Très bien. Bonne soirée au concert !",
+          "newWords": [
+            "à votre place"
+          ]
+        },
+        {
+          "id": "sit_20_formal_s05",
+          "place": "Sur le palier · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "You talk to M. Ferrand, your neighbour (vous). Which French words mean “I recommend (vous)”?",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Monsieur, ___ la boulangerie en face, le pain est délicieux."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "I recommend (vous)",
+              "choices": [
+                "je vous remercie",
+                "je vous présente",
+                "je vous recommande"
+              ],
+              "correct": 2,
+              "why": [
+                "« Je vous remercie » means thank you.",
+                "« Je vous présente » means let me introduce.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_20_after",
+      "title": "Alors, tu as choisi ?",
+      "note": "After the advice. « Tu as eu raison » means you were right (avoir raison in the passé composé), « tu ne vas pas regretter » means you won't regret it, and « félicitations ! » is congratulations. With vous: « vous avez eu raison », « vous n'allez pas regretter ».",
+      "items": [
+        {
+          "id": "sit_20_after_d01",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "J'ai pris le premier. Tu as eu raison !",
+              "name": "Inès"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "Which flat did Inès take?",
+              "choices": [
+                "The second one",
+                "The first one"
+              ],
+              "correct": 1,
+              "miss": "Reread: « J'ai pris le premier »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Say great, and that it's bright!",
+              "bank": [
+                "Super !",
+                "Il est",
+                "lumineux !",
+                "Elle est",
+                "lumineuse !"
+              ],
+              "accepted": [
+                [
+                  "Super !",
+                  "Il est",
+                  "lumineux !"
+                ]
+              ],
+              "model": "Super ! Il est lumineux !"
+            }
+          ],
+          "followUp": "Oui, et il est moins cher !",
+          "newWords": [
+            "tu as eu raison"
+          ]
+        },
+        {
+          "id": "sit_20_after_d02",
+          "place": "Texto · Théo",
+          "cue": "Théo, your friend, texts you. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "J'ai acheté le vélo électrique. Je ne vais pas regretter !",
+              "name": "Théo"
+            },
+            {
+              "speaker": "learner",
+              "text": "Il est ___ ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What did Théo buy?",
+              "choices": [
+                "The electric bike",
+                "A second-hand bike"
+              ],
+              "correct": 0,
+              "miss": "Reread: « J'ai acheté le vélo électrique »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "légère",
+                "léger",
+                "légers"
+              ],
+              "correct": 1,
+              "why": [
+                "« Légère » is feminine: « le vélo » is masculine.",
+                "",
+                "« Légers » is plural: there's one bike."
+              ]
+            }
+          ],
+          "followUp": "Oui, et il est super rapide !",
+          "newWords": [
+            "regretter"
+          ]
+        },
+        {
+          "id": "sit_20_after_s01",
+          "place": "Texto · Inès · phrase seule",
+          "standalone": "Construire",
+          "cue": "Inès, your colleague, took the flat you advised. Text her back. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Voilà, j'ai pris le premier appartement ! Tu es contente ?",
+              "name": "Inès"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say she was right, she won't regret it, her flat is great!",
+              "bank": [
+                "Tu as eu raison,",
+                "tu ne vas pas",
+                "regretter,",
+                "ton appartement",
+                "est super !",
+                "regretté,",
+                "ta appartement",
+                "tu vas"
+              ],
+              "accepted": [
+                [
+                  "Tu as eu raison,",
+                  "tu ne vas pas",
+                  "regretter,",
+                  "ton appartement",
+                  "est super !"
+                ]
+              ],
+              "model": "Tu as eu raison, tu ne vas pas regretter, ton appartement est super !"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_20_after_d03",
+          "place": "À l'appart",
+          "cue": "Léa, your flatmate, has news about Inès, your colleague. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Inès a eu l'appartement !",
+              "name": "Léa"
+            },
+            {
+              "speaker": "learner",
+              "text": "Super ! Félicitations à elle ! Elle ___ contente ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "es",
+                "et",
+                "est"
+              ],
+              "correct": 2,
+              "why": [
+                "« Es » goes with tu. With « elle », it's « est ».",
+                "« Et » means and: you need the verb « est ».",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What's Léa's news?",
+              "choices": [
+                "Inès got the flat",
+                "Inès didn't get the flat"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Inès a eu l'appartement ! »"
+            }
+          ],
+          "followUp": "Très contente ! On fait un apéro samedi ?",
+          "newWords": [
+            "félicitations"
+          ]
+        },
+        {
+          "id": "sit_20_after_d04",
+          "place": "Au café",
+          "cue": "Karim, the barista and your friend, has seen your new electric bike. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Le vélo ? Tu as eu raison, il est top !",
+              "name": "Karim"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « tu as eu raison » mean here?",
+              "target": "tu as eu raison",
+              "choices": [
+                "you were lucky",
+                "you had a reason",
+                "you were right"
+              ],
+              "correct": 2,
+              "why": [
+                "No: you were lucky is « tu as eu de la chance ».",
+                "No: he isn't asking about a reason.",
+                ""
+              ]
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, it's very practical!",
+              "bank": [
+                "Oui,",
+                "c'est",
+                "très",
+                "pratique !",
+                "pratiques !",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "c'est",
+                  "très",
+                  "pratique !"
+                ]
+              ],
+              "model": "Oui, c'est très pratique !"
+            }
+          ],
+          "followUp": "Moi aussi, je veux un vélo électrique !",
+          "newWords": [
+            "tu as eu raison"
+          ]
+        },
+        {
+          "id": "sit_20_after_s02",
+          "place": "Au bureau · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "Your manager tells you she has bought a new flat. Congratulate her. She says vous to you.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which answer fits your manager?",
+              "choices": [
+                "Félicitations, madame ! Vous n'allez pas regretter.",
+                "Super, bravo ! Tu as eu raison !",
+                "Félicitations ! Tu ne vas pas regretter !"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "Good French with a friend, but « tu » is too familiar: your manager says vous to you.",
+                "Good French with a friend, but « tu ne vas pas » is tu: say « vous n'allez pas »."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_20_after_d05",
+          "place": "Appel · Inès",
+          "cue": "Clarify: Inès, your colleague, calls you about her new flat. The line is bad. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Je ne vais pas regretter, tu crois ?",
+              "name": "Inès"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say you can't hear her well, and ask her to repeat.",
+              "bank": [
+                "Pardon ?",
+                "Je t'entends mal.",
+                "Tu peux répéter ?",
+                "Je vous entends mal.",
+                "Vous pouvez répéter ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon ?",
+                  "Je t'entends mal.",
+                  "Tu peux répéter ?"
+                ],
+                [
+                  "Je t'entends mal.",
+                  "Tu peux répéter ?"
+                ],
+                [
+                  "Pardon ?",
+                  "Tu peux répéter ?",
+                  "Je t'entends mal."
+                ],
+                [
+                  "Tu peux répéter ?",
+                  "Je t'entends mal."
+                ],
+                [
+                  "Je t'entends mal.",
+                  "Pardon ?",
+                  "Tu peux répéter ?"
+                ]
+              ],
+              "model": "Pardon ? Je t'entends mal. Tu peux répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « regretter » mean here?",
+              "target": "regretter",
+              "choices": [
+                "to regret",
+                "to pay back",
+                "to look again"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "No: to pay back is « rembourser ».",
+                "No: to look again is « regarder encore »."
+              ]
+            }
+          ],
+          "followUp": "Je ne vais pas regretter l'appartement, tu crois ?",
+          "newWords": [
+            "regretter"
+          ]
+        },
+        {
+          "id": "sit_20_after_d06",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat « Les copains ». His vous means you all; you say tu to him.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "J'ai un nouveau travail !",
+              "name": "Théo"
+            },
+            {
+              "speaker": "learner",
+              "text": "Félicitations ! Tu commences ___ ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "quel",
+                "quand",
+                "quoi"
+              ],
+              "correct": 1,
+              "why": [
+                "« Quel » goes before a noun: « quel jour ? ».",
+                "",
+                "« Quoi » means what: you're asking when."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What's Théo's news?",
+              "choices": [
+                "He has a new flat",
+                "He has a new job"
+              ],
+              "correct": 1,
+              "miss": "Reread: « J'ai un nouveau travail ! »"
+            }
+          ],
+          "followUp": "Lundi ! On fait un apéro samedi ?",
+          "newWords": [
+            "félicitations"
+          ]
+        },
+        {
+          "id": "sit_20_after_s03",
+          "place": "Texto · Théo · phrase seule",
+          "standalone": "Corriger",
+          "cue": "Théo, your friend, bought an electric bike. You text him (tu). Fix the mistake.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Tu as eu raison, tu ne vas pas regretté ce vélo électrique.",
+              "error": {
+                "word": "regretté",
+                "fix": "regretter",
+                "choices": [
+                  "regrettes",
+                  "regretter",
+                  "regretté"
+                ],
+                "why": "After « tu ne vas pas », use the infinitive: « regretter »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_20_after_d07",
+          "place": "WhatsApp · Mme Dumas",
+          "cue": "Mme Dumas, your landlady, has seen your new bike. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Félicitations pour votre nouveau vélo, madame !",
+              "name": "Mme Dumas"
+            },
+            {
+              "speaker": "learner",
+              "text": "Merci, madame, ___ êtes gentille !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « félicitations » mean here?",
+              "target": "félicitations",
+              "choices": [
+                "good luck",
+                "thank you",
+                "congratulations"
+              ],
+              "correct": 2,
+              "why": [
+                "No: good luck is « bonne chance ».",
+                "No: thank you is « merci ».",
+                ""
+              ]
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "vous",
+                "tu",
+                "nous"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Tu » takes « es », and you say vous to Mme Dumas.",
+                "« Nous » takes « sommes »: you're talking to her."
+              ]
+            }
+          ],
+          "followUp": "Faites attention dans la rue, surtout !",
+          "newWords": [
+            "félicitations"
+          ]
+        },
+        {
+          "id": "sit_20_after_d08",
+          "place": "Sur le palier",
+          "cue": "M. Ferrand, your neighbour, sees your new bike. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Vous avez pris le vélo électrique ? Vous avez eu raison.",
+              "name": "M. Ferrand"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say yes, and thank him for the advice.",
+              "bank": [
+                "Oui,",
+                "merci pour",
+                "le conseil,",
+                "monsieur !",
+                "madame !",
+                "la conseil,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "merci pour",
+                  "le conseil,",
+                  "monsieur !"
+                ]
+              ],
+              "model": "Oui, merci pour le conseil, monsieur !"
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does M. Ferrand think?",
+              "choices": [
+                "You should take another bike",
+                "You were right to take the electric bike"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Vous avez eu raison »."
+            }
+          ],
+          "followUp": "Avec plaisir, madame !",
+          "newWords": []
+        },
+        {
+          "id": "sit_20_after_s04",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Transformer",
+          "cue": "Mme Dumas, your landlady, bought an electric bike. You said this to Inès (tu); now say it to Mme Dumas (vous).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Tu as eu raison, tu ne vas pas regretter. Félicitations !",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it for Mme Dumas.",
+              "bank": [
+                "Vous avez eu raison,",
+                "vous n'allez pas",
+                "regretter.",
+                "Félicitations,",
+                "madame !",
+                "Tu as eu raison,",
+                "tu ne vas pas"
+              ],
+              "accepted": [
+                [
+                  "Vous avez eu raison,",
+                  "vous n'allez pas",
+                  "regretter.",
+                  "Félicitations,",
+                  "madame !"
+                ],
+                [
+                  "Félicitations,",
+                  "madame !",
+                  "Vous avez eu raison,",
+                  "vous n'allez pas",
+                  "regretter."
+                ]
+              ],
+              "model": "Vous avez eu raison, vous n'allez pas regretter. Félicitations, madame !"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_20_after_d09",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Mon nouvel appartement : tu as eu raison !",
+              "name": "Inès"
+            },
+            {
+              "speaker": "learner",
+              "text": "Je peux ___ voir samedi ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What is Inès texting about?",
+              "choices": [
+                "Her new flat",
+                "Her new bike"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Mon nouvel appartement »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "viens",
+                "vient",
+                "venir"
+              ],
+              "correct": 2,
+              "why": [
+                "After « je peux », use the infinitive: « venir ».",
+                "« Vient » goes with il or elle, and after « je peux » you need the infinitive.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Bien sûr ! Viens pour l'apéro !",
+          "newWords": [
+            "tu as eu raison"
+          ]
+        },
+        {
+          "id": "sit_20_after_d10",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Inès ne va pas regretter, tu crois ?",
+              "name": "Léa"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa ask?",
+              "choices": [
+                "If Inès will move soon",
+                "If Inès will regret her choice"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Inès ne va pas regretter, tu crois ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say no, she was right!",
+              "bank": [
+                "Non,",
+                "elle",
+                "a eu raison !",
+                "il",
+                "as eu raison !"
+              ],
+              "accepted": [
+                [
+                  "Non,",
+                  "elle",
+                  "a eu raison !"
+                ]
+              ],
+              "model": "Non, elle a eu raison !"
+            }
+          ],
+          "followUp": "Tu as raison, il est super, son appartement !",
+          "newWords": [
+            "regretter"
+          ]
+        },
+        {
+          "id": "sit_20_after_s05",
+          "place": "Texto · Inès · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "You text Inès, your colleague (tu). Which French word means “congratulations”?",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Tu as trouvé un appartement ? ___ ! Tu ne vas pas regretter."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "congratulations",
+              "choices": [
+                "Bon rétablissement",
+                "Félicitations",
+                "Pas de souci"
+              ],
+              "correct": 1,
+              "why": [
+                "« Bon rétablissement » means get well soon.",
+                "",
+                "« Pas de souci » means no worries."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    }
+  ]
+}

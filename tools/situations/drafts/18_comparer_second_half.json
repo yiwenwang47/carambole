@@ -1,0 +1,2700 @@
+{
+  "elements": [
+    {
+      "id": "sit_18_bike",
+      "title": "Les vélos",
+      "note": "Robin wants a new bike. « Électrique » (electric) or « d'occasion » (second-hand, used), « léger » (light) or « lourd » (heavy). Compare with « plus … que » and « moins … que »: « il est moins cher que mon vélo ». « Vélo » is masculine: « un vélo », « il est léger ».",
+      "items": [
+        {
+          "id": "sit_18_bike_d01",
+          "place": "En boutique",
+          "cue": "You're in a bike shop. The salesman shows you a bike. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Vendeur",
+              "text": "Ce vélo électrique est d'occasion, et pas cher."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the salesman say about the bike?",
+              "choices": [
+                "It's new, and very expensive",
+                "It's second-hand, and not expensive"
+              ],
+              "correct": 1,
+              "miss": "Reread: « d'occasion, et pas cher »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Ask how much it costs.",
+              "bank": [
+                "Il",
+                "coûte",
+                "combien ?",
+                "Elle",
+                "coûtes"
+              ],
+              "accepted": [
+                [
+                  "Il",
+                  "coûte",
+                  "combien ?"
+                ]
+              ],
+              "model": "Il coûte combien ?"
+            }
+          ],
+          "followUp": "Regardez, le prix est sur le vélo, madame.",
+          "newWords": [
+            "électrique",
+            "d'occasion"
+          ]
+        },
+        {
+          "id": "sit_18_bike_d02",
+          "place": "Texto · Théo",
+          "cue": "Théo, your friend, texts you. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Mon nouveau vélo est très léger !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Super ! Il est électrique ___ pas ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo say about his new bike?",
+              "choices": [
+                "It's very light",
+                "It's very fast"
+              ],
+              "correct": 0,
+              "miss": "Reread: « très léger »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "où",
+                "et",
+                "ou"
+              ],
+              "correct": 2,
+              "why": [
+                "« Où » with an accent means where. You need or: « ou ».",
+                "« Électrique et pas » makes no sense. You need or: « ou pas ? »",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Non, mais il est rapide !",
+          "followUpBy": "Théo",
+          "newWords": [
+            "léger"
+          ]
+        },
+        {
+          "id": "sit_18_bike_s01",
+          "place": "En boutique · phrase seule",
+          "standalone": "Construire",
+          "cue": "You walk into a bike shop. Tell the salesman (vous) what you're looking for.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Vendeur",
+              "text": "Bonjour, madame, je peux vous aider pour un vélo ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say you're looking for a second-hand electric bike, light and not too expensive, please.",
+              "bank": [
+                "Je cherche",
+                "un",
+                "vélo",
+                "électrique",
+                "d'occasion,",
+                "léger",
+                "et pas trop cher,",
+                "s'il vous plaît.",
+                "une",
+                "légère",
+                "électriques"
+              ],
+              "accepted": [
+                [
+                  "Je cherche",
+                  "un",
+                  "vélo",
+                  "électrique",
+                  "d'occasion,",
+                  "léger",
+                  "et pas trop cher,",
+                  "s'il vous plaît."
+                ]
+              ],
+              "model": "Je cherche un vélo électrique d'occasion, léger et pas trop cher, s'il vous plaît."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_18_bike_d03",
+          "place": "À l'appart",
+          "cue": "Léa, your flatmate, sees the electric bike you've just bought. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Ton vélo électrique est trop lourd !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, mais il est plus ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "rapides",
+                "rapide",
+                "vite"
+              ],
+              "correct": 1,
+              "why": [
+                "« Rapides » is plural, but « il » is one bike: « rapide ».",
+                "",
+                "« Vite » is an adverb (quickly). After « il est plus », use the adjective « rapide »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa think of your bike?",
+              "choices": [
+                "It's too heavy",
+                "It's too expensive"
+              ],
+              "correct": 0,
+              "miss": "Reread: « trop lourd »."
+            }
+          ],
+          "followUp": "C'est vrai. Et il est beau !",
+          "followUpBy": "Léa",
+          "newWords": [
+            "lourd"
+          ]
+        },
+        {
+          "id": "sit_18_bike_d04",
+          "place": "Au bureau",
+          "cue": "Inès, your colleague, wants a bike too. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Un vélo électrique, c'est cher ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « électrique » mean here?",
+              "choices": [
+                "second-hand",
+                "electric",
+                "folding"
+              ],
+              "correct": 1,
+              "why": [
+                "Second-hand is « d'occasion ».",
+                "",
+                "Not this word: « électrique » means it has a motor."
+              ],
+              "target": "électrique"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say no: not a second-hand one!",
+              "bank": [
+                "Non,",
+                "pas",
+                "d'occasion !",
+                "Oui,",
+                "des"
+              ],
+              "accepted": [
+                [
+                  "Non,",
+                  "pas",
+                  "d'occasion !"
+                ]
+              ],
+              "model": "Non, pas d'occasion !"
+            }
+          ],
+          "followUp": "Ah bon ? Alors je cherche un vélo d'occasion !",
+          "followUpBy": "Inès",
+          "newWords": []
+        },
+        {
+          "id": "sit_18_bike_s02",
+          "place": "En boutique · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "You're in a bike shop. Ask the salesman, a stranger (vous), which bike is the lightest.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "Salut ! C'est quel vélo, le plus léger ?",
+                "Excusez-moi, monsieur, quel vélo est le plus léger, s'il vous plaît ?",
+                "Dis, tu sais quel vélo est le plus léger ?"
+              ],
+              "correct": 1,
+              "why": [
+                "Good French, but « salut » is for friends. Start with « excusez-moi » or « bonjour » to a salesman.",
+                "",
+                "Good French, but « dis » and « tu » are for friends. Say vous to a salesman."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_18_bike_d05",
+          "place": "En boutique",
+          "cue": "Clarify: the salesman talks to you in the noisy bike shop. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Vendeur",
+              "text": "Ce vélo électrique est très léger, madame."
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Ask him to repeat, please.",
+              "bank": [
+                "Pardon ?",
+                "Vous pouvez répéter,",
+                "s'il vous plaît ?",
+                "Tu peux répéter,",
+                "s'il te plaît ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon ?",
+                  "Vous pouvez répéter,",
+                  "s'il vous plaît ?"
+                ],
+                [
+                  "Vous pouvez répéter,",
+                  "s'il vous plaît ?"
+                ]
+              ],
+              "model": "Pardon ? Vous pouvez répéter, s'il vous plaît ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « léger » mean here?",
+              "choices": [
+                "cheap",
+                "fast",
+                "light, not heavy"
+              ],
+              "correct": 2,
+              "why": [
+                "Cheap is « pas cher ».",
+                "Fast is « rapide ».",
+                ""
+              ],
+              "target": "léger"
+            }
+          ],
+          "followUp": "Pardon ! Ce vélo est très léger.",
+          "newWords": []
+        },
+        {
+          "id": "sit_18_bike_d06",
+          "place": "Au café",
+          "cue": "Karim, the barista, is a friend now. He says tu to you. You have an electric bike.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Mon vélo d'occasion est lourd, mais pas cher."
+            },
+            {
+              "speaker": "learner",
+              "text": "Il est moins cher ___ mon vélo électrique !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "qui",
+                "de",
+                "que"
+              ],
+              "correct": 2,
+              "why": [
+                "« Qui » means who. To compare, use « moins cher que ».",
+                "« Moins cher de » is wrong here. To compare two things, use « que ».",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Karim say about his bike?",
+              "choices": [
+                "It's light, but expensive",
+                "It's heavy, but not expensive"
+              ],
+              "correct": 1,
+              "miss": "Reread: « lourd, mais pas cher »."
+            }
+          ],
+          "followUp": "Oui, mais ton vélo est plus rapide !",
+          "followUpBy": "Karim",
+          "newWords": []
+        },
+        {
+          "id": "sit_18_bike_s03",
+          "place": "En boutique · phrase seule",
+          "standalone": "Corriger",
+          "cue": "You're in a bike shop. Tell the salesman (vous) what you're looking for.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Bonjour, je cherche une vélo électrique d'occasion, plus léger que mon vieux vélo.",
+              "error": {
+                "word": "une",
+                "fix": "un",
+                "choices": [
+                  "des",
+                  "un",
+                  "de"
+                ],
+                "why": "« Vélo » is masculine: « un vélo ». « Léger » is masculine too."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_18_bike_d07",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat « Les copains ». His vous means you all.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "J'ai un vélo électrique, mais il est très lourd !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Ah, c'est ___ problème !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « lourd » mean here?",
+              "choices": [
+                "slow",
+                "loud",
+                "heavy"
+              ],
+              "correct": 2,
+              "why": [
+                "Slow is not this word: « lourd » is about weight.",
+                "False friend: loud is « bruyant ».",
+                ""
+              ],
+              "target": "lourd"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "une",
+                "un",
+                "des"
+              ],
+              "correct": 1,
+              "why": [
+                "« Problème » is masculine: « un problème ».",
+                "",
+                "« Des » is plural, but there is one problem: « un problème »."
+              ]
+            }
+          ],
+          "followUp": "Oui ! Mais il est très rapide.",
+          "followUpBy": "Théo",
+          "newWords": []
+        },
+        {
+          "id": "sit_18_bike_d08",
+          "place": "Sur le palier",
+          "cue": "M. Ferrand, your neighbour, sees your new electric bike on the landing. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Votre vélo électrique est lourd, madame ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say yes, but it's fast.",
+              "bank": [
+                "Oui,",
+                "mais",
+                "il est",
+                "rapide !",
+                "elle est",
+                "rapides !",
+                "vite !"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "mais",
+                  "il est",
+                  "rapide !"
+                ]
+              ],
+              "model": "Oui, mais il est rapide !"
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does M. Ferrand ask?",
+              "choices": [
+                "If your bike is heavy",
+                "If your bike is new"
+              ],
+              "correct": 0,
+              "miss": "Reread: « votre vélo électrique est lourd ? »"
+            }
+          ],
+          "followUp": "Ah, très bien ! Moi, je prends le bus.",
+          "followUpBy": "M. Ferrand",
+          "newWords": []
+        },
+        {
+          "id": "sit_18_bike_s04",
+          "place": "En boutique · phrase seule",
+          "standalone": "Transformer",
+          "cue": "The salesman (vous) shows you two bikes. Join the two sentences into one with « plus … que ».",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Ce vélo est lourd. Le vélo électrique est très lourd.",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say the electric bike is heavier than this bike.",
+              "bank": [
+                "Le vélo électrique",
+                "est",
+                "plus lourd",
+                "que",
+                "ce vélo.",
+                "moins lourd",
+                "qui",
+                "lourde"
+              ],
+              "accepted": [
+                [
+                  "Le vélo électrique",
+                  "est",
+                  "plus lourd",
+                  "que",
+                  "ce vélo."
+                ]
+              ],
+              "model": "Le vélo électrique est plus lourd que ce vélo."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_18_bike_d09",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. She says tu to you. She wants a bike.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Un vélo d'occasion, c'est une bonne idée ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, il est beaucoup ___ cher !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès ask?",
+              "choices": [
+                "If a second-hand bike is fast",
+                "If a second-hand bike is a good idea"
+              ],
+              "correct": 1,
+              "miss": "Reread: « c'est une bonne idée ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "mieux",
+                "moins",
+                "meilleur"
+              ],
+              "correct": 1,
+              "why": [
+                "« Mieux » is an adverb (better). With « cher », say « moins cher ».",
+                "",
+                "« Meilleur cher » is wrong. Cheaper is « moins cher »."
+              ]
+            }
+          ],
+          "followUp": "Super, je cherche ça ce week-end !",
+          "followUpBy": "Inès",
+          "newWords": []
+        },
+        {
+          "id": "sit_18_bike_d10",
+          "place": "En boutique",
+          "cue": "You're in a bike shop. The salesman shows you one more bike. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Vendeur",
+              "text": "Ce vélo est d'occasion, mais il est très léger."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does the salesman say about this bike?",
+              "choices": [
+                "It's second-hand, but very light",
+                "It's new, and very light"
+              ],
+              "correct": 0,
+              "miss": "Reread: « d'occasion, mais il est très léger »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Say perfect, you'll take it.",
+              "bank": [
+                "Parfait,",
+                "je",
+                "le",
+                "prends !",
+                "la",
+                "prend !",
+                "les"
+              ],
+              "accepted": [
+                [
+                  "Parfait,",
+                  "je",
+                  "le",
+                  "prends !"
+                ]
+              ],
+              "model": "Parfait, je le prends !"
+            }
+          ],
+          "followUp": "Très bien ! Vous payez par carte ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_18_bike_s05",
+          "place": "En boutique · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Which French words mean “second-hand”?",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Je cherche un vélo électrique ___, il est moins cher et assez léger."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "second-hand",
+              "choices": [
+                "d'accord",
+                "d'occasion",
+                "de rien"
+              ],
+              "correct": 1,
+              "why": [
+                "« D'accord » means OK.",
+                "",
+                "« De rien » means you're welcome."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_18_better",
+      "title": "Le meilleur choix",
+      "note": "Judge the value: « un bon rapport qualité-prix » (good value for money), the best is « le meilleur rapport qualité-prix » (« rapport » is masculine, so « meilleur » has no -e). « Ça vaut le coup » means it's worth it, and « en promo » means on offer.",
+      "items": [
+        {
+          "id": "sit_18_better_d01",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you a photo of a bike in a shop. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Ce vélo a un bon rapport qualité-prix !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa say about the bike?",
+              "choices": [
+                "It's too expensive",
+                "It's good value for money"
+              ],
+              "correct": 1,
+              "miss": "Reread: « un bon rapport qualité-prix »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, and it's light.",
+              "bank": [
+                "Oui,",
+                "et",
+                "il est",
+                "léger !",
+                "légère !",
+                "elle est",
+                "lourd !"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "et",
+                  "il est",
+                  "léger !"
+                ]
+              ],
+              "model": "Oui, et il est léger !"
+            }
+          ],
+          "followUp": "Alors, tu le prends ?",
+          "followUpBy": "Léa",
+          "newWords": [
+            "rapport qualité-prix"
+          ]
+        },
+        {
+          "id": "sit_18_better_d02",
+          "place": "Texto · Théo",
+          "cue": "Théo, your friend, texts you. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "J'ai un vélo électrique. Ça vaut le coup !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Super ! Tu l'as ___ où ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo think of his electric bike?",
+              "choices": [
+                "It's worth it",
+                "It's too heavy"
+              ],
+              "correct": 0,
+              "miss": "Reread: « ça vaut le coup ! »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "acheter",
+                "achetée",
+                "acheté"
+              ],
+              "correct": 2,
+              "why": [
+                "« Acheter » is the infinitive. After « tu l'as », use « acheté ».",
+                "« L' » stands for « le vélo », masculine: « acheté », no -e.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Dans un magasin près du métro.",
+          "followUpBy": "Théo",
+          "newWords": [
+            "ça vaut le coup"
+          ]
+        },
+        {
+          "id": "sit_18_better_s01",
+          "place": "Texto · Léa · phrase seule",
+          "standalone": "Construire",
+          "cue": "Léa, your flatmate, texts you. She says tu to you. You've found a good phone plan.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Alors, Robin, tu prends quel forfait pour ton portable ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say this plan is the best value for money: it's worth it!",
+              "bank": [
+                "Ce forfait",
+                "a",
+                "le meilleur",
+                "rapport qualité-prix,",
+                "ça vaut le coup !",
+                "la meilleure",
+                "les meilleurs",
+                "le mieux"
+              ],
+              "accepted": [
+                [
+                  "Ce forfait",
+                  "a",
+                  "le meilleur",
+                  "rapport qualité-prix,",
+                  "ça vaut le coup !"
+                ]
+              ],
+              "model": "Ce forfait a le meilleur rapport qualité-prix, ça vaut le coup !"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_18_better_d03",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Les vélos sont en promo, ce week-end !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Super ! C'est ___ magasin ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "quelle",
+                "quel",
+                "quels"
+              ],
+              "correct": 1,
+              "why": [
+                "« Quelle » is feminine, but « magasin » is masculine: « quel ».",
+                "",
+                "« Quels » is plural, but « magasin » is singular: « quel »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès tell you?",
+              "choices": [
+                "Bikes are on offer this weekend",
+                "Bikes are sold out this weekend"
+              ],
+              "correct": 0,
+              "miss": "Reread: « les vélos sont en promo »."
+            }
+          ],
+          "followUp": "Le magasin à côté de la gare.",
+          "followUpBy": "Inès",
+          "newWords": [
+            "en promo"
+          ]
+        },
+        {
+          "id": "sit_18_better_d04",
+          "place": "En boutique",
+          "cue": "You're in a phone shop. The saleswoman shows you a phone plan. She says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Vendeuse",
+              "voice": "female",
+              "text": "Ce forfait a le meilleur rapport qualité-prix."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « rapport qualité-prix » mean here?",
+              "choices": [
+                "network quality",
+                "monthly price",
+                "value for money"
+              ],
+              "correct": 2,
+              "why": [
+                "The network is « le réseau ».",
+                "Not this phrase: « par mois » means a month.",
+                ""
+              ],
+              "target": "rapport qualité-prix"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say OK, you'll take it.",
+              "bank": [
+                "D'accord,",
+                "je",
+                "le",
+                "prends.",
+                "la",
+                "prend.",
+                "les"
+              ],
+              "accepted": [
+                [
+                  "D'accord,",
+                  "je",
+                  "le",
+                  "prends."
+                ]
+              ],
+              "model": "D'accord, je le prends."
+            }
+          ],
+          "followUp": "Très bien ! En plus, il est illimité.",
+          "newWords": []
+        },
+        {
+          "id": "sit_18_better_s02",
+          "place": "Sur le palier · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "M. Ferrand, your neighbour, wants a new bike. He says vous to you. Tell him the bike shop has offers this week.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "Tu sais, les vélos sont en promo cette semaine !",
+                "Salut ! Les vélos sont en promo, tu viens voir ?",
+                "Vous savez, monsieur, les vélos sont en promo cette semaine."
+              ],
+              "correct": 2,
+              "why": [
+                "Good French, but say vous to M. Ferrand, not tu.",
+                "Good French, but « salut » and « tu » are for friends. Say vous to M. Ferrand.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_18_better_d05",
+          "place": "Appel · Théo",
+          "cue": "Clarify: Théo, your friend, calls you on a bad line. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Le forfait illimité, ça vaut le coup !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say you can't hear him well, and ask him to repeat.",
+              "bank": [
+                "Pardon,",
+                "je t'entends mal.",
+                "Tu peux répéter ?",
+                "je vous entends mal.",
+                "Vous pouvez répéter ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon,",
+                  "je t'entends mal.",
+                  "Tu peux répéter ?"
+                ],
+                [
+                  "Tu peux répéter ?",
+                  "Pardon,",
+                  "je t'entends mal."
+                ]
+              ],
+              "model": "Pardon, je t'entends mal. Tu peux répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « ça vaut le coup » mean here?",
+              "choices": [
+                "it's broken",
+                "it's worth it",
+                "it's too expensive"
+              ],
+              "correct": 1,
+              "why": [
+                "Broken is « cassé ».",
+                "",
+                "Too expensive is « trop cher »."
+              ],
+              "target": "ça vaut le coup"
+            }
+          ],
+          "followUp": "Pardon ! Le forfait illimité, ça vaut le coup !",
+          "followUpBy": "Théo",
+          "newWords": []
+        },
+        {
+          "id": "sit_18_better_d06",
+          "place": "Au café",
+          "cue": "Karim, the barista, is a friend now. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Aujourd'hui, le café est en promo : deux euros !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Super, c'est moins ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "chère",
+                "cher",
+                "chers"
+              ],
+              "correct": 1,
+              "why": [
+                "« Chère » is feminine. After « c'est », use « cher ».",
+                "",
+                "« Chers » is plural. After « c'est », use « cher »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Karim say about the coffee?",
+              "choices": [
+                "It's sold out today",
+                "It's on offer today"
+              ],
+              "correct": 1,
+              "miss": "Reread: « le café est en promo »."
+            }
+          ],
+          "followUp": "Alors, un café, comme d'habitude ?",
+          "followUpBy": "Karim",
+          "newWords": []
+        },
+        {
+          "id": "sit_18_better_s03",
+          "place": "Texto · Léa · phrase seule",
+          "standalone": "Corriger",
+          "cue": "Text Léa, your flatmate. You say tu to her. Tell her about a bike on offer.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Ce vélo est en promo, il a le meilleure rapport qualité-prix.",
+              "error": {
+                "word": "meilleure",
+                "fix": "meilleur",
+                "choices": [
+                  "meilleurs",
+                  "meilleur",
+                  "mieux"
+                ],
+                "why": "« Rapport » is masculine singular: « le meilleur rapport qualité-prix »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_18_better_d07",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Les forfaits sont en promo, en ce moment !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Ah bon ? C'est ___ ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « en promo » mean here?",
+              "choices": [
+                "out of stock",
+                "on offer",
+                "new"
+              ],
+              "correct": 1,
+              "why": [
+                "Out of stock is not this phrase: « en promo » is about the price.",
+                "",
+                "New is « nouveau »."
+              ],
+              "target": "en promo"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "où",
+                "qui",
+                "ou"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Qui » asks who. You want to know where: « c'est où ? »",
+                "« Ou » without an accent means or. Where is « où »."
+              ]
+            }
+          ],
+          "followUp": "Au magasin, à côté du bureau !",
+          "followUpBy": "Inès",
+          "newWords": []
+        },
+        {
+          "id": "sit_18_better_d08",
+          "place": "À l'appart",
+          "cue": "Léa, your flatmate, is at home with you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Un vélo électrique en promo ? Ça vaut le coup ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say yes: it's good value for money.",
+              "bank": [
+                "Oui,",
+                "il a",
+                "un bon",
+                "rapport qualité-prix.",
+                "une bonne",
+                "il est"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "il a",
+                  "un bon",
+                  "rapport qualité-prix."
+                ]
+              ],
+              "model": "Oui, il a un bon rapport qualité-prix."
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa ask?",
+              "choices": [
+                "If an electric bike on offer is worth it",
+                "If an electric bike is heavy"
+              ],
+              "correct": 0,
+              "miss": "Reread: « ça vaut le coup ? »"
+            }
+          ],
+          "followUp": "Super ! Alors, on va le voir samedi ?",
+          "followUpBy": "Léa",
+          "newWords": []
+        },
+        {
+          "id": "sit_18_better_s04",
+          "place": "Texto · Léa · phrase seule",
+          "standalone": "Transformer",
+          "cue": "Text Léa, your flatmate (tu). Make it the best: change « un bon » to the superlative.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Ce forfait a un bon rapport qualité-prix, et il est en promo.",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say this plan has the best value for money, and it's on offer.",
+              "bank": [
+                "Ce forfait a",
+                "le meilleur",
+                "rapport qualité-prix,",
+                "et il est",
+                "en promo.",
+                "la meilleure",
+                "le plus bon",
+                "le mieux"
+              ],
+              "accepted": [
+                [
+                  "Ce forfait a",
+                  "le meilleur",
+                  "rapport qualité-prix,",
+                  "et il est",
+                  "en promo."
+                ]
+              ],
+              "model": "Ce forfait a le meilleur rapport qualité-prix, et il est en promo."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_18_better_d09",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat « Les copains ». His vous means you all.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Le cinéma est en promo mardi !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Ça vaut le coup ! On y ___ ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo say about the cinema?",
+              "choices": [
+                "It's closed on Tuesday",
+                "It has an offer on Tuesday"
+              ],
+              "correct": 1,
+              "miss": "Reread: « le cinéma est en promo mardi »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "vas",
+                "va",
+                "vont"
+              ],
+              "correct": 1,
+              "why": [
+                "« Vas » goes with tu. With « on », say « on y va ».",
+                "",
+                "« Vont » goes with ils. With « on », say « on y va »."
+              ]
+            }
+          ],
+          "followUp": "Top ! Mardi soir, alors.",
+          "followUpBy": "Théo",
+          "newWords": []
+        },
+        {
+          "id": "sit_18_better_d10",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you a photo of a bike. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Ce vélo d'occasion, ça vaut le coup ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès ask?",
+              "choices": [
+                "If this second-hand bike is light",
+                "If this second-hand bike is worth it"
+              ],
+              "correct": 1,
+              "miss": "Reread: « ça vaut le coup ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes: very good value for money!",
+              "bank": [
+                "Oui,",
+                "très bon",
+                "rapport qualité-prix !",
+                "très bonne",
+                "Non,",
+                "mauvais"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "très bon",
+                  "rapport qualité-prix !"
+                ]
+              ],
+              "model": "Oui, très bon rapport qualité-prix !"
+            }
+          ],
+          "followUp": "Top, je le prends, alors !",
+          "followUpBy": "Inès",
+          "newWords": []
+        },
+        {
+          "id": "sit_18_better_s05",
+          "place": "Texto · Léa · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Which French words mean “it's worth it”?",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Ce vélo électrique est en promo et très léger, ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "it's worth it",
+              "choices": [
+                "ça fait",
+                "ça marche",
+                "ça vaut le coup"
+              ],
+              "correct": 2,
+              "why": [
+                "« Ça fait » gives a total (ça fait vingt euros).",
+                "« Ça marche » means OK, that works.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_18_pros",
+      "title": "Avantages et inconvénients",
+      "note": "Weigh it up: « un avantage » (an advantage, a plus), « un inconvénient » (a drawback) and « par contre » (on the other hand). Both nouns are masculine: « un avantage », « un inconvénient ». « Près du métro » and « loin du centre-ville »: de + le = du.",
+      "items": [
+        {
+          "id": "sit_18_pros_d01",
+          "place": "Au bureau",
+          "cue": "Inès, your colleague, is looking for a flat. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Le centre-ville, c'est un avantage !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès say about the town centre?",
+              "choices": [
+                "It's too expensive",
+                "It's an advantage"
+              ],
+              "correct": 1,
+              "miss": "Reread: « c'est un avantage ! »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, but it's noisy.",
+              "bank": [
+                "Oui,",
+                "mais",
+                "c'est",
+                "bruyant.",
+                "bruyante.",
+                "calme."
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "mais",
+                  "c'est",
+                  "bruyant."
+                ]
+              ],
+              "model": "Oui, mais c'est bruyant."
+            }
+          ],
+          "followUp": "C'est vrai. Mais c'est près du bureau !",
+          "followUpBy": "Inès",
+          "newWords": [
+            "avantage"
+          ]
+        },
+        {
+          "id": "sit_18_pros_d02",
+          "place": "À l'appart",
+          "cue": "Léa, your flatmate, is at home with you. She says tu to you. You have an electric bike.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Ton vélo électrique ? Un inconvénient : il est lourd."
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, mais il est ___ rapide que ton vélo !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What drawback does Léa mention?",
+              "choices": [
+                "It's slow",
+                "It's heavy"
+              ],
+              "correct": 1,
+              "miss": "Reread: « un inconvénient : il est lourd »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "pire",
+                "plus",
+                "mieux"
+              ],
+              "correct": 1,
+              "why": [
+                "« Pire » means worse. Faster is « plus rapide ».",
+                "",
+                "« Mieux » is an adverb. Faster is « plus rapide »."
+              ]
+            }
+          ],
+          "followUp": "C'est vrai, il est super !",
+          "followUpBy": "Léa",
+          "newWords": [
+            "inconvénient"
+          ]
+        },
+        {
+          "id": "sit_18_pros_s01",
+          "place": "Au bureau · phrase seule",
+          "standalone": "Construire",
+          "cue": "Inès, your colleague, asks about a flat you visited. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Tu as visité l'appartement de Karim ? Il est comment ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say the flat has one advantage: it's near the metro, but it's small.",
+              "bank": [
+                "Cet appartement",
+                "a",
+                "un avantage :",
+                "il est",
+                "près du métro,",
+                "mais",
+                "il est",
+                "petit.",
+                "une avantage :",
+                "petite.",
+                "loin du métro,"
+              ],
+              "accepted": [
+                [
+                  "Cet appartement",
+                  "a",
+                  "un avantage :",
+                  "il est",
+                  "près du métro,",
+                  "mais",
+                  "il est",
+                  "petit."
+                ]
+              ],
+              "model": "Cet appartement a un avantage : il est près du métro, mais il est petit."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_18_pros_d03",
+          "place": "Texto · Théo",
+          "cue": "Théo, your friend, texts you about his new neighbourhood. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Mon quartier est calme. Par contre, il est loin !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Loin ___ centre-ville ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "des",
+                "de la",
+                "du"
+              ],
+              "correct": 2,
+              "why": [
+                "« Des » is plural, but « centre-ville » is singular: « du ».",
+                "« Centre-ville » is masculine: de + le = « du ».",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What is the downside of Théo's neighbourhood?",
+              "choices": [
+                "It's far away",
+                "It's noisy"
+              ],
+              "correct": 0,
+              "miss": "Reread: « par contre, il est loin ! »"
+            }
+          ],
+          "followUp": "Oui, mais il y a le bus !",
+          "followUpBy": "Théo",
+          "newWords": [
+            "par contre"
+          ]
+        },
+        {
+          "id": "sit_18_pros_d04",
+          "place": "Au café",
+          "cue": "Karim, the barista, is a friend now. He says tu to you. You go to work by bike.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Le vélo, c'est un avantage pour toi !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « avantage » mean here?",
+              "choices": [
+                "problem",
+                "advantage, plus",
+                "habit"
+              ],
+              "correct": 1,
+              "why": [
+                "A problem is « un problème ».",
+                "",
+                "Not this word: « un avantage » is a good point."
+              ],
+              "target": "avantage"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, it's faster than the metro.",
+              "bank": [
+                "Oui,",
+                "c'est",
+                "plus rapide",
+                "que le métro !",
+                "moins rapide",
+                "qui le métro !",
+                "plus rapides"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "c'est",
+                  "plus rapide",
+                  "que le métro !"
+                ]
+              ],
+              "model": "Oui, c'est plus rapide que le métro !"
+            }
+          ],
+          "followUp": "Et c'est moins cher, aussi !",
+          "followUpBy": "Karim",
+          "newWords": []
+        },
+        {
+          "id": "sit_18_pros_s02",
+          "place": "À l'agence · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "At the estate agency, the agent (vous) shows you a flat. Tell him the drawback politely.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "Cet appartement est beau, monsieur. Par contre, le loyer est un peu cher.",
+                "Il est beau, ton appartement, mais il est un peu cher !",
+                "Salut ! Il est beau, mais le loyer est un peu cher."
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "Good French, but « ton » is tu. Say vous to the estate agent.",
+                "Good French, but « salut » is for friends. Say « monsieur » to the estate agent."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_18_pros_d05",
+          "place": "À l'agence",
+          "cue": "Clarify: the estate agent talks fast. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "role": "Agent immobilier",
+              "text": "Il y a un inconvénient : pas de balcon."
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Ask him to repeat, please.",
+              "bank": [
+                "Pardon ?",
+                "Vous pouvez répéter,",
+                "s'il vous plaît ?",
+                "Tu peux répéter,",
+                "s'il te plaît ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon ?",
+                  "Vous pouvez répéter,",
+                  "s'il vous plaît ?"
+                ],
+                [
+                  "Vous pouvez répéter,",
+                  "s'il vous plaît ?"
+                ]
+              ],
+              "model": "Pardon ? Vous pouvez répéter, s'il vous plaît ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « inconvénient » mean here?",
+              "choices": [
+                "drawback",
+                "advantage",
+                "surprise"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "An advantage is « un avantage ».",
+                "Not this word: « un inconvénient » is a bad point."
+              ],
+              "target": "inconvénient"
+            }
+          ],
+          "followUp": "Pardon ! Un inconvénient : il n'y a pas de balcon.",
+          "newWords": []
+        },
+        {
+          "id": "sit_18_pros_d06",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you about a flat. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Cet appartement est lumineux. Par contre, il est bruyant."
+            },
+            {
+              "speaker": "learner",
+              "text": "Ah, c'est ___ inconvénient !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "un",
+                "une",
+                "des"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Inconvénient » is masculine: « un inconvénient ».",
+                "« Des » is plural, but there is one drawback: « un inconvénient »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What is the problem with the flat?",
+              "choices": [
+                "It's small",
+                "It's noisy"
+              ],
+              "correct": 1,
+              "miss": "Reread: « par contre, il est bruyant »."
+            }
+          ],
+          "followUp": "Oui… mais il a un balcon !",
+          "followUpBy": "Inès",
+          "newWords": []
+        },
+        {
+          "id": "sit_18_pros_s03",
+          "place": "Au bureau · phrase seule",
+          "standalone": "Corriger",
+          "cue": "Inès, your colleague, asks about your phone plan. You say tu to her.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Ce forfait a une avantage : il est illimité. Par contre, il est cher.",
+              "error": {
+                "word": "une",
+                "fix": "un",
+                "choices": [
+                  "des",
+                  "un",
+                  "de"
+                ],
+                "why": "« Avantage » is masculine: « un avantage »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_18_pros_d07",
+          "place": "À l'appart",
+          "cue": "Léa, your flatmate, is at home with you, looking at flats. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Ce quartier est sympa. Par contre, il est bruyant."
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, et il est ___ du métro."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « par contre » mean here?",
+              "choices": [
+                "of course",
+                "on the other hand",
+                "for example"
+              ],
+              "correct": 1,
+              "why": [
+                "Of course is « bien sûr ».",
+                "",
+                "Not this phrase: « par contre » brings in a downside."
+              ],
+              "target": "par contre"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "long",
+                "loin",
+                "longue"
+              ],
+              "correct": 1,
+              "why": [
+                "« Long » means long. Far from is « loin de »: « loin du métro ».",
+                "",
+                "« Longue » means long (feminine). Far from is « loin du métro »."
+              ]
+            }
+          ],
+          "followUp": "C'est vrai. On cherche un autre quartier !",
+          "followUpBy": "Léa",
+          "newWords": []
+        },
+        {
+          "id": "sit_18_pros_d08",
+          "place": "Sur le palier",
+          "cue": "M. Ferrand, your neighbour, sees your electric bike on the landing. He says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "M. Ferrand",
+              "text": "Les vélos électriques ? Un inconvénient : le prix !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say yes, but they're fast.",
+              "bank": [
+                "Oui,",
+                "mais",
+                "ils sont",
+                "rapides !",
+                "rapide !",
+                "elles sont",
+                "vite !"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "mais",
+                  "ils sont",
+                  "rapides !"
+                ]
+              ],
+              "model": "Oui, mais ils sont rapides !"
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What drawback does M. Ferrand mention?",
+              "choices": [
+                "The price",
+                "The weight"
+              ],
+              "correct": 0,
+              "miss": "Reread: « un inconvénient : le prix ! »"
+            }
+          ],
+          "followUp": "Ah, c'est vrai ! Bonne journée, madame.",
+          "followUpBy": "M. Ferrand",
+          "newWords": []
+        },
+        {
+          "id": "sit_18_pros_s04",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You texted this to Inès (tu) about her flat. Now say the same to Mme Dumas, your landlady (vous), about her free flat.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Ton appartement a un avantage : il est lumineux. Par contre, il est petit.",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say it to Mme Dumas, with vous.",
+              "bank": [
+                "Votre appartement",
+                "a",
+                "un avantage :",
+                "il est lumineux.",
+                "Par contre,",
+                "il est petit.",
+                "Ton appartement",
+                "Vos appartement",
+                "une avantage :"
+              ],
+              "accepted": [
+                [
+                  "Votre appartement",
+                  "a",
+                  "un avantage :",
+                  "il est lumineux.",
+                  "Par contre,",
+                  "il est petit."
+                ]
+              ],
+              "model": "Votre appartement a un avantage : il est lumineux. Par contre, il est petit."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_18_pros_d09",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat « Les copains ». His vous means you all.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Mon appartement a un avantage : il est grand !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Super ! Et il est ___ du métro ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo say about his flat?",
+              "choices": [
+                "It's big",
+                "It's bright"
+              ],
+              "correct": 0,
+              "miss": "Reread: « il est grand ! »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "plein",
+                "près",
+                "pire"
+              ],
+              "correct": 1,
+              "why": [
+                "« Plein » means full. Near the metro is « près du métro ».",
+                "",
+                "« Pire » means worse. Near the metro is « près du métro »."
+              ]
+            }
+          ],
+          "followUp": "Oui, à cinq minutes !",
+          "followUpBy": "Théo",
+          "newWords": []
+        },
+        {
+          "id": "sit_18_pros_d10",
+          "place": "Au bureau",
+          "cue": "Inès, your colleague, asks about where you live. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Un inconvénient de ton quartier ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès ask about?",
+              "choices": [
+                "The rent in your neighbourhood",
+                "A drawback of your neighbourhood"
+              ],
+              "correct": 1,
+              "miss": "Reread: « un inconvénient de ton quartier ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say it's noisy. On the other hand, it's near the metro.",
+              "bank": [
+                "Il est bruyant.",
+                "Par contre,",
+                "il est",
+                "près du métro.",
+                "loin du métro.",
+                "Il est calme.",
+                "il a"
+              ],
+              "accepted": [
+                [
+                  "Il est bruyant.",
+                  "Par contre,",
+                  "il est",
+                  "près du métro."
+                ]
+              ],
+              "model": "Il est bruyant. Par contre, il est près du métro."
+            }
+          ],
+          "followUp": "Ah, le métro, c'est un avantage !",
+          "followUpBy": "Inès",
+          "newWords": []
+        },
+        {
+          "id": "sit_18_pros_s05",
+          "place": "Au bureau · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Which French words mean “on the other hand”?",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Cet appartement est grand et lumineux. ___, le loyer est très cher."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "on the other hand",
+              "choices": [
+                "Par mois",
+                "Par hasard",
+                "Par contre"
+              ],
+              "correct": 2,
+              "why": [
+                "« Par mois » means a month.",
+                "« Par hasard » means by chance.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_18_decide",
+      "title": "Se décider",
+      "note": "Making up your mind: « j'hésite entre… » (I can't decide between…), « ça dépend du prix » (it depends on the price; de + le = du). Robin is a woman: « je ne suis pas convaincue », with -e.",
+      "items": [
+        {
+          "id": "sit_18_decide_d01",
+          "place": "Au café",
+          "cue": "Inès, your colleague, is having a coffee with you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "J'hésite entre les deux appartements."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What is Inès's problem?",
+              "choices": [
+                "She can't find a flat",
+                "She can't choose between two flats"
+              ],
+              "correct": 1,
+              "miss": "Reread: « j'hésite entre les deux appartements »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Tell her to take the brighter one.",
+              "bank": [
+                "Prends",
+                "le",
+                "plus",
+                "lumineux !",
+                "lumineuse !",
+                "Prenez",
+                "moins"
+              ],
+              "accepted": [
+                [
+                  "Prends",
+                  "le",
+                  "plus",
+                  "lumineux !"
+                ]
+              ],
+              "model": "Prends le plus lumineux !"
+            }
+          ],
+          "followUp": "Bonne idée ! Merci, Robin.",
+          "followUpBy": "Inès",
+          "newWords": [
+            "j'hésite"
+          ]
+        },
+        {
+          "id": "sit_18_decide_d02",
+          "place": "À l'appart",
+          "cue": "Léa, your flatmate, is thinking about moving. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Le centre-ville ou un quartier calme ? Ça dépend…"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, ça dépend ___ prix !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What is Léa choosing between?",
+              "choices": [
+                "The town centre or a quiet area",
+                "A big flat or a small flat"
+              ],
+              "correct": 0,
+              "miss": "Reread: « le centre-ville ou un quartier calme ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "de la",
+                "du",
+                "des"
+              ],
+              "correct": 1,
+              "why": [
+                "« Prix » is masculine: de + le = « du ».",
+                "",
+                "« Des » is plural, but « le prix » is singular here: « du »."
+              ]
+            }
+          ],
+          "followUp": "C'est vrai. Le centre-ville, c'est cher !",
+          "followUpBy": "Léa",
+          "newWords": [
+            "ça dépend"
+          ]
+        },
+        {
+          "id": "sit_18_decide_s01",
+          "place": "Au café · phrase seule",
+          "standalone": "Construire",
+          "cue": "Inès, your colleague, asks which bike you're getting. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Alors, Robin, tu prends quel vélo pour aller au bureau ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say you can't decide between the electric bike and the second-hand bike: it depends on the price.",
+              "bank": [
+                "J'hésite",
+                "entre",
+                "le vélo électrique",
+                "et",
+                "le vélo d'occasion,",
+                "ça dépend",
+                "du prix.",
+                "de le prix.",
+                "ça dépends"
+              ],
+              "accepted": [
+                [
+                  "J'hésite",
+                  "entre",
+                  "le vélo électrique",
+                  "et",
+                  "le vélo d'occasion,",
+                  "ça dépend",
+                  "du prix."
+                ]
+              ],
+              "model": "J'hésite entre le vélo électrique et le vélo d'occasion, ça dépend du prix."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_18_decide_d03",
+          "place": "Texto · Théo",
+          "cue": "Théo, your friend, texts you. He says tu to you. You're both thinking of buying an electric bike. You're a woman.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Le vélo électrique, ça vaut le coup ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Je ne suis pas convaincue. Et toi, tu ___ ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "hésite",
+                "hésiter",
+                "hésites"
+              ],
+              "correct": 2,
+              "why": [
+                "With tu, the verb ends in -s: « tu hésites ».",
+                "« Hésiter » is the infinitive. With tu, say « tu hésites ».",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo ask?",
+              "choices": [
+                "If the electric bike is worth it",
+                "If the electric bike is heavy"
+              ],
+              "correct": 0,
+              "miss": "Reread: « ça vaut le coup ? »"
+            }
+          ],
+          "followUp": "Oui, un peu. Ça dépend du prix !",
+          "followUpBy": "Théo",
+          "newWords": [
+            "convaincue"
+          ]
+        },
+        {
+          "id": "sit_18_decide_d04",
+          "place": "Au café",
+          "cue": "Karim, the barista, is a friend now. It's evening, and he's on his break. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "J'hésite : un café ou un thé ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « j'hésite » mean here?",
+              "choices": [
+                "I'd like",
+                "I can't decide",
+                "I'm sure"
+              ],
+              "correct": 1,
+              "why": [
+                "I'd like is « je voudrais ».",
+                "",
+                "Not this phrase: « j'hésite » means you don't know yet."
+              ],
+              "target": "j'hésite"
+            },
+            {
+              "type": "reply",
+              "prompt": "Tell him to have a tea: it's better in the evening.",
+              "bank": [
+                "Prends",
+                "un thé,",
+                "c'est mieux",
+                "le soir !",
+                "Prenez",
+                "une thé,",
+                "le matin !"
+              ],
+              "accepted": [
+                [
+                  "Prends",
+                  "un thé,",
+                  "c'est mieux",
+                  "le soir !"
+                ]
+              ],
+              "model": "Prends un thé, c'est mieux le soir !"
+            }
+          ],
+          "followUp": "D'accord, un thé, alors !",
+          "followUpBy": "Karim",
+          "newWords": []
+        },
+        {
+          "id": "sit_18_decide_s02",
+          "place": "En boutique · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "In a phone shop, the saleswoman (vous) asks which plan you want. Tell her you can't decide yet.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits?",
+              "choices": [
+                "J'hésite encore, tu sais ! Ça dépend du prix.",
+                "J'hésite encore, madame. Ça dépend du prix, je crois.",
+                "Ça dépend, il coûte combien, ton forfait ?"
+              ],
+              "correct": 1,
+              "why": [
+                "Good French, but « tu sais » is for friends. Say vous to the saleswoman.",
+                "",
+                "Good French, but « ton » is tu. Say vous to the saleswoman."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_18_decide_d05",
+          "place": "Au café",
+          "cue": "Clarify: Inès, your colleague, talks to you in the noisy café. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Le centre-ville ? Ça dépend du loyer."
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Ask her to repeat, please.",
+              "bank": [
+                "Pardon ?",
+                "Tu peux répéter,",
+                "s'il te plaît ?",
+                "Vous pouvez répéter,",
+                "s'il vous plaît ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon ?",
+                  "Tu peux répéter,",
+                  "s'il te plaît ?"
+                ],
+                [
+                  "Tu peux répéter,",
+                  "s'il te plaît ?"
+                ]
+              ],
+              "model": "Pardon ? Tu peux répéter, s'il te plaît ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « ça dépend » mean here?",
+              "choices": [
+                "it's expensive",
+                "it's decided",
+                "it depends"
+              ],
+              "correct": 2,
+              "why": [
+                "Expensive is « cher ».",
+                "Not this phrase: « ça dépend » means it's not decided yet.",
+                ""
+              ],
+              "target": "ça dépend"
+            }
+          ],
+          "followUp": "Pardon ! Le centre-ville ? Ça dépend du loyer.",
+          "followUpBy": "Inès",
+          "newWords": []
+        },
+        {
+          "id": "sit_18_decide_d06",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you. You were choosing a phone plan.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Alors, ce forfait ? Tu es convaincue ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, il est ___ que l'autre."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa ask?",
+              "choices": [
+                "If you're convinced by the plan",
+                "If the plan is expensive"
+              ],
+              "correct": 0,
+              "miss": "Reread: « tu es convaincue ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "meilleure",
+                "meilleurs",
+                "meilleur"
+              ],
+              "correct": 2,
+              "why": [
+                "« Forfait » is masculine: « meilleur », no -e.",
+                "« Meilleurs » is plural, but « il » is one plan: « meilleur ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Super ! Et il coûte combien par mois ?",
+          "followUpBy": "Léa",
+          "newWords": []
+        },
+        {
+          "id": "sit_18_decide_s03",
+          "place": "Au café · phrase seule",
+          "standalone": "Corriger",
+          "cue": "You're a woman. Tell Inès, your colleague (tu), about the bike you saw.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "J'hésite encore, je ne suis pas convaincu par ce vélo électrique.",
+              "error": {
+                "word": "convaincu",
+                "fix": "convaincue",
+                "choices": [
+                  "convaincus",
+                  "convaincue",
+                  "convaincues"
+                ],
+                "why": "You're a woman: « je ne suis pas convaincue », with -e."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_18_decide_d07",
+          "place": "Au café",
+          "cue": "Inès, your colleague, is having a coffee with you. She says tu to you. You visited a flat.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Tu n'es pas convaincue par cet appartement ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Non, il est ___ bruyant."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « convaincue » mean here?",
+              "choices": [
+                "tired",
+                "convinced",
+                "happy"
+              ],
+              "correct": 1,
+              "why": [
+                "Tired is « fatiguée ».",
+                "",
+                "Happy is « contente »."
+              ],
+              "target": "convaincue"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "trop",
+                "beaucoup",
+                "plein"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Beaucoup » can't go before an adjective. Say « trop bruyant ».",
+                "« Plein » means full. Say « trop bruyant »."
+              ]
+            }
+          ],
+          "followUp": "Ah, c'est un inconvénient, c'est vrai.",
+          "followUpBy": "Inès",
+          "newWords": []
+        },
+        {
+          "id": "sit_18_decide_d08",
+          "place": "WhatsApp · Mme Dumas",
+          "cue": "Mme Dumas, your landlady, messages you on WhatsApp. She says vous to you. Your friend Inès visited her free flat.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Mme Dumas",
+              "text": "Votre amie Inès prend l'appartement, madame ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say she can't decide: it depends on the rent.",
+              "bank": [
+                "Elle hésite,",
+                "ça dépend",
+                "du loyer.",
+                "Il hésite,",
+                "de la loyer.",
+                "J'hésite,"
+              ],
+              "accepted": [
+                [
+                  "Elle hésite,",
+                  "ça dépend",
+                  "du loyer."
+                ]
+              ],
+              "model": "Elle hésite, ça dépend du loyer."
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Mme Dumas ask?",
+              "choices": [
+                "If Inès is taking the flat",
+                "If Inès is visiting the flat"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Inès prend l'appartement ? »"
+            }
+          ],
+          "followUp": "Je comprends. Elle peut m'appeler, si elle veut.",
+          "followUpBy": "Mme Dumas",
+          "newWords": []
+        },
+        {
+          "id": "sit_18_decide_s04",
+          "place": "À l'agence · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You texted this to Inès (tu) about photos of a flat. Now say it to the estate agent (vous).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "J'hésite encore, je ne suis pas convaincue. Tu peux m'envoyer des photos ?",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say it to the estate agent, with vous.",
+              "bank": [
+                "J'hésite encore,",
+                "je ne suis pas",
+                "convaincue.",
+                "Vous pouvez",
+                "m'envoyer",
+                "des photos ?",
+                "Tu peux",
+                "convaincu."
+              ],
+              "accepted": [
+                [
+                  "J'hésite encore,",
+                  "je ne suis pas",
+                  "convaincue.",
+                  "Vous pouvez",
+                  "m'envoyer",
+                  "des photos ?"
+                ],
+                [
+                  "Vous pouvez",
+                  "m'envoyer",
+                  "des photos ?",
+                  "J'hésite encore,",
+                  "je ne suis pas",
+                  "convaincue."
+                ]
+              ],
+              "model": "J'hésite encore, je ne suis pas convaincue. Vous pouvez m'envoyer des photos ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_18_decide_d09",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat « Les copains ». His vous means you all.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Cinéma ou piscine samedi ? J'hésite !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Ça ___ du temps !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What can't Théo decide?",
+              "choices": [
+                "Cinema or swimming pool on Saturday",
+                "Cinema or restaurant on Saturday"
+              ],
+              "correct": 0,
+              "miss": "Reread: « cinéma ou piscine samedi ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "dépends",
+                "dépend",
+                "dépendre"
+              ],
+              "correct": 1,
+              "why": [
+                "« Dépends » goes with je or tu. With « ça », say « ça dépend ».",
+                "",
+                "« Dépendre » is the infinitive. Say « ça dépend »."
+              ]
+            }
+          ],
+          "followUp": "Bon, s'il pleut, cinéma !",
+          "followUpBy": "Théo",
+          "newWords": []
+        },
+        {
+          "id": "sit_18_decide_d10",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you about the two flats. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "J'hésite encore entre les deux !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès say?",
+              "choices": [
+                "She has chosen a flat",
+                "She still can't decide between the two"
+              ],
+              "correct": 1,
+              "miss": "Reread: « j'hésite encore entre les deux ! »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Tell her to take the cheaper one.",
+              "bank": [
+                "Prends",
+                "le",
+                "moins",
+                "cher !",
+                "chère !",
+                "Prenez",
+                "plus"
+              ],
+              "accepted": [
+                [
+                  "Prends",
+                  "le",
+                  "moins",
+                  "cher !"
+                ]
+              ],
+              "model": "Prends le moins cher !"
+            }
+          ],
+          "followUp": "Bonne idée ! Je t'appelle ce soir.",
+          "followUpBy": "Inès",
+          "newWords": []
+        },
+        {
+          "id": "sit_18_decide_s05",
+          "place": "Au café · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Which French words mean “I can't decide”?",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "___ entre les deux forfaits, ça dépend du prix et du réseau."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "I can't decide",
+              "choices": [
+                "J'espère",
+                "J'hésite",
+                "J'arrive"
+              ],
+              "correct": 1,
+              "why": [
+                "« J'espère » means I hope.",
+                "",
+                "« J'arrive » means I'm coming."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    }
+  ]
+}

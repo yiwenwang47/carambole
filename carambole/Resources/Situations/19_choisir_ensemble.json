@@ -1,0 +1,5349 @@
+{
+  "id": "sit_19",
+  "title": "Choisir ensemble",
+  "arc": "Raconter",
+  "goal": "Propose, compare options and negotiate a plan in the group chat, then confirm it and share the costs.",
+  "elements": [
+    {
+      "id": "sit_19_propose",
+      "title": "Proposer",
+      "note": "Suggest a plan to the group chat. « Ça vous dit ? » asks all of you (« ça te dit ? » asks one friend); « on pourrait… » (we could…) is the soft conditional; « sinon » (otherwise, or else) adds a second idea.",
+      "items": [
+        {
+          "id": "sit_19_propose_d01",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat « Les copains ». His vous means you all; you say tu to him.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Samedi soir, un cinéma, ça vous dit ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo suggest?",
+              "choices": [
+                "Going to a restaurant on Saturday evening",
+                "Going to the cinema on Saturday evening"
+              ],
+              "correct": 1,
+              "miss": "Reread: « samedi soir, un cinéma »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, good idea, and that you're coming.",
+              "bank": [
+                "Oui,",
+                "bonne idée !",
+                "Je viens.",
+                "bon idée !",
+                "Tu viens.",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "bonne idée !",
+                  "Je viens."
+                ]
+              ],
+              "model": "Oui, bonne idée ! Je viens."
+            }
+          ],
+          "followUp": "Génial ! On choisit le film ensemble.",
+          "newWords": [
+            "ça vous dit"
+          ]
+        },
+        {
+          "id": "sit_19_propose_d02",
+          "place": "Les copains · groupe",
+          "cue": "Léa writes to the group chat « Les copains ». Her vous means you all; you say tu to her.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "On pourrait aller au restaurant samedi ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, ___ bouchon lyonnais !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa suggest?",
+              "choices": [
+                "Going to a restaurant on Saturday",
+                "Cooking at home on Saturday"
+              ],
+              "correct": 0,
+              "miss": "Reread: « aller au restaurant samedi »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "une",
+                "un",
+                "des"
+              ],
+              "correct": 1,
+              "why": [
+                "« Bouchon » is masculine: « un bouchon ».",
+                "",
+                "« Des » is plural, but you suggest one bouchon lyonnais."
+              ]
+            }
+          ],
+          "followUp": "Bonne idée ! Je réserve.",
+          "newWords": [
+            "on pourrait"
+          ]
+        },
+        {
+          "id": "sit_19_propose_s01",
+          "place": "Les copains · groupe · phrase seule",
+          "standalone": "Construire",
+          "cue": "Théo asks the group chat « Les copains » for ideas (vous = you all). Suggest the cinema to everyone.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Salut tout le monde ! On fait quoi samedi soir ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say you all could go to the cinema on Saturday evening, and ask if they fancy it.",
+              "bank": [
+                "Samedi soir,",
+                "on pourrait",
+                "aller",
+                "au cinéma,",
+                "ça vous dit ?",
+                "on pourrais",
+                "ça te dit ?",
+                "à la"
+              ],
+              "accepted": [
+                [
+                  "Samedi soir,",
+                  "on pourrait",
+                  "aller",
+                  "au cinéma,",
+                  "ça vous dit ?"
+                ]
+              ],
+              "model": "Samedi soir, on pourrait aller au cinéma, ça vous dit ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_19_propose_d03",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Le cinéma ? Sinon, un bouchon lyonnais ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Sinon, on ___ faire les deux !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "pouvons",
+                "peut",
+                "peux"
+              ],
+              "correct": 1,
+              "why": [
+                "« Pouvons » goes with « nous », not « on ».",
+                "",
+                "« Peux » goes with « je » or « tu ». « On » takes « peut »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès suggest?",
+              "choices": [
+                "The cinema, or else a bouchon lyonnais",
+                "Only the cinema"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Le cinéma ? Sinon, un bouchon lyonnais ? »"
+            }
+          ],
+          "followUp": "Ah oui ! Le cinéma, puis le bouchon lyonnais !",
+          "newWords": [
+            "sinon"
+          ]
+        },
+        {
+          "id": "sit_19_propose_d04",
+          "place": "Les copains · groupe",
+          "cue": "Karim, the barista and your friend, writes to the group chat « Les copains ». His vous means you all; you say tu to him.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Un apéro au café vendredi, ça vous dit ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « ça vous dit » mean here?",
+              "target": "ça vous dit",
+              "choices": [
+                "did he tell you?",
+                "can you all come in?",
+                "do you fancy it? (all of you)"
+              ],
+              "correct": 2,
+              "why": [
+                "No: « il vous a dit » means he told you.",
+                "No: « vous pouvez entrer » means you can come in.",
+                ""
+              ]
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, you're coming, and ask what time.",
+              "bank": [
+                "Oui,",
+                "je",
+                "viens !",
+                "À quelle heure ?",
+                "venez !",
+                "vient !"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "je",
+                  "viens !",
+                  "À quelle heure ?"
+                ],
+                [
+                  "À quelle heure ?",
+                  "Oui,",
+                  "je",
+                  "viens !"
+                ]
+              ],
+              "model": "Oui, je viens ! À quelle heure ?"
+            }
+          ],
+          "followUp": "Vers sept heures. À vendredi !",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_propose_s02",
+          "place": "WhatsApp · Mme Dumas · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "Invite Mme Dumas, your landlady, for a coffee at your flat on Saturday. She says vous to you.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which message fits Mme Dumas?",
+              "choices": [
+                "Un café chez nous samedi, ça te dit ?",
+                "Madame, un café chez nous samedi, ça vous dirait ?",
+                "Salut ! Un café chez nous samedi ?"
+              ],
+              "correct": 1,
+              "why": [
+                "Good French with a friend, but « te » is tu: Mme Dumas says vous to you.",
+                "",
+                "Good French with friends, but « Salut » is too familiar for your landlady."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_19_propose_d05",
+          "place": "Appel · Théo",
+          "cue": "Clarify: Théo, your friend, calls you. The line is bad. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "On pourrait aller à la piscine samedi ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say you can't hear him well, and ask him to repeat.",
+              "bank": [
+                "Pardon ?",
+                "Je t'entends mal.",
+                "Tu peux répéter ?",
+                "Je vous entends mal.",
+                "Vous pouvez répéter ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon ?",
+                  "Je t'entends mal.",
+                  "Tu peux répéter ?"
+                ],
+                [
+                  "Je t'entends mal.",
+                  "Tu peux répéter ?"
+                ],
+                [
+                  "Pardon ?",
+                  "Tu peux répéter ?",
+                  "Je t'entends mal."
+                ],
+                [
+                  "Tu peux répéter ?",
+                  "Je t'entends mal."
+                ],
+                [
+                  "Je t'entends mal.",
+                  "Pardon ?",
+                  "Tu peux répéter ?"
+                ]
+              ],
+              "model": "Pardon ? Je t'entends mal. Tu peux répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « on pourrait » mean here?",
+              "target": "on pourrait",
+              "choices": [
+                "we could",
+                "we must",
+                "we went"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "No: we must is « on doit ».",
+                "No: we went is « on est allés »."
+              ]
+            }
+          ],
+          "followUp": "La piscine, samedi ! Ça te dit ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_propose_d06",
+          "place": "Les copains · groupe",
+          "cue": "Léa writes to the group chat « Les copains ». Her vous means you all; you say tu to her. You'd rather go on Sunday.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Ça vous dit, un film chez nous ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, mais ___ dimanche ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "plus",
+                "pire",
+                "plutôt"
+              ],
+              "correct": 2,
+              "why": [
+                "« Plus » doesn't work before a day here: « plutôt dimanche ».",
+                "« Pire » means worse: it makes no sense here.",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "Where would you all watch the film?",
+              "choices": [
+                "At the cinema",
+                "At Léa's and your flat"
+              ],
+              "correct": 1,
+              "miss": "Reread: « un film chez nous »: Léa lives with you."
+            }
+          ],
+          "followUp": "D'accord, dimanche soir alors !",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_propose_s03",
+          "place": "Les copains · groupe · phrase seule",
+          "standalone": "Corriger",
+          "cue": "You write to the group chat « Les copains » (vous = you all). Fix the mistake.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Samedi, on pourrais aller au restaurant, ou sinon, au cinéma ?",
+              "error": {
+                "word": "pourrais",
+                "fix": "pourrait",
+                "choices": [
+                  "pourrais",
+                  "pourrait",
+                  "pouvons"
+                ],
+                "why": "With « on », the verb takes the il / elle form: « on pourrait »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_19_propose_d07",
+          "place": "Les copains · groupe",
+          "cue": "Inès writes to the group chat « Les copains ». Her vous means you all; you say tu to her.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Le bouchon lyonnais est complet. Sinon, une pizza ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, ___ marche !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « sinon » mean here?",
+              "target": "sinon",
+              "choices": [
+                "unless",
+                "otherwise, or else",
+                "then, next"
+              ],
+              "correct": 1,
+              "why": [
+                "No: unless is « sauf si ».",
+                "",
+                "No: then, next is « ensuite »."
+              ]
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "sa",
+                "ce",
+                "ça"
+              ],
+              "correct": 2,
+              "why": [
+                "« Sa » means his or her.",
+                "« Ce » goes before a noun or « est ». The phrase is « ça marche ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Super, une pizza alors !",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_propose_d08",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat « Les copains ». His vous means you all; you say tu to him.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "On pourrait faire un apéro chez moi vendredi ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say yes, and that you'll bring crisps.",
+              "bank": [
+                "Oui !",
+                "J'apporte",
+                "des chips.",
+                "du chips.",
+                "Non !"
+              ],
+              "accepted": [
+                [
+                  "Oui !",
+                  "J'apporte",
+                  "des chips."
+                ]
+              ],
+              "model": "Oui ! J'apporte des chips."
+            },
+            {
+              "type": "comprehend",
+              "prompt": "Where would the apéro be?",
+              "choices": [
+                "At Karim's café",
+                "At Théo's place"
+              ],
+              "correct": 1,
+              "miss": "Reread: « un apéro chez moi »: Théo is writing."
+            }
+          ],
+          "followUp": "Parfait, merci ! À vendredi !",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_propose_s04",
+          "place": "Les copains · groupe · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You asked Léa, your flatmate (tu). Now ask the whole group chat « Les copains » (vous = you all).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Samedi, un cinéma, ça te dit ? Sinon, un restaurant ?",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it for the whole group.",
+              "bank": [
+                "Samedi,",
+                "un cinéma,",
+                "ça vous dit ?",
+                "Sinon,",
+                "un restaurant ?",
+                "ça te dit ?",
+                "une restaurant ?"
+              ],
+              "accepted": [
+                [
+                  "Samedi,",
+                  "un cinéma,",
+                  "ça vous dit ?",
+                  "Sinon,",
+                  "un restaurant ?"
+                ]
+              ],
+              "model": "Samedi, un cinéma, ça vous dit ? Sinon, un restaurant ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_19_propose_d09",
+          "place": "Texto · Karim",
+          "cue": "Karim, the barista and your friend, texts you. He says tu to you. You aren't free on Sunday.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "On pourrait se voir dimanche ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Dimanche, je ne suis pas ___."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Karim ask?",
+              "choices": [
+                "If you can meet on Sunday",
+                "If you can work on Sunday"
+              ],
+              "correct": 0,
+              "miss": "Reread: « on pourrait se voir dimanche ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "libres",
+                "livre",
+                "libre"
+              ],
+              "correct": 2,
+              "why": [
+                "« Libres » is plural: you're one person.",
+                "« Livre » means book.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Dommage ! Samedi, alors ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_propose_d10",
+          "place": "Les copains · groupe",
+          "cue": "Inès writes to the group chat « Les copains ». Her vous means you all; you say tu to her.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Un apéro ce soir, ça vous dit ? Sinon, demain ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "When does Inès suggest the apéro?",
+              "choices": [
+                "Tomorrow, or else on Sunday",
+                "Tonight, or else tomorrow"
+              ],
+              "correct": 1,
+              "miss": "Reread: « ce soir… Sinon, demain ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Answer: tonight, at Karim's café.",
+              "bank": [
+                "Ce soir,",
+                "au café",
+                "de Karim !",
+                "Demain,",
+                "à la café"
+              ],
+              "accepted": [
+                [
+                  "Ce soir,",
+                  "au café",
+                  "de Karim !"
+                ]
+              ],
+              "model": "Ce soir, au café de Karim !"
+            }
+          ],
+          "followUp": "Parfait ! À ce soir, alors !",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_propose_s05",
+          "place": "Les copains · groupe · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Théo writes to the group chat « Les copains ». Which French words mean “we could”?",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Samedi, ___ aller au bouchon lyonnais, ou sinon, au cinéma ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "we could",
+              "choices": [
+                "on remet ça",
+                "on pourrait",
+                "on se voit"
+              ],
+              "correct": 1,
+              "why": [
+                "« On remet ça » means let's do it another time.",
+                "",
+                "« On se voit » means we'll see each other."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_19_options",
+      "title": "Les options",
+      "note": "Lay out the choices. A Lyon classic in good weather is « un pique-nique au bord de la Saône » (a picnic by the Saône, one of Lyon's two rivers). « Une expo » is the everyday short form of « une exposition ».",
+      "items": [
+        {
+          "id": "sit_19_options_d01",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Et un pique-nique samedi ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa suggest for Saturday?",
+              "choices": [
+                "A film",
+                "A picnic"
+              ],
+              "correct": 1,
+              "miss": "Reread: « un pique-nique samedi »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Say good idea, and that you'll bring crisps.",
+              "bank": [
+                "Bonne idée !",
+                "J'apporte",
+                "des chips.",
+                "Bon idée !",
+                "de chips."
+              ],
+              "accepted": [
+                [
+                  "Bonne idée !",
+                  "J'apporte",
+                  "des chips."
+                ],
+                [
+                  "J'apporte",
+                  "des chips.",
+                  "Bonne idée !"
+                ]
+              ],
+              "model": "Bonne idée ! J'apporte des chips."
+            }
+          ],
+          "followUp": "Super ! Et moi, je fais une tarte.",
+          "newWords": [
+            "pique-nique"
+          ]
+        },
+        {
+          "id": "sit_19_options_d02",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat « Les copains ». His vous means you all; you say tu to him.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Un pique-nique au bord de la Saône, samedi ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Super ! On se retrouve ___ midi ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "Where does Théo suggest the picnic?",
+              "choices": [
+                "By the Saône, the river",
+                "In a park in the city centre"
+              ],
+              "correct": 0,
+              "miss": "Reread: « au bord de la Saône »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "au",
+                "à",
+                "en"
+              ],
+              "correct": 1,
+              "why": [
+                "Clock times take « à »: « à midi ».",
+                "",
+                "« En » doesn't go before a time: « à midi »."
+              ]
+            }
+          ],
+          "followUp": "Oui, à midi, au bord de l'eau !",
+          "newWords": [
+            "au bord de"
+          ]
+        },
+        {
+          "id": "sit_19_options_s01",
+          "place": "Texto · Léa · phrase seule",
+          "standalone": "Construire",
+          "cue": "Léa, your flatmate, texts you. She says tu to you. Suggest a picnic by the Saône on Saturday.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Il fait beau ce week-end ! On fait quoi samedi ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say you could have a picnic by the Saône on Saturday, and ask if she fancies it.",
+              "bank": [
+                "Samedi,",
+                "on pourrait",
+                "faire",
+                "un pique-nique",
+                "au bord de",
+                "la Saône,",
+                "ça te dit ?",
+                "ça vous dit ?",
+                "une pique-nique"
+              ],
+              "accepted": [
+                [
+                  "Samedi,",
+                  "on pourrait",
+                  "faire",
+                  "un pique-nique",
+                  "au bord de",
+                  "la Saône,",
+                  "ça te dit ?"
+                ]
+              ],
+              "model": "Samedi, on pourrait faire un pique-nique au bord de la Saône, ça te dit ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_19_options_d03",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Il y a une expo au musée samedi !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Super ! C'est ___ ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "gratuite",
+                "gratuit",
+                "gratuits"
+              ],
+              "correct": 1,
+              "why": [
+                "After « c'est », the adjective stays masculine: « gratuit ».",
+                "",
+                "After « c'est », the adjective stays singular: « gratuit »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What is on at the museum?",
+              "choices": [
+                "An exhibition",
+                "A concert"
+              ],
+              "correct": 0,
+              "miss": "Reread: « une expo au musée »."
+            }
+          ],
+          "followUp": "Oui ! Et c'est à côté du métro.",
+          "newWords": [
+            "expo"
+          ]
+        },
+        {
+          "id": "sit_19_options_d04",
+          "place": "Au café",
+          "cue": "Karim, the barista and your friend, says tu to you. You've told him about the picnic.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Un pique-nique ? Je peux apporter les croissants !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « pique-nique » mean here?",
+              "target": "pique-nique",
+              "choices": [
+                "barbecue",
+                "walk",
+                "picnic"
+              ],
+              "correct": 2,
+              "why": [
+                "No: Karim is bringing food to eat outside, not to grill.",
+                "No: a walk is « une promenade ».",
+                ""
+              ]
+            },
+            {
+              "type": "reply",
+              "prompt": "Say great, thanks Karim.",
+              "bank": [
+                "Super,",
+                "merci",
+                "Karim !",
+                "Dommage,",
+                "Pardon,"
+              ],
+              "accepted": [
+                [
+                  "Super,",
+                  "merci",
+                  "Karim !"
+                ]
+              ],
+              "model": "Super, merci Karim !"
+            }
+          ],
+          "followUp": "De rien ! Des croissants pour tout le monde.",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_options_s02",
+          "place": "Au bureau · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "Your manager says vous to you. Give her the team's two options for Friday.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits your manager?",
+              "choices": [
+                "Une expo ou un restaurant vendredi, tu préfères quoi ?",
+                "Expo ou restaurant ? Choisis vite !",
+                "Pour vendredi, il y a une expo ou un restaurant. Qu'est-ce que vous préférez ?"
+              ],
+              "correct": 2,
+              "why": [
+                "Good French with a friend, but your manager says vous to you.",
+                "Good French with a friend, but it's a blunt order, and « choisis » is tu.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_19_options_d05",
+          "place": "Appel · Théo",
+          "cue": "Clarify: Théo, your friend, calls you from a noisy street. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Au bord de la Saône, à midi !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say you can't hear him well, and ask him to repeat.",
+              "bank": [
+                "Pardon ?",
+                "Je t'entends mal.",
+                "Tu peux répéter ?",
+                "Je vous entends mal.",
+                "Vous pouvez répéter ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon ?",
+                  "Je t'entends mal.",
+                  "Tu peux répéter ?"
+                ],
+                [
+                  "Je t'entends mal.",
+                  "Tu peux répéter ?"
+                ],
+                [
+                  "Pardon ?",
+                  "Tu peux répéter ?",
+                  "Je t'entends mal."
+                ],
+                [
+                  "Tu peux répéter ?",
+                  "Je t'entends mal."
+                ],
+                [
+                  "Je t'entends mal.",
+                  "Pardon ?",
+                  "Tu peux répéter ?"
+                ]
+              ],
+              "model": "Pardon ? Je t'entends mal. Tu peux répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « au bord de » mean here?",
+              "target": "au bord de",
+              "choices": [
+                "far from",
+                "by, on the banks of",
+                "in the middle of"
+              ],
+              "correct": 1,
+              "why": [
+                "No: far from is « loin de ».",
+                "",
+                "No: in the middle of is « au milieu de »."
+              ]
+            }
+          ],
+          "followUp": "Au bord de la Saône ! À midi !",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_options_d06",
+          "place": "À l'appart",
+          "cue": "Léa, your flatmate, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Un pique-nique ou une expo, samedi ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "___ pique-nique ! Il fait beau !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "Le",
+                "La",
+                "Les"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Pique-nique » is masculine: « le pique-nique ».",
+                "« Les » is plural, but it's one picnic: « le pique-nique »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa ask?",
+              "choices": [
+                "Picnic or exhibition on Saturday",
+                "Cinema or restaurant on Saturday"
+              ],
+              "correct": 0,
+              "miss": "Reread: « un pique-nique ou une expo »."
+            }
+          ],
+          "followUp": "D'accord ! Et l'expo, dimanche ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_options_s03",
+          "place": "Texto · Léa · phrase seule",
+          "standalone": "Corriger",
+          "cue": "You text Léa, your flatmate (tu). Fix the mistake.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Samedi, on pourrait faire un pique-nique au bord du Saône.",
+              "error": {
+                "word": "du",
+                "fix": "de la",
+                "choices": [
+                  "du",
+                  "de la",
+                  "des"
+                ],
+                "why": "« Saône » is feminine: « au bord de la Saône »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_19_options_d07",
+          "place": "Les copains · groupe",
+          "cue": "Inès writes to the group chat « Les copains ». Her vous means you all; you say tu to her.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Une expo au musée samedi ? C'est gratuit !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Super ! À ___ heure ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « expo » mean here?",
+              "target": "expo",
+              "choices": [
+                "exit",
+                "exhibition",
+                "concert"
+              ],
+              "correct": 1,
+              "why": [
+                "No: an exit is « une sortie ».",
+                "",
+                "No: a concert is « un concert »."
+              ]
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "quel",
+                "quels",
+                "quelle"
+              ],
+              "correct": 2,
+              "why": [
+                "« Heure » is feminine: « quelle heure ».",
+                "« Quels » is masculine plural: « quelle heure ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "À dix heures, devant le musée !",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_options_d08",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat « Les copains ». His vous means you all; you say tu to him.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Pique-nique au bord de la Saône, ou expo ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Answer: the picnic, the weather's nice.",
+              "bank": [
+                "Le pique-nique,",
+                "il fait beau !",
+                "La pique-nique,",
+                "il pleut !"
+              ],
+              "accepted": [
+                [
+                  "Le pique-nique,",
+                  "il fait beau !"
+                ]
+              ],
+              "model": "Le pique-nique, il fait beau !"
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What are the two options?",
+              "choices": [
+                "A picnic or the cinema",
+                "A picnic by the Saône or an exhibition"
+              ],
+              "correct": 1,
+              "miss": "Reread: « pique-nique au bord de la Saône, ou expo ? »"
+            }
+          ],
+          "followUp": "Noté ! Et les autres ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_options_s04",
+          "place": "Les copains · groupe · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You asked Léa, your flatmate (tu). Now ask the whole group chat « Les copains » (vous = you all).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Tu préfères un pique-nique au bord de la Saône ou une expo ?",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it for the whole group.",
+              "bank": [
+                "Vous",
+                "préférez",
+                "un pique-nique",
+                "au bord de",
+                "la Saône",
+                "ou",
+                "une expo ?",
+                "préfères",
+                "Tu"
+              ],
+              "accepted": [
+                [
+                  "Vous",
+                  "préférez",
+                  "un pique-nique",
+                  "au bord de",
+                  "la Saône",
+                  "ou",
+                  "une expo ?"
+                ]
+              ],
+              "model": "Vous préférez un pique-nique au bord de la Saône ou une expo ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_19_options_d09",
+          "place": "Texto · Karim",
+          "cue": "Karim, the barista and your friend, texts you. He says tu to you. You like picnics too.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Une expo ? Moi, je préfère le pique-nique !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Moi ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Karim prefer?",
+              "choices": [
+                "The picnic",
+                "The exhibition"
+              ],
+              "correct": 0,
+              "miss": "Reread: « je préfère le pique-nique »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "non plus",
+                "aussi",
+                "plus"
+              ],
+              "correct": 1,
+              "why": [
+                "« Moi non plus » agrees with a negative: Karim's sentence is positive.",
+                "",
+                "« Moi plus » isn't French here: say « moi aussi »."
+              ]
+            }
+          ],
+          "followUp": "Super ! J'apporte les croissants !",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_options_d10",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Une expo samedi ? Sinon, le cinéma ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa suggest?",
+              "choices": [
+                "An exhibition, or else the cinema",
+                "A picnic, or else the cinema"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Une expo samedi ? Sinon, le cinéma ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Answer: the exhibition, it's free.",
+              "bank": [
+                "L'expo,",
+                "c'est",
+                "gratuit !",
+                "gratuite !",
+                "Le cinéma,"
+              ],
+              "accepted": [
+                [
+                  "L'expo,",
+                  "c'est",
+                  "gratuit !"
+                ]
+              ],
+              "model": "L'expo, c'est gratuit !"
+            }
+          ],
+          "followUp": "Ah bon ? Super, l'expo alors !",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_options_s05",
+          "place": "Texto · Léa · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "You text Léa, your flatmate (tu). Which French words mean “by, on the banks of”?",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Dimanche, on pourrait faire un pique-nique ___ la Saône, s'il ne pleut pas."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "by, on the banks of",
+              "choices": [
+                "à cause de",
+                "au bout de",
+                "au bord de"
+              ],
+              "correct": 2,
+              "why": [
+                "« À cause de » means because of.",
+                "« Au bout de » means at the end of.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_19_prefer",
+      "title": "Dire sa préférence",
+      "note": "Say what you'd rather do, softly: « je préférerais » (I'd rather, the conditional of « préférer »). If you don't mind, say « ça m'est égal », and leave the choice to others: « comme vous voulez » to the group or in vous, « comme tu veux » to one friend.",
+      "items": [
+        {
+          "id": "sit_19_prefer_d01",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat « Les copains ». His vous means you all; you say tu to him.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Moi, je préférerais le cinéma. Et vous ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What would Théo rather do?",
+              "choices": [
+                "Go to a restaurant",
+                "Go to the cinema"
+              ],
+              "correct": 1,
+              "miss": "Reread: « je préférerais le cinéma »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Say you'd like the cinema too.",
+              "bank": [
+                "Moi aussi,",
+                "le cinéma !",
+                "Moi non plus,",
+                "la cinéma !"
+              ],
+              "accepted": [
+                [
+                  "Moi aussi,",
+                  "le cinéma !"
+                ]
+              ],
+              "model": "Moi aussi, le cinéma !"
+            }
+          ],
+          "followUp": "Super ! Deux pour le cinéma !",
+          "newWords": [
+            "je préférerais"
+          ]
+        },
+        {
+          "id": "sit_19_prefer_d02",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Pizza ou bouchon lyonnais, ce soir ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Ça m'est égal ! Et ___ ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What is Léa asking?",
+              "choices": [
+                "What time you eat tonight",
+                "Where you eat tonight: pizza or a bouchon"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Pizza ou bouchon lyonnais, ce soir ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "tu",
+                "toi",
+                "te"
+              ],
+              "correct": 1,
+              "why": [
+                "« Tu » can't stand alone after « et »: « et toi ? »",
+                "",
+                "« Te » can't stand alone: « et toi ? »"
+              ]
+            }
+          ],
+          "followUp": "Moi, je préférerais la pizza !",
+          "newWords": [
+            "ça m'est égal"
+          ]
+        },
+        {
+          "id": "sit_19_prefer_s01",
+          "place": "Les copains · groupe · phrase seule",
+          "standalone": "Construire",
+          "cue": "Théo asks the group chat « Les copains » (vous = you all). You don't mind, but you'd rather have the picnic by the Saône.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Pique-nique ou cinéma samedi ? Qu'est-ce que vous préférez ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say you don't mind, but you'd rather have the picnic by the Saône.",
+              "bank": [
+                "Ça m'est égal,",
+                "mais",
+                "je préférerais",
+                "le pique-nique",
+                "au bord de",
+                "la Saône.",
+                "je préférerait",
+                "la pique-nique"
+              ],
+              "accepted": [
+                [
+                  "Ça m'est égal,",
+                  "mais",
+                  "je préférerais",
+                  "le pique-nique",
+                  "au bord de",
+                  "la Saône."
+                ]
+              ],
+              "model": "Ça m'est égal, mais je préférerais le pique-nique au bord de la Saône."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_19_prefer_d03",
+          "place": "Les copains · groupe",
+          "cue": "Inès writes to the group chat « Les copains ». Her vous means you all; you say tu to her. You're free on Sunday.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Samedi ou dimanche ? Comme vous voulez !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Dimanche, je ___ libre."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "es",
+                "est",
+                "suis"
+              ],
+              "correct": 2,
+              "why": [
+                "« Es » goes with « tu ».",
+                "« Est » goes with « il / elle ».",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès mean?",
+              "choices": [
+                "She can only come on Sunday",
+                "She doesn't mind: you all choose"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Comme vous voulez ! »"
+            }
+          ],
+          "followUp": "Alors dimanche ! Parfait.",
+          "newWords": [
+            "comme vous voulez"
+          ]
+        },
+        {
+          "id": "sit_19_prefer_d04",
+          "place": "Au café",
+          "cue": "Karim, the barista and your friend, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Moi, je préférerais samedi, pour l'apéro."
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « je préférerais » mean here?",
+              "target": "je préférerais",
+              "choices": [
+                "I preferred",
+                "I'd rather",
+                "I'd pay"
+              ],
+              "correct": 1,
+              "why": [
+                "No: I preferred is « j'ai préféré ».",
+                "",
+                "No: paying is « payer »."
+              ]
+            },
+            {
+              "type": "reply",
+              "prompt": "Say OK, Saturday suits you.",
+              "bank": [
+                "D'accord,",
+                "samedi,",
+                "ça me va.",
+                "ça te va.",
+                "dimanche,"
+              ],
+              "accepted": [
+                [
+                  "D'accord,",
+                  "samedi,",
+                  "ça me va."
+                ],
+                [
+                  "D'accord,",
+                  "ça me va."
+                ]
+              ],
+              "model": "D'accord, samedi, ça me va."
+            }
+          ],
+          "followUp": "Parfait, samedi alors !",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_prefer_s02",
+          "place": "Au bureau · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "Your manager says vous to you. She asks if the team meeting should be on Thursday or Friday. You don't mind.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which reply fits your manager?",
+              "choices": [
+                "Ça m'est égal ! Comme tu veux !",
+                "Ça m'est égal, madame. Comme vous voulez.",
+                "Jeudi ou vendredi ? Choisis, toi !"
+              ],
+              "correct": 1,
+              "why": [
+                "Good French with a friend, but « tu » is wrong: your manager says vous to you.",
+                "",
+                "Good French with a friend, but it's a blunt order, and « choisis » is tu."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_19_prefer_d05",
+          "place": "Appel · Inès",
+          "cue": "Clarify: Inès, your colleague, calls you. The line is bad. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Moi ? Ça m'est égal, tu sais !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say you can't hear her well, and ask her to repeat.",
+              "bank": [
+                "Pardon ?",
+                "Je t'entends mal.",
+                "Tu peux répéter ?",
+                "Je vous entends mal.",
+                "Vous pouvez répéter ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon ?",
+                  "Je t'entends mal.",
+                  "Tu peux répéter ?"
+                ],
+                [
+                  "Je t'entends mal.",
+                  "Tu peux répéter ?"
+                ],
+                [
+                  "Pardon ?",
+                  "Tu peux répéter ?",
+                  "Je t'entends mal."
+                ],
+                [
+                  "Tu peux répéter ?",
+                  "Je t'entends mal."
+                ],
+                [
+                  "Je t'entends mal.",
+                  "Pardon ?",
+                  "Tu peux répéter ?"
+                ]
+              ],
+              "model": "Pardon ? Je t'entends mal. Tu peux répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « ça m'est égal » mean here?",
+              "target": "ça m'est égal",
+              "choices": [
+                "it's too expensive",
+                "I don't mind",
+                "I'm not free"
+              ],
+              "correct": 1,
+              "why": [
+                "No: too expensive is « c'est trop cher ».",
+                "",
+                "No: not free is « je ne suis pas libre »."
+              ]
+            }
+          ],
+          "followUp": "Ça m'est égal ! Tu choisis !",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_prefer_d06",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat « Les copains ». His vous means you all; you say tu to him. You'd rather go to the restaurant.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Cinéma ou restaurant ? Comme vous voulez !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Je préférerais ___ restaurant."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "la",
+                "le",
+                "les"
+              ],
+              "correct": 1,
+              "why": [
+                "« Restaurant » is masculine: « le restaurant ».",
+                "",
+                "« Les » is plural, but it's one restaurant: « le restaurant »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo say?",
+              "choices": [
+                "He doesn't mind: you all choose",
+                "He wants the cinema"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Comme vous voulez ! »"
+            }
+          ],
+          "followUp": "Noté ! Et les autres ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_prefer_s03",
+          "place": "Les copains · groupe · phrase seule",
+          "standalone": "Corriger",
+          "cue": "You write to the group chat « Les copains » (vous = you all). Fix the mistake.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Ça m'est égal, mais moi, je préférerait le pique-nique samedi.",
+              "error": {
+                "word": "préférerait",
+                "fix": "préférerais",
+                "choices": [
+                  "préférerait",
+                  "préférerais",
+                  "préférer"
+                ],
+                "why": "With « je », the conditional ends in -ais: « je préférerais »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_19_prefer_d07",
+          "place": "Les copains · groupe",
+          "cue": "Karim, the barista and your friend, writes to the group chat « Les copains ». His vous means you all; you say tu to him. You'd like to go to his place.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Le café ou chez moi ? Comme vous voulez !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Chez ___, c'est sympa !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « comme vous voulez » mean here?",
+              "target": "comme vous voulez",
+              "choices": [
+                "like you",
+                "as you like",
+                "when you want"
+              ],
+              "correct": 1,
+              "why": [
+                "No: « comme » here doesn't compare. It means as you like.",
+                "",
+                "No: when you want is « quand vous voulez »."
+              ]
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "ton",
+                "ta",
+                "toi"
+              ],
+              "correct": 2,
+              "why": [
+                "« Ton » needs a noun after it: « chez toi ».",
+                "« Ta » needs a noun after it: « chez toi ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Parfait, chez moi alors ! Vers huit heures.",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_prefer_d08",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Je préférerais rester à la maison ce soir."
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say no problem, as she likes.",
+              "bank": [
+                "Pas de problème,",
+                "comme",
+                "tu veux !",
+                "vous voulez !",
+                "comment"
+              ],
+              "accepted": [
+                [
+                  "Pas de problème,",
+                  "comme",
+                  "tu veux !"
+                ]
+              ],
+              "model": "Pas de problème, comme tu veux !"
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa want to do tonight?",
+              "choices": [
+                "Go to the cinema",
+                "Stay at home"
+              ],
+              "correct": 1,
+              "miss": "Reread: « rester à la maison ce soir »."
+            }
+          ],
+          "followUp": "Merci ! On fait une pizza ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_prefer_s04",
+          "place": "Les copains · groupe · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You wrote this to Léa, your flatmate (tu). Now write it to the whole group chat « Les copains » (vous = you all).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Comme tu veux, ça m'est égal, mais je préférerais samedi.",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it for the whole group.",
+              "bank": [
+                "Comme",
+                "vous voulez,",
+                "ça m'est égal,",
+                "mais",
+                "je préférerais",
+                "samedi.",
+                "tu veux,",
+                "je préférerait"
+              ],
+              "accepted": [
+                [
+                  "Comme",
+                  "vous voulez,",
+                  "ça m'est égal,",
+                  "mais",
+                  "je préférerais",
+                  "samedi."
+                ]
+              ],
+              "model": "Comme vous voulez, ça m'est égal, mais je préférerais samedi."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_19_prefer_d09",
+          "place": "Les copains · groupe",
+          "cue": "Inès writes to the group chat « Les copains ». Her vous means you all; you say tu to her. You suggest around seven.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Ça m'est égal, mais pas trop tard !"
+            },
+            {
+              "speaker": "learner",
+              "text": "D'accord, ___ sept heures ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès ask for?",
+              "choices": [
+                "Not too expensive",
+                "Not too late"
+              ],
+              "correct": 1,
+              "miss": "Reread: « pas trop tard »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "verre",
+                "vers",
+                "vert"
+              ],
+              "correct": 1,
+              "why": [
+                "« Verre » means a glass.",
+                "",
+                "« Vert » means green."
+              ]
+            }
+          ],
+          "followUp": "Parfait, à sept heures !",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_prefer_d10",
+          "place": "Texto · Théo",
+          "cue": "Théo, your friend, texts you. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Tu préférerais quoi, toi ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo ask you?",
+              "choices": [
+                "What you would rather do",
+                "What time you're free"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Tu préférerais quoi ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Answer: the cinema, but you don't mind.",
+              "bank": [
+                "Le cinéma,",
+                "mais",
+                "ça m'est égal.",
+                "la cinéma,",
+                "ça me va."
+              ],
+              "accepted": [
+                [
+                  "Le cinéma,",
+                  "mais",
+                  "ça m'est égal."
+                ]
+              ],
+              "model": "Le cinéma, mais ça m'est égal."
+            }
+          ],
+          "followUp": "Noté, merci !",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_prefer_s05",
+          "place": "Les copains · groupe · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "You answer Théo in the group chat « Les copains ». Which French words mean “I don't mind”?",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Samedi ou dimanche ? ___, je suis libre les deux jours."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "I don't mind",
+              "choices": [
+                "Ça dépend",
+                "Ça m'est égal",
+                "Dommage"
+              ],
+              "correct": 1,
+              "why": [
+                "« Ça dépend » means it depends, but you're free both days.",
+                "",
+                "« Dommage » means what a shame."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_19_vote",
+      "title": "Voter",
+      "note": "Théo runs a poll (« un sondage ») in the group chat: « il faut voter » (you all have to vote). « La majorité » is most people; a tie is « égalité ! ». In the past: « j'ai voté », « la majorité a préféré ».",
+      "items": [
+        {
+          "id": "sit_19_vote_d01",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat « Les copains ». His vous means you all; you say tu to him.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Je fais un sondage : pique-nique ou cinéma ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What is Théo doing?",
+              "choices": [
+                "Booking the cinema",
+                "Running a poll"
+              ],
+              "correct": 1,
+              "miss": "Reread: « je fais un sondage »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Answer: the picnic, for you.",
+              "bank": [
+                "Le pique-nique,",
+                "pour moi !",
+                "pour toi !",
+                "La pique-nique,"
+              ],
+              "accepted": [
+                [
+                  "Le pique-nique,",
+                  "pour moi !"
+                ]
+              ],
+              "model": "Le pique-nique, pour moi !"
+            }
+          ],
+          "followUp": "Noté ! Et les autres ?",
+          "newWords": [
+            "sondage"
+          ]
+        },
+        {
+          "id": "sit_19_vote_d02",
+          "place": "Les copains · groupe",
+          "cue": "Inès writes to the group chat « Les copains ». Her vous means you all; you say tu to her. You've already voted.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Il faut voter avant ce soir !"
+            },
+            {
+              "speaker": "learner",
+              "text": "C'est ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès say?",
+              "choices": [
+                "Everyone has to vote before this evening",
+                "The picnic is this evening"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Il faut voter avant ce soir ! »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "faire",
+                "fait",
+                "faite"
+              ],
+              "correct": 1,
+              "why": [
+                "« Faire » is the infinitive. Here you need « c'est fait » (done).",
+                "",
+                "After « c'est », the participle stays masculine: « c'est fait »."
+              ]
+            }
+          ],
+          "followUp": "Merci ! Et vous, les autres ?",
+          "newWords": [
+            "voter"
+          ]
+        },
+        {
+          "id": "sit_19_vote_s01",
+          "place": "Les copains · groupe · phrase seule",
+          "standalone": "Construire",
+          "cue": "Remind the group chat « Les copains » (vous = you all): Théo is running a poll, and everyone has to vote before this evening.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Write the reminder, and end by asking « d'accord ? ».",
+              "bank": [
+                "Théo",
+                "fait",
+                "un sondage :",
+                "il faut",
+                "voter",
+                "avant",
+                "ce soir,",
+                "d'accord ?",
+                "voté",
+                "une sondage :"
+              ],
+              "accepted": [
+                [
+                  "Théo",
+                  "fait",
+                  "un sondage :",
+                  "il faut",
+                  "voter",
+                  "avant",
+                  "ce soir,",
+                  "d'accord ?"
+                ]
+              ],
+              "model": "Théo fait un sondage : il faut voter avant ce soir, d'accord ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_19_vote_d03",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat « Les copains ». His vous means you all; you say tu to him.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Égalité ! Pas de majorité !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Alors, on ___ encore une fois ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "votes",
+                "voter",
+                "vote"
+              ],
+              "correct": 2,
+              "why": [
+                "« Votes » goes with « tu ». « On » takes « vote ».",
+                "« Voter » is the infinitive. « On » takes « vote ».",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What is the result of the poll?",
+              "choices": [
+                "A big majority for the picnic",
+                "A tie: no majority"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Égalité ! Pas de majorité ! »"
+            }
+          ],
+          "followUp": "Oui ! Nouveau sondage ce soir !",
+          "newWords": [
+            "majorité",
+            "égalité"
+          ]
+        },
+        {
+          "id": "sit_19_vote_d04",
+          "place": "À l'appart",
+          "cue": "Léa, your flatmate, says tu to you. You voted for the picnic.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Tu as vu le sondage de Théo ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « sondage » mean here?",
+              "target": "sondage",
+              "choices": [
+                "message",
+                "poll",
+                "photo"
+              ],
+              "correct": 1,
+              "why": [
+                "No: a message is « un message ».",
+                "",
+                "No: a photo is « une photo »."
+              ]
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, you voted for the picnic.",
+              "bank": [
+                "Oui,",
+                "j'ai",
+                "voté",
+                "pour",
+                "le pique-nique.",
+                "voter",
+                "je suis"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "j'ai",
+                  "voté",
+                  "pour",
+                  "le pique-nique."
+                ]
+              ],
+              "model": "Oui, j'ai voté pour le pique-nique."
+            }
+          ],
+          "followUp": "Moi, pour le cinéma !",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_vote_s02",
+          "place": "Au bureau · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "Your manager says vous to you. Tell her the result of the team's poll about the team lunch.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits your manager?",
+              "choices": [
+                "On a fait un sondage, tu sais : vendredi !",
+                "Salut ! Le sondage dit vendredi !",
+                "Nous avons fait un sondage, madame : la majorité préfère vendredi."
+              ],
+              "correct": 2,
+              "why": [
+                "Good French with a friend, but « tu sais » is tu: your manager says vous to you.",
+                "Good French with a friend, but « Salut » is too familiar for your manager.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_19_vote_d05",
+          "place": "Au café",
+          "cue": "Clarify: it's very noisy in the café. Karim, the barista and your friend, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Il faut voter pour quoi ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Ask him to repeat, politely.",
+              "bank": [
+                "Pardon ?",
+                "Tu peux répéter,",
+                "s'il te plaît ?",
+                "Vous pouvez répéter,",
+                "s'il vous plaît ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon ?",
+                  "Tu peux répéter,",
+                  "s'il te plaît ?"
+                ],
+                [
+                  "Tu peux répéter,",
+                  "s'il te plaît ?"
+                ]
+              ],
+              "model": "Pardon ? Tu peux répéter, s'il te plaît ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « voter » mean here?",
+              "target": "voter",
+              "choices": [
+                "to fly",
+                "to vote",
+                "to see"
+              ],
+              "correct": 1,
+              "why": [
+                "No: to fly is « voler ».",
+                "",
+                "No: to see is « voir »."
+              ]
+            }
+          ],
+          "followUp": "Le sondage de Théo : il faut voter pour quoi ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_vote_d06",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "La majorité préfère le cinéma !"
+            },
+            {
+              "speaker": "learner",
+              "text": "D'accord, on ___ au cinéma !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "vas",
+                "va",
+                "vont"
+              ],
+              "correct": 1,
+              "why": [
+                "« Vas » goes with « tu ».",
+                "",
+                "« Vont » goes with « ils / elles »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What did most people choose?",
+              "choices": [
+                "The cinema",
+                "The picnic"
+              ],
+              "correct": 0,
+              "miss": "Reread: « La majorité préfère le cinéma ! »"
+            }
+          ],
+          "followUp": "Super ! Samedi soir, alors.",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_vote_s03",
+          "place": "Les copains · groupe · phrase seule",
+          "standalone": "Corriger",
+          "cue": "You write to the group chat « Les copains » (vous = you all). Fix the mistake.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Égalité dans le sondage, alors il faut voté encore une fois.",
+              "error": {
+                "word": "voté",
+                "fix": "voter",
+                "choices": [
+                  "voté",
+                  "voter",
+                  "vote"
+                ],
+                "why": "After « il faut », use the infinitive: « il faut voter »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_19_vote_d07",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat « Les copains ». His vous means you all; you say tu to him.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "La majorité dit : pique-nique !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Super ! On apporte ___ chips ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « majorité » mean here?",
+              "target": "majorité",
+              "choices": [
+                "the mayor",
+                "the minority",
+                "most people (the majority)"
+              ],
+              "correct": 2,
+              "why": [
+                "No: the mayor is « le maire ».",
+                "No: the minority is « la minorité ».",
+                ""
+              ]
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "du",
+                "des",
+                "de la"
+              ],
+              "correct": 1,
+              "why": [
+                "« Du » is for a masculine singular noun, but « chips » is plural.",
+                "",
+                "« De la » is for a feminine singular noun, but « chips » is plural."
+              ]
+            }
+          ],
+          "followUp": "Oui ! Et Karim apporte les croissants.",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_vote_d08",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Le sondage ? Égalité ! On fait comment ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say you all vote once more.",
+              "bank": [
+                "On",
+                "vote",
+                "encore une fois !",
+                "votes",
+                "voter"
+              ],
+              "accepted": [
+                [
+                  "On",
+                  "vote",
+                  "encore une fois !"
+                ]
+              ],
+              "model": "On vote encore une fois !"
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What was the result of the poll?",
+              "choices": [
+                "A tie",
+                "A majority for the picnic"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Égalité ! »"
+            }
+          ],
+          "followUp": "D'accord, je dis ça à Théo !",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_vote_s04",
+          "place": "Les copains · groupe · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You wrote this to the group chat « Les copains » before the poll closed. Now the poll is over: put it in the past.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Je vote pour le cinéma, mais la majorité préfère le pique-nique.",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it in the past (passé composé).",
+              "bank": [
+                "J'ai",
+                "voté",
+                "pour le cinéma,",
+                "mais",
+                "la majorité",
+                "a",
+                "préféré",
+                "le pique-nique.",
+                "voter",
+                "préfère"
+              ],
+              "accepted": [
+                [
+                  "J'ai",
+                  "voté",
+                  "pour le cinéma,",
+                  "mais",
+                  "la majorité",
+                  "a",
+                  "préféré",
+                  "le pique-nique."
+                ]
+              ],
+              "model": "J'ai voté pour le cinéma, mais la majorité a préféré le pique-nique."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_19_vote_d09",
+          "place": "Les copains · groupe",
+          "cue": "Inès writes to the group chat « Les copains ». Her vous means you all; you say tu to her. You vote for Sunday.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Il faut voter : samedi ou dimanche ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Dimanche, ___ moi !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What is Inès asking?",
+              "choices": [
+                "Who can bring food",
+                "Which day you all want"
+              ],
+              "correct": 1,
+              "miss": "Reread: « samedi ou dimanche ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "par",
+                "pour",
+                "de"
+              ],
+              "correct": 1,
+              "why": [
+                "« Par moi » means by me.",
+                "",
+                "« De moi » means of me or from me."
+              ]
+            }
+          ],
+          "followUp": "Noté ! Un vote pour dimanche.",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_vote_d10",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat « Les copains ». His vous means you all; you say tu to him. Pick the picnic or the cinema.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Égalité ! Robin, tu choisis !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "Why does Théo ask you to choose?",
+              "choices": [
+                "Nobody voted",
+                "The poll is a tie"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Égalité ! »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Choose one of the two: the picnic or the cinema.",
+              "bank": [
+                "Le pique-nique,",
+                "Le cinéma,",
+                "alors !",
+                "La pique-nique,"
+              ],
+              "accepted": [
+                [
+                  "Le pique-nique,",
+                  "alors !"
+                ],
+                [
+                  "Le cinéma,",
+                  "alors !"
+                ]
+              ],
+              "model": "Le pique-nique, alors !"
+            }
+          ],
+          "followUp": "C'est noté ! Merci, Robin.",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_vote_s05",
+          "place": "Les copains · groupe · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Théo posts the poll result to the group chat « Les copains ». Which French word means “a tie”?",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Trois votes pour le cinéma, trois pour le pique-nique : ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "a tie",
+              "choices": [
+                "majorité",
+                "égalité",
+                "sondage"
+              ],
+              "correct": 1,
+              "why": [
+                "« Majorité » means most people, but nobody has more votes.",
+                "",
+                "« Sondage » means poll."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_19_compromise",
+      "title": "Trouver un compromis",
+      "note": "When the group can't agree, find « un compromis » (a compromise): « chacun choisit » (each one picks; « chacun » takes a singular verb). When a plan falls through, shrug it off with « tant pis » (never mind, too bad).",
+      "items": [
+        {
+          "id": "sit_19_compromise_d01",
+          "place": "Texto · Théo",
+          "cue": "Théo, your friend, texts you. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Cinéma ou restaurant ? On fait un compromis ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo suggest?",
+              "choices": [
+                "Cancelling the evening",
+                "Finding a compromise"
+              ],
+              "correct": 1,
+              "miss": "Reread: « On fait un compromis ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes: the cinema, then the restaurant.",
+              "bank": [
+                "Oui,",
+                "le cinéma,",
+                "puis",
+                "le restaurant !",
+                "la cinéma,",
+                "pour"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "le cinéma,",
+                  "puis",
+                  "le restaurant !"
+                ]
+              ],
+              "model": "Oui, le cinéma, puis le restaurant !"
+            }
+          ],
+          "followUp": "Top, les deux, alors !",
+          "newWords": [
+            "compromis"
+          ]
+        },
+        {
+          "id": "sit_19_compromise_d02",
+          "place": "À l'appart",
+          "cue": "Léa, your flatmate, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Ce soir, chacun choisit un film ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "D'accord, mais tu ___ d'abord !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa suggest?",
+              "choices": [
+                "Each of you picks a film",
+                "She picks all the films"
+              ],
+              "correct": 0,
+              "miss": "Reread: « chacun choisit un film »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "choisir",
+                "choisis",
+                "choisit"
+              ],
+              "correct": 1,
+              "why": [
+                "« Choisir » is the infinitive. After « tu », write « choisis ».",
+                "",
+                "« Choisit » goes with il / elle / on. After « tu », write « choisis »."
+              ]
+            }
+          ],
+          "followUp": "D'accord ! Moi, je choisis après.",
+          "newWords": [
+            "chacun"
+          ]
+        },
+        {
+          "id": "sit_19_compromise_s01",
+          "place": "Texto · Théo · phrase seule",
+          "standalone": "Construire",
+          "cue": "Text Théo (he says tu to you). Suggest a compromise: each one picks; Théo picks the film, you pick the restaurant.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Write the compromise.",
+              "bank": [
+                "On fait",
+                "un compromis :",
+                "chacun",
+                "choisit,",
+                "toi",
+                "le film,",
+                "moi",
+                "le restaurant.",
+                "choisissent,",
+                "une compromis :"
+              ],
+              "accepted": [
+                [
+                  "On fait",
+                  "un compromis :",
+                  "chacun",
+                  "choisit,",
+                  "toi",
+                  "le film,",
+                  "moi",
+                  "le restaurant."
+                ]
+              ],
+              "model": "On fait un compromis : chacun choisit, toi le film, moi le restaurant."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_19_compromise_d03",
+          "place": "Les copains · groupe",
+          "cue": "Inès writes to the group chat « Les copains ». Her vous means you all; you say tu to her.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Pas de pique-nique, il pleut. Tant pis !"
+            },
+            {
+              "speaker": "learner",
+              "text": "On va ___ cinéma, alors ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "au",
+                "à la",
+                "en"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Cinéma » is masculine: à + le = « au ».",
+                "« En » doesn't go before « cinéma »: say « au cinéma »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "Why is there no picnic?",
+              "choices": [
+                "Nobody is free",
+                "It's raining"
+              ],
+              "correct": 1,
+              "miss": "Reread: « il pleut »."
+            }
+          ],
+          "followUp": "Bonne idée ! Ça vous dit, les autres ?",
+          "newWords": [
+            "tant pis"
+          ]
+        },
+        {
+          "id": "sit_19_compromise_d04",
+          "place": "Au café",
+          "cue": "Karim, the barista and your friend, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Un compromis : l'apéro chez moi, puis le dîner ici ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « compromis » mean here?",
+              "target": "compromis",
+              "choices": [
+                "promise",
+                "compromise",
+                "appointment"
+              ],
+              "correct": 1,
+              "why": [
+                "No: a promise is « une promesse ».",
+                "",
+                "No: an appointment is « un rendez-vous »."
+              ]
+            },
+            {
+              "type": "reply",
+              "prompt": "Say it's perfect, it's a good idea.",
+              "bank": [
+                "Parfait,",
+                "c'est",
+                "une",
+                "bonne",
+                "idée !",
+                "un",
+                "bon"
+              ],
+              "accepted": [
+                [
+                  "Parfait,",
+                  "c'est",
+                  "une",
+                  "bonne",
+                  "idée !"
+                ]
+              ],
+              "model": "Parfait, c'est une bonne idée !"
+            }
+          ],
+          "followUp": "Super, c'est noté !",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_compromise_s02",
+          "place": "Au bureau · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "Your manager says vous to you. You disagree about the meeting day: offer her a compromise, Thursday morning.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits your manager?",
+              "choices": [
+                "On fait un compromis ? Jeudi matin, ça te va ?",
+                "Je vous propose un compromis, madame : la réunion jeudi matin ?",
+                "Salut ! Un compromis : la réunion jeudi matin, d'accord ?"
+              ],
+              "correct": 1,
+              "why": [
+                "Good French with a friend, but « ça te va » is tu: your manager says vous to you.",
+                "",
+                "Good French with a friend, but « Salut » is too familiar for your manager."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_19_compromise_d05",
+          "place": "Appel · Théo",
+          "cue": "Clarify: Théo calls you on a bad line. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Chacun apporte quelque chose, d'accord ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say you can't hear him well, and ask him to repeat.",
+              "bank": [
+                "Pardon,",
+                "je t'entends mal.",
+                "Tu peux répéter ?",
+                "je vous entends mal.",
+                "Vous pouvez répéter ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon,",
+                  "je t'entends mal.",
+                  "Tu peux répéter ?"
+                ],
+                [
+                  "Tu peux répéter ?",
+                  "Pardon,",
+                  "je t'entends mal."
+                ]
+              ],
+              "model": "Pardon, je t'entends mal. Tu peux répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « chacun » mean here?",
+              "target": "chacun",
+              "choices": [
+                "someone",
+                "nobody",
+                "each one, everyone"
+              ],
+              "correct": 2,
+              "why": [
+                "No: someone is « quelqu'un ».",
+                "No: nobody is « personne ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Chacun apporte quelque chose pour le pique-nique !",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_compromise_d06",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Le restaurant est complet. Tant pis !"
+            },
+            {
+              "speaker": "learner",
+              "text": "On ___ à la maison, alors ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "manges",
+                "manger",
+                "mange"
+              ],
+              "correct": 2,
+              "why": [
+                "« Manges » goes with « tu ». « On » takes « mange ».",
+                "« Manger » is the infinitive. « On » takes « mange ».",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What's the problem with the restaurant?",
+              "choices": [
+                "It's closed today",
+                "It's fully booked"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Le restaurant est complet. »"
+            }
+          ],
+          "followUp": "Oui ! Je fais une pizza.",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_compromise_s03",
+          "place": "Texto · Théo · phrase seule",
+          "standalone": "Corriger",
+          "cue": "You text Théo (he says tu to you). Fix the mistake.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Chacun choisissent un film, puis on fait un compromis pour le restaurant.",
+              "error": {
+                "word": "choisissent",
+                "fix": "choisit",
+                "choices": [
+                  "choisissent",
+                  "choisit",
+                  "choisis"
+                ],
+                "why": "« Chacun » is singular, so the verb is too: « chacun choisit »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_19_compromise_d07",
+          "place": "Les copains · groupe",
+          "cue": "Inès writes to the group chat « Les copains ». Her vous means you all; you say tu to her.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Le musée est fermé dimanche. Tant pis !"
+            },
+            {
+              "speaker": "learner",
+              "text": "On ___ voit samedi, alors ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « tant pis » mean here?",
+              "target": "tant pis",
+              "choices": [
+                "so much the better",
+                "never mind, too bad",
+                "hurry up"
+              ],
+              "correct": 1,
+              "why": [
+                "No: so much the better is « tant mieux ».",
+                "",
+                "No: hurry up is « dépêche-toi »."
+              ]
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "ce",
+                "sa",
+                "se"
+              ],
+              "correct": 2,
+              "why": [
+                "« Ce » means this / that. « On se voit » needs « se » (each other).",
+                "« Sa » means his / her. « On se voit » needs « se » (each other).",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Oui ! Samedi matin, au musée ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_compromise_d08",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Ce soir, chacun paie son repas ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say yes: each one pays, it's better.",
+              "bank": [
+                "Oui,",
+                "chacun",
+                "paie,",
+                "c'est",
+                "mieux.",
+                "paies,",
+                "plus."
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "chacun",
+                  "paie,",
+                  "c'est",
+                  "mieux."
+                ]
+              ],
+              "model": "Oui, chacun paie, c'est mieux."
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès suggest?",
+              "choices": [
+                "She pays for everyone",
+                "Each person pays for their own meal"
+              ],
+              "correct": 1,
+              "miss": "Reread: « chacun paie son repas »."
+            }
+          ],
+          "followUp": "Parfait, c'est plus simple.",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_compromise_s04",
+          "place": "Les copains · groupe · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You asked Théo this (tu). Now ask the whole group chat « Les copains » (vous = you all).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "On fait un compromis ? Chacun choisit un film, tu es d'accord ?",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it for the group.",
+              "bank": [
+                "On fait",
+                "un compromis ?",
+                "Chacun",
+                "choisit",
+                "un film,",
+                "vous",
+                "êtes",
+                "d'accord ?",
+                "tu",
+                "es",
+                "choisissent"
+              ],
+              "accepted": [
+                [
+                  "On fait",
+                  "un compromis ?",
+                  "Chacun",
+                  "choisit",
+                  "un film,",
+                  "vous",
+                  "êtes",
+                  "d'accord ?"
+                ],
+                [
+                  "Chacun",
+                  "choisit",
+                  "un film,",
+                  "vous",
+                  "êtes",
+                  "d'accord ?",
+                  "On fait",
+                  "un compromis ?"
+                ]
+              ],
+              "model": "On fait un compromis ? Chacun choisit un film, vous êtes d'accord ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_19_compromise_d09",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat « Les copains ». His vous means you all; you say tu to him. You pick Saturday.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Un compromis : chacun choisit un jour !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Moi, je choisis ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo suggest?",
+              "choices": [
+                "Each person picks a day",
+                "Everyone meets on Sunday"
+              ],
+              "correct": 0,
+              "miss": "Reread: « chacun choisit un jour »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "samedis",
+                "semaine",
+                "samedi"
+              ],
+              "correct": 2,
+              "why": [
+                "« Samedis » is plural. You pick one day: « samedi ».",
+                "« Semaine » means week, not a day.",
+                ""
+              ]
+            }
+          ],
+          "followUp": "C'est noté ! Et les autres ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_compromise_d10",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Pas de cinéma ce soir, c'est complet."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "Why is there no cinema tonight?",
+              "choices": [
+                "Léa is too tired",
+                "It's fully booked"
+              ],
+              "correct": 1,
+              "miss": "Reread: « c'est complet »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Say never mind, and suggest going tomorrow.",
+              "bank": [
+                "Tant pis !",
+                "On y va",
+                "demain ?",
+                "hier ?",
+                "On va"
+              ],
+              "accepted": [
+                [
+                  "Tant pis !",
+                  "On y va",
+                  "demain ?"
+                ]
+              ],
+              "model": "Tant pis ! On y va demain ?"
+            }
+          ],
+          "followUp": "D'accord, je réserve pour demain !",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_compromise_s05",
+          "place": "Texto · Théo · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Théo texts you. Which French word means “compromise”?",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Tu veux le cinéma, moi le restaurant : on fait les deux, c'est un ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "compromise",
+              "choices": [
+                "sondage",
+                "compromis",
+                "égalité"
+              ],
+              "correct": 1,
+              "why": [
+                "« Sondage » means poll: nobody is voting here.",
+                "",
+                "« Égalité » is a tie in a vote, and it's feminine (« une égalité »)."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_19_confirm",
+      "title": "Confirmer",
+      "note": "Closing the plan: « c'est décidé ! » (it's settled), « le lieu » (the place where you meet, beside « l'heure ») and « petit rappel » (a quick reminder) the day before. With the restaurant, you confirm in vous.",
+      "items": [
+        {
+          "id": "sit_19_confirm_d01",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat « Les copains ». His vous means you all; you say tu to him.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "C'est décidé : pique-nique samedi à midi !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo say?",
+              "choices": [
+                "The plan is settled: a picnic on Saturday",
+                "The picnic is cancelled"
+              ],
+              "correct": 0,
+              "miss": "Reread: « C'est décidé : pique-nique samedi à midi ! »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say great, you're coming.",
+              "bank": [
+                "Super,",
+                "je viens !",
+                "tu viens !",
+                "Dommage,"
+              ],
+              "accepted": [
+                [
+                  "Super,",
+                  "je viens !"
+                ]
+              ],
+              "model": "Super, je viens !"
+            }
+          ],
+          "followUp": "Top ! J'apporte les chips.",
+          "newWords": [
+            "c'est décidé"
+          ]
+        },
+        {
+          "id": "sit_19_confirm_d02",
+          "place": "Les copains · groupe",
+          "cue": "Inès writes to the group chat « Les copains ». Her vous means you all; you say tu to her. You meet next to the bridge.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Le lieu ? Au bord de la Saône, non ?"
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, à côté ___ pont."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What is Inès asking about?",
+              "choices": [
+                "The time to meet",
+                "The place to meet"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Le lieu ? »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "de la",
+                "du",
+                "des"
+              ],
+              "correct": 1,
+              "why": [
+                "« Pont » is masculine: de + le = « du ».",
+                "",
+                "« Des » is plural, but there's one bridge: « du pont »."
+              ]
+            }
+          ],
+          "followUp": "Parfait, c'est noté !",
+          "newWords": [
+            "lieu"
+          ]
+        },
+        {
+          "id": "sit_19_confirm_s01",
+          "place": "Les copains · groupe · phrase seule",
+          "standalone": "Construire",
+          "cue": "Write to the group chat « Les copains » (vous = you all): it's settled, a picnic on Saturday, and the place is by the Saône.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Write the message.",
+              "bank": [
+                "C'est décidé :",
+                "pique-nique samedi !",
+                "Le lieu,",
+                "c'est",
+                "au bord de",
+                "la Saône.",
+                "La lieu,",
+                "au bord du"
+              ],
+              "accepted": [
+                [
+                  "C'est décidé :",
+                  "pique-nique samedi !",
+                  "Le lieu,",
+                  "c'est",
+                  "au bord de",
+                  "la Saône."
+                ],
+                [
+                  "Le lieu,",
+                  "c'est",
+                  "au bord de",
+                  "la Saône.",
+                  "C'est décidé :",
+                  "pique-nique samedi !"
+                ]
+              ],
+              "model": "C'est décidé : pique-nique samedi ! Le lieu, c'est au bord de la Saône."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_19_confirm_d03",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you. You're bringing a tart.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Petit rappel : le pique-nique, c'est demain !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Merci ! J'apporte ___ tarte."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "un",
+                "des",
+                "une"
+              ],
+              "correct": 2,
+              "why": [
+                "« Tarte » is feminine: « une tarte ».",
+                "« Des » is plural, but you bring one tart: « une tarte ».",
+                ""
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What is Léa's message?",
+              "choices": [
+                "The picnic is cancelled",
+                "A reminder: the picnic is tomorrow"
+              ],
+              "correct": 1,
+              "miss": "Reread: « Petit rappel : le pique-nique, c'est demain ! »"
+            }
+          ],
+          "followUp": "Super ! Et moi, j'apporte l'eau.",
+          "newWords": [
+            "rappel"
+          ]
+        },
+        {
+          "id": "sit_19_confirm_d04",
+          "place": "Au café",
+          "cue": "Karim, the barista and your friend, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Alors, c'est décidé ? Samedi, apéro chez moi ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « c'est décidé » mean here?",
+              "target": "c'est décidé",
+              "choices": [
+                "it's cancelled",
+                "it's difficult",
+                "it's settled"
+              ],
+              "correct": 2,
+              "why": [
+                "No: it's cancelled is « c'est annulé ».",
+                "No: it's difficult is « c'est difficile ».",
+                ""
+              ]
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, and ask: at seven?",
+              "bank": [
+                "Oui !",
+                "À",
+                "sept",
+                "heures ?",
+                "heure ?",
+                "Au"
+              ],
+              "accepted": [
+                [
+                  "Oui !",
+                  "À",
+                  "sept",
+                  "heures ?"
+                ]
+              ],
+              "model": "Oui ! À sept heures ?"
+            }
+          ],
+          "followUp": "Oui, à sept heures. À samedi !",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_confirm_s02",
+          "place": "Appel · restaurant · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "You call a restaurant to confirm your booking: six people, Saturday at eight p.m. The staff say vous to you.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits the restaurant?",
+              "choices": [
+                "Salut ! Je confirme : six personnes, samedi à vingt heures !",
+                "Je te confirme : six personnes, samedi à vingt heures, ça te va ?",
+                "Bonjour, je vous appelle pour confirmer : six personnes, samedi à vingt heures."
+              ],
+              "correct": 2,
+              "why": [
+                "Good French with a friend, but « Salut » is too familiar: say « Bonjour » to the restaurant.",
+                "Good French with a friend, but « te » and « ça te va » are tu: the restaurant says vous to you.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_19_confirm_d05",
+          "place": "Appel · Théo",
+          "cue": "Clarify: Théo calls you on a bad line. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Le lieu ? Devant le musée, à dix heures !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say you can't hear him well, and ask him to repeat.",
+              "bank": [
+                "Pardon,",
+                "je t'entends mal.",
+                "Tu peux répéter ?",
+                "je vous entends mal.",
+                "Vous pouvez répéter ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon,",
+                  "je t'entends mal.",
+                  "Tu peux répéter ?"
+                ],
+                [
+                  "Tu peux répéter ?",
+                  "Pardon,",
+                  "je t'entends mal."
+                ]
+              ],
+              "model": "Pardon, je t'entends mal. Tu peux répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « lieu » mean here?",
+              "target": "lieu",
+              "choices": [
+                "time",
+                "place, venue",
+                "price"
+              ],
+              "correct": 1,
+              "why": [
+                "No: the time is « l'heure ».",
+                "",
+                "No: the price is « le prix »."
+              ]
+            }
+          ],
+          "followUp": "Devant le musée, à dix heures !",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_confirm_d06",
+          "place": "Les copains · groupe",
+          "cue": "Inès writes to the group chat « Les copains ». Her vous means you all; you say tu to her.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "C'est décidé, on va au cinéma !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Super ! Le film ___ à quelle heure ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "commence",
+                "commences",
+                "commencer"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Commences » goes with « tu ». « Le film » takes « commence ».",
+                "« Commencer » is the infinitive. « Le film » takes « commence »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What has the group decided?",
+              "choices": [
+                "Going to the cinema",
+                "Going to a restaurant"
+              ],
+              "correct": 0,
+              "miss": "Reread: « on va au cinéma ! »"
+            }
+          ],
+          "followUp": "À huit heures, devant le cinéma !",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_confirm_s03",
+          "place": "Les copains · groupe · phrase seule",
+          "standalone": "Corriger",
+          "cue": "You write to the group chat « Les copains » (vous = you all). Fix the mistake.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "C'est décidée : samedi, pique-nique au bord de la Saône, à midi.",
+              "error": {
+                "word": "décidée",
+                "fix": "décidé",
+                "choices": [
+                  "décidée",
+                  "décidé",
+                  "décidés"
+                ],
+                "why": "« C'est décidé » never changes: after « c'est », the participle stays masculine singular."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_19_confirm_d07",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat « Les copains ». His vous means you all; you say tu to him.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Rappel : demain, rendez-vous à midi !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Merci ! Je ___ là !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « rappel » mean here?",
+              "target": "rappel",
+              "choices": [
+                "phone call",
+                "reminder",
+                "receipt"
+              ],
+              "correct": 1,
+              "why": [
+                "No: a phone call is « un appel ».",
+                "",
+                "No: a receipt is « un ticket »."
+              ]
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "seras",
+                "serai",
+                "sera"
+              ],
+              "correct": 1,
+              "why": [
+                "« Seras » goes with « tu ». « Je » takes « serai ».",
+                "",
+                "« Sera » goes with il / elle / on. « Je » takes « serai »."
+              ]
+            }
+          ],
+          "followUp": "Top ! À demain, alors.",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_confirm_d08",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you. You all meet by the Saône, at noon.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "C'est quoi, le lieu, demain ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Tell her: by the Saône, at noon.",
+              "bank": [
+                "Au bord de",
+                "la Saône,",
+                "à midi.",
+                "Au bord du",
+                "le Saône,"
+              ],
+              "accepted": [
+                [
+                  "Au bord de",
+                  "la Saône,",
+                  "à midi."
+                ]
+              ],
+              "model": "Au bord de la Saône, à midi."
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa want to know?",
+              "choices": [
+                "Where you all meet tomorrow",
+                "Who is coming tomorrow"
+              ],
+              "correct": 0,
+              "miss": "Reread: « C'est quoi, le lieu, demain ? »"
+            }
+          ],
+          "followUp": "Parfait ! On y va ensemble ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_confirm_s04",
+          "place": "Les copains · groupe · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You asked Léa this (tu). Now ask the whole group chat « Les copains » (vous = you all).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "C'est décidé : rendez-vous samedi. Tu me confirmes le lieu ?",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it for the group.",
+              "bank": [
+                "C'est décidé :",
+                "rendez-vous",
+                "samedi.",
+                "Vous",
+                "me",
+                "confirmez",
+                "le lieu ?",
+                "Tu",
+                "confirmes",
+                "confirmer"
+              ],
+              "accepted": [
+                [
+                  "C'est décidé :",
+                  "rendez-vous",
+                  "samedi.",
+                  "Vous",
+                  "me",
+                  "confirmez",
+                  "le lieu ?"
+                ],
+                [
+                  "Vous",
+                  "me",
+                  "confirmez",
+                  "le lieu ?",
+                  "C'est décidé :",
+                  "rendez-vous",
+                  "samedi."
+                ]
+              ],
+              "model": "C'est décidé : rendez-vous samedi. Vous me confirmez le lieu ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_19_confirm_d09",
+          "place": "Les copains · groupe",
+          "cue": "Inès writes to the group chat « Les copains ». Her vous means you all; you say tu to her.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Petit rappel : le lieu a changé !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Ah bon ? C'est ___ maintenant ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What is Inès's reminder about?",
+              "choices": [
+                "The time has changed",
+                "The meeting place has changed"
+              ],
+              "correct": 1,
+              "miss": "Reread: « le lieu a changé ! »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "ou",
+                "où",
+                "qui"
+              ],
+              "correct": 1,
+              "why": [
+                "« Ou » without an accent means or. To ask where, write « où ».",
+                "",
+                "« Qui » means who, but you're asking about a place: « où »."
+              ]
+            }
+          ],
+          "followUp": "Devant le musée, pas au bord de la Saône !",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_confirm_d10",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat « Les copains ». His vous means you all; you say tu to him.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Petit rappel : apportez à boire !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo remind you all to bring?",
+              "choices": [
+                "Something to eat",
+                "Something to drink"
+              ],
+              "correct": 1,
+              "miss": "Reread: « apportez à boire ! »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say OK, you're bringing water.",
+              "bank": [
+                "D'accord,",
+                "j'apporte",
+                "de l'eau.",
+                "du eau.",
+                "apporte"
+              ],
+              "accepted": [
+                [
+                  "D'accord,",
+                  "j'apporte",
+                  "de l'eau."
+                ]
+              ],
+              "model": "D'accord, j'apporte de l'eau."
+            }
+          ],
+          "followUp": "Top, merci !",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_confirm_s05",
+          "place": "Les copains · groupe · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Théo writes to the group chat « Les copains ». Which French words mean “it's settled”?",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "___ : on fait un pique-nique au bord de la Saône samedi."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "it's settled",
+              "choices": [
+                "C'est dommage",
+                "C'est combien",
+                "C'est décidé"
+              ],
+              "correct": 2,
+              "why": [
+                "« C'est dommage » means it's a shame, but nothing went wrong.",
+                "« C'est combien » asks how much it is.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_19_book",
+      "title": "Réserver pour le groupe",
+      "note": "Someone has to book: « je m'en charge » (I'll handle it, like « je m'en occupe »), « le lien » (the link) and « réserver en ligne » (to book online). On the phone, the restaurant says vous.",
+      "items": [
+        {
+          "id": "sit_19_book_d01",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat « Les copains ». His vous means you all; you say tu to him. There are six of you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Le restaurant ? Je m'en charge !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo say?",
+              "choices": [
+                "He'll book the restaurant himself",
+                "He can't come to the restaurant"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Je m'en charge ! »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say great, and ask: for six people?",
+              "bank": [
+                "Super !",
+                "Pour",
+                "six",
+                "personnes ?",
+                "personne ?",
+                "Par"
+              ],
+              "accepted": [
+                [
+                  "Super !",
+                  "Pour",
+                  "six",
+                  "personnes ?"
+                ]
+              ],
+              "model": "Super ! Pour six personnes ?"
+            }
+          ],
+          "followUp": "Oui, pour six ! Samedi soir.",
+          "newWords": [
+            "je m'en charge"
+          ]
+        },
+        {
+          "id": "sit_19_book_d02",
+          "place": "Les copains · groupe",
+          "cue": "Inès writes to the group chat « Les copains ». Her vous means you all; you say tu to her.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Je vous envoie le lien du restaurant."
+            },
+            {
+              "speaker": "learner",
+              "text": "Merci, c'est ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What is Inès sending?",
+              "choices": [
+                "A photo of the restaurant",
+                "The restaurant's link"
+              ],
+              "correct": 1,
+              "miss": "Reread: « le lien du restaurant »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "notée",
+                "noter",
+                "noté"
+              ],
+              "correct": 2,
+              "why": [
+                "After « c'est », the participle stays masculine: « c'est noté ».",
+                "« Noter » is the infinitive. Say « c'est noté ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "De rien ! C'est un bouchon lyonnais.",
+          "newWords": [
+            "lien"
+          ]
+        },
+        {
+          "id": "sit_19_book_s01",
+          "place": "Les copains · groupe · phrase seule",
+          "standalone": "Construire",
+          "cue": "Write to the group chat « Les copains » (vous = you all): you'll handle it. You book the restaurant and send them the link.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Write the message.",
+              "bank": [
+                "Je m'en charge :",
+                "je",
+                "réserve",
+                "le restaurant",
+                "et",
+                "je",
+                "vous",
+                "envoie",
+                "le lien.",
+                "la lien.",
+                "réserves"
+              ],
+              "accepted": [
+                [
+                  "Je m'en charge :",
+                  "je",
+                  "réserve",
+                  "le restaurant",
+                  "et",
+                  "je",
+                  "vous",
+                  "envoie",
+                  "le lien."
+                ]
+              ],
+              "model": "Je m'en charge : je réserve le restaurant et je vous envoie le lien."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_19_book_d03",
+          "place": "Appel · restaurant",
+          "cue": "The restaurant answers your call. The waitress says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Vous pouvez aussi réserver en ligne, madame.",
+              "role": "Serveuse",
+              "voice": "female"
+            },
+            {
+              "speaker": "learner",
+              "text": "D'accord, ___ vous remercie."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "tu",
+                "je",
+                "nous"
+              ],
+              "correct": 1,
+              "why": [
+                "« Tu » doesn't fit: « remercie » goes with « je ».",
+                "",
+                "« Nous » would need « remercions ». Here it's « je vous remercie »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does the restaurant say?",
+              "choices": [
+                "You can also book online",
+                "The restaurant is full tonight"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Vous pouvez aussi réserver en ligne »."
+            }
+          ],
+          "followUp": "Bonne soirée, madame !",
+          "newWords": [
+            "en ligne"
+          ]
+        },
+        {
+          "id": "sit_19_book_d04",
+          "place": "À l'appart",
+          "cue": "Léa, your flatmate, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Le pique-nique ? Je m'en charge !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « je m'en charge » mean here?",
+              "target": "je m'en charge",
+              "choices": [
+                "I don't mind",
+                "I'll charge my phone",
+                "I'll handle it"
+              ],
+              "correct": 2,
+              "why": [
+                "No: I don't mind is « ça m'est égal ».",
+                "No: there's no phone here. « Je m'en charge » means I'll take care of it.",
+                ""
+              ]
+            },
+            {
+              "type": "reply",
+              "prompt": "Say great, and you'll bring the dessert.",
+              "bank": [
+                "Super,",
+                "et",
+                "j'apporte",
+                "le dessert !",
+                "la dessert !",
+                "apporte"
+              ],
+              "accepted": [
+                [
+                  "Super,",
+                  "et",
+                  "j'apporte",
+                  "le dessert !"
+                ],
+                [
+                  "Super,",
+                  "j'apporte",
+                  "le dessert !"
+                ]
+              ],
+              "model": "Super, et j'apporte le dessert !"
+            }
+          ],
+          "followUp": "Top ! Une tarte, alors ?",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_book_s02",
+          "place": "Appel · restaurant · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "You call a restaurant to book a table for six on Saturday evening. The staff say vous to you.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits the restaurant?",
+              "choices": [
+                "Tu peux me réserver une table pour six, samedi soir ?",
+                "Bonjour, je voudrais réserver une table pour six personnes, samedi soir.",
+                "Salut ! Une table pour six, samedi soir, c'est possible ?"
+              ],
+              "correct": 1,
+              "why": [
+                "Good French with a friend, but « tu peux » is tu: the restaurant says vous to you.",
+                "",
+                "Good French with a friend, but « Salut » is too familiar: say « Bonjour » to a restaurant."
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_19_book_d05",
+          "place": "Appel · Théo",
+          "cue": "Clarify: Théo calls you on a bad line. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Tu as le lien du restaurant ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say you can't hear him well, and ask him to repeat.",
+              "bank": [
+                "Pardon,",
+                "je t'entends mal.",
+                "Tu peux répéter ?",
+                "je vous entends mal.",
+                "Vous pouvez répéter ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon,",
+                  "je t'entends mal.",
+                  "Tu peux répéter ?"
+                ],
+                [
+                  "Tu peux répéter ?",
+                  "Pardon,",
+                  "je t'entends mal."
+                ]
+              ],
+              "model": "Pardon, je t'entends mal. Tu peux répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « lien » mean here?",
+              "target": "lien",
+              "choices": [
+                "place, venue",
+                "bill",
+                "link"
+              ],
+              "correct": 2,
+              "why": [
+                "No: that's « lieu », a different word.",
+                "No: the bill is « l'addition ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Le lien du restaurant, pour réserver !",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_book_d06",
+          "place": "Texto · Inès",
+          "cue": "Inès, your colleague, texts you. She says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "On réserve en ligne ? C'est plus simple."
+            },
+            {
+              "speaker": "learner",
+              "text": "Oui, tu as ___ lien ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "la",
+                "le",
+                "les"
+              ],
+              "correct": 1,
+              "why": [
+                "« Lien » is masculine: « le lien ».",
+                "",
+                "« Les » is plural, but there's one link: « le lien »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès suggest?",
+              "choices": [
+                "Calling the restaurant",
+                "Booking online"
+              ],
+              "correct": 1,
+              "miss": "Reread: « On réserve en ligne ? »"
+            }
+          ],
+          "followUp": "Oui, je te l'envoie tout de suite.",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_book_s03",
+          "place": "Les copains · groupe · phrase seule",
+          "standalone": "Corriger",
+          "cue": "You write to the group chat « Les copains » (vous = you all). Fix the mistake.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Je m'en charge : je réserve en ligne et je vous envoie la lien.",
+              "error": {
+                "word": "la",
+                "fix": "le",
+                "choices": [
+                  "la",
+                  "le",
+                  "les"
+                ],
+                "why": "« Lien » is masculine and there's one link: « le lien »."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_19_book_d07",
+          "place": "Appel · restaurant",
+          "cue": "The restaurant answers your call. The waitress says vous to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "C'est complet ce soir. Réservez en ligne pour demain.",
+              "role": "Serveuse",
+              "voice": "female"
+            },
+            {
+              "speaker": "learner",
+              "text": "D'accord, merci ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « en ligne » mean here?",
+              "target": "en ligne",
+              "choices": [
+                "in a queue",
+                "online",
+                "in person"
+              ],
+              "correct": 1,
+              "why": [
+                "No: here « en ligne » is on the internet, not a queue.",
+                "",
+                "No: in person is « sur place »."
+              ]
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "beau",
+                "bon",
+                "beaucoup"
+              ],
+              "correct": 2,
+              "why": [
+                "« Beau » means beautiful. Say « merci beaucoup ».",
+                "« Merci bon » isn't French. Say « merci beaucoup ».",
+                ""
+              ]
+            }
+          ],
+          "followUp": "Bonne soirée, madame !",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_book_d08",
+          "place": "Les copains · groupe",
+          "cue": "Karim writes to the group chat « Les copains ». His vous means you all; you say tu to him.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Le lien ne marche pas !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say you'll handle it: you're calling the restaurant.",
+              "bank": [
+                "Je m'en charge,",
+                "j'appelle",
+                "le restaurant.",
+                "la restaurant.",
+                "appelle"
+              ],
+              "accepted": [
+                [
+                  "Je m'en charge,",
+                  "j'appelle",
+                  "le restaurant."
+                ]
+              ],
+              "model": "Je m'en charge, j'appelle le restaurant."
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What's the problem?",
+              "choices": [
+                "The link doesn't work",
+                "The restaurant is closed"
+              ],
+              "correct": 0,
+              "miss": "Reread: « Le lien ne marche pas ! »"
+            }
+          ],
+          "followUp": "Merci, Robin, t'es super !",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_book_s04",
+          "place": "Appel · restaurant · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You asked Léa this (tu). Now ask the restaurant on the phone (vous).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Tu peux m'envoyer le lien ? Je réserve en ligne.",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it for the restaurant.",
+              "bank": [
+                "Vous pouvez",
+                "m'envoyer",
+                "le lien ?",
+                "Je",
+                "réserve",
+                "en ligne.",
+                "Tu peux",
+                "réservez"
+              ],
+              "accepted": [
+                [
+                  "Vous pouvez",
+                  "m'envoyer",
+                  "le lien ?",
+                  "Je",
+                  "réserve",
+                  "en ligne."
+                ],
+                [
+                  "Je",
+                  "réserve",
+                  "en ligne.",
+                  "Vous pouvez",
+                  "m'envoyer",
+                  "le lien ?"
+                ]
+              ],
+              "model": "Vous pouvez m'envoyer le lien ? Je réserve en ligne."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_19_book_d09",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat « Les copains ». His vous means you all; you say tu to him.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "J'ai réservé en ligne, pour six !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Super ! ___ quelle heure ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "How did Théo book?",
+              "choices": [
+                "By phone",
+                "Online"
+              ],
+              "correct": 1,
+              "miss": "Reread: « J'ai réservé en ligne »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "Au",
+                "À",
+                "En"
+              ],
+              "correct": 1,
+              "why": [
+                "« Au » is à + le. Before « quelle heure », use « à ».",
+                "",
+                "« En » doesn't go before « quelle heure ». Use « à »."
+              ]
+            }
+          ],
+          "followUp": "À vingt heures, samedi !",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_book_d10",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you. You have the link.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Tu as le lien pour réserver ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa want?",
+              "choices": [
+                "The restaurant's address",
+                "The link to book"
+              ],
+              "correct": 1,
+              "miss": "Reread: « le lien pour réserver »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, you'll send it to her.",
+              "bank": [
+                "Oui,",
+                "je",
+                "te",
+                "l'envoie !",
+                "le",
+                "envoie !"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "je",
+                  "te",
+                  "l'envoie !"
+                ]
+              ],
+              "model": "Oui, je te l'envoie !"
+            }
+          ],
+          "followUp": "Merci ! Je réserve pour samedi.",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_book_s05",
+          "place": "Appel · restaurant · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "The restaurant answers your call. Which French words mean “online”?",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "C'est complet ce soir, mais vous pouvez réserver ___ pour demain.",
+              "role": "Serveuse",
+              "voice": "female"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "online",
+              "choices": [
+                "en retard",
+                "en ligne",
+                "en panne"
+              ],
+              "correct": 1,
+              "why": [
+                "« En retard » means late.",
+                "",
+                "« En panne » means broken down."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    },
+    {
+      "id": "sit_19_share",
+      "title": "Partager les frais",
+      "note": "Splitting the costs: « partager l'addition » (split the bill), « vingt euros en tout » (in total; « ça fait » gives the total) and « cinq euros par personne » (per person). « Je te rembourse » means I'll pay you back.",
+      "items": [
+        {
+          "id": "sit_19_share_d01",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat « Les copains ». His vous means you all; you say tu to him.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Ce soir, on peut partager l'addition ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Théo ask?",
+              "choices": [
+                "If you all split the bill",
+                "If he can pay for everyone"
+              ],
+              "correct": 0,
+              "miss": "Reread: « on peut partager l'addition ? »"
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, of course.",
+              "bank": [
+                "Oui,",
+                "bien sûr !",
+                "bien sur !",
+                "Non,"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "bien sûr !"
+                ]
+              ],
+              "model": "Oui, bien sûr !"
+            }
+          ],
+          "followUp": "Top, c'est plus simple !",
+          "newWords": [
+            "partager"
+          ]
+        },
+        {
+          "id": "sit_19_share_d02",
+          "place": "Les copains · groupe",
+          "cue": "Inès writes to the group chat « Les copains ». Her vous means you all; you say tu to her. You'll pay her back tomorrow.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "Pour le pique-nique, ça fait vingt euros en tout."
+            },
+            {
+              "speaker": "learner",
+              "text": "Merci ! Je te ___ demain !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "What does Inès say?",
+              "choices": [
+                "Each person pays twenty euros",
+                "The picnic cost twenty euros in total"
+              ],
+              "correct": 1,
+              "miss": "Reread: « vingt euros en tout »."
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "rembourse",
+                "rembourses",
+                "rembourser"
+              ],
+              "correct": 0,
+              "why": [
+                "",
+                "« Rembourses » goes with « tu ». « Je » takes « rembourse ».",
+                "« Rembourser » is the infinitive. « Je » takes « rembourse »."
+              ]
+            }
+          ],
+          "followUp": "Pas de souci !",
+          "newWords": [
+            "en tout"
+          ]
+        },
+        {
+          "id": "sit_19_share_s01",
+          "place": "Les copains · groupe · phrase seule",
+          "standalone": "Construire",
+          "cue": "Tell the group chat « Les copains » (vous = you all): it's twenty euros in total; you split it, five euros each.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Write the message.",
+              "bank": [
+                "Ça fait",
+                "vingt euros",
+                "en tout :",
+                "on partage,",
+                "cinq euros",
+                "chacun !",
+                "partager,",
+                "en tous :"
+              ],
+              "accepted": [
+                [
+                  "Ça fait",
+                  "vingt euros",
+                  "en tout :",
+                  "on partage,",
+                  "cinq euros",
+                  "chacun !"
+                ]
+              ],
+              "model": "Ça fait vingt euros en tout : on partage, cinq euros chacun !"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_19_share_d03",
+          "place": "Texto · Léa",
+          "cue": "Léa, your flatmate, texts you. She says tu to you. You'll pay for your own seat.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Le cinéma, c'est huit euros par personne."
+            },
+            {
+              "speaker": "learner",
+              "text": "D'accord, je paie ___ place !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "mon",
+                "ma",
+                "mes"
+              ],
+              "correct": 1,
+              "why": [
+                "« Place » is feminine: « ma place ».",
+                "",
+                "« Mes » is plural, but it's one seat: « ma place »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "How much is the cinema?",
+              "choices": [
+                "Eight euros for both of you",
+                "Eight euros each"
+              ],
+              "correct": 1,
+              "miss": "Reread: « huit euros par personne »."
+            }
+          ],
+          "followUp": "Parfait ! On se retrouve devant le cinéma ?",
+          "newWords": [
+            "par personne"
+          ]
+        },
+        {
+          "id": "sit_19_share_d04",
+          "place": "Au café",
+          "cue": "Karim, the barista and your friend, says tu to you. Here his vous means you and Léa.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "Vous voulez partager une tarte ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « partager » mean here?",
+              "target": "partager",
+              "choices": [
+                "to order",
+                "to leave",
+                "to share, to split"
+              ],
+              "correct": 2,
+              "why": [
+                "No: to order is « commander ».",
+                "No: to leave is « partir ».",
+                ""
+              ]
+            },
+            {
+              "type": "reply",
+              "prompt": "Say yes, one tart for two.",
+              "bank": [
+                "Oui,",
+                "une tarte",
+                "pour deux !",
+                "un tarte",
+                "par deux !"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "une tarte",
+                  "pour deux !"
+                ]
+              ],
+              "model": "Oui, une tarte pour deux !"
+            }
+          ],
+          "followUp": "Parfait, j'arrive !",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_share_s02",
+          "place": "Au restaurant · phrase seule",
+          "standalone": "Choisir le ton",
+          "cue": "At the restaurant, ask the waiter if you can split the bill. He says vous to you.",
+          "turns": [],
+          "drills": [
+            {
+              "type": "pick",
+              "prompt": "Which one fits the waiter?",
+              "choices": [
+                "On partage l'addition, tu veux bien ?",
+                "Salut ! On peut partager l'addition ?",
+                "Excusez-moi, monsieur, on peut partager l'addition, s'il vous plaît ?"
+              ],
+              "correct": 2,
+              "why": [
+                "Good French with a friend, but « tu veux bien » is tu: the waiter says vous to you.",
+                "Good French with a friend, but « Salut » is too familiar: say « Excusez-moi, monsieur » to the waiter.",
+                ""
+              ]
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_19_share_d05",
+          "place": "Appel · Théo",
+          "cue": "Clarify: Théo calls you on a bad line. He says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Vingt euros en tout, pour le pique-nique !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say you can't hear him well, and ask him to repeat.",
+              "bank": [
+                "Pardon,",
+                "je t'entends mal.",
+                "Tu peux répéter ?",
+                "je vous entends mal.",
+                "Vous pouvez répéter ?"
+              ],
+              "accepted": [
+                [
+                  "Pardon,",
+                  "je t'entends mal.",
+                  "Tu peux répéter ?"
+                ],
+                [
+                  "Tu peux répéter ?",
+                  "Pardon,",
+                  "je t'entends mal."
+                ]
+              ],
+              "model": "Pardon, je t'entends mal. Tu peux répéter ?"
+            },
+            {
+              "type": "word",
+              "prompt": "What does « en tout » mean here?",
+              "target": "en tout",
+              "choices": [
+                "each",
+                "in total, altogether",
+                "at least"
+              ],
+              "correct": 1,
+              "why": [
+                "No: each is « chacun » or « par personne ».",
+                "",
+                "No: at least is « au moins »."
+              ]
+            }
+          ],
+          "followUp": "Vingt euros en tout, pour le pique-nique !",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_share_d06",
+          "place": "Les copains · groupe",
+          "cue": "Inès writes to the group chat « Les copains ». Her vous means you all; you say tu to her. You'll pay her tonight.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Inès",
+              "text": "On partage : cinq euros par personne !"
+            },
+            {
+              "speaker": "learner",
+              "text": "D'accord, je ___ paie ce soir."
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "toi",
+                "te",
+                "tu"
+              ],
+              "correct": 1,
+              "why": [
+                "« Toi » can't go before the verb. Use « te ».",
+                "",
+                "« Tu » is a subject. Before the verb, you need « te »."
+              ]
+            },
+            {
+              "type": "comprehend",
+              "prompt": "How much does each person pay?",
+              "choices": [
+                "Five euros in total",
+                "Five euros each"
+              ],
+              "correct": 1,
+              "miss": "Reread: « cinq euros par personne »."
+            }
+          ],
+          "followUp": "Top, merci !",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_share_s03",
+          "place": "Les copains · groupe · phrase seule",
+          "standalone": "Corriger",
+          "cue": "You write to the group chat « Les copains » (vous = you all). Fix the mistake.",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Ça fait vingt euros en tout, donc cinq euros par personnes.",
+              "error": {
+                "word": "personnes",
+                "fix": "personne",
+                "choices": [
+                  "personnes",
+                  "personne",
+                  "chacun"
+                ],
+                "why": "« Par personne » stays singular: five euros per person."
+              }
+            }
+          ],
+          "drills": [
+            {
+              "type": "fix",
+              "prompt": "Tap the wrong word and fix it."
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_19_share_d07",
+          "place": "Au restaurant",
+          "cue": "At the restaurant, the waitress says vous to you. You and Léa both want one.",
+          "turns": [
+            {
+              "speaker": "server",
+              "text": "Un dessert ? C'est cinq euros par personne.",
+              "role": "Serveuse",
+              "voice": "female"
+            },
+            {
+              "speaker": "learner",
+              "text": "Parfait, on ___ prend deux !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "word",
+              "prompt": "What does « par personne » mean here?",
+              "target": "par personne",
+              "choices": [
+                "in total",
+                "for two people",
+                "per person, each"
+              ],
+              "correct": 2,
+              "why": [
+                "No: in total is « en tout ».",
+                "No: for two people is « pour deux ».",
+                ""
+              ]
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "le",
+                "en",
+                "y"
+              ],
+              "correct": 1,
+              "why": [
+                "With a number (« deux »), use « en », not « le »: « on en prend deux ».",
+                "",
+                "« Y » means there. With a number, use « en »: « on en prend deux »."
+              ]
+            }
+          ],
+          "followUp": "Très bien, je vous apporte ça.",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_share_d08",
+          "place": "À l'appart",
+          "cue": "Léa, your flatmate, says tu to you.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Léa",
+              "text": "Tu veux partager un taxi, ce soir ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Say yes, it's cheaper.",
+              "bank": [
+                "Oui,",
+                "c'est",
+                "moins",
+                "cher !",
+                "chère !",
+                "plus"
+              ],
+              "accepted": [
+                [
+                  "Oui,",
+                  "c'est",
+                  "moins",
+                  "cher !"
+                ]
+              ],
+              "model": "Oui, c'est moins cher !"
+            },
+            {
+              "type": "comprehend",
+              "prompt": "What does Léa suggest?",
+              "choices": [
+                "Taking the metro",
+                "Sharing a taxi"
+              ],
+              "correct": 1,
+              "miss": "Reread: « partager un taxi »."
+            }
+          ],
+          "followUp": "Super ! Je réserve le taxi.",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_share_s04",
+          "place": "Les copains · groupe · phrase seule",
+          "standalone": "Transformer",
+          "cue": "You asked Théo this (tu). Now ask the whole group chat « Les copains » (vous = you all).",
+          "turns": [
+            {
+              "speaker": "learner",
+              "text": "Ça fait vingt euros en tout, tu me rembourses cinq euros ?",
+              "source": true
+            }
+          ],
+          "drills": [
+            {
+              "type": "reply",
+              "prompt": "Rewrite it for the group.",
+              "bank": [
+                "Ça fait",
+                "vingt euros",
+                "en tout,",
+                "vous",
+                "me",
+                "remboursez",
+                "cinq euros ?",
+                "tu",
+                "rembourses",
+                "rembourser"
+              ],
+              "accepted": [
+                [
+                  "Ça fait",
+                  "vingt euros",
+                  "en tout,",
+                  "vous",
+                  "me",
+                  "remboursez",
+                  "cinq euros ?"
+                ]
+              ],
+              "model": "Ça fait vingt euros en tout, vous me remboursez cinq euros ?"
+            }
+          ],
+          "newWords": []
+        },
+        {
+          "id": "sit_19_share_d09",
+          "place": "Les copains · groupe",
+          "cue": "Karim writes to the group chat « Les copains ». His vous means you all; you say tu to him.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Karim",
+              "text": "L'apéro chez moi : dix euros en tout !"
+            },
+            {
+              "speaker": "learner",
+              "text": "Super, ce n'est pas ___ !"
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "How much is the apéro?",
+              "choices": [
+                "Ten euros in total",
+                "Ten euros each"
+              ],
+              "correct": 0,
+              "miss": "Reread: « dix euros en tout ! »"
+            },
+            {
+              "type": "complete",
+              "prompt": "Fill the gap.",
+              "choices": [
+                "chère",
+                "cher",
+                "chers"
+              ],
+              "correct": 1,
+              "why": [
+                "« Chère » is feminine. After « ce n'est pas », use « cher ».",
+                "",
+                "« Chers » is plural. After « ce n'est pas », use « cher »."
+              ]
+            }
+          ],
+          "followUp": "Et j'apporte les chips !",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_share_d10",
+          "place": "Les copains · groupe",
+          "cue": "Théo writes to the group chat « Les copains ». His vous means you all; you say tu to him. You'll pay by card.",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Le restaurant : vingt euros par personne."
+            }
+          ],
+          "drills": [
+            {
+              "type": "comprehend",
+              "prompt": "How much is the restaurant?",
+              "choices": [
+                "Twenty euros in total",
+                "Twenty euros per person"
+              ],
+              "correct": 1,
+              "miss": "Reread: « vingt euros par personne »."
+            },
+            {
+              "type": "reply",
+              "prompt": "Say OK, you'll pay by card.",
+              "bank": [
+                "D'accord,",
+                "je",
+                "paie",
+                "par carte.",
+                "paies",
+                "payer"
+              ],
+              "accepted": [
+                [
+                  "D'accord,",
+                  "je",
+                  "paie",
+                  "par carte."
+                ]
+              ],
+              "model": "D'accord, je paie par carte."
+            }
+          ],
+          "followUp": "Parfait, c'est noté !",
+          "newWords": []
+        },
+        {
+          "id": "sit_19_share_s05",
+          "place": "Les copains · groupe · phrase seule",
+          "standalone": "Mot en retour",
+          "cue": "Théo writes to the group chat « Les copains ». Which French word means “to share, to split”?",
+          "turns": [
+            {
+              "speaker": "server",
+              "name": "Théo",
+              "text": "Ça fait vingt euros en tout : on peut ___ l'addition, cinq euros chacun ?"
+            }
+          ],
+          "drills": [
+            {
+              "type": "complete",
+              "prompt": "to share, to split",
+              "choices": [
+                "goûter",
+                "partager",
+                "prêter"
+              ],
+              "correct": 1,
+              "why": [
+                "« Goûter » means to taste.",
+                "",
+                "« Prêter » means to lend."
+              ]
+            }
+          ],
+          "newWords": []
+        }
+      ]
+    }
+  ]
+}
