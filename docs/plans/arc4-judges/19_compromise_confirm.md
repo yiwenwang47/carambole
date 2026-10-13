@@ -1,0 +1,26 @@
+# Judge findings: 19 `compromise` / `confirm` (30 items)
+
+Checked: every Comprendre `correct` (all 18 point at the true choice), every Choisir le ton option (all natural French), Robin's lines (no masculine self-forms; no participles in her lines), audio keys (décidé `sitw_decide_past`, changé `sitw_change_past`, no verb/participle clash), grammar (only *je serai*, futur simple = Fondations 21), book order of every new key (sondage, égalité, pique-nique, au bord de, ça vous dit all earlier than use), word counts and typography, every `key=gloss` pair in dump lines 1020–1537.
+
+## Logic / cue leaks / natural French
+
+- [SHOULD] sit_19_compromise_d08 — cue leak — The Répondre prompt runs before the Comprendre and says "Say yes: each one pays", which gives away the Comprendre answer "Each person pays for their own meal". → FIX: reply `prompt` "Say yes: each one pays, it's better." → "Agree with her idea, and add that it's better." (bank, accepted, model unchanged).
+- [SHOULD] sit_19_confirm_d08 — cue leak — The cue ("You all meet by the Saône, at noon") and the reply prompt ("Tell her: by the Saône, at noon") make the Comprendre answer obvious: the reply is a place, so "Where you all meet" vs "Who is coming" needs no French. → FIX: comprehend `choices` → ["Where you all meet tomorrow", "What time you all meet tomorrow"] (`correct` stays 0). The reply has both place and time, so only « le lieu » decides it.
+- [SHOULD] sit_19_confirm_d09 — natural French / logic — « Petit rappel : le lieu a changé ! » A *rappel* repeats something already known, but Robin's « Ah bon ? » shows this is news. → FIX: turn 0 `text` → « Attention : le lieu a changé ! » (*attention* is base, `sitw_attention`). Comprendre `prompt` "What is Inès's reminder about?" → "What has changed?" (choices, correct and miss unchanged). *Rappel* still recurs in d07 (Mot) and d10.
+- [SHOULD] sit_19_confirm_d05 — speaker answers own question — Théo: « Le lieu ? Devant le musée, à dix heures ! » asks and answers his own question. → FIX: turn 0 `text` → « Le lieu, c'est devant le musée, à dix heures ! » (9 words; Mot target « lieu » stays visible). Follow-up unchanged.
+- [NIT] sit_19_compromise_s02 — register — « Je vous propose un compromis, madame : … » A French employee rarely calls her manager « madame ». It reads stiff. → FIX: choice 1 → « Je vous propose un compromis : la réunion jeudi matin ? » (still vous; `correct` stays 1).
+
+## Glosses (dump check)
+
+- [SHOULD] sit_19_confirm_d03, sit_19_confirm_d09, sit_19_confirm_d10 — gloss — « Petit rappel » shows petit = "small (masculine)", which gives "small reminder". → FIX: widen book-wide: `petit` `en` "small (masculine)" → "small, little (masculine)". Checked 51 Situations uses (un petit café / thé, petit rhume, trop petit, plus petit que): all still fit.
+- [SHOULD] sit_19_compromise_d10, sit_19_confirm_d08 (follow-up) — gloss — « On y va demain ? » / « On y va ensemble ? » are questions, but on y va = "let's go". → FIX: widen book-wide: `on y va` `en` "let's go" → "let's go / shall we go?". All 22 uses are « on y va » statements or « On y va … ? » questions; both fit.
+- [SHOULD] sit_19_compromise_d05 (turn + follow-up) — gloss — « Chacun apporte quelque chose » shows apporte = "bring / am bringing". The third person "brings" is missing. → FIX: widen book-wide: `apporte` `en` "bring / am bringing" → "bring(s) / am bringing" (only adds a sense).
+- [SHOULD] sit_19_confirm_d10 — gloss — « j'apporte de l'eau » shows de = "of / from" and l'eau = "the water, water", which gives "of / from the water" (the partitive is lost). → FIX: add phrase key `{"fr": "de l'eau", "en": "(some) water", "spoken": false, "audio": "sitw_de_l_eau", "firstSeen": null}` (Fondations has *de l'eau*). It fits all 24 book uses (de l'eau chaude, Tu veux de l'eau ?). Verify that « au bord de l'eau » still segments as *au bord de* + *l'eau*.
+- [SHOULD] sit_19_confirm_d10 — gloss — « apportez à boire » shows "bring (vous) · to / at · to drink". → FIX (rewrite, matching existing book usage): turn 0 `text` → « Petit rappel : apportez quelque chose à boire ! »; Comprendre `miss` → "Reread: « apportez quelque chose à boire ! »".
+- [SHOULD] sit_19_compromise_d03, sit_19_compromise_d10 — gloss — Line-initial « Pas de pique-nique » / « Pas de cinéma » shows pas = "not" and de = "of / from" ("not · of / from · picnic"). → FIX (book-wide, in the coordinator negation pass; about 140 « Pas de » lines): add phrase key `{"fr": "pas de", "en": "no / not any (+ noun)", "spoken": false, "audio": "sitw_pas_de", "firstSeen": null}`. The longer key *pas de problème* still wins. Check it with the planned n'-form glosses so « je n'ai pas de » does not double up.
+- [SHOULD] sit_19_confirm_s02 — gloss — « je vous appelle pour confirmer » shows pour = "for" before an infinitive ("for · to confirm"). → FIX: widen book-wide: `pour` `en` "for" → "for / (in order) to". This fits « pour moi », « pour demain » and « pour te changer les idées ».
+
+## Summary
+
+0 MUST · 11 SHOULD · 1 NIT (12 findings). Of these, 7 are gloss findings (all SHOULD; no MUST-level wrong English in these 30 items).
+Worst: (1) compromise_d08: the reply prompt gives away the Comprendre answer; (2) confirm_d08: the Comprendre is answerable from the cue and prompt; (3) confirm_d09: « Petit rappel » used for news Robin doesn't know.
