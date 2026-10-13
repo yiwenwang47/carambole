@@ -213,6 +213,8 @@ struct SituationSessionView: View {
                             .lineLimit(1)
                             .fixedSize()
                             .offset(x: 6, y: 52)
+                            // Decorative: the label above already names the module.
+                            .accessibilityHidden(true)
                     }
                 }
                 .overlay(alignment: .topLeading) {
@@ -229,6 +231,7 @@ struct SituationSessionView: View {
                 .tracking(-1.2)
                 .foregroundColor(AppColor.ink)
                 .fixedSize(horizontal: false, vertical: true)
+                .accessibilityAddTraits(.isHeader)
             Text(ruleNote)
                 .font(.appBody)
                 .lineSpacing(4)

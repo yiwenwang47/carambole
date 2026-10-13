@@ -280,6 +280,9 @@ struct SituationCardView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(.horizontal, Spacing.screenH)
         .padding(.top, 16)
+        // Place and situation read as one heading, so the rotor can jump to it.
+        .accessibilityElement(children: .combine)
+        .accessibilityAddTraits(.isHeader)
     }
 
     // MARK: - Chat
@@ -349,7 +352,7 @@ struct SituationCardView: View {
         let hasAudio = Speaker.bundledAudioURL(key: audioKey) != nil && !audioLocked
         return HStack {
             VStack(alignment: .leading, spacing: 3) {
-                if let name { speakerLabel(name.uppercased()) }
+                if let name { speakerLabel(name.uppercased()).accessibilityLabel(name) }
                 HStack(alignment: .top, spacing: 10) {
                     // Replay only. A missing clip leaves the text and a dimmed button.
                     Button { Speaker.shared.playBundled(key: audioKey) } label: {
