@@ -3,7 +3,7 @@
 widen: set `en` for an existing key everywhere it is defined.
 add:   new base phrase key (firstSeen null) placed in the words file of the
        first draft half (book order) whose lines use it.
-Usage: python3 apply.py SPEC [--dry]
+Usage: python3 tools/situations/apply_gloss_spec.py SPEC [--dry]  (then assemble.py)
 """
 import glob
 import json
@@ -12,7 +12,7 @@ import sys
 import unicodedata
 from pathlib import Path
 
-REPO = Path("/Users/yiwenwang/Documents/CMU/research/personal/carambole/carambole")
+REPO = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(REPO))
 from tools.situations.lint import tappable_lines, tokens  # noqa: E402
 

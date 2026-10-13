@@ -1,4 +1,6 @@
-# Book 2 handoff: start here (arc 4)
+# Book 2 handoff: arc 4
+
+> **Superseded as the start point by [2026-10-13 audio handoff](2026-10-13-book-2-audio-handoff.md).** §5 is the arc 4 session log.
 
 **Written:** 2026-10-12, end of session.
 **Repo:** `carambole/`, branch `main`, **not pushed** (ahead of origin by 87+ commits).

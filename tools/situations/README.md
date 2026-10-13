@@ -135,6 +135,8 @@ rtk python3 tools/situations/generate_audio.py --review   # pilot2_* clips for t
 rtk python3 tools/situations/review_set.py <nine item IDs from any modules>
 rtk python3 tools/situations/normalize_audio.py --all --check   # loudness report, no changes
 rtk python3 tools/situations/normalize_audio.py --all           # normalise any new/untagged clip
+rtk python3 tools/situations/gloss_dump.py MODULE.json carambole/Resources/Situations/words.json [--moves a,b]
+rtk python3 tools/situations/apply_gloss_spec.py SPEC.json [--dry]   # book-wide gloss widenings + new base keys
 rtk python3 -m unittest tools/situations/test_lint.py tools/situations/test_tools.py tools/pilot/test_content.py tools/situations/test_normalize_audio.py
 ```
 
@@ -149,6 +151,19 @@ that module's turn and follow-up clips plus the words it first teaches; base
 words come from a run without `--module`. `rendered_surfaces(item)` returns
 filled gaps, applied fixes, accepted replies, and all choice lines for a
 grammar review pass.
+
+**Glosses (user rule, 2026-10-12): every gloss must be correct in every drill.**
+Each key has one book-wide `en`; the app (`SituationText.segments`) matches
+keys longest-first, left to right, across commas but not across a free-standing
+« ! » « ? » « : » or a `___` gap, and keeps a Corriger error word apart.
+`gloss_dump.py` prints every tappable line with the gloss each token shows,
+segmented the same way; judges read it pair by pair. Fix a wrong gloss by
+widening the entry (check every other use), adding a longer phrase key
+(`firstSeen: null`; check it swallows nothing else), or rewriting the line.
+`apply_gloss_spec.py` applies a spec `{"widen": {key: en}, "add": {key: en}}`
+to every draft words file and `words.json` (rewrites stay manual), then run
+`assemble.py`. New keys need audio from a plain `generate_audio.py` run. Specs
+so far: `docs/plans/arc4-judges/gloss_spec.json`, `docs/plans/gloss-sweep/spec2.json`.
 
 The full-move linter checks four dialogue drill types, at least half Répondre
 and Compléter, one clarification or repetition dialogue, and two alternate

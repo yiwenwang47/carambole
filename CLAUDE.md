@@ -2,13 +2,15 @@
 
 > ## ▶ RECENT HANDOFFS
 >
-> **▶ BOOK 2 — START HERE: `docs/plans/2026-10-13-book-2-arc4-handoff.md`**
-> (written 2026-10-12). Next: arc 4 (modules 16–20). 15 of 25 modules done with
-> full audio. Going back now uses Book 1's real carousel (`56af4b7`):
-> `Features/Situation/SituationCardView.swift` is one card whose
-> `SituationCardState` the session owns; the Test book pilot runs the production
-> session (no grading). User tested on phone: "works". Pipeline + lessons:
-> `docs/plans/2026-10-13-book-2-next-session-handoff.md` §4–§5.
+> **▶ BOOK 2 — START HERE: `docs/plans/2026-10-13-book-2-audio-handoff.md`**
+> (written 2026-10-12). Arc 4 (modules 16–20) authored, judged, fixed,
+> assembled; review set v9 approved on the phone. Next: production audio for
+> 16–20 + ~126 new phrase-key clips (commands in §1). User rule: every gloss
+> correct in every drill — `tools/situations/gloss_dump.py`; two book-wide
+> gloss passes over 01–20 (`docs/plans/arc4-judges/`, `docs/plans/gloss-sweep/`).
+>
+> **▶ BOOK 2 — arc 4 log:** `docs/plans/2026-10-13-book-2-arc4-handoff.md` §5.
+> Carousel (`56af4b7`): `Features/Situation/SituationCardView.swift`.
 >
 > **▶ BOOK 2 — previous: `docs/plans/2026-10-11-book-2-next-session-handoff.md`
 > (2026-10-11, `main`, not pushed).** Modules 01–06 are authored, reviewed and have

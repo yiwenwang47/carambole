@@ -36,6 +36,12 @@ Write only your two files. Other authors work on the other halves at the same ti
   - For a new base word, use the most general accurate gloss. It must be in *Fondations*; if it isn't, teach it or avoid it.
   - A gloss shows in every context, so make it wide ("do / make", not "make").
 
+## Gloss check (user rule: every gloss correct in every drill)
+
+Before you validate, run `tools/situations/gloss_dump.py` on a scratch module + merged words and read every `key=gloss` pair against its sentence. Avoid senses an existing gloss doesn't cover (reword, or add a longer phrase key with its own gloss). Don't edit existing entries; list needed widenings in your report. Known traps: `docs/plans/2026-10-13-book-2-arc4-plan.md` §2.8 and the gloss specs in `docs/plans/arc4-judges/` and `docs/plans/gloss-sweep/`.
+
+Also: check every Comprendre `correct` by hand; every Choisir le ton option must be natural French; give a verb and its past participle different audio keys (`_verb` / `_past`).
+
 ## Validate
 
 1. Draft check:

@@ -43,6 +43,10 @@ Don't commit. Other fixers work on the other halves at the same time.
 - **Corriger.** The error word may sit inside a set phrase, because the app splits it out. The single word itself still needs a gloss entry.
 - **Moving a taught word.** You may move a taught word's `firstSeen` within your half. Keep the newWords, printed-line, recurrence and Mot rules.
 
+## Gloss findings
+
+Apply gloss findings whose fix is a rewrite of a line in your half, and re-check the new line's glosses with `tools/situations/gloss_dump.py`. Book-wide widenings and new phrase keys are the coordinator's (one pass with `apply_gloss_spec.py`): list them in your report as key, proposed `en`, audio slug, why. Re-check every Comprendre `correct` in your half.
+
 ## Validate
 
 1. Both checks must be clean for your half:

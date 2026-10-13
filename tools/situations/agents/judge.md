@@ -48,8 +48,9 @@ You are an independent, READ-ONLY content judge for Book 2 (*En situation*). It 
 5. **Logic.** Follow-ups that ignore what the learner said; a speaker answering their own question; logic puzzles; facts the learner can't know.
 6. **Recoverable form.** Gender, number and *tu* / *vous* can be worked out from the cue.
 7. **False errors.** A Corriger error or a "wrong" distractor that is actually acceptable spoken French.
-8. **Words and typography.** Untaught words used early; glosses accurate in context; a space before `?` `!` `:`; straight apostrophes.
-9. **Robin's gender.** No masculine self-forms.
+8. **Gloss in context (user rule: every gloss correct in every drill).** The coordinator gives you a dump from `tools/situations/gloss_dump.py` (every tappable line with `key=gloss` per token, segmented like the app). Read every pair for your items against its sentence. Flag a wrong sense, a double negative, a split idiom ("you · have · reason"), wrong person ("we · is"), or a key swallowing words wrongly (also across a comma). MUST if the English contradicts the sentence. Fix: widen the entry (grep every other use), add a phrase key (`firstSeen: null`), or rewrite. A real word in a deliberately wrong answer keeps its real gloss.
+9. **Words and typography.** Untaught words used early; glosses accurate in context; a space before `?` `!` `:`; straight apostrophes.
+10. **Robin's gender.** No masculine self-forms.
 
 ## Output
 
