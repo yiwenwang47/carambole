@@ -188,6 +188,8 @@ struct SituationCardView: View {
     @State private var tip: Tip?
     @State private var tipToken = 0
     @State private var tipPinned = false
+    /// Measured width of the shown tip bubble, so it can be kept on screen.
+    @State private var tipWidth: CGFloat = 0
     @State private var lastWordTap = Date.distantPast
 
     /// One curve for every drill-to-drill change.
@@ -560,21 +562,27 @@ struct SituationCardView: View {
     }
 
     private func tipBubble(_ tip: Tip, word: CGRect, width: CGFloat) -> some View {
-        let estimate = min(240, CGFloat(max(tip.french.count, tip.english.count)) * 8.4 + 28)
-        let centerX = min(max(word.midX, estimate / 2 + 10), width - estimate / 2 - 10)
+        // A long gloss wraps onto more lines instead of running off the card.
+        let maxWidth = min(260, width - 20)
+        let estimate = min(maxWidth, CGFloat(max(tip.french.count, tip.english.count)) * 8.4 + 28)
+        let bubble = tipWidth > 0 ? min(tipWidth, maxWidth) : estimate
+        let centerX = min(max(word.midX, bubble / 2 + 10), width - bubble / 2 - 10)
         return VStack(spacing: 0) {
             VStack(spacing: 1) {
                 Text(tip.french).font(.label(size: 12, wght: 500)).opacity(0.65)
                 Text(tip.english).font(.display(size: 15, wght: 500))
             }
             .multilineTextAlignment(.center)
+            .fixedSize(horizontal: false, vertical: true)
             .foregroundColor(AppColor.white)
             .padding(.horizontal, 12).padding(.vertical, 7)
             .background(RoundedRectangle(cornerRadius: 12).fill(AppColor.ink))
+            .onGeometryChange(for: CGFloat.self) { $0.size.width } action: { tipWidth = $0 }
             SituationTipArrow().fill(AppColor.ink).frame(width: 14, height: 7)
                 .offset(x: word.midX - centerX)
         }
-        .fixedSize()
+        .frame(width: maxWidth)
+        .fixedSize(horizontal: false, vertical: true)
         .frame(width: width, height: max(0, word.minY - 4), alignment: .bottom)
         .offset(x: centerX - width / 2)
         .transition(.opacity)
