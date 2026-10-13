@@ -19,6 +19,9 @@ struct SettingsView: View {
     /// The shared settings store — NOT created here. Editing `store.settings`
     /// persists (clamped) on write via the store's `didSet`.
     @ObservedObject var store: StudySettingsStore
+    /// *En situation* counts conversation moves and dialogues, not grammar
+    /// elements and exercises, so its notes say so.
+    var dialogues = false
 
     @Environment(\.dismiss) private var dismiss
 
@@ -104,7 +107,7 @@ struct SettingsView: View {
     private var newPerDaySection: some View {
         TextStepper(
             title: "Éléments / jour",
-            note: "New grammar elements per day — a hard cap.",
+            note: dialogues ? "New conversation moves per day — a hard cap." : "New grammar elements per day — a hard cap.",
             value: $store.settings.newPerDay,
             range: StudySettings.newPerDayRange
         )
@@ -151,7 +154,7 @@ struct SettingsView: View {
                 }
             }
 
-            note("Number of exercises in each review round.")
+            note(dialogues ? "Number of dialogues in each review round." : "Number of exercises in each review round.")
         }
         .padding(.vertical, 18)
     }
@@ -168,7 +171,9 @@ struct SettingsView: View {
             }
             .tint(AppColor.ink)
 
-            note("Read the sentence aloud automatically on a correct answer. The 🔊 button is always available either way.")
+            note(dialogues
+                 ? "Play the last line of a dialogue automatically once you finish it. The ▶ buttons always replay a line."
+                 : "Read the sentence aloud automatically on a correct answer. The 🔊 button is always available either way.")
         }
         .padding(.vertical, 18)
     }
