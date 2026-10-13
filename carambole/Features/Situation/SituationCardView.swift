@@ -263,6 +263,9 @@ struct SituationCardView: View {
         .onChange(of: active) { _, isActive in if !isActive { tip = nil } }
         #if DEBUG
         .onAppear(perform: pinLaunchTip)
+        // The Test book has no intro, so its first card can appear before the
+        // session reads the launch flags.
+        .onChange(of: launch.tip) { _, _ in pinLaunchTip() }
         .task(id: active && launch.autoplay != nil) { await autoplay() }
         #endif
     }
