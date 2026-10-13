@@ -3,11 +3,11 @@
 > ## ▶ RECENT HANDOFFS
 >
 > **▶ BOOK 2 — START HERE: `docs/plans/2026-10-13-book-2-arc5-done-handoff.md`**
-> (written 2026-10-13). ALL 25 modules authored, judged, fixed, assembled
-> (3,000 items). Review set v11 (arc 5) approved in the simulator ("works").
-> Next: production audio for 21–25 (`generate_audio.py --module 21…25`, then a
-> plain run, strict lint, `normalize_audio.py`), then release work. User rule:
-> every gloss correct in every drill — `tools/situations/gloss_dump.py`.
+> (written 2026-10-13, §0 updated later that day). ALL 25 modules authored, judged,
+> fixed, assembled (3,000 items). Production audio for all 25 is DONE (6,459 clips).
+> Hint bubbles wrap and show the bracketed note as a small second line. Next:
+> release work (handoff §5). User rule: every gloss correct in every drill —
+> `tools/situations/gloss_dump.py`.
 >
 > **▶ BOOK 2 — arc 5 plan + approved defaults:** `docs/plans/2026-10-13-book-2-arc5-handoff.md`, `docs/plans/2026-10-13-book-2-arc5-plan.md`.
 >

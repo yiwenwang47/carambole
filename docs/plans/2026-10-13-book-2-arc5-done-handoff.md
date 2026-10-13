@@ -9,7 +9,19 @@
 - [Content handoff](2026-10-11-book-2-content-handoff.md): the rulebook. §9 has the Test book build and phone install commands.
 - [Arc 5 plan](2026-10-13-book-2-arc5-plan.md) §12: the user approved all its defaults this session.
 
-## 1. Start here: production audio for 21–25
+## 0. Update, later on 2026-10-13: audio done, hint bubble fixed
+
+§1 is **done**. Do not rerun it.
+- `3e09f0fc`: production audio for 21–25 (967 module clips + 214 word clips). 6,459/6,459 present, 0 untagged, strict lint OK, 88 Python tests OK.
+- `efb32c32`: the v11 `pilot2_` clips are byte copies of production. The user listened: "audio ok".
+- `03ea037c`: long hints wrap (bubble at most 260 pt, kept on screen) instead of running off the card.
+- `df68572f`: `CB_PILOT_TIP` now pins on the Test book's first card (it has no intro, so card 0 appeared before the flags were read).
+- `2c7d38b9`: a gloss's last bracket group shows as a small grey second line without brackets (867 of 2,194 glosses). The user checked it on the simulator and approved it.
+- Open, offered and not yet chosen: trim the 19 glosses over 60 characters (re-check each with `gloss_dump.py`).
+- The History page already lists wrong attempts by day (`HistoryViewModel.loadMistakes`), so §5's "doesn't show attempt-log rows" looks stale. Check it on the simulator.
+- Simulator: Test book with all of the above. Phone: still v10. `main` not pushed.
+
+## 1. (Done, see §0) Production audio: production audio for 21–25
 
 The user played review set v11 in the simulator and said "works". The next step is plan §11 step 7:
 
