@@ -2,10 +2,13 @@
 
 > ## ▶ RECENT HANDOFFS
 >
-> **▶ BOOK 2 — START HERE: `docs/plans/2026-10-13-book-2-next-session-handoff.md`**
-> (written 2026-10-12). 15 of 25 modules done; first task: Book 1 carousel for going
-> back in Book 2; then check 11–15 audio; then arc 4. Session log:
-> `docs/plans/2026-10-12-book-2-handoff.md`.
+> **▶ BOOK 2 — START HERE: `docs/plans/2026-10-13-book-2-arc4-handoff.md`**
+> (written 2026-10-12). Next: arc 4 (modules 16–20). 15 of 25 modules done with
+> full audio. Going back now uses Book 1's real carousel (`56af4b7`):
+> `Features/Situation/SituationCardView.swift` is one card whose
+> `SituationCardState` the session owns; the Test book pilot runs the production
+> session (no grading). User tested on phone: "works". Pipeline + lessons:
+> `docs/plans/2026-10-13-book-2-next-session-handoff.md` §4–§5.
 >
 > **▶ BOOK 2 — previous: `docs/plans/2026-10-11-book-2-next-session-handoff.md`
 > (2026-10-11, `main`, not pushed).** Modules 01–06 are authored, reviewed and have
