@@ -11,6 +11,15 @@
 > Book 2: `SituationCardView`/`SituationSessionView` + `SituationTooEasy`. A new
 > book or session view reuses these; never fork the logic.
 >
+> **AUDIO SESSION GOTCHA (phone, 2026-10-13).** The silent star video keeps the
+> app's audio session ACTIVE. Changing the category on an active session stopped
+> Apple Music outright. `Speaker`: `.ambient` at launch and between clips; per
+> clip release → `.playback`/`.default`/`[.mixWithOthers, .duckOthers]` →
+> activate; after it `setActive(false, .notifyOthersOnDeactivation)` → `.ambient`.
+> The simulator can't reproduce inter-app audio; Debug builds log every step to
+> `Documents/audio_diag.txt` (`Debug/AudioDiag.swift`) — pull it with
+> `xcrun devicectl device copy from --domain-type appDataContainer`.
+>
 > **▶ BOOK 2 — START HERE: `docs/plans/2026-10-13-book-2-release-handoff.md`**
 > (written 2026-10-13). Book 2 is release ready: 25 modules, 3,000 items, all
 > 6,459 clips, release check passed on the simulator, `main` pushed. Next: install

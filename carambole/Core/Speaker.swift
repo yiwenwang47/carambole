@@ -34,6 +34,7 @@ final class Speaker: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
                 p.delegate = self
                 player = p          // hold strong so it isn't deallocated mid-playback
                 p.play()
+                AudioDiag.log("clip play")
                 return
             } catch {
                 // Corrupt/unreadable file → fall through to the synthesizer.
@@ -56,6 +57,7 @@ final class Speaker: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
     /// Stops any clip or synthesized speech in flight (exit, next card) and
     /// gives other apps' audio back its full volume.
     func stop() {
+        AudioDiag.log("stop()")
         halt()
         deactivateSession()
     }
@@ -78,6 +80,7 @@ final class Speaker: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
             p.delegate = self
             player = p
             p.play()
+            AudioDiag.log("clip play (bundled)")
         } else {
             deactivateSession()
         }
@@ -92,36 +95,42 @@ final class Speaker: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
             ?? Bundle.main.url(forResource: key, withExtension: "mp3", subdirectory: "Audio")
     }
 
-    /// Between clips the app plays only the silent star video. `.ambient`
-    /// mixes with other apps' audio, so opening the app never stops the
-    /// learner's music (the default `.soloAmbient` session did, even though the
-    /// video has no sound track). Called at launch and after every clip.
+    /// Outside clips the app plays only the silent star video, and that video
+    /// keeps the session active. `.ambient` mixes with other apps' audio, so
+    /// the star never stops or lowers the learner's music (the default
+    /// `.soloAmbient` stopped it on launch). Set at launch and after each clip.
     static func useAmbientSession() {
         #if os(iOS)
-        try? AVAudioSession.sharedInstance().setCategory(.ambient)
+        AudioDiag.startObserving()
+        AudioDiag.attempt("setCategory(ambient)") { try AVAudioSession.sharedInstance().setCategory(.ambient) }
         #endif
     }
 
-    /// Routes speech to `.playback` so a deliberate "écouter" tap is audible
-    /// even when other audio is playing; `.duckOthers` lowers background audio
-    /// only while a clip plays. The session is released when the clip ends or
-    /// is stopped, so music comes back to full volume.
+    /// A clip lowers other audio (`.duckOthers`, `.mixWithOthers` explicit,
+    /// `.default` mode) while it plays. Phone log (2026-10-13): changing the
+    /// category while the star video holds the session ACTIVE stopped Apple
+    /// Music outright. So: release the session, switch while inactive, then
+    /// activate — ducking starts on activation.
     private func activateSession() {
         #if os(iOS)
         let session = AVAudioSession.sharedInstance()
         if session.category != .playback {
-            // Ducking starts on activation, and the silent star video may hold
-            // the session active already: release it, switch, then take it again.
-            try? session.setActive(false)
-            try? session.setCategory(.playback, mode: .spokenAudio, options: [.duckOthers])
+            AudioDiag.attempt("clip setActive(false)") { try session.setActive(false) }
+            AudioDiag.attempt("clip setCategory(playback)") {
+                try session.setCategory(.playback, mode: .default, options: [.mixWithOthers, .duckOthers])
+            }
         }
-        try? session.setActive(true)
+        AudioDiag.attempt("clip setActive(true)") { try session.setActive(true) }
         #endif
     }
 
+    /// Releases the session so other audio returns to full volume, then goes
+    /// back to `.ambient` so the star video can't lower the music.
     private func deactivateSession() {
         #if os(iOS)
-        try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+        AudioDiag.attempt("setActive(false, notify)") {
+            try AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+        }
         Self.useAmbientSession()
         #endif
     }
@@ -131,6 +140,7 @@ final class Speaker: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
     func audioPlayerDidFinishPlaying(_ finished: AVAudioPlayer, successfully flag: Bool) {
         // A replacement clip may already be playing; only the current one releases.
         guard finished === player else { return }
+        AudioDiag.log("clip finished")
         player = nil
         if !synth.isSpeaking { deactivateSession() }
     }

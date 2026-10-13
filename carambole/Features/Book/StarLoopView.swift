@@ -424,6 +424,7 @@ final class StarLoopPlayers {
         guard player(palette, fromStart: false) != nil else { return }
         entries[palette]!.holders += 1
         entries[palette]!.player.play()
+        AudioDiag.log("star play")
     }
 
     func release(_ palette: AppPalette) {
@@ -431,6 +432,7 @@ final class StarLoopPlayers {
         e.holders = max(0, e.holders - 1)
         if e.holders == 0 {
             e.player.pause()
+            AudioDiag.log("star pause")
             // Keep the decoder primed while a page covers the star, so `play()`
             // on the way back shows motion at once instead of holding a frame.
             if e.player.status == .readyToPlay { e.player.preroll(atRate: 1) }
