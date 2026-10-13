@@ -19,7 +19,17 @@ from tools.situations.lint import tappable_lines, tokens  # noqa: E402
 
 
 def segments(line: str, glosses: dict[str, str]) -> list[tuple[str, str]]:
-    """Split a line into (key, gloss) pairs, longest key first."""
+    """Split a line into (key, gloss) pairs, longest key first.
+
+    A `___` gap breaks phrases, as in the app (`Models/Situation.swift`).
+    """
+    if "___" in line:
+        out: list[tuple[str, str]] = []
+        for n, part in enumerate(line.split("___")):
+            if n:
+                out.append(("___", "(gap)"))
+            out += segments(part, glosses)
+        return out
     raw = tokens(line)
     phrases = sorted((k.split() for k in glosses), key=len, reverse=True)
     out: list[tuple[str, str]] = []
