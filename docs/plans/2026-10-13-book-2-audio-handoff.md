@@ -91,3 +91,9 @@ python3 tools/situations/normalize_audio.py --all --check
 - Écrire typing drill: later, in its own session.
 - History page does not show attempt-log rows yet. VoiceOver is only partly labelled.
 - `main` is not pushed.
+
+## 6. Done (2026-10-13)
+
+- Production audio for arc 4: `aab4732e`. 5,278/5,278 clips; strict lint OK; every clip tagged as normalised (median -18.1 LUFS, same as 01–15).
+- Review set v10 (`5ee04c7e`): sit_17_cheer_d06 sit_19_compromise_d08 sit_17_galere_s04 sit_16_out_d02 sit_20_should_d10 sit_18_better_s02 sit_18_rent_d03 sit_16_dinner_d04 sit_17_react_s05. The `pilot2_*` clips are byte copies of the production clips. Installed in the Test book; user verdict: "sounds ok".
+- Arc 4 is complete. Next: arc 5 (§5).
