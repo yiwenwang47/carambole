@@ -96,7 +96,7 @@ Read the lessons in the next-session handoff §4 before you write the author pro
 - [x] Planner: `2026-10-13-book-2-arc4-plan.md` + 5 matrices. User accepted all §12 defaults.
 - [x] Prep (`3702e9a`): modules.json 16–20; lint roles « Agent immobilier / Agente immobilière »; `MASC_SELF` + « je me suis » and couché, tombé, épuisé, trempé, convaincu, sûr (test added).
 - **Gloss decision (Claude, user delegated):** existing glosses are correct for every line in 01–15 (checked by scan). Keep them; arc 4 avoids the plan §2.8 trap senses or adds longer phrase keys. Widen book-wide only where a new line truly needs the sense. User rule: **every gloss must be correct in every drill** — authors self-check; judges and a coordinator gloss-in-context pass verify.
-- [ ] Authors: batch 1 launched (16a, 16b, 17a, 17b, 18a, 18b, 19a); 19b, 20a launched as slots freed; 20b next. DONE: 19a, 20a, 16a, 16b, 17a, 17b, 18a, 18b.
+- [ ] Authors: batch 1 launched (16a, 16b, 17a, 17b, 18a, 18b, 19a); 19b, 20a launched as slots freed; 20b next. DONE: 19a, 19b, 20a, 16a, 16b, 17a, 17b, 18a, 18b.
 - Gloss traps found while authoring (add to judge/fixer prompts): *raconte* "tell (me) (tu)" wrong in « je te raconte » (needs phrase key); *cuisine* "kitchen / cook(s)" wrong for *faire la cuisine*; *l'entrée* "the entrance" wrong for a starter; *je prends l'addition* (16 dinner_d03) reads oddly with "I'll have / I take"; wrong-form decoy « on votes » glossed "votes" (19 vote_d03/d08). If interrupted: relaunch halves whose drafts are missing or fail `lint.py --draft`.
 - Book-wide widening applied: « que » → "that / which / than" (comparisons). Committed.
 - `tools/situations/gloss_dump.py MODULE WORDS --moves a,b` prints every tappable line with each token's gloss: give judges their moves' dump; they must check every pair.
@@ -104,3 +104,4 @@ Read the lessons in the next-session handoff §4 before you write the author pro
 - 17 uses *aïe* instead of *oh là là* (Grammalecte doublon flag).
 - Gloss pass todos (book-wide, incl. 01–15): phrase keys « il n'y a pas » / « il n'y a plus (de) » / « il n'y a plus rien » (now "there isn't · not"), « il y avait » (16b). New keys need audio (plain generate_audio run).
 - More gloss todos: « si j'étais vous » key ("if I were you"; 20a inplace_s02 shows j'étais = "I was"); 20a inplace_d02 « dans l'entrée » (hallway) vs gloss "the entrance" (fine?).
+- Gloss todo: « rembourse » "refund / refunds" → widen to "pay back, refund" (19b share_d02 « Je te rembourse demain »).
