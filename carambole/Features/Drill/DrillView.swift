@@ -109,7 +109,7 @@ struct DrillView: View {
             VStack(spacing: Spacing.sm) {
                 // "Too easy" affordance — only before checking, never in review.
                 if !checked && reviewData == nil {
-                    tooEasyControl
+                    TooEasyControl(pending: $pendingTooEasy)
                 }
                 // (A wrong LIVE answer shows "Réponse : …" under the input's
                 // baseline — see DrillFeedbackLine — not here.)
@@ -511,48 +511,6 @@ struct DrillView: View {
             .frame(maxHeight: 220)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-    }
-
-    // MARK: - "Too easy" gate control
-
-    /// Sits just above the footer button before checking. Tapping "Trop facile"
-    /// arms the answer-once gate; while armed it shows a reminder + an Annuler
-    /// escape. The actual remove/clean happens in `check()` on the next answer.
-    @ViewBuilder
-    private var tooEasyControl: some View {
-        if pendingTooEasy {
-            HStack(spacing: Spacing.sm) {
-                Text("Réponds correctement pour le retirer")
-                    .uppercaseLabel(AppColor.ink)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.8)
-                Spacer(minLength: Spacing.sm)
-                Button {
-                    withAnimation(.spring(response: 0.3, dampingFraction: 0.85)) {
-                        pendingTooEasy = false
-                    }
-                } label: {
-                    Text("Annuler").uppercaseLabel(AppColor.ink).underline()
-                }
-                .buttonStyle(.plain)
-            }
-            .padding(.vertical, 8)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .transition(.opacity)
-        } else {
-            Button {
-                withAnimation(.spring(response: 0.3, dampingFraction: 0.85)) {
-                    pendingTooEasy = true
-                }
-            } label: {
-                Text("Trop facile — retirer")
-                    .uppercaseLabel()
-                    .padding(.vertical, 8)
-                    .contentShape(Rectangle())
-            }
-            .buttonStyle(.plain)
-            .frame(maxWidth: .infinity, alignment: .leading)
-        }
     }
 
     // MARK: - Action button (Check → Next)

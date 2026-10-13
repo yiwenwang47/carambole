@@ -108,12 +108,17 @@ struct SituationSessionView: View {
     /// Outcome per finished card index, for the closing summary.
     @State private var results: [Int: SituationOutcome] = [:]
     @State private var showSummary = false
+    /// Element just removed with "Trop facile", for the undo pill's « Annuler ».
+    @State private var tooEasyUndoElementID: String?
+    @State private var tooEasyUndoToken = 0
     #if DEBUG
     @State private var launch = SituationLaunch()
     @State private var launchStep: Int?
     @State private var launchStage: String?
     /// CB_*_BACK_AT=n: autoplay stops on card n and goes back one.
     @State private var backAt: Int?
+    /// CB_*_TOO_EASY=1: the first card opens with "Trop facile" armed.
+    @State private var launchTooEasy = false
     #endif
 
     /// Book 1's paging spring, for drags, chevrons and « Suivant ».
@@ -132,6 +137,7 @@ struct SituationSessionView: View {
             }
         }
         .background(AppColor.paper.ignoresSafeArea())
+        .tooEasyUndo(elementID: $tooEasyUndoElementID, token: tooEasyUndoToken)
         .onAppear {
             #if DEBUG
             applyLaunchFlags()
@@ -189,6 +195,7 @@ struct SituationSessionView: View {
         #if DEBUG
         if index == firstIndex {
             state.applyLaunch(step: launchStep, stage: launchStage, item: cards[index].item, salt: cards[index].salt)
+            state.pendingTooEasy = launchTooEasy
         }
         #endif
         states[index] = state
@@ -501,15 +508,34 @@ struct SituationSessionView: View {
 
     /// Grade the finished item on its element and remember it for Réviser.
     /// The rating is the worst drill; reading and word taps never lower it.
+    /// An armed "Trop facile" resolves through the shared gate instead (same
+    /// logic as Book 1), and the session moves on to the next element.
     private func finish(card i: Int, outcome: SituationOutcome) {
         results[i] = outcome
-        guard recordsProgress else { return }
         let card = cards[i]
-        let rating: FSRS.Rating = outcome == .good ? .good : (outcome == .hard ? .hard : .again)
         let element = card.element
+        let tooEasy = states[i]?.pendingTooEasy == true
+        if tooEasy {
+            let kept = SituationTooEasy.keptAfter(index: i, elementIDs: cards.map(\.element.id))
+            cards = kept.map { cards[$0] }
+        }
+        guard recordsProgress else { return }
         let now = Date()
-        ElementGrader.grade(elementID: element.id, exampleID: card.item.id, rating: rating, now: now) { status in
+        let gate: (ReviewStatus) -> Bool = { status in
             SituationMastery.gateMet(correctItemIDs: status.masteredExampleIDs, items: element.items)
+        }
+        if tooEasy {
+            let removed = SituationTooEasy.removes(outcome)
+            TooEasyGate.resolve(elementID: element.id, exampleID: card.item.id, removed: removed,
+                                now: now, graduationGate: gate)
+            if removed {
+                tooEasyUndoElementID = element.id
+                tooEasyUndoToken += 1
+            }
+        } else {
+            let rating: FSRS.Rating = outcome == .good ? .good : (outcome == .hard ? .hard : .again)
+            ElementGrader.grade(elementID: element.id, exampleID: card.item.id, rating: rating, now: now,
+                                graduationGate: gate)
         }
         DataManager.shared.logSituationItem(itemID: card.item.id, elementID: element.id, rating: outcome, at: now)
     }
@@ -581,7 +607,8 @@ struct SituationSessionView: View {
     /// <prefix>INDEX=n opens card n; STEP=n jumps to drill n; STAGE=fill|done
     /// previews a filled answer or the finished state; TIP=<word key> pins that
     /// word's English open; AUTOPLAY=1|wrong plays through (wrong = one miss
-    /// per drill first); BACK_AT=n stops autoplay on card n and goes back one.
+    /// per drill first); BACK_AT=n stops autoplay on card n and goes back one;
+    /// TOO_EASY=1 arms "Trop facile" on the first card.
     private func applyLaunchFlags() {
         let env = ProcessInfo.processInfo.environment
         func flag(_ name: String) -> String? { env[flagPrefix + name] }
@@ -594,6 +621,7 @@ struct SituationSessionView: View {
         launchStage = flag("STAGE")
         launch = SituationLaunch(tip: flag("TIP"), autoplay: flag("AUTOPLAY"))
         backAt = flag("BACK_AT").flatMap(Int.init)
+        launchTooEasy = flag("TOO_EASY") == "1"
     }
     #endif
 }

@@ -408,6 +408,40 @@ enum SituationOutcome: Int, Comparable {
     }
 }
 
+// MARK: - Trop facile
+
+/// Book 2's side of the shared "Trop facile" gate (`Features/Drill/TooEasy.swift`,
+/// same learning logic in every book).
+enum SituationTooEasy {
+    /// An armed card removes its element only when every drill was right the
+    /// first time (Book 1: a clean first answer). Anything else cleans it.
+    static func removes(_ outcome: SituationOutcome) -> Bool {
+        outcome == .good
+    }
+
+    /// Queue indices to keep once the gate on card `index` resolves: the
+    /// session moves to the next element (Book 1's `.nextElement`), so later
+    /// cards of the same element leave the queue.
+    static func keptAfter(index: Int, elementIDs: [String]) -> [Int] {
+        guard elementIDs.indices.contains(index) else { return Array(elementIDs.indices) }
+        let element = elementIDs[index]
+        return elementIDs.indices.filter { $0 <= index || elementIDs[$0] != element }
+    }
+
+    /// The control shows on the live card before it is finished: armable while
+    /// the card is still clean and no solved drill is settling (Book 1 hides it
+    /// once an answer is checked), and an armed card keeps its line after a miss.
+    static func showsControl(finished: Bool, reviewing: Bool, locked: Bool, pending: Bool, clean: Bool) -> Bool {
+        !finished && !reviewing && (pending || (clean && !locked))
+    }
+
+    /// Annuler is offered only while the card can still remove. After a miss
+    /// the clean is due (Book 1 resolves on the first answer), so no escape.
+    static func canCancel(clean: Bool) -> Bool {
+        clean
+    }
+}
+
 // MARK: - Réviser selection and mastery
 
 /// What the app remembers about one item (`situation_item_log`).

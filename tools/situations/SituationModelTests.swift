@@ -167,6 +167,28 @@ struct SituationModelTests {
         check(SituationOutcome.drill(misses: 0, solved: true) == .good, "first try → good")
         check(SituationOutcome.drill(misses: 2, solved: false) == .again, "not solved → again")
 
+        // Trop facile (same rule as Book 1): only a clean card removes the element;
+        // after the gate resolves, the element's later cards leave the queue.
+        check(SituationTooEasy.removes(.good), "too easy: all first try removes")
+        check(!SituationTooEasy.removes(.hard), "too easy: a retry cleans instead")
+        check(!SituationTooEasy.removes(.again), "too easy: unsolved cleans instead")
+        check(SituationTooEasy.keptAfter(index: 1, elementIDs: ["a", "b", "b", "b", "c", "b"]) == [0, 1, 4],
+              "too easy: later cards of the element are skipped, earlier and other elements kept")
+        check(SituationTooEasy.keptAfter(index: 0, elementIDs: ["a"]) == [0], "too easy: last card keeps itself")
+        func shows(finished: Bool = false, reviewing: Bool = false, locked: Bool = false,
+                   pending: Bool = false, clean: Bool = true) -> Bool {
+            SituationTooEasy.showsControl(finished: finished, reviewing: reviewing, locked: locked,
+                                          pending: pending, clean: clean)
+        }
+        check(shows(), "too easy: control on a clean live card")
+        check(!shows(clean: false), "too easy: no control once the card has a miss")
+        check(shows(pending: true, clean: false), "too easy: armed card keeps its line after a miss")
+        check(!shows(finished: true, pending: true), "too easy: no control on a finished card")
+        check(!shows(reviewing: true), "too easy: no control while reviewing")
+        check(!shows(locked: true), "too easy: cannot arm while a solved drill settles")
+        check(SituationTooEasy.canCancel(clean: true), "too easy: Annuler while the card is still clean")
+        check(!SituationTooEasy.canCancel(clean: false), "too easy: no Annuler after a miss (the clean is due)")
+
         // Tooltip text: spoken forms carry `* `.
         let spoken = words.values.filter(\.spoken)
         check(!spoken.isEmpty, "word list has spoken forms")

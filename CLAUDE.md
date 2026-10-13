@@ -2,6 +2,15 @@
 
 > ## ▶ RECENT HANDOFFS
 >
+> **HARD RULE — "Trop facile" in every book (user, 2026-10-13).** Every book
+> offers the "Trop facile" button with ONE learning logic: arm on a card, still
+> answer it; a clean answer grades .easy + suspends (instant maîtrisé, undo pill);
+> anything else cleans the element's records; either way the session moves to
+> the next element. Shared code: `Features/Drill/TooEasy.swift` (`TooEasyGate`,
+> `TooEasyControl`, `.tooEasyUndo`). Book 1: `DrillView`/`DrillSessionView`.
+> Book 2: `SituationCardView`/`SituationSessionView` + `SituationTooEasy`. A new
+> book or session view reuses these; never fork the logic.
+>
 > **▶ BOOK 2 — START HERE: `docs/plans/2026-10-13-book-2-release-handoff.md`**
 > (written 2026-10-13). Book 2 is release ready: 25 modules, 3,000 items, all
 > 6,459 clips, release check passed on the simulator, `main` pushed. Next: install

@@ -53,6 +53,15 @@ struct SituationCardState {
     var showFollow = false
     /// True while a solved drill settles, before the next one slides in.
     var locked = false
+    /// "Trop facile" armed on this card (shared gate, `TooEasy.swift`): the
+    /// session resolves it when the card is finished.
+    var pendingTooEasy = false
+
+    /// No miss on this card so far (solved drills all first try, none in the
+    /// drill in play) — the only state in which "Trop facile" can still remove.
+    var clean: Bool {
+        drillMisses == 0 && !drillFailed && drillOutcomes.allSatisfy { $0 == .good }
+    }
 
     /// A fresh card at its first drill.
     init(item: SituationItem, salt: Int) {
@@ -835,15 +844,23 @@ struct SituationCardView: View {
             default: return ("Vérifier", state.selected != nil)
             }
         }()
-        return Button {
-            if reviewing { onForward() } else if drill == nil { onNext() } else { withAnimation(Self.motion) { check() } }
-        } label: {
-            Text(label).contentTransition(.identity)
+        return VStack(spacing: Spacing.sm) {
+            // "Trop facile" — every book has it (shared: `TooEasy.swift`).
+            if SituationTooEasy.showsControl(finished: state.finished, reviewing: reviewing, locked: state.locked,
+                                             pending: state.pendingTooEasy, clean: state.clean) {
+                TooEasyControl(pending: $state.pendingTooEasy,
+                               canCancel: SituationTooEasy.canCancel(clean: state.clean))
+            }
+            Button {
+                if reviewing { onForward() } else if drill == nil { onNext() } else { withAnimation(Self.motion) { check() } }
+            } label: {
+                Text(label).contentTransition(.identity)
+            }
+            .buttonStyle(DrillButtonStyle())
+            .disabled(!enabled)
+            .opacity(enabled ? 1 : 0.4)
+            .accessibilityHint(footerHint(enabled: enabled))
         }
-        .buttonStyle(DrillButtonStyle())
-        .disabled(!enabled)
-        .opacity(enabled ? 1 : 0.4)
-        .accessibilityHint(footerHint(enabled: enabled))
     }
 
     /// Why the footer button is off, for VoiceOver.
