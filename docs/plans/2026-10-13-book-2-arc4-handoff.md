@@ -114,3 +114,8 @@ Read the lessons in the next-session handoff §4 before you write the author pro
   2. Passé composé with être: « je suis allée » reads "I am · gone". Consider widening être forms: suis = "am / (je suis allée = I went)", es, est, sommes, êtes, sont similarly.
   3. Phrase keys to add: il y avait, en ville, de la chance, bon week-end, ce n'est pas grave, si j'étais vous, il n'y a plus de.
   4. Widen: vas → "go / are going (to) / are doing (tu)", on va → "let's go / we're going (to)", votre → "your (polite / plural)", sort → "go out / goes out", pris → "taken, had, got", rentre → "go / come home", en boîte → "at / to a club, clubbing", rembourse → "pay back, refund".
+- [x] Judges: all 20 done; findings in `docs/plans/arc4-judges/`.
+- [x] Fixers: all 10 done (`e57fcd2`, module 20 commit after).
+- [x] Book-wide gloss pass (`763b66b`): spec `docs/plans/arc4-judges/gloss_spec.json`, applied by `tools/situations/apply_gloss_spec.py` (55 widenings, 42 new base phrase keys). Reassembled; lint --no-audio OK, Grammalecte 6,272 lines 0 flags, 87 tests, Swift PASS. **New keys need audio** (plain `generate_audio.py` run) — strict lint fails until then.
+- [ ] Gloss verification sweep over ALL 20 modules (user rule): fresh dumps `/private/tmp/claude-501/gloss-sweep/dumps/NN.md`, prompt `.../gloss-sweep/prompt.md`, findings `.../gloss-sweep/findings/NN.md`. Batch 1 (01–07) launched; then 08–14, 15–20. Then apply findings (second spec) and re-verify.
+- Then: vocab audit, review set v9, user verdict, production audio 16–20 + new keys.
