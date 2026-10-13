@@ -334,6 +334,15 @@ struct SituationCardView: View {
                 .onChange(of: geo.size.height) { _, _ in scrollToEnd(reader) }
                 .onChange(of: state.showFollow) { _, _ in scrollToEnd(reader) }
                 .onAppear { scrollToEnd(reader) }
+                // When the chat is taller than its space (small screens), the
+                // oldest line fades out under the cue instead of being cut mid-line.
+                .mask {
+                    VStack(spacing: 0) {
+                        LinearGradient(colors: [.clear, .black], startPoint: .top, endPoint: .bottom)
+                            .frame(height: fit.chatContent > geo.size.height ? 28 : 0)
+                        Rectangle()
+                    }
+                }
             }
         }
     }
