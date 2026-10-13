@@ -21,9 +21,9 @@
 > `xcrun devicectl device copy from --domain-type appDataContainer`.
 >
 > **▶ BOOK 2 — START HERE: `docs/plans/2026-10-13-book-2-release-handoff.md`**
-> (written 2026-10-13). Book 2 is release ready: 25 modules, 3,000 items, all
-> 6,459 clips, release check passed on the simulator, `main` pushed. Next: install
-> on the phone (ask which build) and the phone-only checks in its §2. Previous
+> (written 2026-10-13). **Book 2 is DONE**: 25 modules, 3,000 items, all 6,459
+> clips. The main app is on the phone and all phone checks passed (§6). Next, only
+> when asked: the Écrire typing drill, in its own session. Previous
 > start point: `docs/plans/2026-10-13-book-2-arc5-done-handoff.md` (§0 = session log).
 > User rule: every gloss correct in every drill — `tools/situations/gloss_dump.py`.
 >

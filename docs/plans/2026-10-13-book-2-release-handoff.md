@@ -1,4 +1,4 @@
-# Book 2 handoff: start here (release ready, install next)
+# Book 2 handoff: start here (done, installed on the phone)
 
 **Written:** 2026-10-13, end of session.
 **Repo:** `carambole/`, branch `main`, **pushed**.
@@ -57,3 +57,18 @@ Afterwards, delete `/tmp/cb-device` and `/tmp/cb-book2-pilot-*`.
 
 - The Écrire typing drill, in its own session.
 - Release-mode install (optional): add `-configuration Release` to the main app build. It drops the Test book files.
+
+## 6. Done (later on 2026-10-13)
+
+The main app is installed on the iPhone 18 Pro from `main` (`37df6776`). The user checked every item in §2 on the phone and it passed.
+
+Fixed in this session:
+- `d0d766cb`, `37df6776`: background music. The silent star video keeps the audio session active. Changing the category on an active session stopped Apple Music. Now: `.ambient` outside clips; for each clip, release → `.playback` + `[.mixWithOthers, .duckOthers]` → activate; then release with notify → `.ambient`. The phone log confirms that music keeps playing and is lowered during clips. Debug builds write `Documents/audio_diag.txt`.
+- `53f123a8`: "Trop facile" in Book 2, with the same code and logic as Book 1 (`Features/Drill/TooEasy.swift`). This is a hard rule for every book (CLAUDE.md).
+- The `round-history` branch and worktree are deleted. Only `main` is left.
+
+Book 2 is done. Still open, each when the user asks:
+- The Écrire typing drill, in its own session.
+- A Release install (drops the Test book files).
+- The Test book on the phone is still v10. Rebuild it only if the user wants it.
+- `project.pbxproj` is left uncommitted. Xcode only rewrote `EXCLUDED_SOURCE_FILE_NAMES` as a list; it means the same.
