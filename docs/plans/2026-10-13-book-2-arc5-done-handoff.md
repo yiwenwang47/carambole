@@ -1,4 +1,6 @@
-# Book 2 handoff: start here (arc 5 content done)
+# Book 2 handoff: arc 5 content done (superseded)
+
+> **Superseded:** start at the [release handoff](2026-10-13-book-2-release-handoff.md). §0 below is the session log.
 
 **Written:** 2026-10-13, end of session.
 **Repo:** `carambole/`, branch `main`, **not pushed**.
@@ -29,7 +31,8 @@
   - Open: `Speaker` sets `.duckOthers` and never deactivates the session, so other audio may stay ducked after the first clip. Check on the phone before changing it.
   - Open: on small screens the oldest chat bubble is cut mid-line under the cue, with no fade.
   - Book 2 Réglages reuses Book 1's English copy ("New grammar elements per day").
-- Simulator: Test book with all of the above. Phone: still v10. `main` not pushed.
+- After the release check: `4511111a` (audio session released), `7d767cc7` (chat fade), `f11705c1` (Book 2 Réglages wording), `cb66c215` (Test book files out of Release).
+- Simulator: Test book with all of the above. Phone: still v10. `main` pushed.
 
 ## 1. (Done, see §0) Production audio: production audio for 21–25
 

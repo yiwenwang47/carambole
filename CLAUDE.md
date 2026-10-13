@@ -2,12 +2,12 @@
 
 > ## ▶ RECENT HANDOFFS
 >
-> **▶ BOOK 2 — START HERE: `docs/plans/2026-10-13-book-2-arc5-done-handoff.md`**
-> (written 2026-10-13, §0 updated later that day). ALL 25 modules authored, judged,
-> fixed, assembled (3,000 items). Production audio for all 25 is DONE (6,459 clips).
-> Hint bubbles wrap and show the bracketed note as a small second line. Next:
-> release work (handoff §5). User rule: every gloss correct in every drill —
-> `tools/situations/gloss_dump.py`.
+> **▶ BOOK 2 — START HERE: `docs/plans/2026-10-13-book-2-release-handoff.md`**
+> (written 2026-10-13). Book 2 is release ready: 25 modules, 3,000 items, all
+> 6,459 clips, release check passed on the simulator, `main` pushed. Next: install
+> on the phone (ask which build) and the phone-only checks in its §2. Previous
+> start point: `docs/plans/2026-10-13-book-2-arc5-done-handoff.md` (§0 = session log).
+> User rule: every gloss correct in every drill — `tools/situations/gloss_dump.py`.
 >
 > **▶ BOOK 2 — arc 5 plan + approved defaults:** `docs/plans/2026-10-13-book-2-arc5-handoff.md`, `docs/plans/2026-10-13-book-2-arc5-plan.md`.
 >
