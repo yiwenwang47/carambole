@@ -10,7 +10,7 @@ You are an independent, READ-ONLY content judge for Book 2 (*En situation*). It 
 ## Read first
 
 - `docs/plans/2026-10-11-book-2-content-handoff.md` §3, §4, §8 (rules, cast, item checklist)
-- `docs/plans/2026-10-11-book-2-cafe-handoff.md` §3 (the error classes judges find)
+- `docs/archive/plans/2026-10-11-book-2-cafe-handoff.md` §3 (the error classes judges find)
 - The current batch handoff (named in your task)
 - `tools/situations/README.md` (JSON shape: turns; drills `comprehend` / `reply` / `pick` / `complete` / `fix` / `word`; the `___` gap; error objects)
 

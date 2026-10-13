@@ -2,7 +2,7 @@
 
 **Written:** 2026-10-13, end of session.
 **Repo:** `carambole/`, branch `main`, **pushed**.
-**Previous start point:** [arc 5 done handoff](2026-10-13-book-2-arc5-done-handoff.md). Its §0 has this session's commits and the release check in detail.
+**Previous start point:** [arc 5 done handoff](../archive/plans/2026-10-13-book-2-arc5-done-handoff.md). Its §0 has this session's commits and the release check in detail.
 
 ## 1. Start here: install on the phone
 

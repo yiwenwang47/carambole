@@ -17,7 +17,7 @@ Don't commit. Other fixers work on the other halves at the same time.
 - The judge spec: `tools/situations/agents/judge.md` (the rules)
 - Your judge reports (named in your task)
 - `tools/situations/README.md`
-- `docs/plans/2026-10-11-book-2-cafe-handoff.md` §3
+- `docs/archive/plans/2026-10-11-book-2-cafe-handoff.md` §3
 
 ## What to apply
 

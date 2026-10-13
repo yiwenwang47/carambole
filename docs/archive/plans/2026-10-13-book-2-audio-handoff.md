@@ -51,11 +51,11 @@ python3 tools/situations/normalize_audio.py --all --check
    - `MASC_SELF` now also catches « je me suis … » and *couché, tombé, épuisé, trempé, convaincu, sûr*.
 3. **Authors** (10, about 7 at a time). Then the gloss conflict scan and assembly (`e28c8f2`).
    - Module 04 decoy « ça vous dit, » became « vous voulez », because module 19 now teaches *ça vous dit*.
-4. **Judges** (20) → findings in `docs/plans/arc4-judges/`. **Fixers** (10) → `e57fcd2` and the module 20 commit.
-5. **Book-wide gloss pass 1** (`763b66b`): `docs/plans/arc4-judges/gloss_spec.json`.
-6. **Gloss sweep of all 20 modules** (one checker per module) → `docs/plans/gloss-sweep/NN.md`.
+4. **Judges** (20) → findings in `docs/archive/plans/arc4-judges/`. **Fixers** (10) → `e57fcd2` and the module 20 commit.
+5. **Book-wide gloss pass 1** (`763b66b`): `docs/archive/plans/arc4-judges/gloss_spec.json`.
+6. **Gloss sweep of all 20 modules** (one checker per module) → `docs/archive/plans/gloss-sweep/NN.md`.
    - It found 24 MUST findings and about 140 SHOULD findings.
-   - **Pass 2** (`abfbf56`): `docs/plans/gloss-sweep/spec2.json` + `spec2_notes.md`. 57 widenings, 84 new keys, 1 rewrite (02 morning_d07 « Non ! Plus ___ »).
+   - **Pass 2** (`abfbf56`): `docs/archive/plans/gloss-sweep/spec2.json` + `spec2_notes.md`. 57 widenings, 84 new keys, 1 rewrite (02 morning_d07 « Non ! Plus ___ »).
 7. **Vocab audit:** of the new base entries, 115 single words are not literally in *Fondations*. All are inflections of taught words, decoys, parts of taught phrases or proper nouns. No action.
 8. **Review set v9** (`d56babc`): checked on the simulator, installed on the phone, approved.
 

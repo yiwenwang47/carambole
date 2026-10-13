@@ -22,7 +22,7 @@
 - Open, offered and not yet chosen: trim the 19 glosses over 60 characters (re-check each with `gloss_dump.py`).
 - The History page already lists wrong attempts by day (`HistoryViewModel.loadMistakes`), so §5's "doesn't show attempt-log rows" looks stale. Check it on the simulator.
 - `98a11554`: VoiceOver gaps fixed (cue and Leçon title are headings, decorative module number hidden, speaker names read as written). Everything else was already labelled.
-- `f5598a6c`: the 19 glosses over 60 characters trimmed, each checked against every line that uses it. Spec: `docs/plans/2026-10-13-gloss-trim-spec.json`.
+- `f5598a6c`: the 19 glosses over 60 characters trimmed, each checked against every line that uses it. Spec: `docs/archive/plans/2026-10-13-gloss-trim-spec.json`.
 - **Release check (Task 7), simulator only:**
   - Pass: Book 1 lints (lint_topics, deep_lint, bank_lint); Book 2 strict lint; 88 + 57 Python tests; pilot tests; Swift model test (3,000 items); pilot scenario test; Debug and Release builds.
   - Pass: the real v4 export (`~/Downloads/carambole-progress.sqlite`) upgrades to v5 with all Book 1 rows kept (492 / 4,348 / 389).

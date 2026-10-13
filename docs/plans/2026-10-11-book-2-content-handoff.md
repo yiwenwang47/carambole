@@ -1,6 +1,6 @@
 # Book 2 handoff — authoring the real content
 
-> **Status 2026-10-11:** module 06 is authored and reviewed. Start from the [café handoff](2026-10-11-book-2-cafe-handoff.md) for state and next steps; this file stays the rulebook.
+> **Status 2026-10-11:** module 06 is authored and reviewed. Start from the [café handoff](../archive/plans/2026-10-11-book-2-cafe-handoff.md) for state and next steps; this file stays the rulebook.
 
 **Date:** 2026-10-11
 **Repo:** `/Users/yiwenwang/Documents/CMU/research/personal/carambole/carambole`
@@ -10,8 +10,8 @@
 ## 1. Read first
 
 1. This file. It has everything needed to author.
-2. [Book 2 action plan](2026-10-11-book-2-action-plan.md). The current sections are *Content direction*, the syllabus table, *Interaction and content contract* and *Implementation tasks*.
-3. [Pilot v2 handoff](2026-10-11-book-2-pilot-v2-handoff.md). It covers the binding UI rules, the drill mix, review set v3 and the pilot screen as built.
+2. [Book 2 action plan](../archive/plans/2026-10-11-book-2-action-plan.md). The current sections are *Content direction*, the syllabus table, *Interaction and content contract* and *Implementation tasks*.
+3. [Pilot v2 handoff](../archive/plans/2026-10-11-book-2-pilot-v2-handoff.md). It covers the binding UI rules, the drill mix, review set v3 and the pilot screen as built.
 4. The pilot content `carambole/Debug/testbook_situation.json`. These 9 cards are the approved style sample.
 5. The two mocks (private artifacts):
    - Dialogue screen and the six dialogue drills: `https://claude.ai/artifact/WisTx5oe1Jq5ZW3h6SL6gN`

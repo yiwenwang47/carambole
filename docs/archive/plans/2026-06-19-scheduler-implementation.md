@@ -1,7 +1,7 @@
 # Scheduler — App-Side Implementation Plan
 
 **Date:** 2026-06-19 · **Branch:** `scheduler` (off `main`)
-**Drives:** `docs/plans/2026-06-19-schedule-design.md` → "Still to build".
+**Drives:** `docs/archive/plans/2026-06-19-schedule-design.md` → "Still to build".
 
 Realizes the daily-driven learning loop in the app: a hard-capped daily NEW
 intake, a soft REVIEW target the user may exceed via overflow, and a home that

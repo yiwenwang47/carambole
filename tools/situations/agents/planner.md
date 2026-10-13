@@ -14,8 +14,8 @@ Everything else is read-only. Don't commit.
 
 - The current batch handoff
 - `docs/plans/2026-10-11-book-2-content-handoff.md` §3–§8
-- `docs/plans/2026-10-11-book-2-cafe-handoff.md` §3
-- The syllabus table in `docs/plans/2026-10-11-book-2-action-plan.md`
+- `docs/archive/plans/2026-10-11-book-2-cafe-handoff.md` §3
+- The syllabus table in `docs/archive/plans/2026-10-11-book-2-action-plan.md`
 - The arc 1 plan and matrices (`docs/plans/2026-10-11-book-2-arc1-*.md`): copy their format
 - `tools/situations/README.md`
 - `tools/situations/modules.json`

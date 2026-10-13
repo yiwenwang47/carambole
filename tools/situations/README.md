@@ -163,7 +163,7 @@ widening the entry (check every other use), adding a longer phrase key
 `apply_gloss_spec.py` applies a spec `{"widen": {key: en}, "add": {key: en}}`
 to every draft words file and `words.json` (rewrites stay manual), then run
 `assemble.py`. New keys need audio from a plain `generate_audio.py` run. Specs
-so far: `docs/plans/arc4-judges/gloss_spec.json`, `docs/plans/gloss-sweep/spec2.json`.
+so far: `docs/archive/plans/arc4-judges/gloss_spec.json`, `docs/archive/plans/gloss-sweep/spec2.json`.
 
 The full-move linter checks four dialogue drill types, at least half Répondre
 and Compléter, one clarification or repetition dialogue, and two alternate

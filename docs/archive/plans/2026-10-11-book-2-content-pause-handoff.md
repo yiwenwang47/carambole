@@ -11,7 +11,7 @@
 
 - `carambole/Resources/Situations/situations_manifest.json`, `06_au_cafe.json`, and `words.json`: production-shaped content. The module currently has 8 moves, 80 dialogues, and 40 standalone cards. `words.json` has 212 entries after the latest assembly.
 - `tools/situations/drafts/06_cafe_first_half.json` and `06_cafe_second_half.json`: authored source halves; adjacent `*_words.json` files hold their candidate glossary entries. **Edit these sources, then run `assemble.py`**. Direct edits to production JSON will be overwritten.
-- `docs/plans/2026-10-11-book-2-cafe-first-half-matrix.md` and `...second-half-matrix.md`: item plans and vocabulary recurrence maps.
+- `docs/archive/plans/2026-10-11-book-2-cafe-first-half-matrix.md` and `...second-half-matrix.md`: item plans and vocabulary recurrence maps.
 - `tools/situations/lint.py`, `test_lint.py`, `README.md`: schema, structural/content lint, and tests. The manifest name avoids the Xcode bundle's flattened `Topics/manifest.json` collision. Production item audio keys are `<item-id>_t<turn-index>` and `<item-id>_f`; word keys use `sitw_...`.
 - `tools/situations/assemble.py`, `deep_lint.py`, `review_set.py`, `generate_audio.py`, `test_tools.py`: assembly, French grammar checking, review export, audio generation, and adapter tests.
 

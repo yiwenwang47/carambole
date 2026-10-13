@@ -15,7 +15,7 @@ Write only your two files. Other authors work on the other halves at the same ti
    - The French in the matrix is a sketch; write the final, natural French yourself.
    - Deviate from a row only to fix a real problem, and list every deviation in your report.
 2. `docs/plans/2026-10-11-book-2-content-handoff.md` §3 (rules), §4 (cast), §6 (JSON shape), §8 (item checklist).
-3. `docs/plans/2026-10-11-book-2-cafe-handoff.md` §3: the error classes the judges find.
+3. `docs/archive/plans/2026-10-11-book-2-cafe-handoff.md` §3: the error classes the judges find.
 4. `tools/situations/agents/judge.md`: what the judges will check. Write so they find nothing.
 5. `tools/situations/README.md` and `carambole/Resources/Situations/06_au_cafe.json`: the exact shape and the quality bar.
 6. `carambole/Resources/Situations/words.json`: the existing glosses.
@@ -38,7 +38,7 @@ Write only your two files. Other authors work on the other halves at the same ti
 
 ## Gloss check (user rule: every gloss correct in every drill)
 
-Before you validate, run `tools/situations/gloss_dump.py` on a scratch module + merged words and read every `key=gloss` pair against its sentence. Avoid senses an existing gloss doesn't cover (reword, or add a longer phrase key with its own gloss). Don't edit existing entries; list needed widenings in your report. Known traps: `docs/plans/2026-10-13-book-2-arc4-plan.md` §2.8 and the gloss specs in `docs/plans/arc4-judges/` and `docs/plans/gloss-sweep/`.
+Before you validate, run `tools/situations/gloss_dump.py` on a scratch module + merged words and read every `key=gloss` pair against its sentence. Avoid senses an existing gloss doesn't cover (reword, or add a longer phrase key with its own gloss). Don't edit existing entries; list needed widenings in your report. Known traps: `docs/archive/plans/2026-10-13-book-2-arc4-plan.md` §2.8 and the gloss specs in `docs/archive/plans/arc4-judges/` and `docs/archive/plans/gloss-sweep/`.
 
 Also: check every Comprendre `correct` by hand; every Choisir le ton option must be natural French; give a verb and its past participle different audio keys (`_verb` / `_past`).
 

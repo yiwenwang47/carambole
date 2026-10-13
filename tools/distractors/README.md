@@ -42,4 +42,4 @@ or the multiset-subset invariant would break. After applying, run
 - The merge uses a style-preserving serializer (scalar arrays inline, object arrays
   pretty-printed) so the git diff is just the changed `tokenBank` lines.
 - Used 2026-06-19 to re-author all 1440 construis banks (avg extra distractors
-  1.24 → 2.62). See `docs/plans/2026-06-19-token-shuffle-distractors-design.md`.
+  1.24 → 2.62). See `docs/archive/plans/2026-06-19-token-shuffle-distractors-design.md`.
