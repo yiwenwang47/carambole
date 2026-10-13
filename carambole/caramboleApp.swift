@@ -11,6 +11,9 @@ import SwiftUI
 struct caramboleApp: App {
     init() {
         AppFonts.register()
+        // Before the silent star video plays: the default session would stop
+        // the learner's music on launch.
+        Speaker.useAmbientSession()
         #if DEBUG
         DrillEngine._selfTest()
         DrillView._selfTest()

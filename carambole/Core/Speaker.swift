@@ -92,7 +92,16 @@ final class Speaker: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
             ?? Bundle.main.url(forResource: key, withExtension: "mp3", subdirectory: "Audio")
     }
 
-    private var sessionConfigured = false
+    /// Between clips the app plays only the silent star video. `.ambient`
+    /// mixes with other apps' audio, so opening the app never stops the
+    /// learner's music (the default `.soloAmbient` session did, even though the
+    /// video has no sound track). Called at launch and after every clip.
+    static func useAmbientSession() {
+        #if os(iOS)
+        try? AVAudioSession.sharedInstance().setCategory(.ambient)
+        #endif
+    }
+
     /// Routes speech to `.playback` so a deliberate "écouter" tap is audible
     /// even when other audio is playing; `.duckOthers` lowers background audio
     /// only while a clip plays. The session is released when the clip ends or
@@ -100,8 +109,10 @@ final class Speaker: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
     private func activateSession() {
         #if os(iOS)
         let session = AVAudioSession.sharedInstance()
-        if !sessionConfigured {
-            sessionConfigured = true
+        if session.category != .playback {
+            // Ducking starts on activation, and the silent star video may hold
+            // the session active already: release it, switch, then take it again.
+            try? session.setActive(false)
             try? session.setCategory(.playback, mode: .spokenAudio, options: [.duckOthers])
         }
         try? session.setActive(true)
@@ -111,6 +122,7 @@ final class Speaker: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
     private func deactivateSession() {
         #if os(iOS)
         try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+        Self.useAmbientSession()
         #endif
     }
 
