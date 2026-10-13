@@ -67,8 +67,15 @@ Fixed in this session:
 - `53f123a8`: "Trop facile" in Book 2, with the same code and logic as Book 1 (`Features/Drill/TooEasy.swift`). This is a hard rule for every book (CLAUDE.md).
 - The `round-history` branch and worktree are deleted. Only `main` is left.
 
-Book 2 is done. Still open, each when the user asks:
+Book 2 is done.
+
+## 7. Final state (end of 2026-10-13)
+
+- **Phone:** a **Release** build of `main` is installed (`wen.carambole`). It has no Test book files, no `CB_*` flags and no audio log. The Test book app was uninstalled at the user's request.
+- **Repo:** only `main`, clean and pushed. `CLAUDE.md` is trimmed to the current rules, commands and open items. Finished plans are in `docs/archive/` (`git mv`, history kept), and references point there. The 3.9 GB of old Instruments traces (`tools/perf/out`) and the caches were deleted.
+- **Kept by decision:** `tools/situations/drafts/`. `assemble.py` builds every Book 2 module and `words.json` from it, and `apply_gloss_spec.py` edits it. It is the source for any later Book 2 content fix.
+- **Kept:** the Test book code (`carambole/Debug/`, `pilot2_*` clips, `tools/pilot/`). Debug builds only; use it for hand testing new drills.
+
+Still open, each only when the user asks:
 - The Écrire typing drill, in its own session.
-- A Release install (drops the Test book files).
-- The Test book on the phone is still v10. Rebuild it only if the user wants it.
-- `project.pbxproj` is left uncommitted. Xcode only rewrote `EXCLUDED_SOURCE_FILE_NAMES` as a list; it means the same.
+- The other open items in `CLAUDE.md` (Book 1 English explanations, Iris iridescence, the remaining swipe-back guards, stutter leads).
