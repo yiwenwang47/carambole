@@ -2,14 +2,14 @@
 
 > ## ▶ RECENT HANDOFFS
 >
-> **▶ BOOK 2 — START HERE: `docs/plans/2026-10-13-book-2-audio-handoff.md`**
-> (written 2026-10-12). Arc 4 (modules 16–20) authored, judged, fixed,
-> assembled; review set v9 approved on the phone. Production audio DONE
-> 2026-10-13: 5,278/5,278 clips, strict `lint.py` OK, all clips normalised.
-> Review set v10 (production audio, 16–20) on the phone: user "sounds ok".
-> Next: arc 5 (modules 21–25), handoff §5. User rule: every gloss
-> correct in every drill — `tools/situations/gloss_dump.py`; two book-wide
-> gloss passes over 01–20 (`docs/plans/arc4-judges/`, `docs/plans/gloss-sweep/`).
+> **▶ BOOK 2 — START HERE: `docs/plans/2026-10-13-book-2-arc5-handoff.md`**
+> (written 2026-10-13). Arc 4 (16–20) complete: production audio 5,278/5,278,
+> v10 approved on the phone. Arc 5 (21–25, the last arc) is PLANNED
+> (`docs/plans/2026-10-13-book-2-arc5-plan.md` + 5 matrices). Next: user OKs
+> the plan §12 defaults, then authoring (plan §11). User rule: every gloss
+> correct in every drill — `tools/situations/gloss_dump.py`.
+>
+> **▶ BOOK 2 — arc 4 audio + gloss decisions:** `docs/plans/2026-10-13-book-2-audio-handoff.md`.
 >
 > **▶ BOOK 2 — arc 4 log:** `docs/plans/2026-10-13-book-2-arc4-handoff.md` §5.
 > Carousel (`56af4b7`): `Features/Situation/SituationCardView.swift`.

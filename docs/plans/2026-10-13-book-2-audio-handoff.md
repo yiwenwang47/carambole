@@ -1,4 +1,6 @@
-# Book 2 handoff: start here (arc 4 audio)
+# Book 2 handoff: arc 4 audio
+
+> **Superseded as the start point by [arc 5 handoff](2026-10-13-book-2-arc5-handoff.md).** §3–§4 stay binding.
 
 **Written:** 2026-10-12, end of session.
 **Repo:** `carambole/`, branch `main`, **not pushed**.
