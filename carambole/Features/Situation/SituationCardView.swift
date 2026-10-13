@@ -573,7 +573,12 @@ struct SituationCardView: View {
         return VStack(spacing: 0) {
             VStack(spacing: 1) {
                 Text(tip.french).font(.label(size: 12, wght: 500)).opacity(0.65)
-                Text(tip.english).font(.display(size: 15, wght: 500))
+                let parts = Self.tipParts(tip.english)
+                Text(parts.meaning).font(.display(size: 15, wght: 500))
+                if let note = parts.note {
+                    Text(note).font(.label(size: 12, wght: 500)).opacity(0.65)
+                        .padding(.top, 2)
+                }
             }
             .multilineTextAlignment(.center)
             .fixedSize(horizontal: false, vertical: true)
@@ -589,6 +594,27 @@ struct SituationCardView: View {
         .frame(width: width, height: max(0, word.minY - 4), alignment: .bottom)
         .offset(x: centerX - width / 2)
         .transition(.opacity)
+    }
+
+    /// Splits "meaning (note)" into the meaning and the note without its
+    /// brackets, so a long gloss reads as a short meaning plus a small note.
+    /// Only the last bracket group splits off, and only after a space:
+    /// "cancel(s) (je, il)" gives "cancel(s)" + "je, il"; "close(s), shut(s)"
+    /// and a gloss that is all one bracket group stay whole.
+    static func tipParts(_ english: String) -> (meaning: String, note: String?) {
+        guard english.hasSuffix(")") else { return (english, nil) }
+        let chars = Array(english)
+        var depth = 0
+        var open = chars.count - 1
+        while open >= 0 {
+            if chars[open] == ")" { depth += 1 }
+            if chars[open] == "(" { depth -= 1; if depth == 0 { break } }
+            open -= 1
+        }
+        guard open > 0, chars[open - 1] == " " else { return (english, nil) }
+        let meaning = String(chars[..<(open - 1)])
+        let note = String(chars[(open + 1)..<(chars.count - 1)])
+        return (meaning, note)
     }
 
     // MARK: - Drill zone
