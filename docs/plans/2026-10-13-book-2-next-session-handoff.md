@@ -9,9 +9,7 @@
 
 ## 1. Start here
 
-1. **Carousel for going back (user decision; do it first).**
-   - The user wants Book 1's real carousel in Book 2. They tried the one-card slide (option 2, now on the phone) and said "nah let's do 1".
-   - The plan is in §3.
+1. **Carousel for going back: DONE (2026-10-12, late).** Book 1's real carousel is in Book 2 (§3). User decision: « Suivant » also slides (Book 1), and a left swipe on a finished card advances. Simulator-checked only; the Test book on the phone still has the old option-2 slide until reinstalled (only when the user asks).
 2. **Audio for 11–15: done.** All 3,982 production clips are present, strict `lint.py` passes for 15 modules, and the clips are committed.
 3. **Arc 4 (modules 16–20)** comes after that, using the same pipeline (§4).
 
@@ -26,38 +24,13 @@
 | Phone | The Test book has v8 plus going back (option 2 slide). The main Carambole app has NOT been reinstalled; install it only when the user asks. |
 | Going back | Built in both `SituationSessionView` and the Test book pilot (§3). The user wants the animation replaced. |
 
-## 3. Task: Book 1 carousel in Book 2
+## 3. Done: Book 1 carousel in Book 2
 
-**What exists now** (`0761e3f`, `36c23cd`):
-- Each finished card is saved as a `CardState` in `finishedCards[index]` when you leave it (`nextDialogue`).
-- `live` holds the card in play while an earlier one is shown.
-- `captureCard()` / `restoreCard()` copy between the session's `@State` and a `CardState`.
-- ‹ › chevrons sit by the counter. « Révision · … » is the place label in review, and the footer says « Suivant » / « Reprendre ».
-- `dragX` slides the single card. The thresholds, rubber-band, spring and haptic match Book 1.
-- Debug flag: `CB_PILOT_AUTOPLAY=1 CB_PILOT_BACK_AT=n` plays to dialogue n, then goes back.
-
-**Why it can't simply be a carousel:**
-- Book 1 (`Features/Drill/DrillSessionView.swift`, `carousel`, `dragGesture`, `endDrag`, `resistedOffset`) renders each drill as its own self-contained `DrillView`, so the neighbours sit side by side at `(i - cursor) * w + dragOffset`.
-- Book 2's card is drawn straight from about 20 session `@State` vars, so only one card can exist on screen.
-
-**Plan:**
-1. Extract the card into its own view.
-   - Make a `SituationCardView` with all its per-card state (step, finished, slot, gapText, placed, …) as its own `@State`, taking `Card` (production) or `PilotDialogue` (pilot).
-   - Pass callbacks for grading, logging mistakes and finishing.
-   - The session keeps the queue, `results`, `mistakes`, the summary, and the history and cursor.
-   - Watch out: card fit (`SituationCardFit`, `fit.*` geometry), the tip overlay, `locked` / `advanceSoon` timing, `autoSpeak`, and the DEBUG launch flags (`CB_SIT_*`, `CB_PILOT_*`). They all live in the card today.
-2. Do the pilot and the production view in the same way. They are near copies; consider one shared card with a small adapter instead of two copies.
-3. Port Book 1's carousel:
-   - Render `visibleIndices` (cursor ± 1), each card offset by `(i - cursor) * w + dragOffset`, with `allowsHitTesting(i == cursor)`.
-   - Use the same `resistedOffset`, `endDrag` thresholds and haptic.
-   - Cards behind the frontier are read-only: they show their finished state, mistakes and « Révision ».
-4. Keep the top bar (✕, progress, ‹ n/N ›) fixed. Only the card moves; Book 1 does the same.
-5. Vertical chat scroll must still win. Decide the axis on the first drag change (the current code does this with `dragIsHorizontal`).
-6. Then delete `CardState`, `captureCard` / `restoreCard`, `swapCard` and `dragX` if the new card view makes them redundant.
-7. Verify:
-   - Build. Record the simulator with `CB_PILOT_AUTOPLAY=1 CB_PILOT_BACK_AT=2` and look at the frames (`tools/sim/frames.swift`; no ffmpeg on this machine; PIL is available for contact sheets).
-   - Check the card fit on a long dialogue plus a reply tray (memory: the card never scrolls whole; only the tray shrinks).
-   - Install the Test book only when the user asks. Never test or record on the phone.
+- `Features/Situation/SituationCardView.swift`: one card (cue, chat, drill zone, footer, tip, card fit, autoplay). Its logic state is a `SituationCardState` that the session owns (`states[index]`), so a card rebuilt off-screen comes back exactly as it was. `CardState`, `captureCard`/`restoreCard`, `swapCard`, `dragX`, the fade-and-rise dialogue change are gone.
+- `SituationSessionView`: queue, `cursor` / `frontier`, Book 1's `visibleIndices` (cursor ± 1), offsets `(i - cursor) * w + dragOffset`, `resistedOffset`, `endDrag` thresholds, `pageSpring`, haptic. The axis is decided on the first drag change, so chat scrolls still win. `leavingIndex` = Book 1's `hideExplanationAt` (the card left with « Suivant » keeps its live look while sliding out). Top bar fixed.
+- The Test book pilot (`Debug/SituationPilotView.swift`) is now a ~60-line adapter: it decodes the review set as `SituationItem`s and runs the production session with `recordsProgress = false`, `audioPrefix "pilot2_"`, flags `CB_PILOT_*`. **Behaviour change:** the Test book now uses production rules (Choisir/Compléter: one retry, render-time shuffles), so review sets look exactly like the book.
+- Flags (both prefixes): `INDEX STEP STAGE TIP AUTOPLAY BACK_AT SKIP_INTRO`; `CB_SIT_ITEMS` for production.
+- Checked on the iPhone 18 Pro sim by frames: pilot autoplay + `BACK_AT=2` (forward and back slides), production `CB_SIT_ITEMS=sit_07_taste_s04,…` (long Transformer card: chat fixed, tray shrinks and scrolls). Real finger swipes untested (no tap automation).
 
 ## 4. Arc 4 (modules 16–20)
 
