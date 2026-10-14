@@ -7,8 +7,9 @@ app-side is `#if DEBUG` and never ships in Release.
 
 **Rules (learned the hard way, 2026-10-10):**
 - Simulators only — never test, record or profile on the user's phone.
-- Never test on empty progress: load a real database (`load-db`) or seed one
-  (`CB_SEED_DEMO=1`).
+- Never test on empty progress: load a real database (`load-db`), seed one
+  (`CB_SEED_DEMO=1`, 76 %), or set exact counts (`progress_db.py`, e.g. a
+  low-% store).
 - Look at the frames yourself (contact sheets), not just pixel-count proxies.
 - Clean up: delete recordings once frames are extracted, delete any simulator
   you created, run `sim.sh clean`. **Don't use xctrace/Instruments** unless
@@ -22,6 +23,7 @@ app-side is `#if DEBUG` and never ships in Release.
 tools/sim/sim.sh build                      # Debug build → $CB_DD (default $TMPDIR/cb-sim-dd)
 tools/sim/sim.sh install
 tools/sim/sim.sh load-db ~/Downloads/carambole-progress.sqlite   # real progress (Settings → Exporter)
+python3 tools/sim/progress_db.py <Documents>/carambole.sqlite situations 3 16   # N maîtrisé + M en cours (app opened a book once; app terminated)
 tools/sim/sim.sh launch                      # normal app
 tools/sim/sim.sh launch CB_DRILL_DEMO=el_si_synthese_01 CB_DRILL_PLACE=8 CB_DRILL_HINT_OPEN=1
 tools/sim/sim.sh remote openBook             # navigate (see DemoRemote below)

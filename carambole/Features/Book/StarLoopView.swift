@@ -66,8 +66,8 @@ struct StarLoopView: View {
 // MARK: - Ring (2D projection of the old 3D ring)
 
 /// The orbit ring of `ObjetStarController` projected with the live scene's
-/// camera: a faint full track, the maîtrisé arc, the en-cours arc after it and
-/// a bead at the end of the maîtrisé arc. Tube widths follow perspective.
+/// camera: a faint full track and a bead leading the maîtrisé arc, with the
+/// en-cours arc behind that. Tube widths follow perspective.
 private struct OrbitRing {
     let mastered: Double
     let inProgress: Double
@@ -141,20 +141,25 @@ private struct OrbitRing {
         // through as a hairline).
         tube(&tubeContext, from: 0, sweep: 2 * .pi, radius: G.trackTube, color: Color(hex: theme.starTrack),
              gloss: false, front: front, seamPad: 0.01)
+        // Bead first, then the maîtrisé arc right behind it, then en cours
+        // (the ring spins toward larger angles, so both arcs trail the bead).
+        // En cours runs on under the maîtrisé arc to the bead: one tube under
+        // the other, with no seam where they meet.
         if p > 0.002 {
-            tube(&tubeContext, from: top + sweep, sweep: 2 * .pi * Float(p), radius: G.enCoursTube,
+            tube(&tubeContext, from: top, sweep: 2 * .pi * Float(p) + sweep, radius: G.enCoursTube,
                  color: Color(hex: theme.starArcSoft), gloss: false, front: front)
         }
         if m > 0.002 {
-            tube(&tubeContext, from: top, sweep: sweep, radius: G.arcTube, color: Color(hex: theme.starArc),
-                 gloss: true, front: front)
+            tube(&tubeContext, from: top + 2 * .pi * Float(p), sweep: sweep, radius: G.arcTube,
+                 color: Color(hex: theme.starArc), gloss: true, front: front)
         }
         if beadIsFront == front { bead(&ctx) }
     }
 
+    /// The bead leads both arcs, at the end of maîtrisé + en cours.
     private var beadPosition: SIMD3<Float> {
-        let m = min(max(mastered, 0), 1)
-        return ringPoint(Float.pi / 2 + 2 * Float.pi * Float(m))
+        let m = min(max(mastered, 0), 1), p = min(max(inProgress, 0), 1 - m)
+        return ringPoint(Float.pi / 2 + 2 * Float.pi * Float(m + p))
     }
 
     private var beadIsFront: Bool { beadPosition.z >= 0 }

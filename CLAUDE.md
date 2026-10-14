@@ -30,6 +30,8 @@ Older history is in `docs/archive/` and git log.
   `Resources/StarVideos/` (`tools/star_video/README.md`).
 - **Star + ring + stutter:** `docs/plans/2026-10-09-star-video-handoff.md`,
   `2026-10-10-ring-star-glow-handoff.md`, `2026-10-09-stutter-handoff.md`.
+  Ring: bead leads, maîtrisé right behind it, en cours behind that
+  (fixed 2026-10-14 for low %; test with `tools/sim/progress_db.py`).
 
 ## Hard rules
 

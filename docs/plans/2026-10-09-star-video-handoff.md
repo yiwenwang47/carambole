@@ -66,7 +66,8 @@ frame recording was taken during this repair.
   - The orbit ring (live progress) is drawn in 2D with `Canvas` inside a
     `TimelineView`. Back half under the video, front half over it. The tube
     width follows perspective, with a soft gloss band and a bead with a
-    highlight. The bob is a 2D offset.
+    highlight. The bob is a 2D offset. The bead leads; maîtrisé trails right
+    behind it, en cours behind that (see the ring handoff, "Arc order").
   - Geometry numbers shared with the renderer: `StarVideoGeometry`.
 - Players are shared per palette, prewarmed in `LibraryView.onAppear`, and
   paused while a page covers the book (`starLive` → `active`). Drag-to-turn

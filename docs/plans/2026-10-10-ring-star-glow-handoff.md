@@ -49,6 +49,21 @@ when the arc ended near a crossing).
   detector plus zoomed crops of both sides: clean in every frame (the few
   remaining detector hits are ordinary tube edges, inspected by eye).
 
+### Arc order (2026-10-14)
+
+At low % (phone: 2 %, 3 / 200 maîtrisés) the pale en-cours arc pointed the
+wrong way. The ring spins toward larger angles. The old order from the top
+was maîtrisé → bead → en cours, so en cours ran ahead of the bead, and with
+maîtrisé shorter than the bead only that forward tail showed. Reversing the
+spin does not fix it: then the maîtrisé arc leads at mid %.
+
+Now: **bead leads, maîtrisé directly behind it, en cours behind that.** The
+bead sits at maîtrisé + en cours. En cours is drawn from the top all the way
+to the bead, under the maîtrisé tube, so the two never meet end to end (no
+seam to break). Checked on the sim with real stores from
+`tools/sim/progress_db.py` (3 + 16 / 200 and 60 + 30 / 200), one full ring
+turn (~42 s) each, zoomed crops: no breaks.
+
 ## 3. Star had a very thin glow round its edges
 
 - **Cause (measured):** RealityKit renders into `.bgra8Unorm_srgb` with
