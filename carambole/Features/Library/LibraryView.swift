@@ -2,12 +2,11 @@
 //  LibraryView.swift
 //  carambole
 //
-//  One language's shelf, pushed from `LanguagesView`. motion.html 08 "Ruban": one paper ribbon runs
-//  down the right side of the shelf and each book is a stretch of it
-//  (`LibraryRibbon.swift`). Books sit on the left of their stretch: kicker
-//  label, light title, then `Ouvrir →` + % for open books or `Bientôt` for
-//  books to come. Open books sort first. The ribbon lives inside the scroll
-//  content, so it scrolls exactly with the titles. It is a still picture.
+//  One language's shelf, pushed from `LanguagesView`. Books keep the old
+//  motion.html 08 spacing (one 200 pt slot each): kicker label, light title,
+//  then `Ouvrir →` + % for open books or `Bientôt` for books to come. Open
+//  books sort first. The 08 paper ribbon was dropped on 2026-10-14; its code is
+//  archived in `docs/archive/code/LibraryRibbon.swift`.
 //
 //  The French shelf holds the two French books; the English shelf holds one
 //  greyed placeholder (`ShelfLanguage.placeholders`). Each shelf speaks its own
@@ -47,16 +46,9 @@ struct LibraryView: View {
     /// Each book's progress (%), from its own element IDs.
     @StateObject private var fondationsModel = BookViewModel(book: BookCatalog.fondations)
     @StateObject private var situationModel = BookViewModel(book: BookCatalog.enSituation)
-    /// Each book's per-day activity — feeds its own ribbon stretch. Loaded before
-    /// the first frame so the ribbon is drawn once, from real days.
-    @StateObject private var fondationsHistory = HistoryViewModel(book: BookCatalog.fondations,
-                                                                  loadImmediately: true)
-    @StateObject private var situationHistory = HistoryViewModel(book: BookCatalog.enSituation,
-                                                                 loadImmediately: true)
     @State private var loaded = false
     /// The book pushed from the shelf (`BookView`).
     @State private var openedBook: BookDescriptor?
-    @AppStorage(AppPalette.storageKey) private var paletteID = AppPalette.fallback.rawValue
 
     private var books: [ShelfBook] {
         catalog.filter(\.available) + catalog.filter { !$0.available }
@@ -101,8 +93,6 @@ struct LibraryView: View {
                     }
                     #endif
                 }
-                fondationsHistory.load()
-                situationHistory.load()
             }
             #if DEBUG
             .onReceive(NotificationCenter.default.publisher(for: DemoRemote.Action.openBook.notification)) { _ in
@@ -120,18 +110,19 @@ struct LibraryView: View {
 
     // MARK: - Shelf
 
+    /// Shelf rhythm (the old 08 ribbon's): first slot top, slot height, space after the last.
+    private enum Slot {
+        static let start: CGFloat = 236
+        static let step: CGFloat = 200
+        static let tail: CGFloat = 110
+        static func top(_ i: Int) -> CGFloat { start + CGFloat(i) * step }
+    }
+
     private func shelf(width: CGFloat) -> some View {
         let books = self.books
-        let geometry = LibraryRibbonGeometry(stretches: books.map(stretch(for:)),
-                                             viewWidth: Float(width))
-        let height = CGFloat(geometry.contentHeight)
+        let height = Slot.top(books.count) + Slot.tail
 
         return ZStack(alignment: .topLeading) {
-            LibraryRibbonImage(geometry: geometry, palette: AppPalette(stored: paletteID))
-            .frame(width: width, height: height)
-            .allowsHitTesting(false)
-            .accessibilityHidden(true)
-
             edgeLabels
                 .padding(.horizontal, Spacing.screenH)
                 .padding(.top, 66)
@@ -144,7 +135,7 @@ struct LibraryView: View {
                 block(book, number: catalogNumber(book))
                     .frame(width: 220, alignment: .leading)
                     .padding(.leading, Spacing.screenH)
-                    .padding(.top, CGFloat(LibraryRibbonGeometry.top(ofStretch: index)) + 34)
+                    .padding(.top, Slot.top(index) + 34)
             }
 
             Text(language.shelf.end)
@@ -154,16 +145,6 @@ struct LibraryView: View {
                 .accessibilityHidden(true)
         }
         .frame(width: width, height: height, alignment: .topLeading)
-    }
-
-    /// The ribbon stretch for a book: an open book's last 30 days, or a
-    /// faint strip for a book to come.
-    private func stretch(for book: ShelfBook) -> LibraryRibbonGeometry.Stretch {
-        guard book.available else { return .toCome }
-        let days = book.id == BookCatalog.enSituation.id ? situationHistory.days : fondationsHistory.days
-        let window = HistoryViewModel.window(days: days, today: Date(),
-                                             count: 30, calendar: .current)
-        return .started(window.map { $0.learned + $0.reviewed })
     }
 
     private func percent(_ book: ShelfBook) -> Int {

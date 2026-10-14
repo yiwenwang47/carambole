@@ -1,5 +1,13 @@
 # Star loops
 
+Since 2026-10-14 the star is a **die-cut card** (`DesignSystem/StarCard.swift`:
+white border, palette colour on the face, quiet colour off register over one
+lobe, thickness 0.08). `CB_RENDER_STAR=ink` or `=objet` renders trial looks
+(black-face card, or the earlier acrylic / pearl star) into
+`Documents/star_<look>_<palette>.mov`; launch with `CB_STAR_VARIANT=<look>` to
+play them on the book page. The committed loops (2026-10-14) were rendered in
+the iPhone 18 Pro simulator.
+
 The book home and the colour page show the 01 Objet star as a pre-rendered
 HEVC-with-alpha loop (`carambole/Resources/StarVideos/star_<palette>.mov`),
 not a live RealityKit scene. A new RealityView cost ~100 ms on the main thread

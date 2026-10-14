@@ -441,6 +441,13 @@ final class StarLoopPlayers {
     }
 
     private static func url(_ palette: AppPalette) -> URL? {
+        #if DEBUG
+        // `CB_STAR_VARIANT=ink|objet`: play a trial loop rendered into Documents.
+        if let v = ProcessInfo.processInfo.environment["CB_STAR_VARIANT"].flatMap(StarCard.Look.init(rawValue:)), v != .card {
+            let trial = URL.documentsDirectory.appending(path: StarCard.fileName(v, palette))
+            if FileManager.default.fileExists(atPath: trial.path) { return trial }
+        }
+        #endif
         let name = (StarVideoGeometry.fileName(palette) as NSString).deletingPathExtension
         return Bundle.main.url(forResource: name, withExtension: "mov")
     }

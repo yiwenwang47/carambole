@@ -3,7 +3,8 @@
 //  carambole
 //
 //  DEBUG-only generator for the pre-rendered star loops (`star_<palette>.mov`).
-//  Renders the 01 Objet star offscreen with `RealityRenderer`, using the same
+//  Renders the 01 Objet star (the `StarCard` die-cut card; `CB_RENDER_STAR=ink`
+//  or `objet` renders a trial look instead) offscreen with `RealityRenderer`, using the same
 //  mesh, materials and lights as the live scene, and writes one HEVC-with-alpha
 //  loop per palette to Documents. Copy them into `Resources/StarVideos/`.
 //
@@ -25,11 +26,12 @@ enum StarVideoRenderer {
     private static let log = Logger(subsystem: "wen.carambole", category: "StarVideo")
 
     static func runIfRequested() {
-        guard ProcessInfo.processInfo.environment["CB_RENDER_STAR"] == "1" else { return }
+        guard let flag = ProcessInfo.processInfo.environment["CB_RENDER_STAR"],
+              let look = flag == "1" ? .card : StarCard.Look(rawValue: flag) else { return }
         Task { @MainActor in
             do {
                 for palette in AppPalette.allCases {
-                    let url = try await render(palette)
+                    let url = try await render(palette, look: look)
                     log.log("wrote \(url.lastPathComponent, privacy: .public)")
                 }
                 log.log("STAR VIDEOS DONE")
@@ -41,7 +43,7 @@ enum StarVideoRenderer {
 
     private struct Failure: Error { let what: String }
 
-    static func render(_ palette: AppPalette) async throws -> URL {
+    static func render(_ palette: AppPalette, look: StarCard.Look) async throws -> URL {
         let g = StarVideoGeometry.self
         let size = g.pixelSize
         let renderer = try RealityRenderer()
@@ -61,9 +63,16 @@ enum StarVideoRenderer {
         let pivot = Entity()
         pivot.scale = SIMD3(repeating: 0.78)
         let light = StudioEnvironment.lightEntity(intensityExponent: 1.1)
-        let mesh = try CaramboleStarMesh.objetMesh()
-        let star = CaramboleStarMesh.centred(mesh, materials: [StarMaterial.finish(palette.theme.star)])
-        pivot.addChild(star.holder)
+        if look == .objet {
+            let mesh = try CaramboleStarMesh.objetMesh()
+            let star = CaramboleStarMesh.centred(mesh, materials: [StarMaterial.finish(palette.theme.star)])
+            pivot.addChild(star.holder)
+        } else {
+            let meshes = try StarCard.meshes()
+            let mats = try StarCard.materials(look, palette)
+            pivot.addChild(ModelEntity(mesh: meshes.faces, materials: [mats.face]))
+            pivot.addChild(ModelEntity(mesh: meshes.edge, materials: [mats.edge]))
+        }
         if let light { StudioEnvironment.receive(pivot, from: light) }
         renderer.entities.append(contentsOf: [camera, key, pivot] + (light.map { [$0] } ?? []))
         renderer.activeCamera = camera
@@ -76,7 +85,7 @@ enum StarVideoRenderer {
         guard let texture = device.makeTexture(descriptor: desc) else { throw Failure(what: "texture") }
         let output = try RealityRenderer.CameraOutput(.singleProjection(colorTexture: texture))
 
-        let url = URL.documentsDirectory.appending(path: g.fileName(palette))
+        let url = URL.documentsDirectory.appending(path: StarCard.fileName(look, palette))
         try? FileManager.default.removeItem(at: url)
         let writer = try AVAssetWriter(outputURL: url, fileType: .mov)
         let input = AVAssetWriterInput(mediaType: .video, outputSettings: [

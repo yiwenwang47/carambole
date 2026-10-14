@@ -23,6 +23,8 @@ Older history is in `docs/archive/` and git log.
   objects, pale capped fills). Code in `carambole/DesignSystem/Theme.swift`.
 - **Book 1 drill types:** `docs/plans/2026-10-10-drill-types-design.md`.
 - **Scheduling:** `docs/plans/2026-06-21-fsrs-mastery-design.md`.
+- **Star = die-cut card (2026-10-14):** `DesignSystem/StarCard.swift`, loops in
+  `Resources/StarVideos/` (`tools/star_video/README.md`).
 - **Star + ring + stutter:** `docs/plans/2026-10-09-star-video-handoff.md`,
   `2026-10-10-ring-star-glow-handoff.md`, `2026-10-09-stutter-handoff.md`.
 
@@ -135,7 +137,6 @@ xcodebuild build -project carambole.xcodeproj -scheme carambole \
   `docs/handoffs/2026-10-10-french-explanations-in-english.md`, finder
   `tools/explanation_lang.py`.
 - The Écrire typing drill for Book 2 (own session).
-- Iris star has no true iridescence (needs the Metal toolchain; ask before installing).
 - `SwipeBackGuard` (`Core/SwipeBackModifier.swift`) is not yet on Today rows,
   colour options or module-detail buttons.
 - Stutter leads (75–155 ms freeze at push/pop; ribbon mesh rebuilds) in the
