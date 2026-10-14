@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Carambole Studio · Book marks</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Familjen+Grotesk:wght@400..700&display=swap">
+<link rel="stylesheet" href="studio.css">
+<style>
+.bar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.bar .lab { margin-right: 6px; min-width: 70px; }
+.controls { display: grid; gap: 10px; margin-bottom: 36px; }
+.layout { display: grid; grid-template-columns: minmax(0, 1fr) 402px; gap: 40px; align-items: start; }
+@media (max-width: 1100px) { .layout { grid-template-columns: 1fr; } }
+.book { display: grid; gap: 16px; padding-block: 28px; border-top: 1px solid var(--rule); }
+.book h2 { margin: 0; font-weight: 250; font-size: 34px; letter-spacing: -.03em; }
+.cands { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+@media (max-width: 760px) { .cands { grid-template-columns: 1fr; } }
+.cand { background: #fff; border-radius: 22px; padding: 22px 18px 16px; display: grid; gap: 12px; border: 1.5px solid transparent; }
+.cand[data-pick="true"] { border-color: var(--fg); }
+.cand .art { display: flex; justify-content: center; align-items: center; min-height: 170px; }
+.cand .row { display: flex; align-items: flex-end; justify-content: center; gap: 14px; padding-top: 12px; border-top: 1px solid #f0efec; }
+.cand h3 { margin: 0; font-weight: 400; font-size: 19px; letter-spacing: -.02em; }
+.cand p { margin: 0; font-size: 13px; line-height: 1.5; color: var(--muted); }
+.vote { display: flex; gap: 6px; }
+.vote button { flex: 1; }
+textarea { width: 100%; min-height: 56px; resize: vertical; font: 400 13px var(--display); color: var(--fg); background: var(--chip); border: 0; border-radius: 12px; padding: 9px 11px; }
+/* phone: the French shelf (LibraryView geometry: slots from 236, step 200, block +34, edge 24) */
+.phone { position: sticky; top: 20px; width: 402px; max-width: 100%; height: 874px; background: #fff; border-radius: 46px; box-shadow: 0 0 0 1px #0000000f, 0 18px 50px #00000014; overflow: hidden; }
+.screen { position: relative; width: 402px; height: 874px; }
+.abs { position: absolute; }
+.big { font: 250 40px/42px var(--display); letter-spacing: -1.2px; }
+.ttl { font: 250 32px/1.15 var(--display); letter-spacing: -.96px; margin-top: 2px; }
+.u { border-bottom: 1px solid #141414; padding-bottom: 2px; color: #141414; }
+.phone .lab { color: #8D8D8A; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="nav"><a href="index.html">Studio</a><a href="marks.html">Marks</a><a href="books.html" aria-current="page">Book marks</a><a href="layout.html">Layout</a><span class="status" id="status">Not saved yet</span></nav>
+  <header class="top">
+    <span class="eyebrow">Book marks · round 2</span>
+    <h1>A mark for each book</h1>
+    <p class="intro"><b>Round 2:</b> your picks (Seed, Guillemet «) in toned-down colours; shapes you voted No are hidden. Same recipe as the language marks: a die-cut shape with a soft edge, the quiet colour printed off register, the number in the deep colour. Three shapes per book. Each card shows the book mark next to the two language marks so you can check they belong together. <b>Like / No</b> and notes save here; <b>Use</b> puts that shape on the phone.</p>
+  </header>
+  <div class="controls">
+    <div class="bar" id="palBar"></div>
+    <div class="bar" id="faceBar"></div>
+    <div class="bar" id="styleBar"></div>
+  </div>
+  <div class="layout">
+    <div id="books"></div>
+    <div class="phone"><div class="screen" id="screen"></div></div>
+  </div>
+</div>
+<script type="module">
+import { PALETTES, markSVG } from "./marks.js";
+import { SHAPES, BOOKS, FACES, bookSVG } from "./books.js";
+import { loadPrefs, savePrefs } from "./marks.js";
+
+const prefs = Object.assign({ votes: {}, notes: {}, palette: "acide", face: "pale", style: "cut", use: { fondations: "pebbles", situation: "bubbles" } },
+  await loadPrefs("books"));
+if (!FACES[prefs.face]) prefs.face = "pale";
+const status = document.getElementById("status");
+let t;
+const save = () => { clearTimeout(t); status.textContent = "Saving…"; t = setTimeout(async () => { const r = await savePrefs("books", prefs); status.textContent = r.ok ? `Saved ${r.savedAt.slice(11)}` : "Save failed: is server.py running?"; }, 500); };
+
+function bar(el, label, items, key) {
+  el.innerHTML = `<span class="lab">${label}</span>`;
+  items.forEach(([id, name, swatch]) => {
+    const b = document.createElement("button"); b.className = "chipbtn"; b.setAttribute("aria-pressed", prefs[key] === id);
+    b.innerHTML = (swatch ? `<i style="display:inline-block;width:14px;height:8px;border-radius:2px;margin-right:8px;background:${swatch}"></i>` : "") + name;
+    b.onclick = () => { prefs[key] = id; save(); draw(); }; el.appendChild(b);
+  });
+}
+
+function draw() {
+  const pal = prefs.palette, c = PALETTES[pal];
+  bar(document.getElementById("palBar"), "Palette", Object.entries(PALETTES).map(([id, p]) => [id, p.name, `linear-gradient(90deg,${p.loud} 50%,${p.quiet} 50%)`]), "palette");
+  bar(document.getElementById("faceBar"), "Face", Object.entries(FACES).map(([id, f]) => [id, f.name, f.get(c)]), "face");
+  bar(document.getElementById("styleBar"), "Style", [["cut", "Cut paper"], ["script", "Script sticker"]], "style");
+
+  const host = document.getElementById("books"); host.innerHTML = "";
+  Object.keys(SHAPES).forEach(book => {
+    const sec = document.createElement("section"); sec.className = "book";
+    sec.innerHTML = `<span class="lab">${BOOKS[book].kicker}</span><h2>${BOOKS[book].title}</h2><div class="cands"></div>`;
+    const grid = sec.querySelector(".cands");
+    SHAPES[book].filter(s => prefs.votes[`${book}.${s.id}`] !== "no").forEach(s => {
+      const key = `${book}.${s.id}`;
+      const card = document.createElement("div"); card.className = "cand"; card.dataset.pick = prefs.use[book] === s.id;
+      card.innerHTML = `
+        <div class="art">${bookSVG({ style: prefs.style, book, shape: s.id, size: 160, pal, face: prefs.face })}</div>
+        <div class="row">${markSVG(prefs.style, "en", 44, pal)}${markSVG(prefs.style, "fr", 44, pal)}${bookSVG({ style: prefs.style, book, shape: s.id, size: 44, pal, face: prefs.face })}</div>
+        <h3>${s.name}</h3><p>${s.idea}</p>
+        <div class="vote"><button class="chipbtn" data-v="like">Like</button><button class="chipbtn" data-v="no">No</button><button class="chipbtn" data-use>Use</button></div>
+        <textarea placeholder="What to keep, what to change…" aria-label="Notes on ${s.name}"></textarea>`;
+      const btns = card.querySelectorAll("[data-v]"), ta = card.querySelector("textarea"), use = card.querySelector("[data-use]");
+      const paint = () => { btns.forEach(b => b.setAttribute("aria-pressed", prefs.votes[key] === b.dataset.v)); use.setAttribute("aria-pressed", prefs.use[book] === s.id); };
+      btns.forEach(b => b.onclick = () => { prefs.votes[key] = prefs.votes[key] === b.dataset.v ? null : b.dataset.v; paint(); save(); });
+      use.onclick = () => { prefs.use[book] = s.id; save(); draw(); };
+      ta.value = prefs.notes[key] || ""; ta.oninput = () => { prefs.notes[key] = ta.value; save(); };
+      paint(); grid.appendChild(card);
+    });
+    host.appendChild(sec);
+  });
+
+  let h = `<div class="abs lab" style="left:24px;top:59px;color:#141414">‹ Langues</div>
+    <div class="abs lab" style="right:24px;top:59px;color:#141414">Français</div>
+    <div class="abs big" style="left:24px;top:96px"><div>2 livres</div><div style="color:#8D8D8A">2 ouverts</div></div>`;
+  ["fondations", "situation"].forEach((book, i) => {
+    const top = 236 + i * 200 + 34, b = BOOKS[book];
+    h += `<div class="abs" style="left:24px;top:${top}px;width:220px"><div class="lab">${b.kicker}</div><div class="ttl">${b.title}</div>
+      <div style="display:flex;gap:10px;margin-top:6px"><span class="lab u">Ouvrir →</span><span class="lab" style="color:#141414">${b.pct} %</span></div></div>
+      <div class="abs" style="left:248px;top:${top - 30}px">${bookSVG({ style: prefs.style, book, shape: prefs.use[book], size: 124, pal, face: prefs.face })}</div>`;
+  });
+  h += `<div class="abs lab" style="left:0;right:0;text-align:center;top:${236 + 400 + 50}px">Fin de la bibliothèque</div>`;
+  document.getElementById("screen").innerHTML = h;
+}
+draw();
+</script>
+</body>
+</html>

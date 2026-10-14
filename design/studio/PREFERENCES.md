@@ -81,3 +81,27 @@ Layouts: no position changes since round 4. In Fields the user started a note
   Serif block was dropped.
 - **Home layout: Specimen.** Fields was dropped.
 - All shapes are drawn in code (`marks.js`). The references were only looked at, never traced.
+
+## Book marks, round 1 (2026-10-14, `books.html`, `prefs/books.json`)
+
+A die-cut mark per book on the shelf, drawn with the Cut paper / Script sticker
+recipe (`books.js`), coloured from the app palette (user: colour, not black and white).
+An earlier pictogram mock (`design/book-icons.html`: arch, stones, bubbles, cup) was
+rejected outright: book marks must look like the language marks.
+
+| Book | Shape | Vote |
+|---|---|---|
+| Fondations | Two pebbles | no |
+| Fondations | **Seed** | picked (Use) |
+| Fondations | Carambole slice | no |
+| En situation | Two bubbles | no |
+| En situation | One bubble | no |
+| En situation | **Guillemet «** | picked (Use) |
+
+Colour: the full star colour face (lime on Acide) is **too bright**. Round 2 offers
+toned faces: Pale (the capped button fill, pale quiet overprint) and Dusty (loud
+mixed 45 % toward grey), plus Ink for comparison. Numbers are greyed deep colour.
+
+Round 2 (same day): Pale = "this is great, maybe a little less grey". Pale is now the
+button fill moved 30 % back toward the palette colour (overprint likewise), numbers
+deep colour with 20 % grey. Dusty eased to 35 % grey.

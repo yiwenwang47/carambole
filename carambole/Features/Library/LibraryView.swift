@@ -6,7 +6,8 @@
 //  motion.html 08 spacing (one 200 pt slot each): kicker label, light title,
 //  then `Ouvrir →` + % for open books or `Bientôt` for books to come. Open
 //  books sort first. The 08 paper ribbon was dropped on 2026-10-14; its code is
-//  archived in `docs/archive/code/LibraryRibbon.swift`.
+//  archived in `docs/archive/code/LibraryRibbon.swift`. Each book has its die-cut
+//  mark on the right (`BookMarkView`, same recipe as the language marks).
 //
 //  The French shelf holds the two French books; the English shelf holds one
 //  greyed placeholder (`ShelfLanguage.placeholders`). Each shelf speaks its own
@@ -33,6 +34,8 @@ struct LibraryView: View {
     var initialBook: BookDescriptor? = nil
 
     @Environment(\.dismiss) private var dismiss
+    @AppStorage(AppPalette.storageKey) private var paletteID = AppPalette.fallback.rawValue
+    @AppStorage(LanguageMarkStyle.storageKey) private var markID = LanguageMarkStyle.fallback.rawValue
 
     /// Authored order: the language's books, then its placeholders.
     private var catalog: [ShelfBook] {
@@ -132,6 +135,9 @@ struct LibraryView: View {
                 .padding(.top, 100)
 
             ForEach(Array(books.enumerated()), id: \.element.id) { index, book in
+                bookMark(book, number: catalogNumber(book))
+                    .padding(.leading, Mark.x)
+                    .padding(.top, Slot.top(index) + 34 + Mark.dy)
                 block(book, number: catalogNumber(book))
                     .frame(width: 220, alignment: .leading)
                     .padding(.leading, Spacing.screenH)
@@ -145,6 +151,22 @@ struct LibraryView: View {
                 .accessibilityHidden(true)
         }
         .frame(width: width, height: height, alignment: .topLeading)
+    }
+
+    /// Book mark beside each block (design/studio/books.html): 124 pt, from x 248,
+    /// its box 30 pt above the block's kicker.
+    private enum Mark {
+        static let x: CGFloat = 248
+        static let dy: CGFloat = -30
+        static let size: CGFloat = 124
+    }
+
+    private func bookMark(_ book: ShelfBook, number: Int) -> some View {
+        BookMarkView(shape: BookMarkShape(bookID: book.id), number: String(format: "%02d", number),
+                     available: book.available, style: LanguageMarkStyle(stored: markID),
+                     palette: AppPalette(stored: paletteID))
+            .frame(width: Mark.size, height: Mark.size)
+            .allowsHitTesting(false)
     }
 
     private func percent(_ book: ShelfBook) -> Int {

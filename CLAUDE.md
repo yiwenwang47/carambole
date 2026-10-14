@@ -19,6 +19,9 @@ Older history is in `docs/archive/` and git log.
   under Colors). App text English, book text in the book's language. Decisions:
   `design/studio/PREFERENCES.md`; mocks + drag editor: `design/studio/`
   (`python3 design/studio/server.py`).
+- **Book marks (2026-10-14):** `DesignSystem/BookMark.swift` (Fondations = seed,
+  En situation = guillemet «), same recipe as the language marks, "Pale" face;
+  mock `design/studio/books.html`, votes in `design/studio/PREFERENCES.md`.
 - **Design:** `design/UI_REDESIGN_HANDOFF.md` (white ground, ink text, colour on
   objects, pale capped fills). Code in `carambole/DesignSystem/Theme.swift`.
 - **Book 1 drill types:** `docs/plans/2026-10-10-drill-types-design.md`.

@@ -18,7 +18,7 @@ const sparkle = (x, y, r) => `M${x},${y - r} Q${x},${y} ${x + r},${y} Q${x},${y}
 
 /* wobbly copy of a closed path: sample it, push each point along its normal by a seeded wave (torn-paper edge) */
 let probe, uid = 0;
-function wobbly(d, amp = 1.6, waves = 15, seed = 1) {
+export function wobbly(d, amp = 1.6, waves = 15, seed = 1) {
   if (!probe) {
     const s = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     s.setAttribute("width", "0"); s.setAttribute("height", "0"); s.style.position = "absolute";

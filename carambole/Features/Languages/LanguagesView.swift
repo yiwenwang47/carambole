@@ -12,7 +12,8 @@
 //  Positions are the user's drag layout (design/studio/prefs/layout-specimen.json,
 //  360 pt wide design): x from the left edge, y from the top of the screen,
 //  text placed by the CSS line-box top it had in the mock (converted to a
-//  baseline), right-hand labels kept 24 pt from the right edge.
+//  baseline), right-hand labels kept 24 pt from the right edge. The two
+//  language rows keep their spacing but are centred vertically as a block.
 //
 
 import SwiftUI
@@ -41,13 +42,22 @@ struct LanguagesView: View {
     private enum Layout {
         static let markX: CGFloat = 22
         static let markSize: CGFloat = 56
-        static let nameX: CGFloat = 86
+        static let nameX: CGFloat = 102
         static let nameSize: CGFloat = 76
         static let edge: CGFloat = 24
         static let headerY: CGFloat = 66
         /// `Settings` box top in the 760 pt tall mock, kept as a distance from the bottom.
         static let footY: CGFloat = 704
         static let mockHeight: CGFloat = 760
+        /// Top of the English name box and bottom of the Français one (mock points):
+        /// the two rows are centred on the screen as one block.
+        static let rowsTop: CGFloat = 140
+        static let rowsBottom: CGFloat = 327 + nameSize
+    }
+
+    /// Moves the language rows down so their block sits at the screen's vertical centre.
+    private func rowsShift(height: CGFloat) -> CGFloat {
+        height / 2 - (Layout.rowsTop + Layout.rowsBottom) / 2
     }
 
     var body: some View {
@@ -57,7 +67,7 @@ struct LanguagesView: View {
                     AppColor.paper
                     header(width: geo.size.width)
                     ForEach(rows, id: \.language) { row in
-                        languageRow(row, width: geo.size.width)
+                        languageRow(row, width: geo.size.width, dy: rowsShift(height: geo.size.height))
                     }
                     footer(size: geo.size)
                 }
@@ -116,7 +126,7 @@ struct LanguagesView: View {
     }
 
     /// One tap band per language: from above its name to just below it.
-    private func languageRow(_ row: Row, width: CGFloat) -> some View {
+    private func languageRow(_ row: Row, width: CGFloat, dy: CGFloat) -> some View {
         let lang = row.language
         let top = row.tapTop
         let height = row.nameY + Layout.nameSize + 8 - top
@@ -142,7 +152,7 @@ struct LanguagesView: View {
             .contentShape(Rectangle())
         }
         .buttonStyle(LanguageRowButtonStyle())
-        .placed(x: 0, y: top)
+        .placed(x: 0, y: top + dy)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("\(lang.name), \(lang.bookCountLine)")
         .accessibilityHint("Opens the shelf")
