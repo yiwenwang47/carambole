@@ -44,9 +44,9 @@ enum AppPalette: String, CaseIterable, Identifiable {
     /// One plain line for the colour page.
     var blurb: String {
         switch self {
-        case .acide: return "Acrylique citron vert, bleu ciel."
-        case .iris: return "Étoile irisée, lilas et pistache."
-        case .surimpression: return "Bleu et rose doux qui se superposent."
+        case .acide: return "Lime acrylic, sky blue."
+        case .iris: return "Iridescent star, lilac and pistachio."
+        case .surimpression: return "Soft blue and pink that overprint."
         }
     }
 
@@ -159,8 +159,8 @@ enum DrillStyle: String, CaseIterable, Identifiable {
 
     var blurb: String {
         switch self {
-        case .plateau: return "Un plateau pâle sous les mots, boutons pleins."
-        case .cadres: return "Des cadres de couleur, boutons sombres."
+        case .plateau: return "A pale tray under the words, filled buttons."
+        case .cadres: return "Coloured frames, dark buttons."
         }
     }
 }

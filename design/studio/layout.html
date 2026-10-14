@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Carambole Studio · Layout</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Familjen+Grotesk:wght@400..700&family=Fraunces:opsz,wght@9..144,600..800&display=swap">
+<link rel="stylesheet" href="studio.css">
+<style>
+.wrap { max-width: none; }
+.bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 20px; }
+.bar .k { font: 500 11px var(--label); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin: 0 4px 0 12px; }
+.bar .k:first-child { margin-left: 0; }
+.desk { display: grid; grid-template-columns: auto minmax(260px, 340px); gap: 40px; align-items: start; }
+.stagebox { position: relative; }
+.phone { position: relative; width: 360px; height: 760px; background: #fff; border-radius: 52px; overflow: hidden; color: #111; box-shadow: 0 0 0 9px #111, 0 30px 60px -30px rgba(20,20,18,.35); transform-origin: 0 0; user-select: none; }
+.sb { position: absolute; top: 0; left: 0; right: 0; height: 50px; display: flex; align-items: center; justify-content: space-between; padding: 0 30px 0 34px; font: 600 15px var(--display); z-index: 30; pointer-events: none; }
+.sb i { width: 64px; height: 10px; border-radius: 6px; background: #111; }
+.plane { position: absolute; left: 0; right: 0; }
+.el { position: absolute; white-space: nowrap; line-height: 1; cursor: grab; z-index: 5; }
+.el:hover { outline: 1px dashed rgba(224,56,154,.5); outline-offset: 2px; }
+.el.sel { outline: 1.5px solid var(--guide); outline-offset: 2px; }
+.el.hid { opacity: .15; }
+.el.dragging { cursor: grabbing; }
+.el .bl { display: inline-block; width: 0; height: 0; vertical-align: baseline; }
+.el svg { display: block; pointer-events: none; }
+.el.lab { font: 500 10.5px var(--label); letter-spacing: .1em; text-transform: uppercase; color: #8d8c88; }
+.el.ink { color: #111; }
+.el.u { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+.split { position: absolute; left: 0; right: 0; height: 14px; margin-top: -7px; cursor: ns-resize; z-index: 6; }
+.split::after { content: ""; position: absolute; left: 0; right: 0; top: 6px; height: 2px; background: transparent; }
+.split:hover::after, .split.sel::after { background: var(--guide); }
+.guide { position: absolute; background: var(--guide); z-index: 40; pointer-events: none; }
+.guide.v { width: 1px; top: 0; bottom: 0; }
+.guide.h { height: 1px; left: 0; right: 0; }
+.cols { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
+.cols i { position: absolute; top: 0; bottom: 0; width: 1px; background: rgba(224,56,154,.18); }
+.insp { display: grid; gap: 16px; position: sticky; top: 20px; }
+.card { background: #fff; border-radius: 20px; padding: 18px; display: grid; gap: 12px; }
+.card h3 { margin: 0; font-weight: 400; font-size: 18px; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+label.f { display: grid; gap: 4px; font: 500 10.5px var(--label); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+input[type=number], textarea { width: 100%; font: 400 14px var(--display); color: var(--fg); background: var(--chip); border: 0; border-radius: 10px; padding: 8px 10px; }
+textarea { min-height: 110px; resize: vertical; }
+.keys { font-size: 12.5px; line-height: 1.7; color: var(--muted); margin: 0; padding-left: 18px; }
+.keys b { color: var(--fg); font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="nav"><a href="index.html">Studio</a><a href="marks.html">Marks</a><a href="layout.html" aria-current="page">Layout</a><span class="status" id="status">Not saved yet</span></nav>
+  <div class="bar" id="bar"></div>
+  <div class="desk">
+    <div class="stagebox" id="stagebox"><div class="phone" id="phone"></div></div>
+    <div class="insp">
+      <div class="card" id="selCard"><h3 id="selName">Nothing selected</h3>
+        <div class="grid2"><label class="f">X<input type="number" id="ix"></label><label class="f">Y<input type="number" id="iy"></label>
+        <label class="f">Size<input type="number" id="is"></label><label class="f">Weight<input type="number" id="iw" step="50"></label></div>
+        <div class="grid2"><button class="chipbtn" id="hideBtn">Hide</button><button class="chipbtn" id="resetEl">Reset this</button></div></div>
+      <div class="card"><h3>Notes for this layout</h3><textarea id="notes" placeholder="What feels off, what you want…"></textarea>
+        <div class="grid2"><button class="chipbtn" id="saveBtn">Save now</button><button class="chipbtn" id="resetAll">Reset layout</button></div></div>
+      <div class="card"><h3>Keys</h3><ul class="keys">
+        <li><b>Drag</b> to move. Pink lines show alignment; it snaps within 5 pt. Hold <b>Alt</b> to drag without snapping.</li>
+        <li><b>Arrows</b> nudge 1 pt, <b>Shift</b> + arrows 8 pt.</li>
+        <li><b>[ ]</b> make text or a mark smaller / bigger.</li>
+        <li><b>Double-click</b> text to edit the words. <b>H</b> hides, <b>Esc</b> deselects.</li>
+        <li>Every change saves by itself to <code>prefs/</code>.</li></ul></div>
+    </div>
+  </div>
+</div>
+<script type="module">
+import { STYLES, PALETTES, markSVG, loadPrefs, savePrefs } from "./marks.js";
+
+
+const T = (id, text, x, y, size, o = {}) => ({ id, kind: "text", text, x, y, size, weight: o.w ?? 250, font: o.f ?? "display", cls: o.cls ?? "", track: o.t ?? -0.03 });
+const M = (id, lang, x, y, size) => ({ id, kind: "mark", lang, x, y, size });
+const L = (id, text, x, y, cls = "") => ({ id, kind: "text", text, x, y, size: 10.5, weight: 500, font: "label", cls: "lab " + cls, track: .1 });
+const DEFAULTS = {
+  specimen: { split: null, els: [
+    L("head-l", "Carambole", 24, 66, "ink"), L("head-r", "Colors →", 282, 66, "ink"),
+    M("en-mark", "en", 22, 150, 56), T("en-word", "English", 84, 146, 76, { w: 200, t: -.055 }), L("en-count", "00", 326, 150), L("en-meta", "No books yet", 86, 228),
+    M("fr-mark", "fr", 22, 290, 56), T("fr-word", "Français", 84, 286, 76, { w: 200, t: -.055 }), L("fr-count", "02", 326, 290), L("fr-meta", "2 books", 86, 368), L("fr-open", "Open →", 150, 368, "ink u"),
+    L("foot-l", "2 languages", 24, 704), L("foot-r", "Settings", 282, 704),
+  ] },
+  fields: { split: 380, els: [
+    L("head-l", "Carambole", 24, 66, "ink"), L("head-r", "Colors →", 282, 66, "ink"),
+    T("en-num", "00", 24, 118, 56, { w: 600, t: -.04 }), L("en-numlab", "books", 26, 182, "ink"), M("en-mark", "en", 216, 116, 118), T("en-name", "English", 22, 318, 52, { w: 250, t: -.04 }), L("en-go", "Coming soon", 256, 336),
+    T("fr-num", "02", 24, 420, 56, { w: 600, t: -.04 }), L("fr-numlab", "books", 26, 484, "ink"), M("fr-mark", "fr", 216, 420, 118), T("fr-name", "Français", 22, 696, 52, { w: 250, t: -.04 }), L("fr-go", "Open →", 286, 714, "ink u"),
+  ] },
+};
+const clone = o => JSON.parse(JSON.stringify(o));
+
+let layout = "specimen", style = "cut", pal = "acide", snap = true, grid = true;
+let state = {}, sel = null;
+const phone = document.getElementById("phone"), status = document.getElementById("status");
+
+async function loadLayout(name) {
+  const saved = await loadPrefs("layout-" + name), base = clone(DEFAULTS[name]);
+  if (saved.els) base.els.forEach(e => Object.assign(e, saved.els.find(s => s.id === e.id) || {}));
+  if (saved.split != null) base.split = saved.split;
+  base.notes = saved.notes || ""; base.style = STYLES.some(s => s.id === saved.style) ? saved.style : style; base.pal = saved.pal || pal;
+  return base;
+}
+let t;
+function save(now) {
+  clearTimeout(t); status.textContent = "Saving…";
+  t = setTimeout(async () => {
+    const r = await savePrefs("layout-" + layout, { layout, style, pal, split: state.split, notes: state.notes, els: state.els });
+    status.textContent = r.ok ? `Saved ${r.savedAt.slice(11)}` : "Save failed: is server.py running?";
+  }, now ? 0 : 600);
+}
+
+/* ---------- render ---------- */
+function render() {
+  phone.innerHTML = `<div class="sb"><span>9:41</span><i></i></div>`;
+  if (grid) phone.insertAdjacentHTML("beforeend", `<div class="cols">${[24, 180, 336].map(x => `<i style="left:${x}px"></i>`).join("")}</div>`);
+  if (state.split != null) {
+    const P = PALETTES[pal], a = P.paleQuiet, b = P.paleLoud;
+    phone.insertAdjacentHTML("beforeend", `<div class="plane" style="top:0;height:${state.split}px;background:${a}"></div><div class="plane" style="top:${state.split}px;bottom:0;background:${b}"></div><div class="split" data-id="split" style="top:${state.split}px"></div>`);
+  }
+  state.els.forEach(e => {
+    const d = document.createElement("div");
+    d.className = `el ${e.cls || ""} ${e.hidden ? "hid" : ""} ${sel === e.id ? "sel" : ""}`; d.dataset.id = e.id;
+    d.style.left = e.x + "px"; d.style.top = e.y + "px";
+    if (e.kind === "mark") d.innerHTML = markSVG(style, e.lang, e.size, pal);
+    else {
+      d.style.fontSize = e.size + "px"; d.style.fontWeight = e.weight; d.style.letterSpacing = e.track + "em";
+      d.style.fontFamily = e.font === "label" ? "var(--label)" : "var(--display)";
+      d.innerHTML = `<span class="tx"></span><i class="bl"></i>`; d.querySelector(".tx").textContent = e.text;
+    }
+    phone.appendChild(d);
+  });
+  inspector();
+}
+const elOf = id => state.els.find(e => e.id === id);
+const nodeOf = id => phone.querySelector(`.el[data-id="${id}"]`);
+function box(id) {
+  const n = nodeOf(id), e = elOf(id);
+  const b = { l: e.x, t: e.y, w: n.offsetWidth, h: n.offsetHeight };
+  const bl = n.querySelector(".bl");
+  return { ...b, r: b.l + b.w, cx: b.l + b.w / 2, b: b.t + b.h, cy: b.t + b.h / 2, base: bl ? e.y + bl.offsetTop : null };
+}
+
+/* ---------- snapping ---------- */
+function snapMove(id, x, y) {
+  const n = nodeOf(id), w = n.offsetWidth, h = n.offsetHeight, bl = n.querySelector(".bl"), bo = bl ? bl.offsetTop : null;
+  const others = state.els.filter(e => e.id !== id && !e.hidden).map(e => box(e.id));
+  const xs = [0, 24, 180, 336, 360, ...others.flatMap(o => [o.l, o.cx, o.r])];
+  const ys = [state.split ?? -999, ...others.flatMap(o => [o.t, o.cy, o.b]), ...others.map(o => o.base).filter(v => v != null)];
+  const guides = [];
+  if (snap) {
+    let best = null;
+    [[0, "l"], [w / 2, "c"], [w, "r"]].forEach(([off]) => xs.forEach(gx => { const dd = gx - (x + off); if (Math.abs(dd) < 5 && (!best || Math.abs(dd) < Math.abs(best.d))) best = { d: dd, g: gx }; }));
+    if (best) { x += best.d; guides.push(["v", best.g]); }
+    best = null;
+    const yo = [0, h / 2, h]; if (bo != null) yo.push(bo);
+    yo.forEach(off => ys.forEach(gy => { const dd = gy - (y + off); if (Math.abs(dd) < 5 && (!best || Math.abs(dd) < Math.abs(best.d))) best = { d: dd, g: gy }; }));
+    if (best) { y += best.d; guides.push(["h", best.g]); }
+  }
+  return { x: Math.round(x), y: Math.round(y), guides };
+}
+function showGuides(gs) {
+  phone.querySelectorAll(".guide").forEach(g => g.remove());
+  gs.forEach(([k, v]) => phone.insertAdjacentHTML("beforeend", `<div class="guide ${k}" style="${k === "v" ? "left" : "top"}:${v}px"></div>`));
+}
+
+/* ---------- interaction ---------- */
+const scale = () => phone.getBoundingClientRect().width / 360;
+let drag = null;
+phone.addEventListener("pointerdown", ev => {
+  const n = ev.target.closest(".el, .split"); if (!n) { select(null); return; }
+  const id = n.dataset.id; select(id);
+  const start = id === "split" ? { y: state.split } : { x: elOf(id).x, y: elOf(id).y };
+  drag = { id, sx: ev.clientX, sy: ev.clientY, start, n };
+  n.setPointerCapture(ev.pointerId); n.classList.add("dragging");
+});
+phone.addEventListener("pointermove", ev => {
+  if (!drag) return;
+  const k = scale(), dx = (ev.clientX - drag.sx) / k, dy = (ev.clientY - drag.sy) / k;
+  if (drag.id === "split") {
+    let y = Math.round(drag.start.y + dy);
+    const gs = []; if (snap && Math.abs(y - 380) < 6) { y = 380; gs.push(["h", 380]); }
+    state.split = Math.max(120, Math.min(700, y)); showGuides(gs);
+    phone.querySelectorAll(".plane")[0].style.height = state.split + "px"; phone.querySelectorAll(".plane")[1].style.top = state.split + "px"; drag.n.style.top = state.split + "px";
+    return;
+  }
+  const r = ev.altKey ? { x: Math.round(drag.start.x + dx), y: Math.round(drag.start.y + dy), guides: [] } : snapMove(drag.id, drag.start.x + dx, drag.start.y + dy);
+  const e = elOf(drag.id); e.x = r.x; e.y = r.y; drag.n.style.left = r.x + "px"; drag.n.style.top = r.y + "px"; showGuides(r.guides); inspector();
+});
+const endDrag = () => { if (!drag) return; drag.n.classList.remove("dragging"); drag = null; showGuides([]); save(); };
+phone.addEventListener("pointerup", endDrag); phone.addEventListener("pointercancel", endDrag);
+phone.addEventListener("dblclick", ev => {
+  const n = ev.target.closest(".el"); if (!n) return; const e = elOf(n.dataset.id); if (e.kind !== "text") return;
+  const tx = n.querySelector(".tx"); tx.contentEditable = "true"; tx.focus();
+  document.getSelection().selectAllChildren(tx);
+  const done = () => { tx.contentEditable = "false"; e.text = tx.textContent; save(); };
+  tx.addEventListener("blur", done, { once: true });
+  tx.addEventListener("keydown", k => { if (k.key === "Enter") { k.preventDefault(); tx.blur(); } });
+});
+function select(id) { sel = id; phone.querySelectorAll(".el, .split").forEach(n => n.classList.toggle("sel", n.dataset.id === id)); inspector(); }
+document.addEventListener("keydown", ev => {
+  if (!sel || sel === "split" || ev.target.closest("input, textarea, [contenteditable=true]")) return;
+  const e = elOf(sel), step = ev.shiftKey ? 8 : 1;
+  const mv = { ArrowLeft: [-step, 0], ArrowRight: [step, 0], ArrowUp: [0, -step], ArrowDown: [0, step] }[ev.key];
+  if (mv) { e.x += mv[0]; e.y += mv[1]; }
+  else if (ev.key === "[" || ev.key === "]") e.size = Math.max(6, +(e.size + (ev.key === "]" ? 1 : -1) * (ev.shiftKey ? 4 : 1)).toFixed(1));
+  else if (ev.key === "h" || ev.key === "H") e.hidden = !e.hidden;
+  else if (ev.key === "Escape") { select(null); return; }
+  else return;
+  ev.preventDefault(); render(); save();
+});
+
+/* ---------- inspector ---------- */
+const ix = document.getElementById("ix"), iy = document.getElementById("iy"), is = document.getElementById("is"), iw = document.getElementById("iw");
+function inspector() {
+  const e = sel && sel !== "split" ? elOf(sel) : null;
+  document.getElementById("selName").textContent = sel === "split" ? "Split line · y " + state.split : e ? `${e.id}${e.kind === "text" ? " · “" + e.text + "”" : ""}` : "Nothing selected";
+  [ix, iy, is, iw].forEach(i => i.disabled = !e);
+  if (!e) { [ix, iy, is, iw].forEach(i => i.value = ""); return; }
+  ix.value = e.x; iy.value = e.y; is.value = e.size; iw.value = e.kind === "text" ? e.weight : ""; iw.disabled = e.kind !== "text";
+  document.getElementById("hideBtn").textContent = e.hidden ? "Show" : "Hide";
+}
+[[ix, "x"], [iy, "y"], [is, "size"], [iw, "weight"]].forEach(([i, k]) => i.addEventListener("change", () => { const e = elOf(sel); if (!e) return; e[k] = +i.value; render(); save(); }));
+document.getElementById("hideBtn").onclick = () => { const e = elOf(sel); if (!e) return; e.hidden = !e.hidden; render(); save(); };
+document.getElementById("resetEl").onclick = () => { const e = elOf(sel); if (!e) return; Object.assign(e, clone(DEFAULTS[layout].els.find(d => d.id === e.id))); render(); save(); };
+document.getElementById("resetAll").onclick = () => { const notes = state.notes; state = clone(DEFAULTS[layout]); state.notes = notes; sel = null; render(); save(); };
+document.getElementById("saveBtn").onclick = () => save(true);
+const notesEl = document.getElementById("notes");
+notesEl.oninput = () => { state.notes = notesEl.value; save(); };
+
+/* ---------- toolbar ---------- */
+function chip(label, on, fn) { const b = document.createElement("button"); b.className = "chipbtn"; b.textContent = label; b.setAttribute("aria-pressed", on); b.onclick = fn; return b; }
+function toolbar() {
+  const bar = document.getElementById("bar"); bar.innerHTML = "";
+  const k = s => { const sp = document.createElement("span"); sp.className = "k"; sp.textContent = s; bar.appendChild(sp); };
+  k("Layout"); ["specimen", "fields"].forEach(l => bar.appendChild(chip(l[0].toUpperCase() + l.slice(1), l === layout, () => switchLayout(l))));
+  k("Mark"); STYLES.forEach(s => bar.appendChild(chip(s.name, s.id === style, () => { style = s.id; toolbar(); render(); save(); })));
+  k("Palette"); Object.entries(PALETTES).forEach(([id, p]) => bar.appendChild(chip(p.name, id === pal, () => { pal = id; toolbar(); render(); save(); })));
+  k("Help"); bar.appendChild(chip("Snap", snap, () => { snap = !snap; toolbar(); }));
+  bar.appendChild(chip("Columns", grid, () => { grid = !grid; toolbar(); render(); }));
+}
+async function switchLayout(l) {
+  layout = l; state = await loadLayout(l); style = state.style; pal = state.pal; sel = null; notesEl.value = state.notes; toolbar(); render();
+}
+function fit() { const k = Math.min(1, (innerHeight - 150) / 790); phone.style.transform = `scale(${k})`; document.getElementById("stagebox").style.width = 360 * k + "px"; document.getElementById("stagebox").style.height = 760 * k + "px"; }
+addEventListener("resize", fit); fit();
+await document.fonts.ready;
+switchLayout("specimen");
+</script>
+</body>
+</html>

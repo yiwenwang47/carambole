@@ -1,17 +1,17 @@
 import SwiftUI
 import Foundation
 
-/// App root: the library shelf. Pick a book → its `BookView`.
+/// App root: the languages (`LanguagesView`). Pick a language → its shelf → a book.
 struct RootView: View {
     var body: some View {
         #if DEBUG
         if let demo = DrillDemo.rootView() {
             demo
         } else {
-            LibraryView()
+            LanguagesView()
         }
         #else
-        LibraryView()
+        LanguagesView()
         #endif
     }
 }
