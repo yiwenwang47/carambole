@@ -3,7 +3,7 @@
 //  carambole
 //
 //  The three colour palettes the learner can pick (design/palettes.html v4):
-//  Acide (lime acrylic + sky), Iris (iridescent star + lilac / pistachio) and
+//  Acide (lime + sky), Iris (lilac + pistachio) and
 //  Surimpression (soft riso pink + blue that overprint). The ground stays white
 //  and running text stays ink; colour goes to the objects — the star and its
 //  ring, the Today tokens, the drill magnets, the library ribbon, button counts.
@@ -44,8 +44,8 @@ enum AppPalette: String, CaseIterable, Identifiable {
     /// One plain line for the colour page.
     var blurb: String {
         switch self {
-        case .acide: return "Lime acrylic, sky blue."
-        case .iris: return "Iridescent star, lilac and pistachio."
+        case .acide: return "Lime star, sky blue."
+        case .iris: return "Lilac star, pistachio."
         case .surimpression: return "Soft blue and pink that overprint."
         }
     }
@@ -108,7 +108,8 @@ struct AppTheme: Equatable {
     /// 2D progress ring arc.
     let ring: String
 
-    /// 01 Objet.
+    /// 01 Objet: the die-cut card prints this colour (Iris: `tokenNew`); the
+    /// finish itself is used only by the `objet` trial look (`StarCard`).
     let star: StarFinish
     let starArc: String
     let starArcSoft: String
