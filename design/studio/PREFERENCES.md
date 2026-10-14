@@ -105,3 +105,7 @@ mixed 45 % toward grey), plus Ink for comparison. Numbers are greyed deep colour
 Round 2 (same day): Pale = "this is great, maybe a little less grey". Pale is now the
 button fill moved 30 % back toward the palette colour (overprint likewise), numbers
 deep colour with 20 % grey. Dusty eased to 35 % grey.
+
+**Decided and shipped 2026-10-14** (`d351ec87`): Fondations = Seed, En situation =
+Guillemet «, Pale face, in `carambole/DesignSystem/BookMark.swift` (port of
+`books.js`). They follow the mark style picked under Colors; a book to come is grey.

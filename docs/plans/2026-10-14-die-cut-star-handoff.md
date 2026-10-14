@@ -1,7 +1,9 @@
 # Handoff: die-cut star, ribbon dropped (2026-10-14)
 
-Shipped on `main` (merge `9cc8bfb4`, pushed). The Release build is installed on
-the iPhone 18 Pro. The user has not reviewed it on the phone yet.
+Shipped on `main` (merge `9cc8bfb4`, then `d351ec87` for the follow-up below,
+both pushed). The Release build with the book marks is installed on the iPhone
+18 Pro (2026-10-14). The session closed after that install; the user had not
+yet reported on the phone build.
 
 ## What changed
 
@@ -70,7 +72,7 @@ on the phone, so check the colours on the phone.
 ## Open items
 
 - **Phone review:** star colours and thickness rendered with the Mac GPU.
-- **The shelf looks empty** without the ribbon. Watch for the user's reaction.
+- ~~The shelf looks empty~~: done, book marks fill it (see the follow-up below).
 - **Overprint shape:** the off-register lobe runs tip-to-centre with straight
   sides, so it can read as a fold or shadow. On Iris it is grey. Reshape it or
   drop it only if the user asks.
