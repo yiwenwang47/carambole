@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Carambole Studio</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Familjen+Grotesk:wght@400..700&display=swap">
+<link rel="stylesheet" href="studio.css">
+<style>
+.go { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; max-width: 900px; }
+@media (max-width: 700px) { .go { grid-template-columns: 1fr; } }
+.go a { background: #fff; color: #111; text-decoration: none; border-radius: 24px; padding: 26px; display: grid; gap: 8px; transition: transform .6s var(--spring); }
+.go a:active { transform: scale(.985); }
+.go h2 { margin: 0; font-weight: 250; font-size: 36px; letter-spacing: -.03em; }
+.go p { margin: 0; font-size: 14px; line-height: 1.55; color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="nav"><a href="index.html" aria-current="page">Studio</a><a href="marks.html">Marks</a><a href="layout.html">Layout</a></nav>
+  <header class="top"><span class="eyebrow">Carambole · local studio</span><h1>Studio</h1>
+    <p class="intro">Everything you mark or move here saves to <code>design/studio/prefs/</code>. Claude reads those files and writes your choices into the design notes.</p></header>
+  <div class="go">
+    <a href="marks.html"><span class="lab">01</span><h2>Marks</h2><p>Six die-cut marks, each in the exact style of one moodboard image. Like / No and notes per style.</p></a>
+    <a href="layout.html"><span class="lab">02</span><h2>Layout</h2><p>Drag the home page into place. Alignment guides, nudge keys, editable text. Specimen and Fields.</p></a>
+  </div>
+</div>
+</body>
+</html>

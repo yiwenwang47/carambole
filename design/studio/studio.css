@@ -1,0 +1,24 @@
+:root {
+  --page: #ecebe8; --fg: #141414; --muted: #6d6c68; --rule: #d6d5d0;
+  --chip: rgba(20, 20, 18, .06); --guide: #E0389A;
+  --display: "Manrope", "Helvetica Neue", system-ui, sans-serif;
+  --label: "Familjen Grotesk", "Helvetica Neue", system-ui, sans-serif;
+  --spring: cubic-bezier(.32, .72, 0, 1);
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--fg); font-family: var(--display); -webkit-font-smoothing: antialiased; }
+.wrap { max-width: 1280px; margin: 0 auto; padding: 28px 28px 120px; }
+.nav { display: flex; gap: 6px; align-items: center; margin-bottom: 48px; }
+.nav a { font: 500 13px var(--label); color: var(--fg); text-decoration: none; padding: 7px 14px; border-radius: 999px; }
+.nav a[aria-current="page"] { background: var(--fg); color: var(--page); }
+.nav .status { margin-left: auto; font: 500 12px var(--label); color: var(--muted); }
+.top { display: grid; gap: 16px; max-width: 780px; margin-bottom: 36px; }
+.eyebrow { justify-self: start; font: 500 10px var(--label); letter-spacing: .2em; text-transform: uppercase; color: var(--muted); padding: 4px 10px; border-radius: 999px; background: var(--chip); }
+h1 { font-weight: 200; font-size: clamp(40px, 6vw, 72px); letter-spacing: -.04em; line-height: .98; margin: 0; }
+.intro { font-size: 15px; line-height: 1.6; color: var(--muted); margin: 0; max-width: 64ch; }
+.intro b { color: var(--fg); font-weight: 600; }
+.lab { font: 500 10.5px var(--label); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.chipbtn { font: 500 13px var(--label); color: var(--fg); background: var(--chip); border: 0; padding: 8px 14px; border-radius: 999px; cursor: pointer; transition: background .5s var(--spring), transform .5s var(--spring); }
+.chipbtn[aria-pressed="true"] { background: var(--fg); color: var(--page); }
+.chipbtn:active { transform: scale(.97); }
+button:focus-visible, a:focus-visible, textarea:focus-visible, input:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }

@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Carambole Studio · Marks</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Familjen+Grotesk:wght@400..700&family=Fraunces:opsz,wght@9..144,600..800&display=swap">
+<link rel="stylesheet" href="studio.css">
+<style>
+.style { display: grid; grid-template-columns: 220px minmax(0, 1fr) 280px; gap: 28px; align-items: start; padding-block: 36px; border-top: 1px solid var(--rule); }
+@media (max-width: 1000px) { .style { grid-template-columns: 1fr; } }
+.ref img { width: 100%; border-radius: 14px; display: block; }
+.ref span { display: block; margin-top: 8px; }
+.board { border-radius: 26px; padding: 34px 24px 22px; display: grid; gap: 22px; min-width: 0; }
+.hero { display: flex; justify-content: space-around; align-items: center; gap: 12px; flex-wrap: wrap; }
+.hero figure { margin: 0; display: grid; justify-items: center; gap: 12px; }
+.hero figcaption { font: 500 10.5px var(--label); letter-spacing: .12em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; background: rgba(255,255,255,.75); color: #222; }
+.small { display: flex; align-items: flex-end; justify-content: center; gap: 22px; padding: 14px; border-radius: 16px; background: #fff; }
+.small div { display: flex; gap: 8px; align-items: flex-end; }
+.side { display: grid; gap: 12px; }
+.side h3 { margin: 0; font-weight: 300; font-size: 28px; letter-spacing: -.025em; }
+.side p { margin: 0; font-size: 13.5px; line-height: 1.55; color: var(--muted); }
+.vote { display: flex; gap: 8px; }
+.vote button { flex: 1; }
+textarea { width: 100%; min-height: 76px; resize: vertical; font: 400 13.5px var(--display); color: var(--fg); background: var(--chip); border: 0; border-radius: 12px; padding: 10px 12px; box-sizing: border-box; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="nav"><a href="index.html">Studio</a><a href="marks.html" aria-current="page">Marks</a><a href="layout.html">Layout</a><span class="status" id="status">Not saved yet</span></nav>
+  <header class="top">
+    <span class="eyebrow">Die-cut marks · chosen</span>
+    <h1>One reference, one style</h1>
+    <p class="intro"><b>Chosen:</b> Cut paper (default) and Script sticker, coloured only from the app palettes. Home layout: Specimen.</p>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap" id="palBar"></div>
+  </header>
+  <div id="rows"></div>
+</div>
+<script type="module">
+import { STYLES, PALETTES, markSVG, loadPrefs, savePrefs } from "./marks.js";
+const prefs = Object.assign({ votes: {}, notes: {}, palette: "acide" }, await loadPrefs("marks"));
+const status = document.getElementById("status");
+let t;
+const save = () => { clearTimeout(t); status.textContent = "Saving…"; t = setTimeout(async () => { const r = await savePrefs("marks", prefs); status.textContent = r.ok ? `Saved ${r.savedAt.slice(11)}` : "Save failed: is server.py running?"; }, 500); };
+
+const rows = document.getElementById("rows"), palBar = document.getElementById("palBar");
+function drawBar() {
+  palBar.innerHTML = '<span class="lab" style="margin-right:6px">App palette</span>';
+  Object.entries(PALETTES).forEach(([id, p]) => {
+    const b = document.createElement("button"); b.className = "chipbtn"; b.setAttribute("aria-pressed", prefs.palette === id);
+    b.innerHTML = `<i style="display:inline-block;width:14px;height:8px;border-radius:2px;margin-right:8px;background:linear-gradient(90deg,${p.loud} 50%,${p.quiet} 50%)"></i>${p.name}`;
+    b.onclick = () => { prefs.palette = id; drawBar(); drawRows(); save(); }; palBar.appendChild(b);
+  });
+}
+function drawRows() {
+  rows.innerHTML = "";
+  const pal = prefs.palette;
+  STYLES.forEach(s => {
+    const row = document.createElement("section");
+    row.className = "style";
+    row.innerHTML = `
+      <div class="ref"><img src="refs/${s.ref}.jpg" alt="Reference: ${s.ref}"><span class="lab">Reference · ${s.ref}</span></div>
+      <div class="board" style="background:${s.bg(PALETTES[pal])}">
+        <div class="hero"><figure>${markSVG(s, "fr", 190, pal)}<figcaption>Français</figcaption></figure><figure>${markSVG(s, "en", 190, pal)}<figcaption>English</figcaption></figure></div>
+        <div class="small">${[64, 40, 24].map(n => `<div>${markSVG(s, "fr", n, pal)}${markSVG(s, "en", n, pal)}</div>`).join("")}</div>
+      </div>
+      <div class="side"><span class="lab">${s.id}</span><h3>${s.name}</h3><p>${s.look}</p>
+        <div class="vote"><button class="chipbtn" data-v="like">Like</button><button class="chipbtn" data-v="no">No</button></div>
+        <textarea placeholder="What to keep, what to change…" aria-label="Notes on ${s.name}"></textarea></div>`;
+    const btns = row.querySelectorAll("[data-v]"), ta = row.querySelector("textarea");
+    const paint = () => btns.forEach(b => b.setAttribute("aria-pressed", prefs.votes[s.id] === b.dataset.v));
+    btns.forEach(b => b.onclick = () => { prefs.votes[s.id] = prefs.votes[s.id] === b.dataset.v ? null : b.dataset.v; paint(); save(); });
+    ta.value = prefs.notes[s.id] || ""; ta.oninput = () => { prefs.notes[s.id] = ta.value; save(); };
+    paint(); rows.appendChild(row);
+  });
+}
+drawBar(); drawRows();
+</script>
+</body>
+</html>

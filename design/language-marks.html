@@ -1,0 +1,290 @@
+<title>Carambole Language Marks</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Familjen+Grotesk:wght@400..700&display=swap">
+<style>
+/* Layout: logo-sheet. Lessons strip → six mark systems (big pair + icon sizes) → two home layouts using the picked system. Grey study ground, white app ground. */
+:root {
+  --page: #ecebe8;
+  --fg: #141414;
+  --muted: #6d6c68;
+  --rule: #d6d5d0;
+  --card: #ffffff;
+  --card-ring: rgba(20,20,18,.06);
+  --frame: #111111;
+  --frame-ring: transparent;
+  --chip: color-mix(in srgb, var(--fg) 6%, transparent);
+  --display: "Manrope", "Helvetica Neue", system-ui, sans-serif;
+  --label: "Familjen Grotesk", "Helvetica Neue", system-ui, sans-serif;
+  --spring: cubic-bezier(.32,.72,0,1);
+  --s: .8;
+  /* mark colours (Acide by default; set from JS) */
+  --a: #D3F45A; --b: #7FAFE8; --pa: #DDE6BC; --pb: #BCCFE6; --ink: #111111;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --page: #141414; --fg: #ecebe8; --muted: #9a9994; --rule: #2c2c2a; --card-ring: rgba(255,255,255,.08); --frame: #050505; --frame-ring: rgba(255,255,255,.14); color-scheme: dark; }
+}
+:root[data-theme="dark"] { --page: #141414; --fg: #ecebe8; --muted: #9a9994; --rule: #2c2c2a; --card-ring: rgba(255,255,255,.08); --frame: #050505; --frame-ring: rgba(255,255,255,.14); color-scheme: dark; }
+
+body { background: var(--page); color: var(--fg); font-family: var(--display); -webkit-font-smoothing: antialiased; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-left: max(24px, env(safe-area-inset-left, 0px)); padding-right: max(24px, env(safe-area-inset-right, 0px)); padding-block: 64px 120px; }
+@media (max-width: 600px) { .wrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 36px 72px; } }
+
+.eyebrow { justify-self: start; display: inline-block; font: 500 10px var(--label); letter-spacing: .2em; text-transform: uppercase; color: var(--muted); padding: 4px 10px; border-radius: 999px; background: var(--chip); }
+header.top { display: grid; gap: 18px; max-width: 780px; }
+h1 { font-weight: 200; font-size: clamp(40px, 6vw, 76px); letter-spacing: -.04em; line-height: .98; margin: 0; text-wrap: balance; }
+h2 { font-weight: 250; font-size: clamp(28px, 3.6vw, 44px); letter-spacing: -.03em; margin: 0; line-height: 1.02; text-wrap: balance; }
+.intro { font-size: 15px; line-height: 1.6; color: var(--muted); margin: 0; max-width: 62ch; }
+.intro b { color: var(--fg); font-weight: 600; }
+.bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.chipbtn { font: 500 13px var(--label); color: var(--fg); background: var(--chip); border: 0; padding: 7px 14px; border-radius: 999px; cursor: pointer; display: inline-flex; gap: 8px; align-items: center; transition: background .5s var(--spring), transform .5s var(--spring); }
+.chipbtn i { width: 14px; height: 8px; border-radius: 2px; display: inline-block; }
+.chipbtn[aria-pressed="true"] { background: var(--fg); color: var(--page); }
+.chipbtn:active { transform: scale(.97); }
+button:focus-visible, [role="button"]:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
+
+section { margin-top: 96px; display: grid; gap: 28px; }
+.sec-head { display: grid; gap: 12px; border-top: 1px solid var(--rule); padding-top: 28px; }
+
+/* lessons */
+.lessons { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px 28px; }
+@media (max-width: 860px) { .lessons { grid-template-columns: 1fr; } }
+.lessons div { border-top: 1.5px solid var(--fg); padding-top: 12px; font-size: 13.5px; line-height: 1.5; color: var(--muted); min-width: 0; }
+.lessons b { display: block; color: var(--fg); font-weight: 600; font-size: 14.5px; margin-bottom: 3px; }
+.lessons span { font: 500 10.5px var(--label); letter-spacing: .1em; text-transform: uppercase; display: block; margin-bottom: 6px; }
+
+/* concept cards: shell + core */
+.concepts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+@media (max-width: 980px) { .concepts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .concepts { grid-template-columns: 1fr; } }
+.shell { padding: 6px; border-radius: 30px; background: var(--chip); box-shadow: 0 0 0 1px var(--card-ring); cursor: pointer; transition: transform .6s var(--spring), background .6s var(--spring); min-width: 0; }
+.shell:active { transform: scale(.985); }
+.shell[aria-pressed="true"] { background: var(--fg); }
+.core { background: var(--card); color: #111; border-radius: 24px; padding: 22px 22px 20px; display: grid; gap: 16px; height: 100%; box-sizing: border-box; }
+.core .hero { display: grid; grid-template-columns: 1fr 1fr; align-items: center; justify-items: center; height: 170px; }
+.core .hero svg { width: 128px; height: 128px; overflow: visible; }
+.core .sizes { display: flex; align-items: flex-end; gap: 14px; border-top: 1px solid #ecebe8; padding-top: 14px; }
+.core .sizes svg { overflow: visible; flex: none; }
+.core .sizes .sp { flex: 1; }
+.core h3 { margin: 0; font-weight: 400; font-size: 21px; letter-spacing: -.015em; }
+.core .from { font: 500 10.5px var(--label); letter-spacing: .1em; text-transform: uppercase; color: #8d8c88; }
+.core p { margin: 0; font-size: 13px; line-height: 1.5; color: #5d5c58; }
+.core .nm { font: 500 10.5px var(--label); letter-spacing: .1em; text-transform: uppercase; color: #8d8c88; text-align: center; margin-top: 6px; }
+.mk { display: grid; justify-items: center; }
+
+/* phones */
+.phones { display: grid; grid-template-columns: repeat(2, calc(360px * var(--s))) minmax(0, 1fr); gap: 36px; align-items: start; }
+@media (max-width: 980px) { .phones { grid-template-columns: repeat(auto-fit, calc(360px * var(--s))); } }
+.pw { width: calc(360px * var(--s)); height: calc(760px * var(--s)); position: relative; max-width: 100%; }
+.phone { position: absolute; left: 0; top: 0; width: 360px; height: 760px; transform: scale(var(--s)); transform-origin: 0 0; background: #fff; border-radius: 52px; overflow: hidden; color: #111; box-shadow: 0 0 0 9px var(--frame), 0 0 0 10px var(--frame-ring), 0 30px 60px -30px rgba(20,20,18,.35); --g2: #8d8c88; --g3: #c8c7c3; }
+.phone * { box-sizing: border-box; }
+.sb { position: absolute; top: 0; left: 0; right: 0; height: 50px; display: flex; align-items: center; justify-content: space-between; padding: 0 30px 0 34px; font: 600 15px var(--display); z-index: 5; }
+.sb i { width: 64px; height: 10px; border-radius: 6px; background: #111; }
+.abs { position: absolute; }
+.lab { font-family: var(--label); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--g2); }
+.lab.ink { color: #111; }
+.head { left: 24px; right: 24px; top: 66px; display: flex; justify-content: space-between; align-items: baseline; z-index: 3; }
+.cap { font-family: var(--label); font-size: 12px; color: var(--muted); line-height: 1.45; margin-top: 14px; max-width: calc(360px * var(--s)); }
+.cap b { color: var(--fg); font-weight: 600; }
+.ph-notes { display: grid; gap: 18px; min-width: 0; align-content: start; }
+.ph-notes div { border-top: 1.5px solid var(--fg); padding-top: 12px; font-size: 14px; line-height: 1.55; color: var(--muted); max-width: 52ch; }
+.ph-notes b { display: block; color: var(--fg); font-weight: 600; font-size: 15px; margin-bottom: 4px; }
+
+/* Home 1 · Specimen: names set huge, mark inline at cap height */
+.spec { left: 22px; right: 10px; top: 150px; display: grid; gap: 40px; }
+.spec .row { display: grid; gap: 10px; }
+.spec .word { font-weight: 200; font-size: 76px; letter-spacing: -.055em; line-height: .86; display: flex; align-items: flex-start; gap: 10px; white-space: nowrap; }
+.spec .word svg { width: 50px; height: 50px; flex: none; margin-top: 4px; }
+.spec .word sup { font: 500 10.5px var(--label); letter-spacing: .1em; color: var(--g2); margin-left: 4px; margin-top: 6px; }
+.spec .meta { display: flex; gap: 16px; padding-left: 62px; }
+.spec .meta u { text-decoration-thickness: 1px; text-underline-offset: 4px; }
+.spec-foot { left: 22px; right: 22px; bottom: 46px; display: flex; justify-content: space-between; }
+
+/* Home 2 · Fields: two pale planes, a hard split */
+.field { left: 0; right: 0; height: 50%; }
+.field.top { top: 0; background: var(--pb); }
+.field.bot { bottom: 0; background: var(--pa); }
+.field svg { position: absolute; right: 26px; width: 118px; height: 118px; overflow: visible; }
+.field.top svg { top: 140px; }
+.field.bot svg { top: 64px; }
+.field .num { position: absolute; left: 24px; font: 600 56px var(--display); letter-spacing: -.04em; line-height: 1; }
+.field.top .num { top: 120px; }
+.field.bot .num { top: 44px; }
+.field .num small { display: block; font: 500 10.5px var(--label); letter-spacing: .1em; text-transform: uppercase; margin-top: 6px; }
+.field .name { position: absolute; left: 22px; bottom: 22px; font-weight: 250; font-size: 52px; letter-spacing: -.04em; line-height: 1; }
+.field .go { position: absolute; right: 24px; bottom: 30px; }
+.field .go u { text-decoration-thickness: 1px; text-underline-offset: 4px; }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <span class="eyebrow">Carambole · language marks</span>
+    <h1>Two flat marks, drawn with a compass</h1>
+    <p class="intro">A new start. Each language gets a <b>flat geometric mark</b>, built only from circles and arcs: no metal, no 3D, no glow. <b>Français</b> keeps the idea of one ribbon link: a lens pinched at both ends, with a twist. <b>English</b> keeps the idea of a petal. Six ways to draw the pair are below, each taken from a lesson in your references. Pick one card to see it on two new home pages.</p>
+    <div class="bar" id="palBar"></div>
+  </header>
+
+  <section>
+    <div class="sec-head"><span class="eyebrow">From the references</span><h2>What I took, not what I copied</h2></div>
+    <div class="lessons">
+      <div><span>Dorian Electra poster</span><b>One ink, technical marks</b>A single blue ink, a registration crosshair, pale paper that shows through. Printing errors read as care.</div>
+      <div><span>Bradmead 0622</span><b>Flat fields, hard split</b>Two flat colour planes meet edge to edge. Small print sits in the corners; one big numeral carries the page.</div>
+      <div><span>Moodboard · CloseCo, ROWEN</span><b>A mark owns its block</b>Each logo sits on its own flat colour block, and type is allowed to crop at the edge.</div>
+      <div><span>Calmar specimen</span><b>Type as the picture</b>Words set huge, with a small picture dropped inline into the line like a letter.</div>
+      <div><span>Start in 1 Minute</span><b>Cut-out and overprint</b>Shapes cut from flat paper, a translucent second colour overlapping, type laid over the shape.</div>
+      <div><span>Acrylic keychain</span><b>Die-cut outline</b>A flat acid shape inside a thin offset outline, black doing the drawing on top.</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="eyebrow">Six systems</span><h2>Pick a pair</h2><p class="intro">Each card shows Français and English large, then at 48, 32 and 20 pt to check they still read at icon size.</p></div>
+    <div class="concepts" id="concepts"></div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="eyebrow">Home</span><h2>Two home pages</h2><p class="intro">No question at the top, no ribbon column. App text is English; the French name stays French.</p></div>
+    <div class="phones">
+      <div>
+        <div class="pw"><div class="phone">
+          <div class="sb"><span>9:41</span><i></i></div>
+          <div class="abs head"><span class="lab ink">Carambole</span><span class="lab ink">Colors →</span></div>
+          <div class="abs spec">
+            <div class="row"><div class="word"><span data-m="en"></span>English<sup>00</sup></div><div class="meta"><span class="lab">No books yet</span></div></div>
+            <div class="row"><div class="word"><span data-m="fr"></span>Français<sup>02</sup></div><div class="meta"><span class="lab">2 books</span><span class="lab ink"><u>Open →</u></span></div></div>
+          </div>
+          <div class="abs spec-foot"><span class="lab">2 languages</span><span class="lab">Settings</span></div>
+        </div></div>
+        <p class="cap"><b>Specimen.</b> The names are the page, set as large as the width allows. The mark sits inline at cap height, like the picture in the Calmar line. The superscript is the book count.</p>
+      </div>
+      <div>
+        <div class="pw"><div class="phone">
+          <div class="sb"><span>9:41</span><i></i></div>
+          <div class="abs head"><span class="lab ink">Carambole</span><span class="lab ink">Colors →</span></div>
+          <div class="abs field top"><span data-m="en"></span><div class="num">00<small>books</small></div><div class="name">English</div><span class="lab go">Coming soon</span></div>
+          <div class="abs field bot"><span data-m="fr"></span><div class="num">02<small>books</small></div><div class="name">Français</div><span class="lab ink go"><u>Open →</u></span></div>
+        </div></div>
+        <p class="cap"><b>Fields.</b> The screen splits into two pale planes, one per language, like the Bradmead grid. Each plane is the whole tap target. The fills are the palette's capped pale colours.</p>
+      </div>
+      <div class="ph-notes">
+        <div><b>Marks are fixed</b>They never change with activity. A tap could play one short move (the lens flips its twist, the petal turns a quarter); nothing loops.</div>
+        <div><b>Colour</b>Français leads with the palette's loud colour, English with the quiet one, so the pair always splits the palette between them. The marks are full strength; only large fills are pale.</div>
+        <div><b>iOS route</b>Each mark is a SwiftUI <code>Shape</code> (arcs only), so it is crisp at every size and also works as the app's language badge on the shelf header.</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+/* ---------- palettes (Theme.swift: loud, quiet, pale loud = buttonFill, pale quiet = quietFill) ---------- */
+const PAL = {
+  acide: { name: "Acide", a: "#D3F45A", b: "#7FAFE8", pa: "#DDE6BC", pb: "#BCCFE6" },
+  iris: { name: "Iris", a: "#CFC3FF", b: "#B9DB7A", pa: "#D9D3EE", pb: "#D9E6BC" },
+  surimpression: { name: "Surimpression", a: "#7E98D8", b: "#EC93B5", pa: "#BCC8E6", pb: "#E6BCCC" },
+};
+let pal = "acide", concept = "compass";
+
+/* ---------- geometry, in a 100 × 100 box ---------- */
+// vertical lens (two circle arcs) centred at cx, cy; half width w, half height h
+function lens(cx, cy, w, h) {
+  const R = (h * h + w * w) / (2 * w);
+  return `M${cx},${cy - h} A${R},${R} 0 0 1 ${cx},${cy + h} A${R},${R} 0 0 1 ${cx},${cy - h} Z`;
+}
+// petal: point at the base (cx, ty), two convex side arcs, a round top of radius r centred at (cx, cy)
+function drop(cx, cy, r, ty) {
+  const side = (ty - cy) * 1.25;
+  return `M${cx},${ty} A${side},${side} 0 0 1 ${cx - r},${cy} A${r},${r} 0 0 1 ${cx + r},${cy} A${side},${side} 0 0 1 ${cx},${ty} Z`;
+}
+// quarter disc: apex at (ax, ay), radius r, opening upward (−135° … −45°)
+function fan(ax, ay, r) {
+  const p = a => [ax + r * Math.cos(a), ay + r * Math.sin(a)];
+  const [x1, y1] = p(-3 * Math.PI / 4), [x2, y2] = p(-Math.PI / 4);
+  return `M${ax},${ay} L${x1},${y1} A${r},${r} 0 0 1 ${x2},${y2} Z`;
+}
+const TWIST = "M-10,36 C40,22 60,80 110,64 L110,110 L-10,110 Z";   // lower part of the lens shows the back face
+const TWIST_LINE = "M-10,36 C40,22 60,80 110,64";
+let uid = 0;
+
+/* each concept: fr(), en() return inner SVG for a 0 0 100 100 box */
+const CONCEPTS = [
+  { id: "compass", name: "Compass", from: "Arcs only", note: "The lens shows its front above an S-shaped twist and its back below, so one flat shape still reads as a turned band. The petal is a round top on two curved sides, pointed at the base. A hairline ink outline does the drawing.",
+    fr: () => { const id = "c" + uid++; return `<clipPath id="${id}"><path d="${lens(50, 50, 24, 46)}"/></clipPath>
+      <path d="${lens(50, 50, 24, 46)}" fill="var(--a)"/><path d="${TWIST}" fill="var(--b)" clip-path="url(#${id})"/>
+      <path d="${TWIST_LINE}" fill="none" stroke="var(--ink)" stroke-width="1.4" vector-effect="non-scaling-stroke" clip-path="url(#${id})"/>
+      <path d="${lens(50, 50, 24, 46)}" fill="none" stroke="var(--ink)" stroke-width="1.4" vector-effect="non-scaling-stroke"/>`; },
+    en: () => `<path d="${drop(50, 38, 30, 95)}" fill="var(--b)" stroke="var(--ink)" stroke-width="1.4" vector-effect="non-scaling-stroke"/>` },
+
+  { id: "register", name: "Off-register", from: "Dorian Electra poster", note: "Colour and ink are printed a few points apart, as if the second plate slipped. The ink outline sits true; the fill drifts down-left. A tiny crosshair marks the centre.",
+    fr: () => `<path d="${lens(46, 54, 24, 44)}" fill="var(--a)"/>
+      <path d="${lens(50, 50, 24, 44)}" fill="none" stroke="var(--ink)" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+      <path d="M50,40 V60 M40,50 H60" stroke="var(--ink)" stroke-width="1" vector-effect="non-scaling-stroke"/>`,
+    en: () => `<g transform="translate(-4 4)"><path d="${lens(50, 50, 15, 46)}" transform="rotate(40 50 50)" fill="var(--b)"/></g>
+      <path d="${lens(50, 50, 15, 46)}" transform="rotate(40 50 50)" fill="none" stroke="var(--ink)" stroke-width="1.5" vector-effect="non-scaling-stroke"/>
+      <path d="M50,40 V60 M40,50 H60" stroke="var(--ink)" stroke-width="1" vector-effect="non-scaling-stroke"/>` },
+
+  { id: "charm", name: "Die-cut", from: "Acrylic keychain", note: "A flat colour shape inside a thin ink outline set off from its edge, like a cut acrylic charm. The twist and the petal's vein are cut out as white slits.",
+    fr: () => { const L = lens(50, 50, 22, 42); return `<path d="${L}" fill="#fff" stroke="var(--ink)" stroke-width="15" stroke-linejoin="round"/>
+      <path d="${L}" fill="#fff" stroke="#fff" stroke-width="11" stroke-linejoin="round"/>
+      <path d="${L}" fill="var(--a)"/><path d="M14,42 C38,39 62,61 86,58" fill="none" stroke="#fff" stroke-width="4"/>`; },
+    en: () => { const D = drop(50, 40, 27, 90); return `<path d="${D}" fill="#fff" stroke="var(--ink)" stroke-width="15" stroke-linejoin="round"/>
+      <path d="${D}" fill="#fff" stroke="#fff" stroke-width="11" stroke-linejoin="round"/>
+      <path d="${D}" fill="var(--b)"/><path d="M50,84 L50,46" stroke="#fff" stroke-width="4" stroke-linecap="round"/>`; } },
+
+  { id: "tile", name: "Tile", from: "Moodboard · CloseCo", note: "Each mark owns a pale square, like a logo on its own block. The tiles cross the colours: the French lens sits on the pale quiet colour, the English petal on the pale loud one.",
+    fr: () => `<rect x="4" y="4" width="92" height="92" rx="24" fill="var(--pb)"/>
+      <path d="${lens(50, 50, 17, 33)}" fill="var(--a)" stroke="var(--ink)" stroke-width="1.3" vector-effect="non-scaling-stroke"/>`,
+    en: () => `<rect x="4" y="4" width="92" height="92" rx="24" fill="var(--pa)"/>
+      <path d="${drop(50, 42, 21, 82)}" fill="var(--b)" stroke="var(--ink)" stroke-width="1.3" vector-effect="non-scaling-stroke"/>` },
+
+  { id: "halves", name: "Halves", from: "Bradmead grid", note: "Bauhaus parts. Français is two half-discs slid past each other: a band seen turning. English is a quarter disc standing on its point: the plainest petal.",
+    fr: () => `<path d="M20,50 A26,26 0 0 1 72,50 Z" transform="translate(-6 0)" fill="var(--a)"/>
+      <path d="M28,50 A26,26 0 0 0 80,50 Z" transform="translate(-2 0)" fill="var(--b)"/>`,
+    en: () => `<path d="${fan(50, 88, 64)}" fill="var(--b)"/>` },
+
+  { id: "overprint", name: "Overprint", from: "Start in 1 Minute", note: "Two translucent inks multiply where they cross. Two lenses turned apart make the twist, and the overlap prints a third colour. The petal carries a smaller inner petal in the other ink.",
+    fr: () => `<g style="mix-blend-mode:multiply"><path d="${lens(50, 50, 20, 44)}" transform="rotate(-16 50 50)" fill="var(--a)"/></g>
+      <g style="mix-blend-mode:multiply"><path d="${lens(50, 50, 20, 44)}" transform="rotate(16 50 50)" fill="var(--b)"/></g>`,
+    en: () => `<g style="mix-blend-mode:multiply"><path d="${drop(50, 38, 30, 95)}" fill="var(--b)"/></g>
+      <g style="mix-blend-mode:multiply"><path d="${drop(50, 50, 16, 95)}" fill="var(--a)"/></g>` },
+];
+
+const svg = (inner, size, label) => `<svg viewBox="0 0 100 100" width="${size}" height="${size}" role="img" aria-label="${label}" style="isolation:isolate">${inner}</svg>`;
+const find = id => CONCEPTS.find(c => c.id === id);
+
+function renderConcepts() {
+  const host = document.getElementById("concepts");
+  host.innerHTML = "";
+  CONCEPTS.forEach(c => {
+    const shell = document.createElement("div");
+    shell.className = "shell"; shell.setAttribute("role", "button"); shell.tabIndex = 0;
+    shell.setAttribute("aria-pressed", c.id === concept);
+    const sizes = [48, 32, 20].map(s => svg(c.fr(), s, "Français") + svg(c.en(), s, "English")).join('<span style="width:10px"></span>');
+    shell.innerHTML = `<div class="core">
+      <div class="hero"><div class="mk">${svg(c.fr(), 128, "Français")}<div class="nm">Français</div></div><div class="mk">${svg(c.en(), 128, "English")}<div class="nm">English</div></div></div>
+      <div class="sizes">${sizes}</div>
+      <span class="from">From · ${c.from}</span><h3>${c.name}</h3><p>${c.note}</p></div>`;
+    const pick = () => { concept = c.id; sync(); };
+    shell.addEventListener("click", pick);
+    shell.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pick(); } });
+    host.appendChild(shell);
+  });
+}
+function renderPhones() {
+  const c = find(concept);
+  document.querySelectorAll("[data-m]").forEach(el => { el.outerHTML = `<span data-m="${el.dataset.m}" style="display:contents">${svg(el.dataset.m === "fr" ? c.fr() : c.en(), 100, el.dataset.m === "fr" ? "Français" : "English")}</span>`; });
+}
+function renderBar() {
+  const bar = document.getElementById("palBar"); bar.innerHTML = "";
+  Object.entries(PAL).forEach(([id, p]) => {
+    const b = document.createElement("button"); b.type = "button"; b.className = "chipbtn"; b.setAttribute("aria-pressed", id === pal);
+    b.innerHTML = `<i style="background:linear-gradient(90deg,${p.a} 50%,${p.b} 50%)"></i>${p.name}`;
+    b.onclick = () => { pal = id; sync(); }; bar.appendChild(b);
+  });
+}
+function sync() {
+  const p = PAL[pal], r = document.documentElement.style;
+  r.setProperty("--a", p.a); r.setProperty("--b", p.b); r.setProperty("--pa", p.pa); r.setProperty("--pb", p.pb);
+  renderBar(); renderConcepts(); renderPhones();
+}
+sync();
+</script>
