@@ -6,7 +6,7 @@
 //  Acide (lime + sky), Iris (lilac + pistachio) and
 //  Surimpression (soft riso pink + blue that overprint). The ground stays white
 //  and running text stays ink; colour goes to the objects — the star and its
-//  ring, the Today tokens, the drill magnets, the library ribbon, button counts.
+//  ring, the Today tokens, the drill magnets, button counts.
 //
 //  The choice persists in UserDefaults under `AppPalette.storageKey`. SwiftUI
 //  views read it with `@AppStorage(AppPalette.storageKey)` so they redraw on
@@ -116,7 +116,8 @@ struct AppTheme: Equatable {
     let starBead: String
     let starTrack: String
 
-    /// 08 library ribbon: started book, then books to come.
+    /// 08 library ribbon: started book, then books to come. The ribbon is
+    /// archived (docs/archive/code/LibraryRibbon.swift); kept for a revival.
     let ribbonFront: String
     let ribbonBack: String
     let soonFront: String

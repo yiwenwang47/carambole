@@ -7,7 +7,7 @@
 //  No object: two all-time totals, the streak, then one quiet line per day
 //  (newest first, rest days kept and greyed) and the "approximatives"
 //  footnote. Nothing moves. Self-contained + previewable; navigation is wired
-//  elsewhere. (The 3D ribbon moved to the library — `LibraryRibbon.swift`.)
+//  elsewhere. (The 3D ribbon moved to the library, then was archived: `docs/archive/code/LibraryRibbon.swift`.)
 //
 import SwiftUI
 import Combine
