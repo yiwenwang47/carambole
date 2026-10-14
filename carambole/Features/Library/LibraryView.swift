@@ -2,15 +2,16 @@
 //  LibraryView.swift
 //  carambole
 //
-//  The shelf — the app's root. motion.html 08 "Ruban": one paper ribbon runs
+//  One language's shelf, pushed from `LanguagesView`. motion.html 08 "Ruban": one paper ribbon runs
 //  down the right side of the shelf and each book is a stretch of it
 //  (`LibraryRibbon.swift`). Books sit on the left of their stretch: kicker
 //  label, light title, then `Ouvrir →` + % for open books or `Bientôt` for
 //  books to come. Open books sort first. The ribbon lives inside the scroll
 //  content, so it scrolls exactly with the titles. It is a still picture.
 //
-//  "Français — Fondations" is the first (and only live) book; the model
-//  supports many, so future books appear here as they ship.
+//  The French shelf holds the two French books; the English shelf holds one
+//  greyed placeholder (`ShelfLanguage.placeholders`). Each shelf speaks its own
+//  language (`ShelfLanguage.shelf`): the French shelf stays in French.
 //
 
 import SwiftUI
@@ -28,9 +29,19 @@ private struct ShelfBook: Identifiable {
 }
 
 struct LibraryView: View {
-    /// Authored order (`BookCatalog.all`); open books are moved to the front.
-    private let catalog: [ShelfBook] = BookCatalog.all.map {
-        ShelfBook(id: $0.id, title: $0.shelfTitle, kicker: $0.kicker, available: true, descriptor: $0)
+    let language: ShelfLanguage
+    /// Opened once on first appearance (debug launch flags / remote).
+    var initialBook: BookDescriptor? = nil
+
+    @Environment(\.dismiss) private var dismiss
+
+    /// Authored order: the language's books, then its placeholders.
+    private var catalog: [ShelfBook] {
+        language.books.map {
+            ShelfBook(id: $0.id, title: $0.shelfTitle, kicker: $0.kicker, available: true, descriptor: $0)
+        } + language.placeholders.map {
+            ShelfBook(id: $0.id, title: $0.title, kicker: $0.kicker, available: false, descriptor: nil)
+        }
     }
 
     /// Each book's progress (%), from its own element IDs.
@@ -45,8 +56,6 @@ struct LibraryView: View {
     @State private var loaded = false
     /// The book pushed from the shelf (`BookView`).
     @State private var openedBook: BookDescriptor?
-    /// Pushes the colour page.
-    @State private var openColors = false
     @AppStorage(AppPalette.storageKey) private var paletteID = AppPalette.fallback.rawValue
 
     private var books: [ShelfBook] {
@@ -54,7 +63,7 @@ struct LibraryView: View {
     }
 
     var body: some View {
-        NavigationStack {
+        Group {
             GeometryReader { geo in
                 ScrollView {
                     shelf(width: geo.size.width)
@@ -72,8 +81,10 @@ struct LibraryView: View {
             .navigationDestination(item: $openedBook) { book in
                 BookView(book: book, showBack: true)
             }
-            .navigationDestination(isPresented: $openColors) { ColorSettingsView() }
+            .navigationBarBackButtonHidden(true)
+            .swipeToGoBack { dismiss() }
             .onAppear {
+                guard language == .french else { return }
                 StarLoopPlayers.shared.prewarm()
                 // First appearance loads content; returning from a book refreshes.
                 if loaded {
@@ -83,6 +94,7 @@ struct LibraryView: View {
                     fondationsModel.load()
                     situationModel.load()
                     loaded = true
+                    if let initialBook { openedBook = initialBook }
                     #if DEBUG
                     if let id = ProcessInfo.processInfo.environment["CB_OPEN_BOOK"] {
                         openedBook = BookCatalog.descriptor(id: id)
@@ -135,7 +147,7 @@ struct LibraryView: View {
                     .padding(.top, CGFloat(LibraryRibbonGeometry.top(ofStretch: index)) + 34)
             }
 
-            Text("Fin de la bibliothèque")
+            Text(language.shelf.end)
                 .uppercaseLabel()
                 .frame(width: width)
                 .padding(.top, height - 60)
@@ -165,39 +177,35 @@ struct LibraryView: View {
 
     // MARK: - Header
 
-    /// motion.html `.lab` pair pinned to the top edges; the right one opens the
-    /// colour page (a small strip of the current palette + `Couleurs →`).
+    /// motion.html `.lab` pair pinned to the top edges: `‹ Languages` (back)
+    /// and the language's name.
     private var edgeLabels: some View {
         HStack(alignment: .firstTextBaseline) {
-            Text("Carambole").uppercaseLabel(AppColor.ink)
-            Spacer()
-            Button {
-                openColors = true
-            } label: {
-                HStack(spacing: 8) {
-                    PaletteStrip(palette: AppPalette(stored: paletteID))
-                        .frame(width: 26, height: 8)
-                        .alignmentGuide(.firstTextBaseline) { d in d[.bottom] }
-                    Text("Couleurs →").uppercaseLabel(AppColor.ink)
-                }
-                .padding(.vertical, 10)
-                .padding(.leading, 12)
-                .contentShape(Rectangle())
+            Button { dismiss() } label: {
+                Text(language.shelf.back)
+                    .uppercaseLabel(AppColor.ink)
+                    .padding(.vertical, 10)
+                    .padding(.trailing, 12)
+                    .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
             .padding(.vertical, -10)
-            .accessibilityLabel("Couleurs, \(AppPalette(stored: paletteID).name)")
+            .accessibilityLabel(language.shelf.backA11y)
+            Spacer()
+            Text(language.name).uppercaseLabel(AppColor.ink)
         }
     }
 
-    /// 08 `.big`: Manrope 40 / 250, −0.03em; `N livres` then grey `M ouverts`.
+    /// 08 `.big`: Manrope 40 / 250, −0.03em; `N livres` then grey `M ouverts`
+    /// (English shelf: `N books`, `M coming`).
     private func heading(_ books: [ShelfBook]) -> some View {
         let open = books.filter(\.available).count
+        let text = language.shelf
         // Manrope's natural line box is ~1.37em; 08 sets 1.05em → pull lines up.
         return VStack(alignment: .leading, spacing: -12) {
-            Text("\(books.count) livres")
+            Text(text.count(language == .english ? open : books.count, open))
                 .foregroundColor(AppColor.ink)
-            Text(open == 1 ? "1 ouvert" : "\(open) ouverts")
+            Text(text.sub(books.count, open))
                 .foregroundColor(AppColor.g2)
         }
         .font(.display(size: 40, wght: 250))
@@ -216,10 +224,10 @@ struct LibraryView: View {
                 blockLabel(book, number: number)
             }
             .buttonStyle(ShelfRowButtonStyle())
-            .accessibilityHint("Ouvrir le livre")
+            .accessibilityHint(language.shelf.openHint)
         } else {
             blockLabel(book, number: number)
-                .accessibilityHint("Bientôt disponible")
+                .accessibilityHint(language.shelf.soonHint)
         }
     }
 
@@ -236,7 +244,7 @@ struct LibraryView: View {
                 .padding(.top, 2)
             if book.available {
                 HStack(spacing: 10) {
-                    Text("Ouvrir →")
+                    Text(language.shelf.open)
                         .uppercaseLabel(AppColor.ink)
                         .padding(.bottom, 2)
                         .overlay(alignment: .bottom) {
@@ -247,7 +255,7 @@ struct LibraryView: View {
                 }
                 .padding(.top, 4)
             } else {
-                Text("Bientôt")
+                Text(language.shelf.soon)
                     .uppercaseLabel()
                     .padding(.top, 4)
             }
@@ -270,5 +278,5 @@ private struct ShelfRowButtonStyle: ButtonStyle {
 // MARK: - Preview
 
 #Preview {
-    LibraryView()
+    NavigationStack { LibraryView(language: .french) }
 }

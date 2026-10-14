@@ -2,9 +2,10 @@
 //  ColorSettingsView.swift
 //  carambole
 //
-//  "Couleurs" — pick one of the three palettes (design/palettes.html v4) and
-//  how colour reaches the drills (Plateau or Cadres, design/drill-colour.html).
-//  Opened from the library's `Couleurs →` label. The star at the top
+//  "Colors": pick one of the three palettes (design/palettes.html v4), the
+//  language marks' style (Cut paper or Script sticker, design/studio) and how
+//  colour reaches the drills (Plateau or Cadres, design/drill-colour.html).
+//  Opened from the home page's `Colors →` and `Settings` labels. The star at the top
 //  takes the chosen palette's material and ring at once; each row shows the
 //  palette's name, one line, and its three token states (new / review /
 //  fragile) as real pills. The choice persists (`AppPalette.storageKey`) and
@@ -17,6 +18,7 @@ struct ColorSettingsView: View {
     @Environment(\.dismiss) private var dismiss
     @AppStorage(AppPalette.storageKey) private var paletteID = AppPalette.fallback.rawValue
     @AppStorage(DrillStyle.storageKey) private var drillStyleID = DrillStyle.fallback.rawValue
+    @AppStorage(LanguageMarkStyle.storageKey) private var markID = LanguageMarkStyle.fallback.rawValue
 
     private var selected: AppPalette { AppPalette(stored: paletteID) }
 
@@ -26,14 +28,14 @@ struct ColorSettingsView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
                     header
-                    Text("Couleurs")
+                    Text("Colors")
                         .font(.display(size: 40, wght: 250))
                         .tracking(-1.2)
                         .foregroundColor(AppColor.ink)
                         .padding(.top, 30)
                         .accessibilityAddTraits(.isHeader)
 
-                    // Preview: a sample ring (41 % maîtrisé, 12 % en cours).
+                    // Preview: a sample ring (41 % mastered, 12 % in progress).
                     StarLoopView(mastered: 0.41, inProgress: 0.12, palette: selected)
                         .frame(height: 300)
                         .padding(.horizontal, -Spacing.screenH)
@@ -45,7 +47,13 @@ struct ColorSettingsView: View {
                         row(palette)
                     }
 
-                    SectionLabel("Exercices").padding(.top, 34).padding(.bottom, 10)
+                    SectionLabel("Language marks").padding(.top, 34).padding(.bottom, 10)
+                    Rectangle().fill(AppColor.ink).frame(height: 1)
+                    ForEach(LanguageMarkStyle.allCases) { style in
+                        markRow(style)
+                    }
+
+                    SectionLabel("Drills").padding(.top, 34).padding(.bottom, 10)
                     Rectangle().fill(AppColor.ink).frame(height: 1)
                     ForEach(DrillStyle.allCases) { style in
                         styleRow(style)
@@ -65,21 +73,21 @@ struct ColorSettingsView: View {
     private var header: some View {
         HStack {
             Button { dismiss() } label: {
-                Text("‹ Bibliothèque")
+                Text("‹ Back")
                     .uppercaseLabel(AppColor.ink)
                     .padding(.vertical, 8)
                     .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
             .padding(.vertical, -8)
-            .accessibilityLabel("Retour")
+            .accessibilityLabel("Back")
             Spacer()
-            Text("Réglages").uppercaseLabel()
+            Text("Settings").uppercaseLabel()
         }
     }
 
-    /// Name + line on the left, token pills under them; `Choisie` (ink pill) or
-    /// `Choisir` on the right.
+    /// Name + line on the left, token pills under them; `Chosen` (ink pill) or
+    /// `Choose` on the right.
     private func row(_ palette: AppPalette) -> some View {
         let isOn = palette == selected
         return Button {
@@ -114,14 +122,53 @@ struct ColorSettingsView: View {
 }
 
 extension ColorSettingsView {
-    /// `Choisie` (dark grey pill) or `Choisir` (outline).
+    /// `Chosen` (dark grey pill) or `Choose` (outline).
     fileprivate func choiceTag(_ isOn: Bool) -> some View {
-        Text(isOn ? "Choisie" : "Choisir")
+        Text(isOn ? "Chosen" : "Choose")
             .uppercaseLabel(isOn ? AppColor.paper : AppColor.ink)
             .padding(.horizontal, 12)
             .padding(.vertical, 6)
             .background(Capsule().fill(isOn ? AppColor.buttonDark : Color.clear))
             .overlay(Capsule().strokeBorder(isOn ? AppColor.buttonDark : AppColor.ink, lineWidth: 1))
+    }
+
+    /// One language-mark style: name, line, and both marks in the current palette.
+    fileprivate func markRow(_ style: LanguageMarkStyle) -> some View {
+        let isOn = style == LanguageMarkStyle(stored: markID)
+        let theme = AppPalette(stored: paletteID).theme
+        return Button {
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            markID = style.rawValue
+        } label: {
+            VStack(alignment: .leading, spacing: 10) {
+                HStack(alignment: .firstTextBaseline) {
+                    Text(style.name)
+                        .font(.display(size: 26, wght: isOn ? 400 : 250))
+                        .tracking(-0.6)
+                        .foregroundColor(AppColor.ink)
+                    Spacer()
+                    choiceTag(isOn)
+                }
+                Text(style.blurb)
+                    .font(.label(size: 13, wght: 400))
+                    .foregroundColor(AppColor.graphite)
+                HStack(spacing: 14) {
+                    ForEach(ShelfLanguage.homeOrder) { lang in
+                        LanguageMarkView(language: lang, style: style, theme: theme)
+                            .frame(width: 52, height: 52)
+                    }
+                }
+            }
+            .padding(.vertical, 16)
+            .contentShape(Rectangle())
+            .overlay(alignment: .bottom) {
+                Rectangle().fill(AppColor.hairline).frame(height: 1)
+            }
+        }
+        .buttonStyle(.plain)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(style.name). \(style.blurb)")
+        .accessibilityAddTraits(isOn ? .isSelected : [])
     }
 
     /// One drill style: name, line, and a tiny sample in the current palette.
@@ -232,21 +279,6 @@ private struct TokenSample: View {
             .padding(.horizontal, 10)
             .frame(height: 24)
             .background(Capsule().fill(fill))
-    }
-}
-
-/// Two short bars of a palette's loud and quiet colours (the library's
-/// `Couleurs →` label).
-struct PaletteStrip: View {
-    let palette: AppPalette
-
-    var body: some View {
-        let t = palette.theme
-        HStack(spacing: 2) {
-            RoundedRectangle(cornerRadius: 2).fill(Color(hex: t.tokenNew))
-            RoundedRectangle(cornerRadius: 2).fill(Color(hex: t.tokenReview))
-        }
-        .accessibilityHidden(true)
     }
 }
 

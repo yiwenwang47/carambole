@@ -13,6 +13,12 @@ Older history is in `docs/archive/` and git log.
 - **Book 2 rulebook** (cast, voices, JSON shape, authoring steps):
   `docs/plans/2026-10-11-book-2-content-handoff.md`; tools in
   `tools/situations/README.md`.
+- **Languages home (2026-10-14):** root is `Features/Languages/LanguagesView.swift`
+  (Specimen layout) → `LibraryView(language:)`; marks in
+  `DesignSystem/LanguageMark.swift` (Cut paper default, Script sticker; picked
+  under Colors). App text English, book text in the book's language. Decisions:
+  `design/studio/PREFERENCES.md`; mocks + drag editor: `design/studio/`
+  (`python3 design/studio/server.py`).
 - **Design:** `design/UI_REDESIGN_HANDOFF.md` (white ground, ink text, colour on
   objects, pale capped fills). Code in `carambole/DesignSystem/Theme.swift`.
 - **Book 1 drill types:** `docs/plans/2026-10-10-drill-types-design.md`.
