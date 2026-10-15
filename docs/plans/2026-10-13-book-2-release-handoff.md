@@ -4,14 +4,9 @@
 **Repo:** `carambole/`, branch `main`, **pushed**.
 **Previous start point:** [arc 5 done handoff](../archive/plans/2026-10-13-book-2-arc5-done-handoff.md). Its §0 has this session's commits and the release check in detail.
 
-## 1. Start here: install on the phone
+## 1. Current phone state
 
-The user asked to do the installation in this session.
-
-1. Ask which build to install: the main Carambole app (`wen.carambole`), the Test book (`wen.carambole.testbook`), or both. The phone has Test book v10 and an older main app.
-2. Check that the phone is connected and unlocked: `xcrun devicectl list devices`.
-3. Install with the commands in §4.
-4. Ask the user to check the items in §2 on the phone. Never test, record or profile on the phone yourself.
+The main Carambole app (`wen.carambole`) received a Release build from `main` on 2026-10-15. See §8 for the Book 2 card-slide fix and its simulator checks. Only the user checks behavior on the phone; do not test, record, or profile there.
 
 ## 2. Checks only the phone can do
 
@@ -41,9 +36,9 @@ Fixed this session, after the release check:
 ## 4. Commands
 
 ```sh
-# main app on the phone
-xcodebuild -project carambole.xcodeproj -scheme carambole -configuration Debug -destination 'id=00008160-001A09920AA0000A' -allowProvisioningUpdates DEVELOPMENT_TEAM=QMV4SPL476 -derivedDataPath /tmp/cb-device build -quiet
-xcrun devicectl device install app --device 00008160-001A09920AA0000A /tmp/cb-device/Build/Products/Debug-iphoneos/carambole.app
+# main Release app on the phone
+xcodebuild -project carambole.xcodeproj -scheme carambole -configuration Release -destination 'id=00008160-001A09920AA0000A' -allowProvisioningUpdates DEVELOPMENT_TEAM=QMV4SPL476 -derivedDataPath /tmp/cb-device build -quiet
+xcrun devicectl device install app --device 00008160-001A09920AA0000A /tmp/cb-device/Build/Products/Release-iphoneos/carambole.app
 
 # Test book on the phone
 xcodebuild -project carambole.xcodeproj -scheme carambole -configuration Debug -destination 'id=00008160-001A09920AA0000A' -allowProvisioningUpdates DEVELOPMENT_TEAM=QMV4SPL476 PRODUCT_BUNDLE_IDENTIFIER=wen.carambole.testbook INFOPLIST_KEY_CFBundleDisplayName='Test book' -derivedDataPath /tmp/cb-book2-pilot-device build -quiet
@@ -79,3 +74,11 @@ Book 2 is done.
 Still open, each only when the user asks:
 - The Écrire typing drill, in its own session.
 - The other open items in `CLAUDE.md` (Book 1 English explanations, Iris iridescence, the remaining swipe-back guards, stutter leads).
+
+## 8. Book 2 card slide (2026-10-15)
+
+Commit `851acd59` indexes the 2,194 glossary keys once per Book 2 session. `SituationCardView` uses that index for each dialogue line. It no longer scans the full glossary during every card update.
+
+The Test book autoplay ran in the iPhone 18 Pro simulator. In comparable runs of about 35 seconds, segmentation used 3,238 ms of sampled CPU time before the fix and 31 ms after it. The largest continuous main-thread busy stretch fell from about 231 ms to 47 ms. These are CPU sample estimates, not frame times. Animation Hitches is unavailable on this simulator. A 30 fps frame strip showed the next card moving across the screen without a visible jump.
+
+The Release build, Book 2 model tests, and situation lint passed. The model tests loaded all 3,000 items. The Python suite ran 98 tests with one skip. `devicectl` installed the main Release app from `851acd59` on the paired iPhone 18 Pro (`wen.carambole`). The fix branch and worktree were removed after a fast-forward merge to `main`.

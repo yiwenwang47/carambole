@@ -32,6 +32,9 @@ Older history is in `docs/archive/` and git log.
   `2026-10-10-ring-star-glow-handoff.md`, `2026-10-09-stutter-handoff.md`.
   Ring: bead leads, maîtrisé right behind it, en cours behind that
   (fixed 2026-10-14 for low %; test with `tools/sim/progress_db.py`).
+- **Book 2 card slide (2026-10-15):** `SituationText.Matcher` indexes the
+  glossary once per session. The Test book simulator profile and phone install
+  are in `docs/plans/2026-10-13-book-2-release-handoff.md` §8.
 
 ## Hard rules
 
@@ -144,7 +147,7 @@ xcodebuild build -project carambole.xcodeproj -scheme carambole \
 - The Écrire typing drill for Book 2 (own session).
 - `SwipeBackGuard` (`Core/SwipeBackModifier.swift`) is not yet on Today rows,
   colour options or module-detail buttons.
-- Stutter leads (75–155 ms freeze at push/pop; ribbon mesh rebuilds) in the
-  stutter handoff.
+- Page-switch stutter leads (75–155 ms freeze at push/pop) remain in the
+  stutter handoff. The separate Book 2 card-slide stutter was fixed on 2026-10-15.
 - `upsertReviewStatus` binds `first_seen_date` from `lastReviewDate` (masked by
   COALESCE; low impact).
