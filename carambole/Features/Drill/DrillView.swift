@@ -125,7 +125,7 @@ struct DrillView: View {
         .task {
             // Simulator harness (DrillDemo, tools/sim): open the hint, or cycle it.
             if DrillDemo.hintOpen { showHint = true }
-            if DrillDemo.autoRetry {
+            if DrillDemo.autoRetry || DrillDemo.autoCheck {
                 try? await Task.sleep(nanoseconds: 800_000_000)
                 if !answer.isEmpty { check() }
             }

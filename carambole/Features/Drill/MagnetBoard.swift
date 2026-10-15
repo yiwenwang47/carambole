@@ -48,6 +48,12 @@ struct MagnetBoard: View {
     @State private var welded = false
     @State private var weldStart: Date?
     @State private var waveDone = false
+    /// Height of the placed tiles' flow (rows only, no reserved space).
+    @State private var lineContentHeight: CGFloat = 0
+    /// Plateau: set on the weld so the welded text keeps the tiles' first row
+    /// in place (it only loses its colour and closes up) instead of dropping
+    /// to the baseline when it needs fewer rows. nil = bottom-aligned.
+    @State private var weldTopInset: CGFloat?
     /// During the retry flash: tiles from this line position on show dashed.
     @State private var flashFrom: Int?
     @AppStorage(AppPalette.storageKey) private var paletteID = AppPalette.fallback.rawValue
@@ -120,8 +126,11 @@ struct MagnetBoard: View {
                 lineTile(position: position, index: index)
             }
         }
+        .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { lineContentHeight = $0 }
+        .padding(.top, weldTopInset ?? 0)
         .frame(maxWidth: .infinity, minHeight: reservedLineHeight,
-               alignment: DrillStyle(stored: drillStyleID) == .cadres ? .topLeading : .bottomLeading)
+               alignment: DrillStyle(stored: drillStyleID) == .cadres || weldTopInset != nil
+                   ? .topLeading : .bottomLeading)
         .phaseAnimator([0.0, -10, 10, -7, 7, -3, 0], trigger: shakeTrigger) { content, x in
             content.offset(x: reduceMotion ? 0 : x)
         } animation: { _ in .linear(duration: 0.06) }
@@ -251,6 +260,8 @@ struct MagnetBoard: View {
 
     private func weld() {
         weldStart = Date()
+        // Same spot as bottom alignment right now; pins the first row from here on.
+        weldTopInset = max(0, reservedLineHeight - lineContentHeight)
         withAnimation(reduceMotion ? nil : .spring(duration: 0.4, bounce: 0.15)) {
             welded = true
         }

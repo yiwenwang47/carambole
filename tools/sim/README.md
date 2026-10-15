@@ -48,6 +48,7 @@ app next to the real one (own database), used for the hand-testing test book.
 | `CB_DRILL_HINT=<text>` | `DrillDemo.swift` | override the hint |
 | `CB_DRILL_PLACE=<n>` | `TokenBuilderView` hook | pre-place the first n answer tokens |
 | `CB_DRILL_HINT_OPEN=1` / `CB_DRILL_HINT_CYCLE=1` | `DrillView` hook | hint open / toggling every 1.6 s (animation recording) |
+| `CB_DRILL_CHECK=1` | `DrillView` hook | check the pre-placed answer after 0.8 s (with full `CB_DRILL_PLACE` → correct weld) |
 | `remote openBook` `closeBook` `openModules` `closeModules` `openToday` `closeToday` `openHistory` `closeHistory` `openSettings` `closeSettings` `startReview` `closeSession` `nextPalette` | `DemoRemote.swift` + hooks in `LibraryView`, `BookView` | navigation without taps |
 | `CB_OPEN_LANGUAGE=english\|french` / `CB_OPEN_COLORS=1` | `LanguagesView.swift` | open that shelf / the colour page from the home page |
 | `CB_RENDER_STAR=1` (or `ink` / `objet`) | `Features/Book/StarVideoRenderer.swift` | re-render the star videos, or a trial look (see `tools/star_video/`) |

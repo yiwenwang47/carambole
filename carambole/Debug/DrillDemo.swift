@@ -18,6 +18,7 @@
 //  - CB_DRILL_PLACE=<n>      pre-place the first n answer tokens on the line.
 //  - CB_DRILL_HINT_OPEN=1    start with the hint revealed.
 //  - CB_DRILL_HINT_CYCLE=1   toggle the hint every 1.6 s (animation recording).
+//  - CB_DRILL_CHECK=1        check the pre-placed answer after 0.8 s.
 //
 
 #if DEBUG
@@ -44,6 +45,8 @@ enum DrillDemo {
     static var hintCycle: Bool { env["CB_DRILL_HINT_CYCLE"] == "1" }
     /// Build drill: after pre-placing, add one wrong tile and check (second-try state).
     static var autoRetry: Bool { env["CB_DRILL_RETRY"] == "1" }
+    /// Build drill: check the pre-placed answer (CB_DRILL_PLACE = full length → weld).
+    static var autoCheck: Bool { env["CB_DRILL_CHECK"] == "1" }
     /// Spot drill states: "miss" (one wrong tap), "found", or an option index to pick.
     static var spotState: String? { env["CB_SPOT_STATE"] }
 
@@ -166,13 +169,14 @@ private struct TestBookView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(AppColor.paper.ignoresSafeArea())
         .onAppear {
-            // Simulator harness: open a session straight away (CB_TB_OPEN=spot|build).
+            // Simulator harness: open a session straight away (CB_TB_OPEN=spot|build|…|demo).
             switch ProcessInfo.processInfo.environment["CB_TB_OPEN"] {
             case "spot": running = .spot
             case "build": running = .build
             case "transform": running = .transform
             case "interp": running = .interp
             case "situation": running = .situation
+            case "demo": running = .demo
             default: break
             }
         }
