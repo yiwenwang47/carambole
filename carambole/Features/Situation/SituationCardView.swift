@@ -155,6 +155,7 @@ struct SituationCardView: View {
     /// Label above the cue when the item has no place.
     let fallbackPlace: String
     let words: [String: SituationWord]
+    let wordMatcher: SituationText.Matcher
     /// Prepended to the item's audio keys (the Test book's clips are `pilot2_…`).
     let audioPrefix: String
     /// The session's first card shows the "tap a word" hint.
@@ -213,7 +214,6 @@ struct SituationCardView: View {
     private struct Tip: Equatable { let id: String; let french: String; let english: String }
 
     private var drill: SituationDrill? { state.drill(of: item) }
-    private var wordKeys: Set<String> { Set(words.keys) }
     private var newWordKeys: Set<String> { Set(item.newWords.map(SituationText.norm)) }
 
     var body: some View {
@@ -478,8 +478,8 @@ struct SituationCardView: View {
 
     private func lineText(id: String, text: String, turnIndex: Int?) -> some View {
         let fixLine = turnIndex != nil && turnIndex == item.errorTurnIndex
-        let segments = SituationText.segments(text, keys: wordKeys,
-                                              keepApart: fixLine ? item.errorMark?.word : nil)
+        let segments = wordMatcher.segments(text,
+                                            keepApart: fixLine ? item.errorMark?.word : nil)
         return FlowLayout(spacing: 5, lineSpacing: 4) {
             ForEach(segments, id: \.index) { seg in
                 segmentView(seg, lineID: id, fixLine: fixLine)
@@ -1089,7 +1089,7 @@ struct SituationCardView: View {
     private func pinLaunchTip() {
         guard let key = launch.tip, let word = words[key] else { return }
         for (i, turn) in item.turns.enumerated() {
-            if let seg = SituationText.segments(turn.text, keys: wordKeys).first(where: { $0.key == key }) {
+            if let seg = wordMatcher.segments(turn.text).first(where: { $0.key == key }) {
                 tip = Tip(id: "t\(i)-\(seg.index)", french: seg.display, english: word.tipText)
                 tipPinned = true
                 return

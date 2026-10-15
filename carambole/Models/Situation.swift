@@ -281,6 +281,66 @@ enum SituationText {
             .trimmingCharacters(in: CharacterSet(charactersIn: ".,!?;:«»… "))
     }
 
+    /// Reusable glossary lookup for dialogue rendering. Building this once per
+    /// session avoids sorting every glossary entry for every visible line and
+    /// every animation frame.
+    struct Matcher {
+        private struct Phrase {
+            let tokens: [String]
+            let key: String
+        }
+
+        private let byFirst: [String: [Phrase]]
+
+        init(keys: Set<String>) {
+            var groups: [String: [Phrase]] = [:]
+            for key in keys {
+                let tokens = key.split(separator: " ").map(String.init)
+                guard let first = tokens.first else { continue }
+                groups[first, default: []].append(Phrase(tokens: tokens, key: key))
+            }
+            for first in groups.keys {
+                groups[first]?.sort { $0.tokens.count > $1.tokens.count }
+            }
+            byFirst = groups
+        }
+
+        func segments(_ text: String, keepApart: String? = nil) -> [Segment] {
+            let toks = SituationText.tokens(text)
+            let normalized = toks.map(SituationText.norm)
+            let apart = keepApart.map(SituationText.norm)
+            var out: [Segment] = []
+            var i = 0
+            while i < toks.count {
+                if toks[i].hasPrefix("___") {
+                    out.append(Segment(index: out.count, display: "", trailing: String(toks[i].dropFirst(3)),
+                                       key: nil, kind: .gap))
+                    i += 1
+                    continue
+                }
+                if normalized[i].isEmpty, let last = out.popLast() {
+                    out.append(Segment(index: last.index, display: last.display,
+                                       trailing: last.trailing + "\u{00A0}" + toks[i], key: last.key, kind: last.kind))
+                    i += 1
+                    continue
+                }
+                let hit = byFirst[normalized[i]]?.first { phrase in
+                    if let apart, phrase.tokens.count > 1, phrase.tokens.contains(apart) { return false }
+                    return i + phrase.tokens.count <= toks.count &&
+                        phrase.tokens.indices.allSatisfy { normalized[i + $0] == phrase.tokens[$0] }
+                }
+                let len = hit?.tokens.count ?? 1
+                let raw = toks[i..<(i + len)].joined(separator: " ")
+                let (body, trail) = SituationText.splitTrailing(raw)
+                let key = hit?.key
+                out.append(Segment(index: out.count, display: key == nil ? raw : body,
+                                   trailing: key == nil ? "" : trail, key: key, kind: .word))
+                i += len
+            }
+            return out
+        }
+    }
+
     /// Longest word-list phrase first, so « comme d'habitude » wins over
     /// « comme ». French spaced punctuation rides on the word before it.
     /// `keepApart` is a Corriger error word: no multi-word phrase may swallow

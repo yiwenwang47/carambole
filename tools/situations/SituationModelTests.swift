@@ -201,11 +201,32 @@ struct SituationModelTests {
         // A Corriger error word inside a set phrase stays tappable on its own.
         let apart = SituationText.segments("Moi aussi, j'adore !", keys: ["moi aussi", "moi", "aussi"], keepApart: "aussi")
         check(apart.map(\.key) == ["moi", "aussi", nil] || apart.contains { $0.key == "aussi" }, "error word split out of its phrase")
+        // The reusable matcher must preserve the rendered words while avoiding
+        // a full glossary scan on every SwiftUI card update.
+        let matcher = SituationText.Matcher(keys: Set(words.keys))
+        let phrase = matcher.segments("Bonjour ! Comme d'habitude ?")
+        check(phrase.first?.key == "bonjour" && phrase.first?.trailing == "\u{00A0}!",
+              "indexed matcher keeps spaced punctuation with its word")
+        check(phrase.contains { $0.key == "comme d'habitude" },
+              "indexed matcher keeps the longest set phrase")
+        let split = SituationText.Matcher(keys: ["moi aussi", "moi", "aussi"])
+            .segments("Moi aussi, j'adore !", keepApart: "aussi")
+        check(split.map(\.key) == ["moi", "aussi", nil],
+              "indexed matcher leaves a Corriger error word tappable")
+        for index in stride(from: 0, to: items.count, by: max(1, items.count / 50)) {
+            let item = items[index]
+            for turn in item.turns {
+                check(matcher.segments(turn.text) == SituationText.segments(turn.text, keys: Set(words.keys)),
+                      "\(item.id): indexed dialogue text matches existing rendering")
+            }
+        }
         for item in items {
             guard let i = item.errorTurnIndex, let mark = item.errorMark else { continue }
             let segs = SituationText.segments(item.turns[i].text, keys: Set(words.keys), keepApart: mark.word)
             check(segs.contains { SituationText.norm($0.display) == SituationText.norm(mark.word) },
                   "\(item.id): error word « \(mark.word) » is one tappable segment")
+            check(matcher.segments(item.turns[i].text, keepApart: mark.word) == segs,
+                  "\(item.id): indexed Corriger line matches existing rendering")
         }
         // Every new word and Mot target has a gloss.
         for item in items {

@@ -27,6 +27,7 @@ struct SituationSessionView: View {
     let onFinish: () -> Void
     private let bookID: String
     private let words: [String: SituationWord]
+    private let wordMatcher: SituationText.Matcher
     /// False for the Test book: nothing is graded or saved.
     private let recordsProgress: Bool
     /// Prepended to every dialogue audio key.
@@ -46,6 +47,7 @@ struct SituationSessionView: View {
         self.onFinish = onFinish
         bookID = book.id
         words = book.words
+        wordMatcher = SituationText.Matcher(keys: Set(book.words.keys))
         recordsProgress = true
         audioPrefix = ""
         flagPrefix = "CB_SIT_"
@@ -66,6 +68,7 @@ struct SituationSessionView: View {
         self.onFinish = onFinish
         bookID = "testbook"
         self.words = words
+        wordMatcher = SituationText.Matcher(keys: Set(words.keys))
         recordsProgress = false
         self.audioPrefix = audioPrefix
         flagPrefix = "CB_PILOT_"
@@ -339,6 +342,7 @@ struct SituationSessionView: View {
         let card = cards[i]
         let view = SituationCardView(
             item: card.item, salt: card.salt, fallbackPlace: card.element.label, words: words,
+            wordMatcher: wordMatcher,
             audioPrefix: audioPrefix, isFirst: i == firstIndex, isLast: i == cards.count - 1,
             reviewing: i < frontier && i != leavingIndex, active: i == cursor,
             forwardLabel: i + 1 == frontier ? "Reprendre" : "Suivant",
