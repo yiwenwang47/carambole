@@ -137,7 +137,7 @@ enum DrillDemo {
 /// One page: a button per test session; each relaunches as often as wanted.
 private struct TestBookView: View {
     private enum Kind: Int, Identifiable {
-        case spot, build, transform, interp, situation, demo
+        case spot, build, transform, interp, situation, book3, demo
         var id: Int { rawValue }
     }
     @State private var running: Kind?
@@ -148,25 +148,28 @@ private struct TestBookView: View {
     private let interps = DrillDemo.bundled("testbook_interp")
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 24) {
-            Text("Test book").font(.appPrompt).foregroundColor(AppColor.ink)
-            row("Repérer l'erreur · \(spot.count)",
-                "Tap the wrong word, then pick its fix. A wrong tap counts as a miss.", .spot)
-            row("Construire · deuxième essai",
-                "Long sentences. A first wrong check keeps the right start and gives one more try.", .build)
-            row("Transformer · \(transforms.count)",
-                "Change one thing in a sentence; build only the part that changes.", .transform)
-            row("Comprendre · \(interps.count)",
-                "Read a sentence, answer what only its grammar tells you. No English shown.", .interp)
-            row("En situation · essai",
-                "Eight short café dialogues, six drill types. Tap any word for its English.", .situation)
-            if ProcessInfo.processInfo.environment["CB_DRILL_DEMO"] != nil {
-                row("Lancer le drill", "Tap Indice, place words, scroll the word tray, check.", .demo)
+        ScrollView {
+            VStack(alignment: .leading, spacing: 24) {
+                Text("Test book").font(.appPrompt).foregroundColor(AppColor.ink)
+                row("Repérer l'erreur · \(spot.count)",
+                    "Tap the wrong word, then pick its fix. A wrong tap counts as a miss.", .spot)
+                row("Construire · deuxième essai",
+                    "Long sentences. A first wrong check keeps the right start and gives one more try.", .build)
+                row("Transformer · \(transforms.count)",
+                    "Change one thing in a sentence; build only the part that changes.", .transform)
+                row("Comprendre · \(interps.count)",
+                    "Read a sentence, answer what only its grammar tells you. No English shown.", .interp)
+                row("En situation · essai",
+                    "Eight short café dialogues, six drill types. Tap any word for its English.", .situation)
+                row("Nuances · module 01",
+                    "Eight review cards: dialogue, microtext, rewrite, and word in context.", .book3)
+                if ProcessInfo.processInfo.environment["CB_DRILL_DEMO"] != nil {
+                    row("Lancer le drill", "Tap Indice, place words, scroll the word tray, check.", .demo)
+                }
             }
-            Spacer()
+            .padding(24)
+            .frame(maxWidth: .infinity, alignment: .topLeading)
         }
-        .padding(24)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(AppColor.paper.ignoresSafeArea())
         .onAppear {
             // Simulator harness: open a session straight away (CB_TB_OPEN=spot|build|…|demo).
@@ -176,6 +179,7 @@ private struct TestBookView: View {
             case "transform": running = .transform
             case "interp": running = .interp
             case "situation": running = .situation
+            case "book3": running = .book3
             case "demo": running = .demo
             default: break
             }
@@ -188,6 +192,7 @@ private struct TestBookView: View {
                 case .transform: DrillDemo.session("Transformer", transforms) { running = nil }
                 case .interp: DrillDemo.session("Comprendre", interps) { running = nil }
                 case .situation: SituationPilotView { running = nil }
+                case .book3: Book3PilotView { running = nil }
                 case .demo: DrillDemo.makeSession(testBook: true)
                 }
             }

@@ -1,0 +1,109 @@
+[
+  {
+    "id": "b3_01_dialogue_event",
+    "format": "dialogue",
+    "source": [
+      {"speaker": "Lina", "text": "La salle était pleine quand la lumière s'est éteinte."},
+      {"speaker": "Marc", "text": "Le concert s'est interrompu pendant deux minutes."}
+    ],
+    "task": "Quel événement a interrompu le concert ?",
+    "response": {
+      "kind": "choices",
+      "choices": ["La lumière s'est éteinte.", "La salle était pleine.", "Le concert a commencé."],
+      "answer": "La lumière s'est éteinte."
+    },
+    "feedback": "« Était pleine » décrit la situation ; « s'est éteinte » marque l'événement."
+  },
+  {
+    "id": "b3_01_microtext_change",
+    "format": "microtext",
+    "source": [
+      {"text": "La bibliothèque était calme. Au moment où j'ouvrais mon livre, une panne a coupé la lumière. Nous sommes sortis."}
+    ],
+    "task": "Qu'est-ce qui a changé la situation ?",
+    "response": {
+      "kind": "choices",
+      "choices": ["Une panne a coupé la lumière.", "La bibliothèque était calme.", "J'ouvrais mon livre."],
+      "answer": "Une panne a coupé la lumière."
+    },
+    "feedback": "Le calme et la lecture sont le cadre ; la coupure survient ensuite."
+  },
+  {
+    "id": "b3_01_rewrite_event",
+    "format": "rewrite",
+    "source": [{"text": "Le micro s'interrompt pendant que la guide parle."}],
+    "task": "Mets l'événement au passé composé : « Le micro s'interrompt. »",
+    "response": {
+      "kind": "typed",
+      "answer": "Le micro s'est interrompu",
+      "accepted": ["Le micro s'est interrompu"]
+    },
+    "feedback": "« S'est interrompu » présente l'arrêt comme un événement terminé."
+  },
+  {
+    "id": "b3_01_word_panne",
+    "format": "word",
+    "source": [{"text": "Une panne a coupé la lumière de la bibliothèque ; les lampes ne fonctionnaient plus."}],
+    "task": "Que signifie « une panne » ici ?",
+    "response": {
+      "kind": "choices",
+      "choices": ["Un problème technique.", "Une fermeture prévue.", "Une lampe neuve."],
+      "answer": "Un problème technique."
+    },
+    "feedback": "Les lampes ne fonctionnaient plus à cause de ce problème."
+  },
+  {
+    "id": "b3_01_dialogue_setting",
+    "format": "dialogue",
+    "source": [
+      {"speaker": "Nadia", "text": "Je traversais la place quand la pluie a commencé."},
+      {"speaker": "Hugo", "text": "Et les vendeurs ?"},
+      {"speaker": "Nadia", "text": "Ils ont fermé leurs stands."}
+    ],
+    "task": "Que faisait Nadia quand la pluie a commencé ?",
+    "response": {
+      "kind": "choices",
+      "choices": ["Elle traversait la place.", "Elle fermait un stand.", "Elle attendait Hugo."],
+      "answer": "Elle traversait la place."
+    },
+    "feedback": "« Traversais » décrit l'action en cours au début de la pluie."
+  },
+  {
+    "id": "b3_01_microtext_setting",
+    "format": "microtext",
+    "source": [
+      {"text": "Le train roulait lentement. Au moment où nous approchions de la gare, il s'est arrêté. Le conducteur a annoncé une panne."}
+    ],
+    "task": "Que faisait le train avant de s'arrêter ?",
+    "response": {
+      "kind": "choices",
+      "choices": ["Le train roulait lentement.", "Le train s'est arrêté.", "Le conducteur a annoncé une panne."],
+      "answer": "Le train roulait lentement."
+    },
+    "feedback": "« Roulait » décrit la situation ; « s'est arrêté » est l'événement."
+  },
+  {
+    "id": "b3_01_rewrite_setting",
+    "format": "rewrite",
+    "source": [{"text": "La rue est déserte quand le bus arrive."}],
+    "task": "Mets le cadre à l'imparfait : « La rue est déserte. »",
+    "response": {
+      "kind": "typed",
+      "answer": "La rue était déserte",
+      "accepted": ["La rue était déserte"]
+    },
+    "feedback": "« Était » décrit le cadre dans lequel le bus est arrivé."
+  },
+  {
+    "id": "b3_01_word_relation",
+    "format": "word",
+    "source": [{"text": "Au moment où le rideau s'est levé, le public parlait encore."}],
+    "task": "Que relie « au moment où » ici ?",
+    "response": {
+      "kind": "choices",
+      "choices": ["Deux actions qui se passent en même temps.", "Une cause et sa conséquence.", "Deux lieux différents."],
+      "answer": "Deux actions qui se passent en même temps."
+    },
+    "feedback": "Le rideau se lève pendant que le public parle encore."
+  }
+]
