@@ -10,8 +10,8 @@
 //
 //  Binding UI rules (docs/archive/plans/2026-10-11-book-2-pilot-v2-handoff.md):
 //  - The card never scrolls as a whole. Only the chat scrolls; when space is
-//    short the chat gives up room first, then the word tray shrinks and its
-//    tiles scroll inside it.
+//    short the chat gives up room, and excess word tiles scroll inside a tray
+//    tall enough for two rows.
 //  - English only on tap, in a tooltip right above the word (spoken forms show
 //    `* `). New words are underlined. A tap anywhere else closes the tooltip.
 //  - Learner bubbles use the palette's `tileOn`; server bubbles are white with
@@ -188,11 +188,10 @@ struct SituationCardView: View {
 
     @State private var flashedWord: String?
     @State private var slotSwapInstant = false
-    /// Natural height of the reply tiles, so the tray can shrink below it and
-    /// scroll when the card is short.
+    /// Natural height of the reply tiles; taller banks scroll in a two-row tray.
     @State private var trayContentHeight: CGFloat = 0
-    /// Card fit (the card never scrolls): the dialogue keeps its full height and
-    /// the reply tray gives up space instead. Measured heights, in points.
+    /// Card fit (the card never scrolls): reserve two reply rows and let the
+    /// dialogue scroll when its bubbles exceed the remaining space.
     @State private var fit = SituationCardFit()
     // Tap-to-show English.
     @State private var tip: Tip?
@@ -221,9 +220,8 @@ struct SituationCardView: View {
             cueBlock
                 .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { fit.header = $0 }
             // The chat takes what is left and scrolls inside itself. With a word
-            // tray below, the chat keeps room for all its bubbles and the tray
-            // shrinks (its tiles scroll) instead, so the cue never covers a
-            // speaker label.
+            // tray below, the chat keeps room for its bubbles when possible;
+            // excess choices scroll inside the tray.
             chat
                 .frame(minHeight: fit.chatFloor(trayShown: drill?.type == .reply))
             Rectangle().fill(AppColor.hairline).frame(height: 1).padding(.top, 10)
@@ -442,6 +440,7 @@ struct SituationCardView: View {
                                     .accessibilityHint("Retire ce mot de votre réponse")
                                 }
                             }
+                            .frame(maxWidth: .infinity, alignment: .leading)
                         }
                     }
                     .padding(8)
@@ -466,6 +465,7 @@ struct SituationCardView: View {
                     EmptyView()
                 }
             }
+            .frame(maxWidth: .infinity, alignment: .trailing)
             .transaction { $0.disablesAnimations = slotSwapInstant }
         }
     }
@@ -716,10 +716,8 @@ struct SituationCardView: View {
         }
     }
 
-    /// Word tray. Café handoff fix 2 kept: the tray asks for its full height and
-    /// the chat gives up space first. Only when the chat is at its minimum does
-    /// the tray shrink, and then its tiles scroll inside the tray, clipped to
-    /// its rounded edge — the card itself never scrolls.
+    /// Keep up to two rows of choices visible. More tiles scroll within the tray,
+    /// while the card and its footer stay fixed.
     private var replyTray: some View {
         ScrollView(.vertical, showsIndicators: false) {
             FlowLayout(spacing: 8, lineSpacing: 8) {
@@ -742,7 +740,7 @@ struct SituationCardView: View {
             .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { trayContentHeight = $0 }
         }
         .scrollBounceBehavior(.basedOnSize)
-        .frame(minHeight: SituationCardFit.trayMin, maxHeight: max(96, trayContentHeight))
+        .frame(height: min(SituationCardFit.trayVisibleHeight, max(96, trayContentHeight)))
         .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { fit.tray = $0 }
         .background(RoundedRectangle(cornerRadius: 22, style: .continuous).fill(Color(hex: theme.tint)))
         .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
@@ -1215,12 +1213,12 @@ private struct SituationShake: GeometryEffect {
 }
 
 /// Vertical fit for a dialogue card that never scrolls as a whole. The chat
-/// keeps the height of all its bubbles while a word tray is on screen; the tray
-/// takes the rest and scrolls its tiles inside itself (down to `trayMin`).
+/// keeps room for its bubbles when possible and reserves two visible rows for
+/// the word tray; additional choices scroll inside the tray.
 /// Every input is a measured height in points. The tray's own height is
 /// subtracted from the drill zone, so the result never feeds back into itself.
 struct SituationCardFit: Equatable {
-    static let trayMin: CGFloat = 60
+    static let trayVisibleHeight: CGFloat = 116
     static let chatMin: CGFloat = 64
     /// The hairline between chat and drill zone, with its top padding.
     static let divider: CGFloat = 11
@@ -1237,6 +1235,6 @@ struct SituationCardFit: Equatable {
 
     func chatFloor(trayShown: Bool) -> CGFloat {
         guard trayShown, card > 0, chatContent > 0 else { return Self.chatMin }
-        return max(Self.chatMin, min(chatContent, shared - Self.trayMin))
+        return max(Self.chatMin, min(chatContent, shared - Self.trayVisibleHeight))
     }
 }
