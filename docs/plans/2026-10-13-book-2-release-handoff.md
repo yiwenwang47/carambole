@@ -82,3 +82,9 @@ Commit `851acd59` indexes the 2,194 glossary keys once per Book 2 session. `Situ
 The Test book autoplay ran in the iPhone 18 Pro simulator. In comparable runs of about 35 seconds, segmentation used 3,238 ms of sampled CPU time before the fix and 31 ms after it. The largest continuous main-thread busy stretch fell from about 231 ms to 47 ms. These are CPU sample estimates, not frame times. Animation Hitches is unavailable on this simulator. A 30 fps frame strip showed the next card moving across the screen without a visible jump.
 
 The Release build, Book 2 model tests, and situation lint passed. The model tests loaded all 3,000 items. The Python suite ran 98 tests with one skip. `devicectl` installed the main Release app from `851acd59` on the paired iPhone 18 Pro (`wen.carambole`). The fix branch and worktree were removed after a fast-forward merge to `main`.
+
+## 9. Nouveaux mots chip wrapping (2026-10-15)
+
+The finished Book 2 card used `FlowLayout` for new-word chips. It measured every chip at unlimited width, so a long gloss such as `la bise · cheek kiss (greeting) (faire la bise = to greet with a kiss)` extended past the grey chip and the screen edge. `FlowLayout` now remeasures an oversized child at the available row width, and the chip text can grow vertically. Normal-width chips keep their intrinsic size.
+
+The iPhone 18 Pro simulator reproduced the overflow before the fix. With the same `la bise` text, the full gloss wrapped inside the chip on two lines afterward. The dedicated Test book app also showed its original long `faire le pont` gloss wrapped inside the chip. The temporary `la bise` Test book fixture was restored; no content changed.

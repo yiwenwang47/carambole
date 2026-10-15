@@ -424,7 +424,7 @@ struct FlowLayout: Layout {
         for row in rows {
             var x = bounds.minX
             for item in row.items {
-                let size = subviews[item.index].sizeThatFits(.unspecified)
+                let size = itemSize(item.index, maxWidth: bounds.width, subviews: subviews)
                 subviews[item.index].place(
                     at: CGPoint(x: x, y: y + (row.height - size.height)),
                     anchor: .topLeading,
@@ -441,11 +441,17 @@ struct FlowLayout: Layout {
     private struct RowItem { let index: Int }
     private struct Row { var items: [RowItem] = []; var width: CGFloat = 0; var height: CGFloat = 0 }
 
+    private func itemSize(_ index: Int, maxWidth: CGFloat, subviews: Subviews) -> CGSize {
+        let ideal = subviews[index].sizeThatFits(.unspecified)
+        guard maxWidth.isFinite, ideal.width > maxWidth else { return ideal }
+        return subviews[index].sizeThatFits(ProposedViewSize(width: maxWidth, height: nil))
+    }
+
     private func computeRows(maxWidth: CGFloat, subviews: Subviews) -> [Row] {
         var rows: [Row] = []
         var current = Row()
         for index in subviews.indices {
-            let size = subviews[index].sizeThatFits(.unspecified)
+            let size = itemSize(index, maxWidth: maxWidth, subviews: subviews)
             let projected = current.items.isEmpty ? size.width : current.width + spacing + size.width
             if !current.items.isEmpty && projected > maxWidth {
                 rows.append(current)

@@ -823,6 +823,7 @@ struct SituationCardView: View {
             (Text(fr).foregroundColor(AppColor.ink)
              + Text(" · \(word?.tipText ?? "")").foregroundColor(AppColor.graphite))
                 .font(.display(size: 14, wght: 400))
+                .fixedSize(horizontal: false, vertical: true)
                 .padding(.horizontal, 10).padding(.vertical, 5)
                 .background(RoundedRectangle(cornerRadius: 10).fill(AppColor.hairline))
         }
