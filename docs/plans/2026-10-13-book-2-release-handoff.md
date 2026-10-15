@@ -6,7 +6,7 @@
 
 ## 1. Current phone state
 
-The main Carambole app (`wen.carambole`) received a Release build from `main` on 2026-10-15. See §8 for the Book 2 card-slide fix and its simulator checks. Only the user checks behavior on the phone; do not test, record, or profile there.
+The main Carambole app (`wen.carambole`) received a Release build from `main` on 2026-10-15, most recently with the Nouveaux mots wrapping fix in §9. See §8 for the Book 2 card-slide fix and its simulator checks. Only the user checks behavior on the phone; do not test, record, or profile there.
 
 ## 2. Checks only the phone can do
 
@@ -88,3 +88,5 @@ The Release build, Book 2 model tests, and situation lint passed. The model test
 The finished Book 2 card used `FlowLayout` for new-word chips. It measured every chip at unlimited width, so a long gloss such as `la bise · cheek kiss (greeting) (faire la bise = to greet with a kiss)` extended past the grey chip and the screen edge. `FlowLayout` now remeasures an oversized child at the available row width, and the chip text can grow vertically. Normal-width chips keep their intrinsic size.
 
 The iPhone 18 Pro simulator reproduced the overflow before the fix. With the same `la bise` text, the full gloss wrapped inside the chip on two lines afterward. The dedicated Test book app also showed its original long `faire le pont` gloss wrapped inside the chip. The temporary `la bise` Test book fixture was restored; no content changed.
+
+Commit `fcd8f539` was fast-forward merged to `main`. The strict situation lint, Swift model test (3,000 items), and Python suite (98 tests, one skip) passed. A Release build from the merged tree succeeded, and `devicectl` installed `wen.carambole` on the paired iPhone 18 Pro. Phone behavior remains for the user to check.
