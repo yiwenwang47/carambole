@@ -1,0 +1,53 @@
+[
+  {
+    "id": "b3_09_word_frais",
+    "format": "word",
+    "source": [{"text": "Léa paie les frais du taxi : le trajet coûte douze euros."}],
+    "task": "What does « des frais » mean here?",
+    "response": {"kind": "choices", "choices": ["costs or fees", "free seats", "late friends"], "answer": "costs or fees"},
+    "feedback": "Les frais sont de l'argent à payer."
+  },
+  {
+    "id": "b3_09_dialogue_options",
+    "format": "dialogue",
+    "source": [
+      {"speaker": "Léa", "text": "Le bus coûte deux euros et prend vingt minutes."},
+      {"speaker": "Théo", "text": "Le taxi coûte douze euros et prend dix minutes."}
+    ],
+    "task": "Quel trajet est plus rapide ?",
+    "response": {"kind": "choices", "choices": ["Le taxi.", "Le bus.", "Les deux prennent le même temps."], "answer": "Le taxi."},
+    "feedback": "Le taxi prend dix minutes ; le bus en prend vingt."
+  },
+  {
+    "id": "b3_09_word_delai",
+    "format": "word",
+    "source": [{"text": "Le délai pour le bus est de vingt minutes : il faut attendre."}],
+    "task": "What does « le délai » mean here?",
+    "response": {"kind": "choices", "choices": ["the wait time", "the ticket price", "the bus driver"], "answer": "the wait time"},
+    "feedback": "Le délai indique combien de temps il faut attendre."
+  },
+  {
+    "id": "b3_09_microtext_priority",
+    "format": "microtext",
+    "source": [{"text": "Le bus coûte moins cher, mais il prend vingt minutes. Le taxi coûte plus cher, mais il prend dix minutes. Léa veut payer le moins possible."}],
+    "task": "Quel trajet est le meilleur choix pour Léa ?",
+    "response": {"kind": "choices", "choices": ["Le bus.", "Le taxi.", "Aucun des deux."], "answer": "Le bus."},
+    "feedback": "Léa veut payer le moins possible ; le bus coûte moins cher."
+  },
+  {
+    "id": "b3_09_rewrite_price",
+    "format": "rewrite",
+    "source": [{"text": "Bus : deux euros. Taxi : douze euros."}],
+    "task": "Compare les prix avec « moins cher ».",
+    "response": {"kind": "typed", "answer": "Le bus coûte moins cher que le taxi", "accepted": ["Le bus coûte moins cher que le taxi"]},
+    "feedback": "Le bus coûte moins cher que le taxi."
+  },
+  {
+    "id": "b3_09_microtext_choice",
+    "format": "microtext",
+    "source": [{"text": "Le concert commence bientôt. Inès doit arriver vite. Le bus prend vingt minutes et le taxi dix minutes. Inès peut payer les frais du taxi."}],
+    "task": "Quel choix répond le mieux à son besoin ?",
+    "response": {"kind": "choices", "choices": ["Le taxi, parce qu'il est plus rapide.", "Le bus, parce qu'il est moins cher.", "Attendre demain."], "answer": "Le taxi, parce qu'il est plus rapide."},
+    "feedback": "Inès doit arriver vite et peut payer le taxi."
+  }
+]

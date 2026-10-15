@@ -1,0 +1,93 @@
+[
+  {
+    "id": "b3_04_word_verifier",
+    "format": "word",
+    "source": [{"text": "Inès veut vérifier l'heure : elle regarde les messages."}],
+    "task": "What does « vérifier » mean here?",
+    "response": {
+      "kind": "choices",
+      "choices": ["to check", "to forget", "to invite"],
+      "answer": "to check"
+    },
+    "feedback": "Inès regarde les messages pour vérifier l'heure."
+  },
+  {
+    "id": "b3_04_dialogue_versions",
+    "format": "dialogue",
+    "source": [
+      {"speaker": "Léa", "text": "Je suis arrivée avant la panne."},
+      {"speaker": "Théo", "text": "Je pensais que tu étais arrivée après la panne."}
+    ],
+    "task": "Qu'est-ce qui n'est pas pareil dans leurs versions ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Le moment de l'arrivée de Léa.",
+        "Le nom d'Inès.",
+        "Le lieu du concert."
+      ],
+      "answer": "Le moment de l'arrivée de Léa."
+    },
+    "feedback": "Léa dit « avant » ; Théo pensait « après »."
+  },
+  {
+    "id": "b3_04_word_en_fait",
+    "format": "word",
+    "source": [{"text": "Je pensais que Léa était en retard. En fait, elle était déjà là."}],
+    "task": "What does « en fait » mean here?",
+    "response": {
+      "kind": "choices",
+      "choices": ["actually", "before", "because"],
+      "answer": "actually"
+    },
+    "feedback": "« En fait » introduit ce qui était vrai, malgré la première idée."
+  },
+  {
+    "id": "b3_04_microtext_difference",
+    "format": "microtext",
+    "source": [
+      {"text": "Léa : « Je suis arrivée avant l'arrêt de la musique. » Théo : « Léa est arrivée après l'arrêt de la musique. »"}
+    ],
+    "task": "Quelle information est différente ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "L'arrivée de Léa : avant ou après l'arrêt.",
+        "Le lieu du concert.",
+        "La personne qui parle à Inès."
+      ],
+      "answer": "L'arrivée de Léa : avant ou après l'arrêt."
+    },
+    "feedback": "Les deux messages ne placent pas l'arrivée de Léa au même moment."
+  },
+  {
+    "id": "b3_04_rewrite_attribution",
+    "format": "rewrite",
+    "source": [{"text": "Théo dit : « Léa est arrivée après la panne. »"}],
+    "task": "Rapporte sa version avec « selon ».",
+    "response": {
+      "kind": "typed",
+      "answer": "Selon Théo, Léa est arrivée après la panne",
+      "accepted": ["Selon Théo, Léa est arrivée après la panne"]
+    },
+    "feedback": "« Selon Théo » attribue l'information à Théo."
+  },
+  {
+    "id": "b3_04_microtext_check",
+    "format": "microtext",
+    "source": [
+      {"text": "Théo dit que Léa est arrivée après la panne. Inès vérifie un message de Léa, envoyé avant la panne : « Je suis au concert. » En fait, Léa était déjà là."}
+    ],
+    "task": "Que montre le message de Léa ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Léa était au concert avant la panne.",
+        "Léa est arrivée après la panne.",
+        "Léa a parlé à Théo après la panne."
+      ],
+      "answer": "Léa était au concert avant la panne."
+    },
+    "feedback": "Léa a écrit « Je suis au concert » avant la panne."
+  }
+]

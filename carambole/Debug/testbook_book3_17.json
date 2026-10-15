@@ -1,0 +1,53 @@
+[
+  {
+    "id": "b3_17_word_temoignage",
+    "format": "word",
+    "source": [{"text": "Le témoignage de Léa raconte ce qu'elle a vu pendant le concert."}],
+    "task": "What is « un témoignage »?",
+    "response": {"kind": "choices", "choices": ["a firsthand account", "a ticket price", "a timetable"], "answer": "a firsthand account"},
+    "feedback": "Léa raconte ce qu'elle dit avoir vu."
+  },
+  {
+    "id": "b3_17_dialogue_account",
+    "format": "dialogue",
+    "source": [
+      {"speaker": "Léa", "text": "J'ai vu la musique s'arrêter après mon arrivée."},
+      {"speaker": "Théo", "text": "Selon ton témoignage, tu étais déjà là quand la musique s'est arrêtée."}
+    ],
+    "task": "Qui a donné cette version ?",
+    "response": {"kind": "choices", "choices": ["À Léa.", "À Inès.", "À personne."], "answer": "À Léa."},
+    "feedback": "Théo attribue cette version au témoignage de Léa."
+  },
+  {
+    "id": "b3_17_word_enquete",
+    "format": "word",
+    "source": [{"text": "L'enquête cherche la cause de la panne : personne ne sait encore pourquoi elle a eu lieu."}],
+    "task": "What is « une enquête »?",
+    "response": {"kind": "choices", "choices": ["an investigation", "a concert ticket", "a reply"], "answer": "an investigation"},
+    "feedback": "Une enquête cherche des informations pour comprendre un événement."
+  },
+  {
+    "id": "b3_17_microtext_claim_fact",
+    "format": "microtext",
+    "source": [{"text": "Selon Léa, la panne a commencé après son arrivée. Le concert a été reporté à demain. L'enquête sur la panne n'est pas terminée."}],
+    "task": "Quelle phrase présente la version de Léa ?",
+    "response": {"kind": "choices", "choices": ["La panne a commencé après son arrivée.", "Le concert a été reporté.", "L'enquête est terminée."], "answer": "La panne a commencé après son arrivée."},
+    "feedback": "« Selon Léa » marque sa version ; le report est présenté séparément."
+  },
+  {
+    "id": "b3_17_rewrite_passive",
+    "format": "rewrite",
+    "source": [{"text": "Théo a envoyé l'affiche."}],
+    "task": "Commence par « L'affiche a été... ».",
+    "response": {"kind": "typed", "answer": "L'affiche a été envoyée par Théo", "accepted": ["L'affiche a été envoyée par Théo"]},
+    "feedback": "Au passif, l'affiche devient le sujet ; « envoyée » s'accorde avec elle."
+  },
+  {
+    "id": "b3_17_microtext_two_reports",
+    "format": "microtext",
+    "source": [{"text": "Message de Théo : « Le concert a été reporté à demain. » Témoignage de Léa : « La panne a commencé après mon arrivée. » L'enquête n'a pas encore confirmé l'heure de la panne."}],
+    "task": "Quelle information reste à vérifier ?",
+    "response": {"kind": "choices", "choices": ["L'heure de la panne.", "La nouvelle date du concert.", "Le nom de Léa."], "answer": "L'heure de la panne."},
+    "feedback": "L'enquête n'a pas encore confirmé l'heure de la panne."
+  }
+]

@@ -3,9 +3,13 @@
 **Status:** Review pilot in the simulator Test book. No production Book 3
 schema, content size, or progress rule is fixed.
 
-The eight learner-facing cards live in
+The user approved the source layout after removing white dialogue boxes. The
+French sentences and speaker labels now sit directly on the blue block, inset
+from its rounded corners. Keep this presentation in later Test book samples.
+
+The ten learner-facing cards live in
 `carambole/Debug/testbook_book3.json`, loaded by `Book3PilotView`. They cover
-dialogue, microtext, rewrite, and word in context, two cards each. Every card
+dialogue, microtext, rewrite, and word in context. Every card
 shows its French source and one task. There is no separate top cue. Audio is
 absent from this content pilot.
 
@@ -16,6 +20,10 @@ set of familiar words around the three module targets: *une panne*,
 *s'interrompre*, and *au moment où*. The grammar target remains *imparfait*
 for an action in progress versus *passé composé* for an event.
 
+Harder expressions get English-choice vocabulary cards before reuse in French
+reading or rewrite cards. The user asked to focus on material and vocabulary,
+with little further time spent on layout.
+
 Interpretation cards use choices. The two typed cards ask for a specified tense
 and a complete short sentence. The pilot checks authored answers after
 normalizing case, Unicode composition, whitespace, apostrophes, and terminal
@@ -25,5 +33,8 @@ can affect FSRS. The shared `TooEasyGate`, separate book progress, additive
 migration rule, and all other constraints remain as stated in the
 [curriculum handoff](2026-10-15-book-3-curriculum-handoff.md).
 
-Review the cards in Test book before deciding the Book 3 content schema,
-review unit, module size, lexical support, audio policy, or graduation gate.
+The Test book now has short review drafts for all twenty modules. Module 02
+reuses the concert vocabulary and introduces the earlier-than relationship
+with *plus-que-parfait*. The user need only review a few checkpoints, not
+every module, before production decisions on schema, grading, module size,
+audio, and graduation.

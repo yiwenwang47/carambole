@@ -1,0 +1,53 @@
+[
+  {
+    "id": "b3_15_word_rumeur",
+    "format": "word",
+    "source": [{"text": "Une rumeur dit que le concert n'aura pas lieu, mais personne ne l'a confirmé."}],
+    "task": "What is « une rumeur »?",
+    "response": {"kind": "choices", "choices": ["an unconfirmed rumor", "a confirmed date", "a ticket"], "answer": "an unconfirmed rumor"},
+    "feedback": "La rumeur circule sans confirmation."
+  },
+  {
+    "id": "b3_15_dialogue_claim",
+    "format": "dialogue",
+    "source": [
+      {"speaker": "Léa", "text": "Une rumeur dit que le concert n'aura pas lieu demain."},
+      {"speaker": "Théo", "text": "Inès a confirmé qu'il aura lieu demain."}
+    ],
+    "task": "Quelle information est confirmée ?",
+    "response": {"kind": "choices", "choices": ["Le concert aura lieu demain.", "Le concert n'aura pas lieu.", "Léa a perdu son billet."], "answer": "Le concert aura lieu demain."},
+    "feedback": "Théo rapporte une confirmation d'Inès ; Léa rapporte une rumeur."
+  },
+  {
+    "id": "b3_15_word_douter",
+    "format": "word",
+    "source": [{"text": "Je doute que le concert ait lieu : je n'ai reçu aucune confirmation."}],
+    "task": "What does « douter » mean?",
+    "response": {"kind": "choices", "choices": ["to doubt", "to confirm", "to schedule"], "answer": "to doubt"},
+    "feedback": "La personne n'est pas sûre que le concert aura lieu."
+  },
+  {
+    "id": "b3_15_microtext_fact_doubt",
+    "format": "microtext",
+    "source": [{"text": "Inès sait que la date a changé : elle a reçu un message. Léa doute que l'heure soit correcte : elle n'a pas vu l'affiche."}],
+    "task": "De quoi Léa doute-t-elle ?",
+    "response": {"kind": "choices", "choices": ["De l'heure du concert.", "Du changement de date.", "Du nom de Théo."], "answer": "De l'heure du concert."},
+    "feedback": "Inès a une information ; Léa n'est pas sûre de l'heure."
+  },
+  {
+    "id": "b3_15_rewrite_doubt",
+    "format": "rewrite",
+    "source": [{"text": "Le concert aura lieu demain ? Je ne suis pas sûre."}],
+    "task": "Exprime le doute avec « je doute que ».",
+    "response": {"kind": "typed", "answer": "Je doute que le concert ait lieu demain", "accepted": ["Je doute que le concert ait lieu demain"]},
+    "feedback": "Après « je doute que », on dit « ait lieu »."
+  },
+  {
+    "id": "b3_15_microtext_confirmed_hour",
+    "format": "microtext",
+    "source": [{"text": "Une rumeur dit que le concert commence à neuf heures. Sur l'affiche, l'heure confirmée est huit heures. Inès transmet cette heure à Léa."}],
+    "task": "Quelle heure est confirmée ?",
+    "response": {"kind": "choices", "choices": ["Huit heures.", "Neuf heures.", "Aucune heure."], "answer": "Huit heures."},
+    "feedback": "L'affiche donne huit heures ; neuf heures vient de la rumeur."
+  }
+]

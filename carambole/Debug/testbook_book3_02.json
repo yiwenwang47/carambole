@@ -1,0 +1,71 @@
+[
+  {
+    "id": "b3_02_dialogue_before",
+    "format": "dialogue",
+    "source": [
+      {"speaker": "Léa", "text": "Je suis arrivée au concert."},
+      {"speaker": "Théo", "text": "Quand tu es arrivée, j'avais déjà parlé à Inès."}
+    ],
+    "task": "Qu'est-ce que Théo a fait avant l'arrivée de Léa ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Il a parlé à Inès avant l'arrivée de Léa.",
+        "Il a parlé à Inès après l'arrivée de Léa.",
+        "Il n'a pas parlé à Inès."
+      ],
+      "answer": "Il a parlé à Inès avant l'arrivée de Léa."
+    },
+    "feedback": "« J'avais déjà parlé » place la conversation avant l'arrivée de Léa."
+  },
+  {
+    "id": "b3_02_word_deja",
+    "format": "word",
+    "source": [
+      {"text": "Quand Léa est arrivée au concert, Théo avait déjà parlé à Inès."}
+    ],
+    "task": "Ici, « avait déjà parlé » indique...",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Une action finie avant l'arrivée de Léa.",
+        "Une action en cours au même moment.",
+        "Une action après le concert."
+      ],
+      "answer": "Une action finie avant l'arrivée de Léa."
+    },
+    "feedback": "Théo avait parlé à Inès avant l'arrivée de Léa."
+  },
+  {
+    "id": "b3_02_microtext_order",
+    "format": "microtext",
+    "source": [
+      {"text": "Léa est arrivée au concert. Théo avait parlé à Inès. Puis la musique s'est arrêtée."}
+    ],
+    "task": "Qu'est-ce qui s'est passé en premier ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Théo a parlé à Inès.",
+        "Léa est arrivée au concert.",
+        "La musique s'est arrêtée."
+      ],
+      "answer": "Théo a parlé à Inès."
+    },
+    "feedback": "« Avait parlé » montre que Théo a parlé à Inès avant l'arrivée de Léa."
+  },
+  {
+    "id": "b3_02_rewrite_before",
+    "format": "rewrite",
+    "source": [
+      {"text": "Théo a parlé à Inès. Puis Léa est arrivée au concert."}
+    ],
+    "task": "Réécris la première phrase au plus-que-parfait.",
+    "response": {
+      "kind": "typed",
+      "answer": "Théo avait parlé à Inès",
+      "accepted": ["Théo avait parlé à Inès"]
+    },
+    "feedback": "« Avait parlé » place cette action avant l'arrivée de Léa."
+  }
+]

@@ -1,0 +1,53 @@
+[
+  {
+    "id": "b3_10_word_confirmer",
+    "format": "word",
+    "source": [{"text": "Théo confirme l'heure : il dit que le concert commence à huit heures."}],
+    "task": "What does « confirmer » mean here?",
+    "response": {"kind": "choices", "choices": ["to confirm", "to cancel", "to forget"], "answer": "to confirm"},
+    "feedback": "Théo confirme l'heure en donnant une réponse sûre."
+  },
+  {
+    "id": "b3_10_dialogue_si",
+    "format": "dialogue",
+    "source": [
+      {"speaker": "Léa", "text": "Je viens si Théo confirme l'heure."},
+      {"speaker": "Théo", "text": "Je confirme : le concert commence à huit heures."}
+    ],
+    "task": "Théo a-t-il fait ce que Léa demandait ?",
+    "response": {"kind": "choices", "choices": ["Oui, Théo a confirmé l'heure.", "Non, Théo n'a pas répondu.", "Non, le concert est reporté."], "answer": "Oui, Théo a confirmé l'heure."},
+    "feedback": "Léa demandait une confirmation ; Théo l'a donnée."
+  },
+  {
+    "id": "b3_10_word_condition",
+    "format": "word",
+    "source": [{"text": "Je viens à condition que tu sois là : sans toi, je ne viens pas."}],
+    "task": "What does « à condition que » mean?",
+    "response": {"kind": "choices", "choices": ["provided that", "even though", "after that"], "answer": "provided that"},
+    "feedback": "La présence de l'autre personne est nécessaire."
+  },
+  {
+    "id": "b3_10_microtext_agreement",
+    "format": "microtext",
+    "source": [{"text": "Inès accepte de venir à condition que Léa l'accompagne. Léa répond : « Oui, je viens avec toi. »"}],
+    "task": "De quoi Inès avait-elle besoin pour accepter ?",
+    "response": {"kind": "choices", "choices": ["Que Léa l'accompagne.", "Que Théo paie le taxi.", "Que le concert soit reporté."], "answer": "Que Léa l'accompagne."},
+    "feedback": "Léa accepte de venir avec Inès : la condition est remplie."
+  },
+  {
+    "id": "b3_10_rewrite_condition",
+    "format": "rewrite",
+    "source": [{"text": "Je viens si tu es là."}],
+    "task": "Réécris avec « à condition que ».",
+    "response": {"kind": "typed", "answer": "Je viens à condition que tu sois là", "accepted": ["Je viens à condition que tu sois là"]},
+    "feedback": "Après « à condition que », on dit « tu sois »."
+  },
+  {
+    "id": "b3_10_microtext_condition",
+    "format": "microtext",
+    "source": [{"text": "Théo confirme l'heure du concert. Inès vient à condition que Léa soit là. Léa écrit : « Je serai là. »"}],
+    "task": "Quelle condition permet à Inès de venir ?",
+    "response": {"kind": "choices", "choices": ["La présence de Léa.", "Le prix du bus.", "Une nouvelle affiche."], "answer": "La présence de Léa."},
+    "feedback": "Inès viendra si Léa est là ; Léa a confirmé sa présence."
+  }
+]

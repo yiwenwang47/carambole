@@ -2,20 +2,23 @@
 
 **Date:** 2026-10-15
 
-**Status:** Curriculum agreed in chat. No Book 3 code or content exists yet.
+**Status:** The 20-module Test book draft has 122 cards. The user tried module
+10 in the simulator and approved this checkpoint on 2026-10-15. The user also
+approved the blue source block without white dialogue boxes. Production Book 3
+and its module size are still open. See
+`2026-10-15-book-3-content-checkpoint-handoff.md` for the exact handoff.
 
 **Working title:** *Nuances*; the title is not final.
 
 ## 1. Start here next session
 
-The user plans to start implementation in a new session. Read this file before
-designing the pilot. Then read `CLAUDE.md`, `Models/BookCatalog.swift`, and the
-Book 2 content rulebook at `docs/plans/2026-10-11-book-2-content-handoff.md`.
-
-Start with a small pilot from module 01. Put all four proposed drill formats in
-the pilot. Review a small set of cards with the user before fixing a content
-schema, module size, or full authoring process. Keep the present session limited
-to documentation; the user said, "don't build anything yet."
+Read this file, `CLAUDE.md`, `Models/BookCatalog.swift`, and the Book 2 content
+rulebook at `docs/plans/2026-10-11-book-2-content-handoff.md`. The review cards
+live in `carambole/Debug/testbook_book3.json` (module 01) and
+`testbook_book3_02.json` through `testbook_book3_20.json`. Open them in the
+simulator Test book. Use the app for user review; a Markdown file is not the
+review interface. The user does not need to review every module: use short
+checkpoints around modules 10 and 18, then bring forward only material issues.
 
 ## 2. Purpose and level
 
@@ -44,11 +47,24 @@ is a level reference, not a fixed French grammar syllabus.
   in later modules, not only in the module that introduces them.
 - Facts needed for the answer, including person, referent, and register, must
   appear in the visible source or the short task. Do not add a hidden hint.
+- Start with people, settings, and core words familiar from Book 2. Introduce
+  one useful expression in a clear context, reuse it, and only then ask the
+  learner to produce it. Do not jump between several unfamiliar settings in a
+  short pilot.
+- Increase difficulty gradually within each module and across the book. Raise
+  one demand at a time: source length, inference, grammar, vocabulary, or answer
+  freedom.
+- In the Test book layout, the French source sits directly on the blue block.
+  Dialogue speaker labels remain visible; there are no white message boxes.
+  Keep the text inset from the rounded corners.
+- Teach harder vocabulary explicitly. The first vocabulary drill for a harder
+  word offers English meanings; later cards reuse the French expression. Do
+  not gloss every familiar word or increase difficulty by adding untaught words.
 
-These are format requirements. The module titles and lexical examples below
+These are working requirements. The module titles and lexical examples below
 are the current curriculum proposal; pilot feedback can refine them.
 
-## 4. Format to pilot
+## 4. Pilot formats
 
 | Format | Visible source | One compact action |
 |---|---|---|
@@ -57,9 +73,11 @@ are the current curriculum proposal; pilot feedback can refine them.
 | Rewrite | A visible sentence or pair of sentences | Change time, reference, relation, or tone |
 | Word in context | A phrase in a visible sentence | Select or produce the meaning or fitting phrase |
 
-Do not impose a fixed quota of formats per module. Pick the format that checks
-the module outcome. Avoid a second task on the same card. Text length, exact
-answer constraints, grading, and vocabulary support remain pilot decisions.
+The Test book draft has 10 cards in module 01, four in module 02, and six in
+each later module. These counts are review samples, not production quotas.
+Pick the format that checks the module outcome and keep one task per card.
+Exact text lengths, production grading, and further vocabulary support remain
+open.
 
 ## 5. Twenty-module map
 
@@ -67,10 +85,10 @@ answer constraints, grading, and vocabulary support remain pilot decisions.
 
 | # | Module | Outcome | Grammar and vocabulary in use | Source idea |
 |---:|---|---|---|---|
-| 01 | Ce qui s'est passé | Separate the setting from an event in an account. | *Imparfait* vs *passé composé*; *une panne, s'interrompre, au moment où*. | An eyewitness message about an interrupted event. |
-| 02 | Ce qui s'était déjà passé | State which action happened before the main event. | *Plus-que-parfait*; *prévoir, se rendre compte, entre-temps, à l'avance*. | A short sequence of dated messages. |
-| 03 | D'après elle… | Report a person's account without stating it as fact. | Reported speech and shifts of person or time; *affirmer, reconnaître, selon*. | Two messages with different accounts. |
-| 04 | Deux versions | Reconstruct a cautious timeline from two accounts. | Sequence and simultaneity; *un témoin, vérifier, apparemment, en fait*. | Two brief witness notes. |
+| 01 | Ce qui s'est passé | Separate the setting from an event in an account. | *Imparfait* vs *passé composé*; *une panne, s'interrompre, au moment où*. | Léa, Théo, and Inès at a concert. |
+| 02 | Ce qui s'était déjà passé | State which action happened before the main event. | *Plus-que-parfait* with familiar *déjà* and *avant*; defer new lexical demands while this tense is introduced. | Two short messages about the same familiar event. |
+| 03 | D'après elle… | Report a person's account without stating it as fact. | Reported speech; start with *elle dit que* and *selon elle* before stronger reporting verbs. | Two familiar characters describe one event. |
+| 04 | Deux versions | Reconstruct a cautious timeline from two accounts. | Sequence and simultaneity; *vérifier, peut-être, en fait* in context. | Two brief accounts with one visible difference. |
 
 ### Arc 2 — Expliquer et relier
 
@@ -113,18 +131,45 @@ culture, neighborhood life, work, travel, and public discussion. Avoid a book
 made mainly of office and administrative problems. Module 20 adds no new
 headline grammar.
 
-## 6. Pilot and implementation work for the next session
+### Difficulty ladder
 
-1. Read the current Book 1 and Book 2 data models, session views, progress
-   logic, and authoring tools. Preserve the shipped content and user data.
-2. Write a small design for the Book 3 card and answer model. Resolve how
-   short typed answers accept valid variants without unreliable grading.
-3. Draft a small module-01 pilot across the four proposed formats. Keep each
-   source visible and each card to one task. Use no top hint or cue.
-4. Review a small set of pilot cards with the user. Use that feedback to set
-   text length, difficulty, feedback, lexical support, and module size.
-5. After the pilot format works, define the schema, lint rules, review unit,
-   content pipeline, and audio rules. Then plan the full 20-module authoring.
+Increase difficulty a little at a time across the book. The module map sets the
+skill progression; it is not permission to introduce a fresh grammar pattern,
+unfamiliar setting, long text, and several new words on the same card.
+The expressions in the map are candidates to stage and recycle, not a list to
+teach all at once in each module.
+
+| Modules | Reading and response progression |
+|---|---|
+| 01–04 | Familiar Book 2 people, places, and words. One or two short messages. Identify a stated event, order, or speaker; produce a short controlled answer. |
+| 05–08 | Two or three connected sentences. Track a referent or a cause across sentences; restate a point in familiar words. |
+| 09–12 | Short choices or viewpoints with visible evidence. Compare, give one reason, then add a condition or concession. |
+| 13–16 | Brief exchanges with a change in tone, certainty, or register. Choose or write a fitting response using the information shown. |
+| 17–20 | Two short sources about one issue. Separate fact from claim, notice a reservation, and finish with a brief supported synthesis. |
+
+Within a module, begin with recognition in an easy source, then ask for one
+small application, then transfer the same expression to a nearby context.
+Recycle earlier expressions throughout. Teach a new word from a visible clue
+before asking the learner to produce it. Review the first modules in the Test
+book app before setting exact text lengths or new-word counts.
+
+## 6. Next work and review gates
+
+1. Keep the module-01 pilot as the baseline. Its four formats, visible French
+   source, and blue dialogue block are working in the simulator. The first
+   version's library/train/street vocabulary was too advanced; the current
+   concert version uses familiar Book 2 characters and repeated expressions.
+2. The user tried module 10 and said it works. Do not request a review of every
+   module. Use module 18 as a later content checkpoint only when its feedback
+   can change the production plan.
+3. Run a full editorial pass over the 122 draft cards: verify French grammar,
+   event continuity, answer uniqueness, and English-first teaching of harder
+   words. Recycle important expressions across modules. The current model tests
+   check shape and selected answers, not all semantic judgments.
+4. Settle production schema, answer variants and grading, source-length ranges,
+   review unit, module size, audio, and content linting. Expand one complete
+   production module from the review draft and validate the pipeline before
+   expanding the remaining modules.
 
 Reuse the shared `TooEasy` logic and keep book progress separate. Follow the
 additive database migration rule in `CLAUDE.md`. Do not infer that Book 3 uses
@@ -134,8 +179,8 @@ Book 2's dialogue schema or its item count; the pilot decides those choices.
 
 - Final title and shelf label.
 - Exact size of one module and one study session.
-- Limits for source length and typed answer length.
-- Accepted-answer rules, feedback, and vocabulary support.
+- Limits for source length and typed answer length at each ladder stage.
+- Accepted-answer rules, feedback, and optional vocabulary support.
 - Audio coverage and whether the existing voices return.
 - Review unit and graduation requirements for mixed drill formats.
 

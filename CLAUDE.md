@@ -13,10 +13,11 @@ Older history is in `docs/archive/` and git log.
 - **Book 2 rulebook** (cast, voices, JSON shape, authoring steps):
   `docs/plans/2026-10-11-book-2-content-handoff.md`; tools in
   `tools/situations/README.md`.
-- **Book 3 curriculum and next-session handoff (2026-10-15):**
-  `docs/plans/2026-10-15-book-3-curriculum-handoff.md`. It maps 20 modules and
-  records the user's format rules: visible text, no top hint, compact mixed
-  drills, and grammar with vocabulary. No Book 3 code or content exists yet.
+- **Book 3 content checkpoint (2026-10-15):**
+  `docs/plans/2026-10-15-book-3-content-checkpoint-handoff.md`. The curriculum
+  map is in `docs/plans/2026-10-15-book-3-curriculum-handoff.md`. The user tried
+  module 10 in the simulator and approved this checkpoint. DEBUG-only Test book
+  cards cover modules 01–20; production Book 3 content and progress are pending.
 - **Languages home (2026-10-14):** root is `Features/Languages/LanguagesView.swift`
   (Specimen layout) → `LibraryView(language:)`; marks in
   `DesignSystem/LanguageMark.swift` (Cut paper default, Script sticker; picked
@@ -141,7 +142,8 @@ xcodebuild build -project carambole.xcodeproj -scheme carambole \
   `xcrun devicectl device copy from --domain-type appDataContainer --domain-identifier wen.carambole --source Documents/audio_diag.txt --destination <path>`.
   Test book (hand testing, separate data): add
   `PRODUCT_BUNDLE_IDENTIFIER=wen.carambole.testbook INFOPLIST_KEY_CFBundleDisplayName='Test book'`
-  to a Debug build. It is not installed now.
+  to a Debug build. The simulator Test book was installed for the Book 3
+  checkpoint. Its presence can change between sessions.
 
 ## Open items
 

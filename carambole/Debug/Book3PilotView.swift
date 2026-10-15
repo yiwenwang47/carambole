@@ -1,9 +1,34 @@
 #if DEBUG
 import SwiftUI
 
+struct Book3PilotModule: Hashable, Identifiable {
+    let number: Int
+    var id: Int { number }
+
+    private static let titles = [
+        "Ce qui s'est passé", "Ce qui s'était déjà passé", "D'après elle…", "Deux versions",
+        "De qui, de quoi ?", "Ce qui compte", "Transmettre sans répéter", "Pourquoi le plan a changé",
+        "Peser les options", "Poser ses conditions", "Revenir sur un choix", "Concéder, puis défendre",
+        "Demander avec tact", "Réagir à une nouvelle", "Distinguer fait et doute", "Négocier un désaccord",
+        "Qui dit quoi ?", "Qui a fait faire quoi ?", "Deux avis, une nuance", "Faire la synthèse"
+    ]
+
+    var title: String { Self.titles[number - 1] }
+    var resourceName: String {
+        number == 1 ? "testbook_book3" : String(format: "testbook_book3_%02d", number)
+    }
+
+    static var available: [Self] {
+        (1...titles.count).map(Self.init(number:)).filter {
+            Bundle.main.url(forResource: $0.resourceName, withExtension: "json") != nil
+        }
+    }
+}
+
 /// Review-only Book 3 session. It does not write progress or use the production
 /// Book 2 dialogue schema. The source is the only scrolling part of a card.
 struct Book3PilotView: View {
+    let module: Book3PilotModule
     let onFinish: () -> Void
 
     @State private var index = 0
@@ -13,7 +38,13 @@ struct Book3PilotView: View {
     @State private var correct = false
     @FocusState private var typingFocused: Bool
 
-    private let cards = Self.loadCards()
+    private let cards: [Book3PilotCard]
+
+    init(module: Book3PilotModule, onFinish: @escaping () -> Void) {
+        self.module = module
+        self.onFinish = onFinish
+        self.cards = Self.loadCards(module)
+    }
 
     var body: some View {
         Group {
@@ -61,31 +92,34 @@ struct Book3PilotView: View {
                 }
 
                 HStack(spacing: 8) {
-                    Text("NUANCES · 01").foregroundColor(AppColor.g2)
+                    Text(String(format: "NUANCES · %02d", module.number))
+                        .foregroundColor(AppColor.g2)
                     Text("/").foregroundColor(AppColor.g2)
                     Text(card.format.title).foregroundColor(AppColor.ink)
                 }
                 .font(.system(size: 12, weight: .semibold, design: .rounded))
                 .textCase(.uppercase)
 
-                Text("Ce qui s'est passé")
+                Text(module.title)
                     .font(.display(size: 31, wght: 300))
                     .foregroundColor(AppColor.ink)
                     .lineLimit(1)
                     .minimumScaleFactor(0.8)
 
                 ScrollView {
-                    VStack(alignment: .leading, spacing: 12) {
+                    VStack(alignment: .leading, spacing: card.format == .dialogue ? 18 : 12) {
                         ForEach(Array(card.source.enumerated()), id: \.offset) { _, line in
-                            sourceLine(line, dialogue: card.format == .dialogue)
+                            sourceLine(line)
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(18)
                 }
+                .padding(16)
                 .frame(height: sourceHeight(for: card, available: geo.size.height))
-                .background(Color(hex: AppPalette.current.theme.tint))
-                .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+                .background(
+                    RoundedRectangle(cornerRadius: 20, style: .continuous)
+                        .fill(Color(hex: AppPalette.current.theme.tint))
+                )
 
                 Text(card.task)
                     .font(.display(size: 24, wght: 350))
@@ -136,7 +170,7 @@ struct Book3PilotView: View {
         }
     }
 
-    private func sourceLine(_ line: Book3PilotCard.SourceLine, dialogue: Bool) -> some View {
+    private func sourceLine(_ line: Book3PilotCard.SourceLine) -> some View {
         VStack(alignment: .leading, spacing: 4) {
             if let speaker = line.speaker {
                 Text(speaker.uppercased())
@@ -149,10 +183,7 @@ struct Book3PilotView: View {
                 .foregroundColor(AppColor.ink)
                 .fixedSize(horizontal: false, vertical: true)
         }
-        .padding(dialogue ? 12 : 0)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(dialogue ? AppColor.paper : Color.clear)
-        .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
     }
 
     @ViewBuilder
@@ -212,7 +243,7 @@ struct Book3PilotView: View {
 
     private func sourceHeight(for card: Book3PilotCard, available: CGFloat) -> CGFloat {
         switch card.format {
-        case .dialogue: return min(220, max(175, available * 0.27))
+        case .dialogue: return min(190, max(170, available * 0.22))
         case .microtext: return min(175, max(145, available * 0.21))
         case .rewrite, .word: return min(145, max(115, available * 0.17))
         }
@@ -233,11 +264,12 @@ struct Book3PilotView: View {
         correct = false
     }
 
-    private static func loadCards() -> [Book3PilotCard] {
-        guard let url = Bundle.main.url(forResource: "testbook_book3", withExtension: "json"),
+    private static func loadCards(_ module: Book3PilotModule) -> [Book3PilotCard] {
+        guard let url = Bundle.main.url(forResource: module.resourceName, withExtension: "json"),
               let data = try? Data(contentsOf: url),
               let cards = try? JSONDecoder().decode([Book3PilotCard].self, from: data),
-              cards.count == 8, cards.allSatisfy({ $0.validationErrors.isEmpty }) else { return [] }
+              !cards.isEmpty,
+              cards.allSatisfy({ $0.validationErrors.isEmpty }) else { return [] }
         return cards
     }
 }

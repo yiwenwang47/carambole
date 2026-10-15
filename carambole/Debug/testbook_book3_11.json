@@ -1,0 +1,60 @@
+[
+  {
+    "id": "b3_11_word_au_lieu_de",
+    "format": "word",
+    "source": [{"text": "Au lieu de vérifier l'heure, Léa est partie sans regarder l'affiche."}],
+    "task": "What does « au lieu de » mean?",
+    "response": {"kind": "choices", "choices": ["instead of", "because of", "at the same time as"], "answer": "instead of"},
+    "feedback": "Léa n'a pas vérifié l'heure ; elle a fait autre chose."
+  },
+  {
+    "id": "b3_11_dialogue_regret",
+    "format": "dialogue",
+    "source": [
+      {"speaker": "Léa", "text": "Je n'ai pas vérifié l'heure. Je suis arrivée en retard."},
+      {"speaker": "Théo", "text": "Si tu avais vérifié l'heure, tu serais arrivée à temps."}
+    ],
+    "task": "Que s'est-il passé en réalité ?",
+    "response": {"kind": "choices", "choices": ["Léa est arrivée en retard.", "Léa a vérifié l'heure.", "Léa est arrivée à temps."], "answer": "Léa est arrivée en retard."},
+    "feedback": "Théo imagine une autre possibilité ; Léa dit qu'elle est arrivée en retard."
+  },
+  {
+    "id": "b3_11_word_regretter",
+    "format": "word",
+    "source": [{"text": "Léa regrette de ne pas avoir vérifié l'heure : elle est arrivée en retard."}],
+    "task": "What does « regretter » mean?",
+    "response": {"kind": "choices", "choices": ["to regret", "to confirm", "to compare"], "answer": "to regret"},
+    "feedback": "Léa aurait voulu faire un autre choix."
+  },
+  {
+    "id": "b3_11_microtext_bus",
+    "format": "microtext",
+    "source": [{"text": "Théo a pris le bus au lieu du taxi. Le bus est arrivé en retard. S'il avait pris le taxi, il serait arrivé à l'heure."}],
+    "task": "Quel trajet Théo a-t-il pris ?",
+    "response": {"kind": "choices", "choices": ["Le bus.", "Le taxi.", "Aucun trajet."], "answer": "Le bus."},
+    "feedback": "La phrase avec « si » imagine le taxi ; Théo a pris le bus."
+  },
+  {
+    "id": "b3_11_rewrite_if",
+    "format": "rewrite",
+    "source": [{"text": "Je n'ai pas vérifié l'heure. Je suis arrivée en retard."}],
+    "task": "Imagine l'autre résultat : « Si j'avais vérifié l'heure... »",
+    "response": {
+      "kind": "typed",
+      "answer": "Si j'avais vérifié l'heure, je ne serais pas arrivée en retard",
+      "accepted": [
+        "Si j'avais vérifié l'heure, je ne serais pas arrivée en retard",
+        "Si j'avais vérifié l'heure, je serais arrivée à l'heure"
+      ]
+    },
+    "feedback": "La condition passée prend le plus-que-parfait ; le résultat imaginé prend le conditionnel passé."
+  },
+  {
+    "id": "b3_11_microtext_message",
+    "format": "microtext",
+    "source": [{"text": "Inès avait confirmé l'heure, mais Léa n'a pas lu son message. Léa est arrivée en retard. Elle regrette de ne pas l'avoir lu."}],
+    "task": "Quelle action Léa aurait-elle voulu faire ?",
+    "response": {"kind": "choices", "choices": ["Lire le message d'Inès.", "Prendre le taxi de Théo.", "Reporter le concert."], "answer": "Lire le message d'Inès."},
+    "feedback": "Léa regrette de ne pas avoir lu le message qui donnait l'heure."
+  }
+]

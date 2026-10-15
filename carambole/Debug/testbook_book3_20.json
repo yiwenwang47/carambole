@@ -1,0 +1,76 @@
+[
+  {
+    "id": "b3_20_word_reported_review",
+    "format": "word",
+    "source": [{"text": "Le concert est reporté à demain."}],
+    "task": "Quelle phrase dit la même chose ?",
+    "response": {"kind": "choices", "choices": ["Il aura lieu demain, pas ce soir.", "Il a eu lieu hier.", "Il est annulé."], "answer": "Il aura lieu demain, pas ce soir."},
+    "feedback": "« Reporté » signifie qu'une nouvelle date est prévue."
+  },
+  {
+    "id": "b3_20_dialogue_relief",
+    "format": "dialogue",
+    "source": [
+      {"speaker": "Léa", "text": "Le concert a été reporté à demain à cause d'une panne."},
+      {"speaker": "Inès", "text": "Je suis soulagée qu'il ait lieu quand même."}
+    ],
+    "task": "Pourquoi Inès est-elle soulagée ?",
+    "response": {"kind": "choices", "choices": ["Le concert aura lieu demain.", "La panne est plus longue.", "Le taxi coûte moins cher."], "answer": "Le concert aura lieu demain."},
+    "feedback": "Le concert change de date, mais il n'est pas annulé."
+  },
+  {
+    "id": "b3_20_word_malgre_review",
+    "format": "word",
+    "source": [{"text": "Malgré la panne, le concert aura lieu demain."}],
+    "task": "Ici, « malgré la panne » signifie...",
+    "response": {"kind": "choices", "choices": ["Même avec la panne.", "À cause de la panne.", "Avant la panne."], "answer": "Même avec la panne."},
+    "feedback": "La panne n'empêche pas le concert d'avoir lieu demain."
+  },
+  {
+    "id": "b3_20_microtext_two_sources",
+    "format": "microtext",
+    "source": [{"text": "Affiche : « Concert demain à huit heures. » Message d'Inès : « Malgré le report, je viendrai. »"}],
+    "task": "Quelle phrase utilise les deux informations ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Le concert aura lieu demain et Inès compte venir.",
+        "Le concert est annulé et Inès reste chez elle.",
+        "L'affiche ne donne aucune heure."
+      ],
+      "answer": "Le concert aura lieu demain et Inès compte venir."
+    },
+    "feedback": "L'affiche donne la date ; Inès dit qu'elle viendra."
+  },
+  {
+    "id": "b3_20_rewrite_synthesis",
+    "format": "rewrite",
+    "source": [{"text": "Léa : « J'ai trouvé le concert bon. » Inès : « Il a commencé en retard. »"}],
+    "task": "Résume les deux messages avec « même si ».",
+    "response": {
+      "kind": "typed",
+      "answer": "Même si le concert a commencé en retard, Léa l'a trouvé bon",
+      "accepted": [
+        "Même si le concert a commencé en retard, Léa l'a trouvé bon",
+        "Léa l'a trouvé bon même s'il a commencé en retard"
+      ]
+    },
+    "feedback": "La phrase garde le retard et attribue l'avis positif à Léa."
+  },
+  {
+    "id": "b3_20_microtext_claim_and_source",
+    "format": "microtext",
+    "source": [{"text": "Affiche : « Le concert aura lieu demain à huit heures. » Théo : « J'ai entendu une rumeur : il commencerait à neuf heures. »"}],
+    "task": "Quelle conclusion respecte les deux textes ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "L'affiche annonce huit heures ; la version de neuf heures reste une rumeur.",
+        "Le concert est confirmé à neuf heures.",
+        "Le concert n'aura pas lieu demain."
+      ],
+      "answer": "L'affiche annonce huit heures ; la version de neuf heures reste une rumeur."
+    },
+    "feedback": "L'affiche annonce huit heures ; Théo rapporte seulement une rumeur."
+  }
+]

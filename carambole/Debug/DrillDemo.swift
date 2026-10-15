@@ -136,9 +136,9 @@ enum DrillDemo {
 
 /// One page: a button per test session; each relaunches as often as wanted.
 private struct TestBookView: View {
-    private enum Kind: Int, Identifiable {
-        case spot, build, transform, interp, situation, book3, demo
-        var id: Int { rawValue }
+    private enum Kind: Hashable, Identifiable {
+        case spot, build, transform, interp, situation, book3(Book3PilotModule), demo
+        var id: Self { self }
     }
     @State private var running: Kind?
     @State private var runID = 0
@@ -161,8 +161,10 @@ private struct TestBookView: View {
                     "Read a sentence, answer what only its grammar tells you. No English shown.", .interp)
                 row("En situation · essai",
                     "Eight short café dialogues, six drill types. Tap any word for its English.", .situation)
-                row("Nuances · module 01",
-                    "Eight review cards: dialogue, microtext, rewrite, and word in context.", .book3)
+                ForEach(Book3PilotModule.available) { module in
+                    row(String(format: "Nuances · module %02d", module.number),
+                        module.title, .book3(module))
+                }
                 if ProcessInfo.processInfo.environment["CB_DRILL_DEMO"] != nil {
                     row("Lancer le drill", "Tap Indice, place words, scroll the word tray, check.", .demo)
                 }
@@ -179,9 +181,15 @@ private struct TestBookView: View {
             case "transform": running = .transform
             case "interp": running = .interp
             case "situation": running = .situation
-            case "book3": running = .book3
+            case "book3": running = .book3(Book3PilotModule(number: 1))
             case "demo": running = .demo
-            default: break
+            default:
+                if let value = ProcessInfo.processInfo.environment["CB_TB_OPEN"],
+                   value.hasPrefix("book3_"),
+                   let number = Int(value.dropFirst("book3_".count)),
+                   let module = Book3PilotModule.available.first(where: { $0.number == number }) {
+                    running = .book3(module)
+                }
             }
         }
         .fullScreenCover(item: $running) { kind in
@@ -192,7 +200,7 @@ private struct TestBookView: View {
                 case .transform: DrillDemo.session("Transformer", transforms) { running = nil }
                 case .interp: DrillDemo.session("Comprendre", interps) { running = nil }
                 case .situation: SituationPilotView { running = nil }
-                case .book3: Book3PilotView { running = nil }
+                case .book3(let module): Book3PilotView(module: module) { running = nil }
                 case .demo: DrillDemo.makeSession(testBook: true)
                 }
             }

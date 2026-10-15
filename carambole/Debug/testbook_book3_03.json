@@ -1,0 +1,81 @@
+[
+  {
+    "id": "b3_03_word_selon",
+    "format": "word",
+    "source": [{"text": "Selon Inès, la musique s'est arrêtée avant l'arrivée de Léa."}],
+    "task": "What does « selon Inès » mean?",
+    "response": {
+      "kind": "choices",
+      "choices": ["according to Inès", "before Inès", "with Inès"],
+      "answer": "according to Inès"
+    },
+    "feedback": "« Selon Inès » présente ce qu'Inès dit, sans confirmer que c'est vrai."
+  },
+  {
+    "id": "b3_03_dialogue_report",
+    "format": "dialogue",
+    "source": [
+      {"speaker": "Inès", "text": "J'étais au concert."},
+      {"speaker": "Léa", "text": "Selon Inès, elle était au concert."}
+    ],
+    "task": "Dans la phrase de Léa, qui est « elle » ?",
+    "response": {
+      "kind": "choices",
+      "choices": ["Inès.", "Léa.", "Théo."],
+      "answer": "Inès."
+    },
+    "feedback": "Léa rapporte les paroles d'Inès ; elle ne parle pas d'elle-même."
+  },
+  {
+    "id": "b3_03_microtext_two_claims",
+    "format": "microtext",
+    "source": [
+      {"text": "Léa dit que la musique s'est arrêtée. Théo dit que la musique a continué."}
+    ],
+    "task": "Selon Théo, la musique...",
+    "response": {
+      "kind": "choices",
+      "choices": ["a continué.", "s'est arrêtée.", "n'a pas commencé."],
+      "answer": "a continué."
+    },
+    "feedback": "« Théo dit que » présente sa version, différente de celle de Léa."
+  },
+  {
+    "id": "b3_03_word_d_apres",
+    "format": "word",
+    "source": [{"text": "D'après Théo, la musique a continué. Selon Léa, elle s'est arrêtée."}],
+    "task": "What does « d'après Théo » mean?",
+    "response": {
+      "kind": "choices",
+      "choices": ["according to Théo", "after Théo", "without Théo"],
+      "answer": "according to Théo"
+    },
+    "feedback": "Ici, « d'après » et « selon » ont le même sens."
+  },
+  {
+    "id": "b3_03_rewrite_speech",
+    "format": "rewrite",
+    "source": [{"text": "Inès dit : « J'ai parlé à Théo. »"}],
+    "task": "Rapporte les paroles d'Inès : « Inès dit que... »",
+    "response": {
+      "kind": "typed",
+      "answer": "Inès dit qu'elle a parlé à Théo",
+      "accepted": ["Inès dit qu'elle a parlé à Théo"]
+    },
+    "feedback": "Dans le récit, « je » devient « elle » : Inès dit qu'elle a parlé à Théo."
+  },
+  {
+    "id": "b3_03_microtext_attribution",
+    "format": "microtext",
+    "source": [
+      {"text": "Léa dit que la musique s'est arrêtée après son arrivée. Théo dit qu'elle s'est arrêtée avant l'arrivée de Léa."}
+    ],
+    "task": "D'après Léa, quand la musique s'est-elle arrêtée ?",
+    "response": {
+      "kind": "choices",
+      "choices": ["Après son arrivée.", "Avant son arrivée.", "Le lendemain."],
+      "answer": "Après son arrivée."
+    },
+    "feedback": "La question demande la version de Léa, même si Théo dit autre chose."
+  }
+]

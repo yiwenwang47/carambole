@@ -1,0 +1,77 @@
+[
+  {
+    "id": "b3_08_word_reporter",
+    "format": "word",
+    "source": [{"text": "Le concert est reporté à demain : il n'aura pas lieu ce soir."}],
+    "task": "What does « reporté » mean here?",
+    "response": {
+      "kind": "choices",
+      "choices": ["postponed", "finished early", "sold out"],
+      "answer": "postponed"
+    },
+    "feedback": "Le concert aura lieu demain au lieu de ce soir."
+  },
+  {
+    "id": "b3_08_dialogue_cause",
+    "format": "dialogue",
+    "source": [
+      {"speaker": "Théo", "text": "Il y a une panne."},
+      {"speaker": "Léa", "text": "Donc le concert est reporté à demain."}
+    ],
+    "task": "Pourquoi le concert est-il reporté ?",
+    "response": {
+      "kind": "choices",
+      "choices": ["À cause d'une panne.", "Parce qu'Inès est partie.", "Parce que l'affiche est bleue."],
+      "answer": "À cause d'une panne."
+    },
+    "feedback": "« Donc » relie la panne à la décision de reporter le concert."
+  },
+  {
+    "id": "b3_08_word_faute_de",
+    "format": "word",
+    "source": [{"text": "Faute de temps, Léa n'a pas vérifié l'affiche."}],
+    "task": "What does « faute de temps » mean?",
+    "response": {
+      "kind": "choices",
+      "choices": ["for lack of time", "after a long time", "at the right time"],
+      "answer": "for lack of time"
+    },
+    "feedback": "Léa manquait de temps pour vérifier l'affiche."
+  },
+  {
+    "id": "b3_08_microtext_update",
+    "format": "microtext",
+    "source": [{"text": "Le concert devait commencer ce soir. Il y a eu une panne, donc il a été reporté à demain. Théo transmet la nouvelle à Inès."}],
+    "task": "Quand le concert aura-t-il lieu ?",
+    "response": {
+      "kind": "choices",
+      "choices": ["Demain.", "Ce soir.", "Il a déjà eu lieu."],
+      "answer": "Demain."
+    },
+    "feedback": "« Reporté à demain » donne la nouvelle date."
+  },
+  {
+    "id": "b3_08_rewrite_parce_que",
+    "format": "rewrite",
+    "source": [{"text": "Il y a une panne. Le concert est reporté."}],
+    "task": "Relie les phrases avec « parce que ».",
+    "response": {
+      "kind": "typed",
+      "answer": "Le concert est reporté parce qu'il y a une panne",
+      "accepted": ["Le concert est reporté parce qu'il y a une panne"]
+    },
+    "feedback": "« Parce que » introduit la cause : la panne."
+  },
+  {
+    "id": "b3_08_microtext_consequence",
+    "format": "microtext",
+    "source": [{"text": "Faute de temps, Léa n'a pas vérifié l'affiche. L'heure y était fausse, donc Inès est arrivée en retard. Le concert est maintenant reporté à demain à cause d'une panne."}],
+    "task": "Pourquoi Inès est-elle arrivée en retard ?",
+    "response": {
+      "kind": "choices",
+      "choices": ["L'heure sur l'affiche était fausse.", "Le concert a été reporté.", "Théo a perdu l'affiche."],
+      "answer": "L'heure sur l'affiche était fausse."
+    },
+    "feedback": "L'heure fausse a causé son retard ; la panne a causé le report du concert."
+  }
+]

@@ -1,0 +1,57 @@
+[
+  {
+    "id": "b3_13_word_preciser",
+    "format": "word",
+    "source": [{"text": "Pouvez-vous préciser l'heure du concert ? Je ne vois pas l'heure sur l'affiche."}],
+    "task": "What does « préciser » mean here?",
+    "response": {"kind": "choices", "choices": ["to clarify or specify", "to postpone", "to compare"], "answer": "to clarify or specify"},
+    "feedback": "La personne demande une heure plus précise."
+  },
+  {
+    "id": "b3_13_dialogue_polite",
+    "format": "dialogue",
+    "source": [
+      {"speaker": "Inès", "text": "Bonjour, pourriez-vous préciser l'heure du concert ?"},
+      {"speaker": "Accueil", "text": "Bonjour, le concert commence à huit heures."}
+    ],
+    "task": "Quelle information Inès demande-t-elle ?",
+    "response": {"kind": "choices", "choices": ["L'heure du concert.", "Le prix du taxi.", "Le nom de Léa."], "answer": "L'heure du concert."},
+    "feedback": "« Pourriez-vous » rend la demande polie."
+  },
+  {
+    "id": "b3_13_word_renseignement",
+    "format": "word",
+    "source": [{"text": "Je demande un renseignement : à quelle heure commence le concert ?"}],
+    "task": "What is « un renseignement »?",
+    "response": {"kind": "choices", "choices": ["a piece of information", "a seat", "a complaint"], "answer": "a piece of information"},
+    "feedback": "L'heure demandée est le renseignement recherché."
+  },
+  {
+    "id": "b3_13_microtext_email",
+    "format": "microtext",
+    "source": [{"text": "Bonjour, je n'ai pas reçu mon billet. Pourriez-vous me l'envoyer ? Merci. — Léa"}],
+    "task": "Que demande Léa ?",
+    "response": {"kind": "choices", "choices": ["Qu'on lui envoie son billet.", "Qu'on reporte le concert.", "Qu'on change le prix du taxi."], "answer": "Qu'on lui envoie son billet."},
+    "feedback": "« Me l'envoyer » renvoie au billet que Léa n'a pas reçu."
+  },
+  {
+    "id": "b3_13_rewrite_indirect",
+    "format": "rewrite",
+    "source": [{"text": "À quelle heure commence le concert ?"}],
+    "task": "Demande poliment avec « pourriez-vous préciser ».",
+    "response": {
+      "kind": "typed",
+      "answer": "Pourriez-vous préciser à quelle heure le concert commence",
+      "accepted": ["Pourriez-vous préciser à quelle heure le concert commence"]
+    },
+    "feedback": "Dans la question indirecte, on dit « à quelle heure le concert commence »."
+  },
+  {
+    "id": "b3_13_microtext_date",
+    "format": "microtext",
+    "source": [{"text": "Bonjour, je cherche un renseignement sur mon billet. Pourriez-vous préciser si la date du concert a changé ? Merci. — Théo"}],
+    "task": "Que veut savoir Théo ?",
+    "response": {"kind": "choices", "choices": ["Si la date a changé.", "Si Inès a reçu l'affiche.", "Si le taxi est rapide."], "answer": "Si la date a changé."},
+    "feedback": "Théo demande une précision sur la date du concert."
+  }
+]
