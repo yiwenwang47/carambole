@@ -3,107 +3,106 @@
     "id": "b3_01_dialogue_event",
     "format": "dialogue",
     "source": [
-      {"speaker": "Lina", "text": "La salle était pleine quand la lumière s'est éteinte."},
-      {"speaker": "Marc", "text": "Le concert s'est interrompu pendant deux minutes."}
+      {"speaker": "Léa", "text": "Je parlais à Théo quand la musique s'est arrêtée."},
+      {"speaker": "Théo", "text": "Le concert s'est interrompu."}
     ],
-    "task": "Quel événement a interrompu le concert ?",
+    "task": "Qu'est-ce qui s'est passé pendant que Léa parlait ?",
     "response": {
       "kind": "choices",
-      "choices": ["La lumière s'est éteinte.", "La salle était pleine.", "Le concert a commencé."],
-      "answer": "La lumière s'est éteinte."
+      "choices": ["La musique s'est arrêtée.", "Léa parlait à Théo.", "Théo est parti."],
+      "answer": "La musique s'est arrêtée."
     },
-    "feedback": "« Était pleine » décrit la situation ; « s'est éteinte » marque l'événement."
+    "feedback": "« Parlais » décrit l'action en cours ; « s'est arrêtée » marque l'événement."
   },
   {
     "id": "b3_01_microtext_change",
     "format": "microtext",
     "source": [
-      {"text": "La bibliothèque était calme. Au moment où j'ouvrais mon livre, une panne a coupé la lumière. Nous sommes sortis."}
+      {"text": "Hier soir, le concert était bien. Au moment où Léa parlait à Théo, la musique s'est arrêtée. Le concert s'est interrompu."}
     ],
-    "task": "Qu'est-ce qui a changé la situation ?",
+    "task": "Qu'est-ce qui a interrompu le concert ?",
     "response": {
       "kind": "choices",
-      "choices": ["Une panne a coupé la lumière.", "La bibliothèque était calme.", "J'ouvrais mon livre."],
-      "answer": "Une panne a coupé la lumière."
+      "choices": ["La musique s'est arrêtée.", "Léa parlait à Théo.", "Le concert était bien."],
+      "answer": "La musique s'est arrêtée."
     },
-    "feedback": "Le calme et la lecture sont le cadre ; la coupure survient ensuite."
+    "feedback": "Léa parlait déjà ; l'arrêt de la musique a interrompu le concert."
   },
   {
     "id": "b3_01_rewrite_event",
     "format": "rewrite",
-    "source": [{"text": "Le micro s'interrompt pendant que la guide parle."}],
-    "task": "Mets l'événement au passé composé : « Le micro s'interrompt. »",
+    "source": [{"text": "Le concert s'interrompt pendant que Théo parle à Léa."}],
+    "task": "Mets l'événement au passé composé : « Le concert s'interrompt. »",
     "response": {
       "kind": "typed",
-      "answer": "Le micro s'est interrompu",
-      "accepted": ["Le micro s'est interrompu"]
+      "answer": "Le concert s'est interrompu",
+      "accepted": ["Le concert s'est interrompu"]
     },
     "feedback": "« S'est interrompu » présente l'arrêt comme un événement terminé."
   },
   {
     "id": "b3_01_word_panne",
     "format": "word",
-    "source": [{"text": "Une panne a coupé la lumière de la bibliothèque ; les lampes ne fonctionnaient plus."}],
+    "source": [{"text": "Le concert s'est interrompu. La musique s'est arrêtée : il y avait une panne."}],
     "task": "Que signifie « une panne » ici ?",
     "response": {
       "kind": "choices",
-      "choices": ["Un problème technique.", "Une fermeture prévue.", "Une lampe neuve."],
-      "answer": "Un problème technique."
+      "choices": ["Un problème.", "Le concert a commencé.", "Théo est parti."],
+      "answer": "Un problème."
     },
-    "feedback": "Les lampes ne fonctionnaient plus à cause de ce problème."
+    "feedback": "La musique s'est arrêtée à cause d'un problème."
   },
   {
     "id": "b3_01_dialogue_setting",
     "format": "dialogue",
     "source": [
-      {"speaker": "Nadia", "text": "Je traversais la place quand la pluie a commencé."},
-      {"speaker": "Hugo", "text": "Et les vendeurs ?"},
-      {"speaker": "Nadia", "text": "Ils ont fermé leurs stands."}
+      {"speaker": "Théo", "text": "Je parlais à Léa quand la musique s'est arrêtée."},
+      {"speaker": "Léa", "text": "Oui, le concert s'est interrompu."}
     ],
-    "task": "Que faisait Nadia quand la pluie a commencé ?",
+    "task": "Que faisait Théo quand la musique s'est arrêtée ?",
     "response": {
       "kind": "choices",
-      "choices": ["Elle traversait la place.", "Elle fermait un stand.", "Elle attendait Hugo."],
-      "answer": "Elle traversait la place."
+      "choices": ["Il parlait à Léa.", "Il est parti.", "Il attendait Inès."],
+      "answer": "Il parlait à Léa."
     },
-    "feedback": "« Traversais » décrit l'action en cours au début de la pluie."
+    "feedback": "« Parlais » décrit l'action en cours quand la musique s'est arrêtée."
   },
   {
     "id": "b3_01_microtext_setting",
     "format": "microtext",
     "source": [
-      {"text": "Le train roulait lentement. Au moment où nous approchions de la gare, il s'est arrêté. Le conducteur a annoncé une panne."}
+      {"text": "Au concert, Inès attendait Léa. Au moment où Léa est arrivée, la musique s'est arrêtée. Il y avait une panne."}
     ],
-    "task": "Que faisait le train avant de s'arrêter ?",
+    "task": "Que faisait Inès quand Léa est arrivée ?",
     "response": {
       "kind": "choices",
-      "choices": ["Le train roulait lentement.", "Le train s'est arrêté.", "Le conducteur a annoncé une panne."],
-      "answer": "Le train roulait lentement."
+      "choices": ["Elle attendait Léa.", "Elle parlait à Théo.", "Elle est partie."],
+      "answer": "Elle attendait Léa."
     },
-    "feedback": "« Roulait » décrit la situation ; « s'est arrêté » est l'événement."
+    "feedback": "« Attendait » décrit ce qu'Inès faisait au moment de l'arrivée."
   },
   {
     "id": "b3_01_rewrite_setting",
     "format": "rewrite",
-    "source": [{"text": "La rue est déserte quand le bus arrive."}],
-    "task": "Mets le cadre à l'imparfait : « La rue est déserte. »",
+    "source": [{"text": "Théo parle à Léa quand le concert s'interrompt."}],
+    "task": "Mets le cadre à l'imparfait : « Théo parle à Léa. »",
     "response": {
       "kind": "typed",
-      "answer": "La rue était déserte",
-      "accepted": ["La rue était déserte"]
+      "answer": "Théo parlait à Léa",
+      "accepted": ["Théo parlait à Léa"]
     },
-    "feedback": "« Était » décrit le cadre dans lequel le bus est arrivé."
+    "feedback": "« Parlait » décrit l'action en cours quand le concert s'est interrompu."
   },
   {
     "id": "b3_01_word_relation",
     "format": "word",
-    "source": [{"text": "Au moment où le rideau s'est levé, le public parlait encore."}],
+    "source": [{"text": "Au moment où le concert s'est interrompu, Théo parlait à Léa."}],
     "task": "Que relie « au moment où » ici ?",
     "response": {
       "kind": "choices",
-      "choices": ["Deux actions qui se passent en même temps.", "Une cause et sa conséquence.", "Deux lieux différents."],
-      "answer": "Deux actions qui se passent en même temps."
+      "choices": ["Deux actions au même moment.", "Une action avant l'autre.", "Deux personnes différentes."],
+      "answer": "Deux actions au même moment."
     },
-    "feedback": "Le rideau se lève pendant que le public parle encore."
+    "feedback": "Le concert s'arrête pendant que Théo parle à Léa."
   }
 ]

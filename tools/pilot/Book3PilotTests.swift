@@ -14,13 +14,13 @@ struct Book3PilotTests {
         precondition(cards.allSatisfy { $0.validationErrors.isEmpty })
 
         let rewrite = try XCTUnwrap(cards.first { $0.id == "b3_01_rewrite_event" })
-        precondition(rewrite.accepts("  LE MICRO S’EST INTERROMPU.  "))
-        precondition(!rewrite.accepts("Le micro s'est interrompue"))
-        precondition(!rewrite.accepts("Le micro s'est interrompu hier"))
+        precondition(rewrite.accepts("  LE CONCERT S’EST INTERROMPU.  "))
+        precondition(!rewrite.accepts("Le concert s'est interrompue"))
+        precondition(!rewrite.accepts("Le concert s'est interrompu hier"))
 
         let choice = try XCTUnwrap(cards.first { $0.id == "b3_01_dialogue_event" })
-        precondition(choice.accepts("La lumière s'est éteinte."))
-        precondition(!choice.accepts("La salle était pleine."))
+        precondition(choice.accepts("La musique s'est arrêtée."))
+        precondition(!choice.accepts("Léa parlait à Théo."))
 
         print("Book 3 pilot model: 8 cards, 4 formats, answer checks passed")
     }
