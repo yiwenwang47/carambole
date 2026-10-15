@@ -13,6 +13,10 @@ Older history is in `docs/archive/` and git log.
 - **Book 2 rulebook** (cast, voices, JSON shape, authoring steps):
   `docs/plans/2026-10-11-book-2-content-handoff.md`; tools in
   `tools/situations/README.md`.
+- **Book 3 curriculum and next-session handoff (2026-10-15):**
+  `docs/plans/2026-10-15-book-3-curriculum-handoff.md`. It maps 20 modules and
+  records the user's format rules: visible text, no top hint, compact mixed
+  drills, and grammar with vocabulary. No Book 3 code or content exists yet.
 - **Languages home (2026-10-14):** root is `Features/Languages/LanguagesView.swift`
   (Specimen layout) → `LibraryView(language:)`; marks in
   `DesignSystem/LanguageMark.swift` (Cut paper default, Script sticker; picked
