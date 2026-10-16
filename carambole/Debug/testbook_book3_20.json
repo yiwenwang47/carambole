@@ -400,20 +400,20 @@
     "format": "microtext",
     "source": [
       {
-        "text": "Compte rendu : « Le budget sera étudié vendredi ; aucune date d’ouverture n’est fixée. » Message d’Inès : « Huit voisins se sont proposés pour l’entretien, mais il nous manque un calendrier. »"
+        "text": "Avis de la salle : « Le concert de samedi est maintenu, mais commencera à vingt heures. » Message de Léa : « Mon ancien billet indique dix-neuf heures ; j'attends la confirmation qu'il reste valable. »"
       }
     ],
     "task": "Quelle conclusion suit les deux sources ?",
     "response": {
       "kind": "choices",
       "choices": [
-        "Des volontaires existent, mais le budget, le calendrier et la date d’ouverture restent ouverts.",
-        "Le budget et la date d’ouverture sont approuvés.",
-        "Aucun voisin ne souhaite participer."
+        "Le concert est maintenu à vingt heures ; la validité de l'ancien billet reste à confirmer.",
+        "Le concert est annulé et tous les billets sont remboursés.",
+        "Le billet de Léa a déjà été confirmé pour vingt heures."
       ],
-      "answer": "Des volontaires existent, mais le budget, le calendrier et la date d’ouverture restent ouverts."
+      "answer": "Le concert est maintenu à vingt heures ; la validité de l'ancien billet reste à confirmer."
     },
-    "feedback": "Les sources confirment l’aide proposée et les points en attente."
+    "feedback": "L'avis fixe la nouvelle heure ; Léa attend encore une réponse sur son billet."
   },
   {
     "id": "b3_20_rewrite_two_source_condition",
@@ -438,23 +438,23 @@
     "format": "dialogue",
     "source": [
       {
-        "speaker": "Léa",
-        "text": "Je soutiens le jardin puisque les bancs restent, sous réserve du budget."
+        "speaker": "Nora",
+        "text": "Je suis ravie que mon film soit projeté samedi, mais je préfère attendre l'horaire avant d'inviter mes amis."
       },
       {
         "speaker": "Malik",
-        "text": "Le budget me convient, mais je veux un calendrier d’arrosage."
+        "text": "L'horaire m'importe peu ; je voudrais savoir si le cinéma gardera une place pour ma sœur."
       }
     ],
     "task": "Quelle synthèse garde leurs réserves distinctes ?",
     "response": {
       "kind": "choices",
       "choices": [
-        "Léa attend le budget ; Malik attend le calendrier d’arrosage.",
-        "Tous deux attendent seulement le budget.",
-        "Tous deux refusent les bancs."
+        "Nora attend l'horaire ; Malik attend une réponse sur la place de sa sœur.",
+        "Tous deux attendent seulement l'horaire.",
+        "Nora refuse la projection et Malik a déjà réservé deux places."
       ],
-      "answer": "Léa attend le budget ; Malik attend le calendrier d’arrosage."
+      "answer": "Nora attend l'horaire ; Malik attend une réponse sur la place de sa sœur."
     },
     "feedback": "Chaque personne pose une condition différente."
   },
@@ -463,35 +463,35 @@
     "format": "microtext",
     "source": [
       {
-        "text": "Compte rendu : « Le devis du jardin est provisoire : mille cinq cents euros. » Message partagé : « Le prix final sera deux mille euros. » Aucun devis final n’est publié."
+        "text": "Site de la compagnie : « Le train de samedi partira avec vingt minutes de retard. » Un message partagé affirme qu'il a été supprimé. Aucune autre annonce de la compagnie n'est publiée."
       }
     ],
     "task": "Que peut-on affirmer ?",
     "response": {
       "kind": "choices",
       "choices": [
-        "Le seul montant écrit dans le compte rendu est provisoire ; le prix final reste inconnu.",
-        "Le prix final est deux mille euros.",
-        "Le compte rendu ne donne aucun montant."
+        "La compagnie annonce un retard ; la suppression n'est affirmée que dans le message partagé.",
+        "La compagnie confirme la suppression du train.",
+        "Les deux sources annoncent le même changement."
       ],
-      "answer": "Le seul montant écrit dans le compte rendu est provisoire ; le prix final reste inconnu."
+      "answer": "La compagnie annonce un retard ; la suppression n'est affirmée que dans le message partagé."
     },
-    "feedback": "Le message partagé ne constitue pas un devis final."
+    "feedback": "Le site de la compagnie signale un retard, sans annoncer de suppression."
   },
   {
     "id": "b3_20_rewrite_attributed_synthesis",
     "format": "rewrite",
     "source": [
       {
-        "text": "Mairie : « Quatre bancs resteront. » Un voisin affirme qu’ils disparaîtront tous."
+        "text": "Mairie : « La passerelle a été fermée mardi pour inspection. » Un voisin affirme qu'elle l'était déjà lundi."
       }
     ],
     "task": "Résume la contradiction en commençant par « Selon la mairie ».",
     "response": {
       "kind": "typed",
-      "answer": "Selon la mairie quatre bancs resteront malgré l’affirmation contraire d’un voisin",
+      "answer": "Selon la mairie la passerelle a été fermée mardi malgré l’affirmation contraire d’un voisin",
       "accepted": [
-        "Selon la mairie quatre bancs resteront malgré l’affirmation contraire d’un voisin"
+        "Selon la mairie la passerelle a été fermée mardi malgré l’affirmation contraire d’un voisin"
       ]
     },
     "feedback": "La source officielle et l’affirmation du voisin restent distinctes."
@@ -501,20 +501,20 @@
     "format": "microtext",
     "source": [
       {
-        "text": "Lundi, le projet attendait un groupe d’entretien. Jeudi, huit voisins signent un engagement et répartissent les jours. Le compte rendu précise que le budget sera examiné vendredi avant toute décision finale."
+        "text": "Lundi, Inès attendait la réparation de son vélo. Jeudi, le magasin confirme que le mécanicien l'a terminée et propose une livraison payante vendredi. Inès n'a pas encore accepté la livraison."
       }
     ],
     "task": "Quel point a changé, et lequel reste ouvert ?",
     "response": {
       "kind": "choices",
       "choices": [
-        "L’entretien est organisé ; le budget attend encore un examen.",
-        "Le budget est approuvé ; aucun voisin ne s’est engagé.",
-        "La décision finale a été prise lundi."
+        "Le vélo est réparé ; la livraison reste à décider.",
+        "Inès a livré elle-même le vélo jeudi.",
+        "Le mécanicien n'a pas encore commencé la réparation."
       ],
-      "answer": "L’entretien est organisé ; le budget attend encore un examen."
+      "answer": "Le vélo est réparé ; la livraison reste à décider."
     },
-    "feedback": "L’engagement règle l’organisation, pas le budget."
+    "feedback": "Le mécanicien a fini la réparation ; Inès n'a pas encore accepté le service de livraison."
   },
   {
     "id": "b3_20_dialogue_reaction_and_condition",
@@ -522,81 +522,81 @@
     "source": [
       {
         "speaker": "Inès",
-        "text": "Nous avons enfin réparti les jours d’arrosage."
+        "text": "Le cinéma a confirmé la projection de ton film samedi."
       },
       {
-        "speaker": "Léa",
-        "text": "Je suis soulagée que ce soit fait. J’attends encore le budget avant de voter."
+        "speaker": "Nora",
+        "text": "Je suis soulagée qu'il l'ait confirmé. J'attends encore l'horaire avant d'inviter mes amis."
       }
     ],
     "task": "Quelle conclusion est justifiée ?",
     "response": {
       "kind": "choices",
       "choices": [
-        "L’entretien est organisé, mais Léa n’a pas encore décidé son vote.",
-        "Léa a déjà voté contre le jardin.",
-        "Le budget a été approuvé avec l’arrosage."
+        "La projection est confirmée, mais Nora attend l'horaire avant d'inviter ses amis.",
+        "Nora a déjà invité ses amis à une séance annulée.",
+        "Le cinéma a confirmé l'horaire en même temps que la projection."
       ],
-      "answer": "L’entretien est organisé, mais Léa n’a pas encore décidé son vote."
+      "answer": "La projection est confirmée, mais Nora attend l'horaire avant d'inviter ses amis."
     },
-    "feedback": "Le soulagement concerne l’arrosage ; le vote dépend encore du budget."
+    "feedback": "Nora sait que son film sera projeté, mais ne connaît pas encore l'heure de la séance."
   },
   {
     "id": "b3_20_microtext_evidence_limit",
     "format": "microtext",
     "source": [
       {
-        "text": "Note de réunion : « Le plan conserve quatre bancs et prévoit deux arbres. » Avis de Théo : « La place sera sûrement plus agréable. » Avis d’Inès : « Le coût annuel doit être précisé. »"
+        "text": "Programme du cinéma : « Le film de Nora sera projeté samedi. » Avis de Théo : « Il plaira sûrement au public. » Message d'Inès : « Les prix ne seront annoncés que dimanche. »"
       }
     ],
-    "task": "Quelle synthèse distingue plan et appréciations ?",
+    "task": "Quelle synthèse distingue le programme des avis ?",
     "response": {
       "kind": "choices",
       "choices": [
-        "Le plan prévoit bancs et arbres ; son agrément et son coût restent des points à discuter.",
-        "La note prouve que tous les habitants aimeront la place.",
-        "Inès confirme que le coût annuel est fixé."
+        "La projection est confirmée ; l'accueil du public et les prix restent inconnus.",
+        "Le programme prouve que le film gagnera un prix dimanche.",
+        "Théo confirme que le public a déjà vu le film."
       ],
-      "answer": "Le plan prévoit bancs et arbres ; son agrément et son coût restent des points à discuter."
+      "answer": "La projection est confirmée ; l'accueil du public et les prix restent inconnus."
     },
-    "feedback": "Le plan décrit les aménagements ; les avis et le coût demandent encore examen."
+    "feedback": "Le programme établit la projection ; l'avis de Théo est une prévision et les prix seront annoncés plus tard."
   },
   {
     "id": "b3_20_rewrite_cautious_final",
     "format": "rewrite",
     "source": [
       {
-        "text": "Le plan garde les bancs. L’entretien est organisé. Le budget doit encore être approuvé."
+        "text": "Le magasin a payé la réparation du vélo d'Inès. Inès a accepté la livraison vendredi à ses frais."
       }
     ],
     "task": "Écris une conclusion brève avec « même si ».",
     "response": {
       "kind": "typed",
-      "answer": "Le budget du jardin reste à approuver même si les bancs sont conservés et que l'entretien est organisé",
+      "answer": "Le magasin a payé la réparation même si Inès paie la livraison",
       "accepted": [
-        "Le budget du jardin reste à approuver même si les bancs sont conservés et que l'entretien est organisé"
+        "Le magasin a payé la réparation même si Inès paie la livraison"
       ]
     },
-    "feedback": "Le plan et l'entretien sont précisés ; seul le statut du budget est encore ouvert dans ce texte."
+    "feedback": "Le magasin prend en charge la réparation ; la livraison acceptée reste aux frais d'Inès."
   },
   {
     "id": "b3_20_microtext_final_balanced",
     "format": "microtext",
     "source": [
       {
-        "text": "Mairie : « Les bancs resteront ; l’ouverture dépend de l’entretien et du budget. » Groupe de voisins : « Les jours d’arrosage sont répartis ; nous attendons le vote sur le budget vendredi. »"
+        "text": "Mairie : « Le budget du jardin a été approuvé vendredi ; l'ouverture reste soumise à l'organisation de l'entretien. » Groupe de voisins : « Nous avons réparti les jours d'arrosage, mais aucune date d'ouverture n'est encore annoncée. »"
       }
     ],
     "task": "Quelle conclusion est maintenant la plus précise ?",
     "response": {
       "kind": "choices",
       "choices": [
-        "L’entretien est organisé, mais l’ouverture dépend encore du vote sur le budget.",
-        "Le jardin est ouvert puisque les voisins arrosent déjà.",
-        "Les bancs seront retirés si le budget est voté."
+        "Le budget et l'entretien sont réglés ; la date d'ouverture reste à annoncer.",
+        "Le jardin a déjà ouvert vendredi.",
+        "Les voisins attendent encore le vote sur le budget."
       ],
-      "answer": "L’entretien est organisé, mais l’ouverture dépend encore du vote sur le budget."
+      "answer": "Le budget et l'entretien sont réglés ; la date d'ouverture reste à annoncer."
     },
-    "feedback": "Le calendrier est prêt ; le budget reste à décider."
+    "feedback": "La mairie a approuvé le budget et les voisins ont organisé l'entretien ; aucune date n'est encore fixée."
   }
 ]

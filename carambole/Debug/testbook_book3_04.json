@@ -89,7 +89,7 @@
     "format": "rewrite",
     "source": [
       {
-        "text": "Inès a vérifié le message envoyé avant la panne, mais elle ne sait pas à quelle heure Léa est entrée dans la salle."
+        "text": "Inès a vérifié le message de Léa, envoyé avant la panne : « Je suis dans la salle. » Elle ne sait pourtant pas à quelle heure Léa est entrée."
       }
     ],
     "task": "Rapporte la limite de cette preuve en commençant par « Selon Inès ».",
@@ -211,7 +211,7 @@
     "format": "word",
     "source": [
       {
-        "text": "Inès a vérifié l'heure du message de Léa, « Je suis dans la salle » : il est parti bien avant la panne."
+        "text": "Inès a vérifié l'heure du message de Léa, « Je suis dans la salle » : il a été envoyé bien avant la panne."
       }
     ],
     "task": "Pourquoi l'heure du message compte-t-elle ?",
@@ -231,7 +231,7 @@
     "format": "microtext",
     "source": [
       {
-        "text": "À 19 h 40, Léa a envoyé à Inès : « Je suis dans la salle. » Inès a conservé ce message. La panne a commencé à 20 h 15, alors que Théo parlait avec Léa. Théo pensait qu'elle venait d'arriver, car il ne l'avait pas vue entrer. Inès lui montre l'heure du message."
+        "text": "À 19 h 40, Léa a envoyé à Inès : « Je suis dans la salle. » Inès a conservé ce message. La panne est survenue à 20 h 15, alors que Théo parlait avec Léa. Théo pensait qu'elle venait d'arriver, car il ne l'avait pas vue entrer. Inès lui montre l'heure du message."
       }
     ],
     "task": "Quelle partie de la version de Théo le message remet-il en cause ?",
@@ -252,7 +252,7 @@
     "source": [
       {
         "speaker": "Théo",
-        "text": "Je croyais qu'elle venait d'arriver : je ne l'avais pas vue entrer."
+        "text": "Je croyais qu'elle venait d'arriver : je ne savais pas quand elle était entrée."
       },
       {
         "speaker": "Inès",
@@ -269,14 +269,14 @@
       ],
       "answer": "Théo ignorait l'heure d'entrée de Léa."
     },
-    "feedback": "L'absence d'observation explique son estimation, mais le message la contredit."
+    "feedback": "Théo reconnaît son incertitude ; le message contredit son estimation d'une arrivée récente."
   },
   {
     "id": "b3_04_rewrite_evidence",
     "format": "rewrite",
     "source": [
       {
-        "text": "Théo n'a pas vu Léa entrer, mais il lui parlait pendant la panne. Inès possède un message de Léa daté d'avant le concert."
+        "text": "Théo dit qu'il ne sait pas quand Léa est entrée, mais il lui parlait quand le son s'est coupé. Inès possède un message de Léa daté d'avant le concert : « Je suis dans la salle. »"
       }
     ],
     "task": "Complète le bilan : « Théo ne sait pas... »",
@@ -335,19 +335,19 @@
     "format": "rewrite",
     "source": [
       {
-        "text": "Théo pensait que Léa venait d'arriver. Son message daté d'avant le concert prouve qu'elle était déjà dans la salle."
+        "text": "Jules pensait que Sam était arrivé à la bibliothèque après midi. Nora lui montre un message de Sam envoyé à onze heures : « Je suis à la bibliothèque. »"
       }
     ],
-    "task": "Complète : « En fait, Léa... »",
+    "task": "Corrige l'estimation de Jules : « En fait, Sam... »",
     "response": {
       "kind": "typed",
-      "answer": "était déjà dans la salle avant le concert",
+      "answer": "était déjà à la bibliothèque avant midi",
       "accepted": [
-        "était déjà dans la salle avant le concert",
-        "était dans la salle avant le concert"
+        "était déjà à la bibliothèque avant midi",
+        "était à la bibliothèque avant midi"
       ]
     },
-    "feedback": "Le message établit sa présence avant le concert."
+    "feedback": "Le message de onze heures établit la présence de Sam avant midi."
   },
   {
     "id": "b3_04_microtext_two_sources",
@@ -374,19 +374,18 @@
     "format": "rewrite",
     "source": [
       {
-        "text": "Théo : « Je croyais que Léa venait d'arriver. » Il ne l'a pas vue entrer."
+        "text": "Au théâtre, Jules dit : « Je croyais que Sam était arrivé à l'entracte. » Il ne l'a pas vu entrer."
       }
     ],
-    "task": "Présente sa supposition sans l'affirmer : « Selon Théo, ... »",
+    "task": "Présente sa supposition sans l'affirmer : « Selon Jules, ... »",
     "response": {
       "kind": "typed",
-      "answer": "Léa venait d'arriver",
+      "answer": "Sam était arrivé à l'entracte",
       "accepted": [
-        "Léa venait d'arriver",
-        "elle venait d'arriver"
+        "Sam était arrivé à l'entracte"
       ]
     },
-    "feedback": "« Selon Théo » garde l'attribution de son estimation."
+    "feedback": "« Selon Jules » garde l'attribution de son estimation."
   },
   {
     "id": "b3_04_microtext_transfer",
@@ -412,9 +411,9 @@
     "id": "b3_04_microtext_clock_limit",
     "format": "microtext",
     "source": [{"text": "À 19 h 40, Léa écrit à Inès : « Je suis dans la salle. » La panne commence à 20 h 15. Théo parle à Léa pendant la panne, sans avoir vu son entrée."}],
-    "task": "Quelle limite garde-t-on malgré l'heure du message ?",
-    "response": {"kind": "choices", "choices": ["On ignore l'heure exacte de son entrée.", "On ignore si Léa était là avant la panne.", "On ignore si Théo lui a parlé pendant la panne."], "answer": "On ignore l'heure exacte de son entrée."},
-    "feedback": "Le message prouve sa présence à 19 h 40, pas son heure d'entrée."
+    "task": "À quel moment le message situe-t-il Léa dans la salle par rapport à la panne ?",
+    "response": {"kind": "choices", "choices": ["Trente-cinq minutes avant.", "Quinze minutes avant.", "Trente-cinq minutes après."], "answer": "Trente-cinq minutes avant."},
+    "feedback": "De 19 h 40 à 20 h 15, il s'écoule trente-cinq minutes."
   },
   {
     "id": "b3_04_rewrite_correction_transfer",

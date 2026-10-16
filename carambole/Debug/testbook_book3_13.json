@@ -227,14 +227,14 @@
   {
     "id": "b3_13_microtext_no_accusation",
     "format": "microtext",
-    "source": [{"text": "Samir a payé lundi pour l'atelier. Le site annonce l'envoi du billet après vérification du paiement, mais ne donne pas de délai. Jeudi, Samir n'a toujours pas de billet. Il ne sait pas si la vérification est terminée et souhaite écrire à l'accueil."}],
+    "source": [{"text": "Samir a envoyé lundi son formulaire et sa pièce d'identité pour l'atelier. Il a reçu un accusé de réception pour le formulaire, mais aucune confirmation concernant la pièce jointe. Il souhaite écrire à l'accueil sans supposer que son document a été perdu."}],
     "task": "Quelle demande reste précise sans supposer une erreur ?",
     "response": {
       "kind": "choices",
-      "choices": ["Pourriez-vous me préciser si mon paiement a été vérifié ?", "Pourquoi avez-vous oublié de m'envoyer mon billet ?", "Remboursez-moi immédiatement mon billet."],
-      "answer": "Pourriez-vous me préciser si mon paiement a été vérifié ?"
+      "choices": ["Pourriez-vous me confirmer que vous avez reçu ma pièce d'identité ?", "Pourquoi avez-vous perdu ma pièce d'identité ?", "Envoyez-moi mon billet immédiatement."],
+      "answer": "Pourriez-vous me confirmer que vous avez reçu ma pièce d'identité ?"
     },
-    "feedback": "Samir demande l'état de la vérification, qui n'est pas connu."
+    "feedback": "Samir demande si la pièce jointe est arrivée, sans affirmer qu'elle a été perdue."
   },
   {
     "id": "b3_13_microtext_sequence_request",
@@ -251,12 +251,12 @@
   {
     "id": "b3_13_rewrite_formal_followup",
     "format": "rewrite",
-    "source": [{"text": "L'accueil a répondu à Léa que son billet serait envoyé après vérification. Il n'a pas indiqué si cette étape était terminée. Léa doit voyager vendredi."}],
+    "source": [{"text": "L'accueil a répondu à Léa que son billet serait envoyé après vérification du paiement. Il n'a pas indiqué si cette étape était terminée. Léa doit voyager vendredi."}],
     "task": "Demande poliment si l'étape annoncée est terminée. Commence par « Pourriez-vous me confirmer si ».",
     "response": {
       "kind": "typed",
-      "answer": "Pourriez-vous me confirmer si la vérification de mon billet est terminée",
-      "accepted": ["Pourriez-vous me confirmer si la vérification de mon billet est terminée", "Pourriez-vous me confirmer si mon billet a été vérifié"]
+      "answer": "Pourriez-vous me confirmer si la vérification de mon paiement est terminée",
+      "accepted": ["Pourriez-vous me confirmer si la vérification de mon paiement est terminée", "Pourriez-vous me confirmer si mon paiement a été vérifié"]
     },
     "feedback": "La relance porte sur la vérification annoncée, sans supposer qu'une erreur a été commise."
   },
