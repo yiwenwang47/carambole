@@ -19,9 +19,8 @@ struct SettingsView: View {
     /// The shared settings store — NOT created here. Editing `store.settings`
     /// persists (clamped) on write via the store's `didSet`.
     @ObservedObject var store: StudySettingsStore
-    /// *En situation* counts conversation moves and dialogues, not grammar
-    /// elements and exercises, so its notes say so.
-    var dialogues = false
+    /// Labels and audio options follow the selected book's content.
+    var kind: BookKind = .grammar
 
     @Environment(\.dismiss) private var dismiss
 
@@ -41,14 +40,18 @@ struct SettingsView: View {
 
                     VStack(alignment: .leading, spacing: 0) {
                         rule(AppColor.ink)
-                        newPerDaySection
-                        rule(AppColor.hairline)
+                        if kind != .nuances {
+                            newPerDaySection
+                            rule(AppColor.hairline)
+                        }
                         reviewTargetSection
                         rule(AppColor.hairline)
                         reviewRoundSection
                         rule(AppColor.hairline)
-                        audioSection
-                        rule(AppColor.hairline)
+                        if kind != .nuances {
+                            audioSection
+                            rule(AppColor.hairline)
+                        }
                         backupSection
                         rule(AppColor.hairline)
                     }
@@ -106,8 +109,8 @@ struct SettingsView: View {
 
     private var newPerDaySection: some View {
         TextStepper(
-            title: "Éléments / jour",
-            note: dialogues ? "New conversation moves per day — a hard cap." : "New grammar elements per day — a hard cap.",
+            title: kind == .nuances ? "Groupes / jour" : "Éléments / jour",
+            note: newPerDayNote,
             value: $store.settings.newPerDay,
             range: StudySettings.newPerDayRange
         )
@@ -154,7 +157,7 @@ struct SettingsView: View {
                 }
             }
 
-            note(dialogues ? "Number of dialogues in each review round." : "Number of exercises in each review round.")
+            note(reviewRoundNote)
         }
         .padding(.vertical, 18)
     }
@@ -171,11 +174,27 @@ struct SettingsView: View {
             }
             .tint(AppColor.ink)
 
-            note(dialogues
+            note(kind == .situation
                  ? "Play the last line of a dialogue automatically once you finish it. The ▶ buttons always replay a line."
                  : "Read the sentence aloud automatically on a correct answer. The 🔊 button is always available either way.")
         }
         .padding(.vertical, 18)
+    }
+
+    private var newPerDayNote: String {
+        switch kind {
+        case .grammar: "New grammar elements per day — a hard cap."
+        case .situation: "New conversation moves per day — a hard cap."
+        case .nuances: "Daily goal for new reading and expression groups."
+        }
+    }
+
+    private var reviewRoundNote: String {
+        switch kind {
+        case .grammar: "Number of exercises in each review round."
+        case .situation: "Number of dialogues in each review round."
+        case .nuances: "Number of groups in each review round."
+        }
     }
 
     // MARK: - Backup / export

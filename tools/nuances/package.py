@@ -2,7 +2,6 @@
 
 import argparse
 import json
-import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -88,6 +87,8 @@ def validate_course(modules: list[dict], *, strict_counts: bool = True) -> None:
                         raise ValueError(f"{card_id}: long or punctuated typed answer")
                 else:
                     raise ValueError(f"{card_id}: bad response kind")
+            if len({card["format"] for card in element["cards"]}) < 2:
+                raise ValueError(f"{element_id}: group needs two formats for mastery")
         if strict_counts and (len(module["elements"]) != 5 or formats != FORMATS):
             raise ValueError(f"{module_id}: missing group or format")
     if strict_counts and (len(modules) != 20 or len(element_ids) != 100 or total != 550):

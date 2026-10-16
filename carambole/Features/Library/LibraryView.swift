@@ -9,7 +9,7 @@
 //  archived in `docs/archive/code/LibraryRibbon.swift`. Each book has its die-cut
 //  mark on the right (`BookMarkView`, same recipe as the language marks).
 //
-//  The French shelf holds the two French books; the English shelf holds one
+//  The French shelf holds three French books; the English shelf holds one
 //  greyed placeholder (`ShelfLanguage.placeholders`). Each shelf speaks its own
 //  language (`ShelfLanguage.shelf`): the French shelf stays in French.
 //
@@ -49,6 +49,7 @@ struct LibraryView: View {
     /// Each book's progress (%), from its own element IDs.
     @StateObject private var fondationsModel = BookViewModel(book: BookCatalog.fondations)
     @StateObject private var situationModel = BookViewModel(book: BookCatalog.enSituation)
+    @StateObject private var nuancesModel = BookViewModel(book: BookCatalog.nuances)
     @State private var loaded = false
     /// The book pushed from the shelf (`BookView`).
     @State private var openedBook: BookDescriptor?
@@ -85,9 +86,11 @@ struct LibraryView: View {
                 if loaded {
                     fondationsModel.refresh()
                     situationModel.refresh()
+                    nuancesModel.refresh()
                 } else {
                     fondationsModel.load()
                     situationModel.load()
+                    nuancesModel.load()
                     loaded = true
                     if let initialBook { openedBook = initialBook }
                     #if DEBUG
@@ -170,7 +173,12 @@ struct LibraryView: View {
     }
 
     private func percent(_ book: ShelfBook) -> Int {
-        let model = book.id == BookCatalog.enSituation.id ? situationModel : fondationsModel
+        let model: BookViewModel
+        switch book.id {
+        case BookCatalog.enSituation.id: model = situationModel
+        case BookCatalog.nuances.id: model = nuancesModel
+        default: model = fondationsModel
+        }
         return model.estimate.percentComplete
     }
 

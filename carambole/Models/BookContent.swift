@@ -6,10 +6,9 @@ import Foundation
 //  The course content hierarchy: Book → Module → Element → Example.
 //
 //  - A `Book` holds an ordered list of `CourseModule`s (the unlock units).
-//  - A `CourseModule` holds 20 `GrammarElement`s (one grammar point each).
-//  - A `GrammarElement` holds ≥5 `Exercise`s — interchangeable example sentences
-//    drilling the same rule, shuffled so the learner masters the rule, not a
-//    memorized token order.
+//  - A `CourseModule` holds the book's review elements.
+//  - A *Fondations* `GrammarElement` holds ≥5 interchangeable `Exercise`s,
+//    shuffled so the learner masters the rule, not a memorized token order.
 //
 //  These are pure in-memory value types loaded from bundle JSON by `ContentLoader`
 //  (content is static, so it is NOT persisted in SQLite — only user `review_status`
@@ -30,9 +29,11 @@ struct GrammarElement: Identifiable, Equatable {
     /// *En situation*: the move's short dialogues and standalone drills, in
     /// authored order (`d01 d02 s01 …`). Empty for a grammar element.
     var items: [SituationItem] = []
+    /// *Nuances*: visible-source reading and expression cards, in authored order.
+    var nuanceCards: [NuanceCard] = []
 }
 
-/// The unlock unit. 20 elements. Module N+1 unlocks when module N is complete
+/// The unlock unit. Module N+1 unlocks when module N is complete
 /// (every element mastered). ≈ the former `GrammarTopic`, much larger.
 struct CourseModule: Identifiable, Equatable {
     let id: String

@@ -118,7 +118,7 @@ struct BookView: View {
             starLive = closed
         }
         .sheet(isPresented: $showingSettings, onDismiss: { viewModel.refresh() }) {
-            SettingsView(store: viewModel.settingsStore, dialogues: viewModel.descriptor.kind == .situation)
+            SettingsView(store: viewModel.settingsStore, kind: viewModel.descriptor.kind)
         }
         .toolbar(.hidden, for: .navigationBar)
         .navigationBarBackButtonHidden(true)

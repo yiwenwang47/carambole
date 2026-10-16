@@ -88,3 +88,25 @@ plus focused session checks.
 - A cleared Too Easy group must become unseen again and leave the session queue.
 - A module file with duplicate or missing cards must fail the content gate.
 - A Book 3 due queue must never include an ID from the other two books.
+
+## Execution record — 2026-10-16
+
+- Editorial wave: all 20 Test book modules reviewed in three disjoint ranges;
+  chronology, unsupported conclusions, and repeated tasks corrected. The pilot
+  model accepts all 550 cards.
+- Content wave: 20 production modules, 100 groups, and 550 cards packaged. The
+  content validator and pure Swift model and loader checks pass.
+- Integration wave: the third shelf entry, group progress, additive v6 card
+  history, Nuances session, module details, and book-specific settings are in
+  place. The v5-to-v6 SQL contract test preserves populated Book 1/2 rows.
+- Visual wave: production cards from modules 01 and 18 fit the iPhone 18 Pro
+  simulator. Module 18 uses the long microtext; module 01 uses typed input.
+  The module 18 wrong-answer panel initially truncated the model answer; its
+  source area now contracts after grading, and the answer wraps fully. The
+  armed Too Easy state also fits.
+- Audio: this first production version has no bundled speech, as set in the
+  design. The registered Book 2 audio gate passes (6,459 clips, zero unresolved).
+  Any later Book 3 speech addition must register an index and pass that gate.
+- The final simulator Release build passed through `tools/release_build.sh` with
+  the audio gate enabled. The content gate, model/loader/policy checks, migration
+  contract checks, and `git diff --check` also passed.

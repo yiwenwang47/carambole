@@ -42,16 +42,26 @@ class PackageTests(unittest.TestCase):
             package_module(cards, metadata)
 
     def test_course_rejects_duplicate_card_ids_across_modules(self):
-        card = {
-            "id": "b3_01_x", "format": "word", "source": [{"text": "La salle ouvre."}],
-            "task": "Choisis.", "response": {"kind": "choices", "choices": ["a", "b", "c"],
-                                                  "answer": "a"}, "feedback": "A.",
-        }
-        module = {"id": "nu_01", "number": 1,
-                  "elements": [{"id": "nu_01_e01", "cards": [card]}]}
+        first = json.loads((ROOT / "carambole/Resources/Nuances/nuances_01.json").read_text())
+        second = json.loads((ROOT / "carambole/Resources/Nuances/nuances_02.json").read_text())
+        second["elements"][0]["cards"][0]["id"] = first["elements"][0]["cards"][0]["id"]
         with self.assertRaisesRegex(ValueError, "duplicate card"):
-            validate_course([module, {"id": "nu_02", "number": 2, "elements": [
-                {"id": "nu_02_e01", "cards": [card]}]}], strict_counts=False)
+            validate_course([first, second], strict_counts=False)
+
+    def test_group_needs_two_formats_for_mastery_to_be_reachable(self):
+        cards = json.loads((ROOT / "carambole/Debug/testbook_book3.json").read_text())
+        metadata = {
+            "number": 1, "id": "nu_01", "title": "Ce qui s'est passé", "goal": "Raconter.",
+            "groups": [{"label": f"Étape {i}", "note": "Lire.", "count": n}
+                       for i, n in enumerate((5, 5, 5, 5, 6), 1)],
+        }
+        module = package_module(cards, metadata)
+        for card in module["elements"][0]["cards"]:
+            card["format"] = "word"
+            for line in card["source"]:
+                line.pop("speaker", None)
+        with self.assertRaisesRegex(ValueError, "two formats"):
+            validate_course([module], strict_counts=False)
 
 
 if __name__ == "__main__":

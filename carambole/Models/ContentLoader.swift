@@ -8,7 +8,8 @@ import Foundation
 //  only user `review_status` lives in the database. Each book in `BookCatalog`
 //  has its own manifest: *Fondations* reads `manifest.json` (grammar modules),
 //  *En situation* reads `situations_manifest.json` (dialogue modules) and
-//  `words.json`. Every module listed in a manifest is loaded.
+//  `words.json`; *Nuances* reads `nuances_manifest.json` and its card modules.
+//  Every valid module listed in a manifest is loaded.
 
 /// Manifest listing the per-module JSON files, in load order.
 private struct ContentManifest: Codable {
@@ -58,6 +59,7 @@ enum ContentLoader {
         switch descriptor.kind {
         case .grammar: return loadBook()
         case .situation: return loadSituationBook(descriptor)
+        case .nuances: return loadNuanceBook(descriptor)
         }
     }
 
@@ -156,6 +158,69 @@ enum ContentLoader {
     private static func situationURL(_ resource: String, _ ext: String) -> URL? {
         Bundle.main.url(forResource: resource, withExtension: ext, subdirectory: "Situations")
             ?? Bundle.main.url(forResource: resource, withExtension: ext)
+    }
+
+    // MARK: - Nuances
+
+    /// Loads the five review elements in each Nuances module. The optional
+    /// directory lets the pure Swift model test exercise the real loader.
+    static func loadNuanceBook(_ descriptor: BookDescriptor, directory: URL? = nil) -> Book {
+        var book = Book(id: descriptor.id, title: descriptor.title, sortOrder: 3,
+                        modules: [], kind: .nuances)
+        let decoder = JSONDecoder()
+        func resourceURL(_ fileName: String) -> URL? {
+            if let directory { return directory.appendingPathComponent(fileName) }
+            let resource = (fileName as NSString).deletingPathExtension
+            let ext = (fileName as NSString).pathExtension
+            return Bundle.main.url(forResource: resource, withExtension: ext, subdirectory: "Nuances")
+                ?? Bundle.main.url(forResource: resource, withExtension: ext)
+        }
+        guard let url = resourceURL("nuances_manifest.json"),
+              let data = try? Data(contentsOf: url),
+              let manifest = try? decoder.decode(ContentManifest.self, from: data) else {
+            print("ContentLoader: no nuances manifest")
+            return book
+        }
+
+        var moduleIDs: Set<String> = []
+        var elementIDs: Set<String> = []
+        var cardIDs: Set<String> = []
+        for fileName in manifest.moduleFiles {
+            guard let url = resourceURL(fileName),
+                  let data = try? Data(contentsOf: url),
+                  let file = try? decoder.decode(NuanceModuleFile.self, from: data) else {
+                print("ContentLoader: could not decode nuances module \(fileName)")
+                continue
+            }
+            let elements = file.elements
+            let cards = elements.flatMap(\.cards)
+            let newElementIDs = elements.map(\.id)
+            let newCardIDs = cards.map(\.id)
+            let valid = !file.id.isEmpty && !moduleIDs.contains(file.id)
+                && !elements.isEmpty && elements.count == 5
+                && !cards.isEmpty && elements.allSatisfy { !$0.id.isEmpty && !$0.cards.isEmpty }
+                && newElementIDs.allSatisfy { !elementIDs.contains($0) }
+                && newCardIDs.allSatisfy { !$0.isEmpty && !cardIDs.contains($0) }
+                && Set(newElementIDs).count == newElementIDs.count
+                && Set(newCardIDs).count == newCardIDs.count
+            guard valid else {
+                print("ContentLoader: skipped invalid nuances module \(fileName)")
+                continue
+            }
+            moduleIDs.insert(file.id)
+            elementIDs.formUnion(newElementIDs)
+            cardIDs.formUnion(newCardIDs)
+            let mappedElements = elements.enumerated().map { index, element in
+                GrammarElement(id: element.id, moduleID: file.id, sortOrder: index + 1,
+                               label: element.title, ruleNote: element.note,
+                               examples: [], nuanceCards: element.cards)
+            }
+            book.modules.append(CourseModule(id: file.id, bookID: descriptor.id,
+                                             sortOrder: file.number, title: file.title,
+                                             ruleNote: file.goal, elements: mappedElements))
+        }
+        book.modules.sort { $0.sortOrder < $1.sortOrder }
+        return book
     }
 
     // MARK: - DTO → domain (injecting parent ids down the tree)

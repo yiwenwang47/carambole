@@ -33,6 +33,10 @@ struct StudySessionView: View {
             SituationSessionView(book: viewModel.book, title: title, ruleNote: ruleNote,
                                  elements: elements, mode: mode, module: module, canStart: canStart,
                                  autoSpeak: viewModel.settingsStore.autoSpeak, onFinish: onFinish)
+        case .nuances:
+            NuanceSessionView(book: viewModel.book, title: title, ruleNote: ruleNote,
+                              elements: elements, mode: mode, module: module, canStart: canStart,
+                              onFinish: onFinish)
         }
     }
 }

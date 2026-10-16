@@ -20,6 +20,8 @@ enum BookKind: Equatable {
     /// *En situation*: conversational moves drilled with short dialogues
     /// (`SituationSessionView`).
     case situation
+    /// *Nuances*: reading and expression cards drawn from visible French text.
+    case nuances
 }
 
 /// One shelf entry: identity, labels, content kind and settings scope.
@@ -50,8 +52,12 @@ enum BookCatalog {
         id: "book_fr_en_situation", title: "Français — En situation", shelfTitle: "En situation",
         kicker: "Dialogues", kind: .situation, settingsScope: "book_fr_en_situation")
 
+    static let nuances = BookDescriptor(
+        id: "book_fr_nuances", title: "Français — Nuances", shelfTitle: "Nuances",
+        kicker: "Lecture & expression", kind: .nuances, settingsScope: "book_fr_nuances")
+
     /// Shelf order.
-    static let all: [BookDescriptor] = [fondations, enSituation]
+    static let all: [BookDescriptor] = [fondations, enSituation, nuances]
 
     static func descriptor(id: String) -> BookDescriptor? {
         all.first { $0.id == id }
