@@ -1,0 +1,562 @@
+{
+  "id": "nu_05",
+  "number": 5,
+  "title": "De qui, de quoi ?",
+  "goal": "Identifier précisément la personne ou l'objet repris dans un texte.",
+  "elements": [
+    {
+      "id": "nu_05_e01",
+      "title": "Les mots de l'exposition",
+      "note": "Repère l'affiche, la légende et la personne à qui l'on parle.",
+      "cards": [
+        {
+          "id": "b3_05_word_affiche",
+          "format": "word",
+          "source": [
+            {
+              "text": "À l'exposition, une affiche annonce les horaires et montre une image de la salle."
+            }
+          ],
+          "task": "What is « une affiche » here?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "a poster",
+              "a ticket",
+              "a seat"
+            ],
+            "answer": "a poster"
+          },
+          "feedback": "L'affiche présente l'exposition et ses horaires."
+        },
+        {
+          "id": "b3_05_dialogue_a_qui",
+          "format": "dialogue",
+          "source": [
+            {
+              "speaker": "Léa",
+              "text": "J'ai parlé à Inès, la guide de l'exposition."
+            },
+            {
+              "speaker": "Théo",
+              "text": "C'est donc la personne à qui tu as posé une question sur le tableau ?"
+            }
+          ],
+          "task": "Qui est « la personne à qui » ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Inès, la guide.",
+              "Léa, la visiteuse.",
+              "Théo, le visiteur."
+            ],
+            "answer": "Inès, la guide."
+          },
+          "feedback": "Léa a posé sa question à Inès."
+        },
+        {
+          "id": "b3_05_word_legende",
+          "format": "word",
+          "source": [
+            {
+              "text": "Sous le tableau, la légende indique son titre et le nom de l'artiste."
+            }
+          ],
+          "task": "What does « la légende » mean here?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "the caption",
+              "the admission ticket",
+              "the gallery entrance"
+            ],
+            "answer": "the caption"
+          },
+          "feedback": "La légende donne des informations sur le tableau."
+        },
+        {
+          "id": "b3_05_microtext_dont",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "La légende parle d'un tableau bleu. Léa montre à Théo le tableau dont la légende parle."
+            }
+          ],
+          "task": "De quoi parle la légende ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Du tableau bleu.",
+              "De Théo.",
+              "De l'affiche des horaires."
+            ],
+            "answer": "Du tableau bleu."
+          },
+          "feedback": "« Le tableau dont la légende parle » reprend « parler du tableau »."
+        },
+        {
+          "id": "b3_05_word_reference",
+          "format": "word",
+          "source": [
+            {
+              "text": "Léa lit la légende sous le tableau. Dans son message, elle fait référence à cette légende : elle en reprend le titre."
+            }
+          ],
+          "task": "What does « faire référence à » mean?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "to refer to",
+              "to throw away",
+              "to arrive before"
+            ],
+            "answer": "to refer to"
+          },
+          "feedback": "Léa reprend le titre de la légende dans son message."
+        }
+      ]
+    },
+    {
+      "id": "nu_05_e02",
+      "title": "Le tableau dont on parle",
+      "note": "Distingue « parler de » et « faire référence à » devant deux œuvres.",
+      "cards": [
+        {
+          "id": "b3_05_rewrite_dont",
+          "format": "rewrite",
+          "source": [
+            {
+              "text": "Léa a parlé du tableau bleu. Ce tableau est près de l'entrée."
+            }
+          ],
+          "task": "Relie les deux phrases avec « dont ».",
+          "response": {
+            "kind": "typed",
+            "answer": "Le tableau bleu dont Léa a parlé est près de l'entrée",
+            "accepted": [
+              "Le tableau bleu dont Léa a parlé est près de l'entrée",
+              "Le tableau dont Léa a parlé est près de l'entrée"
+            ]
+          },
+          "feedback": "« Dont » remplace « du tableau » dans « Léa a parlé du tableau »."
+        },
+        {
+          "id": "b3_05_dialogue_two_images",
+          "format": "dialogue",
+          "source": [
+            {
+              "speaker": "Inès",
+              "text": "Voici deux œuvres : une photo de la salle et un tableau bleu."
+            },
+            {
+              "speaker": "Léa",
+              "text": "Je cherche le tableau dont la légende parle."
+            }
+          ],
+          "task": "Quelle œuvre cherche Léa ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Le tableau bleu.",
+              "La photo de la salle.",
+              "Les deux œuvres."
+            ],
+            "answer": "Le tableau bleu."
+          },
+          "feedback": "La légende mentionne le tableau bleu, pas la photo."
+        },
+        {
+          "id": "b3_05_word_lequel",
+          "format": "word",
+          "source": [
+            {
+              "text": "Il y a deux tableaux : un rouge et un bleu. La légende fait référence au tableau bleu."
+            }
+          ],
+          "task": "À quelle œuvre la légende fait-elle référence ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Au tableau bleu.",
+              "Au tableau rouge.",
+              "Aux deux tableaux."
+            ],
+            "answer": "Au tableau bleu."
+          },
+          "feedback": "Le texte précise « au tableau bleu »."
+        },
+        {
+          "id": "b3_05_microtext_caption",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Sous le tableau bleu, la légende dit : « Peint par Inès en 2022. » Léa photographie le tableau, puis envoie la photo à Théo."
+            }
+          ],
+          "task": "Qui a peint le tableau ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Inès.",
+              "Léa.",
+              "Théo."
+            ],
+            "answer": "Inès."
+          },
+          "feedback": "La légende attribue la peinture à Inès ; Léa prend seulement la photo."
+        },
+        {
+          "id": "b3_05_dialogue_auquel",
+          "format": "dialogue",
+          "source": [
+            {
+              "speaker": "Léa",
+              "text": "La guide a montré un tableau bleu et une photo de la salle."
+            },
+            {
+              "speaker": "Théo",
+              "text": "Le tableau auquel tu fais référence est celui d'Inès ?"
+            }
+          ],
+          "task": "À quoi renvoie « auquel » ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Au tableau bleu.",
+              "À la photo de la salle.",
+              "À la guide."
+            ],
+            "answer": "Au tableau bleu."
+          },
+          "feedback": "« Auquel » reprend « au tableau » avec « faire référence à »."
+        }
+      ]
+    },
+    {
+      "id": "nu_05_e03",
+      "title": "Deux œuvres, deux légendes",
+      "note": "Suis les renvois entre la photo, le tableau et leurs légendes.",
+      "cards": [
+        {
+          "id": "b3_05_rewrite_auquel",
+          "format": "rewrite",
+          "source": [
+            {
+              "text": "Léa fait référence au tableau bleu. Ce tableau est près de l'entrée."
+            }
+          ],
+          "task": "Relie les phrases avec « auquel » : « Le tableau bleu... »",
+          "response": {
+            "kind": "typed",
+            "answer": "Le tableau bleu auquel Léa fait référence est près de l'entrée",
+            "accepted": [
+              "Le tableau bleu auquel Léa fait référence est près de l'entrée"
+            ]
+          },
+          "feedback": "« Auquel » reprend « au tableau bleu » après « faire référence à »."
+        },
+        {
+          "id": "b3_05_microtext_pronouns",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Inès montre à Léa une photo de la salle. Léa l'envoie à Théo avec ce message : « Elle montre l'entrée de l'exposition. »"
+            }
+          ],
+          "task": "Que désigne « Elle » dans le message ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "La photo de la salle.",
+              "Inès.",
+              "Léa."
+            ],
+            "answer": "La photo de la salle."
+          },
+          "feedback": "La photo peut montrer l'entrée ; « elle » renvoie ici à l'image envoyée."
+        },
+        {
+          "id": "b3_05_microtext_two_captions",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Dans la salle de l'exposition, Inès place une photo de l'entrée à côté d'un tableau bleu. La légende de la photo nomme Léa, qui l'a prise. Celle du tableau donne le nom de l'artiste. Théo lit cette seconde légende, puis demande à Inès qui a peint l'œuvre."
+            }
+          ],
+          "task": "À quoi renvoie « cette seconde légende » ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "À la légende du tableau bleu.",
+              "À la légende de la photo de l'entrée.",
+              "À l'affiche des horaires de l'exposition."
+            ],
+            "answer": "À la légende du tableau bleu."
+          },
+          "feedback": "« Celle du tableau » désigne la seconde légende, que Théo lit ensuite."
+        },
+        {
+          "id": "b3_05_rewrite_a_laquelle",
+          "format": "rewrite",
+          "source": [
+            {
+              "text": "Léa fait référence à la photo de l'entrée. Inès fait référence à l'affiche des horaires. Seule la photo est près du tableau bleu."
+            }
+          ],
+          "task": "Relie avec « à laquelle » : « La photo de l'entrée... »",
+          "response": {
+            "kind": "typed",
+            "answer": "La photo de l'entrée à laquelle Léa fait référence est près du tableau bleu",
+            "accepted": [
+              "La photo de l'entrée à laquelle Léa fait référence est près du tableau bleu"
+            ]
+          },
+          "feedback": "« À laquelle » reprend « à la photo » après « faire référence à »."
+        },
+        {
+          "id": "b3_05_dialogue_precise_referent",
+          "format": "dialogue",
+          "source": [
+            {
+              "speaker": "Théo",
+              "text": "Tu parles de la photo de l'entrée ou du tableau bleu ?"
+            },
+            {
+              "speaker": "Léa",
+              "text": "De l'œuvre dont la légende donne le nom du peintre."
+            }
+          ],
+          "task": "Quelle œuvre Léa désigne-t-elle ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Le tableau bleu.",
+              "La photo de l'entrée.",
+              "Les deux œuvres."
+            ],
+            "answer": "Le tableau bleu."
+          },
+          "feedback": "Le nom d'un peintre figure dans la légende du tableau, tandis que Léa a pris la photo."
+        }
+      ]
+    },
+    {
+      "id": "nu_05_e04",
+      "title": "La bonne personne, le bon objet",
+      "note": "Vérifie à qui ou à quoi renvoie chaque forme relative.",
+      "cards": [
+        {
+          "id": "b3_05_word_caption_reference",
+          "format": "word",
+          "source": [
+            {
+              "text": "Sur le mur, une photo montre l'entrée. Sa légende donne le nom de Léa, qui l'a prise."
+            }
+          ],
+          "task": "Que désigne « sa légende » ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "La légende de la photo.",
+              "La légende du tableau bleu.",
+              "L'affiche des horaires."
+            ],
+            "answer": "La légende de la photo."
+          },
+          "feedback": "Le possessif renvoie à la photo de l'entrée."
+        },
+        {
+          "id": "b3_05_microtext_dont_photo",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Léa : « Je parle de la photo prise à l'entrée, pas du tableau bleu. » Inès : « Ah, c'est la photo dont la légende porte ton nom. »"
+            }
+          ],
+          "task": "À quelle œuvre renvoie « dont » ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "À la photo de l'entrée.",
+              "Au tableau bleu.",
+              "À l'affiche des horaires."
+            ],
+            "answer": "À la photo de l'entrée."
+          },
+          "feedback": "La légende de cette photo porte le nom de Léa."
+        },
+        {
+          "id": "b3_05_rewrite_person",
+          "format": "rewrite",
+          "source": [
+            {
+              "text": "Léa a posé une question à Inès. Inès est la guide."
+            }
+          ],
+          "task": "Complète : « Inès est la guide à qui... »",
+          "response": {
+            "kind": "typed",
+            "answer": "Léa a posé une question",
+            "accepted": [
+              "Léa a posé une question"
+            ]
+          },
+          "feedback": "« À qui » reprend Inès, la personne qui reçoit la question."
+        },
+        {
+          "id": "b3_05_microtext_label_note",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Note pour l'exposition : « Mettre la photo de l'entrée près du tableau bleu. Sous la photo, écrire le nom de Léa ; sous le tableau, écrire le nom du peintre. » Théo cherche l'œuvre dont la légende nomme Léa."
+            }
+          ],
+          "task": "Quelle œuvre cherche Théo ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "La photo de l'entrée.",
+              "Le tableau bleu.",
+              "L'affiche à l'entrée."
+            ],
+            "answer": "La photo de l'entrée."
+          },
+          "feedback": "La légende de la photo nomme Léa."
+        },
+        {
+          "id": "b3_05_rewrite_photo",
+          "format": "rewrite",
+          "source": [
+            {
+              "text": "Inès fait référence à l'affiche des horaires. Cette affiche est près de l'entrée."
+            }
+          ],
+          "task": "Relie les phrases avec « à laquelle ».",
+          "response": {
+            "kind": "typed",
+            "answer": "L'affiche des horaires à laquelle Inès fait référence est près de l'entrée",
+            "accepted": [
+              "L'affiche des horaires à laquelle Inès fait référence est près de l'entrée",
+              "L'affiche à laquelle Inès fait référence est près de l'entrée"
+            ]
+          },
+          "feedback": "« À laquelle » renvoie à l'affiche qu'Inès mentionne."
+        }
+      ]
+    },
+    {
+      "id": "nu_05_e05",
+      "title": "De la photo à la lettre",
+      "note": "Retrouve le bon objet malgré plusieurs légendes voisines.",
+      "cards": [
+        {
+          "id": "b3_05_microtext_transfer",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Dans une autre salle, deux objets sont exposés : une lettre écrite par Inès et une affiche du concert. La légende de la lettre précise sa date ; celle de l'affiche explique où le concert a eu lieu. Léa demande à Théo la date de l'objet dont Inès est l'autrice."
+            }
+          ],
+          "task": "Quelle légende Théo doit-il lire ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Celle de la lettre.",
+              "Celle de l'affiche.",
+              "Les deux pour connaître la date."
+            ],
+            "answer": "Celle de la lettre."
+          },
+          "feedback": "Inès a écrit la lettre et sa légende porte la date."
+        },
+        {
+          "id": "b3_05_dialogue_person_reference",
+          "format": "dialogue",
+          "source": [
+            {
+              "speaker": "Léa",
+              "text": "J'ai montré la photo à Inès, puis j'ai posé une question à la guide."
+            },
+            {
+              "speaker": "Théo",
+              "text": "La guide, c'est Inès ?"
+            },
+            {
+              "speaker": "Léa",
+              "text": "Oui."
+            }
+          ],
+          "task": "À qui Léa a-t-elle posé sa question ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "À Inès.",
+              "À Théo.",
+              "À la personne sur la photo."
+            ],
+            "answer": "À Inès."
+          },
+          "feedback": "La guide est Inès ; c'est à elle que Léa a posé la question."
+        },
+        {
+          "id": "b3_05_microtext_dont_versus_auquel",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "La légende parle du tableau bleu, mais le message de Léa fait référence à la photo de l'entrée. Les deux œuvres sont côte à côte."
+            }
+          ],
+          "task": "À quelle œuvre Léa fait-elle référence ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "À la photo de l'entrée.",
+              "Au tableau bleu.",
+              "Aux deux œuvres."
+            ],
+            "answer": "À la photo de l'entrée."
+          },
+          "feedback": "« Parle du » renvoie au tableau ; « fait référence à » renvoie à la photo."
+        },
+        {
+          "id": "b3_05_rewrite_dont_transfer",
+          "format": "rewrite",
+          "source": [
+            {
+              "text": "Inès parle de la lettre exposée. La lettre porte une date."
+            }
+          ],
+          "task": "Relie les phrases avec « dont » : « La lettre... »",
+          "response": {
+            "kind": "typed",
+            "answer": "La lettre dont Inès parle porte une date",
+            "accepted": [
+              "La lettre dont Inès parle porte une date"
+            ]
+          },
+          "feedback": "« Dont » reprend « de la lettre »."
+        },
+        {
+          "id": "b3_05_microtext_caption_chain",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Inès accroche une lettre près de la photo de l'entrée. La légende de la lettre donne sa date ; celle de la photo nomme Léa. Théo cherche l'œuvre dont la légende indique un jour précis."
+            }
+          ],
+          "task": "Quelle œuvre Théo cherche-t-il ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "La lettre.",
+              "La photo de l'entrée.",
+              "Les deux œuvres."
+            ],
+            "answer": "La lettre."
+          },
+          "feedback": "Seule la légende de la lettre indique sa date."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,621 @@
+{
+  "id": "nu_10",
+  "number": 10,
+  "title": "Poser ses conditions",
+  "goal": "Énoncer la condition d'un accord et vérifier si elle est remplie.",
+  "elements": [
+    {
+      "id": "nu_10_e01",
+      "title": "Confirmer avant d'accepter",
+      "note": "Repère ce que chacun attend avant de dire oui.",
+      "cards": [
+        {
+          "id": "b3_10_word_confirmer",
+          "format": "word",
+          "source": [
+            {
+              "text": "Théo confirme l'heure de la visite de l'exposition : elle commencera à dix-huit heures."
+            }
+          ],
+          "task": "What does « confirmer » mean here?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "to confirm",
+              "to cancel",
+              "to forget"
+            ],
+            "answer": "to confirm"
+          },
+          "feedback": "Théo donne une réponse certaine sur l’heure."
+        },
+        {
+          "id": "b3_10_dialogue_si",
+          "format": "dialogue",
+          "source": [
+            {
+              "speaker": "Léa",
+              "text": "Je viens à la visite si Théo confirme l'heure."
+            },
+            {
+              "speaker": "Théo",
+              "text": "Je confirme : la visite commence à dix-huit heures."
+            }
+          ],
+          "task": "La condition posée par Léa est-elle remplie ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Oui, Théo a confirmé l’heure.",
+              "Non, Théo n’a pas répondu.",
+              "Non, la visite est annulée."
+            ],
+            "answer": "Oui, Théo a confirmé l’heure."
+          },
+          "feedback": "Théo donne l’heure demandée par Léa."
+        },
+        {
+          "id": "b3_10_word_condition",
+          "format": "word",
+          "source": [
+            {
+              "text": "Inès vient à condition qu'il reste une place : si la visite est complète, elle ne vient pas."
+            }
+          ],
+          "task": "What does « à condition que » mean?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "provided that",
+              "even though",
+              "after that"
+            ],
+            "answer": "provided that"
+          },
+          "feedback": "Une place libre est nécessaire pour qu’Inès puisse venir."
+        },
+        {
+          "id": "b3_10_microtext_agreement",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Il reste une place pour la visite de dix-huit heures. Inès accepte de venir à condition que Léa l'accompagne. Léa répond : « Oui, je viens avec toi. »"
+            }
+          ],
+          "task": "De quoi Inès avait-elle besoin pour accepter ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Que Léa l’accompagne.",
+              "Que Théo paie le taxi.",
+              "Que la visite soit reportée."
+            ],
+            "answer": "Que Léa l’accompagne."
+          },
+          "feedback": "Léa accepte de venir avec Inès : cette condition est remplie."
+        },
+        {
+          "id": "b3_10_rewrite_condition",
+          "format": "rewrite",
+          "source": [
+            {
+              "text": "Pour la visite de l'exposition, je viens si tu es là."
+            }
+          ],
+          "task": "Réécris avec « à condition que ».",
+          "response": {
+            "kind": "typed",
+            "answer": "Je viens à condition que tu sois là",
+            "accepted": [
+              "Je viens à condition que tu sois là"
+            ]
+          },
+          "feedback": "Après « à condition que », le verbe devient « sois »."
+        }
+      ]
+    },
+    {
+      "id": "nu_10_e02",
+      "title": "Places et salle disponibles",
+      "note": "Distingue une place réservée d'une visite encore incertaine.",
+      "cards": [
+        {
+          "id": "b3_10_microtext_condition",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Théo a confirmé l'heure de la visite. Inès vient à condition que Léa soit là. Léa écrit : « Je serai là à dix-huit heures. »"
+            }
+          ],
+          "task": "Quelle condition permet à Inès de venir ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "La présence de Léa.",
+              "Le prix du bus.",
+              "Une nouvelle affiche."
+            ],
+            "answer": "La présence de Léa."
+          },
+          "feedback": "Léa annonce qu’elle sera présente à l’heure de la visite."
+        },
+        {
+          "id": "b3_10_word_pourvu_que",
+          "format": "word",
+          "source": [
+            {
+              "text": "Pourvu qu'il reste des places, nous pourrons entrer à la visite. Si elle est complète, nous rentrerons."
+            }
+          ],
+          "task": "What does « pourvu que » mean here?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "as long as",
+              "even after",
+              "because"
+            ],
+            "answer": "as long as"
+          },
+          "feedback": "La disponibilité des places détermine si le groupe peut entrer."
+        },
+        {
+          "id": "b3_10_dialogue_places",
+          "format": "dialogue",
+          "source": [
+            {
+              "speaker": "Inès",
+              "text": "Je viendrai pourvu qu'il reste une place à dix-huit heures."
+            },
+            {
+              "speaker": "Théo",
+              "text": "La visite de dix-huit heures est complète, mais il reste une place à dix-neuf heures."
+            }
+          ],
+          "task": "Inès a-t-elle une place à l’heure qu’elle demandait ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Non, la visite de dix-huit heures est complète.",
+              "Oui, à dix-huit heures.",
+              "On ne connaît pas l’heure."
+            ],
+            "answer": "Non, la visite de dix-huit heures est complète."
+          },
+          "feedback": "La place disponible est pour dix-neuf heures, pas dix-huit heures."
+        },
+        {
+          "id": "b3_10_word_sous_reserve",
+          "format": "word",
+          "source": [
+            {
+              "text": "La visite aura lieu samedi, sous réserve de la réouverture de la salle. Si la salle reste fermée, la visite sera annulée."
+            }
+          ],
+          "task": "What does « sous réserve de » mean here?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "subject to",
+              "despite",
+              "before"
+            ],
+            "answer": "subject to"
+          },
+          "feedback": "La réouverture de la salle est une condition encore incertaine."
+        },
+        {
+          "id": "b3_10_microtext_uncertain",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Léa a réservé une place pour Inès samedi. La visite aura lieu sous réserve de la réouverture de la salle. Théo n'a pas encore confirmé que la salle sera ouverte."
+            }
+          ],
+          "task": "Que sait-on avec certitude ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Une place est réservée, mais la visite reste incertaine.",
+              "La visite aura lieu à coup sûr.",
+              "La salle restera fermée."
+            ],
+            "answer": "Une place est réservée, mais la visite reste incertaine."
+          },
+          "feedback": "La réservation est faite ; la réouverture n’est pas confirmée."
+        }
+      ]
+    },
+    {
+      "id": "nu_10_e03",
+      "title": "Des conditions différentes",
+      "note": "Vérifie séparément la condition posée par chaque personne.",
+      "cards": [
+        {
+          "id": "b3_10_rewrite_si",
+          "format": "rewrite",
+          "source": [
+            {
+              "text": "Je viens à condition que tu sois là."
+            }
+          ],
+          "task": "Réécris avec « si ».",
+          "response": {
+            "kind": "typed",
+            "answer": "Je viens si tu es là",
+            "accepted": [
+              "Je viens si tu es là",
+              "Si tu es là je viens"
+            ]
+          },
+          "feedback": "Après « si », la condition prend « es » plutôt que « sois »."
+        },
+        {
+          "id": "b3_10_microtext_conditions_split",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Inès accepte la visite à condition que Léa l'accompagne. Léa confirme qu'elle sera là. Théo, lui, viendra pourvu qu'il reste une place ; il attend encore la réponse de l'accueil. L'heure de la visite est fixée, mais les deux amis ne sont pas dans la même situation."
+            }
+          ],
+          "task": "Qui attend encore qu'une condition soit remplie ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Théo, car sa place n'est pas confirmée.",
+              "Inès, car Léa n'a pas répondu.",
+              "Léa, car l'heure reste inconnue."
+            ],
+            "answer": "Théo, car sa place n'est pas confirmée."
+          },
+          "feedback": "Léa a confirmé sa présence ; Théo attend une place."
+        },
+        {
+          "id": "b3_10_microtext_reserve_outcome",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "L'accueil annonce une visite samedi, sous réserve de la réouverture de la salle. Léa réserve sa place, mais elle sait que la réservation ne garantit pas la visite. Si la réparation finit vendredi, la salle rouvrira ; sinon, l'accueil annoncera une annulation. Pour l'instant, personne ne connaît le résultat."
+            }
+          ],
+          "task": "Que peut-on affirmer maintenant ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "La visite dépend encore de la réouverture.",
+              "La visite aura certainement lieu.",
+              "La visite est déjà annulée."
+            ],
+            "answer": "La visite dépend encore de la réouverture."
+          },
+          "feedback": "« Sous réserve de » marque une condition encore incertaine."
+        },
+        {
+          "id": "b3_10_rewrite_attendance",
+          "format": "rewrite",
+          "source": [
+            {
+              "text": "L'accueil propose une place à Nora pour la visite de samedi. Nora aimerait venir avec Samir, qui n'a pas encore répondu. Elle ne veut pas faire cette visite seule."
+            }
+          ],
+          "task": "Écris la réponse de Nora à l'accueil avec « à condition que ».",
+          "response": {
+            "kind": "typed",
+            "answer": "Je viendrai à condition que Samir soit là",
+            "accepted": [
+              "Je viendrai à condition que Samir soit là",
+              "Je viendrai à condition que Samir m'accompagne",
+              "Je viens à condition que Samir soit là"
+            ]
+          },
+          "feedback": "La venue de Nora dépend de celle de Samir ; « à condition que » demande le subjonctif."
+        },
+        {
+          "id": "b3_10_microtext_place_vs_opening",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Inès a une place confirmée pour la visite de samedi. Pourtant, l'accueil précise que la visite aura lieu sous réserve de la réouverture de la salle. Léa, elle, attend encore une réponse pour obtenir sa propre place."
+            }
+          ],
+          "task": "Quelle affirmation respecte les deux incertitudes ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Inès a une place mais la visite peut encore être annulée.",
+              "La visite est certaine et Léa a une place.",
+              "Inès attend encore la confirmation de sa place."
+            ],
+            "answer": "Inès a une place mais la visite peut encore être annulée."
+          },
+          "feedback": "La place d'Inès est confirmée ; la réouverture de la salle ne l'est pas."
+        },
+        {
+          "id": "b3_10_dialogue_conditional_offer",
+          "format": "dialogue",
+          "source": [
+            {
+              "speaker": "Accueil",
+              "text": "Il reste deux places à dix-sept heures, mais pas à dix-huit heures."
+            },
+            {
+              "speaker": "Nora",
+              "text": "Je viendrai à condition que Samir puisse venir avec moi. Il n'a pas encore confirmé son horaire."
+            }
+          ],
+          "task": "Pourquoi Nora ne peut-elle pas encore accepter définitivement ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Samir n'a pas confirmé sa disponibilité.",
+              "La visite de dix-sept heures est complète.",
+              "L'accueil a refusé la demande de Nora."
+            ],
+            "answer": "Samir n'a pas confirmé sa disponibilité."
+          },
+          "feedback": "Nora pose la présence de Samir comme condition et attend sa réponse."
+        }
+      ]
+    },
+    {
+      "id": "nu_10_e04",
+      "title": "Ce qui reste à confirmer",
+      "note": "Exprime un accord conditionnel et repère ce qui le bloque encore.",
+      "cards": [
+        {
+          "id": "b3_10_rewrite_shared_condition",
+          "format": "rewrite",
+          "source": [
+            {
+              "text": "Léa accompagnera Inès à l'exposition seulement si la salle rouvre samedi. La salle est encore fermée."
+            }
+          ],
+          "task": "Exprime l'engagement de Léa avec « à condition que ».",
+          "response": {
+            "kind": "typed",
+            "answer": "Léa accompagnera Inès à condition que la salle rouvre samedi",
+            "accepted": [
+              "Léa accompagnera Inès à condition que la salle rouvre samedi",
+              "Léa ira avec Inès à condition que la salle rouvre samedi"
+            ]
+          },
+          "feedback": "La réouverture reste la condition de la venue de Léa."
+        },
+        {
+          "id": "b3_10_microtext_which_condition",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Théo a confirmé qu'il peut guider la visite. Inès a réservé la salle sous réserve d'une réparation électrique. Si la réparation finit vendredi, l'équipe maintiendra la visite samedi. Les places des visiteurs sont déjà attribuées."
+            }
+          ],
+          "task": "Quelle condition reste à remplir ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Finir la réparation électrique vendredi.",
+              "Trouver un guide pour la visite.",
+              "Attribuer les places aux visiteurs."
+            ],
+            "answer": "Finir la réparation électrique vendredi."
+          },
+          "feedback": "Le guide et les places sont confirmés ; la réparation reste incertaine."
+        },
+        {
+          "id": "b3_10_microtext_counterfactual",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Nora avait accepté de venir pourvu que Samir soit libre. Samir lui annonce finalement qu'il travaille samedi. Nora ne réserve donc pas sa place ; elle proposera une autre date."
+            }
+          ],
+          "task": "Si Samir avait été libre, qu'aurait fait Nora selon son accord ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Elle serait venue samedi.",
+              "Elle aurait annulé la visite.",
+              "Elle aurait travaillé avec Samir."
+            ],
+            "answer": "Elle serait venue samedi."
+          },
+          "feedback": "L'accord de Nora dépendait de la disponibilité de Samir."
+        },
+        {
+          "id": "b3_10_rewrite_status_message",
+          "format": "rewrite",
+          "source": [
+            {
+              "text": "La salle est peut-être encore fermée samedi. La place d'Inès est confirmée, mais la visite dépend de la réouverture."
+            }
+          ],
+          "task": "Écris une annonce courte avec « sous réserve de ».",
+          "response": {
+            "kind": "typed",
+            "answer": "La visite est maintenue sous réserve de la réouverture de la salle",
+            "accepted": [
+              "La visite est maintenue sous réserve de la réouverture de la salle",
+              "La visite aura lieu sous réserve de la réouverture de la salle"
+            ]
+          },
+          "feedback": "La formule garde visible la condition encore incertaine."
+        },
+        {
+          "id": "b3_10_microtext_two_requirements",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Nora viendra au concert à condition que Malik l'accompagne et que la salle soit accessible. Malik a confirmé sa présence, mais l'accueil n'a pas encore répondu au sujet de l'accès."
+            }
+          ],
+          "task": "Qu'est-ce qui empêche encore Nora de confirmer sa venue ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "L'accès à la salle reste incertain.",
+              "Malik n'a pas répondu.",
+              "L'heure du concert reste inconnue."
+            ],
+            "answer": "L'accès à la salle reste incertain."
+          },
+          "feedback": "Une condition est remplie ; l'autre attend la réponse de l'accueil."
+        },
+        {
+          "id": "b3_10_dialogue_condition_failed",
+          "format": "dialogue",
+          "source": [
+            {
+              "speaker": "Léa",
+              "text": "Je peux guider la visite samedi pourvu que la salle rouvre vendredi."
+            },
+            {
+              "speaker": "Théo",
+              "text": "La réparation prendra jusqu'à dimanche ; la salle restera fermée samedi."
+            }
+          ],
+          "task": "Léa peut-elle guider la visite samedi selon son accord ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Non, la salle ne rouvrira pas à temps.",
+              "Oui, la réparation est terminée.",
+              "Oui, la visite a lieu dimanche."
+            ],
+            "answer": "Non, la salle ne rouvrira pas à temps."
+          },
+          "feedback": "La condition de réouverture avant samedi n'est pas remplie."
+        }
+      ]
+    },
+    {
+      "id": "nu_10_e05",
+      "title": "À quoi s'applique la condition ?",
+      "note": "Précise si la réserve concerne une place, un événement ou une personne.",
+      "cards": [
+        {
+          "id": "b3_10_microtext_reservation_not_guarantee",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Samir a réservé deux places pour l'atelier. L'association confirme les places, mais annonce que l'atelier aura lieu sous réserve d'un nombre suffisant d'inscrits. Elle donnera une réponse définitive jeudi."
+            }
+          ],
+          "task": "Que peut affirmer Samir maintenant ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Ses places sont réservées, mais l'atelier reste incertain.",
+              "L'atelier aura lieu quoi qu'il arrive.",
+              "Ses places ne sont pas réservées."
+            ],
+            "answer": "Ses places sont réservées, mais l'atelier reste incertain."
+          },
+          "feedback": "La réservation ne résout pas la condition qui porte sur l'atelier lui-même."
+        },
+        {
+          "id": "b3_10_rewrite_sufficient_people",
+          "format": "rewrite",
+          "source": [
+            {
+              "text": "L'atelier aura lieu samedi seulement si huit personnes s'inscrivent. Pour l'instant, six personnes sont inscrites."
+            }
+          ],
+          "task": "Annonce la condition avec « sous réserve de ».",
+          "response": {
+            "kind": "typed",
+            "answer": "L'atelier aura lieu samedi sous réserve de huit inscriptions",
+            "accepted": [
+              "L'atelier aura lieu samedi sous réserve de huit inscriptions",
+              "L'atelier aura lieu samedi sous réserve de l'inscription de huit personnes"
+            ]
+          },
+          "feedback": "La formule garde visible le seuil encore non atteint."
+        },
+        {
+          "id": "b3_10_microtext_condition_scope",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Le concert est confirmé pour dimanche. Nora ira à la répétition samedi à condition que son train arrive avant midi. Son billet est acheté, mais le train peut être retardé."
+            }
+          ],
+          "task": "À quoi s'applique la condition de Nora ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "À sa présence à la répétition.",
+              "À la tenue du concert.",
+              "À l'achat de son billet."
+            ],
+            "answer": "À sa présence à la répétition."
+          },
+          "feedback": "La condition concerne la répétition du samedi, pas le concert confirmé."
+        },
+        {
+          "id": "b3_10_microtext_if_reopened",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "La salle est encore fermée. L'accueil maintiendra la visite si la réparation finit vendredi. Jeudi soir, le technicien annonce qu'il finira samedi matin."
+            }
+          ],
+          "task": "La visite peut-elle être maintenue selon la condition annoncée ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Non, la réparation ne finira pas vendredi.",
+              "Oui, la salle est déjà ouverte.",
+              "Oui, samedi matin est avant vendredi."
+            ],
+            "answer": "Non, la réparation ne finira pas vendredi."
+          },
+          "feedback": "Le délai demandé était vendredi ; la fin prévue est samedi."
+        },
+        {
+          "id": "b3_10_dialogue_not_same_condition",
+          "format": "dialogue",
+          "source": [
+            {
+              "speaker": "Inès",
+              "text": "Je viendrai si le billet coûte moins de dix euros."
+            },
+            {
+              "speaker": "Nora",
+              "text": "Il coûte huit euros, mais la salle n'ouvrira que dimanche. La visite prévue samedi est annulée."
+            }
+          ],
+          "task": "Quelle affirmation est exacte ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Le prix convient à Inès, mais la visite de samedi est annulée.",
+              "Le billet dépasse la limite d'Inès.",
+              "La visite de samedi est confirmée."
+            ],
+            "answer": "Le prix convient à Inès, mais la visite de samedi est annulée."
+          },
+          "feedback": "La condition de prix est remplie, mais l'événement n'aura pas lieu samedi."
+        },
+        {
+          "id": "b3_10_rewrite_friend_condition",
+          "format": "rewrite",
+          "source": [
+            {
+              "text": "Malik acceptera de venir à la fête seulement si Nora peut rentrer avec lui. Nora n'a pas encore répondu."
+            }
+          ],
+          "task": "Exprime l'accord de Malik avec « à condition que ».",
+          "response": {
+            "kind": "typed",
+            "answer": "Malik viendra à condition que Nora puisse rentrer avec lui",
+            "accepted": [
+              "Malik viendra à condition que Nora puisse rentrer avec lui",
+              "Malik acceptera de venir à condition que Nora puisse rentrer avec lui"
+            ]
+          },
+          "feedback": "Le subjonctif « puisse » marque la condition encore ouverte."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,637 @@
+{
+  "id": "nu_13",
+  "number": 13,
+  "title": "Demander avec tact",
+  "goal": "Poser une question précise et polie sans supposer une erreur ou une réponse inconnue.",
+  "elements": [
+    {
+      "id": "nu_13_e01",
+      "title": "Demander une précision",
+      "note": "Nomme l'information manquante et transforme la question en demande polie.",
+      "cards": [
+        {
+          "id": "b3_13_word_preciser",
+          "format": "word",
+          "source": [
+            {
+              "text": "Le programme indique « en fin de journée ». Pourriez-vous préciser l'heure exacte de la visite ?"
+            }
+          ],
+          "task": "What does « préciser » mean here?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "to specify",
+              "to postpone",
+              "to compare"
+            ],
+            "answer": "to specify"
+          },
+          "feedback": "La personne demande une heure exacte."
+        },
+        {
+          "id": "b3_13_dialogue_polite",
+          "format": "dialogue",
+          "source": [
+            {
+              "speaker": "Nora",
+              "text": "Bonjour, pourriez-vous préciser à quelle heure commence la visite ?"
+            },
+            {
+              "speaker": "Accueil",
+              "text": "Bonjour, elle commence à dix-sept heures, devant l'entrée principale."
+            }
+          ],
+          "task": "Quelle information Nora demandait-elle ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "L'heure de la visite.",
+              "Le prix du billet.",
+              "Le nom du guide."
+            ],
+            "answer": "L'heure de la visite."
+          },
+          "feedback": "L'accueil donne aussi le lieu de rendez-vous, mais Nora demandait l'heure."
+        },
+        {
+          "id": "b3_13_word_renseignement",
+          "format": "word",
+          "source": [
+            {
+              "text": "L'affiche ne donne pas le prix de l'atelier. Malik demande un renseignement à l'accueil pour connaître ce prix."
+            }
+          ],
+          "task": "What is « un renseignement »?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "a piece of information",
+              "a complaint",
+              "a reservation"
+            ],
+            "answer": "a piece of information"
+          },
+          "feedback": "Malik cherche une information qui manque sur l'affiche."
+        },
+        {
+          "id": "b3_13_microtext_email",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Bonjour, j'ai réservé deux places pour l'atelier de samedi, mais je n'ai reçu qu'un billet. Pourriez-vous m'envoyer le second ? Merci. — Léa"
+            }
+          ],
+          "task": "Que demande Léa ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "L'envoi du second billet.",
+              "Le report de l'atelier.",
+              "Le remboursement des deux places."
+            ],
+            "answer": "L'envoi du second billet."
+          },
+          "feedback": "Elle a réservé deux places et n'a reçu qu'un billet."
+        },
+        {
+          "id": "b3_13_rewrite_indirect",
+          "format": "rewrite",
+          "source": [
+            {
+              "text": "À quelle heure commence la visite ?"
+            }
+          ],
+          "task": "Demande poliment avec « pourriez-vous préciser ».",
+          "response": {
+            "kind": "typed",
+            "answer": "Pourriez-vous préciser à quelle heure la visite commence",
+            "accepted": [
+              "Pourriez-vous préciser à quelle heure la visite commence"
+            ]
+          },
+          "feedback": "Dans la question indirecte, le sujet précède le verbe."
+        },
+        {
+          "id": "b3_13_microtext_date",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Bonjour, mon billet indique le 12 mai, mais votre site affiche le 13 mai. Pourriez-vous préciser quelle date est valable ? Merci. — Théo"
+            }
+          ],
+          "task": "Que veut savoir Théo ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Quelle date est valable.",
+              "Combien coûte le billet.",
+              "Si le site est fermé."
+            ],
+            "answer": "Quelle date est valable."
+          },
+          "feedback": "Le billet et le site donnent deux dates différentes."
+        }
+      ]
+    },
+    {
+      "id": "nu_13_e02",
+      "title": "Démarche et délai de réponse",
+      "note": "Distingue les étapes à suivre du temps nécessaire pour recevoir une réponse.",
+      "cards": [
+        {
+          "id": "b3_13_word_demarche",
+          "format": "word",
+          "source": [
+            {
+              "text": "Pour obtenir une copie du billet, la démarche est simple : remplir le formulaire, puis attendre le courriel."
+            }
+          ],
+          "task": "What is « une démarche » here?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "a procedure or step",
+              "a performance",
+              "a delay"
+            ],
+            "answer": "a procedure or step"
+          },
+          "feedback": "Le texte décrit les étapes à suivre."
+        },
+        {
+          "id": "b3_13_word_delai",
+          "format": "word",
+          "source": [
+            {
+              "text": "Samir a envoyé sa demande lundi. Le délai de réponse est de trois jours : il devrait recevoir une réponse jeudi."
+            }
+          ],
+          "task": "What does « un délai » mean here?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "a time frame or waiting period",
+              "a fee",
+              "an address"
+            ],
+            "answer": "a time frame or waiting period"
+          },
+          "feedback": "Le délai indique combien de temps il faut attendre la réponse."
+        },
+        {
+          "id": "b3_13_dialogue_deadline",
+          "format": "dialogue",
+          "source": [
+            {
+              "speaker": "Samir",
+              "text": "Bonjour, j'ai envoyé le formulaire lundi. Quel est le délai pour recevoir une réponse ?"
+            },
+            {
+              "speaker": "Accueil",
+              "text": "Nous répondons sous trois jours ouvrés."
+            }
+          ],
+          "task": "Que signifie « le délai » dans la question de Samir ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Le temps d’attente avant la réponse.",
+              "Le prix du formulaire.",
+              "La durée de la visite."
+            ],
+            "answer": "Le temps d’attente avant la réponse."
+          },
+          "feedback": "L'accueil répond en indiquant le temps nécessaire."
+        },
+        {
+          "id": "b3_13_rewrite_tact",
+          "format": "rewrite",
+          "source": [
+            {
+              "text": "Envoyez-moi le formulaire."
+            }
+          ],
+          "task": "Rends la demande plus polie avec « pourriez-vous ».",
+          "response": {
+            "kind": "typed",
+            "answer": "Pourriez-vous m'envoyer le formulaire",
+            "accepted": [
+              "Pourriez-vous m'envoyer le formulaire"
+            ]
+          },
+          "feedback": "Le conditionnel présente la demande avec tact."
+        },
+        {
+          "id": "b3_13_microtext_register",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Malik écrit à une amie : « Tu sais quand le groupe se retrouve ? » Il écrit à l'association : « Pourriez-vous me préciser à quelle heure le groupe se retrouve ? »"
+            }
+          ],
+          "task": "Quel changement rend le second message adapté à l'association ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "La formule polie et la question indirecte.",
+              "Le tutoiement et l'ordre direct.",
+              "Une réponse à la place d'une question."
+            ],
+            "answer": "La formule polie et la question indirecte."
+          },
+          "feedback": "« Pourriez-vous me préciser » et l'ordre « le groupe se retrouve » marquent le registre plus formel."
+        },
+        {
+          "id": "b3_13_rewrite_delai",
+          "format": "rewrite",
+          "source": [
+            {
+              "text": "Quel est le délai de réponse ?"
+            }
+          ],
+          "task": "Pose la question dans un courriel formel avec « pourriez-vous m'indiquer ».",
+          "response": {
+            "kind": "typed",
+            "answer": "Pourriez-vous m'indiquer quel est le délai de réponse",
+            "accepted": [
+              "Pourriez-vous m'indiquer quel est le délai de réponse"
+            ]
+          },
+          "feedback": "La question directe devient une demande indirecte polie."
+        }
+      ]
+    },
+    {
+      "id": "nu_13_e03",
+      "title": "Relancer sur le point manquant",
+      "note": "Une relance utile porte sur ce que le premier message n'a pas éclairci.",
+      "cards": [
+        {
+          "id": "b3_13_microtext_missing_step",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Malik a rempli le formulaire pour l'atelier, mais le courriel de confirmation n'indique aucun billet. L'accueil explique que le billet arrive après vérification du paiement ; Malik a déjà payé hier. Il souhaite écrire à l'association pour savoir si cette vérification est terminée, sans supposer qu'une erreur a été commise."
+            }
+          ],
+          "task": "Quelle question correspond à son besoin et au registre ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Pourriez-vous me préciser si mon paiement a été vérifié ?",
+              "Pourquoi avez-vous perdu mon billet ?",
+              "Envoie-moi mon billet tout de suite."
+            ],
+            "answer": "Pourriez-vous me préciser si mon paiement a été vérifié ?"
+          },
+          "feedback": "Malik cherche une information précise et n'a pas de preuve d'erreur."
+        },
+        {
+          "id": "b3_13_microtext_deadline_request",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Nora écrit à l'association au sujet d'une visite samedi. Elle a envoyé son formulaire lundi et a reçu un message confirmant sa réception, mais aucun billet. Le site indique qu'un billet arrive après vérification, sans donner de délai. Nora doit organiser son trajet vendredi et veut demander quand elle recevra une réponse."
+            }
+          ],
+          "task": "Quelle information manque à Nora ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Le délai de validation du billet.",
+              "L'adresse de l'association.",
+              "Le jour prévu pour la visite."
+            ],
+            "answer": "Le délai de validation du billet."
+          },
+          "feedback": "Elle connaît le jour de la visite, mais pas quand le billet sera confirmé."
+        },
+        {
+          "id": "b3_13_rewrite_formal_deadline",
+          "format": "rewrite",
+          "source": [
+            {
+              "text": "Samir a demandé un billet pour l'atelier et a reçu un message confirmant sa demande. Il doit organiser son déplacement, mais l'accueil n'a pas indiqué quand le billet serait envoyé."
+            }
+          ],
+          "task": "Réécris « Quand le billet sera-t-il envoyé ? » en commençant par « Pourriez-vous me préciser quand ».",
+          "response": {
+            "kind": "typed",
+            "answer": "Pourriez-vous me préciser quand le billet sera envoyé",
+            "accepted": [
+              "Pourriez-vous me préciser quand le billet sera envoyé",
+              "Pourriez-vous me préciser quand mon billet sera envoyé"
+            ]
+          },
+          "feedback": "La question indirecte demande le moment de l'envoi avec une formule polie."
+        },
+        {
+          "id": "b3_13_microtext_question_scope",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Bonjour, mon billet confirme une place pour la visite de samedi, mais ne précise pas le lieu de rendez-vous. Le site indique deux entrées au musée. Pourriez-vous m'indiquer devant laquelle le groupe se retrouve ? Merci. — Nora"
+            }
+          ],
+          "task": "Quelle information Nora demande-t-elle exactement ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "L'entrée où commence la visite.",
+              "La confirmation de sa place.",
+              "Le prix d'un second billet."
+            ],
+            "answer": "L'entrée où commence la visite."
+          },
+          "feedback": "La place est déjà confirmée ; seule l'entrée de rendez-vous manque."
+        },
+        {
+          "id": "b3_13_dialogue_tactful_followup",
+          "format": "dialogue",
+          "source": [
+            {
+              "speaker": "Malik",
+              "text": "Bonjour, j'ai reçu votre réponse, mais elle donne l'heure de la visite et pas le lieu. Pourriez-vous préciser où nous devons nous retrouver ?"
+            },
+            {
+              "speaker": "Accueil",
+              "text": "Veuillez nous retrouver devant l'entrée du jardin à seize heures."
+            }
+          ],
+          "task": "Pourquoi Malik écrit-il de nouveau ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Il lui manque le lieu de rendez-vous.",
+              "Il conteste l'heure annoncée.",
+              "Il veut annuler sa visite."
+            ],
+            "answer": "Il lui manque le lieu de rendez-vous."
+          },
+          "feedback": "La première réponse donnait l'heure, mais omettait le lieu."
+        },
+        {
+          "id": "b3_13_rewrite_ticket_location",
+          "format": "rewrite",
+          "source": [
+            {
+              "text": "Nora a son billet et connaît l'heure de la visite. Elle doit demander à l'accueil : « Où commence la visite ? »"
+            }
+          ],
+          "task": "Pose sa question poliment avec « pourriez-vous m'indiquer ».",
+          "response": {
+            "kind": "typed",
+            "answer": "Pourriez-vous m'indiquer où la visite commence",
+            "accepted": [
+              "Pourriez-vous m'indiquer où la visite commence",
+              "Pourriez-vous m'indiquer où commence la visite"
+            ]
+          },
+          "feedback": "La question indirecte demande seulement le lieu qui manque."
+        }
+      ]
+    },
+    {
+      "id": "nu_13_e04",
+      "title": "Vérifier sans accuser",
+      "note": "Demande l'état d'un dossier ou la réception d'un document sans inventer une faute.",
+      "cards": [
+        {
+          "id": "b3_13_microtext_no_accusation",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Samir a envoyé lundi son formulaire et sa pièce d'identité pour l'atelier. Il a reçu un accusé de réception pour le formulaire, mais aucune confirmation concernant la pièce jointe. Il souhaite écrire à l'accueil sans supposer que son document a été perdu."
+            }
+          ],
+          "task": "Quelle demande reste précise sans supposer une erreur ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Pourriez-vous me confirmer que vous avez reçu ma pièce d'identité ?",
+              "Pourquoi avez-vous perdu ma pièce d'identité ?",
+              "Envoyez-moi mon billet immédiatement."
+            ],
+            "answer": "Pourriez-vous me confirmer que vous avez reçu ma pièce d'identité ?"
+          },
+          "feedback": "Samir demande si la pièce jointe est arrivée, sans affirmer qu'elle a été perdue."
+        },
+        {
+          "id": "b3_13_microtext_sequence_request",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Pour obtenir une copie du billet, Léa a déjà rempli le formulaire et reçu un courriel confirmant sa demande. Le message dit que la copie sera envoyée après vérification, sans indiquer quand. Léa doit organiser son déplacement vendredi."
+            }
+          ],
+          "task": "Quel renseignement serait le plus utile à demander maintenant ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Le délai d'envoi de la copie.",
+              "La façon de remplir le formulaire.",
+              "Le nombre de places réservées."
+            ],
+            "answer": "Le délai d'envoi de la copie."
+          },
+          "feedback": "La démarche est déjà faite ; Léa a besoin d'une date pour organiser son trajet."
+        },
+        {
+          "id": "b3_13_rewrite_formal_followup",
+          "format": "rewrite",
+          "source": [
+            {
+              "text": "L'accueil a répondu à Léa que son billet serait envoyé après vérification du paiement. Il n'a pas indiqué si cette étape était terminée. Léa doit voyager vendredi."
+            }
+          ],
+          "task": "Demande poliment si l'étape annoncée est terminée. Commence par « Pourriez-vous me confirmer si ».",
+          "response": {
+            "kind": "typed",
+            "answer": "Pourriez-vous me confirmer si la vérification de mon paiement est terminée",
+            "accepted": [
+              "Pourriez-vous me confirmer si la vérification de mon paiement est terminée",
+              "Pourriez-vous me confirmer si mon paiement a été vérifié"
+            ]
+          },
+          "feedback": "La relance porte sur la vérification annoncée, sans supposer qu'une erreur a été commise."
+        },
+        {
+          "id": "b3_13_microtext_exact_gap",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Bonjour, j'ai reçu le programme de l'atelier. Il indique le samedi 12 juin et l'entrée du jardin, mais seulement « dans l'après-midi » pour l'heure. Pourriez-vous me préciser l'heure de début ? Merci. — Samir"
+            }
+          ],
+          "task": "Quelle information Samir cherche-t-il ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "L'heure de début.",
+              "La date.",
+              "L'entrée."
+            ],
+            "answer": "L'heure de début."
+          },
+          "feedback": "La date et l'entrée figurent déjà dans le programme."
+        },
+        {
+          "id": "b3_13_dialogue_followup",
+          "format": "dialogue",
+          "source": [
+            {
+              "speaker": "Nora",
+              "text": "Bonjour, pourriez-vous m'indiquer si le billet est valable dimanche ?"
+            },
+            {
+              "speaker": "Accueil",
+              "text": "Votre billet est valable samedi seulement. Nous pouvons vous proposer un échange."
+            }
+          ],
+          "task": "Quel renseignement l'accueil donne-t-il d'abord ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Le billet n'est pas valable dimanche.",
+              "L'échange est déjà effectué.",
+              "Le billet est valable les deux jours."
+            ],
+            "answer": "Le billet n'est pas valable dimanche."
+          },
+          "feedback": "La réponse précise la validité actuelle avant de proposer une démarche."
+        },
+        {
+          "id": "b3_13_microtext_process_unknown",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Léa a payé son inscription et reçu un reçu. Le site indique qu'un billet sera envoyé après vérification, mais ne dit pas si elle doit remplir un autre formulaire. Elle écrit à l'accueil sans supposer que son dossier est incomplet."
+            }
+          ],
+          "task": "Quelle demande répond exactement à son doute ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Pourriez-vous m'indiquer si une autre démarche est nécessaire ?",
+              "Pourquoi avez-vous oublié mon billet ?",
+              "Pouvez-vous confirmer que je suis déjà inscrite définitivement ?"
+            ],
+            "answer": "Pourriez-vous m'indiquer si une autre démarche est nécessaire ?"
+          },
+          "feedback": "Elle demande si une étape reste à faire, sans attribuer une faute à l'accueil."
+        }
+      ]
+    },
+    {
+      "id": "nu_13_e05",
+      "title": "Prix, date et lieu exacts",
+      "note": "Adapte la question indirecte à l'information que le message ne donne pas.",
+      "cards": [
+        {
+          "id": "b3_13_rewrite_indirect_price",
+          "format": "rewrite",
+          "source": [
+            {
+              "text": "Le site annonce une visite guidée, sans indiquer son prix. Nora écrit à l'accueil : « Combien coûte la visite ? »"
+            }
+          ],
+          "task": "Formule sa question avec « pourriez-vous m'indiquer ».",
+          "response": {
+            "kind": "typed",
+            "answer": "Pourriez-vous m'indiquer combien coûte la visite",
+            "accepted": [
+              "Pourriez-vous m'indiquer combien coûte la visite",
+              "Pourriez-vous m'indiquer le prix de la visite"
+            ]
+          },
+          "feedback": "La question indirecte demande précisément le prix manquant."
+        },
+        {
+          "id": "b3_13_microtext_deadline_difference",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Malik a reçu un courriel confirmant sa demande de copie du billet. Il doit prendre le train vendredi. Le courriel indique que la copie sera envoyée après vérification, mais ne donne aucun délai."
+            }
+          ],
+          "task": "Que devrait-il demander pour organiser son trajet ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Quand la copie sera envoyée.",
+              "Si sa demande a été reçue.",
+              "À quelle heure part son train."
+            ],
+            "answer": "Quand la copie sera envoyée."
+          },
+          "feedback": "La réception de la demande est confirmée ; seul le délai d'envoi manque."
+        },
+        {
+          "id": "b3_13_dialogue_register",
+          "format": "dialogue",
+          "source": [
+            {
+              "speaker": "Samir",
+              "text": "Bonjour, j'ai reçu l'heure du rendez-vous, mais pas son lieu. Pourriez-vous me préciser où nous devons nous retrouver ?"
+            },
+            {
+              "speaker": "Accueil",
+              "text": "Devant l'entrée du jardin, à seize heures."
+            }
+          ],
+          "task": "Pourquoi la demande de Samir est-elle précise ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Elle vise le lieu encore inconnu.",
+              "Elle redemande l'heure déjà reçue.",
+              "Elle conteste la réponse de l'accueil."
+            ],
+            "answer": "Elle vise le lieu encore inconnu."
+          },
+          "feedback": "Samir distingue l'information connue de celle qui manque."
+        },
+        {
+          "id": "b3_13_microtext_tactful_correction",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Nora a demandé deux billets. Le courriel n'en contient qu'un, mais elle ne sait pas si le second sera envoyé séparément. Elle souhaite écrire à l'association."
+            }
+          ],
+          "task": "Quelle formule convient à ce qu'elle sait ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Pourriez-vous me préciser si le second billet sera envoyé séparément ?",
+              "Vous avez perdu mon second billet.",
+              "Je refuse le premier billet."
+            ],
+            "answer": "Pourriez-vous me préciser si le second billet sera envoyé séparément ?"
+          },
+          "feedback": "La question demande une précision sans supposer une erreur."
+        },
+        {
+          "id": "b3_13_rewrite_indirect_place",
+          "format": "rewrite",
+          "source": [
+            {
+              "text": "L'invitation donne la date du concert mais pas son lieu. Léa écrit à l'association : « Où aura lieu le concert ? »"
+            }
+          ],
+          "task": "Formule sa question avec « pourriez-vous me préciser ».",
+          "response": {
+            "kind": "typed",
+            "answer": "Pourriez-vous me préciser où aura lieu le concert",
+            "accepted": [
+              "Pourriez-vous me préciser où aura lieu le concert",
+              "Pourriez-vous me préciser le lieu du concert"
+            ]
+          },
+          "feedback": "La demande indirecte porte sur le lieu absent de l'invitation."
+        }
+      ]
+    }
+  ]
+}

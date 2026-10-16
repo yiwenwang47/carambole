@@ -1,0 +1,538 @@
+{
+  "id": "nu_03",
+  "number": 3,
+  "title": "D'après elle…",
+  "goal": "Rapporter une version sans la présenter comme un fait établi.",
+  "elements": [
+    {
+      "id": "nu_03_e01",
+      "title": "Selon Théo, d'après Inès",
+      "note": "Repère à qui appartient chaque version de l'arrivée de Léa.",
+      "cards": [
+        {
+          "id": "b3_03_word_selon",
+          "format": "word",
+          "source": [
+            {
+              "text": "Selon Théo, Léa est arrivée peu avant la panne. Inès veut vérifier depuis quand elle était là."
+            }
+          ],
+          "task": "What does « selon Théo » mean?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "according to Théo",
+              "before Théo",
+              "without Théo"
+            ],
+            "answer": "according to Théo"
+          },
+          "feedback": "« Selon Théo » attribue son estimation à Théo ; Inès ne la confirme pas."
+        },
+        {
+          "id": "b3_03_dialogue_report",
+          "format": "dialogue",
+          "source": [
+            {
+              "speaker": "Théo",
+              "text": "J'ai parlé à Léa quand la musique s'est arrêtée, mais je ne l'ai pas vue entrer."
+            },
+            {
+              "speaker": "Inès",
+              "text": "Selon Théo, il ne l'a pas vue entrer."
+            }
+          ],
+          "task": "Que rapporte Inès ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Théo dit qu'il n'a pas vu Léa entrer.",
+              "La preuve que Léa est arrivée pendant la panne.",
+              "Le moment où Inès est arrivée."
+            ],
+            "answer": "Théo dit qu'il n'a pas vu Léa entrer."
+          },
+          "feedback": "Inès rapporte l'absence d'observation de Théo, sans dater l'entrée de Léa."
+        },
+        {
+          "id": "b3_03_microtext_two_claims",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Inès dit que Léa est entrée dans la salle bien avant la panne. Théo dit qu'il lui parlait quand le son s'est coupé, mais qu'il ne sait pas quand elle est entrée."
+            }
+          ],
+          "task": "Les deux propos sont-ils forcément incompatibles ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Non, Théo ignore depuis quand Léa était là.",
+              "Oui, Théo dit que Léa était dehors pendant la panne.",
+              "Oui, Inès dit que Théo est parti."
+            ],
+            "answer": "Non, Théo ignore depuis quand Léa était là."
+          },
+          "feedback": "Leur conversation pendant la panne ne révèle pas à Théo l'heure d'entrée de Léa."
+        },
+        {
+          "id": "b3_03_word_d_apres",
+          "format": "word",
+          "source": [
+            {
+              "text": "D'après Inès, Léa est entrée bien avant la panne. Selon Théo, elle est peut-être arrivée peu avant."
+            }
+          ],
+          "task": "What does « d'après Inès » mean?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "according to Inès",
+              "after Inès",
+              "without Inès"
+            ],
+            "answer": "according to Inès"
+          },
+          "feedback": "« D'après Inès » attribue la première version à Inès."
+        }
+      ]
+    },
+    {
+      "id": "nu_03_e02",
+      "title": "Ce que chacun a vu",
+      "note": "Distingue un témoignage direct d'une heure d'arrivée supposée.",
+      "cards": [
+        {
+          "id": "b3_03_rewrite_speech",
+          "format": "rewrite",
+          "source": [
+            {
+              "text": "Inès dit : « J'ai vu Léa entrer dans la salle. »"
+            }
+          ],
+          "task": "Rapporte ses paroles : « Inès dit que... »",
+          "response": {
+            "kind": "typed",
+            "answer": "Inès dit qu'elle a vu Léa entrer dans la salle",
+            "accepted": [
+              "Inès dit qu'elle a vu Léa entrer dans la salle"
+            ]
+          },
+          "feedback": "« Je » devient « elle » quand on rapporte les paroles d'Inès."
+        },
+        {
+          "id": "b3_03_microtext_attribution",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Inès dit que Léa était dans la salle bien avant la panne. Théo dit qu'il lui parlait quand la musique s'est arrêtée, mais qu'il ne sait pas quand elle est entrée."
+            }
+          ],
+          "task": "D'après Théo, que ne peut-il pas préciser ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Depuis quand Léa était dans la salle.",
+              "S'il parlait à Léa pendant la panne.",
+              "Si la musique s'est arrêtée."
+            ],
+            "answer": "Depuis quand Léa était dans la salle."
+          },
+          "feedback": "Théo confirme leur conversation, mais dit ignorer l'heure d'entrée de Léa."
+        },
+        {
+          "id": "b3_03_dialogue_uncertain",
+          "format": "dialogue",
+          "source": [
+            {
+              "speaker": "Léa",
+              "text": "J'étais dans la salle bien avant que le son se coupe."
+            },
+            {
+              "speaker": "Théo",
+              "text": "Oui, je te parlais déjà, mais je croyais que tu venais d'arriver."
+            }
+          ],
+          "task": "Qui dit être dans la salle bien avant la panne ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Léa.",
+              "Théo.",
+              "Inès."
+            ],
+            "answer": "Léa."
+          },
+          "feedback": "Léa précise sa présence bien avant la panne ; Théo estimait seulement son arrivée."
+        },
+        {
+          "id": "b3_03_word_selon_reuse",
+          "format": "word",
+          "source": [
+            {
+              "text": "Selon Théo, Léa venait d'arriver. Léa dit qu'elle était dans la salle depuis longtemps."
+            }
+          ],
+          "task": "Quelle réponse garde l'attribution sans trancher ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Selon Théo, Léa venait d'arriver.",
+              "Léa venait certainement d'arriver.",
+              "Léa et Théo sont arrivés ensemble."
+            ],
+            "answer": "Selon Théo, Léa venait d'arriver."
+          },
+          "feedback": "« Selon Théo » indique que cette version vient de lui."
+        },
+        {
+          "id": "b3_03_microtext_evidence",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Théo dit : « Je n'ai pas vu Léa entrer. » Inès dit : « Je l'ai accueillie près de la salle bien avant la panne. » Plus tard, Théo a parlé à Léa quand la musique s'est arrêtée."
+            }
+          ],
+          "task": "Pourquoi Théo ne peut-il pas dater l'arrivée de Léa ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Il ne l'a pas vue entrer.",
+              "Il était absent pendant la panne.",
+              "Inès a oublié son accueil."
+            ],
+            "answer": "Il ne l'a pas vue entrer."
+          },
+          "feedback": "Il lui a parlé plus tard, mais il n'a pas assisté à son entrée."
+        }
+      ]
+    },
+    {
+      "id": "nu_03_e03",
+      "title": "Rapporter sans confondre",
+      "note": "Garde le bon locuteur quand tu reformules ses paroles.",
+      "cards": [
+        {
+          "id": "b3_03_rewrite_attributed",
+          "format": "rewrite",
+          "source": [
+            {
+              "text": "Théo dit : « Je n'ai pas vu Léa entrer. »"
+            }
+          ],
+          "task": "Complète le compte rendu : « Selon Théo, ... »",
+          "response": {
+            "kind": "typed",
+            "answer": "il n'a pas vu Léa entrer",
+            "accepted": [
+              "il n'a pas vu Léa entrer"
+            ]
+          },
+          "feedback": "« Selon Théo » attribue l'observation ; « je » devient « il »."
+        },
+        {
+          "id": "b3_03_dialogue_which_claim",
+          "format": "dialogue",
+          "source": [
+            {
+              "speaker": "Inès",
+              "text": "J'ai accueilli Léa avant la panne."
+            },
+            {
+              "speaker": "Théo",
+              "text": "Je parlais à Léa pendant la panne, mais je ne sais pas quand elle est arrivée."
+            }
+          ],
+          "task": "Que sait-on avec certitude d'après cet échange ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Théo ignore depuis quand Léa était là.",
+              "Léa est arrivée après la panne.",
+              "Inès n'était pas au concert."
+            ],
+            "answer": "Théo ignore depuis quand Léa était là."
+          },
+          "feedback": "Théo confirme leur conversation, mais dit ignorer depuis quand Léa était là."
+        },
+        {
+          "id": "b3_03_microtext_full_accounts",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Inès affirme avoir accueilli Léa avant le concert. Théo, lui, raconte qu'il parlait avec Léa quand le son s'est coupé, mais qu'il n'avait pas vu son entrée. Il pense donc qu'elle venait d'arriver. Inès dit avoir gardé un message envoyé par Léa plus tôt."
+            }
+          ],
+          "task": "Quelle formulation distingue une observation d'une supposition ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Théo lui parlait pendant la panne ; il suppose qu'elle venait d'arriver.",
+              "Théo a vu Léa entrer juste avant la panne.",
+              "Inès affirme que Léa a envoyé son message après la panne."
+            ],
+            "answer": "Théo lui parlait pendant la panne ; il suppose qu'elle venait d'arriver."
+          },
+          "feedback": "La conversation est rapportée comme vécue ; l'heure d'arrivée est une déduction de Théo."
+        },
+        {
+          "id": "b3_03_rewrite_theo_claim",
+          "format": "rewrite",
+          "source": [
+            {
+              "text": "Théo dit : « Je pense que Léa venait d'arriver. »"
+            }
+          ],
+          "task": "Rapporte cette opinion : « Selon Théo, ... »",
+          "response": {
+            "kind": "typed",
+            "answer": "Léa venait d'arriver",
+            "accepted": [
+              "Léa venait d'arriver",
+              "elle venait d'arriver"
+            ]
+          },
+          "feedback": "« Selon Théo » garde l'estimation attribuée à son auteur."
+        },
+        {
+          "id": "b3_03_dialogue_observation_claim",
+          "format": "dialogue",
+          "source": [
+            {
+              "speaker": "Théo",
+              "text": "Je parlais à Léa quand le son s'est coupé. Je n'ai pas vu son entrée."
+            },
+            {
+              "speaker": "Inès",
+              "text": "Moi, je l'avais accueillie plus tôt."
+            }
+          ],
+          "task": "Que peut-on attribuer à Théo sans lui prêter l'observation d'Inès ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Il a parlé à Léa pendant la panne.",
+              "Il a vu Léa entrer avec Inès.",
+              "Il a accueilli Léa avant Inès."
+            ],
+            "answer": "Il a parlé à Léa pendant la panne."
+          },
+          "feedback": "Théo rapporte sa conversation, tandis qu'Inès rapporte l'accueil."
+        }
+      ]
+    },
+    {
+      "id": "nu_03_e04",
+      "title": "Une observation ou une supposition",
+      "note": "Conserve le doute de Théo et l'observation d'Inès.",
+      "cards": [
+        {
+          "id": "b3_03_word_claim",
+          "format": "word",
+          "source": [
+            {
+              "text": "Théo dit : « Je pense que Léa venait d'arriver, mais je ne l'ai pas vue entrer. »"
+            }
+          ],
+          "task": "Quelle partie est une supposition de Théo ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Léa venait d'arriver.",
+              "Il ne l'a pas vue entrer.",
+              "Il a parlé à Léa."
+            ],
+            "answer": "Léa venait d'arriver."
+          },
+          "feedback": "« Je pense » présente une estimation."
+        },
+        {
+          "id": "b3_03_microtext_at_entrance",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Inès : « J'ai accueilli Léa à l'entrée avant le concert. » Théo : « Je lui ai parlé pendant la panne ; je n'ai pas vu son arrivée. »"
+            }
+          ],
+          "task": "Qui dit avoir vu Léa à l'entrée ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Inès.",
+              "Théo.",
+              "Les deux."
+            ],
+            "answer": "Inès."
+          },
+          "feedback": "Inès décrit l'accueil ; Théo n'a pas observé l'entrée."
+        },
+        {
+          "id": "b3_03_rewrite_ines",
+          "format": "rewrite",
+          "source": [
+            {
+              "text": "Inès dit : « J'ai accueilli Léa avant le concert. »"
+            }
+          ],
+          "task": "Complète : « Selon Inès, ... »",
+          "response": {
+            "kind": "typed",
+            "answer": "elle a accueilli Léa avant le concert",
+            "accepted": [
+              "elle a accueilli Léa avant le concert",
+              "Inès a accueilli Léa avant le concert"
+            ]
+          },
+          "feedback": "La formule attribue le récit à Inès."
+        },
+        {
+          "id": "b3_03_microtext_accounts_note",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Message d'Inès : « Léa m'a rejointe avant le concert. » Note de Théo : « Je lui parlais quand la musique s'est arrêtée. Je ne l'ai pas vue entrer. »"
+            }
+          ],
+          "task": "Quel fait Théo peut-il confirmer lui-même ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Il parlait à Léa pendant la panne.",
+              "Léa est entrée juste avant la panne.",
+              "Inès attendait Léa dehors."
+            ],
+            "answer": "Il parlait à Léa pendant la panne."
+          },
+          "feedback": "Théo connaît leur conversation, pas l'heure de l'entrée."
+        },
+        {
+          "id": "b3_03_rewrite_cautious",
+          "format": "rewrite",
+          "source": [
+            {
+              "text": "Théo : « Léa venait peut-être d'arriver. »"
+            }
+          ],
+          "task": "Commence le compte rendu par « Selon Théo »",
+          "response": {
+            "kind": "typed",
+            "answer": "Selon Théo Léa venait peut-être d'arriver",
+            "accepted": [
+              "Selon Théo Léa venait peut-être d'arriver"
+            ]
+          },
+          "feedback": "Le compte rendu conserve l'incertitude de Théo."
+        }
+      ]
+    },
+    {
+      "id": "nu_03_e05",
+      "title": "Deux témoignages à comparer",
+      "note": "Attribue chaque information dans de nouveaux récits.",
+      "cards": [
+        {
+          "id": "b3_03_microtext_transfer",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Au théâtre, Nora dit : « J'ai vu Sam dans la salle avant le début. » Jules dit : « Je lui ai parlé à l'entracte, mais je ne sais pas quand il est arrivé. »"
+            }
+          ],
+          "task": "Quelle phrase respecte les deux témoignages ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Selon Nora, Sam était déjà là avant le début ; Jules ignore son heure d'arrivée.",
+              "Jules a vu Sam entrer à l'entracte.",
+              "Nora dit que Sam est arrivé à l'entracte."
+            ],
+            "answer": "Selon Nora, Sam était déjà là avant le début ; Jules ignore son heure d'arrivée."
+          },
+          "feedback": "Le contact de Jules avec Sam ne date pas son arrivée."
+        },
+        {
+          "id": "b3_03_rewrite_qualified_arrival",
+          "format": "rewrite",
+          "source": [
+            {
+              "text": "Théo : « Je pense que Léa est arrivée peu avant la panne. Je ne l'ai pas vue entrer. »"
+            }
+          ],
+          "task": "Complète sans présenter son estimation comme un fait : « Théo dit que Léa... »",
+          "response": {
+            "kind": "typed",
+            "answer": "est peut-être arrivée peu avant la panne",
+            "accepted": [
+              "est peut-être arrivée peu avant la panne",
+              "était peut-être arrivée peu avant la panne"
+            ]
+          },
+          "feedback": "« Peut-être » conserve l'incertitude de Théo."
+        },
+        {
+          "id": "b3_03_dialogue_report_limit",
+          "format": "dialogue",
+          "source": [
+            {
+              "speaker": "Théo",
+              "text": "J'ai parlé à Léa quand le son s'est coupé, mais je n'ai pas vu son entrée."
+            },
+            {
+              "speaker": "Inès",
+              "text": "Je l'avais accueillie avant le concert."
+            }
+          ],
+          "task": "Quelle phrase rapporte seulement ce qu'Inès affirme ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Selon Inès, elle a accueilli Léa avant le concert.",
+              "Selon Théo, il a vu Léa entrer avant le concert.",
+              "Inès et Théo ont vu Léa entrer ensemble."
+            ],
+            "answer": "Selon Inès, elle a accueilli Léa avant le concert."
+          },
+          "feedback": "L'accueil est le témoignage d'Inès ; Théo n'a pas vu l'entrée."
+        },
+        {
+          "id": "b3_03_microtext_transfer_uncertainty",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "À la bibliothèque, Nora dit avoir vu Sam avant midi. Jules lui a parlé à 13 h, mais pense sans preuve qu'il venait d'arriver."
+            }
+          ],
+          "task": "Quelle information Jules peut-il confirmer lui-même ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Il a parlé à Sam à 13 h.",
+              "Sam est arrivé à 13 h.",
+              "Sam n'était pas là avant midi."
+            ],
+            "answer": "Il a parlé à Sam à 13 h."
+          },
+          "feedback": "Leur conversation est observée ; l'heure d'arrivée reste une supposition."
+        },
+        {
+          "id": "b3_03_rewrite_attributed_transfer",
+          "format": "rewrite",
+          "source": [
+            {
+              "text": "Nora dit : « J'ai vu Sam avant midi. »"
+            }
+          ],
+          "task": "Rapporte son témoignage en commençant par « Selon Nora »",
+          "response": {
+            "kind": "typed",
+            "answer": "Selon Nora elle a vu Sam avant midi",
+            "accepted": [
+              "Selon Nora elle a vu Sam avant midi",
+              "Selon Nora Sam était là avant midi"
+            ]
+          },
+          "feedback": "L'attribution indique que cette information vient de Nora."
+        }
+      ]
+    }
+  ]
+}

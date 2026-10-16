@@ -1,0 +1,641 @@
+{
+  "id": "nu_09",
+  "number": 9,
+  "title": "Peser les options",
+  "goal": "Comparer des contraintes mesurables et justifier un choix.",
+  "elements": [
+    {
+      "id": "nu_09_e01",
+      "title": "Le prix et le délai",
+      "note": "Compare le coût et le temps total de deux trajets.",
+      "cards": [
+        {
+          "id": "b3_09_word_frais",
+          "format": "word",
+          "source": [
+            {
+              "text": "Pour aller à l'exposition, le bus coûte deux euros. Le taxi coûte douze euros ; ces frais sont plus élevés."
+            }
+          ],
+          "task": "What does « des frais » mean here?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "costs or fees",
+              "free seats",
+              "travel time"
+            ],
+            "answer": "costs or fees"
+          },
+          "feedback": "Les frais sont les sommes à payer pour le trajet."
+        },
+        {
+          "id": "b3_09_dialogue_options",
+          "format": "dialogue",
+          "source": [
+            {
+              "speaker": "Léa",
+              "text": "Le bus coûte deux euros. J'attends huit minutes, puis le trajet prend vingt minutes."
+            },
+            {
+              "speaker": "Théo",
+              "text": "Le taxi coûte douze euros et arrive tout de suite ; le trajet prend dix minutes."
+            }
+          ],
+          "task": "Quel choix permet d’arriver le plus vite ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Le taxi.",
+              "Le bus.",
+              "Les deux arrivent en même temps."
+            ],
+            "answer": "Le taxi."
+          },
+          "feedback": "Le taxi prend dix minutes au total ; le bus demande huit minutes d’attente puis vingt minutes de trajet."
+        },
+        {
+          "id": "b3_09_word_delai",
+          "format": "word",
+          "source": [
+            {
+              "text": "Le taxi peut venir tout de suite. Pour le bus, le délai d'attente est de huit minutes ; ensuite, le trajet dure vingt minutes."
+            }
+          ],
+          "task": "What does « le délai d’attente » mean here?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "the time before the bus arrives",
+              "the bus travel time",
+              "the ticket price"
+            ],
+            "answer": "the time before the bus arrives"
+          },
+          "feedback": "Les huit minutes précèdent le trajet de vingt minutes."
+        },
+        {
+          "id": "b3_09_microtext_priority",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Pour rejoindre l'exposition, le bus coûte deux euros : huit minutes d'attente, puis vingt minutes de trajet. Le taxi coûte douze euros et prend dix minutes. Léa veut limiter ses frais ; elle peut arriver dans une demi-heure."
+            }
+          ],
+          "task": "Quel trajet répond à la priorité de Léa ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Le bus.",
+              "Le taxi.",
+              "Aucun des deux."
+            ],
+            "answer": "Le bus."
+          },
+          "feedback": "Le bus coûte moins cher et arrive en vingt-huit minutes, avant la limite de trente minutes."
+        },
+        {
+          "id": "b3_09_rewrite_price",
+          "format": "rewrite",
+          "source": [
+            {
+              "text": "Pour aller à l'exposition, le bus coûte deux euros. Le taxi coûte douze euros."
+            }
+          ],
+          "task": "Compare les prix avec « moins cher ».",
+          "response": {
+            "kind": "typed",
+            "answer": "Le bus coûte moins cher que le taxi",
+            "accepted": [
+              "Le bus coûte moins cher que le taxi"
+            ]
+          },
+          "feedback": "Deux euros, c’est moins que douze euros."
+        }
+      ]
+    },
+    {
+      "id": "nu_09_e02",
+      "title": "Un trajet fiable vaut-il le coup ?",
+      "note": "Ajoute la ponctualité aux prix, à l'attente et à la durée.",
+      "cards": [
+        {
+          "id": "b3_09_microtext_choice",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Inès doit arriver à l'exposition dans un quart d'heure. Le bus demande huit minutes d'attente et vingt minutes de trajet ; le taxi prend dix minutes et coûte douze euros. Inès peut payer cette somme."
+            }
+          ],
+          "task": "Quel choix respecte son délai d’arrivée ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Le taxi, car il prend dix minutes.",
+              "Le bus, car il coûte moins cher.",
+              "Les deux trajets."
+            ],
+            "answer": "Le taxi, car il prend dix minutes."
+          },
+          "feedback": "Dix minutes respectent la limite de quinze minutes ; vingt-huit minutes la dépassent."
+        },
+        {
+          "id": "b3_09_word_fiable",
+          "format": "word",
+          "source": [
+            {
+              "text": "Le bus arrive presque toujours à l'heure, même quand il pleut. Pour Léa, c'est un moyen de transport fiable."
+            }
+          ],
+          "task": "What does « fiable » mean here?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "reliable",
+              "expensive",
+              "crowded"
+            ],
+            "answer": "reliable"
+          },
+          "feedback": "Le bus respecte généralement son horaire."
+        },
+        {
+          "id": "b3_09_dialogue_tradeoff",
+          "format": "dialogue",
+          "source": [
+            {
+              "speaker": "Inès",
+              "text": "Le taxi est plus rapide, mais il coûte dix euros de plus."
+            },
+            {
+              "speaker": "Léa",
+              "text": "Nous avons le temps. Et le bus est fiable : il arrive presque toujours à l'heure."
+            }
+          ],
+          "task": "Pourquoi Léa préfère-t-elle le bus ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Elle a le temps et veut éviter les frais du taxi.",
+              "Le taxi est moins cher.",
+              "Le bus est plus rapide."
+            ],
+            "answer": "Elle a le temps et veut éviter les frais du taxi."
+          },
+          "feedback": "La différence de prix compte davantage puisqu’elles ne sont pas pressées."
+        },
+        {
+          "id": "b3_09_word_vaut_le_coup",
+          "format": "word",
+          "source": [
+            {
+              "text": "Le taxi coûte dix euros de plus, mais il permet à Inès d'arriver avant la fermeture. Pour elle, ça vaut le coup."
+            }
+          ],
+          "task": "What does « ça vaut le coup » mean here?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "it is worth it",
+              "it is impossible",
+              "it is free"
+            ],
+            "answer": "it is worth it"
+          },
+          "feedback": "Le gain de temps justifie pour Inès les frais supplémentaires."
+        },
+        {
+          "id": "b3_09_microtext_reliability",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Le train coûte cinq euros et arrive à 18 h 20, mais il est souvent en retard. Le bus coûte quatre euros et arrive normalement à 18 h 25 ; il est fiable. L'exposition ferme à 18 h 30. Théo ne veut pas risquer de la manquer."
+            }
+          ],
+          "task": "Quel trajet correspond le mieux à la priorité de Théo ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Le bus fiable.",
+              "Le train souvent en retard.",
+              "Aucun trajet."
+            ],
+            "answer": "Le bus fiable."
+          },
+          "feedback": "Le bus laisse cinq minutes avant la fermeture et présente moins de risque de retard."
+        },
+        {
+          "id": "b3_09_rewrite_total",
+          "format": "rewrite",
+          "source": [
+            {
+              "text": "Bus : huit minutes d'attente, puis vingt minutes de trajet."
+            }
+          ],
+          "task": "Reformule en distinguant l'attente du trajet.",
+          "response": {
+            "kind": "typed",
+            "answer": "Il faut attendre huit minutes puis voyager vingt minutes",
+            "accepted": [
+              "Il faut attendre huit minutes puis voyager vingt minutes",
+              "Il faut attendre huit minutes puis faire vingt minutes de trajet"
+            ]
+          },
+          "feedback": "L'attente précède le trajet ; les vingt minutes ne comprennent pas l'attente."
+        }
+      ]
+    },
+    {
+      "id": "nu_09_e03",
+      "title": "Quand la priorité change",
+      "note": "Choisis selon le budget, l'horaire et le risque de retard.",
+      "cards": [
+        {
+          "id": "b3_09_microtext_conditional_choice",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Léa dispose de trente minutes et de cinq euros pour venir à l'exposition. Le bus coûte deux euros et prend vingt-huit minutes, attente comprise. Le taxi prend dix minutes, mais coûte douze euros."
+            }
+          ],
+          "task": "Quel choix respecte à la fois son temps et son budget ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Le bus.",
+              "Le taxi.",
+              "Aucun des deux."
+            ],
+            "answer": "Le bus."
+          },
+          "feedback": "Vingt-huit minutes et deux euros restent dans les deux limites de Léa."
+        },
+        {
+          "id": "b3_09_microtext_budget_vs_weather",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Pour rejoindre l'exposition, Léa peut prendre le bus, peu cher et fiable même sous la pluie, ou un taxi, plus rapide mais plus coûteux. Elle n'est pas pressée et veut garder de l'argent pour acheter le catalogue. La météo annonce de la pluie ; elle hésitait seulement sur la fiabilité du bus."
+            }
+          ],
+          "task": "Quel choix répond le mieux aux priorités de Léa ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Le bus, car il coûte moins et reste fiable.",
+              "Le taxi, car Léa doit arriver vite.",
+              "Le taxi, car le bus ne roule pas sous la pluie."
+            ],
+            "answer": "Le bus, car il coûte moins et reste fiable."
+          },
+          "feedback": "Léa a du temps et veut limiter ses frais ; la pluie ne rend pas le bus peu fiable."
+        },
+        {
+          "id": "b3_09_microtext_priority_shift",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Théo avait choisi le bus pour son faible coût. Puis il apprend que l'exposition fermera plus tôt que prévu. Le taxi est plus cher, mais il lui permet d'arriver avant la fermeture ; le bus arriverait après. Théo peut payer le taxi et tient surtout à voir l'exposition aujourd'hui."
+            }
+          ],
+          "task": "Pourquoi le taxi vaut-il maintenant le coup pour Théo ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Il permet la visite malgré son prix.",
+              "Il est devenu moins cher que le bus.",
+              "Le bus est moins fiable que prévu."
+            ],
+            "answer": "Il permet la visite malgré son prix."
+          },
+          "feedback": "La nouvelle heure de fermeture change le poids du prix et du temps."
+        },
+        {
+          "id": "b3_09_rewrite_tradeoff",
+          "format": "rewrite",
+          "source": [
+            {
+              "text": "Inès veut garder de l'argent pour visiter l'exposition. Le bus est fiable et peu cher, mais il met plus longtemps que le taxi. Elle n'est pas pressée ; le temps supplémentaire ne la gêne pas."
+            }
+          ],
+          "task": "Complète avec une raison : « Inès choisit le bus ... »",
+          "response": {
+            "kind": "typed",
+            "answer": "parce qu'il coûte moins cher",
+            "accepted": [
+              "parce qu'il coûte moins cher",
+              "parce qu'elle veut limiter ses frais",
+              "pour garder de l'argent pour la visite"
+            ]
+          },
+          "feedback": "Inès accepte un trajet plus long pour dépenser moins."
+        },
+        {
+          "id": "b3_09_microtext_late_bus",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Pour rejoindre l'exposition, le bus coûte deux euros, mais il attend parfois dix minutes au feu. Le taxi coûte douze euros et arrive directement. Théo doit être présent pour ouvrir la salle à neuf heures ; en partant maintenant, le bus le ferait arriver juste à neuf heures si tout va bien."
+            }
+          ],
+          "task": "Pourquoi le taxi peut-il valoir le coup pour Théo ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Il réduit le risque d'arriver après l'ouverture.",
+              "Il coûte moins cher que le bus.",
+              "Il permet d'éviter l'exposition."
+            ],
+            "answer": "Il réduit le risque d'arriver après l'ouverture."
+          },
+          "feedback": "Théo a une obligation à neuf heures et le bus ne laisse aucune marge."
+        },
+        {
+          "id": "b3_09_dialogue_different_priorities",
+          "format": "dialogue",
+          "source": [
+            {
+              "speaker": "Léa",
+              "text": "Je peux arriver à l'exposition avant dix heures. Je prends le bus : il est moins cher et fiable aujourd'hui."
+            },
+            {
+              "speaker": "Théo",
+              "text": "Je dois ouvrir à neuf heures. Même si le taxi coûte davantage, je préfère ne pas risquer un retard."
+            }
+          ],
+          "task": "Pourquoi leurs choix diffèrent-ils ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Théo a une heure limite plus stricte.",
+              "Léa n'a pas assez d'argent pour le bus.",
+              "Le taxi ne va pas à l'exposition."
+            ],
+            "answer": "Théo a une heure limite plus stricte."
+          },
+          "feedback": "La contrainte de Théo change le poids du prix et du délai."
+        }
+      ]
+    },
+    {
+      "id": "nu_09_e04",
+      "title": "Justifier malgré un inconvénient",
+      "note": "Explique pourquoi une option reste préférable malgré son coût.",
+      "cards": [
+        {
+          "id": "b3_09_rewrite_cost_vs_time",
+          "format": "rewrite",
+          "source": [
+            {
+              "text": "Le bus coûte deux euros et arrive avant dix heures. Le taxi coûte douze euros et arrive plus tôt. Léa n'a pas besoin d'être là avant dix heures."
+            }
+          ],
+          "task": "Exprime le choix de Léa avec « même si » et une raison.",
+          "response": {
+            "kind": "typed",
+            "answer": "Même si le taxi arrive plus tôt Léa prend le bus car il coûte moins cher",
+            "accepted": [
+              "Même si le taxi arrive plus tôt Léa prend le bus car il coûte moins cher",
+              "Léa prend le bus même si le taxi arrive plus tôt car il coûte moins cher"
+            ]
+          },
+          "feedback": "L'arrivée plus tôt n'aide pas Léa assez pour justifier les frais."
+        },
+        {
+          "id": "b3_09_microtext_priority_reversal",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Nora voulait limiter ses frais et avait choisi le bus pour aller au musée. La visite commence maintenant plus tôt que prévu. Le bus la ferait arriver après le début, tandis que le taxi la déposerait avant. Nora tient surtout à entendre la présentation du guide."
+            }
+          ],
+          "task": "Quelle raison peut justifier que Nora change d'avis ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Le taxi lui permettrait d'entendre le début de la visite.",
+              "Le bus coûte désormais plus que le taxi.",
+              "Le guide a annulé sa présentation."
+            ],
+            "answer": "Le taxi lui permettrait d'entendre le début de la visite."
+          },
+          "feedback": "Sa nouvelle priorité est d'arriver avant la présentation."
+        },
+        {
+          "id": "b3_09_microtext_budget_limit",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Pour voir l'exposition, Samir dispose de cinq euros pour son trajet. Le bus coûte deux euros et arrive à temps. Le taxi coûte douze euros et lui ferait gagner quinze minutes. Il n'a pas d'autre argent pour le transport."
+            }
+          ],
+          "task": "Quel choix respecte à la fois son budget et l'horaire ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Le bus.",
+              "Le taxi.",
+              "Aucun des deux."
+            ],
+            "answer": "Le bus."
+          },
+          "feedback": "Le bus est assez rapide et coûte moins que le montant disponible."
+        },
+        {
+          "id": "b3_09_rewrite_reliable_reason",
+          "format": "rewrite",
+          "source": [
+            {
+              "text": "Le train pour l'exposition coûte un peu plus que le bus. Il arrive presque toujours à 17 h 40. Le bus arrive normalement à 17 h 50, mais il a souvent vingt minutes de retard. Inès doit être là avant l'ouverture à 18 h."
+            }
+          ],
+          "task": "Justifie en une phrase le choix du train par Inès.",
+          "response": {
+            "kind": "typed",
+            "answer": "Inès choisit le train car il est plus fiable que le bus",
+            "accepted": [
+              "Inès choisit le train car il est plus fiable que le bus",
+              "Inès prend le train parce qu'il est plus fiable que le bus"
+            ]
+          },
+          "feedback": "Le train arrive habituellement avant l'ouverture ; le retard fréquent du bus mettrait l'arrivée d'Inès en danger."
+        },
+        {
+          "id": "b3_09_microtext_two_limits",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Pour aller au concert, Nora a dix euros et doit arriver avant vingt heures. Le bus coûte trois euros et arrive à 19 h 50. Le taxi coûte quatorze euros et arrive à 19 h 30. Le concert ne commence qu'à vingt heures."
+            }
+          ],
+          "task": "Quel trajet respecte les deux limites de Nora ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Le bus.",
+              "Le taxi.",
+              "Aucun des deux."
+            ],
+            "answer": "Le bus."
+          },
+          "feedback": "Le bus arrive à temps et coûte moins que son budget."
+        },
+        {
+          "id": "b3_09_dialogue_fee_for_refund",
+          "format": "dialogue",
+          "source": [
+            {
+              "speaker": "Malik",
+              "text": "Le billet à huit euros n'est pas remboursable."
+            },
+            {
+              "speaker": "Nora",
+              "text": "Celui à onze euros l'est. Je ne connais pas encore ma date de départ ; trois euros de plus peuvent valoir le coup."
+            }
+          ],
+          "task": "Quel avantage motive Nora à payer plus ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Elle pourrait obtenir un remboursement.",
+              "Le trajet serait plus rapide.",
+              "Le départ serait confirmé."
+            ],
+            "answer": "Elle pourrait obtenir un remboursement."
+          },
+          "feedback": "La possibilité de remboursement compte tant que sa date reste incertaine."
+        }
+      ]
+    },
+    {
+      "id": "nu_09_e05",
+      "title": "Billets et contraintes réelles",
+      "note": "Applique la comparaison à d'autres trajets et billets.",
+      "cards": [
+        {
+          "id": "b3_09_microtext_deadline_not_cost",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Samir doit arriver au musée avant la fermeture à dix-huit heures. Le bus coûte deux euros mais arrive à 18 h 05. Le train coûte cinq euros et arrive à 17 h 40. Samir dispose de six euros."
+            }
+          ],
+          "task": "Pourquoi le train vaut-il le coup pour Samir ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Il arrive avant la fermeture dans son budget.",
+              "Il coûte moins que le bus.",
+              "Il arrive après la fermeture."
+            ],
+            "answer": "Il arrive avant la fermeture dans son budget."
+          },
+          "feedback": "Le train respecte la limite horaire et reste payable."
+        },
+        {
+          "id": "b3_09_rewrite_tradeoff_ferry",
+          "format": "rewrite",
+          "source": [
+            {
+              "text": "Le bateau coûte moins cher que le train. Il met une heure de plus. Inès n'est pas pressée et veut réduire ses frais."
+            }
+          ],
+          "task": "Exprime le choix d'Inès avec « même si ».",
+          "response": {
+            "kind": "typed",
+            "answer": "Même si le bateau met une heure de plus Inès le choisit pour réduire ses frais",
+            "accepted": [
+              "Même si le bateau met une heure de plus Inès le choisit pour réduire ses frais",
+              "Inès choisit le bateau pour réduire ses frais même s'il met une heure de plus"
+            ]
+          },
+          "feedback": "Le temps supplémentaire est acceptable pour Inès ; le coût décide son choix."
+        },
+        {
+          "id": "b3_09_microtext_reliability_conflict",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Le train arrive normalement à neuf heures, mais il est souvent en retard de vingt minutes. Le bus arrive à 9 h 10 et respecte presque toujours son horaire. Léa doit être là avant 9 h 30 et veut éviter tout risque inutile."
+            }
+          ],
+          "task": "Quel trajet répond le mieux à sa priorité ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Le bus fiable.",
+              "Le train souvent en retard.",
+              "Aucun des deux."
+            ],
+            "answer": "Le bus fiable."
+          },
+          "feedback": "Même avec son arrivée prévue plus tard, le bus reste sous la limite et son horaire est plus fiable."
+        },
+        {
+          "id": "b3_09_microtext_priority_change",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Au départ, Nora choisit le billet de train le moins cher, sans remboursement. Puis sa réunion devient incertaine : elle devra peut-être annuler son trajet. Un autre billet coûte quatre euros de plus, mais il est remboursable. Elle peut payer la différence."
+            }
+          ],
+          "task": "Qu'est-ce qui rend le second billet plus intéressant ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "La possibilité de récupérer son argent.",
+              "Une arrivée plus tôt.",
+              "Une réduction de quatre euros."
+            ],
+            "answer": "La possibilité de récupérer son argent."
+          },
+          "feedback": "L'incertitude sur le voyage donne de la valeur au remboursement."
+        },
+        {
+          "id": "b3_09_dialogue_different_outcomes",
+          "format": "dialogue",
+          "source": [
+            {
+              "speaker": "Théo",
+              "text": "Je veux surtout économiser : je prends le bus à trois euros."
+            },
+            {
+              "speaker": "Inès",
+              "text": "Je dois arriver avant l'ouverture ; le bus serait trop tard. Je prends le train à six euros."
+            }
+          ],
+          "task": "Quel fait justifie le coût supplémentaire pour Inès ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Le bus arriverait trop tard pour elle.",
+              "Le train coûte moins cher.",
+              "Théo doit ouvrir la salle."
+            ],
+            "answer": "Le bus arriverait trop tard pour elle."
+          },
+          "feedback": "Leurs contraintes d'heure diffèrent, ce qui change le bon choix."
+        },
+        {
+          "id": "b3_09_rewrite_budget_condition",
+          "format": "rewrite",
+          "source": [
+            {
+              "text": "Le taxi coûte quinze euros et arrive à temps. Le bus coûte quatre euros et arrive aussi à temps. Malik ne dispose que de dix euros."
+            }
+          ],
+          "task": "Justifie le choix du bus en une phrase.",
+          "response": {
+            "kind": "typed",
+            "answer": "Malik choisit le bus car il arrive à temps et respecte son budget",
+            "accepted": [
+              "Malik choisit le bus car il arrive à temps et respecte son budget",
+              "Malik prend le bus parce qu'il arrive à temps et coûte moins de dix euros"
+            ]
+          },
+          "feedback": "Le bus satisfait à la fois l'horaire et le budget de Malik."
+        }
+      ]
+    }
+  ]
+}

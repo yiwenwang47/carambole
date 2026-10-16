@@ -1,0 +1,656 @@
+{
+  "id": "nu_16",
+  "number": 16,
+  "title": "Négocier un désaccord",
+  "goal": "Reconnaître des contraintes différentes et proposer un accord précis, parfois provisoire.",
+  "elements": [
+    {
+      "id": "nu_16_e01",
+      "title": "Préférences et accord provisoire",
+      "note": "Distingue une préférence, un compromis et une décision confirmée.",
+      "cards": [
+        {
+          "id": "b3_16_word_provisoire",
+          "format": "word",
+          "source": [
+            {
+              "text": "L'heure de la rencontre de samedi est provisoire : Léa et Inès doivent encore se mettre d'accord."
+            }
+          ],
+          "task": "What does « provisoire » mean here?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "temporary, not final",
+              "already confirmed",
+              "cancelled"
+            ],
+            "answer": "temporary, not final"
+          },
+          "feedback": "L'heure peut encore changer tant que Léa et Inès ne sont pas d'accord."
+        },
+        {
+          "id": "b3_16_dialogue_preference",
+          "format": "dialogue",
+          "source": [
+            {
+              "speaker": "Léa",
+              "text": "Pour la rencontre de samedi, je voudrais commencer à huit heures."
+            },
+            {
+              "speaker": "Inès",
+              "text": "Je préférerais que nous commencions à neuf heures."
+            }
+          ],
+          "task": "Quelle heure Inès propose-t-elle pour la rencontre ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Neuf heures.",
+              "Huit heures.",
+              "Huit heures et demie."
+            ],
+            "answer": "Neuf heures."
+          },
+          "feedback": "Inès propose neuf heures, une heure plus tard que Léa."
+        },
+        {
+          "id": "b3_16_word_compromis",
+          "format": "word",
+          "source": [
+            {
+              "text": "Pour la rencontre, Léa propose huit heures et Inès neuf heures. Elles choisissent huit heures et demie : c'est un compromis."
+            }
+          ],
+          "task": "What is « un compromis » here?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "a compromise",
+              "a cancellation",
+              "a deadline"
+            ],
+            "answer": "a compromise"
+          },
+          "feedback": "Huit heures et demie se situe entre les deux heures proposées."
+        },
+        {
+          "id": "b3_16_microtext_provisional",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Léa et Inès proposent huit heures et demie pour la rencontre de samedi. L'heure reste provisoire : le groupe doit encore confirmer qu'il peut venir. Elles réserveront la salle vendredi matin si assez de personnes répondent."
+            }
+          ],
+          "task": "Pourquoi l’heure de la rencontre reste-t-elle provisoire ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Le groupe n'a pas encore confirmé sa présence.",
+              "La salle a déjà été réservée définitivement.",
+              "La rencontre a été déplacée à dimanche."
+            ],
+            "answer": "Le groupe n'a pas encore confirmé sa présence."
+          },
+          "feedback": "Le groupe doit répondre avant que Léa et Inès fixent l'heure et réservent la salle."
+        },
+        {
+          "id": "b3_16_rewrite_preference",
+          "format": "rewrite",
+          "source": [
+            {
+              "text": "Léa dit à Inès : « Je veux que nous commencions la rencontre à huit heures. »"
+            }
+          ],
+          "task": "Reformule la demande de Léa avec « je préférerais que ».",
+          "response": {
+            "kind": "typed",
+            "answer": "Je préférerais que nous commencions la rencontre à huit heures",
+            "accepted": [
+              "Je préférerais que nous commencions la rencontre à huit heures"
+            ]
+          },
+          "feedback": "Le conditionnel « préférerais » adoucit la demande ; « commencions » reste au subjonctif."
+        },
+        {
+          "id": "b3_16_dialogue_compromise",
+          "format": "dialogue",
+          "source": [
+            {
+              "speaker": "Léa",
+              "text": "Je vois que neuf heures t’arrangerait. Je préférerais huit heures pour la rencontre."
+            },
+            {
+              "speaker": "Inès",
+              "text": "Je peux accepter huit heures et demie, si le groupe confirme."
+            }
+          ],
+          "task": "Quel horaire proposent-elles au groupe ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Huit heures et demie.",
+              "Huit heures.",
+              "Neuf heures."
+            ],
+            "answer": "Huit heures et demie."
+          },
+          "feedback": "Huit heures et demie est leur compromis ; le groupe doit encore confirmer."
+        }
+      ]
+    },
+    {
+      "id": "nu_16_e02",
+      "title": "Une échéance pour s'engager",
+      "note": "Propose une réponse qui précise ce qui sera confirmé et quand.",
+      "cards": [
+        {
+          "id": "b3_16_word_echeance",
+          "format": "word",
+          "source": [
+            {
+              "text": "L'échéance est vendredi : après cette date, nous ne pourrons plus réserver la salle."
+            }
+          ],
+          "task": "What does « une échéance » mean here?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "a deadline",
+              "a room",
+              "a discount"
+            ],
+            "answer": "a deadline"
+          },
+          "feedback": "Vendredi est la dernière date possible pour réserver."
+        },
+        {
+          "id": "b3_16_dialogue_constraint",
+          "format": "dialogue",
+          "source": [
+            {
+              "speaker": "Inès",
+              "text": "Je vois que vendredi est votre échéance. Nous ne connaîtrons le nombre de participants que jeudi soir."
+            },
+            {
+              "speaker": "Accueil",
+              "text": "Je peux garder la salle jusqu'à vendredi midi, mais pas plus tard."
+            }
+          ],
+          "task": "Quelle réponse reconnaît la limite et propose un engagement précis ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Merci, nous vous confirmerons le nombre vendredi matin.",
+              "Gardez la salle jusqu'à lundi, s'il vous plaît.",
+              "Je confirme le nombre maintenant, même si je ne le connais pas."
+            ],
+            "answer": "Merci, nous vous confirmerons le nombre vendredi matin."
+          },
+          "feedback": "Vendredi matin respecte l'échéance de midi et laisse le temps de compter les participants."
+        },
+        {
+          "id": "b3_16_microtext_proposal",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Le groupe veut organiser une rencontre samedi. La salle coûte trop cher pour huit personnes, mais le tarif baisse à partir de douze. Inès attend encore quatre réponses. Elle propose de réserver vendredi matin si assez de personnes confirment."
+            }
+          ],
+          "task": "Pourquoi Inès attend-elle avant de réserver ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Le prix dépend du nombre de participants.",
+              "La rencontre a été reportée à dimanche.",
+              "La salle n'est libre que jeudi."
+            ],
+            "answer": "Le prix dépend du nombre de participants."
+          },
+          "feedback": "Il faut au moins douze participants pour bénéficier du tarif réduit."
+        },
+        {
+          "id": "b3_16_rewrite_commitment",
+          "format": "rewrite",
+          "source": [
+            {
+              "text": "Inès : « Je peux donner une réponse vendredi matin. » Accueil : « La réservation ferme à midi. »"
+            }
+          ],
+          "task": "Écris l'engagement d'Inès avec « je m'engage à ».",
+          "response": {
+            "kind": "typed",
+            "answer": "Je m'engage à vous répondre vendredi matin",
+            "accepted": [
+              "Je m'engage à vous répondre vendredi matin",
+              "Je m'engage à répondre vendredi matin"
+            ]
+          },
+          "feedback": "L'engagement précise l'action et reste avant l'échéance de midi."
+        },
+        {
+          "id": "b3_16_dialogue_room_limit",
+          "format": "dialogue",
+          "source": [
+            {
+              "speaker": "Accueil",
+              "text": "La grande salle est libre samedi matin, mais elle doit être rendue à onze heures. La petite salle est libre jusqu'à midi."
+            },
+            {
+              "speaker": "Inès",
+              "text": "Notre rencontre finit à onze heures trente. Nous serons dix, et la petite salle peut accueillir douze personnes."
+            }
+          ],
+          "task": "Quelle proposition tient compte de l'horaire et du nombre de personnes ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Réserver la petite salle jusqu'à midi.",
+              "Réserver la grande salle et finir à onze heures trente.",
+              "Annuler la rencontre faute de salle assez grande."
+            ],
+            "answer": "Réserver la petite salle jusqu'à midi."
+          },
+          "feedback": "La petite salle convient aux dix personnes et reste disponible après la fin de la rencontre."
+        },
+        {
+          "id": "b3_16_microtext_two_constraints",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "La petite salle convient au groupe samedi, mais l'accueil ne peut la garder que jusqu'à vendredi midi. Inès ne recevra les dernières réponses que jeudi soir. Elle souhaite éviter de confirmer un nombre qu'elle ne connaît pas encore, tout en respectant l'échéance de l'accueil."
+            }
+          ],
+          "task": "Quelle réponse d'Inès est à la fois prudente et précise ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Je vois votre limite ; je vous confirmerai le nombre vendredi matin.",
+              "Je confirme dès maintenant que tout le groupe sera présent.",
+              "Je vous répondrai samedi, après la rencontre."
+            ],
+            "answer": "Je vois votre limite ; je vous confirmerai le nombre vendredi matin."
+          },
+          "feedback": "Elle attend les réponses de jeudi et s'engage à répondre avant vendredi midi."
+        }
+      ]
+    },
+    {
+      "id": "nu_16_e03",
+      "title": "Deux limites à respecter",
+      "note": "Cherche une solution compatible avec l'horaire, la place ou le nombre de personnes.",
+      "cards": [
+        {
+          "id": "b3_16_rewrite_formal_compromise",
+          "format": "rewrite",
+          "source": [
+            {
+              "text": "Accueil : « La petite salle est disponible samedi, mais vous devez la libérer avant midi. » Inès : « Notre rencontre se termine à onze heures trente. Nous aurons assez de temps pour ranger la salle avant de partir. »"
+            }
+          ],
+          "task": "Engage le groupe sur l'heure de départ avec « nous nous engageons à ».",
+          "response": {
+            "kind": "typed",
+            "answer": "Nous nous engageons à libérer la salle avant midi",
+            "accepted": [
+              "Nous nous engageons à libérer la salle avant midi",
+              "Nous nous engageons à quitter la salle avant midi"
+            ]
+          },
+          "feedback": "L'engagement porte sur la libération de la salle avant la limite donnée par l'accueil."
+        },
+        {
+          "id": "b3_16_dialogue_hold_until_friday",
+          "format": "dialogue",
+          "source": [
+            {
+              "speaker": "Accueil",
+              "text": "Je peux garder la petite salle jusqu'à vendredi midi, mais pas au-delà."
+            },
+            {
+              "speaker": "Inès",
+              "text": "Le groupe confirmera sa taille jeudi soir. Je pourrai vous répondre vendredi matin."
+            }
+          ],
+          "task": "Quelle proposition respecte les deux délais ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Gardez la salle jusqu'à vendredi midi ; je confirmerai vendredi matin.",
+              "Gardez la salle jusqu'à samedi ; je confirmerai après la rencontre.",
+              "Libérez la salle jeudi matin ; je confirmerai vendredi soir."
+            ],
+            "answer": "Gardez la salle jusqu'à vendredi midi ; je confirmerai vendredi matin."
+          },
+          "feedback": "Inès connaît la taille du groupe jeudi soir et peut répondre avant vendredi midi."
+        },
+        {
+          "id": "b3_16_rewrite_preference_room",
+          "format": "rewrite",
+          "source": [
+            {
+              "text": "L'accueil propose la grande salle. Inès préfère la petite salle, qui coûte moins cher. Elle répond à l'accueil."
+            }
+          ],
+          "task": "Exprime poliment sa préférence avec « je préférerais que ».",
+          "response": {
+            "kind": "typed",
+            "answer": "Je préférerais que nous réservions la petite salle",
+            "accepted": [
+              "Je préférerais que nous réservions la petite salle",
+              "Je préférerais que vous réserviez la petite salle"
+            ]
+          },
+          "feedback": "La préférence porte sur la petite salle ; « réservions » ou « réserviez » convient selon la personne chargée de réserver."
+        },
+        {
+          "id": "b3_16_microtext_constraint_tradeoff",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "La grande salle est libre samedi jusqu'à onze heures. Le groupe voudrait finir à midi. La petite salle est libre jusqu'à midi et assez grande si moins de dix personnes viennent. Huit personnes ont confirmé."
+            }
+          ],
+          "task": "Quel compromis permet de finir à midi avec le groupe confirmé ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Choisir la petite salle, sous réserve que le groupe reste de moins de dix personnes.",
+              "Choisir la grande salle et la garder jusqu'à midi.",
+              "Annuler la rencontre parce qu'aucune salle n'est disponible."
+            ],
+            "answer": "Choisir la petite salle, sous réserve que le groupe reste de moins de dix personnes."
+          },
+          "feedback": "La petite salle correspond à huit personnes et reste libre jusqu'à midi."
+        },
+        {
+          "id": "b3_16_dialogue_acknowledge_constraint",
+          "format": "dialogue",
+          "source": [
+            {
+              "speaker": "Malik",
+              "text": "Je peux aider samedi, mais je dois partir à dix heures."
+            },
+            {
+              "speaker": "Inès",
+              "text": "Il faut installer la salle à neuf heures et accueillir les autres à dix heures."
+            }
+          ],
+          "task": "Quelle réponse tient compte de la limite de Malik ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Je vois que tu dois partir à dix heures ; pourrais-tu aider à installer la salle à neuf heures ?",
+              "Puisque tu pars à dix heures, peux-tu accueillir les autres à onze heures ?",
+              "Je préférerais que tu annules ton départ pour rester toute la journée."
+            ],
+            "answer": "Je vois que tu dois partir à dix heures ; pourrais-tu aider à installer la salle à neuf heures ?"
+          },
+          "feedback": "L'installation précède son départ ; l'accueil commence quand il doit partir."
+        },
+        {
+          "id": "b3_16_rewrite_commit_by_deadline",
+          "format": "rewrite",
+          "source": [
+            {
+              "text": "L'accueil demande une réponse avant vendredi midi. Inès sait qu'elle aura la liste jeudi soir."
+            }
+          ],
+          "task": "Engage-toi à transmettre la liste à l'accueil avec « je m'engage à ».",
+          "response": {
+            "kind": "typed",
+            "answer": "Je m'engage à vous envoyer la liste vendredi matin",
+            "accepted": [
+              "Je m'engage à vous envoyer la liste vendredi matin",
+              "Je m'engage à transmettre la liste vendredi matin"
+            ]
+          },
+          "feedback": "Inès disposera de la liste jeudi soir et pourra l'envoyer avant vendredi midi."
+        }
+      ]
+    },
+    {
+      "id": "nu_16_e04",
+      "title": "Reconnaître l'autre contrainte",
+      "note": "Réponds à la limite exprimée sans présenter l'accord comme acquis.",
+      "cards": [
+        {
+          "id": "b3_16_microtext_provisional_not_agreed",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Inès propose la petite salle pour samedi. Malik accepte si huit personnes au maximum viennent ; deux invités n'ont pas encore répondu. L'accueil garde la salle jusqu'à vendredi midi."
+            }
+          ],
+          "task": "Quel point empêche encore un accord définitif ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Le nombre final de participants.",
+              "La disponibilité de la salle samedi.",
+              "L'heure limite donnée par l'accueil."
+            ],
+            "answer": "Le nombre final de participants."
+          },
+          "feedback": "Les deux réponses en attente peuvent modifier la taille du groupe."
+        },
+        {
+          "id": "b3_16_word_engager",
+          "format": "word",
+          "source": [
+            {
+              "text": "Inès s’engage à répondre avant vendredi midi : elle promet de donner sa réponse avant cette échéance."
+            }
+          ],
+          "task": "What does « s’engager à » mean here?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "to commit to",
+              "to refuse to",
+              "to forget to"
+            ],
+            "answer": "to commit to"
+          },
+          "feedback": "Inès promet une action précise avant vendredi midi."
+        },
+        {
+          "id": "b3_16_dialogue_two_needs",
+          "format": "dialogue",
+          "source": [
+            {
+              "speaker": "Léa",
+              "text": "Je dois partir à onze heures."
+            },
+            {
+              "speaker": "Inès",
+              "text": "Je voudrais une heure pour discuter. Nous pourrions commencer à neuf heures trente."
+            }
+          ],
+          "task": "La proposition d’Inès respecte-t-elle la limite de Léa ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Oui, une heure se termine avant onze heures.",
+              "Non, elle commence après onze heures.",
+              "On ne connaît pas l’heure proposée."
+            ],
+            "answer": "Oui, une heure se termine avant onze heures."
+          },
+          "feedback": "La rencontre finirait à dix heures trente."
+        },
+        {
+          "id": "b3_16_rewrite_acknowledge",
+          "format": "rewrite",
+          "source": [
+            {
+              "text": "Malik ne peut venir qu’après neuf heures. Inès voulait commencer à huit heures."
+            }
+          ],
+          "task": "Réponds à Malik avec « Je vois que » en reconnaissant sa contrainte.",
+          "response": {
+            "kind": "typed",
+            "answer": "Je vois que tu ne peux venir qu’après neuf heures",
+            "accepted": [
+              "Je vois que tu ne peux venir qu’après neuf heures"
+            ]
+          },
+          "feedback": "La réponse reconnaît l’horaire de Malik."
+        },
+        {
+          "id": "b3_16_microtext_partial_agreement",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Le groupe accepte la petite salle si dix personnes au plus viennent. Huit ont confirmé ; trois n’ont pas encore répondu. Inès doit réserver vendredi matin."
+            }
+          ],
+          "task": "Quelle proposition garde l’accord provisoire ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Réservons vendredi matin si le nombre final ne dépasse pas dix.",
+              "Réservons maintenant pour onze personnes confirmées.",
+              "Annulons la rencontre car onze personnes ont confirmé."
+            ],
+            "answer": "Réservons vendredi matin si le nombre final ne dépasse pas dix."
+          },
+          "feedback": "Le nombre définitif reste inconnu."
+        },
+        {
+          "id": "b3_16_dialogue_counteroffer",
+          "format": "dialogue",
+          "source": [
+            {
+              "speaker": "Accueil",
+              "text": "Nous devons recevoir votre réponse jeudi soir."
+            },
+            {
+              "speaker": "Inès",
+              "text": "Je n’aurai la liste complète que vendredi matin. Pourriez-vous attendre jusqu’à vendredi midi ?"
+            }
+          ],
+          "task": "Que propose Inès ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "De reporter l’échéance à vendredi midi.",
+              "De confirmer jeudi sans connaître le groupe.",
+              "De déplacer la rencontre à jeudi."
+            ],
+            "answer": "De reporter l’échéance à vendredi midi."
+          },
+          "feedback": "Elle demande plus de temps pour confirmer."
+        }
+      ]
+    },
+    {
+      "id": "nu_16_e05",
+      "title": "Clore sans forcer l'accord",
+      "note": "Résume les engagements pris et les réponses encore attendues.",
+      "cards": [
+        {
+          "id": "b3_16_rewrite_preference_subj",
+          "format": "rewrite",
+          "source": [
+            {
+              "text": "Inès dit à Léa : « Commençons à neuf heures. » Elle veut formuler une préférence plutôt qu’un ordre."
+            }
+          ],
+          "task": "Commence par « Je préférerais que ».",
+          "response": {
+            "kind": "typed",
+            "answer": "Je préférerais que nous commencions à neuf heures",
+            "accepted": [
+              "Je préférerais que nous commencions à neuf heures"
+            ]
+          },
+          "feedback": "Le subjonctif « commencions » suit la préférence."
+        },
+        {
+          "id": "b3_16_microtext_concession",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "L’accueil accepte de garder la salle jusqu’à vendredi midi, mais exige que le groupe la libère samedi avant onze heures. Inès sait que la rencontre peut finir à dix heures trente."
+            }
+          ],
+          "task": "Quel engagement répond à l’accueil ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Nous confirmerons vendredi matin et libérerons la salle avant onze heures.",
+              "Nous confirmerons samedi et partirons à midi.",
+              "Nous garderons la salle sans confirmer."
+            ],
+            "answer": "Nous confirmerons vendredi matin et libérerons la salle avant onze heures."
+          },
+          "feedback": "Les deux limites de l’accueil sont respectées."
+        },
+        {
+          "id": "b3_16_dialogue_distinct_preferences",
+          "format": "dialogue",
+          "source": [
+            {
+              "speaker": "Malik",
+              "text": "Je peux aider à installer, mais seulement jusqu’à dix heures."
+            },
+            {
+              "speaker": "Léa",
+              "text": "Je peux accueillir les participants à partir de dix heures."
+            }
+          ],
+          "task": "Quel partage des tâches convient ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Malik installe avant dix heures ; Léa accueille ensuite.",
+              "Léa installe après dix heures ; Malik accueille à onze heures.",
+              "Malik accueille tout le monde après dix heures."
+            ],
+            "answer": "Malik installe avant dix heures ; Léa accueille ensuite."
+          },
+          "feedback": "Le partage suit les disponibilités annoncées."
+        },
+        {
+          "id": "b3_16_rewrite_provisional_agreement",
+          "format": "rewrite",
+          "source": [
+            {
+              "text": "Le groupe propose neuf heures, mais l’accueil doit encore confirmer la salle."
+            }
+          ],
+          "task": "Décris l’accord avec « provisoire ».",
+          "response": {
+            "kind": "typed",
+            "answer": "L’accord sur neuf heures est provisoire",
+            "accepted": [
+              "L’accord sur neuf heures est provisoire"
+            ]
+          },
+          "feedback": "La salle n’est pas encore confirmée."
+        },
+        {
+          "id": "b3_16_microtext_no_false_commitment",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Inès promet une réponse vendredi matin. L’accueil garde la salle jusqu’à midi. Malik n’a pas encore accepté l’horaire de neuf heures."
+            }
+          ],
+          "task": "Quelle phrase décrit exactement l’état de l’accord ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "La salle est gardée jusqu’à midi, mais Malik doit encore accepter l’horaire.",
+              "Malik a accepté neuf heures et la salle est réservée définitivement.",
+              "Inès n’a donné aucun délai pour sa réponse."
+            ],
+            "answer": "La salle est gardée jusqu’à midi, mais Malik doit encore accepter l’horaire."
+          },
+          "feedback": "Le délai est connu ; l’accord de Malik manque."
+        }
+      ]
+    }
+  ]
+}

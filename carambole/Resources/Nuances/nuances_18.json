@@ -1,0 +1,642 @@
+{
+  "id": "nu_18",
+  "number": 18,
+  "title": "Qui a fait faire quoi ?",
+  "goal": "Identifier qui demande, effectue et paie une réparation ou une livraison.",
+  "elements": [
+    {
+      "id": "nu_18_e01",
+      "title": "Faire réparer et payer",
+      "note": "La personne qui fait réparer n'est pas forcément celle qui répare ou qui paie.",
+      "cards": [
+        {
+          "id": "b3_18_word_faire_reparer",
+          "format": "word",
+          "source": [
+            {
+              "text": "Léa fait réparer son téléphone au magasin : elle ne le répare pas elle-même."
+            }
+          ],
+          "task": "What does « faire réparer » mean?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "to have something repaired",
+              "to repair it yourself",
+              "to lose it"
+            ],
+            "answer": "to have something repaired"
+          },
+          "feedback": "Léa demande au magasin de réparer son téléphone."
+        },
+        {
+          "id": "b3_18_dialogue_who_repairs",
+          "format": "dialogue",
+          "source": [
+            {
+              "speaker": "Léa",
+              "text": "Je fais réparer mon téléphone au magasin."
+            },
+            {
+              "speaker": "Théo",
+              "text": "Donc le magasin le répare pour toi."
+            }
+          ],
+          "task": "Qui fait la réparation ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Le magasin.",
+              "Léa elle-même.",
+              "Théo."
+            ],
+            "answer": "Le magasin."
+          },
+          "feedback": "Léa organise la réparation ; le magasin fait le travail."
+        },
+        {
+          "id": "b3_18_word_prendre_en_charge",
+          "format": "word",
+          "source": [
+            {
+              "text": "Le magasin prend en charge la réparation : il organise le travail et paie les frais."
+            }
+          ],
+          "task": "What does « prendre en charge » mean here?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "to take responsibility for",
+              "to postpone",
+              "to complain about"
+            ],
+            "answer": "to take responsibility for"
+          },
+          "feedback": "Le magasin s'occupe de la réparation et de ses frais."
+        },
+        {
+          "id": "b3_18_microtext_two_phones",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Théo a réparé son téléphone lui-même. Léa a fait réparer le sien au magasin."
+            }
+          ],
+          "task": "Qui a demandé au magasin de réparer son téléphone ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Léa.",
+              "Théo.",
+              "Les deux."
+            ],
+            "answer": "Léa."
+          },
+          "feedback": "« A fait réparer » indique que le magasin a fait le travail pour Léa."
+        },
+        {
+          "id": "b3_18_rewrite_causative",
+          "format": "rewrite",
+          "source": [
+            {
+              "text": "Le magasin répare le téléphone de Léa."
+            }
+          ],
+          "task": "Réécris avec « Léa fait réparer... ».",
+          "response": {
+            "kind": "typed",
+            "answer": "Léa fait réparer son téléphone au magasin",
+            "accepted": [
+              "Léa fait réparer son téléphone au magasin"
+            ]
+          },
+          "feedback": "Léa demande la réparation ; le magasin répare le téléphone."
+        },
+        {
+          "id": "b3_18_microtext_cost",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Léa a fait réparer son téléphone au magasin. Le magasin a pris en charge les frais : Léa n'a rien payé."
+            }
+          ],
+          "task": "Qui a payé la réparation ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Le magasin.",
+              "Léa.",
+              "Théo."
+            ],
+            "answer": "Le magasin."
+          },
+          "feedback": "« Pris en charge les frais » signifie ici que le magasin a payé."
+        }
+      ]
+    },
+    {
+      "id": "nu_18_e02",
+      "title": "Faire livrer : les rôles",
+      "note": "Distingue la demande de livraison, le transport et sa prise en charge.",
+      "cards": [
+        {
+          "id": "b3_18_word_faire_livrer",
+          "format": "word",
+          "source": [
+            {
+              "text": "Inès fait livrer son vélo réparé : le magasin l'apporte chez elle, elle ne va pas le chercher."
+            }
+          ],
+          "task": "What does « faire livrer » mean here?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "to arrange delivery",
+              "to deliver it yourself",
+              "to postpone the repair"
+            ],
+            "answer": "to arrange delivery"
+          },
+          "feedback": "Le magasin apporte le vélo à Inès."
+        },
+        {
+          "id": "b3_18_microtext_roles",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Inès a demandé au magasin de réparer son vélo. Le magasin a confié le travail à un mécanicien indépendant, puis a fait livrer le vélo par un coursier. Le magasin prend en charge les frais de réparation ; Inès ne paie que la livraison."
+            }
+          ],
+          "task": "Qui a réellement réparé le vélo ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Un mécanicien indépendant.",
+              "Inès elle-même.",
+              "Le coursier."
+            ],
+            "answer": "Un mécanicien indépendant."
+          },
+          "feedback": "Inès a demandé le service ; le magasin a organisé et payé la réparation ; le mécanicien l'a effectuée."
+        },
+        {
+          "id": "b3_18_dialogue_delivery",
+          "format": "dialogue",
+          "source": [
+            {
+              "speaker": "Inès",
+              "text": "Je ne peux pas venir au magasin demain. Puis-je me faire livrer le vélo ?"
+            },
+            {
+              "speaker": "Accueil",
+              "text": "Oui, notre coursier vous l'apportera vendredi."
+            }
+          ],
+          "task": "Qui apportera le vélo à Inès ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Le coursier du magasin.",
+              "Inès elle-même.",
+              "Théo."
+            ],
+            "answer": "Le coursier du magasin."
+          },
+          "feedback": "« Se faire livrer » signifie recevoir le vélo grâce au service du magasin."
+        },
+        {
+          "id": "b3_18_rewrite_delivery",
+          "format": "rewrite",
+          "source": [
+            {
+              "text": "Le magasin livre le vélo à Inès vendredi."
+            }
+          ],
+          "task": "Réécris du point de vue d'Inès avec « se faire livrer ».",
+          "response": {
+            "kind": "typed",
+            "answer": "Inès se fait livrer son vélo vendredi",
+            "accepted": [
+              "Inès se fait livrer son vélo vendredi",
+              "Inès se fait livrer le vélo vendredi"
+            ]
+          },
+          "feedback": "Inès reçoit le service ; le magasin effectue la livraison."
+        },
+        {
+          "id": "b3_18_microtext_repair_roles",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Le vélo d'Inès ne freine plus. Elle le dépose au magasin et demande qu'on le répare. Le magasin fait venir un mécanicien indépendant, qui remplace les freins. Comme le vélo est encore sous garantie, le magasin paie le mécanicien. Inès récupère le vélo vendredi."
+            }
+          ],
+          "task": "Qui a décidé de faire réparer le vélo, qui l'a réparé et qui a payé ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Inès l'a demandé ; le mécanicien l'a réparé ; le magasin a payé.",
+              "Le magasin l'a demandé ; Inès l'a réparé ; le mécanicien a payé.",
+              "Le mécanicien l'a demandé ; le magasin l'a réparé ; Inès a payé."
+            ],
+            "answer": "Inès l'a demandé ; le mécanicien l'a réparé ; le magasin a payé."
+          },
+          "feedback": "La demande, le travail et le paiement sont attribués à trois acteurs différents."
+        },
+        {
+          "id": "b3_18_dialogue_delivery_agency",
+          "format": "dialogue",
+          "source": [
+            {
+              "speaker": "Inès",
+              "text": "Je ne pourrai pas venir chercher le vélo. Pouvez-vous le faire livrer chez moi vendredi après-midi ?"
+            },
+            {
+              "speaker": "Accueil",
+              "text": "Oui. Nous demanderons à notre coursier de l'apporter. La livraison est prise en charge par le magasin."
+            }
+          ],
+          "task": "Quelle répartition des rôles correspond à cet accord ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Inès demande la livraison ; le coursier l'effectue ; le magasin la paie.",
+              "Inès livre elle-même le vélo ; le coursier paie le magasin.",
+              "Le coursier demande la livraison ; Inès paie le magasin."
+            ],
+            "answer": "Inès demande la livraison ; le coursier l'effectue ; le magasin la paie."
+          },
+          "feedback": "« Faire livrer » porte sur l'organisation ; le coursier transporte le vélo."
+        }
+      ]
+    },
+    {
+      "id": "nu_18_e03",
+      "title": "Une chaîne de services",
+      "note": "Reformule les actions du client, du magasin et du professionnel.",
+      "cards": [
+        {
+          "id": "b3_18_rewrite_causative_chain",
+          "format": "rewrite",
+          "source": [
+            {
+              "text": "Inès a déposé son vélo au magasin. Un mécanicien indépendant l'a réparé à la demande du magasin. Le vélo fonctionne de nouveau. Inès explique à Théo : « Je n'ai pas fait la réparation moi-même. »"
+            }
+          ],
+          "task": "Résume l'action d'Inès avec « j'ai fait réparer ».",
+          "response": {
+            "kind": "typed",
+            "answer": "J'ai fait réparer mon vélo au magasin",
+            "accepted": [
+              "J'ai fait réparer mon vélo au magasin",
+              "J'ai fait réparer mon vélo par un mécanicien"
+            ]
+          },
+          "feedback": "Inès a organisé la réparation, que le mécanicien a effectuée."
+        },
+        {
+          "id": "b3_18_microtext_repair_and_payment",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Inès a déposé son vélo au magasin. Le magasin l'a fait réparer par un mécanicien indépendant et a pris en charge les frais. Inès viendra le chercher vendredi."
+            }
+          ],
+          "task": "Qui a effectué la réparation, et qui en a payé les frais ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Le mécanicien a réparé le vélo ; le magasin a payé.",
+              "Inès a réparé le vélo ; le mécanicien a payé.",
+              "Le magasin a réparé le vélo ; Inès a payé."
+            ],
+            "answer": "Le mécanicien a réparé le vélo ; le magasin a payé."
+          },
+          "feedback": "Le magasin a organisé et financé le travail du mécanicien."
+        },
+        {
+          "id": "b3_18_rewrite_causative_third_person",
+          "format": "rewrite",
+          "source": [
+            {
+              "text": "Un mécanicien indépendant répare le vélo d'Inès à la demande du magasin. Le magasin organise l'intervention."
+            }
+          ],
+          "task": "Commence par « Le magasin fait réparer ».",
+          "response": {
+            "kind": "typed",
+            "answer": "Le magasin fait réparer le vélo d'Inès par un mécanicien indépendant",
+            "accepted": [
+              "Le magasin fait réparer le vélo d'Inès par un mécanicien indépendant",
+              "Le magasin fait réparer le vélo d'Inès"
+            ]
+          },
+          "feedback": "« Fait réparer » désigne le magasin comme organisateur, pas comme réparateur."
+        },
+        {
+          "id": "b3_18_dialogue_delivery_choice",
+          "format": "dialogue",
+          "source": [
+            {
+              "speaker": "Magasin",
+              "text": "Votre vélo est réparé. Nous pouvons le livrer vendredi ou vous pouvez venir le chercher jeudi."
+            },
+            {
+              "speaker": "Inès",
+              "text": "Je travaille jeudi ; je choisis la livraison vendredi."
+            }
+          ],
+          "task": "Quelle phrase décrit le choix d'Inès ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Elle se fait livrer son vélo vendredi.",
+              "Elle livre son vélo au magasin jeudi.",
+              "Elle répare son vélo vendredi."
+            ],
+            "answer": "Elle se fait livrer son vélo vendredi."
+          },
+          "feedback": "Inès choisit de recevoir le vélo ; le magasin assure la livraison."
+        },
+        {
+          "id": "b3_18_microtext_two_requests",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Léa demande au magasin de réparer son téléphone ; elle viendra le chercher. Inès demande au même magasin de réparer son vélo puis de le livrer chez elle. Le magasin confie les réparations à deux spécialistes."
+            }
+          ],
+          "task": "Quelle action Inès a-t-elle demandée en plus de Léa ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Faire livrer l'objet réparé.",
+              "Effectuer elle-même la réparation.",
+              "Venir chercher l'objet au magasin."
+            ],
+            "answer": "Faire livrer l'objet réparé."
+          },
+          "feedback": "Les deux font réparer un objet ; seule Inès demande une livraison."
+        },
+        {
+          "id": "b3_18_rewrite_delivery_agency",
+          "format": "rewrite",
+          "source": [
+            {
+              "text": "Inès demande au magasin d'envoyer son vélo réparé chez elle vendredi. Le magasin assurera la livraison."
+            }
+          ],
+          "task": "Commence par « Inès se fait livrer ».",
+          "response": {
+            "kind": "typed",
+            "answer": "Inès se fait livrer son vélo réparé vendredi",
+            "accepted": [
+              "Inès se fait livrer son vélo réparé vendredi",
+              "Inès se fait livrer son vélo vendredi"
+            ]
+          },
+          "feedback": "Inès demande et reçoit la livraison ; le magasin la réalise."
+        }
+      ]
+    },
+    {
+      "id": "nu_18_e04",
+      "title": "Garantie et dépenses distinctes",
+      "note": "Vérifie séparément le coût de la réparation et celui de la livraison.",
+      "cards": [
+        {
+          "id": "b3_18_microtext_responsibility_limit",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Le magasin a fait réparer le vélo d'Inès par un mécanicien et a pris en charge la réparation. Pour la livraison, il propose un service payant ; Inès n'a pas encore accepté."
+            }
+          ],
+          "task": "Quelle dépense le magasin a-t-il déjà accepté de payer ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "La réparation du vélo.",
+              "La livraison du vélo.",
+              "La réparation et la livraison."
+            ],
+            "answer": "La réparation du vélo."
+          },
+          "feedback": "La prise en charge concerne la réparation ; la livraison payante reste une proposition."
+        },
+        {
+          "id": "b3_18_word_garantie",
+          "format": "word",
+          "source": [
+            {
+              "text": "Le vélo est encore sous garantie : le magasin paiera la réparation prévue dans l’accord de vente."
+            }
+          ],
+          "task": "What does « sous garantie » mean here?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "covered by a warranty",
+              "already delivered",
+              "repaired by its owner"
+            ],
+            "answer": "covered by a warranty"
+          },
+          "feedback": "L’accord prévoit que le magasin paie cette réparation."
+        },
+        {
+          "id": "b3_18_microtext_three_roles",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Inès dépose son vélo au magasin. Le magasin demande à un mécanicien indépendant de changer les freins et paie sa facture."
+            }
+          ],
+          "task": "Qui organise, qui répare et qui paie ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Le magasin organise et paie ; le mécanicien répare.",
+              "Inès organise et répare ; le magasin paie.",
+              "Le mécanicien organise et paie ; Inès répare."
+            ],
+            "answer": "Le magasin organise et paie ; le mécanicien répare."
+          },
+          "feedback": "Le magasin commande et finance le travail du mécanicien."
+        },
+        {
+          "id": "b3_18_rewrite_initiator",
+          "format": "rewrite",
+          "source": [
+            {
+              "text": "Le mécanicien répare le vélo à la demande d’Inès. Inès ne touche pas aux freins."
+            }
+          ],
+          "task": "Commence par « Inès fait réparer ».",
+          "response": {
+            "kind": "typed",
+            "answer": "Inès fait réparer son vélo par le mécanicien",
+            "accepted": [
+              "Inès fait réparer son vélo par le mécanicien"
+            ]
+          },
+          "feedback": "Inès demande l’action ; le mécanicien l’effectue."
+        },
+        {
+          "id": "b3_18_dialogue_delivery_payer",
+          "format": "dialogue",
+          "source": [
+            {
+              "speaker": "Magasin",
+              "text": "Nous faisons livrer votre vélo par un coursier. La livraison coûte dix euros."
+            },
+            {
+              "speaker": "Inès",
+              "text": "Je l’accepte et je paierai ces frais."
+            }
+          ],
+          "task": "Qui transporte le vélo et qui paie la livraison ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Le coursier le transporte ; Inès paie.",
+              "Inès le transporte ; le magasin paie.",
+              "Le mécanicien le transporte ; le coursier paie."
+            ],
+            "answer": "Le coursier le transporte ; Inès paie."
+          },
+          "feedback": "Le magasin organise la livraison ; les rôles sont explicités."
+        },
+        {
+          "id": "b3_18_microtext_two_causatives",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Le magasin fait réparer le vélo par un mécanicien jeudi. Il propose ensuite à Inès de le faire livrer par un coursier vendredi ; elle accepte cette proposition."
+            }
+          ],
+          "task": "Qui propose de faire livrer le vélo ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Le magasin.",
+              "Le mécanicien.",
+              "Le coursier."
+            ],
+            "answer": "Le magasin."
+          },
+          "feedback": "Le magasin propose et organise la livraison ; Inès accepte."
+        }
+      ]
+    },
+    {
+      "id": "nu_18_e05",
+      "title": "Réparer, transporter, régler",
+      "note": "Suis chaque rôle jusqu'au résultat final sans les confondre.",
+      "cards": [
+        {
+          "id": "b3_18_rewrite_reflexive_delivery",
+          "format": "rewrite",
+          "source": [
+            {
+              "text": "Nora demande à la librairie de lui envoyer son livre samedi. Un coursier l'apportera chez elle."
+            }
+          ],
+          "task": "Décris l’action du point de vue de Nora avec « se fait livrer ».",
+          "response": {
+            "kind": "typed",
+            "answer": "Nora se fait livrer son livre samedi",
+            "accepted": [
+              "Nora se fait livrer son livre samedi",
+              "Nora se fait livrer le livre samedi"
+            ]
+          },
+          "feedback": "Nora reçoit le livre grâce à la livraison organisée par la librairie."
+        },
+        {
+          "id": "b3_18_dialogue_repair_not_delivery",
+          "format": "dialogue",
+          "source": [
+            {
+              "speaker": "Inès",
+              "text": "La garantie couvre la réparation, n’est-ce pas ?"
+            },
+            {
+              "speaker": "Magasin",
+              "text": "Oui. En revanche, la livraison à domicile reste à votre charge."
+            }
+          ],
+          "task": "Quelle dépense Inès devra-t-elle payer si elle choisit la livraison ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "La livraison seulement.",
+              "La réparation seulement.",
+              "La réparation et la livraison."
+            ],
+            "answer": "La livraison seulement."
+          },
+          "feedback": "La garantie couvre la réparation, mais pas l’envoi."
+        },
+        {
+          "id": "b3_18_microtext_receipt",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Facture : « Réparation des freins : prise en charge par le magasin. Livraison : dix euros payés par Inès. » Le coursier a déposé le vélo vendredi."
+            }
+          ],
+          "task": "Quelle phrase décrit la prise en charge ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Le magasin a payé la réparation ; Inès a payé la livraison.",
+              "Le coursier a payé la réparation.",
+              "Inès a réparé et livré son vélo."
+            ],
+            "answer": "Le magasin a payé la réparation ; Inès a payé la livraison."
+          },
+          "feedback": "La facture distingue les deux frais."
+        },
+        {
+          "id": "b3_18_rewrite_magasin_causative",
+          "format": "rewrite",
+          "source": [
+            {
+              "text": "Un coursier livre le vélo d’Inès à la demande du magasin."
+            }
+          ],
+          "task": "Commence par « Le magasin fait livrer ».",
+          "response": {
+            "kind": "typed",
+            "answer": "Le magasin fait livrer le vélo d’Inès par un coursier",
+            "accepted": [
+              "Le magasin fait livrer le vélo d’Inès par un coursier"
+            ]
+          },
+          "feedback": "Le magasin organise l’action ; le coursier la réalise."
+        },
+        {
+          "id": "b3_18_microtext_chain_error",
+          "format": "microtext",
+          "source": [
+            {
+              "text": "Léa a remplacé elle-même la batterie de son téléphone. Inès a laissé son vélo au magasin ; un mécanicien l’a réparé, et le magasin l’a fait livrer par un coursier."
+            }
+          ],
+          "task": "Qui a réparé et transporté le vélo d’Inès ?",
+          "response": {
+            "kind": "choices",
+            "choices": [
+              "Un mécanicien et un coursier.",
+              "Inès et Léa.",
+              "Léa et le magasin."
+            ],
+            "answer": "Un mécanicien et un coursier."
+          },
+          "feedback": "Le mécanicien et le coursier ont effectué ces actions."
+        }
+      ]
+    }
+  ]
+}
