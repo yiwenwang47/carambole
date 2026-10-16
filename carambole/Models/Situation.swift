@@ -76,6 +76,58 @@ struct SituationItem: Decodable, Equatable, Identifiable {
     let newWords: [String]
 
     var isStandalone: Bool { standalone != nil }
+    /// The single form-of-address cue shown above a drill. A correction about
+    /// a mistaken form keeps the relationship stated by the other speaker.
+    var addressTag: String {
+        let words = cue.lowercased().components(separatedBy: CharacterSet.letters.inverted)
+            .filter { !$0.isEmpty }
+        if cue.localizedCaseInsensitiveContains("slip") || cue.localizedCaseInsensitiveContains("mistake") {
+            let stated = words.indices.compactMap { i -> String? in
+                guard words[i] == "says", words.indices.contains(i + 1),
+                      words[i + 1] == "tu" || words[i + 1] == "vous" else { return nil }
+                return words[i + 1]
+            }
+            if let last = stated.last { return "#" + last }
+        }
+        if let last = words.last(where: { $0 == "tu" || $0 == "vous" }) { return "#" + last }
+        let spoken = turns.flatMap {
+            $0.text.lowercased().components(separatedBy: CharacterSet.letters.inverted)
+        }
+        if let last = spoken.last(where: { $0 == "tu" || $0 == "vous" }) { return "#" + last }
+        let context = cue.lowercased()
+        if context.contains("you write to the group chat")
+            || context.contains("you wrote this to the group chat")
+            || context.contains("for the group chat")
+            || context.contains("to several friends")
+            || context.contains("to all your friends")
+            || context.contains("formal")
+            || context.contains("older neighbour")
+            || context.contains("call the restaurant")
+            || context.contains("owner of the gîte")
+            || context.contains("thank the waiter") { return "#vous" }
+        return "#tu"
+    }
+
+    /// Show the address cue only when this drill asks the learner to use or
+    /// distinguish a second-person form. A social detail in the scene alone
+    /// is not enough to show it.
+    func addressTag(for drill: SituationDrill) -> String? {
+        let target = drill.model ?? drill.correctChoice ?? ""
+        let text = ([drill.prompt, target] + (drill.choices ?? []) + (drill.bank ?? [])
+                    + (drill.type == .fix ? [errorMark?.word ?? "", errorMark?.fix ?? ""] : []))
+            .joined(separator: " ")
+        let informal = #"(?i)\b(tu|toi|te|ton|ta|tes)\b|\bt['’]"#
+        let formal = #"(?i)\b(vous|votre|vos)\b"#
+        let hasInformal = text.range(of: informal, options: .regularExpression) != nil
+        let hasFormal = text.range(of: formal, options: .regularExpression) != nil
+        let namesRegister = drill.prompt.range(of: #"(?i)\b(formal|informal|polite|tutoyer|vouvoyer)\b"#,
+                                               options: .regularExpression) != nil
+        guard hasInformal || hasFormal || namesRegister else { return nil }
+        let answerIsFormal = target.range(of: formal, options: .regularExpression) != nil
+        let answerIsInformal = target.range(of: informal, options: .regularExpression) != nil
+        if answerIsFormal != answerIsInformal { return answerIsFormal ? "#vous" : "#tu" }
+        return addressTag
+    }
     /// Label above the follow-up bubble. Mirrors the audio voice choice:
     /// `followUpBy`, else the first named server, else the first server's role.
     var followUpSpeaker: String? {

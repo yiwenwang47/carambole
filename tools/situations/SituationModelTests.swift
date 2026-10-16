@@ -55,6 +55,29 @@ struct SituationModelTests {
         check(servers.allSatisfy { $0.speakerLabel != nil }, "every bundled server turn has a name or role")
         check(servers.allSatisfy { $0.name == nil || $0.role == nil }, "role only on unnamed server turns")
         let byID = Dictionary(uniqueKeysWithValues: items.map { ($0.id, $0) })
+        check(byID["sit_02_morning_d01"]?.addressTag == "#tu", "informal dialogue address tag")
+        check(byID["sit_02_morning_d06"]?.addressTag == "#tu", "group vous does not change the informal tag")
+        check(byID["sit_17_react_s04"]?.addressTag == "#vous", "switch to formal address tag")
+        check(byID["sit_03_slip_d03"]?.addressTag == "#tu", "a mistaken vous does not change the address tag")
+        check(byID["sit_03_tutoyer_s04"]?.addressTag == "#tu", "switch to informal address tag")
+        check(byID["sit_19_propose_s04"]?.addressTag == "#vous", "group reply uses plural address tag")
+        check(byID["sit_19_book_s05"]?.addressTag == "#vous", "dialogue form supplies a missing cue tag")
+        check(byID["sit_09_confirm_s05"]?.addressTag == "#vous", "formal standalone prompt address tag")
+        check(byID["sit_03_landing_s05"]?.addressTag == "#vous", "older neighbour prompt address tag")
+        check(byID["sit_04_group_s02"]?.addressTag == "#vous", "group prompt address tag")
+        check(byID["sit_19_prefer_s05"]?.addressTag == "#tu", "one friend's group-chat reply stays informal")
+        check(byID["sit_24_pont_d01"]?.addressTag(for: byID["sit_24_pont_d01"]!.drills[0]) == nil,
+              "comprehension without address choice hides the tag")
+        check(byID["sit_24_pont_d01"]?.addressTag(for: byID["sit_24_pont_d01"]!.drills[1]) == nil,
+              "reply without address words hides the tag")
+        check(byID["sit_18_flats_s01"]?.addressTag(for: byID["sit_18_flats_s01"]!.drills[0]) == nil,
+              "a contextual tu alone does not show the tag")
+        check(byID["sit_02_morning_d01"]?.addressTag(for: byID["sit_02_morning_d01"]!.drills[1]) == "#tu",
+              "an answer with toi shows the informal tag")
+        check(byID["sit_03_register_s04"]?.addressTag(for: byID["sit_03_register_s04"]!.drills[0]) == "#vous",
+              "formal rewrite shows the tag")
+        check(byID["sit_19_propose_s04"]?.addressTag(for: byID["sit_19_propose_s04"]!.drills[0]) == "#vous",
+              "group reply with vous shows the tag")
         check(byID["sit_07_bread_d01"]?.turns.first?.speakerLabel == "Boulangère", "baker's role label")
         check(byID["sit_07_bread_d01"]?.followUpSpeaker == "Boulangère", "follow-up takes the first server's role")
         check(byID["sit_10_address_d01"]?.turns.first?.speakerLabel == "Livreur", "delivery driver's role label")

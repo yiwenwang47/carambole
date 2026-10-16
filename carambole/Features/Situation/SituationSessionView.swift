@@ -341,9 +341,9 @@ struct SituationSessionView: View {
     private func card(at i: Int) -> some View {
         let card = cards[i]
         let view = SituationCardView(
-            item: card.item, salt: card.salt, fallbackPlace: card.element.label, words: words,
+            item: card.item, salt: card.salt, words: words,
             wordMatcher: wordMatcher,
-            audioPrefix: audioPrefix, isFirst: i == firstIndex, isLast: i == cards.count - 1,
+            audioPrefix: audioPrefix, isLast: i == cards.count - 1,
             reviewing: i < frontier && i != leavingIndex, active: i == cursor,
             forwardLabel: i + 1 == frontier ? "Reprendre" : "Suivant",
             mistakes: mistakes.filter { $0.cardIndex == i },

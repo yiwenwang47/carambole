@@ -9,9 +9,8 @@
 //  as it ended, and lets the card in play be rebuilt after it leaves the screen.
 //
 //  Binding UI rules (docs/archive/plans/2026-10-11-book-2-pilot-v2-handoff.md):
-//  - The card never scrolls as a whole. Only the chat scrolls; when space is
-//    short the chat gives up room, and excess word tiles scroll inside a tray
-//    tall enough for two rows.
+//  - The card never scrolls as a whole. Only the chat scrolls; the full word
+//    bank and footer stay visible while the chat gives up room.
 //  - English only on tap, in a tooltip right above the word (spoken forms show
 //    `* `). New words are underlined. A tap anywhere else closes the tooltip.
 //  - Learner bubbles use the palette's `tileOn`; server bubbles are white with
@@ -152,14 +151,10 @@ struct SituationCardView: View {
     let item: SituationItem
     /// Changes each time the item comes back, so its choices reshuffle.
     let salt: Int
-    /// Label above the cue when the item has no place.
-    let fallbackPlace: String
     let words: [String: SituationWord]
     let wordMatcher: SituationText.Matcher
     /// Prepended to the item's audio keys (the Test book's clips are `pilot2_…`).
     let audioPrefix: String
-    /// The session's first card shows the "tap a word" hint.
-    let isFirst: Bool
     let isLast: Bool
     /// Behind the card in play: finished, shown as it ended, read-only.
     let reviewing: Bool
@@ -188,11 +183,6 @@ struct SituationCardView: View {
 
     @State private var flashedWord: String?
     @State private var slotSwapInstant = false
-    /// Natural height of the reply tiles; taller banks scroll in a two-row tray.
-    @State private var trayContentHeight: CGFloat = 0
-    /// Card fit (the card never scrolls): reserve two reply rows and let the
-    /// dialogue scroll when its bubbles exceed the remaining space.
-    @State private var fit = SituationCardFit()
     // Tap-to-show English.
     @State private var tip: Tip?
     @State private var tipToken = 0
@@ -218,12 +208,8 @@ struct SituationCardView: View {
     var body: some View {
         VStack(spacing: 0) {
             cueBlock
-                .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { fit.header = $0 }
-            // The chat takes what is left and scrolls inside itself. With a word
-            // tray below, the chat keeps room for its bubbles when possible;
-            // excess choices scroll inside the tray.
             chat
-                .frame(minHeight: fit.chatFloor(trayShown: drill?.type == .reply))
+                .frame(minHeight: 0)
             Rectangle().fill(AppColor.hairline).frame(height: 1).padding(.top, 10)
             ZStack(alignment: .topLeading) {
                 zone
@@ -231,18 +217,16 @@ struct SituationCardView: View {
                     .transition(Self.swap)
             }
             .padding(.horizontal, 18)
-            .padding(.top, 22)
-            .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { fit.zone = $0 }
+            .padding(.top, 18)
+            .fixedSize(horizontal: false, vertical: true)
             .layoutPriority(1)
             footer
                 .padding(.horizontal, 18)
-                .padding(.top, 12)
+                .padding(.top, 6)
                 .padding(.bottom, 8)
-                .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { fit.footer = $0 }
                 .layoutPriority(2)
         }
         .frame(minHeight: 0, maxHeight: .infinity)
-        .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { fit.card = $0 }
         .background(AppColor.paper)
         .overlayPreferenceValue(SituationTipAnchorKey.self) { anchors in
             GeometryReader { proxy in
@@ -277,19 +261,18 @@ struct SituationCardView: View {
         #endif
     }
 
+    @ViewBuilder
     private var cueBlock: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text(reviewing ? "Révision · " + (item.place ?? fallbackPlace) : (item.place ?? fallbackPlace))
-                .uppercaseLabel()
-            Text(item.cue).font(.display(size: 21, wght: 400)).foregroundColor(AppColor.ink)
+        if let drill, let tag = item.addressTag(for: drill) {
+            Text(tag)
+                .font(.display(size: 21, wght: 400))
+                .foregroundColor(AppColor.ink)
                 .fixedSize(horizontal: false, vertical: true)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, Spacing.screenH)
+                .padding(.top, 16)
+                .accessibilityAddTraits(.isHeader)
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.horizontal, Spacing.screenH)
-        .padding(.top, 16)
-        // Place and situation read as one heading, so the rotor can jump to it.
-        .accessibilityElement(children: .combine)
-        .accessibilityAddTraits(.isHeader)
     }
 
     // MARK: - Chat
@@ -319,13 +302,9 @@ struct SituationCardView: View {
                                     .transition(Self.swap)
                             }
                         }
-                        // The bubbles' own height (the spacer above would grow with
-                        // the chat and feed back into the fit), plus the top
-                        // padding, the end marker and its spacing.
-                        .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { fit.chatContent = $0 + 19 }
                         Color.clear.frame(height: 1).id("end")
                     }
-                    .padding(.horizontal, 18)
+                    .padding(.horizontal, 12)
                     .padding(.top, 8)
                     .frame(minHeight: geo.size.height, alignment: .bottom)
                 }
@@ -341,15 +320,6 @@ struct SituationCardView: View {
                 .onChange(of: geo.size.height) { _, _ in scrollToEnd(reader) }
                 .onChange(of: state.showFollow) { _, _ in scrollToEnd(reader) }
                 .onAppear { scrollToEnd(reader) }
-                // When the chat is taller than its space (small screens), the
-                // oldest line fades out under the cue instead of being cut mid-line.
-                .mask {
-                    VStack(spacing: 0) {
-                        LinearGradient(colors: [.clear, .black], startPoint: .top, endPoint: .bottom)
-                            .frame(height: fit.chatContent > geo.size.height ? 28 : 0)
-                        Rectangle()
-                    }
-                }
             }
         }
     }
@@ -391,7 +361,7 @@ struct SituationCardView: View {
                                                                    bottomTrailing: 20, topTrailing: 20))
                     .strokeBorder(AppColor.ink, lineWidth: 1.5))
             }
-            Spacer(minLength: 40)
+            Spacer(minLength: 12)
         }
     }
 
@@ -401,7 +371,7 @@ struct SituationCardView: View {
 
     private func learnerBubble(turnIndex: Int, turn: SituationItem.Turn) -> some View {
         HStack {
-            Spacer(minLength: 40)
+            Spacer(minLength: 12)
             VStack(alignment: .trailing, spacing: 3) {
                 speakerLabel(turn.isSource ? "VOUS · AVANT" : "VOUS")
                     .accessibilityLabel(turn.isSource ? "Vous, avant" : "Vous")
@@ -415,7 +385,7 @@ struct SituationCardView: View {
 
     private var slotBubble: some View {
         HStack {
-            Spacer(minLength: 40)
+            Spacer(minLength: 12)
             VStack(alignment: .trailing, spacing: 3) {
                 speakerLabel("VOUS")
                 switch state.slot {
@@ -661,13 +631,13 @@ struct SituationCardView: View {
                     .foregroundColor(AppColor.ink)
                     .fixedSize(horizontal: false, vertical: true)
                 drillBody(drill)
-                Text(state.note.isEmpty && isFirst && state.step == 0 && state.tries == 0 && drill.type != .fix
-                     ? "Touchez un mot pour voir l'anglais." : state.note)
-                    .font(.display(size: 14, wght: 400))
-                    .foregroundColor(AppColor.graphite)
-                    .frame(minHeight: 20, alignment: .topLeading)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .onChange(of: state.note) { _, new in announce(new) }
+                if !state.note.isEmpty {
+                    Text(state.note)
+                        .font(.display(size: 14, wght: 400))
+                        .foregroundColor(AppColor.graphite)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .onChange(of: state.note) { _, new in announce(new) }
+                }
             } else {
                 doneBlock
             }
@@ -716,32 +686,25 @@ struct SituationCardView: View {
         }
     }
 
-    /// Keep up to two rows of choices visible. More tiles scroll within the tray,
-    /// while the card and its footer stay fixed.
+    /// Show every word tile. The chat above gives up space when the bank grows.
     private var replyTray: some View {
-        ScrollView(.vertical, showsIndicators: false) {
-            FlowLayout(spacing: 8, lineSpacing: 8) {
-                ForEach(state.bankOrder, id: \.self) { i in
-                    let used = state.placed.contains(i)
-                    Button {
-                        guard !state.locked else { return }
-                        withAnimation(Self.tileSpring) { state.placed.append(i) }
-                    } label: { MagnetTile(text: bank[i]) }
-                        .buttonStyle(.plain)
-                        .opacity(used ? 0.25 : 1)
-                        .disabled(used)
-                        .accessibilityLabel(bank[i])
-                        .accessibilityValue(used ? "Déjà placé" : "")
-                        .accessibilityHint(used ? "" : "Ajoute ce mot à votre réponse")
-                }
+        FlowLayout(spacing: 8, lineSpacing: 8) {
+            ForEach(state.bankOrder, id: \.self) { i in
+                let used = state.placed.contains(i)
+                Button {
+                    guard !state.locked else { return }
+                    withAnimation(Self.tileSpring) { state.placed.append(i) }
+                } label: { MagnetTile(text: bank[i]) }
+                    .buttonStyle(.plain)
+                    .opacity(used ? 0.25 : 1)
+                    .disabled(used)
+                    .accessibilityLabel(bank[i])
+                    .accessibilityValue(used ? "Déjà placé" : "")
+                    .accessibilityHint(used ? "" : "Ajoute ce mot à votre réponse")
             }
-            .padding(14)
-            .frame(maxWidth: .infinity, minHeight: 96, alignment: .topLeading)
-            .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { trayContentHeight = $0 }
         }
-        .scrollBounceBehavior(.basedOnSize)
-        .frame(height: min(SituationCardFit.trayVisibleHeight, max(96, trayContentHeight)))
-        .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { fit.tray = $0 }
+        .padding(14)
+        .frame(maxWidth: .infinity, minHeight: 96, alignment: .topLeading)
         .background(RoundedRectangle(cornerRadius: 22, style: .continuous).fill(Color(hex: theme.tint)))
         .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
     }
@@ -890,7 +853,6 @@ struct SituationCardView: View {
 
     private func startDrill() {
         flashedWord = nil
-        trayContentHeight = 0
         state.startDrill(item: item, salt: salt)
     }
 
@@ -1209,32 +1171,5 @@ private struct SituationShake: GeometryEffect {
     }
     func effectValue(size: CGSize) -> ProjectionTransform {
         ProjectionTransform(CGAffineTransform(translationX: 4 * sin(amount * .pi * 4), y: 0))
-    }
-}
-
-/// Vertical fit for a dialogue card that never scrolls as a whole. The chat
-/// keeps room for its bubbles when possible and reserves two visible rows for
-/// the word tray; additional choices scroll inside the tray.
-/// Every input is a measured height in points. The tray's own height is
-/// subtracted from the drill zone, so the result never feeds back into itself.
-struct SituationCardFit: Equatable {
-    static let trayVisibleHeight: CGFloat = 116
-    static let chatMin: CGFloat = 64
-    /// The hairline between chat and drill zone, with its top padding.
-    static let divider: CGFloat = 11
-
-    var card: CGFloat = 0
-    var header: CGFloat = 0
-    var chatContent: CGFloat = 0
-    var zone: CGFloat = 0
-    var tray: CGFloat = 0
-    var footer: CGFloat = 0
-
-    /// Height the chat and the tray share.
-    var shared: CGFloat { card - header - Self.divider - (zone - tray) - footer }
-
-    func chatFloor(trayShown: Bool) -> CGFloat {
-        guard trayShown, card > 0, chatContent > 0 else { return Self.chatMin }
-        return max(Self.chatMin, min(chatContent, shared - Self.trayVisibleHeight))
     }
 }
