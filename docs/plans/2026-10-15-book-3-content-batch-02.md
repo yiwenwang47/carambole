@@ -1,5 +1,8 @@
 # Book 3 content batch 02
 
+**Historical drafting checkpoint.** Current production status:
+`2026-10-16-book-3-production-handoff.md`.
+
 **Date:** 2026-10-15
 
 **Status:** Second Test book content pass; production Book 3 remains pending.

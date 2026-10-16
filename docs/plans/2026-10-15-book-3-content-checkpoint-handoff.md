@@ -1,5 +1,8 @@
 # Book 3 content checkpoint handoff
 
+**Historical checkpoint.** Current production status:
+`2026-10-16-book-3-production-handoff.md`.
+
 **Date:** 2026-10-15
 
 **Later content state:** See `2026-10-15-book-3-content-final-handoff.md` for

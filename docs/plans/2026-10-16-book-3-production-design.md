@@ -1,8 +1,9 @@
 # Book 3 production design
 
-**Status:** implementation design, 2026-10-16. The editorial pass of the 550
-Test book cards precedes packaging. The reviewed cards remain the content source;
-production uses a separate, validated bundle.
+**Status:** implemented 2026-10-16. See
+`2026-10-16-book-3-production-handoff.md` for the integrated code state and checks.
+The reviewed Test book cards remain the content source; production uses a
+separate, validated bundle.
 
 ## Learner outcome
 

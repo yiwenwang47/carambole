@@ -222,8 +222,10 @@ points to its manifest directory. Any other book supplies a JSON index of
 rows. Point to its audio directory and report path too. Run
 `audio_release_gate.py` for all books, or use `tools/release_build.sh`, which
 runs the gate before `xcodebuild`. A missing or unresolved clip stops the build.
-The Book 3 Test book is a draft without production audio and is registered only
-when its production audio is created.
+Book 3 *Nuances* is integrated as a text-only production book. It has no
+bundled speech or audio controls, so it has no entry in `audio_books.json`.
+If spoken French is added, create its complete clip index, register the book,
+and pass this gate before a Release build.
 
 Every new Book 2 clip is checked immediately after generation and normalisation.
 Excessive quiet gaps are shortened automatically, without changing the spoken

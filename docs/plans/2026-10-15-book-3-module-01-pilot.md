@@ -1,5 +1,8 @@
 # Book 3, module 01: Test book pilot
 
+**Historical pilot.** Current production status:
+`2026-10-16-book-3-production-handoff.md`.
+
 **Status:** Review pilot in the simulator Test book. No production Book 3
 schema, content size, or progress rule is fixed.
 

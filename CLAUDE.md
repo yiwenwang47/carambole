@@ -1,9 +1,11 @@
 # Carambole — French trainer (iOS, SwiftUI + raw SQLite)
 
-Two books on a library shelf. **Fondations** (`book_fr_fondations`, Book 1):
+Three books on a library shelf. **Fondations** (`book_fr_fondations`, Book 1):
 grammar drills, 25 modules × 20 elements, tap-to-build / multiple choice / short
 typing / spot-the-error. **En situation** (`book_fr_en_situation`, Book 2, DONE
 2026-10-13): short chat dialogues, 25 modules, 3,000 items, 6,459 voiced clips.
+**Nuances** (`book_fr_nuances`, Book 3, integrated 2026-10-16): 20 modules,
+100 review groups, 550 visible-source reading and expression cards; text only.
 Older history is in `docs/archive/` and git log.
 
 ## Start here
@@ -13,13 +15,10 @@ Older history is in `docs/archive/` and git log.
 - **Book 2 rulebook** (cast, voices, JSON shape, authoring steps):
   `docs/plans/2026-10-11-book-2-content-handoff.md`; tools in
   `tools/situations/README.md`.
-- **Book 3 content checkpoint (2026-10-15):**
-  `docs/plans/2026-10-15-book-3-content-checkpoint-handoff.md`. The curriculum
-  map is in `docs/plans/2026-10-15-book-3-curriculum-handoff.md`. The user tried
-  module 10 in the simulator and approved this checkpoint. DEBUG-only Test book
-  cards cover modules 01–20. The current 550-card handoff is
-  `docs/plans/2026-10-15-book-3-content-final-handoff.md`; production Book 3
-  content and progress are pending.
+- **Book 3 production handoff (2026-10-16):**
+  `docs/plans/2026-10-16-book-3-production-handoff.md`. It records the edited
+  550-card package, group grading, v6 migration, app integration, verification,
+  and audio scope. The 2026-10-15 content checkpoints are historical snapshots.
 - **Languages home (2026-10-14):** root is `Features/Languages/LanguagesView.swift`
   (Specimen layout) → `LibraryView(language:)`; marks in
   `DesignSystem/LanguageMark.swift` (Cut paper default, Script sticker; picked
@@ -62,7 +61,8 @@ Older history is in `docs/archive/` and git log.
   to the next element. Shared code: `Features/Drill/TooEasy.swift` (`TooEasyGate`,
   `TooEasyControl`, `.tooEasyUndo`). Book 1: `DrillView`/`DrillSessionView`.
   Book 2: `SituationCardView`/`SituationSessionView` + `SituationTooEasy`. A new
-  book or session view reuses these; never fork the logic.
+  book or session view reuses these; never fork the logic. Book 3 uses
+  `NuanceSessionView` with the same shared gate and undo.
 - **The drill card never scrolls as a whole.** Book 1 can scroll its word-bank
   tray (`MagnetBoard.bankTray`); text uses `minimumScaleFactor`. In Book 2, only
   the chat scrolls. The purple reply bank shows all tiles and stays fixed.
@@ -88,7 +88,7 @@ Older history is in `docs/archive/` and git log.
 - **Token banks:** authored order doesn't matter (`Exercise.displayBank` shuffles
   per id, never in answer order). Bank ≈ 1.6× answer length with grammar-trap
   distractors (min +2); bulk edits via `tools/distractors/{extract,apply}.py`.
-- **Schema migrations** (`CoreDataManager.migrate()`, now `user_version` 5): add
+- **Schema migrations** (`CoreDataManager.migrate()`, now `user_version` 6): add
   a new `if version < N` block, additive only (`ADD COLUMN`, `CREATE TABLE IF NOT
   EXISTS`); never edit an earlier block, never DROP a user-data table. User data
   survives reinstalls; only deleting the app wipes it.
@@ -98,14 +98,17 @@ Older history is in `docs/archive/` and git log.
 - **Content** is in-memory from bundle JSON. Book 1: `Resources/Topics/` +
   `manifest.json` (`ContentLoader`). Book 2: `Resources/Situations/` +
   `situations_manifest.json` + one `words.json` glossary; module JSON is built
-  from `tools/situations/drafts/` by `assemble.py` (keep the drafts).
+  from `tools/situations/drafts/` by `assemble.py` (keep the drafts). Book 3:
+  `Resources/Nuances/nuances_manifest.json` + 20 module files, packaged from
+  reviewed DEBUG cards by `tools/nuances/package.py`.
 - **Grading:** every answer grades its ELEMENT with FSRS-6 (`Core/FSRS.swift`,
   `Core/ElementGrader.swift`). An element is maîtrisé once stability passes 21
   days (sticky `graduated_date`). Book 2 also needs correct answers on 3 distinct
-  items covering 2 drill types (`SituationMastery`).
+  items covering 2 drill types (`SituationMastery`). Book 3 requires 3 distinct
+  correct cards across 2 formats (`NuanceMastery`).
 - **Tables:** `review_status` (per element), `review_log`, `mastery_log`,
-  `situation_item_log`, `situation_attempt_log`. Each book has its own progress,
-  history, due queue and settings (`settings.<book id>.*`).
+  `situation_item_log`, `situation_attempt_log`, `nuance_card_log`. Each book
+  has its own progress, history, due queue and settings (`settings.<book id>.*`).
 - **Audio:** `Core/Speaker.swift`, bundled MP3 by content hash (Xcode flattens
   `Resources/Audio/*` to the bundle root). The silent star video keeps the audio
   session ACTIVE, and changing the category on an active session stops Apple
@@ -113,7 +116,7 @@ Older history is in `docs/archive/` and git log.
   `.default` / `[.mixWithOthers, .duckOthers]` → activate; afterwards
   `setActive(false, .notifyOthersOnDeactivation)` → `.ambient`. Clips must be
   equal loudness (`tools/situations/normalize_audio.py`).
-- **Folders:** `Features/{Library,Book,Today,Drill,Situation,History,Settings}`,
+- **Folders:** `Features/{Library,Book,Today,Drill,Situation,Nuance,History,Settings}`,
   `Core/`, `Models/`, `DesignSystem/`, `Debug/` (DEBUG-only harness + Test book).
 
 ## Build and check
@@ -141,11 +144,17 @@ xcodebuild build -project carambole.xcodeproj -scheme carambole \
   excessive quiet gaps without changing spoken samples;
   `python3 -m unittest tools/situations/test_lint.py tools/situations/test_tools.py tools/pilot/test_content.py tools/situations/test_normalize_audio.py tools/situations/test_audio_audit.py tools/situations/test_audio_release_gate.py tools/situations/test_repair_audio.py`;
   model tests: `swiftc carambole/Models/Situation.swift tools/situations/SituationModelTests.swift -o /tmp/t && /tmp/t carambole/Resources/Situations`.
+- **Book 3:** `rtk proxy python3 -m tools.nuances.package --check` validates
+  20 modules, 100 groups, and 550 cards; `rtk proxy python3 -m unittest
+  tools.nuances.test_package tools.nuances.test_migration` checks packaging and the additive v6 SQL
+  contract. Swift model, loader, and attempt-policy checks are listed in the
+  production handoff. It has no bundled speech; keep using
+  `tools/release_build.sh` so the registered Book 2 audio is gated.
 - **Content pipeline tests:** `cd tools && python3 -m pytest content_pipeline -q`.
 - **Phone** (iPhone 18 Pro `00008160-001A09920AA0000A`, team `QMV4SPL476`,
   bundle `wen.carambole`). Install only when the user asks. The user tests on the
-  phone; Claude never tests, records or profiles there. The phone has a Release
-  build.
+  phone; Claude never tests, records or profiles there. The phone still has its
+  earlier Release build; Book 3 has only been checked in the simulator.
   ```bash
   CARAMBOLE_AUDIO_PYTHON=/path/to/python-with-numpy-scipy-lameenc \
     tools/release_build.sh \

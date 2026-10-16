@@ -1,5 +1,8 @@
 # Book 3 curriculum handoff
 
+**Historical curriculum checkpoint.** Current production status:
+`2026-10-16-book-3-production-handoff.md`.
+
 **Date:** 2026-10-15
 
 **Later content state:** The 550-card review draft is documented in

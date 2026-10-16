@@ -9,9 +9,9 @@ in `2026-10-16-book-3-production-plan.md`. The 20-module, 550-card production
 package and Nuances app integration supersede the "Next decisions and work"
 section below, which records the original handoff state.
 
-**State:** 550 review cards across all 20 DEBUG Test book modules. Content
-authoring volume is complete. Production Book 3 remains to be designed and
-integrated.
+**State at this handoff:** 550 review cards across all 20 DEBUG Test book
+modules. Content authoring volume was complete; production was still pending.
+For current status, use `2026-10-16-book-3-production-handoff.md`.
 
 ## Start here
 

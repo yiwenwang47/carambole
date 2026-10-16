@@ -1,5 +1,9 @@
 # Book 3 production implementation plan
 
+**Status:** implemented 2026-10-16. The execution record below and
+`2026-10-16-book-3-production-handoff.md` supersede the unchecked planning
+list, which is retained as the original sprint scope.
+
 > **For agentic workers:** Execute the checked waves in order. Use subagents
 > for independent module ranges and for a fresh review of each completed wave.
 
