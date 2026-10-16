@@ -1,12 +1,13 @@
 # Book 2 handoff: start here (done, installed on the phone)
 
 **Written:** 2026-10-13, end of session.
-**Repo:** `carambole/`, branch `main`, **pushed**.
+**Original release branch:** `main`, pushed.
+**Latest update:** 2026-10-15, Book 2 drill layout on `book3-pilot` (`ee721aca`, pushed).
 **Previous start point:** [arc 5 done handoff](../archive/plans/2026-10-13-book-2-arc5-done-handoff.md). Its §0 has this session's commits and the release check in detail.
 
 ## 1. Current phone state
 
-The main Carambole app (`wen.carambole`) received a Release build from `main` on 2026-10-15, most recently with the Nouveaux mots wrapping fix in §9. See §8 for the Book 2 card-slide fix and its simulator checks. Only the user checks behavior on the phone; do not test, record, or profile there.
+The main Carambole app (`wen.carambole`) received a Release build from `book3-pilot` on 2026-10-15. This build includes the Book 2 drill layout in §10. Only the user checks behavior on the phone; do not test, record, or profile there.
 
 ## 2. Checks only the phone can do
 
@@ -23,8 +24,8 @@ The main Carambole app (`wen.carambole`) received a Release build from `main` on
 | Content | 25 modules, 3,000 items, 2,194 glosses. No gloss is longer than 60 characters. |
 | Audio | 6,459 / 6,459 clips, all normalised. |
 | Hint bubble | Wraps (at most 260 pt), stays on screen. The last bracket group shows as a small grey second line. |
-| Simulator (iPhone 18 Pro) | Test book with all of the above, including today's fixes. The main app's simulator database was restored to what it was before the release check. |
-| Checks | All lints and tests pass (Book 1 lints, Book 2 strict lint, 88 + 57 Python tests, pilot tests, Swift model test, Debug and Release builds). |
+| Simulator (iPhone 18 Pro) | The Test book showed the Book 2 layout in §10. It was uninstalled after the check. |
+| Checks | The latest Book 2 strict lint, 98 Python tests, Swift model test, Test book build, and Release phone build passed. |
 | Release build | No `CB_*` flags. `testbook_*.json` and `pilot2_*` clips are excluded (`EXCLUDED_SOURCE_FILE_NAMES`, Release only). |
 
 Fixed this session, after the release check:
@@ -36,7 +37,7 @@ Fixed this session, after the release check:
 ## 4. Commands
 
 ```sh
-# main Release app on the phone
+# Release app on the phone (build from the intended branch)
 xcodebuild -project carambole.xcodeproj -scheme carambole -configuration Release -destination 'id=00008160-001A09920AA0000A' -allowProvisioningUpdates DEVELOPMENT_TEAM=QMV4SPL476 -derivedDataPath /tmp/cb-device build -quiet
 xcrun devicectl device install app --device 00008160-001A09920AA0000A /tmp/cb-device/Build/Products/Release-iphoneos/carambole.app
 
@@ -51,7 +52,6 @@ Afterwards, delete `/tmp/cb-device` and `/tmp/cb-book2-pilot-*`.
 ## 5. Later
 
 - The Écrire typing drill, in its own session.
-- Release-mode install (optional): add `-configuration Release` to the main app build. It drops the Test book files.
 
 ## 6. Done (later on 2026-10-13)
 
@@ -90,3 +90,15 @@ The finished Book 2 card used `FlowLayout` for new-word chips. It measured every
 The iPhone 18 Pro simulator reproduced the overflow before the fix. With the same `la bise` text, the full gloss wrapped inside the chip on two lines afterward. The dedicated Test book app also showed its original long `faire le pont` gloss wrapped inside the chip. The temporary `la bise` Test book fixture was restored; no content changed.
 
 Commit `fcd8f539` was fast-forward merged to `main`. The strict situation lint, Swift model test (3,000 items), and Python suite (98 tests, one skip) passed. A Release build from the merged tree succeeded, and `devicectl` installed `wen.carambole` on the paired iPhone 18 Pro. Phone behavior remains for the user to check.
+
+## 10. Book 2 drill layout (2026-10-15)
+
+Commit `ee721aca` removes the place header and English setup cue from each Book 2 drill card. A drill shows `#tu` or `#vous` only when its active prompt, answer, or choices use that distinction. The tag uses the former setup cue's text size and color. Other drills have no top cue.
+
+Chat bubbles have smaller side margins. The purple reply bank shows every word tile at full height and does not scroll or collapse. Only the chat scrolls. The gap below the bank is smaller.
+
+The user approved the layout in the iPhone 18 Pro Test book simulator. The reply card at index 7 showed five candidates across four rows with `#tu`. The conditional card at index 5 showed seven candidates with no address tag. Empty, filled, dialogue, and finished states were also checked.
+
+The strict situation lint passed for 25 modules. The Swift model test loaded all 3,000 items, and 98 Python tests passed with the Conda Python that has the audio dependencies. The Test book simulator build and the signed Release phone build passed. `devicectl` installed `wen.carambole` on the paired iPhone 18 Pro. The agent did not test the phone.
+
+The change was fast-forward merged into `book3-pilot` and pushed to `origin/book3-pilot`. `main` was not changed in this round. The feature worktree, local branch, simulator Test book app, and temporary build caches were removed.

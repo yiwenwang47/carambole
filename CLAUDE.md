@@ -40,6 +40,8 @@ Older history is in `docs/archive/` and git log.
 - **Book 2 card slide (2026-10-15):** `SituationText.Matcher` indexes the
   glossary once per session. The Test book simulator profile and phone install
   are in `docs/plans/2026-10-13-book-2-release-handoff.md` §8.
+- **Book 2 drill layout (2026-10-15):** the Test book simulator check and
+  Release phone install are in that handoff §10. The user approved the layout.
 
 ## Hard rules
 
@@ -50,8 +52,9 @@ Older history is in `docs/archive/` and git log.
   `TooEasyControl`, `.tooEasyUndo`). Book 1: `DrillView`/`DrillSessionView`.
   Book 2: `SituationCardView`/`SituationSessionView` + `SituationTooEasy`. A new
   book or session view reuses these; never fork the logic.
-- **The drill card never scrolls as a whole.** Only the word-bank tray shrinks and
-  scrolls (`MagnetBoard.bankTray`); text uses `minimumScaleFactor`.
+- **The drill card never scrolls as a whole.** Book 1 can scroll its word-bank
+  tray (`MagnetBoard.bankTray`); text uses `minimumScaleFactor`. In Book 2, only
+  the chat scrolls. The purple reply bank shows all tiles and stays fixed.
 - **Book 2:** never show English automatically (tap only; a tap elsewhere closes
   it), never strike through words, keep the current transition timing, every tap
   gloss must fit its sentence (`tools/situations/gloss_dump.py`), review content
@@ -142,8 +145,8 @@ xcodebuild build -project carambole.xcodeproj -scheme carambole \
   `xcrun devicectl device copy from --domain-type appDataContainer --domain-identifier wen.carambole --source Documents/audio_diag.txt --destination <path>`.
   Test book (hand testing, separate data): add
   `PRODUCT_BUNDLE_IDENTIFIER=wen.carambole.testbook INFOPLIST_KEY_CFBundleDisplayName='Test book'`
-  to a Debug build. The simulator Test book was installed for the Book 3
-  checkpoint. Its presence can change between sessions.
+  to a Debug build. The simulator Test book was uninstalled after the Book 2
+  layout check. Build it again when needed.
 
 ## Open items
 
