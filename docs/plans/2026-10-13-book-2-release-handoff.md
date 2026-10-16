@@ -2,7 +2,7 @@
 
 **Written:** 2026-10-13, end of session.
 **Original release branch:** `main`, pushed.
-**Latest update:** 2026-10-16, audio audit and Studio A replacement merged to `main`.
+**Latest update:** 2026-10-16, Release build of `main` (`a40cadd0`) reinstalled on the iPhone after the audio gate passed.
 **Previous start point:** [arc 5 done handoff](../archive/plans/2026-10-13-book-2-arc5-done-handoff.md). Its §0 has this session's commits and the release check in detail.
 
 ## 1. Current phone state
@@ -118,3 +118,12 @@ register their clip index in `tools/situations/audio_books.json`; the Release
 build wrapper blocks missing or unresolved audio. Signal checks cannot judge
 pronunciation or intonation. The signed Release build passed the gate and was
 installed on the paired iPhone 18 Pro. The agent did not test on the phone.
+
+## 12. Final phone delivery (2026-10-16)
+
+The Release build of `main` at `a40cadd0` ran through `tools/release_build.sh`.
+The registered Book 2 audit checked 6,459 clips and found zero unresolved
+findings. The signed build succeeded, and `devicectl` installed
+`wen.carambole` on the connected iPhone 18 Pro. The audit rule remains in
+`CLAUDE.md`, `tools/situations/README.md`, and the release wrapper. The agent
+did not launch or test the app on the phone.
