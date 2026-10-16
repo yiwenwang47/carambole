@@ -2,75 +2,601 @@
   {
     "id": "b3_20_word_reported_review",
     "format": "word",
-    "source": [{"text": "Le concert est reporté à demain."}],
-    "task": "Quelle phrase dit la même chose ?",
-    "response": {"kind": "choices", "choices": ["Il aura lieu demain, pas ce soir.", "Il a eu lieu hier.", "Il est annulé."], "answer": "Il aura lieu demain, pas ce soir."},
-    "feedback": "« Reporté » signifie qu'une nouvelle date est prévue."
+    "source": [
+      {
+        "text": "Le jardin pourrait ouvrir en juin, sous réserve de trouver des voisins pour l'entretenir."
+      }
+    ],
+    "task": "What does « sous réserve de » mean here?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "subject to a condition",
+        "despite",
+        "as soon as"
+      ],
+      "answer": "subject to a condition"
+    },
+    "feedback": "L'ouverture dépend de la présence de voisins pour l'entretien."
   },
   {
     "id": "b3_20_dialogue_relief",
     "format": "dialogue",
     "source": [
-      {"speaker": "Léa", "text": "Le concert a été reporté à demain à cause d'une panne."},
-      {"speaker": "Inès", "text": "Je suis soulagée qu'il ait lieu quand même."}
+      {
+        "speaker": "Mairie",
+        "text": "Le projet de jardin reste possible si des voisins assurent l'entretien."
+      },
+      {
+        "speaker": "Inès",
+        "text": "Je suis soulagée qu'il ne soit pas rejeté. Nous cherchons encore une équipe."
+      }
     ],
-    "task": "Pourquoi Inès est-elle soulagée ?",
-    "response": {"kind": "choices", "choices": ["Le concert aura lieu demain.", "La panne est plus longue.", "Le taxi coûte moins cher."], "answer": "Le concert aura lieu demain."},
-    "feedback": "Le concert change de date, mais il n'est pas annulé."
+    "task": "Quelle conclusion respecte les deux messages ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Le projet reste possible, mais l'équipe d'entretien manque encore.",
+        "Le jardin est déjà ouvert et entretenu.",
+        "La mairie a rejeté le projet."
+      ],
+      "answer": "Le projet reste possible, mais l'équipe d'entretien manque encore."
+    },
+    "feedback": "Inès est soulagée que le projet reste possible ; elle cherche encore des personnes pour l'entretien."
   },
   {
     "id": "b3_20_word_malgre_review",
     "format": "word",
-    "source": [{"text": "Malgré la panne, le concert aura lieu demain."}],
-    "task": "Ici, « malgré la panne » signifie...",
-    "response": {"kind": "choices", "choices": ["Même avec la panne.", "À cause de la panne.", "Avant la panne."], "answer": "Même avec la panne."},
-    "feedback": "La panne n'empêche pas le concert d'avoir lieu demain."
+    "source": [
+      {
+        "text": "Malgré huit volontaires, l'entretien du jardin n'est pas encore organisé : personne ne sait quels jours venir."
+      }
+    ],
+    "task": "Ici, « malgré huit volontaires » signifie...",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Même avec huit volontaires.",
+        "Grâce aux huit volontaires.",
+        "Avant l’arrivée des volontaires."
+      ],
+      "answer": "Même avec huit volontaires."
+    },
+    "feedback": "Les volontaires existent, mais cela ne suffit pas à organiser l'entretien."
   },
   {
     "id": "b3_20_microtext_two_sources",
     "format": "microtext",
-    "source": [{"text": "Affiche : « Concert demain à huit heures. » Message d'Inès : « Malgré le report, je viendrai. »"}],
-    "task": "Quelle phrase utilise les deux informations ?",
+    "source": [
+      {
+        "text": "Plan présenté par la mairie : « Quatre bancs resteront sur la place. Deux arbres seront ajoutés. » Message de Léa : « Je suis contente pour les bancs, mais j'attends le budget avant de juger l'ensemble du projet. »"
+      }
+    ],
+    "task": "Que sait-on, et que Léa attend-elle encore ?",
     "response": {
       "kind": "choices",
       "choices": [
-        "Le concert aura lieu demain et Inès compte venir.",
-        "Le concert est annulé et Inès reste chez elle.",
-        "L'affiche ne donne aucune heure."
+        "Le plan garde les bancs ; Léa attend le budget.",
+        "Le plan retire les bancs ; Léa accepte le coût.",
+        "Le budget est fixé ; Léa attend le plan."
       ],
-      "answer": "Le concert aura lieu demain et Inès compte venir."
+      "answer": "Le plan garde les bancs ; Léa attend le budget."
     },
-    "feedback": "L'affiche donne la date ; Inès dit qu'elle viendra."
+    "feedback": "Le plan précise le sort des bancs ; le montant manque encore pour Léa."
   },
   {
     "id": "b3_20_rewrite_synthesis",
     "format": "rewrite",
-    "source": [{"text": "Léa : « J'ai trouvé le concert bon. » Inès : « Il a commencé en retard. »"}],
-    "task": "Résume les deux messages avec « même si ».",
+    "source": [
+      {
+        "text": "Léa soutient le jardin : il rendrait la place plus verte. Le budget n'est pas encore fixé."
+      }
+    ],
+    "task": "Résume son avis avec « même si ».",
     "response": {
       "kind": "typed",
-      "answer": "Même si le concert a commencé en retard, Léa l'a trouvé bon",
+      "answer": "Léa soutient le jardin même si son coût est incertain",
       "accepted": [
-        "Même si le concert a commencé en retard, Léa l'a trouvé bon",
-        "Léa l'a trouvé bon même s'il a commencé en retard"
+        "Léa soutient le jardin même si son coût est incertain",
+        "Léa soutient le jardin même si le budget reste incertain"
       ]
     },
-    "feedback": "La phrase garde le retard et attribue l'avis positif à Léa."
+    "feedback": "Léa garde son soutien tout en reconnaissant que le montant n'est pas fixé."
   },
   {
     "id": "b3_20_microtext_claim_and_source",
     "format": "microtext",
-    "source": [{"text": "Affiche : « Le concert aura lieu demain à huit heures. » Théo : « J'ai entendu une rumeur : il commencerait à neuf heures. »"}],
-    "task": "Quelle conclusion respecte les deux textes ?",
+    "source": [
+      {
+        "text": "Compte rendu de la mairie : « Aucune décision finale n'a été prise sur le jardin. Une nouvelle réunion aura lieu vendredi. » Message d'un voisin : « On m'a dit que le projet avait été refusé. »"
+      }
+    ],
+    "task": "Quelle conclusion respecte la différence entre les deux sources ?",
     "response": {
       "kind": "choices",
       "choices": [
-        "L'affiche annonce huit heures ; la version de neuf heures reste une rumeur.",
-        "Le concert est confirmé à neuf heures.",
-        "Le concert n'aura pas lieu demain."
+        "Le refus est rapporté, mais le compte rendu ne le confirme pas.",
+        "La mairie confirme le refus du jardin.",
+        "Le jardin ouvrira vendredi."
       ],
-      "answer": "L'affiche annonce huit heures ; la version de neuf heures reste une rumeur."
+      "answer": "Le refus est rapporté, mais le compte rendu ne le confirme pas."
     },
-    "feedback": "L'affiche annonce huit heures ; Théo rapporte seulement une rumeur."
+    "feedback": "Le voisin rapporte ce qu'il a entendu ; le compte rendu dit qu'aucune décision finale n'est prise."
+  },
+  {
+    "id": "b3_20_microtext_garden_sources",
+    "format": "microtext",
+    "source": [
+      {
+        "text": "Compte rendu de la mairie : « Le jardin pourra ouvrir en juin si un groupe de voisins accepte l'entretien. » Message d'Inès : « Nous sommes huit volontaires, mais nous n'avons pas encore réparti les tâches. »"
+      }
+    ],
+    "task": "Quelle conclusion les deux sources permettent-elles ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "L'ouverture reste possible, sous réserve d'organiser l'entretien.",
+        "Le jardin ouvrira certainement en juin.",
+        "La mairie a refusé le projet faute de volontaires."
+      ],
+      "answer": "L'ouverture reste possible, sous réserve d'organiser l'entretien."
+    },
+    "feedback": "La mairie pose une condition ; les volontaires existent, mais l'organisation manque encore."
+  },
+  {
+    "id": "b3_20_dialogue_claim_vs_record",
+    "format": "dialogue",
+    "source": [
+      {
+        "speaker": "Théo",
+        "text": "J'ai entendu dire que le jardin coûterait deux mille euros."
+      },
+      {
+        "speaker": "Léa",
+        "text": "Le compte rendu donne mille cinq cents euros, mais le devis final n'est pas signé."
+      }
+    ],
+    "task": "Quelle formulation distingue la rumeur du montant écrit ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Théo évoque deux mille euros ; le compte rendu indique mille cinq cents euros, encore provisoires.",
+        "La mairie a fixé définitivement le prix à deux mille euros.",
+        "Les deux sources confirment le même montant."
+      ],
+      "answer": "Théo évoque deux mille euros ; le compte rendu indique mille cinq cents euros, encore provisoires."
+    },
+    "feedback": "Le compte rendu est écrit, mais le devis n'est pas définitif ; le chiffre de Théo est entendu."
+  },
+  {
+    "id": "b3_20_rewrite_condition_synthesis",
+    "format": "rewrite",
+    "source": [
+      {
+        "text": "La mairie autorise le jardin si des voisins assurent l'entretien. Huit voisins sont volontaires, mais leurs tâches ne sont pas encore réparties."
+      }
+    ],
+    "task": "Résume la situation avec « possible » et « si ».",
+    "response": {
+      "kind": "typed",
+      "answer": "L'ouverture du jardin reste possible si les voisins organisent l'entretien",
+      "accepted": [
+        "L'ouverture du jardin reste possible si les voisins organisent l'entretien",
+        "L'ouverture du jardin est possible si les voisins organisent l'entretien"
+      ]
+    },
+    "feedback": "La condition concerne l'organisation de l'entretien, pas seulement la présence de volontaires."
+  },
+  {
+    "id": "b3_20_microtext_final_synthesis",
+    "format": "microtext",
+    "source": [
+      {
+        "text": "Mairie : « La place serait plus verte grâce au jardin, à condition que son entretien soit assuré. Le budget annoncé est provisoire. » Inès : « Des voisins sont volontaires ; nous devons encore décider qui fera quoi. Certains s'inquiètent aussi du coût. »"
+      }
+    ],
+    "task": "Quel résumé garde à la fois l'avantage et les réserves ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Le jardin pourrait améliorer la place, mais l'entretien et le coût restent à préciser.",
+        "Le jardin est financé et son entretien est déjà organisé.",
+        "Les voisins s'opposent tous au jardin malgré un budget définitif."
+      ],
+      "answer": "Le jardin pourrait améliorer la place, mais l'entretien et le coût restent à préciser."
+    },
+    "feedback": "Le bénéfice est envisagé ; l'organisation et le montant ne sont pas fixés."
+  },
+  {
+    "id": "b3_20_microtext_plan_and_reply",
+    "format": "microtext",
+    "source": [
+      {
+        "text": "Plan de la mairie : « Le jardin pourrait ouvrir en juin si l'entretien est organisé. Quatre bancs resteront. Le budget sera présenté vendredi. » Message de Léa : « Je suis rassurée pour les bancs, mais je réserverai mon avis jusqu'à la présentation du budget. » Les voisins volontaires n'ont pas encore fixé leurs jours."
+      }
+    ],
+    "task": "Quelle synthèse garde les conditions et la position de Léa ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Les bancs sont conservés, mais l'ouverture et l'avis de Léa dépendent encore de points à régler.",
+        "Le jardin ouvrira en juin puisque Léa a donné son accord définitif.",
+        "Le budget est approuvé, mais les bancs seront retirés."
+      ],
+      "answer": "Les bancs sont conservés, mais l'ouverture et l'avis de Léa dépendent encore de points à régler."
+    },
+    "feedback": "L'entretien reste à organiser pour l'ouverture ; Léa attend le budget avant de se prononcer."
+  },
+  {
+    "id": "b3_20_microtext_minutes_and_claim",
+    "format": "microtext",
+    "source": [
+      {
+        "text": "Compte rendu de la réunion : « Huit voisins ont proposé leur aide pour le jardin. Le budget sera examiné vendredi ; aucune date d'ouverture n'est fixée. » Un message partagé affirme que la mairie a déjà approuvé le budget et annoncé une ouverture en juin. Inès prépare une réponse au groupe."
+      }
+    ],
+    "task": "Quelle réponse d'Inès distingue les faits du message partagé ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Huit voisins se sont proposés, mais le budget et la date d'ouverture ne sont pas encore fixés.",
+        "La mairie a approuvé le budget et fixé l'ouverture en juin.",
+        "Personne ne s'est proposé et la mairie a refusé le jardin."
+      ],
+      "answer": "Huit voisins se sont proposés, mais le budget et la date d'ouverture ne sont pas encore fixés."
+    },
+    "feedback": "Le compte rendu confirme les volontaires et reporte l'examen du budget ; aucune ouverture n'est datée."
+  },
+  {
+    "id": "b3_20_dialogue_cautious_conclusion",
+    "format": "dialogue",
+    "source": [
+      {
+        "speaker": "Mairie",
+        "text": "Le plan garde les bancs. Le jardin reste possible, à condition qu'une équipe organise son entretien. Le budget sera présenté vendredi."
+      },
+      {
+        "speaker": "Inès",
+        "text": "Des voisins se sont proposés, mais nous n'avons pas encore réparti les jours. Léa attend le budget avant de décider si elle soutient le projet."
+      }
+    ],
+    "task": "Quelle conclusion peut être transmise sans annoncer une décision acquise ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Le plan répond à la demande sur les bancs ; l'entretien et le budget restent à préciser.",
+        "L'équipe est organisée et Léa a définitivement approuvé le budget.",
+        "La mairie a retiré les bancs et rejeté le projet."
+      ],
+      "answer": "Le plan répond à la demande sur les bancs ; l'entretien et le budget restent à préciser."
+    },
+    "feedback": "Les bancs sont confirmés ; les autres conditions ne sont pas encore réglées."
+  },
+  {
+    "id": "b3_20_microtext_plan_and_witness",
+    "format": "microtext",
+    "source": [
+      {
+        "text": "Compte rendu municipal : « Le budget du jardin sera examiné vendredi. Quatre bancs resteront. » Un voisin écrit : « On m'a dit que le budget était déjà approuvé ; les bancs, eux, disparaîtraient. »"
+      }
+    ],
+    "task": "Quelle synthèse suit le compte rendu plutôt que la rumeur ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Les bancs resteront et le budget doit encore être examiné.",
+        "Le budget est approuvé et tous les bancs seront retirés.",
+        "Ni les bancs ni le budget ne sont mentionnés officiellement."
+      ],
+      "answer": "Les bancs resteront et le budget doit encore être examiné."
+    },
+    "feedback": "Le compte rendu confirme les bancs et annonce seulement un examen futur du budget."
+  },
+  {
+    "id": "b3_20_rewrite_two_source_summary",
+    "format": "rewrite",
+    "source": [
+      {
+        "text": "Mairie : « Le jardin pourra ouvrir si l'entretien est organisé. » Inès : « Nous avons des volontaires, mais aucun calendrier. »"
+      }
+    ],
+    "task": "Écris une brève synthèse avec « si ».",
+    "response": {
+      "kind": "typed",
+      "answer": "Le jardin pourra ouvrir si les volontaires fixent un calendrier d'entretien",
+      "accepted": [
+        "Le jardin pourra ouvrir si les volontaires fixent un calendrier d'entretien",
+        "Le jardin pourra ouvrir si un calendrier d'entretien est fixé"
+      ]
+    },
+    "feedback": "Les volontaires existent, mais Inès indique qu'il manque encore un calendrier."
+  },
+  {
+    "id": "b3_20_dialogue_cautious_forward",
+    "format": "dialogue",
+    "source": [
+      {
+        "speaker": "Inès",
+        "text": "J'ai entendu que le jardin ouvrirait en juin."
+      },
+      {
+        "speaker": "Léa",
+        "text": "Le compte rendu ne fixe aucune date. Il dit seulement que l'entretien doit être organisé avant l'ouverture."
+      }
+    ],
+    "task": "Quel message Léa peut-elle transmettre au groupe ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Une ouverture en juin est évoquée, mais aucune date n'est confirmée ; l'entretien reste à organiser.",
+        "Le compte rendu confirme juin et annonce que l'entretien est terminé.",
+        "Le jardin ne pourra jamais ouvrir puisque la date n'est pas fixée."
+      ],
+      "answer": "Une ouverture en juin est évoquée, mais aucune date n'est confirmée ; l'entretien reste à organiser."
+    },
+    "feedback": "La date vient d'une information entendue ; le compte rendu pose une condition sans date."
+  },
+  {
+    "id": "b3_20_microtext_concession_synthesis",
+    "format": "microtext",
+    "source": [
+      {
+        "text": "Avis de Théo : « Le jardin rendrait la place plus agréable, même si l'entretien demande du temps. » Note de réunion : « Huit voisins proposent leur aide ; la répartition des jours reste à faire. »"
+      }
+    ],
+    "task": "Quelle conclusion combine les deux sources sans exagérer ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Le jardin a un avantage possible et des volontaires, mais l'entretien reste à répartir.",
+        "Le jardin est déjà entretenu chaque jour par huit voisins.",
+        "Théo rejette le jardin car personne ne veut aider."
+      ],
+      "answer": "Le jardin a un avantage possible et des volontaires, mais l'entretien reste à répartir."
+    },
+    "feedback": "L'avis indique un bénéfice possible ; la note confirme l'aide proposée, pas son calendrier."
+  },
+  {
+    "id": "b3_20_rewrite_position_and_condition",
+    "format": "rewrite",
+    "source": [
+      {
+        "text": "Plan : « Les bancs resteront. Le budget sera présenté vendredi. » Léa : « Je suis rassurée pour les bancs ; je déciderai après avoir vu le budget. »"
+      }
+    ],
+    "task": "Résume la position de Léa en commençant par « Léa ».",
+    "response": {
+      "kind": "typed",
+      "answer": "Léa est rassurée pour les bancs mais attend le budget avant de décider",
+      "accepted": [
+        "Léa est rassurée pour les bancs mais attend le budget avant de décider",
+        "Léa est rassurée que les bancs restent mais attend le budget avant de décider"
+      ]
+    },
+    "feedback": "Sa première réserve est levée ; sa décision dépend encore du budget."
+  },
+  {
+    "id": "b3_20_microtext_final_two_source",
+    "format": "microtext",
+    "source": [
+      {
+        "text": "Mairie : « Le plan conserve les bancs. Le jardin reste possible si une équipe assure l'entretien ; le budget sera présenté vendredi. » Inès : « Des voisins veulent aider, mais nous n'avons pas encore fixé les jours. Léa attend le budget avant de voter. »"
+      }
+    ],
+    "task": "Quelle conclusion tient compte des deux sources et des deux conditions ouvertes ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Les bancs restent ; l'entretien doit être organisé et Léa attend le budget.",
+        "L'équipe d'entretien est prête et Léa a déjà voté pour.",
+        "La mairie a retiré les bancs et rejeté le jardin."
+      ],
+      "answer": "Les bancs restent ; l'entretien doit être organisé et Léa attend le budget."
+    },
+    "feedback": "Le plan règle la question des bancs ; l'organisation et le budget restent ouverts."
+  },
+  {
+    "id": "b3_20_microtext_two_source_time",
+    "format": "microtext",
+    "source": [
+      {
+        "text": "Compte rendu : « Le budget sera étudié vendredi ; aucune date d’ouverture n’est fixée. » Message d’Inès : « Huit voisins se sont proposés pour l’entretien, mais il nous manque un calendrier. »"
+      }
+    ],
+    "task": "Quelle conclusion suit les deux sources ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Des volontaires existent, mais le budget, le calendrier et la date d’ouverture restent ouverts.",
+        "Le budget et la date d’ouverture sont approuvés.",
+        "Aucun voisin ne souhaite participer."
+      ],
+      "answer": "Des volontaires existent, mais le budget, le calendrier et la date d’ouverture restent ouverts."
+    },
+    "feedback": "Les sources confirment l’aide proposée et les points en attente."
+  },
+  {
+    "id": "b3_20_rewrite_two_source_condition",
+    "format": "rewrite",
+    "source": [
+      {
+        "text": "Mairie : « Le plan conserve quatre bancs ; le devis final sera présenté vendredi. » Léa : « Je suis rassurée pour les bancs, mais j'attends le montant avant de voter. »"
+      }
+    ],
+    "task": "Résume la position de Léa avec « malgré ».",
+    "response": {
+      "kind": "typed",
+      "answer": "Malgré le maintien des bancs Léa attend le devis final avant de voter",
+      "accepted": [
+        "Malgré le maintien des bancs Léa attend le devis final avant de voter"
+      ]
+    },
+    "feedback": "Le plan répond à une réserve de Léa ; le coût reste à connaître avant son vote."
+  },
+  {
+    "id": "b3_20_dialogue_two_positions",
+    "format": "dialogue",
+    "source": [
+      {
+        "speaker": "Léa",
+        "text": "Je soutiens le jardin puisque les bancs restent, sous réserve du budget."
+      },
+      {
+        "speaker": "Malik",
+        "text": "Le budget me convient, mais je veux un calendrier d’arrosage."
+      }
+    ],
+    "task": "Quelle synthèse garde leurs réserves distinctes ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Léa attend le budget ; Malik attend le calendrier d’arrosage.",
+        "Tous deux attendent seulement le budget.",
+        "Tous deux refusent les bancs."
+      ],
+      "answer": "Léa attend le budget ; Malik attend le calendrier d’arrosage."
+    },
+    "feedback": "Chaque personne pose une condition différente."
+  },
+  {
+    "id": "b3_20_microtext_record_vs_claim",
+    "format": "microtext",
+    "source": [
+      {
+        "text": "Compte rendu : « Le devis du jardin est provisoire : mille cinq cents euros. » Message partagé : « Le prix final sera deux mille euros. » Aucun devis final n’est publié."
+      }
+    ],
+    "task": "Que peut-on affirmer ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Le seul montant écrit dans le compte rendu est provisoire ; le prix final reste inconnu.",
+        "Le prix final est deux mille euros.",
+        "Le compte rendu ne donne aucun montant."
+      ],
+      "answer": "Le seul montant écrit dans le compte rendu est provisoire ; le prix final reste inconnu."
+    },
+    "feedback": "Le message partagé ne constitue pas un devis final."
+  },
+  {
+    "id": "b3_20_rewrite_attributed_synthesis",
+    "format": "rewrite",
+    "source": [
+      {
+        "text": "Mairie : « Quatre bancs resteront. » Un voisin affirme qu’ils disparaîtront tous."
+      }
+    ],
+    "task": "Résume la contradiction en commençant par « Selon la mairie ».",
+    "response": {
+      "kind": "typed",
+      "answer": "Selon la mairie quatre bancs resteront malgré l’affirmation contraire d’un voisin",
+      "accepted": [
+        "Selon la mairie quatre bancs resteront malgré l’affirmation contraire d’un voisin"
+      ]
+    },
+    "feedback": "La source officielle et l’affirmation du voisin restent distinctes."
+  },
+  {
+    "id": "b3_20_microtext_changed_status",
+    "format": "microtext",
+    "source": [
+      {
+        "text": "Lundi, le projet attendait un groupe d’entretien. Jeudi, huit voisins signent un engagement et répartissent les jours. Le compte rendu précise que le budget sera examiné vendredi avant toute décision finale."
+      }
+    ],
+    "task": "Quel point a changé, et lequel reste ouvert ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "L’entretien est organisé ; le budget attend encore un examen.",
+        "Le budget est approuvé ; aucun voisin ne s’est engagé.",
+        "La décision finale a été prise lundi."
+      ],
+      "answer": "L’entretien est organisé ; le budget attend encore un examen."
+    },
+    "feedback": "L’engagement règle l’organisation, pas le budget."
+  },
+  {
+    "id": "b3_20_dialogue_reaction_and_condition",
+    "format": "dialogue",
+    "source": [
+      {
+        "speaker": "Inès",
+        "text": "Nous avons enfin réparti les jours d’arrosage."
+      },
+      {
+        "speaker": "Léa",
+        "text": "Je suis soulagée que ce soit fait. J’attends encore le budget avant de voter."
+      }
+    ],
+    "task": "Quelle conclusion est justifiée ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "L’entretien est organisé, mais Léa n’a pas encore décidé son vote.",
+        "Léa a déjà voté contre le jardin.",
+        "Le budget a été approuvé avec l’arrosage."
+      ],
+      "answer": "L’entretien est organisé, mais Léa n’a pas encore décidé son vote."
+    },
+    "feedback": "Le soulagement concerne l’arrosage ; le vote dépend encore du budget."
+  },
+  {
+    "id": "b3_20_microtext_evidence_limit",
+    "format": "microtext",
+    "source": [
+      {
+        "text": "Note de réunion : « Le plan conserve quatre bancs et prévoit deux arbres. » Avis de Théo : « La place sera sûrement plus agréable. » Avis d’Inès : « Le coût annuel doit être précisé. »"
+      }
+    ],
+    "task": "Quelle synthèse distingue plan et appréciations ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Le plan prévoit bancs et arbres ; son agrément et son coût restent des points à discuter.",
+        "La note prouve que tous les habitants aimeront la place.",
+        "Inès confirme que le coût annuel est fixé."
+      ],
+      "answer": "Le plan prévoit bancs et arbres ; son agrément et son coût restent des points à discuter."
+    },
+    "feedback": "Le plan décrit les aménagements ; les avis et le coût demandent encore examen."
+  },
+  {
+    "id": "b3_20_rewrite_cautious_final",
+    "format": "rewrite",
+    "source": [
+      {
+        "text": "Le plan garde les bancs. L’entretien est organisé. Le budget doit encore être approuvé."
+      }
+    ],
+    "task": "Écris une conclusion brève avec « même si ».",
+    "response": {
+      "kind": "typed",
+      "answer": "Le budget du jardin reste à approuver même si les bancs sont conservés et que l'entretien est organisé",
+      "accepted": [
+        "Le budget du jardin reste à approuver même si les bancs sont conservés et que l'entretien est organisé"
+      ]
+    },
+    "feedback": "Le plan et l'entretien sont précisés ; seul le statut du budget est encore ouvert dans ce texte."
+  },
+  {
+    "id": "b3_20_microtext_final_balanced",
+    "format": "microtext",
+    "source": [
+      {
+        "text": "Mairie : « Les bancs resteront ; l’ouverture dépend de l’entretien et du budget. » Groupe de voisins : « Les jours d’arrosage sont répartis ; nous attendons le vote sur le budget vendredi. »"
+      }
+    ],
+    "task": "Quelle conclusion est maintenant la plus précise ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "L’entretien est organisé, mais l’ouverture dépend encore du vote sur le budget.",
+        "Le jardin est ouvert puisque les voisins arrosent déjà.",
+        "Les bancs seront retirés si le budget est voté."
+      ],
+      "answer": "L’entretien est organisé, mais l’ouverture dépend encore du vote sur le budget."
+    },
+    "feedback": "Le calendrier est prêt ; le budget reste à décider."
   }
 ]

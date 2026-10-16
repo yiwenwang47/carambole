@@ -17,7 +17,9 @@ Older history is in `docs/archive/` and git log.
   `docs/plans/2026-10-15-book-3-content-checkpoint-handoff.md`. The curriculum
   map is in `docs/plans/2026-10-15-book-3-curriculum-handoff.md`. The user tried
   module 10 in the simulator and approved this checkpoint. DEBUG-only Test book
-  cards cover modules 01–20; production Book 3 content and progress are pending.
+  cards cover modules 01–20. The current 550-card handoff is
+  `docs/plans/2026-10-15-book-3-content-final-handoff.md`; production Book 3
+  content and progress are pending.
 - **Languages home (2026-10-14):** root is `Features/Languages/LanguagesView.swift`
   (Specimen layout) → `LibraryView(language:)`; marks in
   `DesignSystem/LanguageMark.swift` (Cut paper default, Script sticker; picked

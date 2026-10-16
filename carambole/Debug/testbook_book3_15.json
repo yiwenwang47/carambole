@@ -2,52 +2,623 @@
   {
     "id": "b3_15_word_rumeur",
     "format": "word",
-    "source": [{"text": "Une rumeur dit que le concert n'aura pas lieu, mais personne ne l'a confirmé."}],
+    "source": [
+      {
+        "text": "Une rumeur dit que la piscine va fermer. La mairie n'a publié aucune annonce, et personne n'a confirmé cette information."
+      }
+    ],
     "task": "What is « une rumeur »?",
-    "response": {"kind": "choices", "choices": ["an unconfirmed rumor", "a confirmed date", "a ticket"], "answer": "an unconfirmed rumor"},
-    "feedback": "La rumeur circule sans confirmation."
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "an unconfirmed rumor",
+        "an official notice",
+        "a reservation"
+      ],
+      "answer": "an unconfirmed rumor"
+    },
+    "feedback": "L'information circule sans confirmation officielle."
   },
   {
     "id": "b3_15_dialogue_claim",
     "format": "dialogue",
     "source": [
-      {"speaker": "Léa", "text": "Une rumeur dit que le concert n'aura pas lieu demain."},
-      {"speaker": "Théo", "text": "Inès a confirmé qu'il aura lieu demain."}
+      {
+        "speaker": "Nora",
+        "text": "J'ai entendu une rumeur : la piscine fermerait lundi."
+      },
+      {
+        "speaker": "Malik",
+        "text": "La mairie confirme seulement une fermeture mardi pour des travaux."
+      }
     ],
-    "task": "Quelle information est confirmée ?",
-    "response": {"kind": "choices", "choices": ["Le concert aura lieu demain.", "Le concert n'aura pas lieu.", "Léa a perdu son billet."], "answer": "Le concert aura lieu demain."},
-    "feedback": "Théo rapporte une confirmation d'Inès ; Léa rapporte une rumeur."
+    "task": "Quelle information Malik présente-t-il comme confirmée ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "La piscine fermera mardi.",
+        "La piscine fermera lundi.",
+        "La piscine restera ouverte toute la semaine."
+      ],
+      "answer": "La piscine fermera mardi."
+    },
+    "feedback": "Malik attribue le mardi à une confirmation de la mairie ; le lundi reste une rumeur."
   },
   {
     "id": "b3_15_word_douter",
     "format": "word",
-    "source": [{"text": "Je doute que le concert ait lieu : je n'ai reçu aucune confirmation."}],
+    "source": [
+      {
+        "text": "Je doute que la piscine ferme lundi : la mairie n'a annoncé qu'une fermeture mardi."
+      }
+    ],
     "task": "What does « douter » mean?",
-    "response": {"kind": "choices", "choices": ["to doubt", "to confirm", "to schedule"], "answer": "to doubt"},
-    "feedback": "La personne n'est pas sûre que le concert aura lieu."
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "to doubt",
+        "to confirm",
+        "to announce"
+      ],
+      "answer": "to doubt"
+    },
+    "feedback": "La personne met en question la fermeture de lundi."
   },
   {
     "id": "b3_15_microtext_fact_doubt",
     "format": "microtext",
-    "source": [{"text": "Inès sait que la date a changé : elle a reçu un message. Léa doute que l'heure soit correcte : elle n'a pas vu l'affiche."}],
-    "task": "De quoi Léa doute-t-elle ?",
-    "response": {"kind": "choices", "choices": ["De l'heure du concert.", "Du changement de date.", "Du nom de Théo."], "answer": "De l'heure du concert."},
-    "feedback": "Inès a une information ; Léa n'est pas sûre de l'heure."
+    "source": [
+      {
+        "text": "Sur le site de la mairie, la fermeture de mardi est annoncée. Nora sait donc que la piscine sera fermée ce jour-là. Elle doute en revanche qu'elle ferme aussi lundi : aucun avis ne le dit."
+      }
+    ],
+    "task": "De quel jour Nora doute-t-elle ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "De lundi.",
+        "De mardi.",
+        "De mercredi."
+      ],
+      "answer": "De lundi."
+    },
+    "feedback": "Le mardi est annoncé ; le lundi ne l'est pas."
   },
   {
     "id": "b3_15_rewrite_doubt",
     "format": "rewrite",
-    "source": [{"text": "Le concert aura lieu demain ? Je ne suis pas sûre."}],
+    "source": [
+      {
+        "text": "La piscine fermera lundi ? Je ne suis pas sûre."
+      }
+    ],
     "task": "Exprime le doute avec « je doute que ».",
-    "response": {"kind": "typed", "answer": "Je doute que le concert ait lieu demain", "accepted": ["Je doute que le concert ait lieu demain"]},
-    "feedback": "Après « je doute que », on dit « ait lieu »."
+    "response": {
+      "kind": "typed",
+      "answer": "Je doute que la piscine ferme lundi",
+      "accepted": [
+        "Je doute que la piscine ferme lundi"
+      ]
+    },
+    "feedback": "« Douter que » demande ici le subjonctif « ferme »."
   },
   {
     "id": "b3_15_microtext_confirmed_hour",
     "format": "microtext",
-    "source": [{"text": "Une rumeur dit que le concert commence à neuf heures. Sur l'affiche, l'heure confirmée est huit heures. Inès transmet cette heure à Léa."}],
+    "source": [
+      {
+        "text": "Une rumeur annonce que la projection commence à vingt heures. Le programme publié par le cinéma confirme dix-neuf heures trente. Léa transmet l'horaire du programme à Inès."
+      }
+    ],
     "task": "Quelle heure est confirmée ?",
-    "response": {"kind": "choices", "choices": ["Huit heures.", "Neuf heures.", "Aucune heure."], "answer": "Huit heures."},
-    "feedback": "L'affiche donne huit heures ; neuf heures vient de la rumeur."
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Dix-neuf heures trente.",
+        "Vingt heures.",
+        "Aucune heure."
+      ],
+      "answer": "Dix-neuf heures trente."
+    },
+    "feedback": "Le programme du cinéma, et non la rumeur, donne l'heure confirmée."
+  },
+  {
+    "id": "b3_15_word_supposer",
+    "format": "word",
+    "source": [
+      {
+        "text": "Le train n'est pas encore affiché. Théo suppose qu'il aura du retard, mais il n'a reçu aucune annonce."
+      }
+    ],
+    "task": "What does « supposer » mean here?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "to assume",
+        "to verify",
+        "to cancel"
+      ],
+      "answer": "to assume"
+    },
+    "feedback": "Théo imagine un retard sans confirmation."
+  },
+  {
+    "id": "b3_15_dialogue_source",
+    "format": "dialogue",
+    "source": [
+      {
+        "speaker": "Inès",
+        "text": "On m'a dit que le train serait supprimé."
+      },
+      {
+        "speaker": "Léa",
+        "text": "Le site de la compagnie indique qu'il partira avec vingt minutes de retard. Je doute qu'il soit supprimé."
+      }
+    ],
+    "task": "Que peut-on affirmer d'après la source citée par Léa ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Le train partira avec vingt minutes de retard.",
+        "Le train est supprimé.",
+        "Le train partira à l'heure."
+      ],
+      "answer": "Le train partira avec vingt minutes de retard."
+    },
+    "feedback": "Le site donne un retard ; la suppression vient d'une information non vérifiée."
+  },
+  {
+    "id": "b3_15_rewrite_certainty",
+    "format": "rewrite",
+    "source": [
+      {
+        "text": "Le site officiel confirme ceci : la route est ouverte."
+      }
+    ],
+    "task": "Commence par « Je sais que ».",
+    "response": {
+      "kind": "typed",
+      "answer": "Je sais que la route est ouverte",
+      "accepted": [
+        "Je sais que la route est ouverte"
+      ]
+    },
+    "feedback": "Un fait présenté comme confirmé prend l'indicatif « est »."
+  },
+  {
+    "id": "b3_15_microtext_two_sources",
+    "format": "microtext",
+    "source": [
+      {
+        "text": "Une publication affirme que le musée ferme définitivement. Sur son site, le musée annonce seulement une fermeture de trois semaines pour travaux. Nora écrit à ses amis : « Je sais que le musée ferme temporairement ; je doute qu'il ferme définitivement. »"
+      }
+    ],
+    "task": "Quelle affirmation dépasse ce que confirme le musée ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "La fermeture est définitive.",
+        "Le musée ferme trois semaines.",
+        "Il y aura des travaux."
+      ],
+      "answer": "La fermeture est définitive."
+    },
+    "feedback": "Le site du musée confirme une fermeture temporaire, pas définitive."
+  },
+  {
+    "id": "b3_15_rewrite_responsible",
+    "format": "rewrite",
+    "source": [
+      {
+        "text": "On m'a dit que le jardin ferme demain. Je n'ai pas vu d'annonce officielle."
+      }
+    ],
+    "task": "Transmets l'information avec prudence en commençant par « Il paraît que ».",
+    "response": {
+      "kind": "typed",
+      "answer": "Il paraît que le jardin ferme demain",
+      "accepted": [
+        "Il paraît que le jardin ferme demain",
+        "Il paraît que le jardin fermera demain"
+      ]
+    },
+    "feedback": "« Il paraît que » présente l'information comme rapportée, sans la confirmer."
+  },
+  {
+    "id": "b3_15_microtext_notice_scope",
+    "format": "microtext",
+    "source": [
+      {
+        "text": "Un message partagé annonce que toutes les séances du cinéma sont annulées. Le site du cinéma indique seulement que la séance de vendredi est reportée à dimanche ; il ne mentionne aucun changement pour samedi. Malik doit prévenir Nora, qui a réservé pour samedi."
+      }
+    ],
+    "task": "Que peut dire Malik à Nora sans dépasser la source du cinéma ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Le site ne signale aucun changement pour ta séance de samedi.",
+        "Toutes les séances du week-end sont annulées.",
+        "Le cinéma garantit que ta séance de samedi aura lieu."
+      ],
+      "answer": "Le site ne signale aucun changement pour ta séance de samedi."
+    },
+    "feedback": "Le site parle du vendredi et ne confirme ni l'annulation ni le maintien de samedi."
+  },
+  {
+    "id": "b3_15_dialogue_claim_attribution",
+    "format": "dialogue",
+    "source": [
+      {
+        "speaker": "Inès",
+        "text": "Une voisine dit que le musée ne rouvrira jamais après les travaux."
+      },
+      {
+        "speaker": "Nora",
+        "text": "Les travaux sont encore en cours. Le musée annonce une réouverture en mai sur son site, sans donner de date précise. Je vais prévenir Léa."
+      }
+    ],
+    "task": "Quel message distingue l'annonce du musée de l'affirmation de la voisine ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Le musée prévoit de rouvrir en mai ; une voisine affirme pourtant qu'il restera fermé.",
+        "Le musée a confirmé qu'il ne rouvrira jamais.",
+        "La voisine a annoncé la date exacte de la réouverture."
+      ],
+      "answer": "Le musée prévoit de rouvrir en mai ; une voisine affirme pourtant qu'il restera fermé."
+    },
+    "feedback": "Le site annonce un mois de réouverture ; la fermeture définitive est attribuée à la voisine."
+  },
+  {
+    "id": "b3_15_microtext_missing_confirmation",
+    "format": "microtext",
+    "source": [
+      {
+        "text": "La page officielle du festival confirme que le film de Nora figure au programme de samedi. Un compte non identifié affirme qu'elle recevra aussi un prix. Le règlement précise que les prix seront annoncés dimanche. Nora veut partager une bonne nouvelle sans annoncer un résultat inconnu."
+      }
+    ],
+    "task": "Quelle annonce peut-elle publier dès maintenant ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Mon film sera projeté samedi ; les prix seront annoncés dimanche.",
+        "Mon film a gagné un prix qui sera remis dimanche.",
+        "Le programme de samedi n'est pas encore confirmé."
+      ],
+      "answer": "Mon film sera projeté samedi ; les prix seront annoncés dimanche."
+    },
+    "feedback": "La projection figure au programme ; l'attribution d'un prix n'est pas encore connue."
+  },
+  {
+    "id": "b3_15_dialogue_verify_before_share",
+    "format": "dialogue",
+    "source": [
+      {
+        "speaker": "Théo",
+        "text": "On m'a dit que la piscine fermait aussi lundi."
+      },
+      {
+        "speaker": "Léa",
+        "text": "L'avis de la mairie annonce mardi seulement. Je vais répondre au groupe."
+      }
+    ],
+    "task": "Quelle réponse garde la distinction entre rumeur et avis ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "La mairie annonce mardi ; la fermeture de lundi reste à vérifier.",
+        "La mairie annonce une fermeture lundi et mardi.",
+        "La piscine sera ouverte mardi malgré l'avis de la mairie."
+      ],
+      "answer": "La mairie annonce mardi ; la fermeture de lundi reste à vérifier."
+    },
+    "feedback": "L'avis confirme mardi ; l'information sur lundi n'a pas de confirmation."
+  },
+  {
+    "id": "b3_15_rewrite_attributed_claim",
+    "format": "rewrite",
+    "source": [
+      {
+        "text": "Une voisine affirme que le jardin ouvrira lundi. La mairie n'a annoncé aucune date."
+      }
+    ],
+    "task": "Commence par « Selon une voisine » sans présenter la date comme confirmée.",
+    "response": {
+      "kind": "typed",
+      "answer": "Selon une voisine le jardin ouvrira lundi",
+      "accepted": [
+        "Selon une voisine le jardin ouvrira lundi",
+        "Selon une voisine le jardin ouvrirait lundi"
+      ]
+    },
+    "feedback": "La source de la date est nommée ; aucune annonce officielle ne la confirme."
+  },
+  {
+    "id": "b3_15_microtext_scope_of_notice",
+    "format": "microtext",
+    "source": [
+      {
+        "text": "Avis du cinéma : « La séance de vendredi est reportée à dimanche. Les billets de vendredi restent valables. » Un message partagé prétend que tous les billets du week-end doivent être échangés. Inès possède un billet pour vendredi."
+      }
+    ],
+    "task": "Que peut conclure Inès pour son billet ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Il reste valable pour la séance reportée à dimanche.",
+        "Elle doit l'échanger pour samedi.",
+        "Tous les billets du week-end ont été annulés."
+      ],
+      "answer": "Il reste valable pour la séance reportée à dimanche."
+    },
+    "feedback": "L'avis précise le sort des billets de vendredi, dont celui d'Inès."
+  },
+  {
+    "id": "b3_15_rewrite_doubt_past",
+    "format": "rewrite",
+    "source": [
+      {
+        "text": "Une publication affirme que le musée a fermé définitivement. Son site annonce une réouverture en mai. Nora ne croit pas à la fermeture définitive."
+      }
+    ],
+    "task": "Exprime le doute de Nora avec « elle doute que ».",
+    "response": {
+      "kind": "typed",
+      "answer": "Elle doute que le musée ait fermé définitivement",
+      "accepted": [
+        "Elle doute que le musée ait fermé définitivement",
+        "Nora doute que le musée ait fermé définitivement"
+      ]
+    },
+    "feedback": "Le doute porte sur une fermeture présentée comme déjà arrivée : « ait fermé »."
+  },
+  {
+    "id": "b3_15_microtext_two_levels",
+    "format": "microtext",
+    "source": [
+      {
+        "text": "Le programme du festival confirme que le film de Nora sera projeté samedi. Inès suppose que Nora recevra aussi un prix, car le public l'a applaudi. Le festival annoncera les prix dimanche."
+      }
+    ],
+    "task": "Quelle formulation peut être publiée avant dimanche ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "La projection est confirmée ; le prix n'est qu'une supposition d'Inès.",
+        "La projection et le prix sont confirmés par le festival.",
+        "Le film a reçu un prix, mais sa projection reste incertaine."
+      ],
+      "answer": "La projection est confirmée ; le prix n'est qu'une supposition d'Inès."
+    },
+    "feedback": "Le programme établit la projection ; les prix seront annoncés plus tard."
+  },
+  {
+    "id": "b3_15_dialogue_indicative_subjunctive",
+    "format": "dialogue",
+    "source": [
+      {
+        "speaker": "Nora",
+        "text": "Le site du cinéma confirme que la séance commence à dix-neuf heures. On m'a dit qu'elle pourrait être annulée, sans aucune annonce du cinéma."
+      },
+      {
+        "speaker": "Léa",
+        "text": "Je vais prévenir Théo avec prudence."
+      }
+    ],
+    "task": "Quelle phrase distingue le fait du doute ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Je sais que la séance commence à dix-neuf heures, mais je doute qu'elle soit annulée.",
+        "Je doute que la séance commence à dix-neuf heures et je sais qu'elle est annulée.",
+        "Je sais que la séance est annulée et qu'aucune heure n'est indiquée."
+      ],
+      "answer": "Je sais que la séance commence à dix-neuf heures, mais je doute qu'elle soit annulée."
+    },
+    "feedback": "L'heure vient du site ; l'annulation n'est pas confirmée."
+  },
+  {
+    "id": "b3_15_word_source_officielle",
+    "format": "word",
+    "source": [
+      {
+        "text": "Une affiche signée par le cinéma indique la nouvelle heure. Ce document est une source officielle ; un message anonyme ne l’est pas."
+      }
+    ],
+    "task": "What does « une source officielle » mean?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "an authorized source",
+        "an anonymous message",
+        "a private guess"
+      ],
+      "answer": "an authorized source"
+    },
+    "feedback": "L’affiche émane du cinéma lui-même."
+  },
+  {
+    "id": "b3_15_microtext_ticket_time",
+    "format": "microtext",
+    "source": [
+      {
+        "text": "Un ami affirme que le concert commence à vingt heures. Le billet de Léa indique dix-neuf heures trente ; le site de la salle affiche la même heure."
+      }
+    ],
+    "task": "Quelle heure Léa peut-elle transmettre comme confirmée ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Dix-neuf heures trente.",
+        "Vingt heures.",
+        "Aucune heure."
+      ],
+      "answer": "Dix-neuf heures trente."
+    },
+    "feedback": "Le billet et le site concordent."
+  },
+  {
+    "id": "b3_15_rewrite_reported_cancel",
+    "format": "rewrite",
+    "source": [
+      {
+        "text": "Théo dit : « La séance serait annulée. » Le cinéma n’a rien annoncé."
+      }
+    ],
+    "task": "Rapporte ses paroles avec « Selon Théo » sans confirmer l’annulation.",
+    "response": {
+      "kind": "typed",
+      "answer": "Selon Théo la séance serait annulée",
+      "accepted": [
+        "Selon Théo la séance serait annulée"
+      ]
+    },
+    "feedback": "Le conditionnel garde la distance avec l’affirmation de Théo."
+  },
+  {
+    "id": "b3_15_dialogue_ticket_check",
+    "format": "dialogue",
+    "source": [
+      {
+        "speaker": "Inès",
+        "text": "On me dit que nos billets ne sont plus valables."
+      },
+      {
+        "speaker": "Léa",
+        "text": "Le site du cinéma dit que les billets de vendredi restent valables dimanche."
+      }
+    ],
+    "task": "Quelle réponse s’appuie sur la source visible ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Le site indique que nos billets restent valables dimanche.",
+        "Nos billets sont annulés.",
+        "Le cinéma remboursera tous les billets lundi."
+      ],
+      "answer": "Le site indique que nos billets restent valables dimanche."
+    },
+    "feedback": "Le site traite explicitement les billets de vendredi."
+  },
+  {
+    "id": "b3_15_microtext_photo_old",
+    "format": "microtext",
+    "source": [
+      {
+        "text": "Une photo partagée aujourd’hui montre la piscine fermée. Sa légende indique « travaux de l’an dernier ». L’avis actuel de la mairie annonce une fermeture mardi prochain."
+      }
+    ],
+    "task": "Quelle conclusion évite de confondre les dates ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "La photo montre une ancienne fermeture ; mardi prochain est annoncé séparément.",
+        "La photo prouve que la piscine est fermée aujourd’hui.",
+        "L’avis actuel annule les travaux de l’an dernier."
+      ],
+      "answer": "La photo montre une ancienne fermeture ; mardi prochain est annoncé séparément."
+    },
+    "feedback": "La légende et l’avis parlent de deux périodes."
+  },
+  {
+    "id": "b3_15_rewrite_doubt_award",
+    "format": "rewrite",
+    "source": [
+      {
+        "text": "Un compte anonyme annonce que Nora a gagné un prix. Le festival ne publiera les résultats que demain. Inès n’est pas convaincue."
+      }
+    ],
+    "task": "Exprime le doute d’Inès avec « Elle doute que ».",
+    "response": {
+      "kind": "typed",
+      "answer": "Elle doute que Nora ait gagné un prix",
+      "accepted": [
+        "Elle doute que Nora ait gagné un prix"
+      ]
+    },
+    "feedback": "Le gain supposé est antérieur ; le résultat n’est pas confirmé."
+  },
+  {
+    "id": "b3_15_dialogue_quote_scope",
+    "format": "dialogue",
+    "source": [
+      {
+        "speaker": "Malik",
+        "text": "Le musée annonce trois semaines de fermeture."
+      },
+      {
+        "speaker": "Nora",
+        "text": "Un voisin dit qu’il ne rouvrira jamais."
+      }
+    ],
+    "task": "Quelle phrase distingue les deux informations ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Le musée annonce une fermeture de trois semaines ; la fermeture définitive est une affirmation du voisin.",
+        "Le musée confirme une fermeture définitive.",
+        "Le voisin confirme la date de réouverture."
+      ],
+      "answer": "Le musée annonce une fermeture de trois semaines ; la fermeture définitive est une affirmation du voisin."
+    },
+    "feedback": "L’annonce du musée est limitée dans le temps."
+  },
+  {
+    "id": "b3_15_microtext_no_negative_proof",
+    "format": "microtext",
+    "source": [
+      {
+        "text": "Le site de la salle confirme le concert de samedi. Il ne mentionne pas de deuxième séance dimanche. Une publication affirme que cette séance supplémentaire est déjà confirmée."
+      }
+    ],
+    "task": "Que peut-on dire de dimanche ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "La deuxième séance est annoncée par une publication, mais pas confirmée par la salle.",
+        "La salle a annulé la deuxième séance.",
+        "La salle a confirmé deux séances."
+      ],
+      "answer": "La deuxième séance est annoncée par une publication, mais pas confirmée par la salle."
+    },
+    "feedback": "Le silence du site ne prouve ni confirmation ni annulation."
+  },
+  {
+    "id": "b3_15_rewrite_confirmed_vs_suspected",
+    "format": "rewrite",
+    "source": [
+      {
+        "text": "Le programme confirme la projection de samedi. Inès croit que Nora recevra un prix dimanche."
+      }
+    ],
+    "task": "Commence par « Je sais que » et énonce seulement le fait confirmé.",
+    "response": {
+      "kind": "typed",
+      "answer": "Je sais que le film de Nora sera projeté samedi",
+      "accepted": [
+        "Je sais que le film de Nora sera projeté samedi"
+      ]
+    },
+    "feedback": "Le programme confirme la projection, pas le prix."
+  },
+  {
+    "id": "b3_15_microtext_updated_notice",
+    "format": "microtext",
+    "source": [
+      {
+        "text": "À huit heures, le site de la mairie annonçait la fermeture de la piscine mardi. À midi, un nouvel avis sur le même site précise qu’elle fermera mercredi à la place. Le message de Théo reprend encore l’ancien avis."
+      }
+    ],
+    "task": "Quelle information transmettre maintenant ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Le nouvel avis fixe la fermeture à mercredi.",
+        "La piscine fermera mardi et mercredi.",
+        "Théo a confirmé mercredi avant la mairie."
+      ],
+      "answer": "Le nouvel avis fixe la fermeture à mercredi."
+    },
+    "feedback": "Le nouvel avis remplace l’ancien."
   }
 ]

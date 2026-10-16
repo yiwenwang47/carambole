@@ -2,59 +2,59 @@
   {
     "id": "b3_08_word_reporter",
     "format": "word",
-    "source": [{"text": "Le concert est reporté à demain : il n'aura pas lieu ce soir."}],
-    "task": "What does « reporté » mean here?",
+    "source": [{"text": "L'ouverture de l'exposition est reportée à samedi : elle n'aura pas lieu vendredi comme prévu."}],
+    "task": "What does « reportée » mean here?",
     "response": {
       "kind": "choices",
       "choices": ["postponed", "finished early", "sold out"],
       "answer": "postponed"
     },
-    "feedback": "Le concert aura lieu demain au lieu de ce soir."
+    "feedback": "L’ouverture aura lieu samedi, un jour plus tard."
   },
   {
     "id": "b3_08_dialogue_cause",
     "format": "dialogue",
     "source": [
-      {"speaker": "Théo", "text": "Il y a une panne."},
-      {"speaker": "Léa", "text": "Donc le concert est reporté à demain."}
+      {"speaker": "Théo", "text": "La salle est fermée vendredi à cause d'une panne électrique."},
+      {"speaker": "Léa", "text": "Puisqu'on ne peut pas y entrer, l'ouverture est reportée à samedi."}
     ],
-    "task": "Pourquoi le concert est-il reporté ?",
+    "task": "Pourquoi l’ouverture change-t-elle de jour ?",
     "response": {
       "kind": "choices",
-      "choices": ["À cause d'une panne.", "Parce qu'Inès est partie.", "Parce que l'affiche est bleue."],
-      "answer": "À cause d'une panne."
+      "choices": ["La salle est fermée vendredi.", "Inès préfère le samedi.", "L'affiche n'est pas bleue."],
+      "answer": "La salle est fermée vendredi."
     },
-    "feedback": "« Donc » relie la panne à la décision de reporter le concert."
+    "feedback": "« Puisque » présente la fermeture comme la raison de la décision."
   },
   {
     "id": "b3_08_word_faute_de",
     "format": "word",
-    "source": [{"text": "Faute de temps, Léa n'a pas vérifié l'affiche."}],
+    "source": [{"text": "Faute de temps, Inès ne peut pas imprimer la nouvelle affiche avant ce soir."}],
     "task": "What does « faute de temps » mean?",
     "response": {
       "kind": "choices",
       "choices": ["for lack of time", "after a long time", "at the right time"],
       "answer": "for lack of time"
     },
-    "feedback": "Léa manquait de temps pour vérifier l'affiche."
+    "feedback": "Inès manque de temps pour finir l’impression."
   },
   {
     "id": "b3_08_microtext_update",
     "format": "microtext",
-    "source": [{"text": "Le concert devait commencer ce soir. Il y a eu une panne, donc il a été reporté à demain. Théo transmet la nouvelle à Inès."}],
-    "task": "Quand le concert aura-t-il lieu ?",
+    "source": [{"text": "La salle de l'exposition est fermée vendredi à cause d'une panne. L'ouverture est donc reportée à samedi. Inès transmet la nouvelle aux habitants."}],
+    "task": "Quand l’exposition ouvrira-t-elle ?",
     "response": {
       "kind": "choices",
-      "choices": ["Demain.", "Ce soir.", "Il a déjà eu lieu."],
-      "answer": "Demain."
+      "choices": ["Samedi.", "Vendredi.", "Elle est déjà ouverte."],
+      "answer": "Samedi."
     },
-    "feedback": "« Reporté à demain » donne la nouvelle date."
+    "feedback": "« Reportée à samedi » donne le nouveau jour."
   },
   {
     "id": "b3_08_rewrite_parce_que",
     "format": "rewrite",
-    "source": [{"text": "Il y a une panne. Le concert est reporté."}],
-    "task": "Relie les phrases avec « parce que ».",
+    "source": [{"text": "Un concert était prévu pour l'ouverture. Il y a une panne. Le concert est reporté."}],
+    "task": "Relie les deux dernières phrases avec « parce que ».",
     "response": {
       "kind": "typed",
       "answer": "Le concert est reporté parce qu'il y a une panne",
@@ -65,13 +65,289 @@
   {
     "id": "b3_08_microtext_consequence",
     "format": "microtext",
-    "source": [{"text": "Faute de temps, Léa n'a pas vérifié l'affiche. L'heure y était fausse, donc Inès est arrivée en retard. Le concert est maintenant reporté à demain à cause d'une panne."}],
-    "task": "Pourquoi Inès est-elle arrivée en retard ?",
+    "source": [{"text": "Inès n'a pas eu le temps d'imprimer la nouvelle affiche : faute de temps, elle a laissé l'ancienne dans la vitrine. L'ancienne indique vendredi, alors que l'ouverture est reportée à samedi."}],
+    "task": "Pourquoi des visiteurs pourraient-ils venir vendredi ?",
     "response": {
       "kind": "choices",
-      "choices": ["L'heure sur l'affiche était fausse.", "Le concert a été reporté.", "Théo a perdu l'affiche."],
-      "answer": "L'heure sur l'affiche était fausse."
+      "choices": ["L'ancienne affiche indique encore vendredi.", "La salle est ouverte vendredi.", "Inès a annulé samedi."],
+      "answer": "L'ancienne affiche indique encore vendredi."
     },
-    "feedback": "L'heure fausse a causé son retard ; la panne a causé le report du concert."
+    "feedback": "La date sur l’affiche n’a pas été corrigée pour les passants."
+  },
+  {
+    "id": "b3_08_word_entrainer",
+    "format": "word",
+    "source": [{"text": "La panne a entraîné un changement de date : l'ouverture aura lieu samedi au lieu de vendredi."}],
+    "task": "What does « a entraîné » mean here?",
+    "response": {
+      "kind": "choices",
+      "choices": ["led to", "prevented", "announced"],
+      "answer": "led to"
+    },
+    "feedback": "La panne est la cause du changement de date."
+  },
+  {
+    "id": "b3_08_dialogue_decision",
+    "format": "dialogue",
+    "source": [
+      {"speaker": "Léa", "text": "L'ancienne affiche indique toujours vendredi."},
+      {"speaker": "Inès", "text": "Alors j'envoie un message aux habitants ce soir ; ils auront la bonne date."}
+    ],
+    "task": "Pourquoi Inès envoie-t-elle un message ?",
+    "response": {
+      "kind": "choices",
+      "choices": ["Pour corriger l'information de l'affiche.", "Pour demander des photos.", "Pour réserver la salle vendredi."],
+      "answer": "Pour corriger l'information de l'affiche."
+    },
+    "feedback": "Le message donne la nouvelle date que l’affiche ne montre pas."
+  },
+  {
+    "id": "b3_08_microtext_causes",
+    "format": "microtext",
+    "source": [{"text": "La panne a fermé la salle vendredi, si bien que l'ouverture a été reportée. Faute de temps, Inès n'a pas changé l'affiche ; elle a transmis la nouvelle par message."}],
+    "task": "Quelle cause explique le report, et non le choix du message ?",
+    "response": {
+      "kind": "choices",
+      "choices": ["La panne.", "Le manque de temps.", "Le nombre de photos."],
+      "answer": "La panne."
+    },
+    "feedback": "La panne entraîne le report ; le manque de temps explique le message."
+  },
+  {
+    "id": "b3_08_rewrite_consequence",
+    "format": "rewrite",
+    "source": [{"text": "La salle est fermée vendredi. L'ouverture est reportée à samedi."}],
+    "task": "Relie les phrases avec « donc ».",
+    "response": {
+      "kind": "typed",
+      "answer": "La salle est fermée vendredi donc l'ouverture est reportée à samedi",
+      "accepted": ["La salle est fermée vendredi donc l'ouverture est reportée à samedi"]
+    },
+    "feedback": "« Donc » introduit la conséquence de la fermeture."
+  },
+  {
+    "id": "b3_08_microtext_order",
+    "format": "microtext",
+    "source": [{"text": "Vendredi matin, Théo découvre la panne. Léa décide alors de reporter l'ouverture. Inès prévient les habitants vendredi soir. L'ancienne affiche reste dans la vitrine jusqu'à samedi matin."}],
+    "task": "Qu’est-ce qui s’est passé après la décision de Léa ?",
+    "response": {
+      "kind": "choices",
+      "choices": ["Inès a prévenu les habitants.", "Théo a découvert la panne.", "L’exposition a ouvert vendredi."],
+      "answer": "Inès a prévenu les habitants."
+    },
+    "feedback": "Le message d’Inès suit la décision dans la chronologie."
+  },
+  {
+    "id": "b3_08_microtext_two_causes",
+    "format": "microtext",
+    "source": [{"text": "La panne électrique empêche l'ouverture de l'exposition vendredi. Léa la reporte donc à samedi. Inès voudrait changer l'affiche dans la vitrine, mais elle manque de temps ; elle prévient plutôt les habitants par message. Le report et le choix du message ont ainsi deux raisons différentes."}],
+    "task": "Quelle raison explique le choix du message ?",
+    "response": {
+      "kind": "choices",
+      "choices": ["Inès manque de temps pour changer l'affiche.", "La salle sera fermée samedi.", "Les habitants ont demandé un message."],
+      "answer": "Inès manque de temps pour changer l'affiche."
+    },
+    "feedback": "La panne cause le report ; le manque de temps explique le canal choisi."
+  },
+  {
+    "id": "b3_08_microtext_if_poster_changed",
+    "format": "microtext",
+    "source": [{"text": "L'ancienne affiche annonce toujours l'ouverture vendredi. Pourtant, à cause d'une panne, la salle ne pourra ouvrir que samedi. Inès envoie un message pour corriger la date, mais certains visiteurs ne lisent que l'affiche. Si elle pouvait la remplacer aujourd'hui, ces visiteurs auraient aussi la bonne information."}],
+    "task": "Si Inès remplaçait l'affiche, quel problème serait évité ?",
+    "response": {
+      "kind": "choices",
+      "choices": ["La venue de visiteurs le mauvais jour.", "La fermeture de la salle samedi.", "L'envoi tardif du message."],
+      "answer": "La venue de visiteurs le mauvais jour."
+    },
+    "feedback": "L'affiche actuelle indique vendredi alors que l'ouverture a lieu samedi."
+  },
+  {
+    "id": "b3_08_rewrite_two_decisions",
+    "format": "rewrite",
+    "source": [{"text": "La salle sera fermée vendredi à cause d'une panne. Léa reporte l'ouverture de l'exposition à samedi. Inès prévient les habitants par message, car l'ancienne affiche indique encore vendredi."}],
+    "task": "Explique la décision de Léa en commençant par « Puisque ».",
+    "response": {
+      "kind": "typed",
+      "answer": "Puisque la salle sera fermée vendredi Léa reporte l'ouverture à samedi",
+      "accepted": ["Puisque la salle sera fermée vendredi Léa reporte l'ouverture à samedi", "Puisque la salle est fermée vendredi Léa reporte l'ouverture à samedi"]
+    },
+    "feedback": "« Puisque » introduit la fermeture de la salle comme cause du report."
+  },
+  {
+    "id": "b3_08_microtext_two_changes",
+    "format": "microtext",
+    "source": [{"text": "La salle de l'exposition reste fermée vendredi à cause de la panne. Léa reporte donc l'ouverture à samedi. Comme le musicien n'est libre que dimanche, son concert est déplacé séparément à dimanche ; l'exposition ouvrira sans lui samedi."}],
+    "task": "Quelle cause explique le déplacement du concert à dimanche ?",
+    "response": {
+      "kind": "choices",
+      "choices": ["La disponibilité du musicien.", "La panne de samedi.", "L'impression de l'affiche."],
+      "answer": "La disponibilité du musicien."
+    },
+    "feedback": "La panne reporte l'ouverture ; le musicien ne peut jouer que dimanche."
+  },
+  {
+    "id": "b3_08_dialogue_notice_priority",
+    "format": "dialogue",
+    "source": [
+      {"speaker": "Léa", "text": "Nous sommes vendredi soir. La salle rouvre samedi, mais l'ancienne affiche annonce encore vendredi."},
+      {"speaker": "Inès", "text": "Faute de temps pour la remplacer aujourd'hui, je vais prévenir les visiteurs par message. Je changerai l'affiche demain matin."}
+    ],
+    "task": "Quel effet pourrait avoir l'affiche jusqu'à demain matin ?",
+    "response": {
+      "kind": "choices",
+      "choices": ["Certains visiteurs pourraient venir vendredi.", "La salle resterait fermée samedi.", "Le message annoncerait dimanche."],
+      "answer": "Certains visiteurs pourraient venir vendredi."
+    },
+    "feedback": "L'affiche montre encore l'ancienne date pendant ce délai."
+  },
+  {
+    "id": "b3_08_rewrite_cause_result",
+    "format": "rewrite",
+    "source": [{"text": "La panne empêche l'ouverture vendredi. Léa reporte l'exposition à samedi."}],
+    "task": "Relie les deux faits avec « si bien que ».",
+    "response": {
+      "kind": "typed",
+      "answer": "La panne empêche l'ouverture vendredi si bien que Léa reporte l'exposition à samedi",
+      "accepted": ["La panne empêche l'ouverture vendredi si bien que Léa reporte l'exposition à samedi", "La panne empêche l'ouverture vendredi si bien que l'exposition est reportée à samedi"]
+    },
+    "feedback": "« Si bien que » introduit le report comme conséquence de la panne."
+  },
+  {
+    "id": "b3_08_microtext_missed_message",
+    "format": "microtext",
+    "source": [{"text": "Inès a envoyé la nouvelle date vendredi soir. Nora n'a pas vu ce message et a suivi l'affiche restée dans la vitrine. Elle s'est présentée vendredi devant une salle fermée. Malik a lu le message et viendra samedi."}],
+    "task": "Pourquoi Nora est-elle venue le mauvais jour, contrairement à Malik ?",
+    "response": {
+      "kind": "choices",
+      "choices": ["Elle a suivi l'ancienne affiche sans voir le message.", "Elle a confondu samedi et dimanche.", "Elle savait que la salle serait ouverte vendredi."],
+      "answer": "Elle a suivi l'ancienne affiche sans voir le message."
+    },
+    "feedback": "Le texte distingue la date affichée de celle communiquée par message."
+  },
+  {
+    "id": "b3_08_microtext_no_panne",
+    "format": "microtext",
+    "source": [{"text": "L'ouverture était prévue vendredi et la salle était prête. Une panne électrique a ensuite obligé Léa à la reporter à samedi. Inès n'a pas eu le temps de changer l'affiche, si bien qu'elle a envoyé un message."}],
+    "task": "Sans la panne, quelle décision n'aurait pas été nécessaire d'après ce texte ?",
+    "response": {
+      "kind": "choices",
+      "choices": ["Reporter l'ouverture à samedi.", "Préparer la salle pour vendredi.", "Inviter les habitants à l'exposition."],
+      "answer": "Reporter l'ouverture à samedi."
+    },
+    "feedback": "La panne est la cause donnée pour le report."
+  },
+  {
+    "id": "b3_08_rewrite_message_reason",
+    "format": "rewrite",
+    "source": [{"text": "Inès doit annoncer samedi aux habitants. Elle ne peut pas changer l'affiche aujourd'hui parce qu'elle manque de temps. Elle choisit un message."}],
+    "task": "Explique son choix en commençant par « Faute de temps ».",
+    "response": {
+      "kind": "typed",
+      "answer": "Faute de temps pour changer l'affiche Inès prévient les habitants par message",
+      "accepted": ["Faute de temps pour changer l'affiche Inès prévient les habitants par message", "Faute de temps pour remplacer l'affiche Inès prévient les habitants par message"]
+    },
+    "feedback": "Le manque de temps explique le moyen d'information choisi."
+  },
+  {
+    "id": "b3_08_microtext_not_weather",
+    "format": "microtext",
+    "source": [{"text": "La pluie commence avant la fête, mais la salle est disponible et les invités peuvent entrer. La sono tombe ensuite en panne ; Nora reporte le concert à dimanche. Elle prévient les invités par message."}],
+    "task": "Qu'est-ce qui provoque le report du concert ?",
+    "response": {
+      "kind": "choices",
+      "choices": ["La panne de sono.", "La pluie.", "Le message aux invités."],
+      "answer": "La panne de sono."
+    },
+    "feedback": "La pluie ne bloque pas l'accès à la salle ; c'est la panne qui impose le report."
+  },
+  {
+    "id": "b3_08_dialogue_two_effects",
+    "format": "dialogue",
+    "source": [
+      {"speaker": "Malik", "text": "Le jardin est fermé à cause du vent. Le marché se tiendra dans la salle."},
+      {"speaker": "Nora", "text": "Je change aussi le plan envoyé aux vendeurs, pour qu'ils trouvent l'entrée de la salle."}
+    ],
+    "task": "Pourquoi Nora change-t-elle le plan ?",
+    "response": {
+      "kind": "choices",
+      "choices": ["Pour indiquer la nouvelle entrée aux vendeurs.", "Pour rouvrir le jardin.", "Pour reporter le marché."],
+      "answer": "Pour indiquer la nouvelle entrée aux vendeurs."
+    },
+    "feedback": "Le changement de lieu entraîne un nouveau besoin d'orientation."
+  },
+  {
+    "id": "b3_08_microtext_shortage",
+    "format": "microtext",
+    "source": [{"text": "Faute de bénévoles vendredi, l'atelier ne peut pas accueillir tous les inscrits. Léa maintient une petite séance vendredi et en propose une autre samedi. Les billets restent valables pour l'une des deux séances."}],
+    "task": "Quelle décision répond au manque de bénévoles ?",
+    "response": {
+      "kind": "choices",
+      "choices": ["Ajouter une séance samedi.", "Annuler tous les billets.", "Fermer la salle samedi."],
+      "answer": "Ajouter une séance samedi."
+    },
+    "feedback": "La seconde séance répartit les inscrits entre deux jours."
+  },
+  {
+    "id": "b3_08_rewrite_venue_cause",
+    "format": "rewrite",
+    "source": [{"text": "Le jardin est fermé à cause du vent. Le marché se tient dans la salle."}],
+    "task": "Relie ces faits en commençant par « Puisque ».",
+    "response": {
+      "kind": "typed",
+      "answer": "Puisque le jardin est fermé à cause du vent le marché se tient dans la salle",
+      "accepted": ["Puisque le jardin est fermé à cause du vent le marché se tient dans la salle", "Puisque le vent ferme le jardin le marché se tient dans la salle"]
+    },
+    "feedback": "La fermeture du jardin explique le changement de lieu."
+  },
+  {
+    "id": "b3_08_microtext_consequence_chain",
+    "format": "microtext",
+    "source": [{"text": "La visite commence une heure plus tard parce que le guide arrive en retard. Le dernier bus part à l'heure habituelle, si bien que Malik ne pourra pas rester jusqu'à la fin. Il demande un billet pour dimanche."}],
+    "task": "Pourquoi Malik demande-t-il un billet pour dimanche ?",
+    "response": {
+      "kind": "choices",
+      "choices": ["Il manquerait la fin de la visite aujourd'hui.", "Le guide a annulé dimanche.", "Le bus part une heure plus tard."],
+      "answer": "Il manquerait la fin de la visite aujourd'hui."
+    },
+    "feedback": "Le retard de la visite entre en conflit avec l'horaire du dernier bus."
+  },
+  {
+    "id": "b3_08_microtext_avoid_effect",
+    "format": "microtext",
+    "source": [{"text": "L'atelier change de salle, mais l'ancien courriel indique toujours l'entrée du jardin. Nora envoie aussitôt un nouveau plan aux inscrits. Sans ce plan, plusieurs iraient à la mauvaise entrée."}],
+    "task": "Quel effet le nouveau plan cherche-t-il à éviter ?",
+    "response": {
+      "kind": "choices",
+      "choices": ["L'arrivée à la mauvaise entrée.", "Le changement de salle.", "L'envoi du premier courriel."],
+      "answer": "L'arrivée à la mauvaise entrée."
+    },
+    "feedback": "Le plan corrige une conséquence possible du courriel ancien."
+  },
+  {
+    "id": "b3_08_dialogue_reason_of_method",
+    "format": "dialogue",
+    "source": [
+      {"speaker": "Léa", "text": "Le concert est reporté, mais l'affiche est déjà imprimée."},
+      {"speaker": "Théo", "text": "Faute de temps pour la refaire, je préviens les visiteurs sur le site."}
+    ],
+    "task": "Que justifie « faute de temps » ?",
+    "response": {
+      "kind": "choices",
+      "choices": ["Le choix d'un avis sur le site.", "La cause du report du concert.", "L'impression de la première affiche."],
+      "answer": "Le choix d'un avis sur le site."
+    },
+    "feedback": "Le manque de temps explique le moyen choisi pour prévenir les visiteurs."
+  },
+  {
+    "id": "b3_08_rewrite_result_notice",
+    "format": "rewrite",
+    "source": [{"text": "La pluie a abîmé le plan affiché dehors. Les visiteurs ne voient plus l'entrée sur le plan."}],
+    "task": "Relie les faits avec « si bien que ».",
+    "response": {
+      "kind": "typed",
+      "answer": "La pluie a abîmé le plan affiché dehors si bien que les visiteurs ne voient plus l'entrée",
+      "accepted": ["La pluie a abîmé le plan affiché dehors si bien que les visiteurs ne voient plus l'entrée", "La pluie a abîmé le plan si bien que les visiteurs ne voient plus l'entrée"]
+    },
+    "feedback": "La perte de l'information est une conséquence de la pluie."
   }
 ]

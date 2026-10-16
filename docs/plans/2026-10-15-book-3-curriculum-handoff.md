@@ -2,6 +2,10 @@
 
 **Date:** 2026-10-15
 
+**Later content state:** The 550-card review draft is documented in
+`2026-10-15-book-3-content-final-handoff.md`. Counts and next steps below
+describe the earlier 122-card curriculum checkpoint.
+
 **Status:** The 20-module Test book draft has 122 cards. The user tried module
 10 in the simulator and approved this checkpoint on 2026-10-15. The user also
 approved the blue source block without white dialogue boxes. Production Book 3

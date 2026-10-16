@@ -3,8 +3,14 @@
     "id": "b3_02_dialogue_before",
     "format": "dialogue",
     "source": [
-      {"speaker": "Léa", "text": "Je suis arrivée au concert."},
-      {"speaker": "Théo", "text": "Quand tu es arrivée, j'avais déjà parlé à Inès."}
+      {
+        "speaker": "Léa",
+        "text": "Je suis arrivée au concert."
+      },
+      {
+        "speaker": "Théo",
+        "text": "Quand tu es arrivée, j'avais déjà parlé à Inès."
+      }
     ],
     "task": "Qu'est-ce que Théo a fait avant l'arrivée de Léa ?",
     "response": {
@@ -22,7 +28,9 @@
     "id": "b3_02_word_deja",
     "format": "word",
     "source": [
-      {"text": "Quand Léa est arrivée au concert, Théo avait déjà parlé à Inès."}
+      {
+        "text": "Quand Léa est arrivée au concert, Théo avait déjà parlé à Inès."
+      }
     ],
     "task": "Ici, « avait déjà parlé » indique...",
     "response": {
@@ -40,7 +48,9 @@
     "id": "b3_02_microtext_order",
     "format": "microtext",
     "source": [
-      {"text": "Léa est arrivée au concert. Théo avait parlé à Inès. Puis la musique s'est arrêtée."}
+      {
+        "text": "Théo avait parlé à Inès avant l'arrivée de Léa, puis il était entré dans la salle. Inès a attendu Léa à l'entrée. Elles sont entrées ensemble ; plus tard, la musique s'est arrêtée."
+      }
     ],
     "task": "Qu'est-ce qui s'est passé en premier ?",
     "response": {
@@ -52,20 +62,373 @@
       ],
       "answer": "Théo a parlé à Inès."
     },
-    "feedback": "« Avait parlé » montre que Théo a parlé à Inès avant l'arrivée de Léa."
+    "feedback": "Le plus-que-parfait « avait parlé » situe la conversation avant l'arrivée de Léa."
   },
   {
     "id": "b3_02_rewrite_before",
     "format": "rewrite",
     "source": [
-      {"text": "Théo a parlé à Inès. Puis Léa est arrivée au concert."}
+      {
+        "text": "Théo a parlé à Inès. Puis Léa est arrivée au concert."
+      }
     ],
     "task": "Réécris la première phrase au plus-que-parfait.",
     "response": {
       "kind": "typed",
       "answer": "Théo avait parlé à Inès",
-      "accepted": ["Théo avait parlé à Inès"]
+      "accepted": [
+        "Théo avait parlé à Inès"
+      ]
     },
     "feedback": "« Avait parlé » place cette action avant l'arrivée de Léa."
+  },
+  {
+    "id": "b3_02_dialogue_ticket",
+    "format": "dialogue",
+    "source": [
+      {
+        "speaker": "Léa",
+        "text": "Tu as acheté ton billet à l'entrée ?"
+      },
+      {
+        "speaker": "Inès",
+        "text": "Non, je l'avais déjà acheté hier."
+      }
+    ],
+    "task": "Quand Inès a-t-elle acheté son billet ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "La veille de son arrivée.",
+        "À l'entrée, avec Léa.",
+        "Après la panne."
+      ],
+      "answer": "La veille de son arrivée."
+    },
+    "feedback": "« L'avais déjà acheté hier » situe l'achat avant l'échange à l'entrée."
+  },
+  {
+    "id": "b3_02_word_earlier",
+    "format": "word",
+    "source": [
+      {
+        "text": "Quand Léa est arrivée, Inès avait déjà trouvé leurs places."
+      }
+    ],
+    "task": "Quel fait est antérieur à l'arrivée de Léa ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Inès a trouvé leurs places.",
+        "Léa est arrivée.",
+        "Le concert s'est interrompu."
+      ],
+      "answer": "Inès a trouvé leurs places."
+    },
+    "feedback": "« Avait déjà trouvé » situe cette action avant l'arrivée."
+  },
+  {
+    "id": "b3_02_microtext_two_steps",
+    "format": "microtext",
+    "source": [
+      {
+        "text": "Avant l'arrivée de Léa, Théo avait parlé à Inès puis était entré dans la salle. Quand Léa est arrivée, Inès l'a accueillie près de l'entrée. La panne est survenue plus tard."
+      }
+    ],
+    "task": "Qu'est-ce qui s'est passé juste après l'arrivée de Léa ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Inès l'a accueillie près de l'entrée.",
+        "Théo a parlé à Inès pour la première fois.",
+        "La panne a commencé."
+      ],
+      "answer": "Inès l'a accueillie près de l'entrée."
+    },
+    "feedback": "Inès accueille Léa après son arrivée ; Théo est déjà entré dans la salle."
+  },
+  {
+    "id": "b3_02_rewrite_ticket",
+    "format": "rewrite",
+    "source": [
+      {
+        "text": "Inès a acheté son billet. Puis elle est venue au concert."
+      }
+    ],
+    "task": "Mets l'achat au plus-que-parfait : « Inès a acheté son billet. »",
+    "response": {
+      "kind": "typed",
+      "answer": "Inès avait acheté son billet",
+      "accepted": [
+        "Inès avait acheté son billet"
+      ]
+    },
+    "feedback": "L'achat précède sa venue au concert."
+  },
+  {
+    "id": "b3_02_dialogue_panne",
+    "format": "dialogue",
+    "source": [
+      {
+        "speaker": "Théo",
+        "text": "La musique s'est arrêtée juste après l'arrivée de Léa ?"
+      },
+      {
+        "speaker": "Inès",
+        "text": "Non. Quand la panne est arrivée, Léa était déjà entrée dans la salle."
+      }
+    ],
+    "task": "Quelle action précède la panne ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Léa est entrée dans la salle.",
+        "Léa a quitté la salle.",
+        "Théo a acheté son billet."
+      ],
+      "answer": "Léa est entrée dans la salle."
+    },
+    "feedback": "« Était déjà entrée » place l'entrée avant la panne."
+  },
+  {
+    "id": "b3_02_rewrite_enter",
+    "format": "rewrite",
+    "source": [
+      {
+        "text": "Léa est entrée dans la salle. Puis la panne est arrivée."
+      }
+    ],
+    "task": "Complète avec l'action antérieure : « Quand la panne est arrivée, Léa... »",
+    "response": {
+      "kind": "typed",
+      "answer": "était déjà entrée dans la salle",
+      "accepted": [
+        "était déjà entrée dans la salle",
+        "était entrée dans la salle"
+      ]
+    },
+    "feedback": "La forme « était entrée » marque une action terminée avant la panne."
+  },
+  {
+    "id": "b3_02_microtext_full_sequence",
+    "format": "microtext",
+    "source": [
+      {
+        "text": "Inès avait acheté son billet la veille du concert. Avant l'arrivée de Léa, elle avait trouvé leurs places et parlé à Théo près de la salle. Théo est entré seul. Léa a rejoint Inès ensuite, puis elles sont entrées ensemble. Plus tard, Léa parlait avec Théo quand la musique s'est arrêtée."
+      }
+    ],
+    "task": "Quelle suite d'événements est compatible avec ce récit ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Inès avait parlé à Théo avant que Léa les rejoigne.",
+        "Léa a rejoint Inès avant l'achat du billet.",
+        "La musique s'est arrêtée avant leur entrée dans la salle."
+      ],
+      "answer": "Inès avait parlé à Théo avant que Léa les rejoigne."
+    },
+    "feedback": "« Avait parlé » situe la conversation avant l'arrivée de Léa."
+  },
+  {
+    "id": "b3_02_dialogue_prior_action",
+    "format": "dialogue",
+    "source": [
+      {
+        "speaker": "Léa",
+        "text": "Quand je suis arrivée, tu savais déjà où nous asseoir ?"
+      },
+      {
+        "speaker": "Inès",
+        "text": "Oui, j'avais trouvé nos places en parlant à Théo."
+      }
+    ],
+    "task": "Qu'avait fait Inès avant l'arrivée de Léa ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Elle avait repéré les places.",
+        "Elle avait quitté la salle.",
+        "Elle avait entendu la panne."
+      ],
+      "answer": "Elle avait repéré les places."
+    },
+    "feedback": "Inès connaissait déjà leurs places à l'arrivée de Léa."
+  },
+  {
+    "id": "b3_02_rewrite_concert_start",
+    "format": "rewrite",
+    "source": [
+      {
+        "text": "Le concert a commencé. Plus tard, une panne a coupé le son."
+      }
+    ],
+    "task": "Complète au plus-que-parfait : « Quand le son s'est coupé, le concert... »",
+    "response": {
+      "kind": "typed",
+      "answer": "avait commencé",
+      "accepted": [
+        "avait commencé",
+        "avait déjà commencé"
+      ]
+    },
+    "feedback": "Le début du concert précède la panne."
+  },
+  {
+    "id": "b3_02_word_prior_ticket",
+    "format": "word",
+    "source": [
+      {
+        "text": "Au moment d'entrer, Léa a montré un billet qu'elle avait acheté la veille."
+      }
+    ],
+    "task": "Quand Léa avait-elle acheté le billet ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Avant d'entrer.",
+        "Pendant la panne.",
+        "Après le concert."
+      ],
+      "answer": "Avant d'entrer."
+    },
+    "feedback": "« Avait acheté » place l'achat avant son entrée."
+  },
+  {
+    "id": "b3_02_microtext_places",
+    "format": "microtext",
+    "source": [
+      {
+        "text": "Léa : « Quand je t'ai rejointe, cherchais-tu encore nos places ? » Inès : « Non, je les avais déjà trouvées. »"
+      }
+    ],
+    "task": "Qu'avait fait Inès avant que Léa la rejoigne ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Elle avait trouvé les places.",
+        "Elle avait quitté la salle.",
+        "Elle avait perdu les billets."
+      ],
+      "answer": "Elle avait trouvé les places."
+    },
+    "feedback": "Les places étaient trouvées avant l'arrivée de Léa."
+  },
+  {
+    "id": "b3_02_rewrite_arrival",
+    "format": "rewrite",
+    "source": [
+      {
+        "text": "Léa est entrée dans la salle. Plus tard, elle a parlé à Théo pendant la panne."
+      }
+    ],
+    "task": "Complète : « Quand elle a parlé à Théo, Léa... »",
+    "response": {
+      "kind": "typed",
+      "answer": "était déjà entrée dans la salle",
+      "accepted": [
+        "était déjà entrée dans la salle",
+        "était entrée dans la salle"
+      ]
+    },
+    "feedback": "L'entrée précède leur conversation."
+  },
+  {
+    "id": "b3_02_microtext_program",
+    "format": "microtext",
+    "source": [
+      {
+        "text": "Note d'Inès : « J'avais trouvé nos places avant l'arrivée de Léa. Je l'ai accueillie à l'entrée ; nous nous sommes assises avant que la musique commence. »"
+      }
+    ],
+    "task": "Quelle action Inès avait-elle faite seule ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Trouver les places.",
+        "S'asseoir avec Léa.",
+        "Accueillir Léa à l'entrée."
+      ],
+      "answer": "Trouver les places."
+    },
+    "feedback": "Elle avait trouvé les places avant l'arrivée de Léa."
+  },
+  {
+    "id": "b3_02_rewrite_found",
+    "format": "rewrite",
+    "source": [
+      {
+        "text": "Inès a trouvé les places. Puis Léa l'a rejointe."
+      }
+    ],
+    "task": "Complète : « Quand Léa l'a rejointe, Inès... »",
+    "response": {
+      "kind": "typed",
+      "answer": "avait déjà trouvé les places",
+      "accepted": [
+        "avait déjà trouvé les places",
+        "avait trouvé les places"
+      ]
+    },
+    "feedback": "Le plus-que-parfait situe la recherche terminée avant l'arrivée."
+  },
+  {
+    "id": "b3_02_microtext_transfer",
+    "format": "microtext",
+    "source": [
+      {
+        "text": "Au théâtre, Nora a retrouvé son amie devant la salle. Son amie avait déjà choisi deux places et gardé les billets. Elles sont entrées ensemble."
+      }
+    ],
+    "task": "Qui avait choisi les places avant leurs retrouvailles ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "L'amie de Nora.",
+        "Nora.",
+        "La personne qui contrôlait les billets."
+      ],
+      "answer": "L'amie de Nora."
+    },
+    "feedback": "Le choix des places précède les retrouvailles."
+  },
+  {
+    "id": "b3_02_rewrite_earlier_exit",
+    "format": "rewrite",
+    "source": [{"text": "Théo est entré dans la salle. Ensuite, Léa est arrivée à l'entrée."}],
+    "task": "Complète : « Quand Léa est arrivée, Théo... »",
+    "response": {"kind": "typed", "answer": "était déjà entré dans la salle", "accepted": ["était déjà entré dans la salle", "était entré dans la salle"]},
+    "feedback": "« Était entré » situe l'entrée de Théo avant l'arrivée de Léa."
+  },
+  {
+    "id": "b3_02_microtext_not_yet",
+    "format": "microtext",
+    "source": [{"text": "À 19 h 30, Inès avait trouvé les places, mais Léa n'était pas encore arrivée. À 19 h 45, Léa l'a rejointe."}],
+    "task": "Qu'est-ce qui était déjà fait à 19 h 30 ?",
+    "response": {"kind": "choices", "choices": ["La recherche des places.", "L'arrivée de Léa.", "L'entrée des deux amies dans la salle."], "answer": "La recherche des places."},
+    "feedback": "Inès avait trouvé les places avant que Léa la rejoigne."
+  },
+  {
+    "id": "b3_02_rewrite_transfer_program",
+    "format": "rewrite",
+    "source": [{"text": "Nora a lu le programme. Puis la pièce a commencé."}],
+    "task": "Complète : « Quand la pièce a commencé, Nora... »",
+    "response": {"kind": "typed", "answer": "avait déjà lu le programme", "accepted": ["avait déjà lu le programme", "avait lu le programme"]},
+    "feedback": "La lecture est antérieure au début de la pièce."
+  },
+  {
+    "id": "b3_02_dialogue_memory",
+    "format": "dialogue",
+    "source": [{"speaker": "Léa", "text": "Tu as cherché nos places quand je suis arrivée ?"}, {"speaker": "Inès", "text": "Non, je les avais trouvées avant de t'accueillir."}],
+    "task": "À quel moment Inès a-t-elle trouvé les places ?",
+    "response": {"kind": "choices", "choices": ["Avant d'accueillir Léa.", "Pendant la panne.", "Après leur entrée dans la salle."], "answer": "Avant d'accueillir Léa."},
+    "feedback": "« Avais trouvées » situe la recherche avant l'accueil de Léa."
+  },
+  {
+    "id": "b3_02_word_plusqueparfait_transfer",
+    "format": "word",
+    "source": [{"text": "Quand Sam est arrivé au café, Nora avait déjà choisi une table."}],
+    "task": "Que permet de comprendre « avait déjà choisi » ?",
+    "response": {"kind": "choices", "choices": ["Nora avait choisi la table avant l'arrivée de Sam.", "Nora a choisi la table à l'arrivée de Sam.", "Sam a choisi la table avant Nora."], "answer": "Nora avait choisi la table avant l'arrivée de Sam."},
+    "feedback": "Le plus-que-parfait situe le choix de la table avant l'arrivée de Sam."
   }
 ]

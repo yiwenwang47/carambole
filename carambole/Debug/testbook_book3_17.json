@@ -2,52 +2,600 @@
   {
     "id": "b3_17_word_temoignage",
     "format": "word",
-    "source": [{"text": "Le témoignage de Léa raconte ce qu'elle a vu pendant le concert."}],
-    "task": "What is « un témoignage »?",
-    "response": {"kind": "choices", "choices": ["a firsthand account", "a ticket price", "a timetable"], "answer": "a firsthand account"},
-    "feedback": "Léa raconte ce qu'elle dit avoir vu."
+    "source": [
+      {
+        "text": "Léa habite près de la passerelle. Dans son témoignage, elle raconte ce qu'elle dit avoir vu lundi : une fissure sur le pont."
+      }
+    ],
+    "task": "What is « un témoignage » here?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "a firsthand account",
+        "an official closure notice",
+        "a repair bill"
+      ],
+      "answer": "a firsthand account"
+    },
+    "feedback": "Léa rapporte ce qu'elle dit avoir vu ; son récit reste à vérifier."
   },
   {
     "id": "b3_17_dialogue_account",
     "format": "dialogue",
     "source": [
-      {"speaker": "Léa", "text": "J'ai vu la musique s'arrêter après mon arrivée."},
-      {"speaker": "Théo", "text": "Selon ton témoignage, tu étais déjà là quand la musique s'est arrêtée."}
+      {
+        "speaker": "Léa",
+        "text": "J’ai vu une fissure sur la passerelle lundi."
+      },
+      {
+        "speaker": "Théo",
+        "text": "Selon ton témoignage, la passerelle était déjà abîmée lundi."
+      }
     ],
-    "task": "Qui a donné cette version ?",
-    "response": {"kind": "choices", "choices": ["À Léa.", "À Inès.", "À personne."], "answer": "À Léa."},
-    "feedback": "Théo attribue cette version au témoignage de Léa."
+    "task": "Que fait Théo en disant « selon ton témoignage » ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Il attribue l'observation à Léa.",
+        "Il cite l'avis officiel de la mairie.",
+        "Il confirme la cause de la fissure."
+      ],
+      "answer": "Il attribue l'observation à Léa."
+    },
+    "feedback": "Théo rapporte les propos de Léa sans les présenter comme un fait vérifié."
   },
   {
     "id": "b3_17_word_enquete",
     "format": "word",
-    "source": [{"text": "L'enquête cherche la cause de la panne : personne ne sait encore pourquoi elle a eu lieu."}],
-    "task": "What is « une enquête »?",
-    "response": {"kind": "choices", "choices": ["an investigation", "a concert ticket", "a reply"], "answer": "an investigation"},
-    "feedback": "Une enquête cherche des informations pour comprendre un événement."
+    "source": [
+      {
+        "text": "La mairie a fermé la passerelle mardi pour inspection. Une enquête cherche maintenant la cause des dommages ; elle n'a encore rien confirmé."
+      }
+    ],
+    "task": "What is « une enquête » here?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "an investigation",
+        "a detour",
+        "a closure notice"
+      ],
+      "answer": "an investigation"
+    },
+    "feedback": "L'enquête rassemble des informations sur les dommages et leur cause."
   },
   {
     "id": "b3_17_microtext_claim_fact",
     "format": "microtext",
-    "source": [{"text": "Selon Léa, la panne a commencé après son arrivée. Le concert a été reporté à demain. L'enquête sur la panne n'est pas terminée."}],
-    "task": "Quelle phrase présente la version de Léa ?",
-    "response": {"kind": "choices", "choices": ["La panne a commencé après son arrivée.", "Le concert a été reporté.", "L'enquête est terminée."], "answer": "La panne a commencé après son arrivée."},
-    "feedback": "« Selon Léa » marque sa version ; le report est présenté séparément."
+    "source": [
+      {
+        "text": "Avis de la mairie : « La passerelle a été fermée mardi pour inspection. » Léa affirme avoir vu une fissure lundi. L'enquête n'a pas encore confirmé son témoignage."
+      }
+    ],
+    "task": "Quelle information vient du témoignage de Léa ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Une fissure était visible lundi.",
+        "La passerelle a été fermée mardi.",
+        "L'enquête a confirmé la cause des dommages."
+      ],
+      "answer": "Une fissure était visible lundi."
+    },
+    "feedback": "Léa parle de la fissure ; l'avis officiel établit seulement la fermeture mardi."
   },
   {
     "id": "b3_17_rewrite_passive",
     "format": "rewrite",
-    "source": [{"text": "Théo a envoyé l'affiche."}],
-    "task": "Commence par « L'affiche a été... ».",
-    "response": {"kind": "typed", "answer": "L'affiche a été envoyée par Théo", "accepted": ["L'affiche a été envoyée par Théo"]},
-    "feedback": "Au passif, l'affiche devient le sujet ; « envoyée » s'accorde avec elle."
+    "source": [
+      {
+        "text": "La mairie a fermé la passerelle mardi pour inspection."
+      }
+    ],
+    "task": "Commence par « La passerelle a été... » et garde le responsable.",
+    "response": {
+      "kind": "typed",
+      "answer": "La passerelle a été fermée mardi par la mairie pour inspection",
+      "accepted": [
+        "La passerelle a été fermée mardi par la mairie pour inspection",
+        "La passerelle a été fermée par la mairie mardi pour inspection"
+      ]
+    },
+    "feedback": "Au passif, la passerelle devient le sujet ; « fermée » s'accorde avec elle."
   },
   {
     "id": "b3_17_microtext_two_reports",
     "format": "microtext",
-    "source": [{"text": "Message de Théo : « Le concert a été reporté à demain. » Témoignage de Léa : « La panne a commencé après mon arrivée. » L'enquête n'a pas encore confirmé l'heure de la panne."}],
-    "task": "Quelle information reste à vérifier ?",
-    "response": {"kind": "choices", "choices": ["L'heure de la panne.", "La nouvelle date du concert.", "Le nom de Léa."], "answer": "L'heure de la panne."},
-    "feedback": "L'enquête n'a pas encore confirmé l'heure de la panne."
+    "source": [
+      {
+        "text": "Avis de la mairie : « La passerelle a été fermée mardi pour inspection. » Témoignage de Léa : « J'ai vu une fissure lundi. » L'enquête n'a pas encore confirmé si la fissure était déjà visible lundi."
+      }
+    ],
+    "task": "Quel point reste à vérifier ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "La présence d'une fissure lundi.",
+        "La fermeture de la passerelle mardi.",
+        "Le jour de publication de l'avis."
+      ],
+      "answer": "La présence d'une fissure lundi."
+    },
+    "feedback": "La fermeture mardi est officielle ; la fissure observée lundi reste un témoignage."
+  },
+  {
+    "id": "b3_17_word_mis_en_cause",
+    "format": "word",
+    "source": [
+      {
+        "text": "Le directeur est mis en cause dans un témoignage, mais l'enquête n'a pas établi sa responsabilité."
+      }
+    ],
+    "task": "What does « mis en cause » mean here?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "implicated or called into question",
+        "officially cleared",
+        "appointed director"
+      ],
+      "answer": "implicated or called into question"
+    },
+    "feedback": "Un témoignage le concerne ; sa responsabilité n'est pas établie."
+  },
+  {
+    "id": "b3_17_microtext_passerelle",
+    "format": "microtext",
+    "source": [
+      {
+        "text": "Avis de la mairie : « La passerelle a été fermée mardi pour inspection. » Une habitante affirme qu'elle était abîmée depuis lundi. Le service technique indique que l'état de la passerelle reste à vérifier."
+      }
+    ],
+    "task": "Quelle information est établie par l'avis officiel ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "La passerelle a été fermée mardi.",
+        "La passerelle était abîmée depuis lundi.",
+        "L'inspection a révélé la cause exacte."
+      ],
+      "answer": "La passerelle a été fermée mardi."
+    },
+    "feedback": "La date de fermeture figure dans l'avis ; les autres points restent des affirmations ou des questions."
+  },
+  {
+    "id": "b3_17_dialogue_caution",
+    "format": "dialogue",
+    "source": [
+      {
+        "speaker": "Théo",
+        "text": "Une habitante met le directeur en cause : selon elle, il connaissait le problème lundi."
+      },
+      {
+        "speaker": "Inès",
+        "text": "L'enquête n'a pas encore confirmé cela."
+      }
+    ],
+    "task": "Quelle formulation transmet l'accusation sans la présenter comme un fait ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Selon une habitante, le directeur connaissait le problème lundi.",
+        "Le directeur connaissait le problème lundi.",
+        "L'enquête prouve que le directeur a ignoré le problème."
+      ],
+      "answer": "Selon une habitante, le directeur connaissait le problème lundi."
+    },
+    "feedback": "« Selon une habitante » attribue l'affirmation à sa source."
+  },
+  {
+    "id": "b3_17_rewrite_attribution",
+    "format": "rewrite",
+    "source": [
+      {
+        "text": "Témoignage de Léa : « La passerelle était déjà abîmée lundi. » L'enquête n'a pas encore confirmé ce point."
+      }
+    ],
+    "task": "Rapporte le témoignage sans affirmer que l'information est vérifiée. Commence par « Selon Léa ».",
+    "response": {
+      "kind": "typed",
+      "answer": "Selon Léa la passerelle était déjà abîmée lundi",
+      "accepted": [
+        "Selon Léa la passerelle était déjà abîmée lundi"
+      ]
+    },
+    "feedback": "L'attribution distingue le témoignage d'un fait confirmé."
+  },
+  {
+    "id": "b3_17_microtext_notice_and_witness",
+    "format": "microtext",
+    "source": [
+      {
+        "text": "Avis municipal : « La passerelle a été fermée mardi après le signalement de dommages. Une inspection est en cours. » Léa raconte avoir remarqué une fissure lundi. Son message ne précise pas si elle l'avait signalée ce jour-là. L'enquête cherche encore quand les dommages sont apparus."
+      }
+    ],
+    "task": "Quelle conclusion reste justifiée malgré la différence entre les sources ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "La fermeture de mardi est confirmée ; la date d'apparition des dommages reste inconnue.",
+        "La mairie savait dès lundi que la passerelle était endommagée.",
+        "L'inspection a établi que la fissure est apparue mardi."
+      ],
+      "answer": "La fermeture de mardi est confirmée ; la date d'apparition des dommages reste inconnue."
+    },
+    "feedback": "L'avis confirme la fermeture ; le souvenir de Léa ne fixe pas la date d'apparition des dommages."
+  },
+  {
+    "id": "b3_17_dialogue_responsibility",
+    "format": "dialogue",
+    "source": [
+      {
+        "speaker": "Théo",
+        "text": "Un voisin affirme que le directeur avait été averti lundi. Il le met en cause pour la fermeture tardive."
+      },
+      {
+        "speaker": "Inès",
+        "text": "Le rapport confirme la fermeture mardi, mais ne dit pas quand le directeur a été averti. L'enquête continue."
+      }
+    ],
+    "task": "Comment rapporter l'accusation avec la prudence nécessaire ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Un voisin met le directeur en cause, mais la date de l'avertissement n'est pas confirmée.",
+        "Le rapport prouve que le directeur a ignoré un avertissement lundi.",
+        "Le directeur a été disculpé par le rapport de mardi."
+      ],
+      "answer": "Un voisin met le directeur en cause, mais la date de l'avertissement n'est pas confirmée."
+    },
+    "feedback": "Le rapport ne confirme ni ne réfute la date avancée par le voisin."
+  },
+  {
+    "id": "b3_17_microtext_passive_agent",
+    "format": "microtext",
+    "source": [
+      {
+        "text": "Le service technique a inspecté la passerelle mercredi. Dans la note diffusée aux habitants, on lit : « La passerelle a été inspectée mercredi ; les résultats seront publiés vendredi. » Une publication affirme que l'inspection a déjà prouvé la faute du directeur, sans citer de résultat."
+      }
+    ],
+    "task": "Que permet d'affirmer la note diffusée ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Une inspection a eu lieu ; ses résultats ne sont pas encore publics.",
+        "Le directeur a été déclaré responsable mercredi.",
+        "La passerelle a été rouverte après l'inspection."
+      ],
+      "answer": "Une inspection a eu lieu ; ses résultats ne sont pas encore publics."
+    },
+    "feedback": "La note confirme l'inspection et annonce une publication future des résultats."
+  },
+  {
+    "id": "b3_17_microtext_notice_boundary",
+    "format": "microtext",
+    "source": [
+      {
+        "text": "Avis municipal : « La passerelle a été fermée mardi après un signalement. Une inspection a commencé mercredi. » Léa écrit : « J'avais remarqué une fissure lundi. » L'avis ne donne pas la date d'apparition de la fissure."
+      }
+    ],
+    "task": "Quelle date est établie par l'avis municipal ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "La fermeture de la passerelle mardi.",
+        "L'apparition de la fissure lundi.",
+        "La fin de l'inspection mercredi."
+      ],
+      "answer": "La fermeture de la passerelle mardi."
+    },
+    "feedback": "L'avis date la fermeture ; le lundi appartient au témoignage de Léa."
+  },
+  {
+    "id": "b3_17_rewrite_reported_warning",
+    "format": "rewrite",
+    "source": [
+      {
+        "text": "Léa dit : « J'ai signalé la fissure lundi. » La mairie n'a pas confirmé la date de ce signalement."
+      }
+    ],
+    "task": "Rapporte ses paroles avec « selon Léa ».",
+    "response": {
+      "kind": "typed",
+      "answer": "Selon Léa elle a signalé la fissure lundi",
+      "accepted": [
+        "Selon Léa elle a signalé la fissure lundi",
+        "Selon Léa la fissure a été signalée lundi"
+      ]
+    },
+    "feedback": "La date reste attribuée à Léa, sans devenir un fait confirmé par la mairie."
+  },
+  {
+    "id": "b3_17_dialogue_claim_about_cause",
+    "format": "dialogue",
+    "source": [
+      {
+        "speaker": "Théo",
+        "text": "Un voisin affirme que les travaux ont causé la fissure."
+      },
+      {
+        "speaker": "Inès",
+        "text": "L'avis municipal dit seulement que la cause fait encore l'objet d'une enquête."
+      }
+    ],
+    "task": "Que peut-on publier à partir de ces deux messages ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Un voisin met les travaux en cause ; l'enquête n'a pas encore établi la cause.",
+        "L'enquête a confirmé que les travaux ont causé la fissure.",
+        "La mairie nie qu'une fissure ait été signalée."
+      ],
+      "answer": "Un voisin met les travaux en cause ; l'enquête n'a pas encore établi la cause."
+    },
+    "feedback": "L'hypothèse vient du voisin ; l'enquête est encore ouverte."
+  },
+  {
+    "id": "b3_17_microtext_two_different_questions",
+    "format": "microtext",
+    "source": [
+      {
+        "text": "Compte rendu technique : « La passerelle a été inspectée mercredi. La cause des dommages n'est pas encore déterminée. » Témoignage de Léa : « J'ai vu une fissure lundi soir, avant la fermeture. »"
+      }
+    ],
+    "task": "Sur quel point les deux sources ne répondent-elles pas encore ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "La cause des dommages.",
+        "Le jour de l'inspection.",
+        "Le jour où Léa dit avoir vu la fissure."
+      ],
+      "answer": "La cause des dommages."
+    },
+    "feedback": "Le compte rendu laisse la cause ouverte ; les deux dates figurent dans les textes."
+  },
+  {
+    "id": "b3_17_rewrite_agent_passive",
+    "format": "rewrite",
+    "source": [
+      {
+        "text": "Le service technique inspectera la passerelle jeudi. L'avis doit mettre l'accent sur la passerelle."
+      }
+    ],
+    "task": "Réécris au passif en conservant l'auteur de l'action.",
+    "response": {
+      "kind": "typed",
+      "answer": "La passerelle sera inspectée jeudi par le service technique",
+      "accepted": [
+        "La passerelle sera inspectée jeudi par le service technique",
+        "Jeudi la passerelle sera inspectée par le service technique"
+      ]
+    },
+    "feedback": "Le passif conserve l'inspection prévue et nomme le service technique comme agent."
+  },
+  {
+    "id": "b3_17_microtext_responsibility_not_proven",
+    "format": "microtext",
+    "source": [
+      {
+        "text": "L'avis municipal confirme la fermeture de la passerelle mardi. Un témoin affirme avoir prévenu le directeur lundi ; celui-ci répond qu'il a reçu le message mardi matin. L'enquête vérifie encore les échanges."
+      }
+    ],
+    "task": "Quelle conclusion reste prudente ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "La fermeture est confirmée, mais la date à laquelle le directeur a été prévenu reste contestée.",
+        "Le directeur savait avec certitude dès lundi que la passerelle serait fermée.",
+        "Le témoin et le directeur donnent la même date pour le message."
+      ],
+      "answer": "La fermeture est confirmée, mais la date à laquelle le directeur a été prévenu reste contestée."
+    },
+    "feedback": "La fermeture figure dans l'avis ; les deux personnes donnent des dates différentes pour le message."
+  },
+  {
+    "id": "b3_17_word_signaler",
+    "format": "word",
+    "source": [
+      {
+        "text": "Léa a signalé une fissure à la mairie : elle lui a envoyé un message pour l’en informer."
+      }
+    ],
+    "task": "What does « signaler » mean here?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "to report",
+        "to repair",
+        "to hide"
+      ],
+      "answer": "to report"
+    },
+    "feedback": "Léa informe la mairie du problème."
+  },
+  {
+    "id": "b3_17_microtext_reported_time",
+    "format": "microtext",
+    "source": [
+      {
+        "text": "Avis municipal : « La passerelle a été fermée mardi. » Léa affirme l’avoir signalée dès lundi. Le registre des messages n’a pas encore été consulté."
+      }
+    ],
+    "task": "Que sait-on de la date du signalement ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Léa dit avoir écrit lundi ; cette date reste à vérifier.",
+        "La mairie confirme un signalement lundi.",
+        "Le registre prouve que Léa n’a jamais écrit."
+      ],
+      "answer": "Léa dit avoir écrit lundi ; cette date reste à vérifier."
+    },
+    "feedback": "Seule la fermeture de mardi figure dans l’avis."
+  },
+  {
+    "id": "b3_17_rewrite_passive_maintenance",
+    "format": "rewrite",
+    "source": [
+      {
+        "text": "Le service technique a fermé la passerelle mardi."
+      }
+    ],
+    "task": "Mets la passerelle en tête et conserve l’agent.",
+    "response": {
+      "kind": "typed",
+      "answer": "La passerelle a été fermée mardi par le service technique",
+      "accepted": [
+        "La passerelle a été fermée mardi par le service technique"
+      ]
+    },
+    "feedback": "Le passif garde l’action et son agent."
+  },
+  {
+    "id": "b3_17_dialogue_different_observation",
+    "format": "dialogue",
+    "source": [
+      {
+        "speaker": "Léa",
+        "text": "J’ai vu une fissure lundi soir."
+      },
+      {
+        "speaker": "Théo",
+        "text": "Moi, je suis passé mardi matin ; la passerelle était déjà fermée."
+      }
+    ],
+    "task": "Quel fait Théo peut-il attester personnellement ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "La passerelle était fermée mardi matin.",
+        "La fissure est apparue lundi soir.",
+        "Le directeur avait été averti lundi."
+      ],
+      "answer": "La passerelle était fermée mardi matin."
+    },
+    "feedback": "Théo décrit ce qu’il a vu mardi."
+  },
+  {
+    "id": "b3_17_microtext_cause_claim",
+    "format": "microtext",
+    "source": [
+      {
+        "text": "Le rapport confirme une fissure, sans en déterminer la cause. Un voisin attribue les dommages aux travaux de la semaine précédente. Le service technique poursuit l’enquête."
+      }
+    ],
+    "task": "Quelle phrase reste fidèle aux sources ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Les travaux sont une explication avancée par un voisin, pas une cause établie.",
+        "Le rapport prouve que les travaux ont causé la fissure.",
+        "Aucune fissure n’a été constatée."
+      ],
+      "answer": "Les travaux sont une explication avancée par un voisin, pas une cause établie."
+    },
+    "feedback": "Le rapport confirme le dommage mais pas sa cause."
+  },
+  {
+    "id": "b3_17_rewrite_claim_attribution",
+    "format": "rewrite",
+    "source": [
+      {
+        "text": "Un voisin affirme : « Le directeur connaissait la fissure lundi. » L’enquête ne l’a pas établi."
+      }
+    ],
+    "task": "Rapporte l’accusation avec « Selon un voisin ».",
+    "response": {
+      "kind": "typed",
+      "answer": "Selon un voisin le directeur connaissait la fissure lundi",
+      "accepted": [
+        "Selon un voisin le directeur connaissait la fissure lundi"
+      ]
+    },
+    "feedback": "L’attribution évite de présenter l’accusation comme établie."
+  },
+  {
+    "id": "b3_17_dialogue_edited_report",
+    "format": "dialogue",
+    "source": [
+      {
+        "speaker": "Mairie",
+        "text": "Nous avons fermé la passerelle mardi après un signalement."
+      },
+      {
+        "speaker": "Journaliste",
+        "text": "Un témoin dit que la fissure était visible lundi."
+      }
+    ],
+    "task": "Quelle phrase distingue l’action confirmée du témoignage ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "La mairie confirme la fermeture mardi ; un témoin situe la fissure dès lundi.",
+        "La mairie confirme que la fissure est apparue lundi.",
+        "Le témoin a fermé la passerelle mardi."
+      ],
+      "answer": "La mairie confirme la fermeture mardi ; un témoin situe la fissure dès lundi."
+    },
+    "feedback": "Chaque information reste liée à sa source."
+  },
+  {
+    "id": "b3_17_microtext_agent_unknown",
+    "format": "microtext",
+    "source": [
+      {
+        "text": "La note dit : « La passerelle a été inspectée mercredi. » Elle ne précise pas qui l’a inspectée. Un voisin affirme que le directeur a fait l’inspection lui-même."
+      }
+    ],
+    "task": "Que peut-on affirmer à partir de la note seule ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Une inspection a eu lieu mercredi ; son auteur n’est pas précisé.",
+        "Le directeur a mené l’inspection.",
+        "La passerelle n’a pas été inspectée."
+      ],
+      "answer": "Une inspection a eu lieu mercredi ; son auteur n’est pas précisé."
+    },
+    "feedback": "Le passif n’identifie pas l’agent ici."
+  },
+  {
+    "id": "b3_17_rewrite_qualified_report",
+    "format": "rewrite",
+    "source": [
+      {
+        "text": "Léa dit : « J’ai prévenu la mairie lundi. » Aucun registre ne confirme encore son message."
+      }
+    ],
+    "task": "Commence par « Léa affirme que ».",
+    "response": {
+      "kind": "typed",
+      "answer": "Léa affirme qu’elle a prévenu la mairie lundi",
+      "accepted": [
+        "Léa affirme qu’elle a prévenu la mairie lundi"
+      ]
+    },
+    "feedback": "« Affirme » attribue l’information à Léa."
+  },
+  {
+    "id": "b3_17_microtext_two_records",
+    "format": "microtext",
+    "source": [
+      {
+        "text": "Le registre municipal contient un message de Léa daté de lundi à dix-huit heures. L’avis de fermeture est daté de mardi matin. Le rapport ne précise toujours pas quand la fissure est apparue."
+      }
+    ],
+    "task": "Quelle chronologie est établie ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Léa a écrit lundi soir et la passerelle a été fermée mardi matin.",
+        "La fissure est apparue lundi à dix-huit heures.",
+        "La passerelle a été fermée avant le message de Léa."
+      ],
+      "answer": "Léa a écrit lundi soir et la passerelle a été fermée mardi matin."
+    },
+    "feedback": "Les documents datent le message et la fermeture, pas l’apparition de la fissure."
   }
 ]

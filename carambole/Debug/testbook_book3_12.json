@@ -2,56 +2,352 @@
   {
     "id": "b3_12_word_malgre",
     "format": "word",
-    "source": [{"text": "Malgré la panne, le concert a eu lieu le lendemain."}],
+    "source": [{"text": "Malgré la pluie, le marché de quartier est resté ouvert. Les vendeurs se sont installés sous des abris."}],
     "task": "What does « malgré » mean?",
-    "response": {"kind": "choices", "choices": ["despite", "because of", "before"], "answer": "despite"},
-    "feedback": "La panne n'a pas empêché le concert d'avoir lieu le lendemain."
+    "response": {
+      "kind": "choices",
+      "choices": ["despite", "because of", "before"],
+      "answer": "despite"
+    },
+    "feedback": "La pluie n'a pas empêché le marché d'ouvrir."
   },
   {
     "id": "b3_12_dialogue_choice",
     "format": "dialogue",
     "source": [
-      {"speaker": "Léa", "text": "Le taxi coûte cher, mais il est rapide."},
-      {"speaker": "Théo", "text": "Même si le taxi coûte cher, je le prends."}
+      {"speaker": "Léa", "text": "Le train coûte plus cher, mais il arrive deux heures plus tôt."},
+      {"speaker": "Théo", "text": "Même si le train coûte plus cher, je le prends : je veux arriver avant le dîner."}
     ],
     "task": "Quel trajet Théo choisit-il ?",
-    "response": {"kind": "choices", "choices": ["Le taxi.", "Le bus.", "Il ne choisit rien."], "answer": "Le taxi."},
-    "feedback": "Théo reconnaît le prix élevé, puis choisit le taxi."
+    "response": {
+      "kind": "choices",
+      "choices": ["Le train.", "Le bus.", "Il remet son voyage à plus tard."],
+      "answer": "Le train."
+    },
+    "feedback": "Théo reconnaît le prix plus élevé et choisit le train pour arriver tôt."
   },
   {
     "id": "b3_12_word_pourtant",
     "format": "word",
-    "source": [{"text": "Le bus était moins cher. Pourtant, Léa a pris le taxi."}],
+    "source": [{"text": "Le roman commence lentement. Pourtant, Inès le recommande : la fin l'a convaincue."}],
     "task": "What does « pourtant » mean here?",
-    "response": {"kind": "choices", "choices": ["however", "therefore", "earlier"], "answer": "however"},
-    "feedback": "« Pourtant » marque le contraste entre le prix et le choix."
+    "response": {
+      "kind": "choices",
+      "choices": ["however", "therefore", "earlier"],
+      "answer": "however"
+    },
+    "feedback": "Le début lent contraste avec la recommandation d'Inès."
   },
   {
     "id": "b3_12_microtext_reviews",
     "format": "microtext",
-    "source": [{"text": "Inès : « Le concert a commencé en retard. Malgré cela, j'ai aimé la musique. » Théo : « Il a commencé en retard, alors je suis parti. »"}],
-    "task": "Qui a aimé le concert malgré le retard ?",
-    "response": {"kind": "choices", "choices": ["Inès.", "Théo.", "Personne."], "answer": "Inès."},
-    "feedback": "Inès dit qu'elle a aimé la musique malgré le retard."
+    "source": [{"text": "Avis d'Inès : « La visite guidée était courte. Malgré cela, les explications m'ont donné envie de revenir. » Avis de Théo : « La visite était courte ; je n'ai pas eu le temps de voir la dernière salle. »"}],
+    "task": "Qui dit vouloir revenir malgré la brièveté de la visite ?",
+    "response": {
+      "kind": "choices",
+      "choices": ["Inès.", "Théo.", "Les deux."],
+      "answer": "Inès."
+    },
+    "feedback": "Inès exprime l'envie de revenir ; Théo souligne seulement ce qu'il a manqué."
   },
   {
     "id": "b3_12_rewrite_meme_si",
     "format": "rewrite",
-    "source": [{"text": "Le taxi coûte cher. Je le prends."}],
-    "task": "Relie les phrases avec « même si ».",
+    "source": [{"text": "Le train coûte cher. Je le prends."}],
+    "task": "Relie les idées avec « même si ».",
     "response": {
       "kind": "typed",
-      "answer": "Même si le taxi coûte cher, je le prends",
-      "accepted": ["Même si le taxi coûte cher, je le prends", "Je le prends même si le taxi coûte cher"]
+      "answer": "Même si le train coûte cher je le prends",
+      "accepted": ["Même si le train coûte cher je le prends", "Je le prends même si le train coûte cher"]
     },
-    "feedback": "« Même si » reconnaît le prix élevé sans changer le choix."
+    "feedback": "« Même si » admet le coût sans changer la décision."
   },
   {
     "id": "b3_12_microtext_reservation",
     "format": "microtext",
-    "source": [{"text": "Le concert avait été reporté. Pourtant, Léa y est allée le lendemain. Elle a trouvé la musique belle, mais l'attente longue."}],
-    "task": "Quel point négatif Léa mentionne-t-elle ?",
-    "response": {"kind": "choices", "choices": ["L'attente était longue.", "La musique était mauvaise.", "Elle a perdu son billet."], "answer": "L'attente était longue."},
-    "feedback": "Léa aime la musique, mais elle trouve l'attente longue."
+    "source": [{"text": "Dans son avis, Nora trouve la nouvelle bibliothèque lumineuse et calme. Pourtant, elle hésite à y travailler : elle ferme dès dix-sept heures."}],
+    "task": "Quelle réserve Nora exprime-t-elle ?",
+    "response": {
+      "kind": "choices",
+      "choices": ["La bibliothèque ferme tôt.", "La bibliothèque est bruyante.", "La bibliothèque manque de lumière."],
+      "answer": "La bibliothèque ferme tôt."
+    },
+    "feedback": "Son hésitation vient de l'heure de fermeture."
+  },
+  {
+    "id": "b3_12_word_neanmoins",
+    "format": "word",
+    "source": [{"text": "Le sentier est raide. Néanmoins, la vue au sommet vaut l'effort."}],
+    "task": "What does « néanmoins » mean?",
+    "response": {
+      "kind": "choices",
+      "choices": ["nevertheless", "for this reason", "at first"],
+      "answer": "nevertheless"
+    },
+    "feedback": "La difficulté du sentier ne change pas l'avis positif sur la vue."
+  },
+  {
+    "id": "b3_12_dialogue_proposal",
+    "format": "dialogue",
+    "source": [
+      {"speaker": "Malik", "text": "L'atelier est gratuit, mais il se termine tard."},
+      {"speaker": "Nora", "text": "C'est vrai. Néanmoins, je propose d'y aller : le dernier bus part après la fin."}
+    ],
+    "task": "Sur quel fait Nora fonde-t-elle sa proposition ?",
+    "response": {
+      "kind": "choices",
+      "choices": ["Ils peuvent prendre le dernier bus.", "L’atelier finit tôt.", "Le bus est gratuit."],
+      "answer": "Ils peuvent prendre le dernier bus."
+    },
+    "feedback": "Le bus part après l'atelier ; l'heure tardive reste gérable."
+  },
+  {
+    "id": "b3_12_word_convaincant",
+    "format": "word",
+    "source": [{"text": "L'argument de Nora est convaincant : elle montre l'horaire du dernier bus, et Malik accepte de venir."}],
+    "task": "What does « convaincant » mean?",
+    "response": {
+      "kind": "choices",
+      "choices": ["persuasive", "unconfirmed", "expensive"],
+      "answer": "persuasive"
+    },
+    "feedback": "La preuve donnée par Nora amène Malik à accepter."
+  },
+  {
+    "id": "b3_12_rewrite_bien_que",
+    "format": "rewrite",
+    "source": [{"text": "Le sentier est raide. Nous continuons."}],
+    "task": "Commence par « Bien que le sentier... ».",
+    "response": {
+      "kind": "typed",
+      "answer": "Bien que le sentier soit raide nous continuons",
+      "accepted": ["Bien que le sentier soit raide nous continuons"]
+    },
+    "feedback": "« Bien que » introduit la réserve et demande ici « soit »."
+  },
+  {
+    "id": "b3_12_microtext_evaluation",
+    "format": "microtext",
+    "source": [{"text": "La médiathèque propose plus de livres depuis septembre. Elle ferme néanmoins une heure plus tôt le samedi. Inès la recommande aux familles, car l'espace pour enfants est désormais plus grand."}],
+    "task": "Quel avantage soutient la recommandation d'Inès ?",
+    "response": {
+      "kind": "choices",
+      "choices": ["L'espace pour enfants est plus grand.", "La médiathèque ouvre plus tard le samedi.", "Tous les livres sont gratuits."],
+      "answer": "L'espace pour enfants est plus grand."
+    },
+    "feedback": "Inès cite cet espace pour justifier sa recommandation malgré la fermeture plus tôt."
+  },
+  {
+    "id": "b3_12_microtext_recommendation_basis",
+    "format": "microtext",
+    "source": [{"text": "Nora trouve la nouvelle bibliothèque calme, mais elle ferme tôt le samedi. Malik trouve ses horaires pratiques ; pourtant, il juge la salle trop bruyante pour travailler. Inès reconnaît les horaires limités et recommande quand même le lieu aux familles, parce que l'espace pour enfants est plus grand qu'avant."}],
+    "task": "Quel avis reconnaît une limite tout en recommandant le lieu ?",
+    "response": {
+      "kind": "choices",
+      "choices": ["Celui d'Inès.", "Celui de Nora.", "Celui de Malik."],
+      "answer": "Celui d'Inès."
+    },
+    "feedback": "Inès concède les horaires limités puis donne une raison de recommander le lieu."
+  },
+  {
+    "id": "b3_12_microtext_concession_strength",
+    "format": "microtext",
+    "source": [{"text": "L'atelier de quartier se termine tard. Nora le recommande néanmoins : le dernier bus part après la fin et l'atelier est gratuit. Malik reconnaît ces avantages, mais il ne peut pas rentrer en bus, car il habite ailleurs. Il ne rejette pas l'atelier ; il explique seulement pourquoi il n'ira pas."}],
+    "task": "Pourquoi l'argument de Nora ne suffit-il pas pour Malik ?",
+    "response": {
+      "kind": "choices",
+      "choices": ["Il ne peut pas rentrer avec ce bus.", "L'atelier coûte trop cher.", "Malik trouve l'atelier inutile."],
+      "answer": "Il ne peut pas rentrer avec ce bus."
+    },
+    "feedback": "Le bus aide Nora, mais Malik ne peut pas l'utiliser pour rentrer."
+  },
+  {
+    "id": "b3_12_rewrite_library_concession",
+    "format": "rewrite",
+    "source": [{"text": "La bibliothèque ferme tôt le samedi, ce qui gêne certaines familles. Son espace pour enfants est maintenant plus grand. Inès la recommande malgré cet horaire limité."}],
+    "task": "Reformule l'avis d'Inès en commençant par « Bien que ».",
+    "response": {
+      "kind": "typed",
+      "answer": "Bien que la bibliothèque ferme tôt le samedi Inès la recommande aux familles",
+      "accepted": ["Bien que la bibliothèque ferme tôt le samedi Inès la recommande aux familles", "Bien qu'elle ferme tôt le samedi Inès la recommande aux familles", "Bien que ses horaires soient limités Inès la recommande aux familles"]
+    },
+    "feedback": "« Bien que » reconnaît la limite tout en gardant la recommandation."
+  },
+  {
+    "id": "b3_12_microtext_review_reservation",
+    "format": "microtext",
+    "source": [{"text": "Inès écrit sur le nouveau roman : « Le début est lent, mais la fin donne un autre sens aux premiers chapitres. Je le recommande. » Nora répond : « La fin est réussie ; néanmoins, le début m'a empêchée de continuer. »"}],
+    "task": "Qui recommande le roman malgré une réserve ?",
+    "response": {
+      "kind": "choices",
+      "choices": ["Inès.", "Nora.", "Les deux lectrices."],
+      "answer": "Inès."
+    },
+    "feedback": "Inès reconnaît le début lent, puis recommande le livre."
+  },
+  {
+    "id": "b3_12_dialogue_concession_scope",
+    "format": "dialogue",
+    "source": [
+      {"speaker": "Nora", "text": "La bibliothèque ferme tôt le samedi. Pour travailler longtemps, cela me gêne."},
+      {"speaker": "Malik", "text": "C'est vrai. Pourtant, je la recommande aux familles : l'espace pour enfants est grand et calme."}
+    ],
+    "task": "Quelle limite Malik reconnaît-il sans retirer sa recommandation ?",
+    "response": {
+      "kind": "choices",
+      "choices": ["La fermeture tôt le samedi.", "Le manque d'espace pour enfants.", "Le bruit dans la bibliothèque."],
+      "answer": "La fermeture tôt le samedi."
+    },
+    "feedback": "« C'est vrai » reprend l'objection de Nora sur les horaires."
+  },
+  {
+    "id": "b3_12_rewrite_library_despite",
+    "format": "rewrite",
+    "source": [{"text": "La bibliothèque ferme tôt le samedi. Malik la recommande aux familles parce que l'espace pour enfants est grand."}],
+    "task": "Reformule en commençant par « Malgré ».",
+    "response": {
+      "kind": "typed",
+      "answer": "Malgré cet horaire limité Malik recommande la bibliothèque aux familles",
+      "accepted": ["Malgré cet horaire limité Malik recommande la bibliothèque aux familles", "Malgré ses horaires limités le samedi Malik la recommande aux familles"]
+    },
+    "feedback": "« Malgré » introduit la limite sans effacer la recommandation."
+  },
+  {
+    "id": "b3_12_microtext_conditions_of_recommendation",
+    "format": "microtext",
+    "source": [{"text": "La visite guidée est courte, et Inès aurait aimé rester plus longtemps. Néanmoins, elle la recommande aux personnes qui découvrent le musée : le guide explique clairement les œuvres principales. Pour les visiteurs qui connaissent déjà la collection, elle conseille plutôt une visite libre."}],
+    "task": "À qui s'adresse précisément la recommandation d'Inès ?",
+    "response": {
+      "kind": "choices",
+      "choices": ["Aux personnes qui découvrent le musée.", "Aux visiteurs qui connaissent déjà la collection.", "À tous les visiteurs sans distinction."],
+      "answer": "Aux personnes qui découvrent le musée."
+    },
+    "feedback": "Inès limite sa recommandation aux nouveaux visiteurs malgré la brièveté."
+  },
+  {
+    "id": "b3_12_microtext_bus_objection",
+    "format": "microtext",
+    "source": [{"text": "Nora recommande le concert en plein air malgré la pluie annoncée : des abris sont prévus. Malik trouve les musiciens excellents. Cependant, il ne viendra pas, car le dernier bus part avant la fin du concert. Son refus ne porte pas sur la qualité du spectacle."}],
+    "task": "Quel obstacle explique la décision de Malik ?",
+    "response": {
+      "kind": "choices",
+      "choices": ["Il ne pourra pas rentrer en bus après le concert.", "Il n'aime pas les musiciens.", "Aucun abri n'est prévu."],
+      "answer": "Il ne pourra pas rentrer en bus après le concert."
+    },
+    "feedback": "Malik apprécie la musique, mais l'horaire du dernier bus le bloque."
+  },
+  {
+    "id": "b3_12_rewrite_even_if_rain",
+    "format": "rewrite",
+    "source": [{"text": "Des abris sont prévus au concert. La météo annonce de la pluie. Nora recommande quand même le concert."}],
+    "task": "Exprime l'avis de Nora avec « même si ».",
+    "response": {
+      "kind": "typed",
+      "answer": "Même si la météo annonce de la pluie Nora recommande le concert",
+      "accepted": ["Même si la météo annonce de la pluie Nora recommande le concert", "Nora recommande le concert même si la météo annonce de la pluie"]
+    },
+    "feedback": "La pluie annoncée est une réserve ; la recommandation reste positive."
+  },
+  {
+    "id": "b3_12_microtext_two_reviews",
+    "format": "microtext",
+    "source": [{"text": "Nora trouve le film trop long, mais recommande sa fin surprenante aux amateurs de mystère. Malik apprécie les acteurs ; néanmoins, il ne recommande pas le film, car l'histoire lui semble confuse."}],
+    "task": "Qui donne un avis favorable malgré une réserve ?",
+    "response": {
+      "kind": "choices",
+      "choices": ["Nora.", "Malik.", "Ni Nora ni Malik."],
+      "answer": "Nora."
+    },
+    "feedback": "Nora reconnaît la longueur mais recommande le film à un public précis."
+  },
+  {
+    "id": "b3_12_dialogue_concession_not_agreement",
+    "format": "dialogue",
+    "source": [
+      {"speaker": "Inès", "text": "Le café est calme, mais il ferme à seize heures."},
+      {"speaker": "Léa", "text": "Je reconnais que l'horaire est limité. Pourtant, je le recommande pour une réunion le matin."}
+    ],
+    "task": "Léa partage-t-elle la réserve d'Inès ?",
+    "response": {
+      "kind": "choices",
+      "choices": ["Oui, mais elle maintient une recommandation limitée au matin.", "Non, elle affirme que le café ferme plus tard.", "Oui, elle déconseille toutes les réunions."],
+      "answer": "Oui, mais elle maintient une recommandation limitée au matin."
+    },
+    "feedback": "Elle accepte le fait de l'horaire puis précise quand son conseil reste valable."
+  },
+  {
+    "id": "b3_12_microtext_stronger_objection",
+    "format": "microtext",
+    "source": [{"text": "Le sentier est beau malgré sa pente. Nora le recommande aux marcheurs habitués. Malik, qui marche avec une personne blessée, préfère un chemin plat : pour son groupe, la vue ne compense pas la difficulté."}],
+    "task": "Pourquoi la recommandation de Nora ne convient-elle pas au groupe de Malik ?",
+    "response": {
+      "kind": "choices",
+      "choices": ["La pente pose un problème pour une personne blessée.", "Le sentier n'offre aucune vue.", "Nora conseille un chemin plat."],
+      "answer": "La pente pose un problème pour une personne blessée."
+    },
+    "feedback": "Le même inconvénient pèse différemment selon les personnes."
+  },
+  {
+    "id": "b3_12_rewrite_film_concession",
+    "format": "rewrite",
+    "source": [{"text": "Le film dure trois heures. Inès le recommande parce que l'histoire la passionne."}],
+    "task": "Exprime son avis en commençant par « Bien que ».",
+    "response": {
+      "kind": "typed",
+      "answer": "Bien que le film dure trois heures Inès le recommande",
+      "accepted": ["Bien que le film dure trois heures Inès le recommande", "Bien que le film soit long Inès le recommande"]
+    },
+    "feedback": "La durée est reconnue sans annuler la recommandation."
+  },
+  {
+    "id": "b3_12_microtext_although_scope",
+    "format": "microtext",
+    "source": [{"text": "Le marché couvert protège de la pluie. Il est cependant plus petit que le marché du jardin. Nora le recommande aux personnes qui veulent acheter quelques produits rapidement, mais pas à celles qui cherchent tous les vendeurs."}],
+    "task": "À qui s'adresse la recommandation de Nora ?",
+    "response": {
+      "kind": "choices",
+      "choices": ["Aux personnes qui veulent acheter quelques produits rapidement.", "Aux personnes qui veulent voir tous les vendeurs.", "Aux vendeurs qui cherchent le jardin."],
+      "answer": "Aux personnes qui veulent acheter quelques produits rapidement."
+    },
+    "feedback": "Son avis positif dépend de l'usage prévu."
+  },
+  {
+    "id": "b3_12_dialogue_evidence",
+    "format": "dialogue",
+    "source": [
+      {"speaker": "Malik", "text": "L'atelier finit tard ; je ne suis pas sûr de pouvoir rentrer."},
+      {"speaker": "Nora", "text": "C'est vrai. Néanmoins, le bus de 22 h 30 part après l'atelier et s'arrête près de chez toi."}
+    ],
+    "task": "Quel fait rend l'argument de Nora convaincant pour Malik ?",
+    "response": {
+      "kind": "choices",
+      "choices": ["Un bus utile part après l'atelier.", "L'atelier finit plus tôt que prévu.", "Malik habite à côté de l'atelier."],
+      "answer": "Un bus utile part après l'atelier."
+    },
+    "feedback": "Nora répond à l'obstacle du retour avec un horaire précis."
+  },
+  {
+    "id": "b3_12_microtext_conclusion_negative",
+    "format": "microtext",
+    "source": [{"text": "La visite est gratuite et le guide connaît bien les œuvres. Pourtant, Samir ne la conseille pas aux familles avec de jeunes enfants : elle dure trois heures sans pause. Il la recommande aux adultes qui ont le temps."}],
+    "task": "Quelle réserve limite sa recommandation ?",
+    "response": {
+      "kind": "choices",
+      "choices": ["La longueur sans pause.", "Le prix de la visite.", "Le manque de connaissances du guide."],
+      "answer": "La longueur sans pause."
+    },
+    "feedback": "Les avantages restent vrais, mais la durée change le public conseillé."
+  },
+  {
+    "id": "b3_12_rewrite_even_if_cost",
+    "format": "rewrite",
+    "source": [{"text": "Le train coûte davantage que le bus. Il arrive avant la fermeture, et Nora veut absolument voir l'exposition aujourd'hui."}],
+    "task": "Justifie le choix du train avec « même si ».",
+    "response": {
+      "kind": "typed",
+      "answer": "Même si le train coûte davantage Nora le prend pour arriver avant la fermeture",
+      "accepted": ["Même si le train coûte davantage Nora le prend pour arriver avant la fermeture", "Nora prend le train même s'il coûte davantage car il arrive avant la fermeture"]
+    },
+    "feedback": "Le prix est admis ; l'heure d'arrivée soutient la décision."
   }
 ]

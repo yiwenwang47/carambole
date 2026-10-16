@@ -2,11 +2,19 @@
   {
     "id": "b3_04_word_verifier",
     "format": "word",
-    "source": [{"text": "Inès veut vérifier l'heure : elle regarde les messages."}],
+    "source": [
+      {
+        "text": "Inès veut vérifier l'heure : elle regarde les messages."
+      }
+    ],
     "task": "What does « vérifier » mean here?",
     "response": {
       "kind": "choices",
-      "choices": ["to check", "to forget", "to invite"],
+      "choices": [
+        "to check",
+        "to forget",
+        "to invite"
+      ],
       "answer": "to check"
     },
     "feedback": "Inès regarde les messages pour vérifier l'heure."
@@ -15,29 +23,43 @@
     "id": "b3_04_dialogue_versions",
     "format": "dialogue",
     "source": [
-      {"speaker": "Léa", "text": "Je suis arrivée avant la panne."},
-      {"speaker": "Théo", "text": "Je pensais que tu étais arrivée après la panne."}
+      {
+        "speaker": "Inès",
+        "text": "J'ai accueilli Léa avant la panne."
+      },
+      {
+        "speaker": "Théo",
+        "text": "Je lui parlais pendant la panne, mais je croyais qu'elle venait d'arriver."
+      }
     ],
-    "task": "Qu'est-ce qui n'est pas pareil dans leurs versions ?",
+    "task": "Sur quel point Théo se trompe-t-il peut-être ?",
     "response": {
       "kind": "choices",
       "choices": [
-        "Le moment de l'arrivée de Léa.",
-        "Le nom d'Inès.",
-        "Le lieu du concert."
+        "Il déduit la durée de sa présence du moment où il lui a parlé.",
+        "Il pense qu'Inès a quitté le concert.",
+        "Il confond Léa avec la chanteuse."
       ],
-      "answer": "Le moment de l'arrivée de Léa."
+      "answer": "Il déduit la durée de sa présence du moment où il lui a parlé."
     },
-    "feedback": "Léa dit « avant » ; Théo pensait « après »."
+    "feedback": "Parler à Léa pendant la panne ne révèle pas depuis quand elle était là."
   },
   {
     "id": "b3_04_word_en_fait",
     "format": "word",
-    "source": [{"text": "Je pensais que Léa était en retard. En fait, elle était déjà là."}],
+    "source": [
+      {
+        "text": "Je pensais que Léa était en retard. En fait, elle était déjà là."
+      }
+    ],
     "task": "What does « en fait » mean here?",
     "response": {
       "kind": "choices",
-      "choices": ["actually", "before", "because"],
+      "choices": [
+        "actually",
+        "before",
+        "because"
+      ],
       "answer": "actually"
     },
     "feedback": "« En fait » introduit ce qui était vrai, malgré la première idée."
@@ -46,48 +68,376 @@
     "id": "b3_04_microtext_difference",
     "format": "microtext",
     "source": [
-      {"text": "Léa : « Je suis arrivée avant l'arrêt de la musique. » Théo : « Léa est arrivée après l'arrêt de la musique. »"}
+      {
+        "text": "Inès : « J'ai accueilli Léa bien avant la panne. » Théo : « Je lui parlais quand la musique s'est arrêtée, mais je n'ai pas vu son arrivée. »"
+      }
     ],
-    "task": "Quelle information est différente ?",
+    "task": "Que peut-on conclure sans trancher la durée de sa présence ?",
     "response": {
       "kind": "choices",
       "choices": [
-        "L'arrivée de Léa : avant ou après l'arrêt.",
-        "Le lieu du concert.",
-        "La personne qui parle à Inès."
+        "Théo parlait à Léa pendant la panne.",
+        "Léa venait juste d'arriver.",
+        "Inès et Théo ont accueilli Léa ensemble."
       ],
-      "answer": "L'arrivée de Léa : avant ou après l'arrêt."
+      "answer": "Théo parlait à Léa pendant la panne."
     },
-    "feedback": "Les deux messages ne placent pas l'arrivée de Léa au même moment."
+    "feedback": "Théo confirme leur conversation, pas l'heure d'arrivée de Léa."
   },
   {
     "id": "b3_04_rewrite_attribution",
     "format": "rewrite",
-    "source": [{"text": "Théo dit : « Léa est arrivée après la panne. »"}],
-    "task": "Rapporte sa version avec « selon ».",
+    "source": [
+      {
+        "text": "Inès a vérifié le message envoyé avant la panne, mais elle ne sait pas à quelle heure Léa est entrée dans la salle."
+      }
+    ],
+    "task": "Rapporte la limite de cette preuve en commençant par « Selon Inès ».",
     "response": {
       "kind": "typed",
-      "answer": "Selon Théo, Léa est arrivée après la panne",
-      "accepted": ["Selon Théo, Léa est arrivée après la panne"]
+      "answer": "Selon Inès l'heure d'entrée de Léa reste inconnue",
+      "accepted": [
+        "Selon Inès l'heure d'entrée de Léa reste inconnue",
+        "Selon Inès on ne sait pas quand Léa est entrée"
+      ]
     },
-    "feedback": "« Selon Théo » attribue l'information à Théo."
+    "feedback": "Le message prouve une présence antérieure, sans donner l'heure d'entrée."
   },
   {
     "id": "b3_04_microtext_check",
     "format": "microtext",
     "source": [
-      {"text": "Théo dit que Léa est arrivée après la panne. Inès vérifie un message de Léa, envoyé avant la panne : « Je suis au concert. » En fait, Léa était déjà là."}
+      {
+        "text": "Théo pensait que Léa venait d'arriver quand ils parlaient pendant la panne. Inès vérifie un message de Léa, envoyé bien avant la panne : « Je suis dans la salle. » En fait, Léa était là depuis plus longtemps."
+      }
     ],
-    "task": "Que montre le message de Léa ?",
+    "task": "Que prouve le message daté ?",
     "response": {
       "kind": "choices",
       "choices": [
-        "Léa était au concert avant la panne.",
-        "Léa est arrivée après la panne.",
-        "Léa a parlé à Théo après la panne."
+        "Léa était dans la salle bien avant la panne.",
+        "Théo a vu Léa entrer dans la salle.",
+        "Léa a causé la panne."
       ],
-      "answer": "Léa était au concert avant la panne."
+      "answer": "Léa était dans la salle bien avant la panne."
     },
-    "feedback": "Léa a écrit « Je suis au concert » avant la panne."
+    "feedback": "Le message a été envoyé avant la panne et dit « Je suis dans la salle »."
+  },
+  {
+    "id": "b3_04_word_peut_etre",
+    "format": "word",
+    "source": [
+      {
+        "text": "Théo n'a pas vu Léa entrer. Peut-être qu'elle était dans la salle depuis longtemps avant leur conversation."
+      }
+    ],
+    "task": "What does « peut-être » express here?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "a possibility",
+        "a confirmed fact",
+        "a refusal"
+      ],
+      "answer": "a possibility"
+    },
+    "feedback": "Théo envisage cette explication sans la présenter comme certaine."
+  },
+  {
+    "id": "b3_04_dialogue_verify",
+    "format": "dialogue",
+    "source": [
+      {
+        "speaker": "Théo",
+        "text": "Je croyais que Léa venait d'arriver quand nous parlions pendant la panne."
+      },
+      {
+        "speaker": "Inès",
+        "text": "Vérifie son message : elle était déjà dans la salle bien avant."
+      }
+    ],
+    "task": "Que devrait corriger Théo ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Son idée sur la durée de présence de Léa.",
+        "La date du concert.",
+        "Le nom de la personne qui a écrit le message."
+      ],
+      "answer": "Son idée sur la durée de présence de Léa."
+    },
+    "feedback": "Le message situe Léa dans la salle avant la panne."
+  },
+  {
+    "id": "b3_04_microtext_cautious",
+    "format": "microtext",
+    "source": [
+      {
+        "text": "Théo parlait à Léa pendant la panne. Un message envoyé bien avant montre qu'elle était déjà dans la salle. Personne ne sait pourquoi Théo n'a pas vu son entrée."
+      }
+    ],
+    "task": "Quelle explication reste incertaine ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "La raison pour laquelle Théo n'a pas vu son entrée.",
+        "La présence de Léa avant la panne.",
+        "Le fait que Théo lui parlait pendant la panne."
+      ],
+      "answer": "La raison pour laquelle Théo n'a pas vu son entrée."
+    },
+    "feedback": "Le message et la conversation établissent les deux moments ; son absence à l'entrée reste inexpliquée."
+  },
+  {
+    "id": "b3_04_rewrite_fact",
+    "format": "rewrite",
+    "source": [
+      {
+        "text": "Théo pensait : « Léa vient d'arriver. » Inès lit son message envoyé bien avant la panne : « Je suis dans la salle. »"
+      }
+    ],
+    "task": "Corrige son idée : « En fait, Léa... »",
+    "response": {
+      "kind": "typed",
+      "answer": "était déjà dans la salle",
+      "accepted": [
+        "était déjà dans la salle"
+      ]
+    },
+    "feedback": "Le message montre que Léa était déjà dans la salle bien avant la panne."
+  },
+  {
+    "id": "b3_04_word_verifier_reuse",
+    "format": "word",
+    "source": [
+      {
+        "text": "Inès a vérifié l'heure du message de Léa, « Je suis dans la salle » : il est parti bien avant la panne."
+      }
+    ],
+    "task": "Pourquoi l'heure du message compte-t-elle ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Elle établit la présence de Léa bien avant la panne.",
+        "Elle indique quand Théo a acheté son billet.",
+        "Elle prouve la cause de la panne."
+      ],
+      "answer": "Elle établit la présence de Léa bien avant la panne."
+    },
+    "feedback": "Le message de Léa dit qu'elle est dans la salle et date d'avant la panne."
+  },
+  {
+    "id": "b3_04_microtext_dated_account",
+    "format": "microtext",
+    "source": [
+      {
+        "text": "À 19 h 40, Léa a envoyé à Inès : « Je suis dans la salle. » Inès a conservé ce message. La panne a commencé à 20 h 15, alors que Théo parlait avec Léa. Théo pensait qu'elle venait d'arriver, car il ne l'avait pas vue entrer. Inès lui montre l'heure du message."
+      }
+    ],
+    "task": "Quelle partie de la version de Théo le message remet-il en cause ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Son estimation du temps passé par Léa dans la salle.",
+        "Le fait qu'il parlait avec Léa pendant la panne.",
+        "Le fait que la musique s'est arrêtée."
+      ],
+      "answer": "Son estimation du temps passé par Léa dans la salle."
+    },
+    "feedback": "Le message daté montre que Léa était déjà là bien avant leur conversation."
+  },
+  {
+    "id": "b3_04_dialogue_correction",
+    "format": "dialogue",
+    "source": [
+      {
+        "speaker": "Théo",
+        "text": "Je croyais qu'elle venait d'arriver : je ne l'avais pas vue entrer."
+      },
+      {
+        "speaker": "Inès",
+        "text": "Son message est daté d'avant le concert. Elle était déjà dans la salle."
+      }
+    ],
+    "task": "Quelle correction reste fidèle aux deux témoignages ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Théo ignorait l'heure d'entrée de Léa.",
+        "Théo a vu Léa entrer avant le concert.",
+        "Inès a envoyé le message à la place de Léa."
+      ],
+      "answer": "Théo ignorait l'heure d'entrée de Léa."
+    },
+    "feedback": "L'absence d'observation explique son estimation, mais le message la contredit."
+  },
+  {
+    "id": "b3_04_rewrite_evidence",
+    "format": "rewrite",
+    "source": [
+      {
+        "text": "Théo n'a pas vu Léa entrer, mais il lui parlait pendant la panne. Inès possède un message de Léa daté d'avant le concert."
+      }
+    ],
+    "task": "Complète le bilan : « Théo ne sait pas... »",
+    "response": {
+      "kind": "typed",
+      "answer": "depuis quand Léa était dans la salle",
+      "accepted": [
+        "depuis quand Léa était dans la salle",
+        "à quelle heure Léa est entrée dans la salle"
+      ]
+    },
+    "feedback": "La conversation situe leur rencontre ; seul le message aide à dater la présence de Léa."
+  },
+  {
+    "id": "b3_04_word_evidence",
+    "format": "word",
+    "source": [
+      {
+        "text": "Théo croyait que Léa venait d'arriver. Inès montre son message daté d'avant le concert : « Je suis dans la salle. »"
+      }
+    ],
+    "task": "Qu'est-ce qui permet de vérifier la présence de Léa ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Le message daté.",
+        "L'impression de Théo.",
+        "La durée de leur conversation."
+      ],
+      "answer": "Le message daté."
+    },
+    "feedback": "L'heure du message confirme que Léa était déjà dans la salle."
+  },
+  {
+    "id": "b3_04_microtext_guess",
+    "format": "microtext",
+    "source": [
+      {
+        "text": "Théo : « Je lui ai parlé quand le son s'est coupé. Je pensais qu'elle venait d'arriver. » Inès : « Pourtant, son message dit qu'elle était dans la salle avant le concert. »"
+      }
+    ],
+    "task": "Quelle idée de Théo faut-il revoir ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Léa venait d'arriver pendant la panne.",
+        "Il a parlé à Léa pendant la panne.",
+        "Il n'a pas vu Léa entrer."
+      ],
+      "answer": "Léa venait d'arriver pendant la panne."
+    },
+    "feedback": "Le message contredit son estimation d'arrivée."
+  },
+  {
+    "id": "b3_04_rewrite_checked",
+    "format": "rewrite",
+    "source": [
+      {
+        "text": "Théo pensait que Léa venait d'arriver. Son message daté d'avant le concert prouve qu'elle était déjà dans la salle."
+      }
+    ],
+    "task": "Complète : « En fait, Léa... »",
+    "response": {
+      "kind": "typed",
+      "answer": "était déjà dans la salle avant le concert",
+      "accepted": [
+        "était déjà dans la salle avant le concert",
+        "était dans la salle avant le concert"
+      ]
+    },
+    "feedback": "Le message établit sa présence avant le concert."
+  },
+  {
+    "id": "b3_04_microtext_two_sources",
+    "format": "microtext",
+    "source": [
+      {
+        "text": "Message de Léa, envoyé avant le concert : « Je suis dans la salle. » Note de Théo : « Je lui parlais quand le son s'est coupé. Je croyais qu'elle venait d'arriver ; je ne l'avais pas vue entrer. »"
+      }
+    ],
+    "task": "Que ne permet pas d'établir le message ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "L'heure exacte où Léa est entrée.",
+        "Sa présence avant le concert.",
+        "Le fait que l'estimation de Théo soit fausse."
+      ],
+      "answer": "L'heure exacte où Léa est entrée."
+    },
+    "feedback": "Un message de présence ne donne pas l'heure d'entrée."
+  },
+  {
+    "id": "b3_04_rewrite_attributed_guess",
+    "format": "rewrite",
+    "source": [
+      {
+        "text": "Théo : « Je croyais que Léa venait d'arriver. » Il ne l'a pas vue entrer."
+      }
+    ],
+    "task": "Présente sa supposition sans l'affirmer : « Selon Théo, ... »",
+    "response": {
+      "kind": "typed",
+      "answer": "Léa venait d'arriver",
+      "accepted": [
+        "Léa venait d'arriver",
+        "elle venait d'arriver"
+      ]
+    },
+    "feedback": "« Selon Théo » garde l'attribution de son estimation."
+  },
+  {
+    "id": "b3_04_microtext_transfer",
+    "format": "microtext",
+    "source": [
+      {
+        "text": "À l'exposition, Inès lit le message de Léa envoyé avant l'ouverture : « Je suis devant la salle. » Théo l'a rencontrée plus tard près d'un tableau et pense qu'elle vient d'arriver."
+      }
+    ],
+    "task": "Quelle conclusion reste justifiée ?",
+    "response": {
+      "kind": "choices",
+      "choices": [
+        "Léa était devant la salle avant l'ouverture.",
+        "Léa est entrée dans la salle avant l'ouverture.",
+        "Théo a vu Léa arriver devant la salle."
+      ],
+      "answer": "Léa était devant la salle avant l'ouverture."
+    },
+    "feedback": "Le message situe Léa devant la salle, sans dire quand elle est entrée."
+  },
+  {
+    "id": "b3_04_microtext_clock_limit",
+    "format": "microtext",
+    "source": [{"text": "À 19 h 40, Léa écrit à Inès : « Je suis dans la salle. » La panne commence à 20 h 15. Théo parle à Léa pendant la panne, sans avoir vu son entrée."}],
+    "task": "Quelle limite garde-t-on malgré l'heure du message ?",
+    "response": {"kind": "choices", "choices": ["On ignore l'heure exacte de son entrée.", "On ignore si Léa était là avant la panne.", "On ignore si Théo lui a parlé pendant la panne."], "answer": "On ignore l'heure exacte de son entrée."},
+    "feedback": "Le message prouve sa présence à 19 h 40, pas son heure d'entrée."
+  },
+  {
+    "id": "b3_04_rewrite_correction_transfer",
+    "format": "rewrite",
+    "source": [{"text": "Jules pense que Sam vient d'arriver à la bibliothèque. Nora montre un message de Sam envoyé une heure plus tôt : « Je suis déjà à l'intérieur. »"}],
+    "task": "Corrige l'estimation de Jules : « En fait, Sam... »",
+    "response": {"kind": "typed", "answer": "était déjà à la bibliothèque", "accepted": ["était déjà à la bibliothèque", "était déjà à l'intérieur"]},
+    "feedback": "Le message établit une présence antérieure à la rencontre avec Jules."
+  },
+  {
+    "id": "b3_04_dialogue_sequence_vs_guess",
+    "format": "dialogue",
+    "source": [{"speaker": "Théo", "text": "Je lui ai parlé quand le son s'est coupé. Je croyais qu'elle venait d'arriver."}, {"speaker": "Inès", "text": "Elle m'avait écrit de la salle bien avant la panne."}],
+    "task": "Quel énoncé tient compte du message sans inventer l'heure d'entrée ?",
+    "response": {"kind": "choices", "choices": ["Léa était déjà dans la salle avant la panne.", "Léa est entrée à l'heure du message.", "Théo a vu Léa entrer avant la panne."], "answer": "Léa était déjà dans la salle avant la panne."},
+    "feedback": "Le message date sa présence, pas son entrée ; Théo n'a pas vu celle-ci."
+  },
+  {
+    "id": "b3_04_word_en_fait_transfer",
+    "format": "word",
+    "source": [{"text": "Je pensais que l'exposition ouvrait samedi. En fait, le message d'Inès indique vendredi."}],
+    "task": "Que fait « en fait » dans cette correction ?",
+    "response": {"kind": "choices", "choices": ["Il remplace une idée erronée par une information vérifiée.", "Il annonce une simple possibilité pour samedi.", "Il indique que les deux jours sont confirmés."], "answer": "Il remplace une idée erronée par une information vérifiée."},
+    "feedback": "Le message corrige l'estimation initiale."
   }
 ]

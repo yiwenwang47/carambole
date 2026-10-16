@@ -2,6 +2,10 @@
 
 **Date:** 2026-10-15
 
+**Later content state:** See `2026-10-15-book-3-content-final-handoff.md` for
+the 550-card draft and current next steps. This file records the earlier
+122-card checkpoint.
+
 **Branch:** `book3-pilot`
 
 **State:** The user tried module 10 in the simulator and said, “works.” The user
