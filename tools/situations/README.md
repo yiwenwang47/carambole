@@ -91,6 +91,10 @@ the long forms (« Monsieur Ferrand », « Madame Dumas »). The voice map is
 
 The three new voices were checked against the live fr-FR voice list but not
 yet auditioned by the user. Word audio uses `fr-FR-Neural2-G`.
+The line `sit_04_thank_d03_t0` uses `fr-FR-Studio-A` by user selection;
+`VOICE_OVERRIDES` in `tools/situations/generate_audio.py` preserves that choice
+when the clip is regenerated. Its IPA pronunciation remains in
+`tts_overrides.json`.
 
 ## Drafts and modules.json
 
@@ -135,6 +139,8 @@ rtk python3 tools/situations/generate_audio.py --review   # pilot2_* clips for t
 rtk python3 tools/situations/review_set.py <nine item IDs from any modules>
 rtk python3 tools/situations/normalize_audio.py --all --check   # loudness report, no changes
 rtk python3 tools/situations/normalize_audio.py --all           # normalise any new/untagged clip
+rtk python3 tools/situations/audio_audit.py                     # hard audio gate; JSON + playable HTML report
+rtk python3 tools/situations/repair_audio.py --apply           # shorten flagged quiet gaps; saves originals in /tmp
 rtk python3 tools/situations/gloss_dump.py MODULE.json carambole/Resources/Situations/words.json [--moves a,b]
 rtk python3 tools/situations/apply_gloss_spec.py SPEC.json [--dry]   # book-wide gloss widenings + new base keys
 rtk python3 -m unittest tools/situations/test_lint.py tools/situations/test_tools.py tools/pilot/test_content.py tools/situations/test_normalize_audio.py
@@ -206,6 +212,53 @@ the codec is missing.
 
 When a line's text changes, delete its clip and regenerate it; the new clip is
 normalised as it is written.
+
+## Audio pronunciation and pause gate
+
+**Mandatory for every future production book with bundled speech:** add the book
+to `audio_books.json` before its first Release build. A situation-schema book
+points to its manifest directory. Any other book supplies a JSON index of
+`{ "key": "clip_basename", "text": "spoken line", "voice": "voice name" }`
+rows. Point to its audio directory and report path too. Run
+`audio_release_gate.py` for all books, or use `tools/release_build.sh`, which
+runs the gate before `xcodebuild`. A missing or unresolved clip stops the build.
+The Book 3 Test book is a draft without production audio and is registered only
+when its production audio is created.
+
+Every new Book 2 clip is checked immediately after generation and normalisation.
+Excessive quiet gaps are shortened automatically, without changing the spoken
+samples; a clip that still fails stops generation. `repair_audio.py --apply`
+does the same for existing clips. It builds and checks a candidate first,
+backs up the original in `/tmp/carambole_audio_backups`, then replaces it.
+The strict `lint.py` release check also runs the full audit; `--no-audio`
+skips it during authoring. Run `audio_audit.py` to write the review queue. It checks every
+expected MP3 for absence, corruption, silence, excessive padding, and long
+pauses that do not align with punctuation. The command exits nonzero while
+any finding remains unresolved. Its JSON report and playable HTML review queue
+go to `docs/reports/book2_audio_audit.*` by default.
+
+**Pronunciation remains a separate judgment.** A waveform cannot tell whether
+`c'était` was spoken as `/setɛ/`; the pause check only caught the conspicuous
+gap in that clip. If a clip sounds wrong, regenerate it with an exact-text
+SSML/IPA entry in `tts_overrides.json`, then rerun the audit. If an unresolved
+timing finding is actually a natural pause, listen to it and record the clip's
+report SHA-256, all finding codes, and a nonempty reason in
+`audio_audit_reviews.json`. Reviews stop applying if the MP3 changes. Never
+approve a clip based only on the signal report.
+
+```json
+{
+  "sit_01_example_t0": {
+    "sha256": "the hash shown in the report",
+    "codes": ["internal_pause"],
+    "reason": "Listened to the whole clip; this pause follows the full stop."
+  }
+}
+```
+
+The same audit can check future books with this situation schema using
+`--situations PATH --audio-dir PATH`; another audio format can supply a JSON
+`--index PATH` list of `{ "key": ..., "text": ..., "voice": ... }` rows.
 
 ## Agent prompts
 

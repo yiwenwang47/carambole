@@ -591,6 +591,14 @@ def main() -> int:
     if all_errors:
         print(f"{len(all_errors)} error(s)", file=sys.stderr)
         return 1
+    if not args.no_audio and not args.draft and not args.module:
+        from audio_audit import audit, expected_clips, load_reviews
+
+        audio_result = audit(expected_clips(SITUATIONS), AUDIO, reviews=load_reviews())
+        if audio_result["flagged_clips"]:
+            print(f"Audio audit: {audio_result['flagged_clips']} clips need review; "
+                  "run tools/situations/audio_audit.py for the playable report", file=sys.stderr)
+            return 1
     print(f"OK: {len(targets)} situation module(s)")
     return 0
 

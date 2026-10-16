@@ -47,6 +47,15 @@ Older history is in `docs/archive/` and git log.
 
 ## Hard rules
 
+- **Audio is a release gate for every production book with bundled speech.**
+  Register its situation manifest or `{key, text, voice}` clip index in
+  `tools/situations/audio_books.json`. Run `tools/release_build.sh` for Release
+  builds: it runs `audio_release_gate.py` across every registered book and fails
+  for missing, corrupt, silent, or excessively padded/paused clips. Generate
+  and repair before building. The signal check cannot judge pronunciation or
+  intonation; use an exact-text TTS override and listen when a line sounds wrong.
+  The user selected `fr-FR-Studio-A` for `sit_04_thank_d03_t0`; preserve the
+  per-clip voice override and `/setɛ/` SSML pronunciation on regeneration.
 - **"Trop facile" in every book, one logic (user, 2026-10-13).** Arm on a card,
   still answer it; a clean answer grades .easy + suspends (instant maîtrisé, undo
   pill); anything else cleans the element's records; either way the session moves
@@ -127,7 +136,10 @@ xcodebuild build -project carambole.xcodeproj -scheme carambole \
 - **Book 1 lints:** `python3 tools/lint_topics.py`, `tools/deep_lint.py`,
   `tools/bank_lint.py`.
 - **Book 2:** `python3 tools/situations/lint.py` (strict, with audio);
-  `python3 -m unittest tools/situations/test_lint.py tools/situations/test_tools.py tools/pilot/test_content.py tools/situations/test_normalize_audio.py`;
+  `python3 tools/situations/audio_audit.py` (hard audio gate and playable
+  report); `python3 tools/situations/repair_audio.py --apply` shortens
+  excessive quiet gaps without changing spoken samples;
+  `python3 -m unittest tools/situations/test_lint.py tools/situations/test_tools.py tools/pilot/test_content.py tools/situations/test_normalize_audio.py tools/situations/test_audio_audit.py tools/situations/test_audio_release_gate.py tools/situations/test_repair_audio.py`;
   model tests: `swiftc carambole/Models/Situation.swift tools/situations/SituationModelTests.swift -o /tmp/t && /tmp/t carambole/Resources/Situations`.
 - **Content pipeline tests:** `cd tools && python3 -m pytest content_pipeline -q`.
 - **Phone** (iPhone 18 Pro `00008160-001A09920AA0000A`, team `QMV4SPL476`,
@@ -135,7 +147,8 @@ xcodebuild build -project carambole.xcodeproj -scheme carambole \
   phone; Claude never tests, records or profiles there. The phone has a Release
   build.
   ```bash
-  xcodebuild -project carambole.xcodeproj -scheme carambole -configuration Release \
+  CARAMBOLE_AUDIO_PYTHON=/path/to/python-with-numpy-scipy-lameenc \
+    tools/release_build.sh \
     -destination 'id=00008160-001A09920AA0000A' -allowProvisioningUpdates \
     DEVELOPMENT_TEAM=QMV4SPL476 -derivedDataPath /tmp/cb-device build -quiet
   xcrun devicectl device install app --device 00008160-001A09920AA0000A \

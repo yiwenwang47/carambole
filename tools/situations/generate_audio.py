@@ -24,6 +24,7 @@ from generate_audio import CAST, access_token, synthesize  # noqa: E402
 sys.path.append(str(ROOT / "tools/situations"))
 from sitbook import SITUATIONS, load_manifest_modules, module_number  # noqa: E402
 from normalize_audio import process_file, require_codec  # noqa: E402
+from repair_audio import repair_if_needed  # noqa: E402
 
 WORDS = SITUATIONS / "words.json"
 PILOT = ROOT / "carambole/Debug/testbook_situation.json"
@@ -31,6 +32,7 @@ OUT = ROOT / "carambole/Resources/Audio"
 OVERRIDES = ROOT / "tools/situations/tts_overrides.json"
 MALE = "fr-FR-Neural2-G"
 FEMALE = "fr-FR-Neural2-F"
+VOICE_OVERRIDES = {"sit_04_thank_d03_t0": "fr-FR-Studio-A"}
 
 
 def turn_voice(turn: dict) -> str:
@@ -59,7 +61,8 @@ def spoken_line(item: dict, text: str) -> str:
 def item_clips(item: dict, prefix: str = "") -> list[tuple[str, str, str]]:
     stem = prefix + item["id"]
     servers = [turn for turn in item["turns"] if turn["speaker"] == "server"]
-    rows = [(f"{stem}_t{i}", spoken_line(item, turn["text"]), turn_voice(turn))
+    rows = [(f"{stem}_t{i}", spoken_line(item, turn["text"]),
+             VOICE_OVERRIDES.get(f"{stem}_t{i}", turn_voice(turn)))
             for i, turn in enumerate(item["turns"]) if turn["speaker"] == "server"]
     if item.get("followUp"):
         if item.get("followUpBy"):
@@ -123,6 +126,7 @@ def main() -> None:
         result = process_file(OUT / f"{stem}.mp3")
         print(f"{stem}.mp3 {len(audio)} bytes; {result.before.lufs:.1f} LUFS -> {result.plan.gain_db:+.1f} dB"
               + (f", shelf {result.plan.shelf_db:.1f} dB" if result.plan.shelf_db else ""))
+        repair_if_needed((stem, text, voice), OUT)
 
 
 if __name__ == "__main__":

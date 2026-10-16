@@ -108,6 +108,13 @@ class ReviewAdapterTests(unittest.TestCase):
         item["followUpBy"] = "M. Ferrand"
         self.assertEqual(item_clips(item)[-1][2], "fr-FR-Chirp3-HD-Orus")
 
+    def test_thank_you_line_uses_selected_studio_voice(self):
+        item = {"id": "sit_04_thank_d03", "turns": [
+            {"speaker": "server", "name": "Léa", "text": "C'était top, hier ! À refaire !"},
+            {"speaker": "server", "name": "Léa", "text": "À bientôt !"}]}
+        voices = [voice for _, _, voice in item_clips(item)]
+        self.assertEqual(voices, ["fr-FR-Studio-A", "fr-FR-Chirp3-HD-Aoede"])
+
     def test_export_takes_items_from_several_modules(self):
         other = {"elements": [{"id": "sit_01_hello", "title": "Saluer", "items": self.items[3:]}]}
         first = {"elements": [{"id": "sit_06_order", "title": "Commander", "items": self.items[:3]}]}
