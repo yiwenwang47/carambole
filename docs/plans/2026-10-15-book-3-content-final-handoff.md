@@ -2,7 +2,7 @@
 
 **Date:** 2026-10-15
 
-**Branch:** `book3-pilot`
+**Integration:** merged into `main` on 2026-10-16; the `book3-pilot` branch can be removed.
 
 **State:** 550 review cards across all 20 DEBUG Test book modules. Content
 authoring volume is complete. Production Book 3 remains to be designed and
@@ -73,5 +73,5 @@ French line is natural.
    production text. The Test book files are authoring material, not a shipped
    course.
 
-This handoff covers Book 3 only. The shared worktree also contains ongoing
-Book 2 audio and tooling changes; they are outside this content checkpoint.
+This handoff covers Book 3 only. The Book 2 audio and tooling changes were
+merged separately in the same integration.

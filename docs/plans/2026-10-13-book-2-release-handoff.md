@@ -2,12 +2,12 @@
 
 **Written:** 2026-10-13, end of session.
 **Original release branch:** `main`, pushed.
-**Latest update:** 2026-10-15, Book 2 drill layout on `book3-pilot` (`ee721aca`, pushed).
+**Latest update:** 2026-10-16, audio audit and Studio A replacement merged to `main`.
 **Previous start point:** [arc 5 done handoff](../archive/plans/2026-10-13-book-2-arc5-done-handoff.md). Its §0 has this session's commits and the release check in detail.
 
 ## 1. Current phone state
 
-The main Carambole app (`wen.carambole`) received a Release build from `book3-pilot` on 2026-10-15. This build includes the Book 2 drill layout in §10. Only the user checks behavior on the phone; do not test, record, or profile there.
+The main Carambole app (`wen.carambole`) received a Release build with the Studio A audio clip on 2026-10-16. This build includes the Book 2 drill layout in §10. Only the user checks behavior on the phone; do not test, record, or profile there.
 
 ## 2. Checks only the phone can do
 
@@ -37,8 +37,8 @@ Fixed this session, after the release check:
 ## 4. Commands
 
 ```sh
-# Release app on the phone (build from the intended branch)
-xcodebuild -project carambole.xcodeproj -scheme carambole -configuration Release -destination 'id=00008160-001A09920AA0000A' -allowProvisioningUpdates DEVELOPMENT_TEAM=QMV4SPL476 -derivedDataPath /tmp/cb-device build -quiet
+# Release app on the phone (audio gate runs before xcodebuild)
+CARAMBOLE_AUDIO_PYTHON=/path/to/python-with-numpy-scipy-lameenc tools/release_build.sh -destination 'id=00008160-001A09920AA0000A' -allowProvisioningUpdates DEVELOPMENT_TEAM=QMV4SPL476 -derivedDataPath /tmp/cb-device build -quiet
 xcrun devicectl device install app --device 00008160-001A09920AA0000A /tmp/cb-device/Build/Products/Release-iphoneos/carambole.app
 
 # Test book on the phone
@@ -102,3 +102,19 @@ The user approved the layout in the iPhone 18 Pro Test book simulator. The reply
 The strict situation lint passed for 25 modules. The Swift model test loaded all 3,000 items, and 98 Python tests passed with the Conda Python that has the audio dependencies. The Test book simulator build and the signed Release phone build passed. `devicectl` installed `wen.carambole` on the paired iPhone 18 Pro. The agent did not test the phone.
 
 The change was fast-forward merged into `book3-pilot` and pushed to `origin/book3-pilot`. `main` was not changed in this round. The feature worktree, local branch, simulator Test book app, and temporary build caches were removed.
+
+## 11. Audio audit and Studio A line (2026-10-16)
+
+The user selected Studio A for Léa's « C'était top, hier ! À refaire ! ».
+`sit_04_thank_d03_t0.mp3` is the selected sample. The line keeps its IPA
+pronunciation in `tts_overrides.json`, and `VOICE_OVERRIDES` in
+`generate_audio.py` keeps Studio A on regeneration. The original, earlier
+replacement, three model candidates, and representative pause repairs are in
+`docs/reports/book2_audio_before_after.html` with local MP3 files.
+
+The audit checked all 6,459 Book 2 clips and found zero unresolved issues after
+the conservative pause repair. Future production books with bundled audio must
+register their clip index in `tools/situations/audio_books.json`; the Release
+build wrapper blocks missing or unresolved audio. Signal checks cannot judge
+pronunciation or intonation. The signed Release build passed the gate and was
+installed on the paired iPhone 18 Pro. The agent did not test on the phone.
