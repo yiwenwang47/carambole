@@ -2,12 +2,12 @@
 
 **Written:** 2026-10-13, end of session.
 **Original release branch:** `main`, pushed.
-**Latest update:** 2026-10-16, Release build of `main` (`a40cadd0`) reinstalled on the iPhone after the audio gate passed.
+**Latest update:** 2026-10-17, Release build with the Book 2 unit-completion fix installed on the iPhone after the audio gate passed.
 **Previous start point:** [arc 5 done handoff](../archive/plans/2026-10-13-book-2-arc5-done-handoff.md). Its §0 has this session's commits and the release check in detail.
 
 ## 1. Current phone state
 
-The main Carambole app (`wen.carambole`) received a Release build with the Studio A audio clip on 2026-10-16. This build includes the Book 2 drill layout in §10. Only the user checks behavior on the phone; do not test, record, or profile there.
+The main Carambole app (`wen.carambole`) received a Release build on 2026-10-17. It includes the Book 2 unit-completion fix in §13, the Studio A clip, and Book 3. Only the user checks behavior on the phone; do not test, record, or profile there.
 
 ## 2. Checks only the phone can do
 
@@ -127,3 +127,22 @@ findings. The signed build succeeded, and `devicectl` installed
 `wen.carambole` on the connected iPhone 18 Pro. The audit rule remains in
 `CLAUDE.md`, `tools/situations/README.md`, and the release wrapper. The agent
 did not launch or test the app on the phone.
+
+## 13. Book 2 unit completion (2026-10-17)
+
+The fixed first pass through a Book 2 unit could end after its initial cards even
+when one or more elements had no correct answer. At the end of that pass, the
+learn session now adds another card for each unintroduced element. It repeats
+until every element has a correct answer or a clean “Trop facile” grade. There
+is no fixed drill-count limit for finishing a unit.
+
+The module list now shows **Appris** when all its elements have been introduced
+correctly. A wrong attempt does not finish the unit or unlock the next one.
+**Maîtrisé** and the book progress bar still mean long-term FSRS graduation after
+spaced reviews. Existing progress is read from `review_status`; no migration is
+needed.
+
+The Swift model test passed across all 3,000 items, 116 Python tests passed,
+and the release audio gate checked 6,459 clips with zero unresolved findings.
+The signed Release build succeeded, and `devicectl` installed `wen.carambole`
+on the paired iPhone 18 Pro. Phone behavior remains for the user to check.

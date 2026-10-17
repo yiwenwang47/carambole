@@ -979,6 +979,15 @@ class DataManager {
                      bindDouble: nil))
     }
 
+    /// Elements whose introduction has succeeded. A wrong first answer creates a
+    /// review row but does not count as learned; a clean "Trop facile" does.
+    func fetchIntroducedElementIDs() -> Set<String> {
+        Set(queryIDs("""
+            SELECT element_id FROM review_status
+            WHERE distinct_correct > 0 OR graduated_date IS NOT NULL OR suspended = 1;
+            """, bindDouble: nil))
+    }
+
     /// FSRS state for every graduated, non-suspended element that has a stability —
     /// the rows whose predicted recall `R(now)` can still decay into "fragile". A
     /// suspended element never decays (the too-easy-skip graduation path), so it is

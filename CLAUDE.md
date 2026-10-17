@@ -46,6 +46,9 @@ Older history is in `docs/archive/` and git log.
 
 ## Hard rules
 
+- **"Clean up" means finish integration:** merge the finished work, push the
+  resulting branch, delete finished branches and worktrees, and remove unneeded
+  cache files. Verify the merged tree before removing its source branch.
 - **Audio is a release gate for every production book with bundled speech.**
   Register its situation manifest or `{key, text, voice}` clip index in
   `tools/situations/audio_books.json`. Run `tools/release_build.sh` for Release
@@ -157,8 +160,9 @@ xcodebuild build -project carambole.xcodeproj -scheme carambole \
 - **Content pipeline tests:** `cd tools && python3 -m pytest content_pipeline -q`.
 - **Phone** (iPhone 18 Pro `00008160-001A09920AA0000A`, team `QMV4SPL476`,
   bundle `wen.carambole`). Install only when the user asks. The user tests on the
-  phone; Claude never tests, records or profiles there. The phone still has its
-  earlier Release build; Book 3 has only been checked in the simulator.
+  phone; Claude never tests, records or profiles there. The 2026-10-17 Release
+  build includes the Book 2 unit-completion fix and Book 3. Phone behavior is
+  still for the user to check.
   ```bash
   CARAMBOLE_AUDIO_PYTHON=/path/to/python-with-numpy-scipy-lameenc \
     tools/release_build.sh \

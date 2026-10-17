@@ -32,6 +32,13 @@ struct SituationModelTests {
             modules.append(try decoder.decode(SituationModuleFile.self, from: Data(contentsOf: dir.appendingPathComponent(file))))
         }
         check(!modules.isEmpty, "manifest lists at least one module")
+        // A learn round may have exhausted its initial cards while moves remain
+        // unlearned. Those moves need another card, regardless of round length.
+        let round = (1...20).map { "move_\($0)" }
+        check(SituationLearnQueue.pendingIDs(round, introduced: Set(round.dropLast(2))) ==
+              ["move_19", "move_20"], "learn queue continues after twenty cards")
+        check(SituationLearnQueue.pendingIDs(round, introduced: Set(round)).isEmpty,
+              "learn queue ends once every move is introduced")
         let elements = modules.flatMap(\.elements)
         let items = elements.flatMap(\.items)
         check(Set(elements.map(\.id)).count == elements.count, "element IDs unique")

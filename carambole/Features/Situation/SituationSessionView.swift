@@ -496,6 +496,28 @@ struct SituationSessionView: View {
         DispatchQueue.main.async { animateCursor(to: frontier) }
     }
 
+    /// The authored first pass is finite. Keep offering fresh (then oldest)
+    /// items for elements still without a correct answer, one per pass.
+    private func appendUnlearnedCards() {
+        guard mode == .learn, recordsProgress else { return }
+        #if DEBUG
+        // Simulator item selection intentionally requests an exact fixed queue.
+        if ProcessInfo.processInfo.environment["CB_SIT_ITEMS"] != nil { return }
+        #endif
+        var elements: [GrammarElement] = []
+        var seen: Set<String> = []
+        for card in cards where seen.insert(card.element.id).inserted {
+            elements.append(card.element)
+        }
+        let pending = Set(SituationLearnQueue.pendingIDs(
+            elements.map(\.id), introduced: DataManager.shared.fetchIntroducedElementIDs()))
+        for element in elements where pending.contains(element.id) {
+            let history = DataManager.shared.fetchSituationItemHistory(elementID: element.id)
+            guard let item = SituationSelector.learnItems(element.items, history: history, size: 1).first else { continue }
+            cards.append(Card(element: element, item: item, salt: history[item.id]?.times ?? 0))
+        }
+    }
+
     // MARK: - Grading
 
     private func log(card i: Int, type: SituationDrill.Kind, title drillTitle: String,
@@ -542,6 +564,7 @@ struct SituationSessionView: View {
                                 graduationGate: gate)
         }
         DataManager.shared.logSituationItem(itemID: card.item.id, elementID: element.id, rating: outcome, at: now)
+        if mode == .learn && i == cards.count - 1 { appendUnlearnedCards() }
     }
 
     // MARK: - Summary

@@ -110,8 +110,8 @@ struct ModuleListView: View {
 
     private func statusText(_ module: CourseModule, state: ModuleState) -> String {
         switch state {
-        case .done: return "Maîtrisé"
-        case .current: return "\(viewModel.masteredCount(in: module)) / \(module.elements.count)"
+        case .done: return viewModel.descriptor.kind == .situation ? "Appris" : "Maîtrisé"
+        case .current: return "\(viewModel.completedCount(in: module)) / \(module.elements.count)"
         case .locked: return "Verrouillé"
         }
     }

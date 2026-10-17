@@ -25,7 +25,7 @@ final class BookViewModel: ObservableObject {
 
     /// Elements due for review right now — drives "Y due".
     @Published var dueCount: Int = 0
-    /// Unmastered elements in the newest unlocked module — drives "X new".
+    /// Unintroduced elements in the newest unlocked module — drives "X new".
     @Published var newAvailableToday: Int = 0
     /// Elements first introduced today, in this book — drives "N appris".
     @Published var learnedToday: Int = 0
@@ -39,6 +39,9 @@ final class BookViewModel: ObservableObject {
     /// Element ids ever introduced (en-cours-or-better) — drives the four-bucket
     /// classification in the module detail list (`seen ∖ graduated = en cours`).
     @Published private(set) var seenIDs: Set<String> = []
+    /// Correctly introduced elements. Book 2 uses this for unit completion;
+    /// merely attempting a card (the seen set) does not finish its unit.
+    @Published private(set) var introducedIDs: Set<String> = []
     /// Graduated element ids whose memory has decayed below the fragile floor
     /// (`R(now) < 0.80`). A subset of `satisfiedIDs`; drives the "fragile" badge.
     @Published private(set) var fragileIDs: Set<String> = []
@@ -83,24 +86,27 @@ final class BookViewModel: ObservableObject {
             let dueIDs = Set(DataManager.shared.fetchDueElementIDs(asOf: Date()))
             let due = book.allElements.filter { dueIDs.contains($0.id) }.count
 
-            // Under FSRS, MODULE UNLOCK keys off the SEEN set (en-cours-or-better) — an
-            // element graduates over spaced review days, NOT in the intro session, so
-            // gating unlock on graduation would stall the chain for weeks. The frontier
-            // therefore opens as soon as the previous module's elements are all SEEN.
+            // Graduation takes spaced reviews, so the course unlocks after
+            // introductions. Book 2 requires a correct answer; a wrong attempt
+            // counts as seen but must keep that unit open.
             let seen = DataManager.shared.fetchSeenElementIDs()
-            let unlocked = StudyScheduler.unlockedModuleIDs(book, satisfied: seen)
+            let introduced = DataManager.shared.fetchIntroducedElementIDs()
+            let unlocked = StudyScheduler.unlockedModuleIDs(
+                book, satisfied: descriptor.kind == .situation ? introduced : seen)
 
             // The bar/module-"done" maîtrisé set is the live STICKY GRADUATION flag
             // (`graduated_date IS NOT NULL`) — exact + monotonic, never the old count.
             let satisfied = DataManager.shared.fetchGraduatedElementIDs()
 
             // Apprendre drills the newest unlocked (frontier) module; "X new" is how
-            // many of its elements are still un-introduced (not yet seen) — what one tap
+            // many of its elements are still un-introduced — what one tap
             // will teach. No daily cap on new material.
             let frontier = book.modules
                 .filter { unlocked.contains($0.id) }
                 .max(by: { $0.sortOrder < $1.sortOrder })
-            let newCount = frontier?.elements.filter { !seen.contains($0.id) }.count ?? 0
+            let newCount = frontier?.elements.filter {
+                !(self.descriptor.kind == .situation ? introduced : seen).contains($0.id)
+            }.count ?? 0
 
             // Today's done-work, scoped to this book. "reviewed" excludes elements
             // first-seen today (a first sighting is not a re-grade) — matches the
@@ -152,6 +158,7 @@ final class BookViewModel: ObservableObject {
                 self.reviewedToday = reviewedCount
                 self.satisfiedIDs = satisfied
                 self.seenIDs = seen
+                self.introducedIDs = introduced
                 self.fragileIDs = fragileIDs
                 self.unlockedIDs = unlocked
                 self.estimate = estimate
@@ -247,9 +254,15 @@ final class BookViewModel: ObservableObject {
     }
 
     func state(for module: CourseModule) -> ModuleState {
-        if StudyScheduler.isModuleComplete(module, satisfied: satisfiedIDs) { return .done }
+        let completeIDs = descriptor.kind == .situation ? introducedIDs : satisfiedIDs
+        if StudyScheduler.isModuleComplete(module, satisfied: completeIDs) { return .done }
         if unlockedIDs.contains(module.id) { return .current }
         return .locked
+    }
+
+    func completedCount(in module: CourseModule) -> Int {
+        let completeIDs = descriptor.kind == .situation ? introducedIDs : satisfiedIDs
+        return module.elements.filter { completeIDs.contains($0.id) }.count
     }
 
     // MARK: - Element-level bucket classification (module detail list)

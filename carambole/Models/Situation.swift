@@ -611,6 +611,14 @@ enum SituationSelector {
     }
 }
 
+/// An introduction is complete after a correct item (or "Trop facile").
+/// A fixed batch of cards must not close while any element still needs that.
+enum SituationLearnQueue {
+    static func pendingIDs(_ orderedIDs: [String], introduced: Set<String>) -> [String] {
+        orderedIDs.filter { !introduced.contains($0) }
+    }
+}
+
 enum SituationMastery {
     static let distinctItems = 3
     static let distinctKinds = 2
