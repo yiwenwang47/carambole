@@ -3,8 +3,8 @@
 //  carambole
 //
 //  "Réglages" — study pacing settings backed by the SHARED
-//  `StudySettingsStore` (single source of truth): the `newPerDay` HARD cap,
-//  the `reviewTarget` SOFT goal, and the review round size. Writes persist
+//  `StudySettingsStore` (single source of truth): the `newPerDay` cap
+//  and the review round size. Writes persist
 //  immediately.
 //
 //  Edge-type layout from design/motion.html (01 / 03 / 05 headers): tracked
@@ -44,8 +44,6 @@ struct SettingsView: View {
                             newPerDaySection
                             rule(AppColor.hairline)
                         }
-                        reviewTargetSection
-                        rule(AppColor.hairline)
                         reviewRoundSection
                         rule(AppColor.hairline)
                         if kind != .nuances {
@@ -116,18 +114,6 @@ struct SettingsView: View {
         )
     }
 
-    // MARK: - Daily review target (soft goal)
-
-    private var reviewTargetSection: some View {
-        TextStepper(
-            title: "Objectif de révision",
-            note: "Daily review goal — you can exceed it.",
-            value: $store.settings.reviewTarget,
-            range: StudySettings.reviewTargetRange,
-            step: StudySettings.reviewTargetStep
-        )
-    }
-
     // MARK: - Review round size
 
     private var reviewRoundSection: some View {
@@ -191,9 +177,9 @@ struct SettingsView: View {
 
     private var reviewRoundNote: String {
         switch kind {
-        case .grammar: "Number of exercises in each review round."
-        case .situation: "Number of dialogues in each review round."
-        case .nuances: "Number of groups in each review round."
+        case .grammar: "Maximum exercises per round; only due reviews appear."
+        case .situation: "Maximum dialogues per round; only due reviews appear."
+        case .nuances: "Maximum groups per round; only due reviews appear."
         }
     }
 

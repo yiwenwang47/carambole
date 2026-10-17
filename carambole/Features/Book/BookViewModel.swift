@@ -176,34 +176,24 @@ final class BookViewModel: ObservableObject {
             .max(by: { $0.sortOrder < $1.sortOrder })
     }
 
-    /// Due elements (never truncated) topped up with overflow toward the soft target,
-    /// then **ordered fragiles-first** — by ASCENDING predicted recall `R(now)` — so the
-    /// most-decayed (lowest-recall, most-at-risk) elements surface first within the
-    /// round. Only the ORDER changes; the due+overflow+target membership is untouched.
+    /// Due elements only, ordered by ascending predicted recall `R(now)` so
+    /// the most-decayed elements enter the round first. The selected round size
+    /// is a maximum, not a target to fill with early reviews.
     func reviewSessionElements() -> [GrammarElement] {
         let now = Date()
-        let byID = Dictionary(book.allElements.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
         let dueIDs = Set(DataManager.shared.fetchDueElementIDs(asOf: now))
         let due = book.allElements.filter { dueIDs.contains($0.id) }
-        let target = settingsStore.settings.reviewTarget
-        // Scoped to this book BEFORE the cap — another book's rows can't use it up.
-        let overflowIDs = DataManager.shared.fetchOverflowElementIDs(
-            asOf: now, limit: max(0, target - due.count), within: Set(byID.keys))
-        let overflow = overflowIDs.compactMap { byID[$0] }
-        let queue = StudyScheduler.reviewQueue(due: due, overflow: overflow, target: target)
 
         // Lowest predicted recall first. R per element from its (stability,
-        // lastReviewDate); an element with no FSRS state yet (shouldn't happen for a
-        // due/overflow item, but be safe) sorts LAST (recall treated as 1.0). The
-        // original index is the tiebreaker, keeping the existing due-then-overflow
-        // order stable for equal recall.
-        // TODO(perf): N+1 — `currentRecall` does one `fetchReviewStatus` per queued
-        // element (bounded by `reviewTarget`, once per tap). Batch into a single
+        // lastReviewDate); an element with no FSRS state yet sorts last. The
+        // original index keeps course order stable for equal recall.
+        // TODO(perf): N+1 — `currentRecall` does one `fetchReviewStatus` per due
+        // element. Batch into a single
         // `fetchReviewStatuses(forIDs:)` reader if review rounds start to feel slow.
         struct Ranked { let index: Int; let element: GrammarElement; let recall: Double }
         var ranked: [Ranked] = []
-        ranked.reserveCapacity(queue.count)
-        for (offset, element) in queue.enumerated() {
+        ranked.reserveCapacity(due.count)
+        for (offset, element) in due.enumerated() {
             let recall = Self.currentRecall(elementID: element.id, asOf: now)
             ranked.append(Ranked(index: offset, element: element, recall: recall))
         }
@@ -212,10 +202,9 @@ final class BookViewModel: ObservableObject {
         }
         let ordered = ranked.map(\.element)
 
-        // One Réviser tap = one round of at most `reviewRoundSize` problems; tap
-        // again for the next round. The day's pool (`reviewTarget`) still bounds the
-        // overflow top-up above; fragiles-first ordering happens BEFORE this slice.
-        return Array(ordered.prefix(settingsStore.settings.reviewRoundSize))
+        // One Réviser tap = up to `reviewRoundSize` due elements. Any remaining
+        // due elements wait for the next round.
+        return StudyScheduler.reviewQueue(due: ordered, limit: settingsStore.settings.reviewRoundSize)
     }
 
     // MARK: - FSRS recall helpers (I/O layer — date math lives here, not in pure FSRS)

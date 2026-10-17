@@ -1,16 +1,15 @@
 import Foundation
 
-/// User-tunable study pacing. `newPerDay` is a HARD cap on how many brand-new
-/// exercises are introduced per calendar day; `reviewTarget` is a SOFT target for
-/// the daily review queue (it may be exceeded by a large due stack). Both are
-/// clamped on init — out-of-range values are an invariant violation and are never
-/// stored.
+/// User-tunable study pacing. `newPerDay` caps brand-new exercises introduced
+/// per calendar day; `reviewRoundSize` caps due reviews in one round. Values
+/// are clamped or snapped on init before storage.
 struct StudySettings: Equatable {
     /// HARD cap on new ELEMENTS (grammar points) introduced per calendar day.
     var newPerDay: Int
+    /// Retained for reading existing settings; no longer fills rounds early.
     var reviewTarget: Int
-    /// How many problems one Réviser tap presents. A discrete choice — snapped to
-    /// the NEAREST allowed option on init, layered on top of `reviewTarget`.
+    /// Maximum due problems one Réviser tap presents. Snapped to the nearest
+    /// allowed option on init.
     var reviewRoundSize: Int
 
     static let newPerDayRange = 3...20

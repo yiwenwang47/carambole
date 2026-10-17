@@ -24,11 +24,10 @@ struct StudyScheduler {
             .map { $0 }
     }
 
-    /// The daily review queue. ALL `due` elements are returned and NEVER truncated;
-    /// when below `target`, topped up with the first `target - due.count` overflow.
-    static func reviewQueue(due: [GrammarElement], overflow: [GrammarElement], target: Int) -> [GrammarElement] {
-        guard due.count < target else { return due }
-        return due + overflow.prefix(target - due.count)
+    /// One review round: due elements only, capped by the selected round size.
+    /// The caller orders due elements by urgency before taking this slice.
+    static func reviewQueue(due: [GrammarElement], limit: Int) -> [GrammarElement] {
+        Array(due.prefix(max(0, limit)))
     }
 
     /// Overflow candidates for ONE book: keep the soonest-due order, drop other
@@ -91,11 +90,12 @@ extension StudyScheduler {
         assert(newQueue(book: book, seen: ["a"], remainingBudget: 10).map(\.id) == ["b", "c", "d"], "drops seen")
         assert(newQueue(book: book, seen: [], remainingBudget: 2).map(\.id) == ["a", "b"], "budget caps")
 
-        // reviewQueue tops up to target; never truncates due.
+        // A round contains only due elements, with its size as an upper bound.
         let due = [el("d1", module: "m1", order: 0), el("d2", module: "m1", order: 1)]
-        let over = [el("o1", module: "m1", order: 0), el("o2", module: "m1", order: 1)]
-        assert(reviewQueue(due: due, overflow: over, target: 3).map(\.id) == ["d1", "d2", "o1"], "tops up")
-        assert(reviewQueue(due: due, overflow: over, target: 1).map(\.id) == ["d1", "d2"], "no truncate")
+        assert(reviewQueue(due: due, limit: 3).map(\.id) == ["d1", "d2"], "round may be shorter than its limit")
+        assert(reviewQueue(due: Array(due.prefix(1)), limit: 20).map(\.id) == ["d1"], "one due review makes one card")
+        assert(reviewQueue(due: due, limit: 1).map(\.id) == ["d1"], "round size caps due reviews")
+        assert(reviewQueue(due: [], limit: 3).isEmpty, "no due reviews means no round")
 
         // Module completeness + unlock chain.
         assert(!isModuleComplete(m1, satisfied: ["a"]), "partial → incomplete")

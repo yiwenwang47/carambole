@@ -284,6 +284,16 @@ struct SituationCardView: View {
                     VStack(spacing: 10) {
                         Spacer(minLength: 0)
                         VStack(spacing: 10) {
+                            // Standalone drills have no authored dialogue turns. Keep
+                            // their scene beside the answer, including after finishing.
+                            if item.isStandalone {
+                                Text(item.cue)
+                                    .font(.display(size: 17, wght: 400))
+                                    .foregroundColor(AppColor.graphite)
+                                    .fixedSize(horizontal: false, vertical: true)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(.horizontal, 6)
+                            }
                             ForEach(Array(item.turns.enumerated()), id: \.offset) { i, turn in
                                 if turn.isLearner {
                                     learnerBubble(turnIndex: i, turn: turn)
@@ -294,7 +304,9 @@ struct SituationCardView: View {
                                 }
                             }
                             if state.slot != .hidden {
-                                slotBubble.transition(Self.swap)
+                                slotBubble
+                                    .fixedSize(horizontal: false, vertical: true)
+                                    .transition(Self.swap)
                             }
                             if state.showFollow, let followUp = item.followUp {
                                 serverBubble(id: "f", name: item.followUpSpeaker, text: followUp,
