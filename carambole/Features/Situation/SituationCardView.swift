@@ -913,7 +913,7 @@ struct SituationCardView: View {
                 let keep = drill.correctPrefixCount(tiles)
                 log(tiles.joined(separator: " "), expected: drill.model ?? "",
                     why: keep > 0 ? "The start « \(tiles.prefix(keep).joined(separator: " ")) » was right." : nil)
-                if state.tries < 2 {
+                if state.tries < 2 && !drill.isAcceptedPlusExtra(tiles) {
                     state.placed = Array(state.placed.prefix(keep))
                     state.rejectedReplies += SituationRetry.rejected(after: tiles, keep: keep)
                     state.note = "Pas encore : « \(tiles.joined(separator: " ")) »"

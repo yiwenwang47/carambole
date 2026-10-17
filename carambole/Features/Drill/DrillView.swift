@@ -550,7 +550,7 @@ struct DrillView: View {
 
     private func check() {
         let correct = DrillEngine.check(answer, exercise)
-        if !correct && canRetry {
+        if !correct && canRetry && !DrillEngine.isAnswerPlusExtra(answer, exercise) {
             startRetry()
             return
         }

@@ -70,6 +70,10 @@ Older history is in `docs/archive/` and git log.
   it), never strike through words, keep the current transition timing, every tap
   gloss must fit its sentence (`tools/situations/gloss_dump.py`), review content
   in small sets (~9 cards).
+- **Answer + extra tile is wrong, no retry (user, 2026-10-17).** A build that
+  spells the whole answer and adds tiles after it grades wrong at once; the
+  second try is only for a wrong start or middle. Book 1:
+  `DrillEngine.isAnswerPlusExtra`; Book 2: `SituationDrill.isAcceptedPlusExtra`.
 - **Typing answers carry no punctuation** (`. , ? ! ; : « » … " ( )`). Enforced by
   `Exercise.isTypeable` (a punctuated answer stays picked) and `tools/lint_topics.py`.
 - **Rendered-surface grammar.** Audit a drill by reading the blank filled with the

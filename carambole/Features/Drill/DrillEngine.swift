@@ -45,6 +45,14 @@ struct DrillEngine {
         return best
     }
 
+    /// True when a wrong build already spells the whole answer and only has tiles
+    /// after it. Nothing is left to fix by building, so it gets no second try.
+    static func isAnswerPlusExtra(_ submitted: [String], _ exercise: Exercise) -> Bool {
+        let k = correctPrefixCount(submitted, exercise)
+        return k < submitted.count
+            && buildSurface(Array(submitted.prefix(k))) == buildSurface(exercise.producibleAnswerTokens)
+    }
+
     /// Surface form for build-mode grading: unify apostrophe shape, split every chip
     /// on whitespace (so a multi-word chip and its separate parts collapse equal),
     /// then rejoin with single spaces — EXCEPT glue (no space) after a token ending
@@ -92,6 +100,8 @@ extension DrillEngine {
         assert(!check(Array(ex.answerTokens.reversed()), ex), "wrong order must fail")
         assert(!check(ex.answerTokens + ["x"], ex), "extra token must fail")
         assert(!check(Array(ex.answerTokens.dropLast()), ex), "missing token must fail")
+        assert(ex.resolvedInputMode != .buildFromTokens
+               || isAnswerPlusExtra(ex.answerTokens + ["x"], ex), "answer + extra gets no retry")
         assert(!check([], ex), "empty must fail")
         // single-token (multiple-choice style) exact match
         let mc = Exercise(id: "t", elementID: "t", type: .conjugate, prompt: "p",

@@ -226,6 +226,12 @@ struct SituationDrill: Decodable, Equatable {
         }.max() ?? 0
     }
 
+    /// A wrong reply that starts with a whole accepted reply and adds tiles after
+    /// it. Nothing is left to fix by building, so it gets no second try.
+    func isAcceptedPlusExtra(_ tiles: [String]) -> Bool {
+        (accepted ?? []).contains { tiles.count > $0.count && Array(tiles.prefix($0.count)) == $0 }
+    }
+
     /// Why-line for an authored choice index.
     func why(for authoredIndex: Int) -> String? {
         guard let why, why.indices.contains(authoredIndex), !why[authoredIndex].isEmpty else { return nil }
