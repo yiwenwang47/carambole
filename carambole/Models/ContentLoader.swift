@@ -111,6 +111,7 @@ enum ContentLoader {
             print("ContentLoader: no situations manifest")
             return book
         }
+        book.persona = manifest.persona
         if let url = situationURL("words", "json"), let data = try? Data(contentsOf: url) {
             do {
                 book.words = try decoder.decode(SituationWordFile.self, from: data).glossary

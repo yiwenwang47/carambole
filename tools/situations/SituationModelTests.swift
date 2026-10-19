@@ -85,6 +85,12 @@ struct SituationModelTests {
               "formal rewrite shows the tag")
         check(byID["sit_19_propose_s04"]?.addressTag(for: byID["sit_19_propose_s04"]!.drills[0]) == "#vous",
               "group reply with vous shows the tag")
+        check(byID["sit_10_turn_d03"]?.addressTag(for: byID["sit_10_turn_d03"]!.drills[0]) == "#vous",
+              "tourne / tournez choice shows the scene tag")
+        check(byID["sit_13_late_d06"]?.addressTag(for: byID["sit_13_late_d06"]!.drills[0]) == "#vous",
+              "group imperative choice shows the plural tag")
+        check(byID["sit_25_annonce_d04"]?.addressTag(for: byID["sit_25_annonce_d04"]!.drills[1]) == "#tu",
+              "regarde / regardez choice shows the informal tag")
         check(byID["sit_07_bread_d01"]?.turns.first?.speakerLabel == "Boulangère", "baker's role label")
         check(byID["sit_07_bread_d01"]?.followUpSpeaker == "Boulangère", "follow-up takes the first server's role")
         check(byID["sit_10_address_d01"]?.turns.first?.speakerLabel == "Livreur", "delivery driver's role label")

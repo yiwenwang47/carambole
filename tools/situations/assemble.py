@@ -150,7 +150,10 @@ def main() -> int:
     manifest = read_json(manifest_path) if manifest_path.is_file() else {"book": "fr_en_situation"}
     if manifest.get("moduleFiles") != files:
         listed = ", ".join(json.dumps(name) for name in files)
+        persona = (f'  "persona": {json.dumps(manifest["persona"], ensure_ascii=False)},\n'
+                   if "persona" in manifest else "")
         _write(manifest_path, "{\n" f'  "book": {json.dumps(manifest.get("book", "fr_en_situation"))},\n'
+               f"{persona}"
                f'  "moduleFiles": [{listed}]\n' "}\n")
     return 0
 

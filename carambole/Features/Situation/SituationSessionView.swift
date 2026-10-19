@@ -27,6 +27,8 @@ struct SituationSessionView: View {
     let onFinish: () -> Void
     private let bookID: String
     private let words: [String: SituationWord]
+    /// Who the learner plays in every dialogue (Leçon intro only).
+    private let persona: String?
     private let wordMatcher: SituationText.Matcher
     /// False for the Test book: nothing is graded or saved.
     private let recordsProgress: Bool
@@ -47,6 +49,7 @@ struct SituationSessionView: View {
         self.onFinish = onFinish
         bookID = book.id
         words = book.words
+        persona = book.persona
         wordMatcher = SituationText.Matcher(keys: Set(book.words.keys))
         recordsProgress = true
         audioPrefix = ""
@@ -68,6 +71,7 @@ struct SituationSessionView: View {
         self.onFinish = onFinish
         bookID = "testbook"
         self.words = words
+        persona = nil
         wordMatcher = SituationText.Matcher(keys: Set(words.keys))
         recordsProgress = false
         self.audioPrefix = audioPrefix
@@ -247,6 +251,16 @@ struct SituationSessionView: View {
                 .lineSpacing(4)
                 .foregroundColor(AppColor.graphite)
                 .fixedSize(horizontal: false, vertical: true)
+            if let persona {
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("Vous").uppercaseLabel(AppColor.g2)
+                    Text(persona)
+                        .font(.appBody)
+                        .foregroundColor(AppColor.ink)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .accessibilityElement(children: .combine)
+            }
             if let module {
                 Text(module.elements.map(\.label).joined(separator: " · "))
                     .font(.display(size: 14, wght: 400))

@@ -174,6 +174,29 @@ def rendered_surfaces(item: dict) -> list[str]:
     return rendered
 
 
+ADDRESS_WORDS = {"tu", "toi", "te", "vous"}
+
+
+def cue_only_answers(item: dict) -> list[str]:
+    """Answer pieces that only the cue states. Dialogue cards hide the cue,
+    so a fact such as a door code must also be in a line or the prompt."""
+    cue = item.get("cue", "")
+    seen = " ".join(corrected(t) for t in item.get("turns", []))
+    found = []
+    for drill in item.get("drills", []):
+        if drill.get("type") == "reply":
+            pieces = (drill.get("accepted") or [[]])[0]
+        elif drill.get("type") in {"pick", "complete"} and drill.get("choices"):
+            pieces = [drill["choices"][drill.get("correct", 0)]]
+        else:
+            continue
+        visible = f"{seen} {drill.get('prompt', '')}"
+        found += [p for p in pieces
+                  if len(norm(p)) >= 3 and norm(p) not in ADDRESS_WORDS
+                  and contains_phrase(cue, p) and not contains_phrase(visible, p)]
+    return found
+
+
 def buildable(answer: list[str], bank: list[str]) -> bool:
     remaining = list(bank)
     for tile in answer:
@@ -317,6 +340,9 @@ def lint_content(module: dict, word_data: dict, audio_dir: Path = AUDIO,
                 all_dialogue_kinds.extend(kinds)
             if len(kinds) != len(set(kinds)):
                 errors.append(f"{iid}: repeated drill type")
+            if not solo:
+                errors.extend(f"{iid}: answer '{x}' is only in the hidden cue"
+                              for x in cue_only_answers(item))
             if {"reply", "pick"} <= set(kinds):
                 errors.append(f"{iid}: reply and pick cannot share a dialogue")
             if set(kinds) - KINDS:

@@ -122,11 +122,26 @@ struct SituationItem: Decodable, Equatable, Identifiable {
         let hasFormal = text.range(of: formal, options: .regularExpression) != nil
         let namesRegister = drill.prompt.range(of: #"(?i)\b(formal|informal|polite|tutoyer|vouvoyer)\b"#,
                                                options: .regularExpression) != nil
-        guard hasInformal || hasFormal || namesRegister else { return nil }
+        guard hasInformal || hasFormal || namesRegister else {
+            // tourne / tournez, Excuse-moi / Excusez-moi: the register sits in
+            // the verb ending, so the scene's tag is the only way to choose.
+            return hasVerbRegisterChoice(drill) ? addressTag : nil
+        }
         let answerIsFormal = target.range(of: formal, options: .regularExpression) != nil
         let answerIsInformal = target.range(of: informal, options: .regularExpression) != nil
         if answerIsFormal != answerIsInformal { return answerIsFormal ? "#vous" : "#tu" }
         return addressTag
+    }
+    /// True when the choices or bank offer a vous verb form (`-ez`) next to
+    /// its tu form (`-e`, `-es`, `-s`).
+    private func hasVerbRegisterChoice(_ drill: SituationDrill) -> Bool {
+        let words = Set(((drill.choices ?? []) + (drill.bank ?? [])).joined(separator: " ").lowercased()
+            .components(separatedBy: CharacterSet.letters.inverted).filter { !$0.isEmpty })
+        return words.contains { word in
+            guard word.hasSuffix("ez") else { return false }
+            let stem = String(word.dropLast(2))
+            return ["e", "es", "s"].contains { words.contains(stem + $0) }
+        }
     }
     /// Label above the follow-up bubble. Mirrors the audio voice choice:
     /// `followUpBy`, else the first named server, else the first server's role.
@@ -277,6 +292,8 @@ struct SituationDrill: Decodable, Equatable {
 /// all of them, so new modules need no Swift change.
 struct SituationManifest: Decodable {
     let book: String
+    /// Who the learner plays in every dialogue, shown on each Leçon intro.
+    let persona: String?
     let moduleFiles: [String]
 }
 

@@ -157,6 +157,16 @@ class SituationLintTests(unittest.TestCase):
         self.assert_bad("cannot be built")
         self.assert_bad("model is not accepted")
 
+    def test_answer_only_in_hidden_cue(self):
+        items = self.module["elements"][0]["items"]
+        drill = copy.deepcopy(items[2]["drills"][0])
+        items[0]["drills"] = [drill]
+        self.assertNotIn("hidden cue", "\n".join(self.errors()))
+        items[0]["cue"] += " You'd like a « café »."
+        self.assert_bad("answer 'café.' is only in the hidden cue")
+        drill["prompt"] = "Say yes: a café."
+        self.assertNotIn("hidden cue", "\n".join(self.errors()))
+
     def test_choice_reasons_and_single_gap(self):
         item = self.module["elements"][0]["items"][0]
         item["turns"][0]["text"] = "Bonjour, ___ ___ ?"

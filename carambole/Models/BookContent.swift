@@ -59,6 +59,8 @@ struct Book: Identifiable, Equatable {
     /// *En situation* word list: normalised French word or set phrase → gloss.
     /// Empty for *Fondations*.
     var words: [String: SituationWord] = [:]
+    /// *En situation*: who the learner plays throughout the book. Nil elsewhere.
+    var persona: String?
 
     /// All elements across every module, in module → element order.
     var allElements: [GrammarElement] { modules.flatMap(\.elements) }
