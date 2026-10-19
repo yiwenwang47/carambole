@@ -80,7 +80,7 @@
   - Her own lines use feminine agreement only (*prête*, *allée*, *enchantée*, *désolée*). Masculine forms are wrong answers and may serve as decoys.
   - Corriger may target her agreement (*Je suis prêt* → *prête*).
   - Others may address her as *madame*.
-  - When an answer hinges on her gender, the cue says "You're a woman." (prompt self-sufficiency).
+  - Her name, gender and home town are shown once on every Leçon intro (manifest `persona`, 2026-10-18). Cards don't repeat them.
   - `lint.py` flags masculine first-person forms in learner lines, accepted replies and correct picks.
 - **Variety:**
   - Textbook service scenes stay, but they must not dominate.
@@ -91,7 +91,9 @@
 
 The learner has just moved to Lyon for work. People recur across modules. **Every dialogue must still make sense on its own,** because Réviser serves a move's dialogues in any order. So:
 - history only shows in the cue line ("Karim knows you by now"),
-- the cue always makes tu/vous, gender, number and person recoverable.
+- tu/vous, gender, number and person must be recoverable from what the card shows.
+
+**The cue is hidden on dialogue cards (since `ee721aca`, 2026-10-15).** A dialogue card shows only the lines, the drill prompt, the choices or bank, and a `#tu`/`#vous` tag when the drill asks for a second-person form (`SituationItem.addressTag(for:)`, including verb-ending pairs such as *tourne* / *tournez*). Standalone cards still show the cue. So any fact the answer needs (a code, a quantity, what you ordered, a third person's gender, a group) goes in the drill prompt, written without giving away the French (numbers as digits: "give him the code: 2-5-8"). `lint.py` fails a dialogue whose answer appears in the cue but not in a line or the prompt.
 
 | Character | Role | Register with you | Voice (Google TTS) | Notes |
 |---|---|---|---|---|
@@ -196,7 +198,7 @@ Field reference (decoded by `carambole/Debug/PilotScenario.swift` today; Task 3 
 | Field | Where | Meaning |
 |---|---|---|
 | `place` | item | label above the cue: place or channel (`Texto · Léa`, `Les copains · groupe`, `Messagerie · Karim`). Add `· phrase seule` for standalone items |
-| `cue` | item | one English line, 21 pt. Must make tu/vous, gender, number and the goal recoverable |
+| `cue` | item | one English line. Shown only on standalone cards; hidden on dialogue cards, so it can't be the only source of a needed fact |
 | `standalone` | item | drill label for a standalone item: `Construire`, `Choisir le ton`, `Corriger`, `Transformer`, `Mot en retour` (later `Écrire`). No `followUp` |
 | `turns[].speaker` | turn | `server` (any other voice) or `learner` |
 | `turns[].name` | turn | cast name shown above the bubble and used for the voice. Omit it for an anonymous server |
@@ -285,7 +287,7 @@ Work in this order. Show the user small review sets only. They said: "i dont wan
 
 ## 8. Item-writing checklist
 
-- **Cue:** one English sentence that says who you're talking to and what you want. Include the channel's context if it isn't face to face. Don't put the answer's facts only in the cue.
+- **Cue:** one English sentence that says who you're talking to and what you want. Include the channel's context if it isn't face to face. Dialogue cards hide the cue: put any fact the answer needs in the drill prompt.
 - **Server line:** natural, ≤10 words. At most 1–2 new words, plus spoken forms only when the speaker is casual.
 - **Comprendre:** asks about one fact said in French. The wrong choice is plausible. The miss note quotes the line to reread.
 - **Répondre / Construire / Transformer:**

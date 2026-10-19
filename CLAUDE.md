@@ -92,6 +92,10 @@ Older history is in `docs/archive/` and git log.
   (`Construis la réponse : « Vous vendez la voiture ? » — « We sell it. »`).
   Number, tu/vous and person must be recoverable too. `gender_ambiguity_errors`
   in `lint_topics.py` checks the clause-final "it" case.
+  **Book 2 (user, 2026-10-18):** dialogue cards hide the English cue, so every
+  fact an answer needs goes in the drill prompt (numbers as digits). Book-wide
+  facts (Robin, a woman, from Eugene, Oregon) show once on the Leçon intro
+  (manifest `persona`). `tools/situations/lint.py` fails cue-only answers.
 - **Token banks:** authored order doesn't matter (`Exercise.displayBank` shuffles
   per id, never in answer order). Bank ≈ 1.6× answer length with grammar-trap
   distractors (min +2); bulk edits via `tools/distractors/{extract,apply}.py`.
@@ -160,8 +164,9 @@ xcodebuild build -project carambole.xcodeproj -scheme carambole \
 - **Content pipeline tests:** `cd tools && python3 -m pytest content_pipeline -q`.
 - **Phone** (iPhone 18 Pro `00008160-001A09920AA0000A`, team `QMV4SPL476`,
   bundle `wen.carambole`). Install only when the user asks. The user tests on the
-  phone; Claude never tests, records or profiles there. The 2026-10-17 Release
-  build includes the Book 2 unit-completion fix and Book 3. Phone behavior is
+  phone; Claude never tests, records or profiles there. The 2026-10-18 Release
+  build (`35ef8d60`) includes the Book 2 hidden-cue fix, the unit-completion
+  fix and Book 3. Phone behavior is
   still for the user to check.
   ```bash
   CARAMBOLE_AUDIO_PYTHON=/path/to/python-with-numpy-scipy-lameenc \

@@ -1,8 +1,9 @@
 # En situation content contract
 
 `situations_manifest.json` is named to avoid the flattened bundle's existing
-`Topics/manifest.json`. It has `book: "fr_en_situation"` and `moduleFiles`
-in numeric module order. A module file has `id: "sit_NN"` (`sit_01`–`sit_25`),
+`Topics/manifest.json`. It has `book: "fr_en_situation"`, `persona` (who the learner
+plays, shown once on every Leçon intro; `assemble.py` keeps it), and
+`moduleFiles` in numeric module order. A module file has `id: "sit_NN"` (`sit_01`–`sit_25`),
 `title`, `arc`, `goal`, and `elements`. Each element has `id: "sit_NN_move"`
 (move: lowercase letters only), `title`, `note`, and 15 `items` in the
 order `d01 d02 s01 d03 d04 s02 … d09 d10 s05`. An item has `id`, `place`,
@@ -176,7 +177,10 @@ and Compléter, one clarification or repetition dialogue, and two alternate
 channel or social dialogues. The last two use cue/prompt and place/cast
 heuristics: a dialogue counts as another channel when its `place` differs from
 the module's most common dialogue place, or as social when it has Léa, Théo,
-Inès, M. Ferrand or Mme Dumas. An author still needs to review whether the request is genuine,
+Inès, M. Ferrand or Mme Dumas. Dialogue cards hide the cue, so `lint.py` fails a dialogue whose answer
+(accepted reply tiles or correct choice, not tu/vous) appears in the cue but
+not in a line or the prompt (`cue_only_answers`). That check is literal: an
+author still needs to review whether the request is genuine,
 whether English cues hide a needed fact, whether gender and register are
 recoverable, whether distractors have unique reasons, and whether the French
 sounds natural. These judgments cannot be proven from this JSON alone.

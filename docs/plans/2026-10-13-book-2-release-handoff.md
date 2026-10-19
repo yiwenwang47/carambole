@@ -2,12 +2,12 @@
 
 **Written:** 2026-10-13, end of session.
 **Original release branch:** `main`, pushed.
-**Latest update:** 2026-10-17, Release build with the Book 2 unit-completion fix installed on the iPhone after the audio gate passed.
+**Latest update:** 2026-10-18, hidden-cue drill fix and Leçon persona (§14), Release build installed on the iPhone.
 **Previous start point:** [arc 5 done handoff](../archive/plans/2026-10-13-book-2-arc5-done-handoff.md). Its §0 has this session's commits and the release check in detail.
 
 ## 1. Current phone state
 
-The main Carambole app (`wen.carambole`) received a Release build on 2026-10-17. It includes the Book 2 unit-completion fix in §13, the Studio A clip, and Book 3. Only the user checks behavior on the phone; do not test, record, or profile there.
+The main Carambole app (`wen.carambole`) received a Release build on 2026-10-18 (`35ef8d60`). It includes the hidden-cue fix and Leçon persona in §14, the unit-completion fix in §13, the Studio A clip, and Book 3. Only the user checks behavior on the phone; do not test, record, or profile there.
 
 ## 2. Checks only the phone can do
 
@@ -146,3 +146,30 @@ The Swift model test passed across all 3,000 items, 116 Python tests passed,
 and the release audio gate checked 6,459 clips with zero unresolved findings.
 The signed Release build succeeded, and `devicectl` installed `wen.carambole`
 on the paired iPhone 18 Pro. Phone behavior remains for the user to check.
+
+## 14. Hidden-cue drills (2026-10-18)
+
+The user hit `sit_10_door_d01`: "Say yes, and give him the code" with
+« deux, cinq, huit » and « deux, six, huit » in the bank. The code was only in
+the English cue, which dialogue cards have hidden since `ee721aca` (§10).
+
+Commit `35ef8d60`:
+- **Persona:** `situations_manifest.json` has `persona` ("You're Robin, a woman
+  from Eugene, Oregon."). Every Book 2 Leçon intro shows it once under
+  **Vous**. Cards don't repeat it.
+- **Content:** all 2,000 dialogue items were reviewed against what the card
+  shows. Seven prompts now carry the missing fact: `sit_06_available_d06`,
+  `sit_06_mixup_d02`, `sit_06_mixup_d04`, `sit_10_door_d01`,
+  `sit_10_door_d08`, `sit_13_late_d06`, `sit_25_gite_d10`. The door-code cues
+  use digits (2-5-8), which also stops `sit_10_door_s01` showing the answer.
+- **Address tag:** `addressTag(for:)` now shows the scene's `#tu`/`#vous` when
+  the choices differ only by verb ending (*tourne* / *tournez*,
+  *Excuse-moi* / *Excusez-moi*, *regarde* / *regardez*).
+- **Lint:** `lint.py` fails a dialogue whose answer appears only in the cue
+  (`cue_only_answers`, with a unit test).
+
+The strict lint, 117 Python tests and the Swift model test (3,000 items)
+passed. The simulator showed the Leçon persona line, the door card's new
+prompt and `#vous` on `sit_13_late_d06`. The Release build passed the audio
+gate, and `devicectl` installed `wen.carambole` on the iPhone 18 Pro. The agent
+did not test on the phone.
