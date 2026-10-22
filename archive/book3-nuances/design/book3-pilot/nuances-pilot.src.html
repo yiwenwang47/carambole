@@ -1,0 +1,670 @@
+<title>Nuances Card Review</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@250;300;350;400;500;600&family=Familjen+Grotesk:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300,0,0&display=block">
+<style>
+/* Layout: one reading column; findings ranked; each big finding pairs a real simulator frame with a proposed mock at true point size, scaled 0.75. */
+:root{
+  --bg:#FAFAF8; --fg:#141414; --muted:#66665F; --rule:#E4E3DE; --panel:#FFFFFF; --pin:#2F6FC0;
+  --display:"Manrope",ui-sans-serif,system-ui,sans-serif;
+  --label:"Familjen Grotesk",ui-sans-serif,system-ui,sans-serif;
+  /* App tokens (Acide palette). Phone mocks always render in the app's light look. */
+  --app-paper:#FFFFFF; --app-ink:#141414; --app-graphite:#4A4A4A; --app-g2:#8D8D8A; --app-hair:#E6E5E1;
+  --app-tint:#E9F2FD; --app-ring:#5E9BE0; --app-g3:#C8C7C3; --app-quietSolid:#BCCFE6; --app-tileOn:#E5F2BC; --app-quiet:rgba(188,207,230,.45); --app-btn:#DDE6BC; --app-fragile:#4F8DD6;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#121311;--fg:#ECECE7;--muted:#A3A39B;--rule:#2B2C29;--panel:#1A1B19;--pin:#8DB6EE;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#121311;--fg:#ECECE7;--muted:#A3A39B;--rule:#2B2C29;--panel:#1A1B19;--pin:#8DB6EE;color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--display);font-size:16px;line-height:1.55;font-weight:400}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:48px 96px;display:flex;flex-direction:column;gap:72px}
+h1,h2,h3{font-weight:300;letter-spacing:-.01em;text-wrap:balance;margin:0}
+h1{font-size:clamp(34px,5vw,52px);line-height:1.05;font-weight:250}
+h2{font-size:28px;line-height:1.15}
+h3{font-size:21px;line-height:1.25;font-weight:400}
+p{margin:0;max-width:65ch}
+.lab{font-family:var(--label);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.lede{color:var(--muted);font-size:17px}
+header{display:flex;flex-direction:column;gap:16px}
+.meta{display:flex;flex-wrap:wrap;gap:8px 24px;font-family:var(--label);font-size:13px;color:var(--muted)}
+.meta b{color:var(--fg);font-weight:500}
+
+/* Current strip */
+.strip{display:flex;gap:16px;overflow-x:auto;padding-bottom:12px;scroll-snap-type:x mandatory}
+.shot{flex:0 0 200px;scroll-snap-align:start;display:flex;flex-direction:column;gap:8px}
+.shot img{width:200px;height:auto;border-radius:22px;border:1px solid var(--rule);display:block;background:#fff}
+.shot span{font-size:13px;color:var(--muted);line-height:1.4}
+.shot strong{display:block;color:var(--fg);font-weight:500;font-size:14px}
+
+/* Findings */
+.finding{display:grid;grid-template-columns:44px minmax(0,1fr);gap:0 18px;padding-top:28px;border-top:1px solid var(--rule)}
+.num{font-family:var(--label);font-size:13px;font-weight:600;color:var(--pin);border:1.5px solid var(--pin);border-radius:999px;width:34px;height:34px;display:grid;place-items:center;font-variant-numeric:tabular-nums}
+.fbody{display:flex;flex-direction:column;gap:14px;min-width:0}
+.sev{font-family:var(--label);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--pin);font-weight:500}
+.kv{display:grid;grid-template-columns:110px minmax(0,1fr);gap:6px 16px;font-size:15px}
+.kv dt{font-family:var(--label);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding-top:3px}
+.kv dd{margin:0;max-width:65ch}
+code{font-family:ui-monospace,"SF Mono",Menlo,monospace;font-size:.86em;background:var(--panel);border:1px solid var(--rule);border-radius:6px;padding:1px 5px;overflow-wrap:anywhere}
+@media (max-width:560px){.kv{grid-template-columns:1fr}.kv dt{padding-top:8px}.finding{grid-template-columns:1fr;gap:12px}}
+
+/* Compare */
+.compare{display:flex;flex-wrap:wrap;gap:28px;align-items:flex-start;margin-top:8px}
+.col{display:flex;flex-direction:column;gap:10px;width:302px;max-width:100%}
+.col > img{width:302px;max-width:100%;border-radius:30px;border:1px solid var(--rule);display:block;background:#fff}
+.notes{flex:1 1 220px;min-width:0;display:flex;flex-direction:column;gap:10px;font-size:14.5px;color:var(--muted);padding-top:30px}
+.notes li{margin-bottom:6px}
+.notes ul{margin:0;padding-left:18px}
+
+/* Phone mock: drawn at real points (402 x 874), scaled 0.75 */
+.phone{width:302px;height:656px;border-radius:30px;border:1px solid var(--rule);overflow:hidden;background:var(--app-paper);position:relative}
+.screen{width:402px;height:874px;transform:scale(.7512);transform-origin:0 0;background:var(--app-paper);color:var(--app-ink);font-family:var(--display);position:absolute;inset:0;display:flex;flex-direction:column;padding:62px 22px 34px;gap:14px}
+.sb{position:absolute;top:18px;left:52px;font:600 17px/1 -apple-system,system-ui,sans-serif;color:var(--app-ink)}
+.top{display:flex;justify-content:space-between;align-items:center;height:42px}
+.top .x{font-size:22px;font-weight:400;width:42px;text-align:center;line-height:42px}
+.top .ct{font-size:15px;color:var(--app-g2)}
+.grp{font-size:15px;line-height:1.35;color:var(--app-graphite);font-weight:400;margin-top:-6px}
+.src{background:var(--app-tint);border-radius:20px;padding:16px;display:flex;flex-direction:column;gap:14px;flex:none;position:relative}
+.src.capped{max-height:190px;overflow:hidden}
+.src .spk{font-family:var(--label);font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--app-g2);margin-bottom:3px}
+.src p{font-size:15px;line-height:1.36;color:var(--app-ink)}
+.task{font-size:22px;line-height:1.24;font-weight:350;letter-spacing:-.005em}
+.choices{display:flex;flex-direction:column;gap:8px}
+.ch{min-height:48px;border:1px solid var(--app-hair);border-radius:14px;padding:11px 14px;font-size:15px;line-height:1.33;display:flex;align-items:center;gap:10px;justify-content:space-between}
+.ch.ok{background:var(--app-tileOn);border-color:transparent}
+.ch.bad{border:1.5px dashed var(--app-fragile)}
+.ch.dim{color:var(--app-g2)}
+.tick{flex:none;width:22px;height:22px;border-radius:50%;background:var(--app-ink);color:#fff;font-size:13px;display:grid;place-items:center}
+.field{border:1px solid var(--app-hair);border-radius:14px;padding:14px;font-size:15px;color:var(--app-g2)}
+.spacer{flex:1}
+.fb{background:var(--app-quiet);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:4px}
+.fb b{font-size:13px;font-weight:600}
+.fb p{font-size:15px;line-height:1.36;color:var(--app-graphite)}
+.te{font-family:var(--label);font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--app-g2)}
+.btn{height:54px;border-radius:27px;background:var(--app-btn);display:grid;place-items:center;font-size:17px;font-weight:400}
+.btn.off{opacity:.45}
+.cap{font-family:var(--label);font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.cap.new{color:var(--pin)}
+
+/* Small list */
+.small{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:20px 36px}
+.small > div{display:flex;flex-direction:column;gap:6px;padding-top:16px;border-top:1px solid var(--rule)}
+.small p{font-size:15px;color:var(--muted)}
+.check{display:flex;flex-direction:column;gap:10px}
+.check li{max-width:70ch;margin-bottom:6px}
+.check ul{margin:0;padding-left:20px}
+
+/* Pilot */
+.pilot{display:flex;flex-direction:column;gap:32px}
+.types{display:flex;flex-wrap:wrap;gap:12px 32px}
+.types div{display:flex;flex-direction:column;gap:2px;max-width:320px}
+.types b{font-weight:500;font-size:16px}
+.types span{font-size:14px;color:var(--muted)}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(234px,1fr));gap:32px 20px;justify-items:center}
+.pcell{display:flex;flex-direction:column;gap:10px;width:234px}
+.phone.sm{width:234px;height:508px;border-radius:26px}
+.phone.sm .screen{transform:scale(.5821)}
+.pmeta{display:flex;flex-direction:column;gap:2px;font-size:13px;color:var(--muted);line-height:1.4;font-variant-numeric:tabular-nums}
+.pmeta b{color:var(--fg);font-weight:600}
+.ptype{font-family:var(--label);font-size:13px;letter-spacing:.09em;text-transform:uppercase;color:var(--app-g2);margin-top:4px}
+.sent{font-size:32px;line-height:1.28;font-weight:300;letter-spacing:-.01em;color:var(--app-ink);text-wrap:pretty;margin:10px 0 14px}
+.tform{margin:0}
+.tfield{width:100%;height:58px;border:1px solid var(--app-hair);border-radius:16px;padding:0 16px;font:inherit;font-family:var(--display);font-size:20px;color:var(--app-ink);background:var(--app-paper);display:flex;align-items:center}
+.tfield:focus{outline:2px solid var(--app-ink);outline-offset:-1px}
+.tfield::placeholder{color:var(--app-g2)}
+.tfield.ok{background:var(--app-tileOn);border-color:transparent}
+.tfield.bad{border:1.5px dashed var(--app-fragile)}
+.sent .hl{background:var(--app-tileOn);border-radius:6px;padding:0 4px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.sent .blank{display:inline-block;width:3.6em;height:0;border-bottom:2px solid var(--app-ink);vertical-align:-0.16em;margin:0 .06em}
+.sent .fill{font-weight:400;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:.16em}
+.pchips{display:flex;flex-direction:column;gap:10px}
+.chip{appearance:none;font:inherit;font-family:var(--display);font-size:19px;color:var(--app-ink);background:var(--app-paper);border:1px solid var(--app-hair);border-radius:16px;height:60px;padding:0 18px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;text-align:left;transition:transform .18s cubic-bezier(.2,.8,.2,1),background-color .2s}
+.chip:hover:not(:disabled){background:#F6F6F3}
+.chip:active:not(:disabled){transform:scale(.98)}
+.chip:focus-visible{outline:3px solid var(--pin);outline-offset:2px}
+.chip.ok{background:var(--app-tileOn);border-color:transparent}
+.chip.bad{border:1.5px dashed var(--app-fragile)}
+.chip.dim{color:var(--app-g2)}
+.chip:disabled{cursor:default}
+.btn.ghost{visibility:hidden}
+.btn.again{appearance:none;border:0;font:inherit;font-family:var(--display);font-size:17px;color:var(--app-ink);cursor:pointer;width:100%}
+.btn.again:focus-visible{outline:3px solid var(--pin);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){.chip{transition:none}}
+
+
+.phone.sm{width:250px;height:544px;border-radius:28px}
+.phone.sm .screen{transform:scale(.6219)}
+.pcell{display:flex;flex-direction:column;gap:10px;width:250px}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:36px 20px;justify-items:center}
+.sent{font-size:33px;line-height:1.3;font-weight:300;letter-spacing:-.01em;margin:8px 0 0}
+.pchips{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pchips{gap:12px}
+/* Tile layout B (user lean, 2026-10-22): 64 pt, text left and vertically centred; long labels wrap. */
+.pchips .chip{height:64px;font-size:18px;line-height:1.2;padding:0 16px;align-items:center;justify-content:flex-start;border-radius:18px}
+.slot{height:54px;display:flex;align-items:center;flex:none}
+.slot .btn{width:100%}
+.cuerow{display:flex;align-items:baseline;gap:12px}
+.cue-en{font-size:20px;color:var(--app-graphite)}
+.cue-inf{font-family:var(--label);font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--app-g2)}
+.tline{display:block;width:100%;height:46px;border:0;border-bottom:2px solid var(--app-ink);border-radius:0;background:transparent;padding:0 2px 6px;font:inherit;font-family:var(--display);font-size:24px;color:var(--app-ink);outline:none;line-height:40px}
+.tline::placeholder{color:var(--app-g3, #C8C7C3)}
+.tline.ok{border-bottom-color:var(--app-ink);background:linear-gradient(to top,var(--app-tileOn) 0,var(--app-tileOn) 60%,transparent 60%)}
+.tline.bad{border-bottom:2px dashed var(--app-fragile)}
+.kb{margin:0 -22px -34px;flex:none;background:var(--app-tint);border-radius:28px 28px 0 0;padding:12px 4px 40px;display:flex;flex-direction:column;gap:11px;position:relative}
+.krow{display:flex;gap:6px;justify-content:center}
+.kgap{flex:0 0 4px}
+.k{appearance:none;flex:1 1 0;min-width:0;height:44px;border:0;border-radius:10px;background:var(--app-paper);font-family:var(--display);font-size:22px;font-weight:400;color:var(--app-ink);cursor:pointer;padding:0;user-select:none;-webkit-user-select:none;touch-action:manipulation;transition:transform .12s cubic-bezier(.2,.8,.2,1),background-color .12s}
+.k:active{transform:scale(.93);background:var(--app-tileOn)}
+.k.sp{flex:0 0 46px;background:transparent;font-size:20px}
+.k.sp.on{background:var(--app-paper)}
+.k.w2{flex:0 0 56px;font-size:16px}
+.k.w3{flex:1 1 0}
+.k.wide{flex:0 0 92px;font-size:16px}
+.k.space{flex:1 1 auto;font-size:15px;color:var(--app-g2)}
+.k.go{flex:0 0 120px;border-radius:22px;background:var(--app-btn);font-size:17px}
+.k:focus-visible,.acc:focus-visible{outline:2px solid var(--app-ink);outline-offset:1px}
+.kb::after{content:"";position:absolute;left:50%;bottom:9px;width:134px;height:5px;margin-left:-67px;border-radius:3px;background:var(--app-ink)}
+.accpop{position:absolute;display:flex;gap:4px;background:var(--app-paper);border-radius:12px;padding:6px;box-shadow:0 6px 18px rgba(20,30,50,.18);z-index:2}
+.acc{appearance:none;width:40px;height:48px;border:0;border-radius:8px;background:transparent;font-family:var(--display);font-size:23px;color:var(--app-ink);cursor:pointer}
+.acc:hover{background:var(--app-tileOn)}
+
+/* Book 1 idiom */
+.top.b1{height:36px}
+.top.b1 .x{font-size:18px;width:28px;text-align:left}
+.hlab{font-family:var(--label);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--app-g2)}
+.ring{width:30px;height:30px;border-radius:50%;background:conic-gradient(var(--app-ring) calc(var(--p)*360deg),transparent 0);-webkit-mask:radial-gradient(circle,transparent 12.5px,#000 13px);mask:radial-gradient(circle,transparent 12.5px,#000 13px);box-shadow:inset 0 0 0 2px var(--app-g3)}
+.elab{font-family:var(--label);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--app-g2);margin-top:6px}
+.sent .well{display:inline-block;width:3.2em;height:1.02em;border-radius:999px;background:var(--app-tileOn);vertical-align:-0.2em;margin:0 .04em}
+.sent .mag{display:inline;background:var(--app-tileOn);border-radius:999px;padding:.02em .38em;box-decoration-break:clone;-webkit-box-decoration-break:clone;font-weight:400}
+.gloss{font-size:17px;color:var(--app-g2);display:flex;align-items:baseline;gap:10px;margin-top:-4px}
+.hintrow{display:flex;justify-content:space-between;align-items:center}
+.listen:disabled{opacity:.35;cursor:default}
+.msym{font-family:'Material Symbols Rounded';font-size:20px;font-weight:300;line-height:1;font-variation-settings:'wght' 300}
+.indice{appearance:none;border:0;background:none;padding:0;display:flex;align-items:center;gap:12px;cursor:pointer}
+.indice .disc{width:36px;height:36px;border-radius:50%;background:var(--app-quietSolid);display:grid;place-items:center;font-family:var(--label);font-size:15px;font-weight:500;color:var(--app-ink)}
+.indice .ilab{font-family:var(--label);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--app-ink)}
+.indice:focus-visible .disc{outline:2px solid var(--app-ink);outline-offset:2px}
+.hintcard{background:var(--app-tint);border-radius:14px;padding:12px 14px;font-size:15px;line-height:1.35;color:var(--app-ink)}
+.tray{background:var(--app-tint);border-radius:22px;padding:12px;margin:0 -8px}
+.tray .chip{background:var(--app-paper);border:1.5px solid var(--app-ink)}
+.tray .chip.ok{background:var(--app-tileOn);border-color:transparent}
+.tray .chip.bad{border:1.5px dashed var(--app-fragile)}
+.tray .chip.dim{border-color:var(--app-g3);color:var(--app-g2)}
+.fbrow{display:flex;align-items:center;gap:12px}
+.okpill{flex:none;border:1.5px solid var(--app-ring);border-radius:999px;padding:6px 14px;font-size:15px}
+.fbtext{font-size:15px;line-height:1.35;color:var(--app-graphite)}
+.fbcard{background:var(--app-tint);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:4px}
+.fbcard b{font-size:13px;font-weight:600}
+.fbcard p{font-size:15px;line-height:1.36;color:var(--app-graphite)}
+
+.lwords{display:flex;flex-direction:column;gap:2px;margin-top:10px}
+.lwords .hlab{margin-bottom:6px}
+.lw{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto auto;column-gap:12px;padding:10px 0;border-top:1px solid var(--app-hair)}
+.lwf{font-size:22px;font-weight:400}
+.lwe{grid-row:2;font-size:15px;color:var(--app-g2)}
+.lw .disc{grid-row:1 / 3;grid-column:2;align-self:center;width:36px;height:36px;border-radius:50%;background:var(--app-quietSolid);display:grid;place-items:center;color:var(--app-ink)}
+.b1ref{display:flex;flex-direction:column;gap:12px}
+.b1scroll{overflow-x:auto;border:1px solid var(--rule);border-radius:18px;background:#fff}
+.b1scroll img{display:block;height:420px;width:auto;max-width:none}
+.b1ref p{font-size:15.5px}
+.b1ref ul{margin:0;padding-left:20px;font-size:15px;color:var(--muted);display:flex;flex-direction:column;gap:6px;max-width:75ch}
+.b1ref b{color:var(--fg);font-weight:500}
+details.old{border-top:1px solid var(--rule);padding-top:24px}
+details.old summary{cursor:pointer;font-size:19px;font-weight:400;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline;list-style-position:outside}
+.oldin{display:flex;flex-direction:column;gap:72px;margin-top:40px}
+</style>
+
+<div class="wrap">
+<header>
+  <span class="lab">Book 3 · Nuances · NuanceSessionView</span>
+  <h1>Nuances card review</h1>
+  <p class="lede">Book 3 cards ask for a median of 44 words of reading. This pilot cuts two groups down to 5-second cards: a short sentence at the top, four French options or a typed verb at the bottom. Tap any card to try it.</p>
+  <div class="meta"><span>Now: <b>44</b> words median, 9 of 550 cards under 15</span><span>Pilot: <b>13 to 23</b> words, one tap or one typed verb</span><span>Updated 2026-10-22</span></div>
+</header>
+
+<div id="pilots" style="display:flex;flex-direction:column;gap:56px">
+<section class="pilot">
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <span class="lab">Pilot · module 1, group 1</span>
+    <h2>Quand le concert s'arrête</h2>
+    <p class="lede" style="font-size:16px">Group note: « Repère la panne et l'action qui était déjà en cours. » Its 5 current cards (22 to 33 words each) become 9 cards. Each card has one or two short sentences at the top. Every option is French. Trop facile sits just above four tiles at the bottom; a tap grades at once. A typed card shows the English and the infinitive under the sentence; you type on an underline above the keyboard and check with Vérifier. The keyboard is Apple's French AZERTY layout: hold e, a, u, i, o or c for accents; the apostrophe sits beside n.</p>
+  </div>
+  <div class="types">
+    <div><b>Le mot juste</b><span>Pick the French word or form that fills the blank. Vocabulary cards show the English meaning under the sentence; tense cards rely on a cue word such as « soudain ».</span></div>
+    <div><b>Écris-le</b><span>Type the French for the English cue, from the infinitive shown. No punctuation.</span></div>
+  </div>
+  <div class="b1ref">
+    <span class="lab">Book 1 today (simulator)</span>
+    <div class="b1scroll"><img src="@@b1@@" alt="Book 1 drill frames: build, hint open, fill blank, article choice, done"></div>
+    <p>Book 1 keeps prompt text ink and puts colour on objects. Book 3 now borrows each one:</p>
+    <ul>
+      <li><b>Placed magnet → the blank.</b> The blank is a pale lime well inside the sentence; the answer lands in it as a lime magnet.</li>
+      <li><b>Bank tray → the options.</b> Four outlined tiles sit on the same pale blue tray as Book 1's word bank.</li>
+      <li><b>Indice disc → the group note.</b> Tap it for « Repère la panne… » on a pale card, like Book 1's hint.</li>
+      <li><b>Header and gloss.</b> Drill type and count centred, progress ring on the right, group name as the small label, English cue in grey quotes.</li>
+      <li><b>Écouter.</b> Same disc as Book 1, on the right. It stays faded until the blank is answered, as in Book 2, then plays the whole sentence with the answer in it. Tap it after answering (this page uses your browser's French voice; the app would ship recorded clips).</li>
+      <li><b>Feedback.</b> « Juste ✓ » in an outlined pill, as in Book 1. A miss gets a pale card with the reason.</li>
+    </ul>
+  </div>
+  <div class="pgrid" id="pgrid"></div>
+  <div class="small">
+    <div><span class="sev">Ambiguity guard</span><h3>Cue words close off the other tense</h3><p>« Léa a parlé à Théo quand la musique s'est arrêtée » is also correct French. So card 5 carries « soudain », and typing cards give the English, which fixes the tense. Every blank needs this check: read the sentence with each wrong option filled in, and each must be wrong.</p></div>
+    <div><span class="sev">What was cut</span><h3>Dialogue and story framing</h3><p>Léa and Théo's two-line exchange and the 3-sentence microtext are gone. Their content survives as single sentences (cards 4 to 7). Nothing in this group needed more than one sentence to test.</p></div>
+    <div><span class="sev">Our own keyboard</span><h3>Apple's layout, Carambole's look</h3><p>Same AZERTY keys and accent popups as the iOS French keyboard, so nothing to relearn. Drawn on the palette's pale tray with white keys, and Vérifier as the return key. The layout never jumps as a system keyboard slides in. Costs: no dictation or third-party keyboards, and hardware-keyboard and VoiceOver support have to be built.</p></div>
+  </div>
+</section>
+<section class="pilot">
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <span class="lab">Harder group test · module 13, group 3</span>
+    <h2>Relancer sur le point manquant</h2>
+    <p class="lede" style="font-size:16px">Book 3 teaches vocabulary and grammar. This group's grammar is the indirect question (« si », and no inversion after « quand » or « où »). Its four words come from the curriculum map: <i>un délai, une démarche, préciser, relancer</i>. The Leçon screen shows the words once, with English and Écouter. Cards 1 to 4 then drill each word with the English cue. Cards 5 to 9 reuse the words without English, inside grammar cards. The 6 current cards (32 to 82 words) tested reading and tact. These 9 cards use 9 to 18 words.</p>
+  </div>
+  <div class="pgrid" id="pgrid2">
+    <div class="pcell"><div class="phone sm"><div class="screen">
+      <span class="sb">9:41</span>
+      <div class="top b1"><span class="x">✕</span><span class="hlab">Leçon</span><span style="width:30px"></span></div>
+      <div class="elab">Demander avec tact · groupe 3</div>
+      <div class="sent" style="font-size:31px">Relancer sur le point manquant</div>
+      <div class="gloss" style="margin-top:0">Question indirecte : « si », pas d'inversion.</div>
+      <div class="lwords"><span class="hlab">Mots</span><div class="lw"><span class="lwf">un délai</span><span class="lwe">the time it takes</span><span class="disc"><span class="msym">volume_up</span></span></div><div class="lw"><span class="lwf">une démarche</span><span class="lwe">a procedure, the steps</span><span class="disc"><span class="msym">volume_up</span></span></div><div class="lw"><span class="lwf">préciser</span><span class="lwe">to specify</span><span class="disc"><span class="msym">volume_up</span></span></div><div class="lw"><span class="lwf">relancer</span><span class="lwe">to follow up with</span><span class="disc"><span class="msym">volume_up</span></span></div></div>
+      <div class="spacer"></div>
+      <div class="btn">Commencer</div>
+    </div></div>
+    <div class="pmeta"><span><b>Leçon</b> · new words before the first card</span><span>replaces the empty lower half of today's intro</span></div></div>
+  </div>
+  <div class="small">
+    <div><span class="sev">Words first</span><h3>See it, drill it with English, then reuse it</h3><p>Each new word appears on the Leçon screen, then in one card with the English cue, then again without English in later cards (« délai » in cards 1, 5 and 6). Wrong options are mostly known look-alikes (<i>retard</i>, <i>prétendre</i>), so the new word is never one guess among four unknowns.</p></div>
+    <div><span class="sev">Grammar</span><h3>Indirect questions, in reuse cards</h3><p>« si », not « est-ce que »; « quand il sera », not « sera-t-il »; the question word that matches the missing detail. The Indice note now states the rule, not a reading tip.</p></div>
+    <div><span class="sev">One-answer check</span><h3>A real idiom was caught by hand</h3><p>« la marche à suivre » means "the procedure", so it was a second right answer for card 2. It is now « dérive ». Grammalecte flags only gender errors here (« le démarche »), so a human read is still the gate.</p></div>
+    <div><span class="sev">Open</span><h3>Should new words count as elements?</h3><p>The words are now taught on purpose, so FSRS could track each word as well as the group. Today it tracks only the group. This is for the content-model step.</p></div>
+  </div>
+</section>
+</div>
+
+
+<details class="old">
+<summary><span class="lab">Earlier review</span> Layout fixes for the current long cards (mostly moot if cards are stripped)</summary>
+<div class="oldin">
+
+<section style="display:flex;flex-direction:column;gap:20px">
+  <h2>What ships now</h2>
+  <div class="strip">
+    <div class="shot"><img src="@@word@@" alt="Word in context card, module 9"><span><strong>Mot en contexte</strong>Short source in a fixed 145 pt box leaves a third of it empty.</span></div>
+    <div class="shot"><img src="@@dialogue@@" alt="Dialogue card, module 20"><span><strong>Dialogue</strong>Title truncated. Inès's line is hidden below the fold.</span></div>
+    <div class="shot"><img src="@@microtext@@" alt="Microtext card, module 13"><span><strong>Microtexte</strong>Last line clipped mid-word, no sign there is more.</span></div>
+    <div class="shot"><img src="@@rewrite@@" alt="Rewrite card, module 16"><span><strong>Réécrire</strong>Two speakers run together as one paragraph.</span></div>
+    <div class="shot"><img src="@@wrong@@" alt="Wrong answer state"><span><strong>Wrong answer</strong>Source shrinks to 115 pt and cuts text; choices give no mark.</span></div>
+    <div class="shot"><img src="@@tooeasy@@" alt="Trop facile armed"><span><strong>Trop facile armed</strong>Shared control, works as in Books 1 and 2.</span></div>
+    <div class="shot"><img src="@@intro@@" alt="Leçon intro"><span><strong>Leçon</strong>Module goal and one group note; the lower half is empty.</span></div>
+    <div class="shot"><img src="@@bookhome@@" alt="Book home"><span><strong>Book home</strong>Shared book surface. Out of scope here.</span></div>
+  </div>
+</section>
+
+<section style="display:flex;flex-direction:column;gap:40px">
+  <h2>Recommended changes</h2>
+
+  <!-- 1 -->
+  <article class="finding">
+    <div class="num">1</div>
+    <div class="fbody">
+      <span class="sev">Fix first · hides answer text</span>
+      <h3>Size the source to its text, and show when it scrolls</h3>
+      <dl class="kv">
+        <dt>Now</dt><dd>The source box has a fixed height per format (<code>sourceHeight</code>: 115 to 190 pt). On the module 20 dialogue, Inès's whole line sits below the fold. Only her name shows, and the correct choice depends on that line ("Léa attend le budget"). The box has no fade or cue, so it looks complete. Short word cards get the opposite: a box one third empty.</dd>
+        <dt>Change</dt><dd>Measure the source text and use <code>min(text height, space left)</code>. The space left is the screen minus header, task, choices and button. When the text is still taller, keep the scroll but add a bottom fade and a small "suite" cue. That keeps the rule that only the source scrolls.</dd>
+        <dt>Where</dt><dd><code>NuanceSessionView.cardView</code>, <code>sourceHeight</code></dd>
+      </dl>
+      <div class="compare">
+        <div class="col"><span class="cap">Now · module 20 dialogue</span><img src="@@dialogue@@" alt="Current dialogue card with hidden second speaker"></div>
+        <div class="col"><span class="cap new">Proposed</span>
+          <div class="phone" role="img" aria-label="Proposed dialogue card with both speakers visible">
+            <div class="screen">
+              <span class="sb">9:41</span>
+              <div class="top"><span class="x">✕</span><span class="ct">01 / 03</span></div>
+              <div class="grp">Transmettre sans annoncer trop tôt</div>
+              <div class="src">
+                <div><div class="spk">Mairie</div><p>Le plan garde les bancs. Le jardin reste possible, à condition qu'une équipe organise son entretien. Le budget sera présenté vendredi.</p></div>
+                <div><div class="spk">Inès</div><p>Des voisins se sont proposés, mais nous n'avons pas encore réparti les jours. Léa attend le budget avant de décider si elle soutient le projet.</p></div>
+              </div>
+              <div class="task">Quelle conclusion peut être transmise sans annoncer une décision acquise ?</div>
+              <div class="choices">
+                <div class="ch">La mairie a retiré les bancs et rejeté le projet.</div>
+                <div class="ch">L'équipe est organisée et Léa a définitivement approuvé le budget.</div>
+                <div class="ch">Le plan répond à la demande sur les bancs ; l'entretien et le budget restent à préciser.</div>
+              </div>
+              <div class="spacer"></div>
+              <div class="te">Trop facile — retirer</div>
+              <div class="btn off">Vérifier</div>
+            </div>
+          </div>
+        </div>
+        <div class="notes"><span class="cap">What moved</span><ul><li>Source grows to fit both speakers (this is the longest dialogue in the book).</li><li>Room comes from the header (finding 2) and the empty band above Trop facile.</li><li>Task 24 → 22 pt so three lines still fit at this length.</li></ul></div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 2 -->
+  <article class="finding">
+    <div class="num">2</div>
+    <div class="fbody">
+      <span class="sev">High · hierarchy and truncation</span>
+      <h3>Make the task the one headline; demote the group title</h3>
+      <dl class="kv">
+        <dt>Now</dt><dd>Two display headings compete: the group title at 30 pt and the task at 24 pt, with a format eyebrow between them. The group title is one line with a 0.8 scale floor, so long titles end in "…". About half the 100 group titles are long enough for this ("Transmettre sans annoncer tro…").</dd>
+        <dt>Change</dt><dd>Show the group title as 15 pt graphite body text that wraps to two lines. Drop the format eyebrow; the source shape already tells the format, and the task says what to do. The task becomes the only large text on the card. The header shrinks by about 50 pt, which finding 1 uses.</dd>
+        <dt>Where</dt><dd><code>cardView</code> header <code>VStack</code></dd>
+      </dl>
+    </div>
+  </article>
+
+  <!-- 3 -->
+  <article class="finding">
+    <div class="num">3</div>
+    <div class="fbody">
+      <span class="sev">High · feedback</span>
+      <h3>Mark the answer in the choices, keep the source whole</h3>
+      <dl class="kv">
+        <dt>Now</dt><dd>After a miss, every choice turns grey alike and the right one is typed out again in the panel below. The source box drops to 115 pt and clips mid-line, so the learner cannot re-read why. The panel then sits under a long empty gap.</dd>
+        <dt>Change</dt><dd>Fill the correct choice with the pale "placed" colour and a check. Give the last wrong pick the dashed outline Book 1 uses for wrong magnets. The panel then only gives the reason. Keep the source at its height; the panel takes the space Trop facile and the gap leave.</dd>
+        <dt>Where</dt><dd><code>responseView</code>, <code>feedback</code>, the <code>result == nil ? … : 115</code> frame</dd>
+      </dl>
+      <div class="compare">
+        <div class="col"><span class="cap">Now · module 13, wrong</span><img src="@@wrong@@" alt="Current wrong state"></div>
+        <div class="col"><span class="cap new">Proposed</span>
+          <div class="phone" role="img" aria-label="Proposed wrong state with marked choices">
+            <div class="screen">
+              <span class="sb">9:41</span>
+              <div class="top"><span class="x">✕</span><span class="ct">02 / 03</span></div>
+              <div class="grp">Relancer sur le point manquant</div>
+              <div class="src">
+                <p>Malik a rempli le formulaire pour l'atelier, mais le courriel de confirmation n'indique aucun billet. L'accueil explique que le billet arrive après vérification du paiement ; Malik a déjà payé hier. Il souhaite écrire à l'association pour savoir si cette vérification est terminée, sans supposer qu'une erreur a été commise.</p>
+              </div>
+              <div class="task">Quelle question correspond à son besoin et au registre ?</div>
+              <div class="choices">
+                <div class="ch ok"><span>Pourriez-vous me préciser si mon paiement a été vérifié ?</span><span class="tick">✓</span></div>
+                <div class="ch bad">Pourquoi avez-vous perdu mon billet ?</div>
+                <div class="ch dim">Envoie-moi mon billet tout de suite.</div>
+              </div>
+              <div class="spacer"></div>
+              <div class="fb"><b>À revoir</b><p>Malik cherche une information précise et n'a pas de preuve d'erreur.</p></div>
+              <div class="btn">Suivant</div>
+            </div>
+          </div>
+        </div>
+        <div class="notes"><span class="cap">What moved</span><ul><li>Whole microtext stays readable after the miss.</li><li>The answer is shown once, where it was chosen.</li><li>Typed cards keep the model answer in the panel, since there is no list to mark.</li></ul></div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 4 -->
+  <article class="finding">
+    <div class="num">4</div>
+    <div class="fbody">
+      <span class="sev">Medium · content shape</span>
+      <h3>Split inline speakers in rewrite sources</h3>
+      <dl class="kv">
+        <dt>Now</dt><dd>32 of the 144 rewrite cards put two speakers in one paragraph ("Accueil : « … » Inès : « … »"). Dialogue cards already have speaker lines; these read as one wall of text.</dd>
+        <dt>Change</dt><dd>Have <code>tools/nuances/package.py</code> split <code>Name : « … »</code> runs into <code>{speaker, text}</code> lines, then re-run <code>--check</code>. No view change is needed: <code>sourceLine</code> already draws speakers.</dd>
+      </dl>
+      <div class="compare">
+        <div class="col"><span class="cap">Now · module 16 rewrite</span><img src="@@rewrite@@" alt="Current rewrite card"></div>
+        <div class="col"><span class="cap new">Proposed</span>
+          <div class="phone" role="img" aria-label="Proposed rewrite card with speaker lines">
+            <div class="screen">
+              <span class="sb">9:41</span>
+              <div class="top"><span class="x">✕</span><span class="ct">01 / 01</span></div>
+              <div class="grp">Deux limites à respecter</div>
+              <div class="src">
+                <div><div class="spk">Accueil</div><p>« La petite salle est disponible samedi, mais vous devez la libérer avant midi. »</p></div>
+                <div><div class="spk">Inès</div><p>« Notre rencontre se termine à onze heures trente. Nous aurons assez de temps pour ranger la salle avant de partir. »</p></div>
+              </div>
+              <div class="task">Engage le groupe sur l'heure de départ avec « nous nous engageons à ».</div>
+              <div class="field">Écris ta réponse</div>
+              <div class="spacer"></div>
+              <div class="te">Trop facile — retirer</div>
+              <div class="btn off">Vérifier</div>
+            </div>
+          </div>
+        </div>
+        <div class="notes"><span class="cap">Not yet checked</span><ul><li>With the keyboard up, the field and Vérifier must stay above it. The source is the part that should give way. This frame has no keyboard; it needs its own simulator check.</li></ul></div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 5, 6 -->
+  <div class="small">
+    <div><span class="sev">5 · Low · consistency</span><h3>One radius for the card's parts</h3><p>The card uses four corner sizes: source 20, choices 12, feedback 14, button pill. Set choices and feedback to 14 so the inner parts match, and keep 20 for the source block and the pill for the button.</p></div>
+    <div><span class="sev">6 · Low · Leçon page</span><h3>List the module's five groups on the Leçon page</h3><p>The intro shows the goal and one note, then empty space down to Commencer. Listing the five group titles with today's group marked ("Quand le concert s'arrête" first) shows the learner the path through the module.</p></div>
+  </div>
+</section>
+
+<section class="check">
+  <h2>Leaving as is</h2>
+  <ul>
+    <li>Trop facile, armed and idle: shared control, same as Books 1 and 2.</li>
+    <li>The card never scrolls as a whole. Every change above keeps the source as the only scroll area.</li>
+    <li>Plain white choice rows with hairlines: they match the app's white ground, and colour appears only on feedback.</li>
+  </ul>
+</section>
+</div>
+</details>
+</div>
+
+<script>
+// ok = index of the right option in authored order; options are shown shuffled.
+// en = English cue for the blank, shown under the sentence.
+const CARDS = [
+  {g:0, type:"Le mot juste", pre:"Au milieu de la deuxième chanson, le concert ", blank:true, post:". Personne ne savait pourquoi.", en:"stopped suddenly",
+   chips:["s'est interrompu","s'interrompait","a interrompu","s'est entendu"], ok:0,
+   fb:"S'interrompre : s'arrêter d'un coup. Ici, un événement, donc passé composé.", from:"b3_01_word_interrompre · 24 words"},
+  {g:0, type:"Le mot juste", pre:"La musique s'est arrêtée d'un coup. Le technicien a expliqué qu'il y avait ", blank:true, post:".", en:"a breakdown",
+   chips:["une panne","une pause","une peine","une pente"], ok:0,
+   fb:"Une panne : quelque chose ne marche plus.", from:"b3_01_word_panne · 23 words"},
+  {g:0, type:"Le mot juste", pre:"", blank:true, post:" la musique s'est arrêtée, Léa racontait ses vacances à Théo.", en:"just when",
+   chips:["Au moment où","Au moment que","Pendant où","Depuis que"], ok:0,
+   fb:"« Au moment où » : les deux actions ont lieu en même temps.", from:"b3_01_word_moment · 24 words"},
+  {g:0, type:"Écris-le", pre:"Léa ", blank:true, post:" de ses vacances à Théo quand la musique s'est arrêtée.", en:"was talking", inf:"parler", accept:["parlait"],
+   fb:"« Was talking » : une action en cours, donc imparfait.", from:"b3_01_dialogue_event · 33 words"},
+  {g:0, type:"Le mot juste", pre:"Léa parlait à Théo de ses vacances quand, soudain, la musique ", blank:true, post:".",
+   chips:["s'est arrêtée","s'arrêtait","s'arrête","s'arrêtera"], ok:0,
+   fb:"« Soudain » marque l'événement, donc passé composé.", from:"b3_01_dialogue_event · 33 words"},
+  {g:0, type:"Le mot juste", pre:"Léa ", blank:true, post:" à Théo quand la panne est arrivée. Elle n'a pas fini sa phrase.",
+   chips:["parlait","a parlé","parle","parlera"], ok:0,
+   fb:"Elle n'a pas fini : l'action était en cours, donc imparfait.", from:"b3_01_microtext_change · 30 words"},
+  {g:0, type:"Le mot juste", pre:"Tout allait bien. Puis une panne ", blank:true, post:" le spectacle, au milieu d'une chanson.",
+   chips:["a interrompu","interrompait","interrompra","s'est interrompu"], ok:0,
+   fb:"« Puis » marque l'événement, donc passé composé.", from:"b3_01_microtext_change · 30 words"},
+  {g:0, type:"Écris-le", pre:"Tout le monde dansait. Soudain, la musique ", blank:true, post:" et la salle est devenue silencieuse.", en:"stopped", inf:"s'arrêter", accept:["s'est arrêtée"],
+   fb:"Passé composé avec être : « arrêtée » s'accorde avec « la musique ».", from:"b3_01_rewrite_event · 22 words"},
+  {g:0, type:"Le mot juste", pre:"Pendant que Léa parlait, la musique ", blank:true, post:". Elle n'a pas repris.",
+   chips:["s'est arrêtée","s'arrêtait","s'est arrêté","s'arrêtera"], ok:0,
+   fb:"Un seul arrêt, terminé : passé composé, accordé avec « la musique ».", from:"new · same scene"}
+  ,
+  // Module 13, group 3 (nu_13_e03). New words come first with the English cue
+  // (and on the Leçon screen), then come back without it in grammar cards.
+  {g:1, type:"Le mot juste", pre:"Le site ne donne pas le ", blank:true, post:" pour recevoir le billet.", en:"time it takes",
+   chips:["délai","retard","dossier","démarche"], ok:0,
+   fb:"Un délai : le temps qu'il faut. Un retard : ce qui arrive trop tard.", from:"new word · un délai"},
+  {g:1, type:"Le mot juste", pre:"Je voudrais m'inscrire à l'atelier. Quelle est la ", blank:true, post:" à suivre ?", en:"procedure",
+   chips:["démarche","dépense","délai","dérive"], ok:0,
+   fb:"Une démarche : les étapes à suivre pour obtenir quelque chose.", from:"new word · une démarche"},
+  {g:1, type:"Le mot juste", pre:"Votre message ne donne pas l'heure. Pourriez-vous ", blank:true, post:" l'heure du rendez-vous ?", en:"specify",
+   chips:["préciser","prétendre","presser","prêter"], ok:0,
+   fb:"Préciser : donner l'information exacte.", from:"new word · préciser"},
+  {g:1, type:"Le mot juste", pre:"Je n'ai pas de réponse depuis lundi. Je vais ", blank:true, post:" l'association demain.", en:"follow up with",
+   chips:["relancer","relever","remplacer","renvoyer"], ok:0,
+   fb:"Relancer quelqu'un : lui écrire de nouveau quand il n'a pas répondu.", from:"new word · relancer"},
+  {g:1, type:"Le mot juste", pre:"Le délai est indiqué, mais pas le lieu. Pourriez-vous préciser ", blank:true, post:" nous nous retrouvons ?",
+   chips:["où","quand","si","qui"], ok:0,
+   fb:"Le lieu manque, donc « où ».", from:"reuse · délai, préciser"},
+  {g:1, type:"Le mot juste", pre:"Pourriez-vous me préciser ", blank:true, post:" le délai est d'une semaine ?",
+   chips:["si","est-ce que","quoi","lequel"], ok:0,
+   fb:"Question oui ou non au style indirect : « si », jamais « est-ce que ».", from:"reuse · préciser, délai"},
+  {g:1, type:"Le mot juste", pre:"J'attends mon billet. Pourriez-vous me préciser quand ", blank:true, post:" envoyé ?",
+   chips:["il sera","sera-t-il","sera-il","est-ce qu'il sera"], ok:0,
+   fb:"Au style indirect, pas d'inversion : « quand il sera ».", from:"reuse · préciser"},
+  {g:1, type:"Écris-le", pre:"Toujours pas de billet. Hier, j'", blank:true, post:" l'accueil.", en:"followed up with", inf:"relancer", accept:["ai relancé"],
+   fb:"Passé composé avec avoir : « j'ai relancé ».", from:"reuse · relancer"},
+  {g:1, type:"Écris-le", pre:"Pourriez-vous me dire combien de temps ", blank:true, post:" la démarche ?", en:"takes", inf:"prendre", accept:["prend"],
+   fb:"« Combien de temps prend la démarche » : le sujet est « la démarche ».", from:"reuse · démarche"}
+];
+// Stable per-card shuffle, like SituationShuffle in the app.
+function order(n, seed){ const a=[...Array(n).keys()]; let s=seed*9301+49297;
+  for(let i=n-1;i>0;i--){ s=(s*9301+49297)%233280; const j=Math.floor(s/233280*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+const norm = s => s.trim().toLowerCase().replace(/[’]/g,"'").replace(/\s+/g," ");
+const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;");
+function words(c){
+  const s = (c.pre + c.post + " " + (c.en||"")).replace(/[.,:]/g," ");
+  return s.split(/\s+/).filter(Boolean).length + (c.chips ? c.chips.join(" ").split(/\s+/).length : 0);
+}
+
+// Apple's French (AZERTY) layout in Carambole style. Hold a key for its accents.
+const ACCENTS = {e:"éèêë", a:"àâæ", u:"ùûü", i:"îï", o:"ôœ", c:"ç", y:"ÿ"};
+const KB = {}; // per card: {shift, layer}
+function kbHTML(i){
+  const st = KB[i] || (KB[i] = {shift:false, layer:"abc"});
+  const key = (ch, cls="") => { const t = st.shift ? ch.toUpperCase() : ch;
+    return `<button type="button" class="k ${cls}" data-i="${i}" data-ch="${esc(t)}">${esc(t)}</button>`; };
+  const sp = (act, label, cls="") => `<button type="button" class="k sp ${cls}" data-i="${i}" data-act="${act}" aria-label="${act}">${label}</button>`;
+  let rows;
+  if (st.layer === "abc") {
+    rows = [
+      [..."azertyuiop"].map(c=>key(c)).join(""),
+      [..."qsdfghjklm"].map(c=>key(c)).join(""),
+      sp("shift", "⇧", st.shift ? "on" : "") + `<span class="kgap"></span>` + [..."wxcvbn'"].map(c=>key(c)).join("") + `<span class="kgap"></span>` + sp("del", "⌫"),
+    ];
+  } else {
+    rows = [
+      [..."1234567890"].map(c=>key(c)).join(""),
+      [..."-/:;()€&@\""].map(c=>key(c)).join(""),
+      sp("noop", "#+=", "w2") + `<span class="kgap"></span>` + [...".,?!'"].map(c=>key(c,"w3")).join("") + `<span class="kgap"></span>` + sp("del", "⌫", "w2"),
+    ];
+  }
+  return `<div class="kb" id="kb${i}">
+    <div class="krow">${rows[0]}</div>
+    <div class="krow">${rows[1]}</div>
+    <div class="krow">${rows[2]}</div>
+    <div class="krow">${sp("layer", st.layer === "abc" ? "123" : "ABC", "wide")}<button type="button" class="k space" data-i="${i}" data-ch=" ">espace</button><button type="button" class="k go" data-i="${i}" data-act="done">Vérifier</button></div>
+  </div>`;
+}
+
+// st: null = unanswered; {k} = option picked; {typed, right} = typed answer
+// Book 1 idiom: ink text, colour on objects (lime slot = placed magnet, pale
+// tray under the options, pale Indice disc, progress ring in the header).
+// g = index into GROUPS; each group has its own grid, count and Indice note.
+const GROUPS = [
+  {title:"Quand le concert s'arrête", note:"Repère la panne et l'action qui était déjà en cours.", grid:"pgrid"},
+  {title:"Relancer sur le point manquant", note:"Question indirecte : « si » pour oui ou non. Après « quand » ou « où », pas d'inversion du pronom.", grid:"pgrid2"}
+];
+const inGroup = i => CARDS.filter(c => c.g === CARDS[i].g);
+const posInGroup = i => CARDS.slice(0, i).filter(c => c.g === CARDS[i].g).length;
+const HINT = {};
+function render(i, st){
+  const c = CARDS[i], done = st != null, typed = !c.chips;
+  const right = done && (typed ? st.right : st.k === c.ok);
+  const answer = typed ? c.accept[0] : c.chips[c.ok];
+  const mid = done ? `<span class="mag">${esc(answer)}</span>` : `<span class="well"></span>`;
+  const gloss = c.en ? `<div class="gloss">“${esc(c.en)}”${c.inf ? `<span class="cue-inf">${esc(c.inf)}</span>` : ""}</div>` : "";
+  const hint = `<div class="hintrow"><button type="button" class="indice" data-hint="${i}" aria-expanded="${!!HINT[i]}"><span class="disc">?</span><span class="ilab">Indice</span></button>
+    <button type="button" class="indice listen" data-listen="${i}" ${done?"":"disabled"} aria-label="Écouter la phrase"><span class="ilab">Écouter</span><span class="disc"><span class="msym">volume_up</span></span></button></div>
+    ${HINT[i] ? `<div class="hintcard">${esc(GROUPS[c.g].note)}</div>` : ""}`;
+  const fb = !done ? "" : right
+    ? `<div class="fbrow"><span class="okpill">Juste ✓</span><span class="fbtext">${esc(c.fb)}</span></div>`
+    : `<div class="fbcard"><b>À revoir</b><p>${esc(c.fb)}</p></div>`;
+  const slot = done
+    ? `<div class="slot"><button type="button" class="btn again" data-reset="${i}">Suivant</button></div>`
+    : `<div class="slot"><span class="te">Trop facile — retirer</span></div>`;
+  let lower;
+  if (typed) {
+    lower = done
+      ? `${fb}${slot}<div class="tline ${right?"ok":"bad"}">${esc(st.typed)}</div>`
+      : `${slot}<form class="tform" data-i="${i}"><input class="tline" id="in${i}" inputmode="none" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Écris le verbe" aria-label="Réponse"></form>${kbHTML(i)}`;
+  } else {
+    const ord = order(c.chips.length, i + 7);
+    const tiles = `<div class="tray"><div class="pchips">` + ord.map(k=>{
+      let cls = "chip";
+      if (done){ if (k===c.ok) cls+=" ok"; else if (k===st.k) cls+=" bad"; else cls+=" dim"; }
+      return `<button type="button" class="${cls}" data-i="${i}" data-k="${k}" ${done?"disabled":""}><span>${esc(c.chips[k])}</span></button>`;
+    }).join("") + `</div></div>`;
+    lower = `${fb}${slot}${tiles}`;
+  }
+  const n = inGroup(i).length, pos = posInGroup(i), pct = (pos + (done ? 1 : 0)) / n;
+  return `<div class="screen">
+    <span class="sb">9:41</span>
+    <div class="top b1"><span class="x">✕</span><span class="hlab">${esc(c.type)} · ${pos+1} / ${n}</span>
+      <span class="ring" style="--p:${pct}"></span></div>
+    <div class="elab">${esc(GROUPS[c.g].title)}</div>
+    <div class="sent">${esc(c.pre)}${mid}${esc(c.post)}</div>
+    ${gloss}
+    ${hint}
+    <div class="spacer"></div>
+    ${lower}
+  </div>`;
+}
+
+const grid = document.getElementById("pilots");
+CARDS.forEach((c,i)=>{
+  const cell = document.createElement("div");
+  cell.className = "pcell";
+  cell.innerHTML = `<div class="phone sm" id="ph${i}">${render(i,null)}</div>
+    <div class="pmeta"><span><b>${words(c)}</b> words to read${c.chips?" · 4 French options":" · type the verb"}</span><span>${esc(c.from)}</span></div>`;
+  document.getElementById(GROUPS[c.g].grid).appendChild(cell);
+});
+const put = (i, st) => { KB[i] = {shift:false, layer:"abc"}; document.getElementById("ph"+i).innerHTML = render(i, st); };
+const redrawKb = i => { const el = document.getElementById("kb"+i); if (el) el.outerHTML = kbHTML(i); };
+function grade(i){
+  const v = document.getElementById("in"+i).value;
+  if (!v.trim()) return;
+  put(i, {typed:v, right: CARDS[i].accept.some(a => norm(a) === norm(v))});
+}
+function insert(i, ch){
+  const inp = document.getElementById("in"+i); if (!inp) return;
+  inp.value += ch;
+  if (KB[i].shift) { KB[i].shift = false; redrawKb(i); }
+}
+
+let holdTimer = null, held = false;
+const closePop = () => document.querySelectorAll(".accpop").forEach(p => p.remove());
+grid.addEventListener("pointerdown", e=>{
+  const k = e.target.closest(".k[data-ch]"); if (!k) return;
+  const base = k.dataset.ch.toLowerCase(), set = ACCENTS[base]; held = false;
+  if (!set) return;
+  clearTimeout(holdTimer);
+  holdTimer = setTimeout(()=>{
+    held = true; closePop();
+    const up = k.dataset.ch !== base;
+    const pop = document.createElement("div");
+    pop.className = "accpop";
+    pop.innerHTML = [...set].map(a=>{ const t = up ? a.toUpperCase() : a;
+      return `<button type="button" class="acc" data-i="${k.dataset.i}" data-ch="${t}">${t}</button>`; }).join("");
+    pop.style.top = (k.offsetTop - 62) + "px";
+    pop.style.left = Math.max(4, Math.min(k.offsetLeft - 6, 402 - 12 - set.length * 44)) + "px";
+    k.closest(".kb").appendChild(pop);
+  }, 380);
+});
+["pointerup","pointerleave","pointercancel"].forEach(t => grid.addEventListener(t, ()=>clearTimeout(holdTimer)));
+grid.addEventListener("click", e=>{
+  const chip = e.target.closest(".chip"), reset = e.target.closest("[data-reset]");
+  const acc = e.target.closest(".acc"), k = e.target.closest(".k");
+  if (chip) return put(+chip.dataset.i, {k:+chip.dataset.k});
+  if (reset) return put(+reset.dataset.reset, null);
+  const lb = e.target.closest("[data-listen]");
+  if (lb) { const c = CARDS[+lb.dataset.listen], a = c.chips ? c.chips[c.ok] : c.accept[0];
+    try { const u = new SpeechSynthesisUtterance(c.pre + a + c.post); u.lang = "fr-FR"; speechSynthesis.cancel(); speechSynthesis.speak(u); } catch (_) {}
+    return; }
+  const hb = e.target.closest("[data-hint]");
+  if (hb) { const i = +hb.dataset.hint; HINT[i] = !HINT[i]; const inp = document.getElementById("in"+i), v = inp ? inp.value : "";
+    document.getElementById("ph"+i).innerHTML = render(i, null); const n = document.getElementById("in"+i); if (n) n.value = v; return; }
+  if (acc) { insert(+acc.dataset.i, acc.dataset.ch); closePop(); return; }
+  if (!k) { closePop(); return; }
+  const i = +k.dataset.i;
+  if (k.dataset.ch != null) { if (held) { held = false; return; } closePop(); return insert(i, k.dataset.ch); }
+  closePop();
+  const act = k.dataset.act, inp = document.getElementById("in"+i);
+  if (act === "del" && inp) inp.value = inp.value.slice(0, -1);
+  else if (act === "shift") { KB[i].shift = !KB[i].shift; redrawKb(i); }
+  else if (act === "layer") { KB[i].layer = KB[i].layer === "abc" ? "123" : "abc"; KB[i].shift = false; redrawKb(i); }
+  else if (act === "done") grade(i);
+});
+grid.addEventListener("submit", e=>{ e.preventDefault(); grade(+e.target.dataset.i); });
+</script>

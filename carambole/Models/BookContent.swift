@@ -29,8 +29,6 @@ struct GrammarElement: Identifiable, Equatable {
     /// *En situation*: the move's short dialogues and standalone drills, in
     /// authored order (`d01 d02 s01 …`). Empty for a grammar element.
     var items: [SituationItem] = []
-    /// *Nuances*: visible-source reading and expression cards, in authored order.
-    var nuanceCards: [NuanceCard] = []
 }
 
 /// The unlock unit. Module N+1 unlocks when module N is complete

@@ -1,0 +1,436 @@
+diff --git b/carambole/Debug/DrillDemo.swift a/carambole/Debug/DrillDemo.swift
+index c519f23a..1a181bd5 100644
+--- b/carambole/Debug/DrillDemo.swift
++++ a/carambole/Debug/DrillDemo.swift
+@@ -137,7 +137,7 @@ enum DrillDemo {
+ /// One page: a button per test session; each relaunches as often as wanted.
+ private struct TestBookView: View {
+     private enum Kind: Hashable, Identifiable {
+-        case spot, build, transform, interp, situation, demo
++        case spot, build, transform, interp, situation, book3(Book3PilotModule), demo
+         var id: Self { self }
+     }
+     @State private var running: Kind?
+@@ -161,6 +161,10 @@ private struct TestBookView: View {
+                     "Read a sentence, answer what only its grammar tells you. No English shown.", .interp)
+                 row("En situation · essai",
+                     "Eight short café dialogues, six drill types. Tap any word for its English.", .situation)
++                ForEach(Book3PilotModule.available) { module in
++                    row(String(format: "Nuances · module %02d", module.number),
++                        module.title, .book3(module))
++                }
+                 if ProcessInfo.processInfo.environment["CB_DRILL_DEMO"] != nil {
+                     row("Lancer le drill", "Tap Indice, place words, scroll the word tray, check.", .demo)
+                 }
+@@ -177,8 +181,15 @@ private struct TestBookView: View {
+             case "transform": running = .transform
+             case "interp": running = .interp
+             case "situation": running = .situation
++            case "book3": running = .book3(Book3PilotModule(number: 1))
+             case "demo": running = .demo
+-            default: break
++            default:
++                if let value = ProcessInfo.processInfo.environment["CB_TB_OPEN"],
++                   value.hasPrefix("book3_"),
++                   let number = Int(value.dropFirst("book3_".count)),
++                   let module = Book3PilotModule.available.first(where: { $0.number == number }) {
++                    running = .book3(module)
++                }
+             }
+         }
+         .fullScreenCover(item: $running) { kind in
+@@ -189,6 +200,7 @@ private struct TestBookView: View {
+                 case .transform: DrillDemo.session("Transformer", transforms) { running = nil }
+                 case .interp: DrillDemo.session("Comprendre", interps) { running = nil }
+                 case .situation: SituationPilotView { running = nil }
++                case .book3(let module): Book3PilotView(module: module) { running = nil }
+                 case .demo: DrillDemo.makeSession(testBook: true)
+                 }
+             }
+diff --git b/carambole/Features/Book/ModuleDetailView.swift a/carambole/Features/Book/ModuleDetailView.swift
+index 7311b4dd..05b2f41c 100644
+--- b/carambole/Features/Book/ModuleDetailView.swift
++++ a/carambole/Features/Book/ModuleDetailView.swift
+@@ -225,7 +225,7 @@ private struct LearnSession: Identifiable {
+     let elements: [GrammarElement]
+ }
+ 
+-// MARK: - Ticker line (example sentence)
++// MARK: - Ticker line (example sentence or visible Nuances source)
+ 
+ /// One element's example, rendered as final French: the blank filled with the answer
+ /// (answer pieces in weight 500), scaffolding stripped exactly as `spokenFrench` does.
+@@ -236,7 +236,7 @@ struct TickerLine {
+ 
+     var plain: String { pieces.joined() }
+ 
+-    /// Picks a short example sentence.
++    /// Picks a short example sentence, or a French source excerpt for Nuances.
+     init?(element: GrammarElement) {
+         let scored: [(Int, [String])] = element.examples.map { ex in
+             let p = Self.pieces(for: ex)
+@@ -246,9 +246,17 @@ struct TickerLine {
+             // answer (an MC pick like "le") is not a sentence at all.
+             return (ex.answerTokens.count < 3 ? 1000 + length : 12 + length, p)
+         }
+-        guard let best = scored.min(by: { $0.0 < $1.0 }) else { return nil }
++        if let best = scored.min(by: { $0.0 < $1.0 }) {
++            elementLabel = element.label
++            pieces = best.1
++            return
++        }
++        guard let excerpt = element.nuanceCards.flatMap(\.source)
++            .map(\.text)
++            .filter({ !$0.isEmpty })
++            .min(by: { $0.count < $1.count }) else { return nil }
+         elementLabel = element.label
+-        pieces = best.1
++        pieces = [excerpt]
+     }
+ 
+     static func pieces(for ex: Exercise) -> [String] {
+@@ -326,6 +334,7 @@ struct ModuleElementRows: View {
+         VStack(alignment: .leading, spacing: 0) {
+             ForEach(module.elements.sorted { $0.sortOrder < $1.sortOrder }) { element in
+                 ElementRow(element: element, bucket: viewModel.bucket(for: element),
++                           note: viewModel.book.kind == .nuances ? element.ruleNote : nil,
+                            onDemote: {
+                     if let onDemote { onDemote(element) }
+                     else { viewModel.demoteElement(element.id) }
+@@ -338,6 +347,7 @@ struct ModuleElementRows: View {
+ struct ElementRow: View {
+     let element: GrammarElement
+     let bucket: BookViewModel.ElementBucket
++    let note: String?
+     let onDemote: () -> Void
+ 
+     /// True only for graduated elements — the ones the swipe action applies to.
+@@ -388,6 +398,12 @@ struct ElementRow: View {
+                 Text(element.label)
+                     .font(.display(size: 15, wght: 400))
+                     .foregroundColor(bucket == .aVenir ? AppColor.g3 : AppColor.ink)
++                if let note, !note.isEmpty {
++                    Text(note)
++                        .font(.display(size: 12, wght: 400))
++                        .foregroundColor(AppColor.g2)
++                        .lineSpacing(2)
++                }
+             }
+             .fixedSize(horizontal: false, vertical: true)
+             .frame(maxWidth: .infinity, alignment: .leading)
+diff --git b/carambole/Features/Drill/StudySessionView.swift a/carambole/Features/Drill/StudySessionView.swift
+index ef5a637d..4109a5f1 100644
+--- b/carambole/Features/Drill/StudySessionView.swift
++++ a/carambole/Features/Drill/StudySessionView.swift
+@@ -33,6 +33,10 @@ struct StudySessionView: View {
+             SituationSessionView(book: viewModel.book, title: title, ruleNote: ruleNote,
+                                  elements: elements, mode: mode, module: module, canStart: canStart,
+                                  autoSpeak: viewModel.settingsStore.autoSpeak, onFinish: onFinish)
++        case .nuances:
++            NuanceSessionView(book: viewModel.book, title: title, ruleNote: ruleNote,
++                              elements: elements, mode: mode, module: module, canStart: canStart,
++                              onFinish: onFinish)
+         }
+     }
+ }
+diff --git b/carambole/Features/Library/LibraryView.swift a/carambole/Features/Library/LibraryView.swift
+index 5e252566..d3eacf0d 100644
+--- b/carambole/Features/Library/LibraryView.swift
++++ a/carambole/Features/Library/LibraryView.swift
+@@ -49,6 +49,7 @@ struct LibraryView: View {
+     /// Each book's progress (%), from its own element IDs.
+     @StateObject private var fondationsModel = BookViewModel(book: BookCatalog.fondations)
+     @StateObject private var situationModel = BookViewModel(book: BookCatalog.enSituation)
++    @StateObject private var nuancesModel = BookViewModel(book: BookCatalog.nuances)
+     @State private var loaded = false
+     /// The book pushed from the shelf (`BookView`).
+     @State private var openedBook: BookDescriptor?
+@@ -85,9 +86,11 @@ struct LibraryView: View {
+                 if loaded {
+                     fondationsModel.refresh()
+                     situationModel.refresh()
++                    nuancesModel.refresh()
+                 } else {
+                     fondationsModel.load()
+                     situationModel.load()
++                    nuancesModel.load()
+                     loaded = true
+                     if let initialBook { openedBook = initialBook }
+                     #if DEBUG
+@@ -173,6 +176,7 @@ struct LibraryView: View {
+         let model: BookViewModel
+         switch book.id {
+         case BookCatalog.enSituation.id: model = situationModel
++        case BookCatalog.nuances.id: model = nuancesModel
+         default: model = fondationsModel
+         }
+         return model.estimate.percentComplete
+diff --git b/carambole/Features/Settings/SettingsView.swift a/carambole/Features/Settings/SettingsView.swift
+index 155062ed..bf23a5ff 100644
+--- b/carambole/Features/Settings/SettingsView.swift
++++ a/carambole/Features/Settings/SettingsView.swift
+@@ -40,12 +40,16 @@ struct SettingsView: View {
+ 
+                     VStack(alignment: .leading, spacing: 0) {
+                         rule(AppColor.ink)
+-                        newPerDaySection
+-                        rule(AppColor.hairline)
++                        if kind != .nuances {
++                            newPerDaySection
++                            rule(AppColor.hairline)
++                        }
+                         reviewRoundSection
+                         rule(AppColor.hairline)
+-                        audioSection
+-                        rule(AppColor.hairline)
++                        if kind != .nuances {
++                            audioSection
++                            rule(AppColor.hairline)
++                        }
+                         backupSection
+                         rule(AppColor.hairline)
+                     }
+@@ -103,7 +107,7 @@ struct SettingsView: View {
+ 
+     private var newPerDaySection: some View {
+         TextStepper(
+-            title: "Éléments / jour",
++            title: kind == .nuances ? "Groupes / jour" : "Éléments / jour",
+             note: newPerDayNote,
+             value: $store.settings.newPerDay,
+             range: StudySettings.newPerDayRange
+@@ -167,6 +171,7 @@ struct SettingsView: View {
+         switch kind {
+         case .grammar: "New grammar elements per day — a hard cap."
+         case .situation: "New conversation moves per day — a hard cap."
++        case .nuances: "Daily goal for new reading and expression groups."
+         }
+     }
+ 
+@@ -174,6 +179,7 @@ struct SettingsView: View {
+         switch kind {
+         case .grammar: "Maximum exercises per round; only due reviews appear."
+         case .situation: "Maximum dialogues per round; only due reviews appear."
++        case .nuances: "Maximum groups per round; only due reviews appear."
+         }
+     }
+ 
+diff --git b/carambole/Models/BookCatalog.swift a/carambole/Models/BookCatalog.swift
+index c3ee8d7f..b0bdf13e 100644
+--- b/carambole/Models/BookCatalog.swift
++++ a/carambole/Models/BookCatalog.swift
+@@ -20,6 +20,8 @@ enum BookKind: Equatable {
+     /// *En situation*: conversational moves drilled with short dialogues
+     /// (`SituationSessionView`).
+     case situation
++    /// *Nuances*: reading and expression cards drawn from visible French text.
++    case nuances
+ }
+ 
+ /// One shelf entry: identity, labels, content kind and settings scope.
+@@ -50,8 +52,12 @@ enum BookCatalog {
+         id: "book_fr_en_situation", title: "Français — En situation", shelfTitle: "En situation",
+         kicker: "Dialogues", kind: .situation, settingsScope: "book_fr_en_situation")
+ 
++    static let nuances = BookDescriptor(
++        id: "book_fr_nuances", title: "Français — Nuances", shelfTitle: "Nuances",
++        kicker: "Lecture & expression", kind: .nuances, settingsScope: "book_fr_nuances")
++
+     /// Shelf order.
+-    static let all: [BookDescriptor] = [fondations, enSituation]
++    static let all: [BookDescriptor] = [fondations, enSituation, nuances]
+ 
+     static func descriptor(id: String) -> BookDescriptor? {
+         all.first { $0.id == id }
+diff --git b/carambole/Models/BookContent.swift a/carambole/Models/BookContent.swift
+index ebd9666e..4af1ffbf 100644
+--- b/carambole/Models/BookContent.swift
++++ a/carambole/Models/BookContent.swift
+@@ -29,6 +29,8 @@ struct GrammarElement: Identifiable, Equatable {
+     /// *En situation*: the move's short dialogues and standalone drills, in
+     /// authored order (`d01 d02 s01 …`). Empty for a grammar element.
+     var items: [SituationItem] = []
++    /// *Nuances*: visible-source reading and expression cards, in authored order.
++    var nuanceCards: [NuanceCard] = []
+ }
+ 
+ /// The unlock unit. Module N+1 unlocks when module N is complete
+diff --git b/carambole/Models/ContentLoader.swift a/carambole/Models/ContentLoader.swift
+index b41a3367..9a43cc0c 100644
+--- b/carambole/Models/ContentLoader.swift
++++ a/carambole/Models/ContentLoader.swift
+@@ -8,7 +8,7 @@ import Foundation
+ //  only user `review_status` lives in the database. Each book in `BookCatalog`
+ //  has its own manifest: *Fondations* reads `manifest.json` (grammar modules),
+ //  *En situation* reads `situations_manifest.json` (dialogue modules) and
+-//  `words.json`.
++//  `words.json`; *Nuances* reads `nuances_manifest.json` and its card modules.
+ //  Every valid module listed in a manifest is loaded.
+ 
+ /// Manifest listing the per-module JSON files, in load order.
+@@ -59,6 +59,7 @@ enum ContentLoader {
+         switch descriptor.kind {
+         case .grammar: return loadBook()
+         case .situation: return loadSituationBook(descriptor)
++        case .nuances: return loadNuanceBook(descriptor)
+         }
+     }
+ 
+@@ -160,6 +161,69 @@ enum ContentLoader {
+             ?? Bundle.main.url(forResource: resource, withExtension: ext)
+     }
+ 
++    // MARK: - Nuances
++
++    /// Loads the five review elements in each Nuances module. The optional
++    /// directory lets the pure Swift model test exercise the real loader.
++    static func loadNuanceBook(_ descriptor: BookDescriptor, directory: URL? = nil) -> Book {
++        var book = Book(id: descriptor.id, title: descriptor.title, sortOrder: 3,
++                        modules: [], kind: .nuances)
++        let decoder = JSONDecoder()
++        func resourceURL(_ fileName: String) -> URL? {
++            if let directory { return directory.appendingPathComponent(fileName) }
++            let resource = (fileName as NSString).deletingPathExtension
++            let ext = (fileName as NSString).pathExtension
++            return Bundle.main.url(forResource: resource, withExtension: ext, subdirectory: "Nuances")
++                ?? Bundle.main.url(forResource: resource, withExtension: ext)
++        }
++        guard let url = resourceURL("nuances_manifest.json"),
++              let data = try? Data(contentsOf: url),
++              let manifest = try? decoder.decode(ContentManifest.self, from: data) else {
++            print("ContentLoader: no nuances manifest")
++            return book
++        }
++
++        var moduleIDs: Set<String> = []
++        var elementIDs: Set<String> = []
++        var cardIDs: Set<String> = []
++        for fileName in manifest.moduleFiles {
++            guard let url = resourceURL(fileName),
++                  let data = try? Data(contentsOf: url),
++                  let file = try? decoder.decode(NuanceModuleFile.self, from: data) else {
++                print("ContentLoader: could not decode nuances module \(fileName)")
++                continue
++            }
++            let elements = file.elements
++            let cards = elements.flatMap(\.cards)
++            let newElementIDs = elements.map(\.id)
++            let newCardIDs = cards.map(\.id)
++            let valid = !file.id.isEmpty && !moduleIDs.contains(file.id)
++                && !elements.isEmpty && elements.count == 5
++                && !cards.isEmpty && elements.allSatisfy { !$0.id.isEmpty && !$0.cards.isEmpty }
++                && newElementIDs.allSatisfy { !elementIDs.contains($0) }
++                && newCardIDs.allSatisfy { !$0.isEmpty && !cardIDs.contains($0) }
++                && Set(newElementIDs).count == newElementIDs.count
++                && Set(newCardIDs).count == newCardIDs.count
++            guard valid else {
++                print("ContentLoader: skipped invalid nuances module \(fileName)")
++                continue
++            }
++            moduleIDs.insert(file.id)
++            elementIDs.formUnion(newElementIDs)
++            cardIDs.formUnion(newCardIDs)
++            let mappedElements = elements.enumerated().map { index, element in
++                GrammarElement(id: element.id, moduleID: file.id, sortOrder: index + 1,
++                               label: element.title, ruleNote: element.note,
++                               examples: [], nuanceCards: element.cards)
++            }
++            book.modules.append(CourseModule(id: file.id, bookID: descriptor.id,
++                                             sortOrder: file.number, title: file.title,
++                                             ruleNote: file.goal, elements: mappedElements))
++        }
++        book.modules.sort { $0.sortOrder < $1.sortOrder }
++        return book
++    }
++
+     // MARK: - DTO → domain (injecting parent ids down the tree)
+ 
+     private static func module(from dto: ModuleDTO) -> CourseModule {
+diff --git b/carambole/Models/CoreDataManager.swift a/carambole/Models/CoreDataManager.swift
+index 547ae279..13b0146f 100644
+--- b/carambole/Models/CoreDataManager.swift
++++ a/carambole/Models/CoreDataManager.swift
+@@ -208,8 +208,6 @@ class DataManager {
+             setUserVersion(5)
+         }
+ 
+-        // Book 3 was archived on 2026-10-22 (`archive/book3-nuances/`). Its v6
+-        // table stays so existing installs keep their data; nothing reads it now.
+         // v6 — *Nuances* (Book 3) card history. Existing review and situation
+         // records remain untouched; each card stores its latest grade and count.
+         if version < 6 {
+@@ -833,6 +831,74 @@ class DataManager {
+         return result
+     }
+ 
++    // MARK: - Nuances (Book 3) card history (v6)
++
++    /// Record one finished card, preserving its cumulative attempt count.
++    func logNuanceCard(cardID: String, elementID: String, rating: Int, at date: Date) {
++        guard (1...3).contains(rating) else { return }
++        dbQueue.async {
++            let query = """
++                INSERT INTO nuance_card_log (card_id, element_id, last_done, times, last_rating)
++                VALUES (?, ?, ?, 1, ?)
++                ON CONFLICT(card_id) DO UPDATE SET
++                    last_done = excluded.last_done,
++                    times = nuance_card_log.times + 1,
++                    last_rating = excluded.last_rating;
++                """
++            var statement: OpaquePointer?
++            if sqlite3_prepare_v2(self.db, query, -1, &statement, nil) == SQLITE_OK {
++                sqlite3_bind_text(statement, 1, (cardID as NSString).utf8String, -1, SQLITE_TRANSIENT)
++                sqlite3_bind_text(statement, 2, (elementID as NSString).utf8String, -1, SQLITE_TRANSIENT)
++                sqlite3_bind_double(statement, 3, date.timeIntervalSince1970)
++                sqlite3_bind_int(statement, 4, Int32(rating))
++                if sqlite3_step(statement) != SQLITE_DONE {
++                    print("Error logging nuance card: \(String(cString: sqlite3_errmsg(self.db)))")
++                }
++            } else {
++                print("Error preparing nuance card log: \(String(cString: sqlite3_errmsg(self.db)))")
++            }
++            sqlite3_finalize(statement)
++        }
++    }
++
++    /// Card history for one Nuances element, keyed by card ID.
++    func fetchNuanceCardHistory(elementID: String) -> [String: NuanceCardHistory] {
++        var result: [String: NuanceCardHistory] = [:]
++        dbQueue.sync {
++            let query = "SELECT card_id, last_done, times, last_rating FROM nuance_card_log WHERE element_id = ?;"
++            var statement: OpaquePointer?
++            if sqlite3_prepare_v2(self.db, query, -1, &statement, nil) == SQLITE_OK {
++                sqlite3_bind_text(statement, 1, (elementID as NSString).utf8String, -1, SQLITE_TRANSIENT)
++                while sqlite3_step(statement) == SQLITE_ROW {
++                    guard let c = sqlite3_column_text(statement, 0) else { continue }
++                    result[String(cString: c)] = NuanceCardHistory(
++                        lastDone: Date(timeIntervalSince1970: sqlite3_column_double(statement, 1)),
++                        times: Int(sqlite3_column_int(statement, 2)),
++                        lastRating: Int(sqlite3_column_int(statement, 3)))
++                }
++            }
++            sqlite3_finalize(statement)
++        }
++        return result
++    }
++
++    /// Make a Nuances group fresh again after an armed Too Easy answer fails.
++    func clearNuanceCardHistory(elementID: String) {
++        dbQueue.async {
++            let query = "DELETE FROM nuance_card_log WHERE element_id = ?;"
++            var statement: OpaquePointer?
++            if sqlite3_prepare_v2(self.db, query, -1, &statement, nil) == SQLITE_OK {
++                sqlite3_bind_text(statement, 1, (elementID as NSString).utf8String, -1, SQLITE_TRANSIENT)
++                if sqlite3_step(statement) != SQLITE_DONE {
++                    print("Error clearing nuance card history: \(String(cString: sqlite3_errmsg(self.db)))")
++                }
++            } else {
++                print("Error preparing nuance card history clear: \(String(cString: sqlite3_errmsg(self.db)))")
++            }
++            sqlite3_finalize(statement)
++        }
++    }
++
+     /// One wrong attempt, kept so the learner's own mistakes can be shown back.
+     struct SituationAttempt: Equatable {
+         let bookID: String

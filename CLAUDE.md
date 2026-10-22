@@ -1,11 +1,12 @@
 # Carambole — French trainer (iOS, SwiftUI + raw SQLite)
 
-Three books on a library shelf. **Fondations** (`book_fr_fondations`, Book 1):
+Two books on a library shelf. **Fondations** (`book_fr_fondations`, Book 1):
 grammar drills, 25 modules × 20 elements, tap-to-build / multiple choice / short
 typing / spot-the-error. **En situation** (`book_fr_en_situation`, Book 2, DONE
 2026-10-13): short chat dialogues, 25 modules, 3,000 items, 6,459 voiced clips.
-**Nuances** (`book_fr_nuances`, Book 3, integrated 2026-10-16): 20 modules,
-100 review groups, 550 visible-source reading and expression cards; text only.
+**Book 3 (*Nuances*) is ARCHIVED (user, 2026-10-22):** removed from the app,
+all material kept in `archive/book3-nuances/` (README there explains what
+stayed and how to restore). Do not re-add it unless the user asks.
 Older history is in `docs/archive/` and git log.
 
 ## Start here
@@ -15,10 +16,6 @@ Older history is in `docs/archive/` and git log.
 - **Book 2 rulebook** (cast, voices, JSON shape, authoring steps):
   `docs/plans/2026-10-11-book-2-content-handoff.md`; tools in
   `tools/situations/README.md`.
-- **Book 3 production handoff (2026-10-16):**
-  `docs/plans/2026-10-16-book-3-production-handoff.md`. It records the edited
-  550-card package, group grading, v6 migration, app integration, verification,
-  and audio scope. The 2026-10-15 content checkpoints are historical snapshots.
 - **Languages home (2026-10-14):** root is `Features/Languages/LanguagesView.swift`
   (Specimen layout) → `LibraryView(language:)`; marks in
   `DesignSystem/LanguageMark.swift` (Cut paper default, Script sticker; picked
@@ -64,8 +61,7 @@ Older history is in `docs/archive/` and git log.
   to the next element. Shared code: `Features/Drill/TooEasy.swift` (`TooEasyGate`,
   `TooEasyControl`, `.tooEasyUndo`). Book 1: `DrillView`/`DrillSessionView`.
   Book 2: `SituationCardView`/`SituationSessionView` + `SituationTooEasy`. A new
-  book or session view reuses these; never fork the logic. Book 3 uses
-  `NuanceSessionView` with the same shared gate and undo.
+  book or session view reuses these; never fork the logic.
 - **The drill card never scrolls as a whole.** Book 1 can scroll its word-bank
   tray (`MagnetBoard.bankTray`); text uses `minimumScaleFactor`. In Book 2, only
   the chat scrolls. The purple reply bank shows all tiles and stays fixed.
@@ -109,16 +105,14 @@ Older history is in `docs/archive/` and git log.
 - **Content** is in-memory from bundle JSON. Book 1: `Resources/Topics/` +
   `manifest.json` (`ContentLoader`). Book 2: `Resources/Situations/` +
   `situations_manifest.json` + one `words.json` glossary; module JSON is built
-  from `tools/situations/drafts/` by `assemble.py` (keep the drafts). Book 3:
-  `Resources/Nuances/nuances_manifest.json` + 20 module files, packaged from
-  reviewed DEBUG cards by `tools/nuances/package.py`.
+  from `tools/situations/drafts/` by `assemble.py` (keep the drafts).
 - **Grading:** every answer grades its ELEMENT with FSRS-6 (`Core/FSRS.swift`,
   `Core/ElementGrader.swift`). An element is maîtrisé once stability passes 21
   days (sticky `graduated_date`). Book 2 also needs correct answers on 3 distinct
-  items covering 2 drill types (`SituationMastery`). Book 3 requires 3 distinct
-  correct cards across 2 formats (`NuanceMastery`).
+  items covering 2 drill types (`SituationMastery`).
 - **Tables:** `review_status` (per element), `review_log`, `mastery_log`,
-  `situation_item_log`, `situation_attempt_log`, `nuance_card_log`. Each book
+  `situation_item_log`, `situation_attempt_log`, and the unused `nuance_card_log`
+  (v6, kept from archived Book 3). Each book
   has its own progress, history, due queue and settings (`settings.<book id>.*`).
 - **Audio:** `Core/Speaker.swift`, bundled MP3 by content hash (Xcode flattens
   `Resources/Audio/*` to the bundle root). The silent star video keeps the audio
@@ -127,7 +121,7 @@ Older history is in `docs/archive/` and git log.
   `.default` / `[.mixWithOthers, .duckOthers]` → activate; afterwards
   `setActive(false, .notifyOthersOnDeactivation)` → `.ambient`. Clips must be
   equal loudness (`tools/situations/normalize_audio.py`).
-- **Folders:** `Features/{Library,Book,Today,Drill,Situation,Nuance,History,Settings}`,
+- **Folders:** `Features/{Library,Book,Today,Drill,Situation,History,Settings}`,
   `Core/`, `Models/`, `DesignSystem/`, `Debug/` (DEBUG-only harness + Test book).
 
 ## Build and check
@@ -155,18 +149,12 @@ xcodebuild build -project carambole.xcodeproj -scheme carambole \
   excessive quiet gaps without changing spoken samples;
   `python3 -m unittest tools/situations/test_lint.py tools/situations/test_tools.py tools/pilot/test_content.py tools/situations/test_normalize_audio.py tools/situations/test_audio_audit.py tools/situations/test_audio_release_gate.py tools/situations/test_repair_audio.py`;
   model tests: `swiftc carambole/Models/Situation.swift tools/situations/SituationModelTests.swift -o /tmp/t && /tmp/t carambole/Resources/Situations`.
-- **Book 3:** `rtk proxy python3 -m tools.nuances.package --check` validates
-  20 modules, 100 groups, and 550 cards; `rtk proxy python3 -m unittest
-  tools.nuances.test_package tools.nuances.test_migration` checks packaging and the additive v6 SQL
-  contract. Swift model, loader, and attempt-policy checks are listed in the
-  production handoff. It has no bundled speech; keep using
-  `tools/release_build.sh` so the registered Book 2 audio is gated.
 - **Content pipeline tests:** `cd tools && python3 -m pytest content_pipeline -q`.
 - **Phone** (iPhone 18 Pro `00008160-001A09920AA0000A`, team `QMV4SPL476`,
   bundle `wen.carambole`). Install only when the user asks. The user tests on the
   phone; Claude never tests, records or profiles there. The 2026-10-18 Release
   build (`35ef8d60`) includes the Book 2 hidden-cue fix, the unit-completion
-  fix and Book 3. Phone behavior is
+  fix and Book 3 (archived since; the next phone build drops it). Phone behavior is
   still for the user to check.
   ```bash
   CARAMBOLE_AUDIO_PYTHON=/path/to/python-with-numpy-scipy-lameenc \

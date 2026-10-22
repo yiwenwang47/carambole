@@ -1,6 +1,9 @@
 # Book 3 production handoff
 
 **Date:** 2026-10-16  
+**Superseded in direction (2026-10-22):** the user plans to strip Book 3 to
+~5-second cards; see `2026-10-22-book-3-strip-down-handoff.md`.
+
 **State:** *Nuances* is integrated as the third French book in the app. This is
 a text-only production version; it has not been installed on the user's phone.
 

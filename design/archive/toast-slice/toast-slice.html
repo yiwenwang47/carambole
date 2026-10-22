@@ -1,0 +1,47 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Toast slice</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500&display=swap">
+<style>
+/* Toast slice: one-column answer rows on a pale tray. Text on one left edge so
+   options that differ only at the end (s'est arrêtée / s'est arrêté) line up.
+   Archived 2026-10-22 from the Book 3 tile-alignment comparison (variant D). */
+:root{
+  --app-paper:#FFFFFF; --app-ink:#141414; --app-g2:#8D8D8A; --app-g3:#C8C7C3;
+  --app-tint:#E9F2FD; --app-tileOn:#E5F2BC; --app-fragile:#4F8DD6;
+}
+*{box-sizing:border-box}
+body{margin:0;padding:24px 16px;background:#FAFAF8;font-family:"Manrope",ui-sans-serif,system-ui,sans-serif;color:var(--app-ink)}
+.ph{width:402px;max-width:100%;margin:0 auto;background:var(--app-paper);border-radius:18px;padding:16px 22px}
+.tray{background:var(--app-tint);border-radius:22px;padding:12px;margin:0 -8px}
+.g{display:grid;grid-template-columns:1fr;gap:8px}
+.c{appearance:none;font:inherit;font-size:18px;line-height:1.25;color:var(--app-ink);background:var(--app-paper);
+   border:1.5px solid var(--app-ink);border-radius:16px;height:52px;padding:0 18px;display:flex;align-items:center;
+   text-align:left;cursor:pointer;transition:transform .18s cubic-bezier(.2,.8,.2,1),background-color .2s}
+.c:active:not(:disabled){transform:scale(.98)}
+.c:focus-visible{outline:3px solid #2F6FC0;outline-offset:2px}
+.c:disabled{cursor:default}
+.c.ok{background:var(--app-tileOn);border-color:transparent}   /* right answer */
+.c.bad{border:1.5px dashed var(--app-fragile)}                  /* wrong pick */
+.c.dim{border-color:var(--app-g3);color:var(--app-g2)}          /* the rest after grading */
+@media (prefers-reduced-motion:reduce){.c{transition:none}}
+</style>
+<div class="ph"><div class="tray"><div class="g" id="g"></div></div></div>
+<script>
+// Tap to grade; option 0 is right. Tap again after grading to reset.
+const OPTS = ["s'est arrêtée","s'arrêtait","s'est arrêté","s'arrêtera"], ORD = [2,0,3,1];
+let pick = null;
+function render(){
+  document.getElementById("g").innerHTML = ORD.map(k => {
+    let cls = "c";
+    if (pick != null){ cls += k === 0 ? " ok" : k === pick ? " bad" : " dim"; }
+    return `<button type="button" class="${cls}" data-k="${k}">${OPTS[k]}</button>`;
+  }).join("");
+}
+document.getElementById("g").addEventListener("click", e => {
+  const b = e.target.closest(".c"); if (!b) return;
+  pick = pick == null ? +b.dataset.k : null; render();
+});
+render();
+</script>

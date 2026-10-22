@@ -40,16 +40,12 @@ struct SettingsView: View {
 
                     VStack(alignment: .leading, spacing: 0) {
                         rule(AppColor.ink)
-                        if kind != .nuances {
-                            newPerDaySection
-                            rule(AppColor.hairline)
-                        }
+                        newPerDaySection
+                        rule(AppColor.hairline)
                         reviewRoundSection
                         rule(AppColor.hairline)
-                        if kind != .nuances {
-                            audioSection
-                            rule(AppColor.hairline)
-                        }
+                        audioSection
+                        rule(AppColor.hairline)
                         backupSection
                         rule(AppColor.hairline)
                     }
@@ -107,7 +103,7 @@ struct SettingsView: View {
 
     private var newPerDaySection: some View {
         TextStepper(
-            title: kind == .nuances ? "Groupes / jour" : "Éléments / jour",
+            title: "Éléments / jour",
             note: newPerDayNote,
             value: $store.settings.newPerDay,
             range: StudySettings.newPerDayRange
@@ -171,7 +167,6 @@ struct SettingsView: View {
         switch kind {
         case .grammar: "New grammar elements per day — a hard cap."
         case .situation: "New conversation moves per day — a hard cap."
-        case .nuances: "Daily goal for new reading and expression groups."
         }
     }
 
@@ -179,7 +174,6 @@ struct SettingsView: View {
         switch kind {
         case .grammar: "Maximum exercises per round; only due reviews appear."
         case .situation: "Maximum dialogues per round; only due reviews appear."
-        case .nuances: "Maximum groups per round; only due reviews appear."
         }
     }
 

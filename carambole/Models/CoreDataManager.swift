@@ -208,6 +208,8 @@ class DataManager {
             setUserVersion(5)
         }
 
+        // Book 3 was archived on 2026-10-22 (`archive/book3-nuances/`). Its v6
+        // table stays so existing installs keep their data; nothing reads it now.
         // v6 — *Nuances* (Book 3) card history. Existing review and situation
         // records remain untouched; each card stores its latest grade and count.
         if version < 6 {
@@ -829,74 +831,6 @@ class DataManager {
             sqlite3_finalize(statement)
         }
         return result
-    }
-
-    // MARK: - Nuances (Book 3) card history (v6)
-
-    /// Record one finished card, preserving its cumulative attempt count.
-    func logNuanceCard(cardID: String, elementID: String, rating: Int, at date: Date) {
-        guard (1...3).contains(rating) else { return }
-        dbQueue.async {
-            let query = """
-                INSERT INTO nuance_card_log (card_id, element_id, last_done, times, last_rating)
-                VALUES (?, ?, ?, 1, ?)
-                ON CONFLICT(card_id) DO UPDATE SET
-                    last_done = excluded.last_done,
-                    times = nuance_card_log.times + 1,
-                    last_rating = excluded.last_rating;
-                """
-            var statement: OpaquePointer?
-            if sqlite3_prepare_v2(self.db, query, -1, &statement, nil) == SQLITE_OK {
-                sqlite3_bind_text(statement, 1, (cardID as NSString).utf8String, -1, SQLITE_TRANSIENT)
-                sqlite3_bind_text(statement, 2, (elementID as NSString).utf8String, -1, SQLITE_TRANSIENT)
-                sqlite3_bind_double(statement, 3, date.timeIntervalSince1970)
-                sqlite3_bind_int(statement, 4, Int32(rating))
-                if sqlite3_step(statement) != SQLITE_DONE {
-                    print("Error logging nuance card: \(String(cString: sqlite3_errmsg(self.db)))")
-                }
-            } else {
-                print("Error preparing nuance card log: \(String(cString: sqlite3_errmsg(self.db)))")
-            }
-            sqlite3_finalize(statement)
-        }
-    }
-
-    /// Card history for one Nuances element, keyed by card ID.
-    func fetchNuanceCardHistory(elementID: String) -> [String: NuanceCardHistory] {
-        var result: [String: NuanceCardHistory] = [:]
-        dbQueue.sync {
-            let query = "SELECT card_id, last_done, times, last_rating FROM nuance_card_log WHERE element_id = ?;"
-            var statement: OpaquePointer?
-            if sqlite3_prepare_v2(self.db, query, -1, &statement, nil) == SQLITE_OK {
-                sqlite3_bind_text(statement, 1, (elementID as NSString).utf8String, -1, SQLITE_TRANSIENT)
-                while sqlite3_step(statement) == SQLITE_ROW {
-                    guard let c = sqlite3_column_text(statement, 0) else { continue }
-                    result[String(cString: c)] = NuanceCardHistory(
-                        lastDone: Date(timeIntervalSince1970: sqlite3_column_double(statement, 1)),
-                        times: Int(sqlite3_column_int(statement, 2)),
-                        lastRating: Int(sqlite3_column_int(statement, 3)))
-                }
-            }
-            sqlite3_finalize(statement)
-        }
-        return result
-    }
-
-    /// Make a Nuances group fresh again after an armed Too Easy answer fails.
-    func clearNuanceCardHistory(elementID: String) {
-        dbQueue.async {
-            let query = "DELETE FROM nuance_card_log WHERE element_id = ?;"
-            var statement: OpaquePointer?
-            if sqlite3_prepare_v2(self.db, query, -1, &statement, nil) == SQLITE_OK {
-                sqlite3_bind_text(statement, 1, (elementID as NSString).utf8String, -1, SQLITE_TRANSIENT)
-                if sqlite3_step(statement) != SQLITE_DONE {
-                    print("Error clearing nuance card history: \(String(cString: sqlite3_errmsg(self.db)))")
-                }
-            } else {
-                print("Error preparing nuance card history clear: \(String(cString: sqlite3_errmsg(self.db)))")
-            }
-            sqlite3_finalize(statement)
-        }
     }
 
     /// One wrong attempt, kept so the learner's own mistakes can be shown back.

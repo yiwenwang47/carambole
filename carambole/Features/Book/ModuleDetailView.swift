@@ -225,7 +225,7 @@ private struct LearnSession: Identifiable {
     let elements: [GrammarElement]
 }
 
-// MARK: - Ticker line (example sentence or visible Nuances source)
+// MARK: - Ticker line (example sentence)
 
 /// One element's example, rendered as final French: the blank filled with the answer
 /// (answer pieces in weight 500), scaffolding stripped exactly as `spokenFrench` does.
@@ -236,7 +236,7 @@ struct TickerLine {
 
     var plain: String { pieces.joined() }
 
-    /// Picks a short example sentence, or a French source excerpt for Nuances.
+    /// Picks a short example sentence.
     init?(element: GrammarElement) {
         let scored: [(Int, [String])] = element.examples.map { ex in
             let p = Self.pieces(for: ex)
@@ -246,17 +246,9 @@ struct TickerLine {
             // answer (an MC pick like "le") is not a sentence at all.
             return (ex.answerTokens.count < 3 ? 1000 + length : 12 + length, p)
         }
-        if let best = scored.min(by: { $0.0 < $1.0 }) {
-            elementLabel = element.label
-            pieces = best.1
-            return
-        }
-        guard let excerpt = element.nuanceCards.flatMap(\.source)
-            .map(\.text)
-            .filter({ !$0.isEmpty })
-            .min(by: { $0.count < $1.count }) else { return nil }
+        guard let best = scored.min(by: { $0.0 < $1.0 }) else { return nil }
         elementLabel = element.label
-        pieces = [excerpt]
+        pieces = best.1
     }
 
     static func pieces(for ex: Exercise) -> [String] {
@@ -334,7 +326,6 @@ struct ModuleElementRows: View {
         VStack(alignment: .leading, spacing: 0) {
             ForEach(module.elements.sorted { $0.sortOrder < $1.sortOrder }) { element in
                 ElementRow(element: element, bucket: viewModel.bucket(for: element),
-                           note: viewModel.book.kind == .nuances ? element.ruleNote : nil,
                            onDemote: {
                     if let onDemote { onDemote(element) }
                     else { viewModel.demoteElement(element.id) }
@@ -347,7 +338,6 @@ struct ModuleElementRows: View {
 struct ElementRow: View {
     let element: GrammarElement
     let bucket: BookViewModel.ElementBucket
-    let note: String?
     let onDemote: () -> Void
 
     /// True only for graduated elements — the ones the swipe action applies to.
@@ -398,12 +388,6 @@ struct ElementRow: View {
                 Text(element.label)
                     .font(.display(size: 15, wght: 400))
                     .foregroundColor(bucket == .aVenir ? AppColor.g3 : AppColor.ink)
-                if let note, !note.isEmpty {
-                    Text(note)
-                        .font(.display(size: 12, wght: 400))
-                        .foregroundColor(AppColor.g2)
-                        .lineSpacing(2)
-                }
             }
             .fixedSize(horizontal: false, vertical: true)
             .frame(maxWidth: .infinity, alignment: .leading)
