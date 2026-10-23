@@ -534,9 +534,11 @@ struct SituationCardView: View {
     private var gapView: some View {
         let filled = state.gapText != nil
         let settled = state.gapSettled
+        // fixedSize: the filled word never truncates; the bubble grows instead.
         return Text(state.gapText ?? " ")
             .font(.display(size: 19, wght: 400))
             .foregroundColor(AppColor.ink)
+            .fixedSize()
             .padding(.horizontal, settled ? 0 : 8)
             .frame(minWidth: settled ? 0 : 70)
             .background(RoundedRectangle(cornerRadius: 8)

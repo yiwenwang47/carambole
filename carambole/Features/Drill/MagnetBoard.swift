@@ -414,8 +414,11 @@ struct FlowLayout: Layout {
         let rows = computeRows(maxWidth: maxWidth, subviews: subviews)
         let height = rows.reduce(CGFloat.zero) { $0 + $1.height } +
             CGFloat(max(0, rows.count - 1)) * lineSpacing
+        // Not clamped to the proposal: a child that can't shrink (one word)
+        // makes the row wider, so a hugging parent (a chat bubble) grows
+        // instead of squeezing that child into a truncated "…".
         let width = rows.map(\.width).max() ?? 0
-        return CGSize(width: min(width, maxWidth), height: height)
+        return CGSize(width: width, height: height)
     }
 
     func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout Void) {
