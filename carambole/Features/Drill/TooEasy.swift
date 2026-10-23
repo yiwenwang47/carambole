@@ -8,7 +8,8 @@
 //  (instant maîtrisé, gone for good, with an undo pill); anything else cleans
 //  the element's records (back to fresh, re-markable). Either way the session
 //  moves on to the next element. Book 1: `DrillView` / `DrillSessionView`.
-//  Book 2: `SituationCardView` / `SituationSessionView`.
+//  Book 2: `SituationCardView` / `SituationSessionView` — armed on one drill,
+//  resolved by that drill; the card's other drills grade normally.
 //
 
 import SwiftUI
@@ -17,8 +18,8 @@ import SwiftUI
 
 enum TooEasyGate {
     /// Resolve an armed gate for `elementID`. `removed` = answered cleanly
-    /// (Book 1: right first time with no missed tap; Book 2: every drill of the
-    /// card right first time). Correct → grade .easy so S/D advance, THEN
+    /// (Book 1: right first time with no missed tap; Book 2: the armed drill
+    /// right first time). Correct → grade .easy so S/D advance, THEN
     /// suspend (`setSuspended` stamps the sticky graduation). Wrong → delete the
     /// element's review row (fresh/unseen again).
     static func resolve(elementID: String, exampleID: String, removed: Bool, now: Date = Date(),

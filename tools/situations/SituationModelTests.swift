@@ -203,26 +203,38 @@ struct SituationModelTests {
         check(SituationOutcome.drill(misses: 0, solved: true) == .good, "first try → good")
         check(SituationOutcome.drill(misses: 2, solved: false) == .again, "not solved → again")
 
-        // Trop facile (same rule as Book 1): only a clean card removes the element;
-        // after the gate resolves, the element's later cards leave the queue.
-        check(SituationTooEasy.removes(.good), "too easy: all first try removes")
+        // Trop facile (same rule as Book 1): only a clean armed drill removes the
+        // element; after the gate resolves, the element's later cards leave the queue.
+        check(SituationTooEasy.removes(.good), "too easy: first try removes")
         check(!SituationTooEasy.removes(.hard), "too easy: a retry cleans instead")
         check(!SituationTooEasy.removes(.again), "too easy: unsolved cleans instead")
+        // The card's other drills grade normally; the armed one never grades twice.
+        check(SituationTooEasy.gradedOutcome([.good, .hard], armedAt: nil) == .hard,
+              "too easy: unarmed card grades the whole dialogue")
+        check(SituationTooEasy.gradedOutcome([.good, .hard], armedAt: 0) == .hard,
+              "too easy: armed on drill 1, drill 2 grades normally")
+        check(SituationTooEasy.gradedOutcome([.again, .good], armedAt: 0) == .good,
+              "too easy: the armed drill's miss does not lower the rest")
+        check(SituationTooEasy.gradedOutcome([.hard, .good], armedAt: 1) == nil,
+              "too easy: armed on the last drill, no second grade")
+        check(SituationTooEasy.gradedOutcome([.good], armedAt: 0) == nil,
+              "too easy: one-drill card, gate only")
         check(SituationTooEasy.keptAfter(index: 1, elementIDs: ["a", "b", "b", "b", "c", "b"]) == [0, 1, 4],
               "too easy: later cards of the element are skipped, earlier and other elements kept")
         check(SituationTooEasy.keptAfter(index: 0, elementIDs: ["a"]) == [0], "too easy: last card keeps itself")
         func shows(finished: Bool = false, reviewing: Bool = false, locked: Bool = false,
-                   pending: Bool = false, clean: Bool = true) -> Bool {
+                   pending: Bool = false, clean: Bool = true, resolved: Bool = false) -> Bool {
             SituationTooEasy.showsControl(finished: finished, reviewing: reviewing, locked: locked,
-                                          pending: pending, clean: clean)
+                                          pending: pending, clean: clean, resolved: resolved)
         }
-        check(shows(), "too easy: control on a clean live card")
-        check(!shows(clean: false), "too easy: no control once the card has a miss")
-        check(shows(pending: true, clean: false), "too easy: armed card keeps its line after a miss")
+        check(shows(), "too easy: control on a clean live drill")
+        check(!shows(clean: false), "too easy: no control once the drill has a miss")
+        check(shows(pending: true, clean: false), "too easy: armed drill keeps its line after a miss")
+        check(!shows(resolved: true), "too easy: once per card, hidden after a drill resolved it")
         check(!shows(finished: true, pending: true), "too easy: no control on a finished card")
         check(!shows(reviewing: true), "too easy: no control while reviewing")
         check(!shows(locked: true), "too easy: cannot arm while a solved drill settles")
-        check(SituationTooEasy.canCancel(clean: true), "too easy: Annuler while the card is still clean")
+        check(SituationTooEasy.canCancel(clean: true), "too easy: Annuler while the drill is still clean")
         check(!SituationTooEasy.canCancel(clean: false), "too easy: no Annuler after a miss (the clean is due)")
 
         // Tooltip text: spoken forms carry `* `.

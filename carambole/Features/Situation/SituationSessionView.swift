@@ -367,6 +367,7 @@ struct SituationSessionView: View {
             onMistake: { type, drillTitle, given, expected, why in
                 log(card: i, type: type, title: drillTitle, given: given, expected: expected, why: why)
             },
+            onTooEasy: { resolveTooEasy(card: i, outcome: $0) },
             onFinished: { finish(card: i, outcome: $0) },
             onNext: nextDialogue,
             onForward: goForward)
@@ -546,36 +547,43 @@ struct SituationSessionView: View {
             createdAt: Date()))
     }
 
+    /// Book 2's mastery gate for `element`, used by every grade of it.
+    private func masteryGate(_ element: GrammarElement) -> (ReviewStatus) -> Bool {
+        { status in SituationMastery.gateMet(correctItemIDs: status.masteredExampleIDs, items: element.items) }
+    }
+
+    /// The drill armed with "Trop facile" on card `i` closed: resolve the shared
+    /// gate on that drill's outcome alone (same logic as Book 1). The card's
+    /// later drills still play and grade normally; the element's later cards
+    /// leave the queue.
+    private func resolveTooEasy(card i: Int, outcome: SituationOutcome) {
+        let card = cards[i]
+        let kept = SituationTooEasy.keptAfter(index: i, elementIDs: cards.map(\.element.id))
+        cards = kept.map { cards[$0] }
+        guard recordsProgress else { return }
+        let removed = SituationTooEasy.removes(outcome)
+        TooEasyGate.resolve(elementID: card.element.id, exampleID: card.item.id, removed: removed,
+                            graduationGate: masteryGate(card.element))
+        if removed {
+            tooEasyUndoElementID = card.element.id
+            tooEasyUndoToken += 1
+        }
+    }
+
     /// Grade the finished item on its element and remember it for Réviser.
     /// The rating is the worst drill; reading and word taps never lower it.
-    /// An armed "Trop facile" resolves through the shared gate instead (same
-    /// logic as Book 1), and the session moves on to the next element.
+    /// A drill that resolved "Trop facile" is left out (the gate graded it).
     private func finish(card i: Int, outcome: SituationOutcome) {
         results[i] = outcome
         let card = cards[i]
         let element = card.element
-        let tooEasy = states[i]?.pendingTooEasy == true
-        if tooEasy {
-            let kept = SituationTooEasy.keptAfter(index: i, elementIDs: cards.map(\.element.id))
-            cards = kept.map { cards[$0] }
-        }
         guard recordsProgress else { return }
         let now = Date()
-        let gate: (ReviewStatus) -> Bool = { status in
-            SituationMastery.gateMet(correctItemIDs: status.masteredExampleIDs, items: element.items)
-        }
-        if tooEasy {
-            let removed = SituationTooEasy.removes(outcome)
-            TooEasyGate.resolve(elementID: element.id, exampleID: card.item.id, removed: removed,
-                                now: now, graduationGate: gate)
-            if removed {
-                tooEasyUndoElementID = element.id
-                tooEasyUndoToken += 1
-            }
-        } else {
-            let rating: FSRS.Rating = outcome == .good ? .good : (outcome == .hard ? .hard : .again)
+        if let graded = SituationTooEasy.gradedOutcome(states[i]?.drillOutcomes ?? [outcome],
+                                                       armedAt: states[i]?.tooEasyDrill) {
+            let rating: FSRS.Rating = graded == .good ? .good : (graded == .hard ? .hard : .again)
             ElementGrader.grade(elementID: element.id, exampleID: card.item.id, rating: rating, now: now,
-                                graduationGate: gate)
+                                graduationGate: masteryGate(element))
         }
         DataManager.shared.logSituationItem(itemID: card.item.id, elementID: element.id, rating: outcome, at: now)
         if mode == .learn && i == cards.count - 1 { appendUnlearnedCards() }

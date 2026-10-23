@@ -58,7 +58,9 @@ Older history is in `docs/archive/` and git log.
 - **"Trop facile" in every book, one logic (user, 2026-10-13).** Arm on a card,
   still answer it; a clean answer grades .easy + suspends (instant maîtrisé, undo
   pill); anything else cleans the element's records; either way the session moves
-  to the next element. Shared code: `Features/Drill/TooEasy.swift` (`TooEasyGate`,
+  to the next element. **Book 2 (user, 2026-10-22):** the gate is armed on ONE
+  drill and resolves on that drill alone; the card's other drills still play and
+  grade the element normally (`SituationTooEasy.gradedOutcome`). Shared code: `Features/Drill/TooEasy.swift` (`TooEasyGate`,
   `TooEasyControl`, `.tooEasyUndo`). Book 1: `DrillView`/`DrillSessionView`.
   Book 2: `SituationCardView`/`SituationSessionView` + `SituationTooEasy`. A new
   book or session view reuses these; never fork the logic.

@@ -52,14 +52,17 @@ struct SituationCardState {
     var showFollow = false
     /// True while a solved drill settles, before the next one slides in.
     var locked = false
-    /// "Trop facile" armed on this card (shared gate, `TooEasy.swift`): the
-    /// session resolves it when the card is finished.
+    /// "Trop facile" armed on the drill in play (shared gate, `TooEasy.swift`):
+    /// the session resolves it when that drill closes.
     var pendingTooEasy = false
+    /// The drill that resolved the gate. Later drills grade normally, and the
+    /// control does not come back on this card.
+    var tooEasyDrill: Int?
 
-    /// No miss on this card so far (solved drills all first try, none in the
-    /// drill in play) — the only state in which "Trop facile" can still remove.
+    /// No miss in the drill in play — the only state in which "Trop facile"
+    /// can still remove.
     var clean: Bool {
-        drillMisses == 0 && !drillFailed && drillOutcomes.allSatisfy { $0 == .good }
+        drillMisses == 0 && !drillFailed
     }
 
     /// A fresh card at its first drill.
@@ -168,6 +171,8 @@ struct SituationCardView: View {
     @Binding var state: SituationCardState
     /// A wrong attempt: drill type, drill title, given, expected, why.
     let onMistake: (SituationDrill.Kind, String, String, String, String?) -> Void
+    /// The drill armed with "Trop facile" closed; its outcome.
+    let onTooEasy: (SituationOutcome) -> Void
     /// The last drill is solved; the card's rating.
     let onFinished: (SituationOutcome) -> Void
     /// Footer on the finished card in play: next dialogue, or the summary.
@@ -823,7 +828,8 @@ struct SituationCardView: View {
         return VStack(spacing: Spacing.sm) {
             // "Trop facile" — every book has it (shared: `TooEasy.swift`).
             if SituationTooEasy.showsControl(finished: state.finished, reviewing: reviewing, locked: state.locked,
-                                             pending: state.pendingTooEasy, clean: state.clean) {
+                                             pending: state.pendingTooEasy, clean: state.clean,
+                                             resolved: state.tooEasyDrill != nil) {
                 TooEasyControl(pending: $state.pendingTooEasy,
                                canCancel: SituationTooEasy.canCancel(clean: state.clean))
             }
@@ -872,9 +878,14 @@ struct SituationCardView: View {
 
     /// One drill done: keep its outcome (the dialogue takes the worst). A
     /// Corriger whose wrong word was never found counts as not solved, even if
-    /// its fix was then picked right.
+    /// its fix was then picked right. An armed drill resolves the gate now.
     private func closeDrill(solved: Bool) {
-        state.drillOutcomes.append(.drill(misses: state.drillMisses, solved: solved && !state.drillFailed))
+        let outcome = SituationOutcome.drill(misses: state.drillMisses, solved: solved && !state.drillFailed)
+        state.drillOutcomes.append(outcome)
+        guard state.pendingTooEasy else { return }
+        state.pendingTooEasy = false
+        state.tooEasyDrill = state.step
+        onTooEasy(outcome)
     }
 
     private func miss() {
