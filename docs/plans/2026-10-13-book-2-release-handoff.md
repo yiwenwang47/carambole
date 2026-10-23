@@ -2,12 +2,12 @@
 
 **Written:** 2026-10-13, end of session.
 **Original release branch:** `main`, pushed.
-**Latest update:** 2026-10-18, hidden-cue drill fix and Leçon persona (§14), Release build installed on the iPhone.
+**Latest update:** 2026-10-22, per-drill "Trop facile" (§15), Release build installed on the iPhone.
 **Previous start point:** [arc 5 done handoff](../archive/plans/2026-10-13-book-2-arc5-done-handoff.md). Its §0 has this session's commits and the release check in detail.
 
 ## 1. Current phone state
 
-The main Carambole app (`wen.carambole`) received a Release build on 2026-10-18 (`35ef8d60`). It includes the hidden-cue fix and Leçon persona in §14, the unit-completion fix in §13, the Studio A clip, and Book 3. Only the user checks behavior on the phone; do not test, record, or profile there.
+The main Carambole app (`wen.carambole`) received a Release build on 2026-10-22 (`6e454f78`). It includes the per-drill "Trop facile" in §15, the gap-word bubble fix (`91715627`), and everything before it. Book 3 is archived and not in the app. Only the user checks behavior on the phone; do not test, record, or profile there.
 
 ## 2. Checks only the phone can do
 
@@ -173,3 +173,33 @@ passed. The simulator showed the Leçon persona line, the door card's new
 prompt and `#vous` on `sit_13_late_d06`. The Release build passed the audio
 gate, and `devicectl` installed `wen.carambole` on the iPhone 18 Pro. The agent
 did not test on the phone.
+
+## 15. Per-drill "Trop facile" (2026-10-22)
+
+The user asked for "Trop facile" to belong to one drill, not the whole
+dialogue. Before, an armed card resolved only when the dialogue finished, and
+removed the element only if every drill was right first time.
+
+Commit `6e454f78`:
+- **Arm on one drill.** The gate resolves when that drill closes
+  (`SituationCardView.closeDrill` → `SituationSessionView.resolveTooEasy`):
+  right first time removes the element (.easy + suspend, undo pill); otherwise
+  it cleans the element. The element's later cards leave the queue at once.
+- **The rest of the card grades normally** (user's choice). The armed drill is
+  left out of the card's normal grade (`SituationTooEasy.gradedOutcome`), so it
+  never grades twice. The item log still keeps the whole dialogue's outcome.
+- **Once per card.** After a drill resolves the gate, the control stays hidden
+  for the rest of that card (`showsControl(..., resolved:)`).
+- The shared `TooEasyGate` and Book 1 are unchanged.
+
+Known effect: after a removal, a miss on a later drill of the same card grades
+.again on the removed element. It stays suspended and maîtrisé (only Annuler
+brings it back).
+
+The Swift model test (new `gradedOutcome` and `resolved` cases, 3,000 items)
+passed. On the simulator (`CB_SIT_ITEMS=sit_01_greet_d01,sit_01_greet_d02,sit_01_name_d01`,
+`CB_SIT_TOO_EASY=1`, `CB_SIT_AUTOPLAY=1`), the frames showed the pill after
+drill 1, the queue going from 3 to 2, and no control on drill 2. The database
+had `sit_01_greet` suspended and graduated, with drill 2's grade on top. The
+Release build passed the audio gate and was installed on the iPhone 18 Pro.
+The agent did not test on the phone.
