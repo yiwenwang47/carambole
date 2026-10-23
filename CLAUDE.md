@@ -155,7 +155,7 @@ xcodebuild build -project carambole.xcodeproj -scheme carambole \
 - **Phone** (iPhone 18 Pro `00008160-001A09920AA0000A`, team `QMV4SPL476`,
   bundle `wen.carambole`). Install only when the user asks. The user tests on the
   phone; Claude never tests, records or profiles there. The 2026-10-22 Release
-  build (`91715627`, gap-word fix) is Books 1 and 2 only (Book 3 archived). Phone behavior is
+  build (`6e454f78`, per-drill Trop facile) is Books 1 and 2 only (Book 3 archived). Phone behavior is
   still for the user to check.
   ```bash
   CARAMBOLE_AUDIO_PYTHON=/path/to/python-with-numpy-scipy-lameenc \
