@@ -1,0 +1,433 @@
+<title>Mots swipe mock</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Familjen+Grotesk:wght@400..700&display=swap">
+<style>
+/* Two phones side by side: the Leçon page (dictionary list) and the swipe drill
+   (four equal toast-slice rows high on the tint tray; the top row is the one you
+   swipe, the next slides up, a new one enters at the bottom).
+   Single light look, like the app: Acide palette from Theme.swift. */
+:root{
+  --page:#F2F2EF; --paper:#FFFFFF; --ink:#141414; --graphite:#4A4A4A;
+  --g2:#8D8D8A; --g3:#C8C7C3; --hairline:#E6E5E1; --dark:#3A3A3A;
+  --tint:#E9F2FD; --tileOn:#E5F2BC; --quiet:#BCCFE6; --buttonFill:#DDE6BC; --fragile:#4F8DD6;
+  --display:"Manrope",ui-sans-serif,system-ui,sans-serif;
+  --label:"Familjen Grotesk","Helvetica Neue",Arial,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{background:var(--page);color:var(--ink)}
+body{font-family:var(--display);padding-block:24px 40px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+button{font:inherit;color:inherit}
+button:focus-visible{outline:2px solid var(--fragile);outline-offset:2px}
+.lab{font-family:var(--label);font-size:11px;letter-spacing:1.3px;text-transform:uppercase}
+
+header.top{max-width:840px;margin:0 auto 20px;display:flex;flex-wrap:wrap;gap:12px 24px;align-items:flex-end;justify-content:space-between}
+header.top h1{font-weight:250;font-size:32px;letter-spacing:-.8px;margin:0;text-wrap:balance}
+header.top p{margin:4px 0 0;color:var(--graphite);font-size:14px;max-width:46ch;line-height:1.5}
+.seg{display:flex;gap:6px}
+.seg button{border:1.5px solid var(--ink);background:var(--paper);border-radius:999px;padding:8px 14px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--buttonFill);border-color:transparent}
+
+.phones{display:flex;flex-wrap:wrap;gap:28px;justify-content:center}
+.phone{width:390px;max-width:100%;height:800px;background:var(--paper);border-radius:44px;
+  box-shadow:0 0 0 1px var(--hairline),0 24px 60px -30px rgba(20,20,20,.25);
+  position:relative;overflow:hidden;display:flex;flex-direction:column;padding:50px 20px 22px}
+.cap{width:100%;text-align:center;color:var(--g2);margin-top:10px}
+.col{display:flex;flex-direction:column;align-items:center;width:390px;max-width:100%;min-width:0}
+.x{width:32px;height:32px;border:0;background:none;font-size:20px;line-height:1;margin-left:-6px;cursor:pointer}
+
+/* Play: Book 2's replay disc (pale quiet fill, ink triangle, no outline). */
+.play{flex:none;width:34px;height:34px;border-radius:50%;border:0;background:var(--quiet);color:var(--ink);
+  display:grid;place-items:center;cursor:pointer;padding:0;transition:transform .15s}
+.play svg{width:11px;height:11px;margin-left:2px}
+.play:active,.play.ing{transform:scale(.92)}
+
+/* ---------- Leçon page ---------- */
+.slab{height:92px;border-radius:24px;background:var(--quiet);position:relative;overflow:hidden;margin-top:4px;flex:none}
+.slab .lab{position:absolute;left:16px;top:14px}
+.slab .num{position:absolute;right:-2px;bottom:-34px;font-weight:200;font-size:120px;letter-spacing:-7px;line-height:1;opacity:.9}
+.hint{color:var(--g2);margin:22px 0 10px}
+.scroll{flex:1;min-height:0;overflow-y:auto;margin:0 -20px;padding:0 20px 24px;scrollbar-width:none}
+.scroll::-webkit-scrollbar{display:none}
+.dict{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.entry{display:flex;align-items:center;gap:14px;border-top:1px solid var(--hairline);padding:18px 8px 18px 10px;margin:0 -10px;
+  border-radius:0;cursor:pointer;transition:background-color .2s}
+.entry:last-child{border-bottom:1px solid var(--hairline)}
+.entry .txt{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
+.entry .hw{display:flex;align-items:baseline;gap:10px;min-width:0}
+.entry .w{font-size:21px;font-weight:400;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.entry .w small{font-size:15px;color:var(--g2);margin-left:5px}
+.entry .pos{color:var(--g2);font-size:10px}
+.entry .gl{font-size:15px;line-height:1.4;color:var(--graphite)}
+.entry .tf{display:none;color:var(--ink);font-size:10px}
+.entry.on{background:var(--tileOn);border-radius:14px;border-top-color:transparent}
+.entry.on + .entry{border-top-color:transparent}
+.entry.on .tf{display:inline}
+.go{margin-top:14px;flex:none;height:54px;border:0;border-radius:999px;background:var(--buttonFill);font-size:16px;cursor:pointer}
+
+/* ---------- Drill ---------- */
+.bar{display:flex;align-items:center;gap:10px;height:36px;flex:none}
+.tray{flex:none;height:366px;background:var(--tint);border-radius:22px;margin:0 -8px;position:relative;touch-action:none}
+.row{position:absolute;left:12px;right:12px;height:72px;border-radius:16px;background:var(--paper);
+  border:1.5px solid var(--ink);color:var(--ink);display:flex;align-items:center;gap:10px;padding:0 14px 0 18px;font-size:23px;
+  transition:top .42s cubic-bezier(.2,.9,.25,1.12),opacity .3s,border-color .2s;user-select:none;z-index:3}
+.row.first{cursor:grab;z-index:4}
+.row .w{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row .w small{font-size:.66em;color:var(--g2);margin-left:5px}
+.row .tag{font-family:var(--label);font-size:10px;letter-spacing:1.3px;text-transform:uppercase;color:var(--fragile)}
+.row.again{border-style:dashed;border-color:var(--fragile)}
+.row.enter{opacity:0}
+.slot{position:absolute;left:12px;right:12px;top:12px;height:72px;border-radius:16px;overflow:hidden;z-index:2;display:none}
+.slot.show{display:block}
+.slot > div{position:absolute;inset:0;display:flex;align-items:center;border-radius:16px;opacity:0}
+.slot .en{right:auto;padding:0 16px;font-size:15px;line-height:1.3;width:62%;background:var(--quiet)}
+.slot .ok{padding-left:18px;background:var(--tileOn)}
+.slot .lock{padding-left:18px;color:var(--fragile)}
+.slot .up{justify-content:center;align-items:flex-end;padding-bottom:10px;background:var(--buttonFill)}
+.hero{flex:none;min-height:132px;display:flex;flex-direction:column;gap:6px;padding:14px 2px 0}
+/* The four cards sit at (or just below) the middle of the screen. */
+.stage{flex:1;min-height:0;display:flex;flex-direction:column}
+.stage::before{content:"";flex:1}
+.stage::after{content:"";flex:1}
+.hero .num{font-weight:200;font-size:96px;letter-spacing:-5px;line-height:.9;font-variant-numeric:tabular-nums}
+.hero .stats{color:var(--g2)}
+.coach{display:none;flex-direction:column;gap:10px}
+.coach .say{font-weight:300;font-size:24px;letter-spacing:-.5px;line-height:1.2;text-wrap:balance;min-height:2.4em}
+.coach .dots{display:flex;gap:6px}
+.coach .dots i{width:18px;height:3px;border-radius:2px;background:var(--g3);transition:background .2s}
+.coach .dots i.on{background:var(--ink)}
+.hero.teach .coach{display:flex}
+.hero.teach .count{display:none}
+.done{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;gap:10px;padding:22px}
+.done .big{font-weight:250;font-size:40px;letter-spacing:-1.2px}
+.done .n{font-weight:200;font-size:64px;letter-spacing:-2.5px;font-variant-numeric:tabular-nums;line-height:1}
+.done button{height:54px;border:0;border-radius:999px;background:var(--buttonFill);font-size:16px;margin-top:12px;cursor:pointer}
+.pill{position:absolute;left:20px;right:20px;bottom:40px;height:48px;border-radius:999px;background:var(--dark);color:var(--paper);
+  display:flex;align-items:center;justify-content:center;gap:16px;z-index:10;transform:translateY(20px);opacity:0;transition:.35s;pointer-events:none}
+.pill.show{transform:none;opacity:1;pointer-events:auto}
+.pill span{font-size:15px}
+.pill i{width:1px;height:16px;background:rgba(255,255,255,.25)}
+.pill button{border:0;background:none;color:var(--paper);text-decoration:underline;cursor:pointer}
+@media (prefers-reduced-motion:reduce){.row,.slot *,.pill{transition:none!important}}
+</style>
+
+<header class="top">
+  <div>
+    <h1>Mots · swipe mock</h1>
+    <p>__INTRO__ Swipe the top card: a little left shows the meaning, far left = still need it, right = know it, up = trop facile. After a peek, right and up are locked. Apprendre opens with the swipe lesson (in the app: first leçon only).</p>
+  </div>
+  <div class="seg" role="group" aria-label="Drill mode">
+    <button type="button" id="m-learn" aria-pressed="false">Apprendre</button>
+    <button type="button" id="m-review" aria-pressed="true">Réviser</button>
+  </div>
+</header>
+
+<div class="phones">
+  <div class="col">
+    <div class="phone" id="lesson">
+      <button class="x" type="button" aria-label="Quitter">✕</button>
+      <div class="slab"><span class="lab">__LECON_LABEL__</span><span class="num">__LECON_NUM__</span></div>
+      <div class="scroll">
+        <div class="lab hint">Touche un mot trop facile pour le retirer</div>
+        <ul class="dict" id="dict"></ul>
+      </div>
+      <button class="go" type="button" id="start">Commencer</button>
+    </div>
+    <div class="lab cap">Leçon page</div>
+  </div>
+  <div class="col">
+    <div class="phone" id="drill">
+      <div class="bar"><button class="x" type="button" aria-label="Quitter">✕</button></div>
+      <div class="hero" id="hero">
+        <div class="count"><div class="num" id="heroNum">0</div><div class="lab" id="heroLab">à réviser</div><div class="lab stats" id="heroStats"></div></div>
+        <div class="coach" aria-live="polite"><div class="lab">Comment glisser</div><div class="say" id="say"></div>
+          <div class="dots" id="dots"><i></i><i></i><i></i><i></i></div><div class="lab stats">Touche une carte pour commencer</div></div>
+      </div>
+      <div class="stage">
+        <div class="tray" id="tray"></div>
+      </div>
+      <div class="pill" id="pill"><span>Marqué trop facile</span><i></i><button type="button" class="lab" id="undo">Annuler</button></div>
+    </div>
+    <div class="lab cap">Drill</div>
+  </div>
+</div>
+
+<script>
+// Real band 601–700 words (Lexique 3 rank), glosses authored for the mock.
+const LESSON = /*LESSON*/[
+  ["la confiance","n.f.","trust, confidence"],
+  ["réussir","v.","to succeed; to pass (an exam)"],
+  ["l'odeur","n.f.","smell"],
+  ["debout","adv.","standing (up)"],
+  ["tout à l'heure","loc.","a little while ago; in a little while"],
+  ["oser","v.","to dare"],
+  ["malgré","prép.","despite, in spite of"],
+  ["l'habitude","n.f.","habit; d'habitude = usually"],
+  ["drôle","adj.","funny; odd"],
+  ["enlever","v.","to take off, to remove"],
+]/*END*/;
+// Optional per-word details: {fem, register}. Filled by build.py for review sets.
+const EXTRA = __EXTRA__;
+const REVIEW = [
+  ["le sourire","n.m.","smile"],["tôt","adv.","early"],["casser","v.","to break"],["le nez","n.m.","nose"],
+  ["la fête","n.f.","party; holiday"],["sale","adj.","dirty"],["la paix","n.f.","peace"],
+  ["se tromper","v.","to be wrong, to make a mistake"],["le mariage","n.m.","wedding; marriage"],
+  ["le jardin","n.m.","garden"],["cesser","v.","to stop, to cease"],["mentir","v.","to lie"],
+  ["exactement","adv.","exactly"],["le bébé","n.m.","baby"],["lorsque","conj.","when"],
+  ["gentil","adj.","kind, nice"],["le boulot","n.m.","job, work (informal)"],["adorer","v.","to love, to adore"],
+  ["sinon","conj.","otherwise, or else"],["le village","n.m.","village"],
+];
+// word -> {src: data URI, by: "Lingua Libre · speaker" | "TTS"}; filled by build.py.
+const AUDIO = __AUDIO__;
+
+// "la confiance" -> ["confiance", "la"]; "l'odeur" -> ["odeur", "l'"]; "se tromper" -> ["tromper", "se"].
+// The clip is the bare word, so the article sits in parentheses after it.
+function head(w){
+  const m = w.match(/^(?:(les|le|la|se) |(l'|s'))(.+)$/i);
+  return m ? [m[3], m[1] || m[2]] : [w, ""];
+}
+function headInto(el, w){
+  const [bare, art] = head(w), fem = (EXTRA[w] || {}).fem;
+  el.textContent = bare + (fem ? ", " + fem : "");   // dictionary style: « doux, douce »
+  if (art) { const s = document.createElement("small"); s.textContent = "(" + art + ")"; el.appendChild(s); }
+}
+const PLAY_SVG = '<svg viewBox="0 0 11 12" aria-hidden="true"><path d="M1 .8v10.4L10.4 6z" fill="currentColor"/></svg>';
+let player = null;
+function speak(word, btn){
+  const a = AUDIO[word];
+  if (player) { player.pause(); player = null; }
+  document.querySelectorAll(".play.ing").forEach(b => b.classList.remove("ing"));
+  if (btn) btn.classList.add("ing");
+  const off = () => btn && btn.classList.remove("ing");
+  if (a) { player = new Audio(a.src); player.onended = off; player.play().catch(off); return; }
+  try {   // mock-only fallback when a clip is missing
+    const u = new SpeechSynthesisUtterance(word); u.lang = "fr-FR"; u.onend = off;
+    speechSynthesis.cancel(); speechSynthesis.speak(u);
+  } catch (e) { off(); }
+}
+function playBtn(word){
+  const b = document.createElement("button");
+  b.type = "button"; b.className = "play"; b.innerHTML = PLAY_SVG;
+  b.setAttribute("aria-label", "Écouter " + word);
+  b.addEventListener("pointerdown", e => e.stopPropagation());
+  b.addEventListener("click", e => { e.stopPropagation(); speak(word, b); });
+  return b;
+}
+
+/* ---------------- Leçon page ---------------- */
+const marked = new Set();
+function renderDict(){
+  const ul = document.getElementById("dict"); ul.innerHTML = "";
+  LESSON.forEach(([w,pos,en]) => {
+    const li = document.createElement("li");
+    li.className = "entry" + (marked.has(w) ? " on" : "");
+    li.tabIndex = 0; li.setAttribute("role","button"); li.setAttribute("aria-pressed", marked.has(w));
+    li.innerHTML = `<div class="txt"><div class="hw"><span class="w"></span><span class="lab pos"></span><span class="lab tf">Trop facile</span></div><div class="gl"></div></div>`;
+    headInto(li.querySelector(".w"), w);
+    const reg = (EXTRA[w] || {}).register;
+    li.querySelector(".pos").textContent = pos + (reg ? " · " + reg : "");
+    li.querySelector(".gl").textContent = en;
+    li.appendChild(playBtn(w));
+    const toggle = () => { marked.has(w) ? marked.delete(w) : marked.add(w); renderDict(); };
+    li.addEventListener("click", toggle);
+    li.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); } });
+    ul.appendChild(li);
+  });
+  document.getElementById("start").textContent = "Commencer · " + LESSON.length + " mots";
+}
+document.getElementById("start").addEventListener("click", () => setMode("learn"));
+
+/* ---------------- Drill ---------------- */
+const tray = document.getElementById("tray"), hero = document.getElementById("hero");
+let mode = "review", queue = [], total = 0, known = 0, again = 0, easy = 0, uid = 0;
+let peeked = false, lastEasy = null, pillTimer = null;
+const ROW_H = 72, GAP = 18, PAD = 12, MAX_CARDS = 4;
+
+function card(entry, extra){ return { id: ++uid, w: entry[0], pos: entry[1], en: entry[2], ...extra }; }
+function setMode(m){
+  stopCoach();
+  mode = m; peeked = false; known = again = easy = 0;
+  document.getElementById("m-learn").setAttribute("aria-pressed", m === "learn");
+  document.getElementById("m-review").setAttribute("aria-pressed", m === "review");
+  if (m === "learn") {
+    // Words marked on the Leçon page come first, armed.
+    const armed = LESSON.filter(e => marked.has(e[0])).map(e => card(e, { armed: true }));
+    const rest = LESSON.filter(e => !marked.has(e[0])).map(e => card(e, {}));
+    queue = [...armed, ...rest];
+  } else {
+    queue = REVIEW.map(e => card(e, {}));
+  }
+  total = queue.length; tray.innerHTML = ""; render();
+  if (m === "learn") startCoach();
+}
+
+const rowTop = i => PAD + i * (ROW_H + GAP);
+function render(){
+  document.getElementById("heroNum").textContent = queue.length;
+  document.getElementById("heroLab").textContent = mode === "learn" ? "à apprendre" : "à réviser";
+  document.getElementById("heroStats").textContent = `${known} connus · ${again} à revoir` + (easy ? ` · ${easy} trop facile` : "");
+  const shown = new Set();
+  queue.slice(0, MAX_CARDS).forEach((c, i) => {
+    shown.add(String(c.id));
+    let el = tray.querySelector(`.row[data-id="${c.id}"]`);
+    if (!el) {   // a new card slides up into the bottom place
+      el = document.createElement("div"); el.className = "row enter"; el.dataset.id = c.id;
+      el.innerHTML = '<span class="w"></span><span class="tag"></span>';
+      headInto(el.querySelector(".w"), c.w);
+      el.appendChild(playBtn(c.w));
+      el.style.top = rowTop(i + 1) + "px";
+      tray.appendChild(el);
+    }
+    el.classList.toggle("again", !!c.again);
+    el.classList.toggle("first", i === 0);
+    el.querySelector(".tag").textContent = c.armed ? "Trop facile ?" : "";
+    requestAnimationFrame(() => { el.classList.remove("enter"); el.style.top = rowTop(i) + "px"; });
+  });
+  tray.querySelectorAll(".row").forEach(el => { if (!shown.has(el.dataset.id) && !el.classList.contains("out")) el.remove(); });
+  let slot = tray.querySelector(".slot");
+  if (!slot) {
+    slot = document.createElement("div"); slot.className = "slot";
+    slot.innerHTML = '<div class="ok lab">Connu</div><div class="lock lab">Sens vu · glisse à gauche</div><div class="up lab">↑ Trop facile</div><div class="en"></div>';
+    tray.appendChild(slot);
+  }
+  if (queue[0]) slot.querySelector(".en").textContent = queue[0].en;
+  if (!queue.length) renderDone();
+}
+
+function renderDone(){
+  const d = document.createElement("div"); d.className = "done";
+  d.innerHTML = `<div class="lab">${mode === "learn" ? "Leçon" : "Réviser"}</div><div class="big">Terminé</div>
+    <div class="n">${known}</div><div class="lab">connus · ${again} à revoir · ${easy} trop facile</div>`;
+  const b = document.createElement("button"); b.type = "button"; b.textContent = "Recommencer"; b.onclick = () => setMode(mode);
+  d.appendChild(b); tray.appendChild(d);
+}
+
+/* Paint the underlay for a top-card offset (dx, dy). Shared by the finger and the lesson. */
+function paint(el, dx, dy){
+  const W = el.offsetWidth, slot = tray.querySelector(".slot");
+  const [en, ok, lock, up] = ["en", "ok", "lock", "up"].map(k => slot.querySelector("." + k));
+  slot.classList.add("show");
+  en.style.left = (W + dx + 10) + "px";
+  en.style.opacity = dx < 0 ? 1 : 0;
+  ok.style.opacity = dx > 0 && !peeked ? Math.min(1, dx / 60) : 0;
+  lock.style.opacity = dx > 0 && peeked ? 1 : 0;
+  up.style.opacity = dy < 0 && !peeked ? Math.min(1, -dy / 40) : 0;
+  el.style.transform = dy ? `translateY(${dy}px)` : `translateX(${dx}px)`;
+}
+
+/* ---- swipe lesson (first leçon only in the app) ---- */
+const STEPS = [
+  { dx: -0.45, say: "Glisse un peu à gauche pour voir le sens." },
+  { dx: -0.8, say: "Encore plus loin à gauche : tu dois le revoir." },
+  { dx: 0.4, say: "À droite : tu le connais déjà." },
+  { dy: -64, say: "Vers le haut : trop facile, il ne reviendra plus." },
+];
+let coach = null;
+function startCoach(){
+  hero.classList.add("teach");
+  let step = 0;
+  const dots = [...document.querySelectorAll("#dots i")];
+  const run = () => {
+    const el = tray.querySelector(".row.first"); if (!el || !coach) return;
+    const s = STEPS[step];
+    document.getElementById("say").textContent = s.say;
+    dots.forEach((d, k) => d.classList.toggle("on", k === step));
+    const W = el.offsetWidth, dx = s.dx ? s.dx * W : 0, dy = s.dy || 0;
+    el.style.transition = "transform .7s cubic-bezier(.3,.7,.2,1)";
+    tray.querySelector(".slot .en").style.transition = "left .7s cubic-bezier(.3,.7,.2,1)";
+    paint(el, dx, dy);
+    coach.t = setTimeout(() => {
+      el.style.transition = "transform .45s cubic-bezier(.2,.9,.25,1.1)";
+      tray.querySelector(".slot .en").style.transition = "left .45s cubic-bezier(.2,.9,.25,1.1)";
+      paint(el, 0, 0);
+      coach.t = setTimeout(() => { step = (step + 1) % STEPS.length; run(); }, 800);
+    }, 1900);
+  };
+  coach = { t: setTimeout(run, 500) };
+}
+function stopCoach(){
+  if (!coach) return;
+  clearTimeout(coach.t); coach = null; hero.classList.remove("teach");
+  const el = tray.querySelector(".row.first");
+  if (el) { el.style.transition = ""; el.style.transform = ""; }
+  const slot = tray.querySelector(".slot");
+  if (slot) { slot.classList.remove("show"); slot.querySelector(".en").style.transition = ""; }
+}
+
+/* ---- gesture on the top card ---- */
+let drag = null;
+tray.addEventListener("pointerdown", e => {
+  if (coach) { stopCoach(); return; }
+  const el = e.target.closest(".row.first"); if (!el || !queue.length) return;
+  el.setPointerCapture(e.pointerId);
+  drag = { el, x0: e.clientX, y0: e.clientY, axis: null, dx: 0, dy: 0, t: performance.now(), vx: 0, vy: 0, lx: e.clientX, ly: e.clientY };
+  el.style.transition = "none"; el.style.cursor = "grabbing";
+});
+const rubber = d => Math.sign(d) * 16 * (1 - Math.exp(-Math.abs(d) / 50));
+tray.addEventListener("pointermove", e => {
+  if (!drag) return;
+  const now = performance.now(), dt = Math.max(1, now - drag.t);
+  drag.vx = (e.clientX - drag.lx) / dt; drag.vy = (e.clientY - drag.ly) / dt;
+  drag.lx = e.clientX; drag.ly = e.clientY; drag.t = now;
+  let dx = e.clientX - drag.x0, dy = e.clientY - drag.y0;
+  if (!drag.axis && Math.hypot(dx, dy) > 8) drag.axis = Math.abs(dx) >= Math.abs(dy) ? "x" : (dy < 0 ? "y" : null);
+  if (!drag.axis) return;
+  if (drag.axis === "x") {
+    if (dx < -56) peeked = true;
+    if (dx > 0 && peeked) dx = rubber(dx);
+    drag.dx = dx; paint(drag.el, dx, 0);
+  } else {
+    dy = Math.min(0, dy); if (peeked) dy = rubber(dy);
+    drag.dy = dy; paint(drag.el, 0, dy);
+  }
+});
+function endDrag(){
+  if (!drag) return;
+  const { el, dx, dy, vx, vy, axis } = drag; drag = null;
+  const W = el.offsetWidth;
+  el.style.cursor = "";
+  if (axis === "x" && dx < 0 && (-dx > W * 0.72 || (vx < -0.9 && -dx > 80))) return commit("left", el);
+  if (axis === "x" && dx > 0 && !peeked && (dx > W * 0.38 || vx > 0.8)) return commit("right", el);
+  if (axis === "y" && !peeked && (dy < -70 || (vy < -0.8 && dy < -30))) return commit("up", el);
+  el.style.transition = "transform .35s cubic-bezier(.2,.9,.25,1.15)";
+  paint(el, 0, 0);
+  setTimeout(() => { el.style.transition = ""; tray.querySelector(".slot").classList.remove("show"); }, 340);
+}
+tray.addEventListener("pointerup", endDrag);
+tray.addEventListener("pointercancel", endDrag);
+
+function commit(dir, el){
+  const c = queue.shift(), clean = !peeked;
+  el.classList.add("out"); el.style.transition = "transform .28s ease-in, opacity .28s";
+  const slot = tray.querySelector(".slot");
+  slot.querySelectorAll("div").forEach(d => d.style.opacity = 0);
+  if (dir === "left") {
+    el.style.transform = "translateX(-130%)"; again++;
+    if (c.armed) c.armed = false;            // trop facile failed: clean, then it is a normal word
+    if (mode === "learn") { c.again = true; queue.splice(Math.min(5, queue.length), 0, { ...c, id: ++uid }); }
+    else if (!c.requeued) { c.again = true; c.requeued = true; queue.push({ ...c, id: ++uid }); }
+  } else if (dir === "right") {
+    el.style.background = "var(--tileOn)"; el.style.borderColor = "transparent";
+    el.style.transform = "translateX(130%)";
+    if (c.armed && clean) { easy++; showPill(c); } else known++;
+  } else {
+    el.style.background = "var(--buttonFill)"; el.style.borderColor = "transparent";
+    el.style.transform = "translateY(-120px)"; el.style.opacity = 0; easy++; showPill(c);
+  }
+  peeked = false;
+  setTimeout(() => { el.remove(); slot.classList.remove("show"); render(); }, 260);
+}
+function showPill(c){
+  lastEasy = c; const p = document.getElementById("pill"); p.classList.add("show");
+  clearTimeout(pillTimer); pillTimer = setTimeout(() => p.classList.remove("show"), 4500);
+}
+document.getElementById("undo").addEventListener("click", () => {
+  // Demote back to en cours: in the app it returns in a later session, not now.
+  document.getElementById("pill").classList.remove("show");
+  if (lastEasy) { easy--; known++; lastEasy = null; render(); }
+});
+document.getElementById("m-learn").onclick = () => setMode("learn");
+document.getElementById("m-review").onclick = () => setMode("review");
+renderDict(); setMode("review");
+</script>

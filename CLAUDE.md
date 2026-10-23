@@ -11,6 +11,10 @@ Older history is in `docs/archive/` and git log.
 
 ## Start here
 
+- **Vocab swipe book (*Mots*, branch `vocab-swipe`, 2026-10-23):** start at
+  `docs/plans/2026-10-23-vocab-swipe-handoff.md`; spec in
+  `docs/plans/2026-10-23-vocab-swipe-plan.md`. Mock + review set v1 approved;
+  next is the engine (phase 3).
 - **Status + phone checks:** `docs/plans/2026-10-13-book-2-release-handoff.md`.
   Next, only when asked: the Écrire typing drill, in its own session.
 - **Book 2 rulebook** (cast, voices, JSON shape, authoring steps):
