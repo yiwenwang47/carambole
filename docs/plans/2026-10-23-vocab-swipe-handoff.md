@@ -6,44 +6,134 @@ spec, every user decision, the engine API and the view notes are in
 `docs/plans/2026-10-23-vocab-swipe-plan.md`. Read it before you change code
 or content.
 
-## 1. State
+## 0. Hard rule (user, 2026-10-24)
+
+**Never cut text with « … » dots**, in the app or the mocks. That covers
+`.truncationMode`, `.byTruncatingTail`, `text-overflow: ellipsis`, and a
+`lineLimit` + `minimumScaleFactor` that runs out of room. When text in a
+new or changed view could be too long, **ask the user exactly what to do**
+(shrink, wrap, widen, rewrite). Don't choose a fallback yourself. Put this
+rule in every subagent brief. Long vocab headwords shrink to fit
+(`.minimumScaleFactor(0.7)`); measure with the bundled font to confirm that
+0.7 is always enough.
+
+## 1. State (2026-10-24)
 
 - Branch `vocab-swipe` (off `main` at the 2026-10-22 state). **Not merged,
   not pushed.** All work is committed; the tree is clean.
-- Phases 1–5 are done for bands 1–10: 1,000 ranked words + 200 expressions,
-  100 leçons, 1,189 clips (1,124 Lingua Libre, 65 TTS). `lint.py`: 0 errors.
-  `audio_release_gate.py`: both books 0 unresolved.
-- The user approved the following:
+- Content:
+  - Bands 1–10: 1,000 ranked words + 200 expressions, in 100 leçons.
+  - Clips: 1,189 (1,124 Lingua Libre, 65 TTS).
+  - Checks: `lint.py` reports 0 errors; `audio_release_gate.py` reports 0
+    unresolved for both books.
+  - The book is **complete at band 10.** Words past rank 1,000 will be a
+    DIFFERENT book (user); never extend this one.
+- The user approved:
   - mock v7: https://claude.ai/artifact/HgtXFFSV5CKDbbCS2ayhgi
-  - review sets v1: https://claude.ai/artifact/2ApAfTxrGYrtPW9FDqU5ko
-  - review sets v2: https://claude.ai/artifact/KqmX6XvU5KydcVenntN4iy
-  - review sets v3: https://claude.ai/artifact/1dgzYJEV3ELPrhJm1GxBpo
-  - v3 was approved together with the band 3–10 rules: celui / lequel merges, two « neuf » cards, madame / mademoiselle with no article, reflexive headwords, fam. / vulg. labels.
-- In the app (simulator-checked on iOS 27.0 with the test bundle):
-  - **Shelf:** book 03 « Monnaie courante » with the **bitten coin** mark (Pale face, `BookMark.swift`). Its two-line title is hard-broken (`BookDescriptor.shelfLines`), spacing −6.7 → 37 pt pitch, on every iOS version.
-  - **Leçon 0 « Comment glisser »:** an ungraded swipe lesson, then a practice round. It is Sommaire row 00. It comes before leçon 1 until it has been done once.
-  - **Placement « Où commencer ? »:** runs after leçon 0. It shows 5 words a band; it stops at the first band with 2 or more misses and starts the learner at that band's first leçon. It is ungraded and can be retaken from the Sommaire (`Core/VocabPlacement.swift`).
-  - **Leçon page:** dictionary rows; a tap arms trop facile.
+    (the published copy is stale; see §2)
+  - review sets:
+    - v1: https://claude.ai/artifact/2ApAfTxrGYrtPW9FDqU5ko
+    - v2: https://claude.ai/artifact/KqmX6XvU5KydcVenntN4iy
+    - v3: https://claude.ai/artifact/1dgzYJEV3ELPrhJm1GxBpo
+    - v3 was approved together with the band 3–10 rules: celui / lequel
+      merges, two « neuf » cards, madame / mademoiselle with no article,
+      reflexive headwords, fam. / vulg. labels.
+- In the app (simulator-checked on iOS 27.0):
+  - **Shelf:** book 03 « Monnaie courante » with the bitten coin mark (Pale
+    face, `BookMark.swift`). The two-line title is hard-broken
+    (`BookDescriptor.shelfLines`).
+  - **Leçon 0 « Comment glisser »:** an ungraded swipe lesson, then a
+    practice round. It is Sommaire row 00, and it comes before leçon 1
+    until it has been done once.
+  - **Placement « Où commencer ? »:** runs after leçon 0.
+    - It shows 5 words per band and stops at the first band with 2 or more
+      misses.
+    - It starts the learner at that band's first leçon.
+    - It is ungraded and can be retaken from the Sommaire
+      (`Core/VocabPlacement.swift`).
+  - **Leçon page:** dictionary rows.
+    - **Tapping a row arms trop facile** (the « Trop facile » row label stays;
+      user 2026-10-24).
+    - A long headword shrinks to fit (0.7).
   - **Session:**
-    - a 4-card stack; peek = small left drag, far left = `.again`, right = `.good`, up = trop facile
-    - after a peek, right and up rubber-band back, with no label
-  - **Undo pill:** on the ✕ row for this book (`.tooEasyUndo(insets:)`). Books 1–2 are unchanged.
-  - **Pacing:** one leçon per session; only the 10 words count against the 10–20 daily cap; after that, « Encore une leçon ». Review cap 200 / 250 / 300, default 250.
+    - The stack holds 4 cards. A small left drag peeks, far left = `.again`,
+      right = `.good`, up = trop facile.
+    - After a peek, right and up rubber-band back, with no label.
+    - **Cards carry no « Trop facile ? » tag** (removed 2026-10-24). Swipe up is
+      the only marking action on a card. An armed card looks like any other
+      card and resolves on its first swipe (clean right → removed with undo;
+      anything else → reset).
+    - Every headword fits the card at full size at 390 and 402 pt (widest:
+      « donner un coup de main », 259 of 266 pt).
+  - **Mock-match fixes (2026-10-24):**
+    - The ✕ is drawn as two bars (`VocabCloseGlyph`).
+    - The play disc shrinks to 0.92 while its clip plays.
+      `Speaker.playBundled(key:onEnd:)` is new; its `onEnd` is optional and
+      Books 1–2 don't pass it.
+  - **Undo pill:** on the ✕ row for this book (`.tooEasyUndo(insets:)`).
+  - **Pacing:**
+    - One leçon per session.
+    - Only words count toward the 10–20 daily cap. After the cap, the done
+      panel offers « Encore une leçon ».
+    - Review cap: 200 / 250 / 300, default 250.
+- **Credits screen (all books, 2026-10-24):** Settings (home, bottom right)
+  → About → Credits (`Features/Settings/CreditsView.swift`,
+  `Models/Credits.swift`). It lists:
+  - Lexique 3;
+  - Lingua Libre: the speakers with their clip counts, the licence counts
+    (673 CC BY-SA / 404 CC0 / 47 CC BY) and an « All recordings » page that
+    links every clip to Commons;
+  - Google TTS, for 65 Monnaie courante words and for Books 1–2;
+  - the fonts Manrope and Familjen Grotesk (OFL).
+  The data file is `Resources/Vocab/mots_credits.json` (renamed from
+  `credits.json`, since Xcode flattens resources). `build_lists.py assemble`
+  writes it and `lint.py` checks it.
+- **Today pile pills (all books, 2026-10-24):** pills now take up to 2
+  lines, with word wrap and no truncation.
+  - All 1,900 labels fit in 2 lines with no text changed. 200 use 2 lines;
+    all of them are from Books 1–2.
+  - A two-line pill is 52 pt tall and as narrow as still gives 2 lines. The
+    widest is 188 pt (« Terminaisons masculines : … »). The old cap was 176.
+  - Join and leave use the same motion as before. The start height and a
+    wall-safe start x are sized to each pill, and the Reduce Motion rows use
+    the tallest pill.
+  - `TokenPileScene._selfTest` lays out every label of every book.
+  - Debug flags: `CB_TODAY_LONG=<n>` puts the n widest labels in the pile;
+    `CB_TODAY_CYCLE=<secs>` makes 4 of them leave and join on a timer.
+- **Mock** `design/vocab/vocab-swipe.src.html` + built `vocab-swipe.html`:
+  - The lock label is removed.
+  - The card tag is removed.
+  - Headwords shrink to fit (`fitHead`, minimum 70%). This was checked in
+    headless Chrome.
 
-## 2. Open, ask when relevant
+## 2. Open, ask the user when relevant
 
-- Merge `vocab-swipe` → `main` and push: only when the user says so.
-- Credits screen design (Lingua Libre speakers per clip + Lexique 3).
-  The data is ready in `carambole/Resources/Vocab/credits.json`. It is a generic
-  bundle name (Xcode flattens resources), so rename it before another book adds one.
-- Bands beyond 10: only if the user asks. `ranked.tsv` holds the top 5,000;
-  14 spare expressions are already in `expressions.json`.
-- Known differences from the mock (all reported to the user):
-  - the ✕ glyph
-  - a long headword shrinks before it truncates
-  - no "playing" state on the play disc
-- `design/vocab/vocab-swipe.html` (built mock, published v7) still shows the
-  removed lock label; only the `.src.html` was updated.
+- **Merge `vocab-swipe` → `main` and push:** only when the user says so.
+- **Republish mock v7** (link above) from the rebuilt `vocab-swipe.html`. The
+  published copy still shows the lock label and the card tag. Ask first.
+- **Rebuild review sets v1–v3:** `design/vocab/review-v1..v3.html` still use
+  `text-overflow: ellipsis` on headwords (built before the rule). Rebuild
+  with `design/vocab/build.py --draft`. The original mock audio dir lived in
+  an old session scratchpad, so it may be gone; `build.py` needs a dir with
+  `report.json` + MP3s.
+- **Places that can't overflow today but have no safe fallback.** Ask the
+  user about each one. Details and options are in
+  `docs/reports/2026-10-24-truncation-audit.txt`:
+  - the vocab peek gloss (`VocabSessionView` ~491; scale 0.8, worst 0.88 now);
+  - the Leçon headword line when armed (worst 0.81);
+  - the TooEasy footer « Réponds correctement pour le retirer » (2% spare at
+    390 pt);
+  - the History `DayRow` (343 of 346 pt in the extreme case);
+  - `MagnetTile` (`lineLimit(1)`, 30 pt spare);
+  - the `TypeAnswerView` UITextField, which UIKit cuts with « … » when the
+    field isn't active.
+  - Also: `ModuleDetailView` is unreachable. Delete it, or fix it if it comes
+    back.
+- **Authored « … » / "..." in content** (« ne ... pas », trailing speech in
+  Book 2, « Écris ta réponse… »). These are not truncation, so they are not
+  covered by the rule unless the user says otherwise. The audit lists them.
+- **Bands beyond 10:** these will be a new book. Don't add them here.
+  `ranked.tsv` holds the top 5,000 for that book.
 
 ## 3. Files
 
@@ -56,7 +146,7 @@ or content.
 | `carambole/Core/VocabPacing.swift` | Daily-cap rule, `_selfTest` |
 | `carambole/Core/VocabPlacement.swift` | Placement sampling + stop rule, `_selfTest` |
 | `carambole/Features/Vocab/` | `VocabLessonView`, `VocabSwipeCard`, `VocabSessionView` (leçon 0, placement, sessions) |
-| `carambole/Resources/Vocab/mots.json`, `credits.json` | Book data, credits |
+| `carambole/Resources/Vocab/mots.json`, `mots_credits.json` | Book data, credits (Credits screen) |
 | `carambole/Resources/Audio/voc_*.mp3` | Clips (`Speaker` finds them by key) |
 | `tools/vocab/build_lists.py` | Lexique import (`rank`) and `mots.json` build (`assemble`) |
 | `tools/vocab/lint.py` | Entry / audio / collision lint |

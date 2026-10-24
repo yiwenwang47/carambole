@@ -51,6 +51,7 @@ app next to the real one (own database), used for the hand-testing test book.
 | `CB_DRILL_CHECK=1` | `DrillView` hook | check the pre-placed answer after 0.8 s (with full `CB_DRILL_PLACE` → correct weld) |
 | `remote openBook` `closeBook` `openModules` `closeModules` `openToday` `closeToday` `openHistory` `closeHistory` `openSettings` `closeSettings` `startReview` `closeSession` `nextPalette` | `DemoRemote.swift` + hooks in `LibraryView`, `BookView` | navigation without taps |
 | `CB_OPEN_LANGUAGE=english\|french` / `CB_OPEN_COLORS=1` | `LanguagesView.swift` | open that shelf / the colour page from the home page |
+| `CB_SETTINGS_SCROLL=credits` / `CB_OPEN_CREDITS=1\|bottom\|all` (with `CB_OPEN_COLORS=1`) | `ColorSettingsView.swift`, `CreditsView.swift` | scroll Settings to the `Credits →` row / push Credits (top, scrolled to the fonts, or on to All recordings) |
 | `CB_RENDER_STAR=1` (or `ink` / `objet`) | `Features/Book/StarVideoRenderer.swift` | re-render the star videos, or a trial look (see `tools/star_video/`) |
 | `CB_STAR_VARIANT=ink\|objet` | `Features/Book/StarLoopView.swift` | play a trial star loop from Documents |
 

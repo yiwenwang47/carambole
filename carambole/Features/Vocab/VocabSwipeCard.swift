@@ -5,8 +5,8 @@
 //  One *Mots* card in the swipe stack, and the play disc shared with the Leçon
 //  page. Port of design/vocab/vocab-swipe.src.html v7 (`.row`, `.play`): every
 //  card looks the same (white face, 1.5 pt ink outline, 72 pt high), the word
-//  with its article smaller after it, a « Trop facile ? » tag on an armed word,
-//  a dashed outline once the word was swiped left. The stack, gestures and
+//  with its article smaller after it, a dashed outline once the word was swiped
+//  left. An armed word's card looks like any other (no tag, user 2026-10-24). The stack, gestures and
 //  underlay live in `VocabSessionView`.
 //
 
@@ -25,15 +25,6 @@ struct VocabSwipeCard: View {
         HStack(spacing: 10) {
             VocabHeadword(entry: card.entry, size: 23)
                 .frame(maxWidth: .infinity, alignment: .leading)
-            if card.armed {
-                Text("Trop facile ?")
-                    .font(.label(size: 10))
-                    .tracking(labelTracking)
-                    .textCase(.uppercase)
-                    .foregroundColor(Color(hex: theme.fragile))
-                    .lineLimit(1)
-                    .fixedSize()
-            }
             VocabPlayDisc(entry: card.entry, theme: theme)
         }
         .padding(.leading, 18)
@@ -48,12 +39,13 @@ struct VocabSwipeCard: View {
             }
         }
         .accessibilityElement(children: .contain)
-        .accessibilityLabel(card.entry.displayFR + (card.armed ? ", trop facile ?" : ""))
+        .accessibilityLabel(card.entry.displayFR)
     }
 }
 
 /// « confiance » + a smaller grey « (la) », dictionary style (`.w small`: 0.66 em
-/// at 23 pt, 15 pt at 21 pt, 5 pt apart).
+/// at 23 pt, 15 pt at 21 pt, 5 pt apart). One line; a word too long for the
+/// line shrinks to fit (never « … »: dots are forbidden, user 2026-10-24).
 struct VocabHeadword: View {
     let entry: VocabEntry
     let size: CGFloat
@@ -71,8 +63,6 @@ struct VocabHeadword: View {
             }
         }
         .lineLimit(1)
-        // The mock ellipsises a long headword; a vocab card must show the whole
-        // word, so it shrinks a little first (as Book 1's drill text does).
         .minimumScaleFactor(0.7)
     }
 }
@@ -80,15 +70,19 @@ struct VocabHeadword: View {
 /// Book 2's replay disc (`.play`): a 34 pt pale `quietFill` disc, ink triangle,
 /// no outline. Plays the bundled clip only (no synthesized fallback, as Book 2
 /// word audio); a missing clip dims the disc. Never counts as a peek.
+/// While its clip plays the disc holds the mock's `.play.ing` state
+/// (`transform: scale(.92)`, 0.15 s `ease`, the same look as pressed); it goes
+/// back when the clip ends, another clip replaces it, or the session stops
+/// audio (`speak()` / `onended` in the mock).
 struct VocabPlayDisc: View {
     let entry: VocabEntry
     let theme: AppTheme
+    @State private var playing = false
+    @State private var playToken = 0
 
     var body: some View {
         let hasAudio = Speaker.bundledAudioURL(key: entry.audio) != nil
-        Button {
-            Speaker.shared.playBundled(key: entry.audio)
-        } label: {
+        Button(action: play) {
             PlayTriangle()
                 .fill(AppColor.ink)
                 .frame(width: 11, height: 11)
@@ -97,11 +91,32 @@ struct VocabPlayDisc: View {
                 .background(Circle().fill(Color(hex: theme.quietFill)))
                 .contentShape(Circle())
         }
-        .buttonStyle(PlayDiscStyle())
+        .buttonStyle(PlayDiscStyle(playing: playing))
         .disabled(!hasAudio)
         .opacity(hasAudio ? 1 : 0.35)
         .accessibilityLabel("Écouter \(entry.displayWord)")
+        #if DEBUG
+        .onReceive(NotificationCenter.default.publisher(for: Self.debugPlay)) { note in
+            if note.object as? String == entry.id { play() }
+        }
+        #endif
     }
+
+    private func play() {
+        playToken += 1
+        let token = playToken
+        // A replay of this disc ends the old clip first (its onEnd is ignored
+        // by token), then this one plays.
+        Speaker.shared.playBundled(key: entry.audio) {
+            DispatchQueue.main.async { if playToken == token { playing = false } }
+        }
+        playing = true   // a clip that can't play calls onEnd, which reverts it
+    }
+
+    #if DEBUG
+    /// `CB_VOC_SCRIPT` step `play`: object = the entry id whose disc to press.
+    static let debugPlay = Notification.Name("cb.voc.play")
+    #endif
 }
 
 /// The mock's `M1 .8v10.4L10.4 6z` in a 11 × 12 view box, fitted (meet) into
@@ -119,11 +134,15 @@ private struct PlayTriangle: Shape {
     }
 }
 
-/// `.play:active { transform: scale(.92) }`, 0.15 s.
+/// `.play:active, .play.ing { transform: scale(.92) }` with the `.play`
+/// transition `transform .15s` (CSS default timing `ease`).
 private struct PlayDiscStyle: ButtonStyle {
+    let playing: Bool
+
     func makeBody(configuration: Configuration) -> some View {
+        let down = configuration.isPressed || playing
         configuration.label
-            .scaleEffect(configuration.isPressed ? 0.92 : 1)
-            .animation(.easeOut(duration: 0.15), value: configuration.isPressed)
+            .scaleEffect(down ? 0.92 : 1)
+            .animation(.timingCurve(0.25, 0.1, 0.25, 1, duration: 0.15), value: down)
     }
 }

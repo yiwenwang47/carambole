@@ -10,6 +10,7 @@
 //  On return, finished tokens fall out of the pile instead of rebuilding it.
 //
 
+import Combine
 import SpriteKit
 import SwiftUI
 
@@ -53,6 +54,8 @@ struct TodayView: View {
     #if DEBUG
     /// `DemoRemote.openHistory`: pushes History without a tap (simulator checks).
     @State private var remoteHistory = false
+    /// `CB_TODAY_CYCLE`: true while the first long tokens are out of the pile.
+    @State private var cycleOut = false
     #endif
     @AppStorage(AppPalette.storageKey) private var paletteID = AppPalette.fallback.rawValue
 
@@ -135,6 +138,11 @@ struct TodayView: View {
         }
         .onReceive(NotificationCenter.default.publisher(for: DemoRemote.Action.closeHistory.notification)) { _ in
             remoteHistory = false
+        }
+        .onReceive(Self.cycleTimer) { _ in
+            guard settled else { return }
+            cycleOut.toggle()
+            rebuild()
         }
         #endif
     }
@@ -301,7 +309,11 @@ struct TodayView: View {
     }
 
     private func rebuild() {
+        #if DEBUG
+        let next = Self.debugLongTokens(override ?? Self.liveSnapshot(viewModel), viewModel, out: cycleOut)
+        #else
         let next = override ?? Self.liveSnapshot(viewModel)
+        #endif
         snapshot = next
         scene.sync(next.tokens)
     }
@@ -334,6 +346,41 @@ struct TodayView: View {
                              fragileCount: vm.estimate.fragileCount)
     }
 }
+
+#if DEBUG
+// MARK: - Simulator checks
+
+extension TodayView {
+    /// `CB_TODAY_LONG=<n>`: the book's n widest element labels (real elements;
+    /// new / review / fragile in turn) go first in the pile, so 2-line pills
+    /// are on screen. `CB_TODAY_CYCLE=<secs>`: every <secs> the first 4 of them
+    /// leave the pile, and join again the next tick (join / leave recordings).
+    fileprivate static func debugLongTokens(_ s: TodaySnapshot, _ vm: BookViewModel, out: Bool) -> TodaySnapshot {
+        guard let n = Int(ProcessInfo.processInfo.environment["CB_TODAY_LONG"] ?? ""), n > 0 else { return s }
+        let font = TokenPileScene.PillLayout.font
+        let widest = vm.book.allElements
+            .map { ($0, (TokenPileScene.shortLabel($0.label) as NSString).size(withAttributes: [.font: font]).width) }
+            .sorted { $0.1 > $1.1 }
+            .prefix(n)
+        let kinds: [TokenSpec.Kind] = [.review, .new, .fragile]
+        var long = widest.enumerated().map { i, pair in
+            TokenSpec(id: pair.0.id, label: pair.0.label, kind: kinds[i % kinds.count])
+        }
+        if out { long.removeFirst(min(4, long.count)) }
+        let ids = Set(widest.map(\.0.id))
+        var copy = s
+        copy.tokens = long + s.tokens.filter { !ids.contains($0.id) }
+        return copy
+    }
+
+    fileprivate static let cycleTimer: AnyPublisher<Date, Never> = {
+        guard let secs = Double(ProcessInfo.processInfo.environment["CB_TODAY_CYCLE"] ?? ""), secs > 0 else {
+            return Empty().eraseToAnyPublisher()
+        }
+        return Timer.publish(every: secs, on: .main, in: .common).autoconnect().eraseToAnyPublisher()
+    }()
+}
+#endif
 
 // MARK: - Dashed rule
 

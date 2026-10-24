@@ -750,7 +750,7 @@ struct VocabSessionView: View {
     #if DEBUG
     /// CB_VOC_ARM=n arms the first n rows; CB_VOC_START=<s> presses Commencer
     /// after s seconds; CB_VOC_SCRIPT=a,b,… then plays gestures on the top card
-    /// (touch, peek, left, right, up, lock, wait) one after another, through
+    /// (touch, peek, left, right, up, lock, wait, play) one after another, through
     /// the same drag / release code as the finger.
     private func runLaunchFlags() async {
         let env = ProcessInfo.processInfo.environment
@@ -805,6 +805,11 @@ struct VocabSessionView: View {
             await pause(0.6)
             await fingerDrag(to: CGSize(width: 0, height: -120), hold: 1.2)
         case "wait": await pause(1.5)
+        case "play":
+            // Press the top card's play disc (`VocabPlayDisc.debugPlay`).
+            if let id = model.display.current?.entry.id {
+                NotificationCenter.default.post(name: VocabPlayDisc.debugPlay, object: id)
+            }
         default: break
         }
     }

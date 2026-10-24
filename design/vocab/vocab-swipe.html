@@ -56,11 +56,12 @@ header.top p{margin:4px 0 0;color:var(--graphite);font-size:14px;max-width:46ch;
 .entry:last-child{border-bottom:1px solid var(--hairline)}
 .entry .txt{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
 .entry .hw{display:flex;align-items:baseline;gap:10px;min-width:0}
-.entry .w{font-size:21px;font-weight:400;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.entry .w small{font-size:15px;color:var(--g2);margin-left:5px}
-.entry .pos{color:var(--g2);font-size:10px}
+/* One line; a long headword shrinks to fit (fitHead, min 70%), never cut with dots. */
+.entry .w{font-size:21px;font-weight:400;white-space:nowrap;min-width:0;flex:0 1 auto}
+.entry .w small{font-size:.714em;color:var(--g2);margin-left:5px}
+.entry .pos{color:var(--g2);font-size:10px;flex:none;white-space:nowrap}
 .entry .gl{font-size:15px;line-height:1.4;color:var(--graphite)}
-.entry .tf{display:none;color:var(--ink);font-size:10px}
+.entry .tf{display:none;color:var(--ink);font-size:10px;flex:none;white-space:nowrap}
 .entry.on{background:var(--tileOn);border-radius:14px;border-top-color:transparent}
 .entry.on + .entry{border-top-color:transparent}
 .entry.on .tf{display:inline}
@@ -73,9 +74,8 @@ header.top p{margin:4px 0 0;color:var(--graphite);font-size:14px;max-width:46ch;
   border:1.5px solid var(--ink);color:var(--ink);display:flex;align-items:center;gap:10px;padding:0 14px 0 18px;font-size:23px;
   transition:top .42s cubic-bezier(.2,.9,.25,1.12),opacity .3s,border-color .2s;user-select:none;z-index:3}
 .row.first{cursor:grab;z-index:4}
-.row .w{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row .w{flex:1;min-width:0;white-space:nowrap}
 .row .w small{font-size:.66em;color:var(--g2);margin-left:5px}
-.row .tag{font-family:var(--label);font-size:10px;letter-spacing:1.3px;text-transform:uppercase;color:var(--fragile)}
 .row.again{border-style:dashed;border-color:var(--fragile)}
 .row.enter{opacity:0}
 .slot{position:absolute;left:12px;right:12px;top:12px;height:72px;border-radius:16px;overflow:hidden;z-index:2;display:none}
@@ -83,7 +83,6 @@ header.top p{margin:4px 0 0;color:var(--graphite);font-size:14px;max-width:46ch;
 .slot > div{position:absolute;inset:0;display:flex;align-items:center;border-radius:16px;opacity:0}
 .slot .en{right:auto;padding:0 16px;font-size:15px;line-height:1.3;width:62%;background:var(--quiet)}
 .slot .ok{padding-left:18px;background:var(--tileOn)}
-.slot .lock{padding-left:18px;color:var(--fragile)}
 .slot .up{justify-content:center;align-items:flex-end;padding-bottom:10px;background:var(--buttonFill)}
 .hero{flex:none;min-height:132px;display:flex;flex-direction:column;gap:6px;padding:14px 2px 0}
 /* The four cards sit at (or just below) the middle of the screen. */
@@ -192,6 +191,21 @@ function headInto(el, w){
   el.textContent = bare + (fem ? ", " + fem : "");   // dictionary style: « doux, douce »
   if (art) { const s = document.createElement("small"); s.textContent = "(" + art + ")"; el.appendChild(s); }
 }
+// The app's VocabHeadword: .lineLimit(1) + .minimumScaleFactor(0.7). Dots are
+// forbidden (user, 2026-10-24), so a long headword shrinks to fit its line, down
+// to 70% of its size; the article (small, in em) shrinks with it.
+function fitHead(el){
+  el.style.fontSize = "";
+  const box = el.clientWidth; if (!box) return;
+  const base = parseFloat(getComputedStyle(el).fontSize);
+  for (let k = 0; k < 3 && el.scrollWidth > box + 0.5; k++) {
+    const cur = parseFloat(el.style.fontSize) || base;
+    el.style.fontSize = Math.max(base * 0.7, cur * box / el.scrollWidth) + "px";
+  }
+}
+const fitAll = () => document.querySelectorAll(".entry .w, .row .w").forEach(fitHead);
+if (document.fonts) document.fonts.ready.then(fitAll);
+addEventListener("resize", fitAll);
 const PLAY_SVG = '<svg viewBox="0 0 11 12" aria-hidden="true"><path d="M1 .8v10.4L10.4 6z" fill="currentColor"/></svg>';
 let player = null;
 function speak(word, btn){
@@ -235,6 +249,7 @@ function renderDict(){
     ul.appendChild(li);
   });
   document.getElementById("start").textContent = "Commencer · " + LESSON.length + " mots";
+  ul.querySelectorAll(".w").forEach(fitHead);
 }
 document.getElementById("start").addEventListener("click", () => setMode("learn"));
 
@@ -273,7 +288,7 @@ function render(){
     let el = tray.querySelector(`.row[data-id="${c.id}"]`);
     if (!el) {   // a new card slides up into the bottom place
       el = document.createElement("div"); el.className = "row enter"; el.dataset.id = c.id;
-      el.innerHTML = '<span class="w"></span><span class="tag"></span>';
+      el.innerHTML = '<span class="w"></span>';
       headInto(el.querySelector(".w"), c.w);
       el.appendChild(playBtn(c.w));
       el.style.top = rowTop(i + 1) + "px";
@@ -281,14 +296,14 @@ function render(){
     }
     el.classList.toggle("again", !!c.again);
     el.classList.toggle("first", i === 0);
-    el.querySelector(".tag").textContent = c.armed ? "Trop facile ?" : "";
+    fitHead(el.querySelector(".w"));
     requestAnimationFrame(() => { el.classList.remove("enter"); el.style.top = rowTop(i) + "px"; });
   });
   tray.querySelectorAll(".row").forEach(el => { if (!shown.has(el.dataset.id) && !el.classList.contains("out")) el.remove(); });
   let slot = tray.querySelector(".slot");
   if (!slot) {
     slot = document.createElement("div"); slot.className = "slot";
-    slot.innerHTML = '<div class="ok lab">Connu</div><div class="lock lab">Sens vu · glisse à gauche</div><div class="up lab">↑ Trop facile</div><div class="en"></div>';
+    slot.innerHTML = '<div class="ok lab">Connu</div><div class="up lab">↑ Trop facile</div><div class="en"></div>';
     tray.appendChild(slot);
   }
   if (queue[0]) slot.querySelector(".en").textContent = queue[0].en;
@@ -306,12 +321,11 @@ function renderDone(){
 /* Paint the underlay for a top-card offset (dx, dy). Shared by the finger and the lesson. */
 function paint(el, dx, dy){
   const W = el.offsetWidth, slot = tray.querySelector(".slot");
-  const [en, ok, lock, up] = ["en", "ok", "lock", "up"].map(k => slot.querySelector("." + k));
+  const [en, ok, up] = ["en", "ok", "up"].map(k => slot.querySelector("." + k));
   slot.classList.add("show");
   en.style.left = (W + dx + 10) + "px";
   en.style.opacity = dx < 0 ? 1 : 0;
   ok.style.opacity = dx > 0 && !peeked ? Math.min(1, dx / 60) : 0;
-  lock.style.opacity = dx > 0 && peeked ? 1 : 0;
   up.style.opacity = dy < 0 && !peeked ? Math.min(1, -dy / 40) : 0;
   el.style.transform = dy ? `translateY(${dy}px)` : `translateX(${dx}px)`;
 }

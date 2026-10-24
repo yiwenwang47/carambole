@@ -4,9 +4,12 @@
 Errors (exit 1): duplicate id / lemma, missing gloss, noun without a
 matching article, English in the French headword, part of speech outside the
 allowed set, missing audio file, clip key collision (one key, two spoken
-forms), contract shape (leçon size, indexes, ranks, keys).
+forms), contract shape (leçon size, indexes, ranks, keys), credits
+(mots_credits.json: every clip key is a credited Lingua Libre clip or counted
+as TTS; each clip has a speaker, a known licence and a Commons URL; no generic
+`credits.json` left in the bundle, since Xcode flattens resources).
 
-  python3 tools/vocab/lint.py [--book PATH] [--audio-dir DIR] [--no-audio]
+  python3 tools/vocab/lint.py [--book PATH] [--credits PATH] [--audio-dir DIR] [--no-audio]
 """
 from __future__ import annotations
 
@@ -22,6 +25,9 @@ sys.path.insert(0, str(HERE))
 from build_lists import BAND_SIZE, LECON_EXPRESSIONS, LECON_WORDS, ROOT, fold, read_ranked, spoken_form
 
 BOOK = ROOT / "carambole/Resources/Vocab/mots.json"
+CREDITS = ROOT / "carambole/Resources/Vocab/mots_credits.json"
+LICENSES = {"CC BY-SA 4.0", "CC BY 4.0", "CC0"}
+COMMONS = "https://commons.wikimedia.org/wiki/File:"
 AUDIO_DIR = ROOT / "carambole/Resources/Audio"
 # Spec set plus pron. and interj. (NOT in the spec, flagged to the user: qui, que, ça,
 # rien, quelqu'un… and merci survive the filters and have no other home).
@@ -162,15 +168,55 @@ def lint(book: dict, audio_dir: Path | None) -> list[str]:
     return errors
 
 
+def lint_credits(credits: dict, book: dict) -> list[str]:
+    """The Credits screen data matches the book's clips."""
+    errors: list[str] = []
+    err = errors.append
+    if credits.get("book") != book.get("book"):
+        err(f"credits: book {credits.get('book')!r} is not {book.get('book')!r}")
+    keys = {e["audio"] for b in book["bands"] for lc in b["lecons"] for e in lc["entries"]}
+    clips = credits.get("clips", [])
+    credited = [c.get("audio") for c in clips]
+    if len(set(credited)) != len(credited):
+        err("credits: a clip is listed twice")
+    for c in clips:
+        key = c.get("audio")
+        if key not in keys:
+            err(f"credits: {key} is not a clip of the book")
+        if not c.get("speaker") or not c.get("word"):
+            err(f"credits: {key} has no speaker or word")
+        if c.get("license") not in LICENSES:
+            err(f"credits: {key} licence {c.get('license')!r}")
+        if not str(c.get("url", "")).startswith(COMMONS):
+            err(f"credits: {key} url is not a Commons file page")
+    speakers = sorted({c.get("speaker") for c in clips})
+    if credits.get("speakers") != speakers:
+        err("credits: speakers list does not match the clips")
+    tts = credits.get("tts", {}).get("count")
+    if tts != len(keys) - len(set(credited) & keys):
+        err(f"credits: tts count {tts} but {len(keys) - len(set(credited) & keys)} clips have no recording")
+    if not credits.get("sources"):
+        err("credits: no sources")
+    stale = CREDITS.parent / "credits.json"
+    if stale.exists():
+        err(f"credits: generic {stale.name} in the bundle (Xcode flattens resources)")
+    return errors
+
+
 def main() -> int:
     logging.basicConfig(level=logging.INFO, format="%(message)s")
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--book", type=Path, default=BOOK)
+    ap.add_argument("--credits", type=Path, default=CREDITS)
     ap.add_argument("--audio-dir", type=Path, default=AUDIO_DIR)
     ap.add_argument("--no-audio", action="store_true")
     args = ap.parse_args()
     book = json.loads(args.book.read_text(encoding="utf-8"))
     errors = lint(book, None if args.no_audio else args.audio_dir)
+    if args.credits.is_file():
+        errors += lint_credits(json.loads(args.credits.read_text(encoding="utf-8")), book)
+    else:
+        errors.append(f"credits: {args.credits} missing")
     n = sum(len(lc["entries"]) for b in book["bands"] for lc in b["lecons"])
     for e in errors:
         log.error("ERROR %s", e)

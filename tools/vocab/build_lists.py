@@ -16,7 +16,9 @@ Two steps:
       carambole/Resources/Vocab/mots.json, tools/vocab/data/audio_entries.json
       (clip key + spoken text, input for fetch_audio.py --entries) and, when
       tools/vocab/data/audio_report.json exists, the release-gate clip index
-      tools/vocab/audio_index.json and carambole/Resources/Vocab/credits.json.
+      tools/vocab/audio_index.json and carambole/Resources/Vocab/mots_credits.json
+      (read by the app's Credits screen, `Models/Credits.swift`; book-specific
+      name because Xcode flattens bundle resources).
 
 Rank of a card = its position in the filtered list (so band b is exactly
 ranks 100(b-1)+1 .. 100b). A card's frequency is the highest of its merged
@@ -53,6 +55,8 @@ AUDIO_ENTRIES = DATA / "audio_entries.json"
 AUDIO_REPORT = DATA / "audio_report.json"
 AUDIO_INDEX = HERE / "audio_index.json"
 OUT_DIR = ROOT / "carambole/Resources/Vocab"
+CREDITS = OUT_DIR / "mots_credits.json"
+TTS_SERVICE = "Google Cloud Text-to-Speech"
 BOOK = "book_fr_mots"
 VERSION = 1
 SEED = 20261023
@@ -223,10 +227,14 @@ def write_json(path: Path, data: object, compact: bool = False) -> None:
 
 
 def credits(flat: list[dict], report: dict) -> dict:
+    """Credits for the app's Credits screen: sources, Lingua Libre clips, TTS count."""
     clips = []
+    tts = []
     for key in sorted({e["audio"] for e in flat}):
         r = report[key]
-        if r["source"] == "lingualibre":
+        if r["source"] != "lingualibre":
+            tts.append(key)
+        else:
             clips.append({"audio": key, "word": r["spoken"], "source": "Lingua Libre",
                           "speaker": r["speaker"], "title": r["title"],
                           "license": r.get("license", "CC BY-SA 4.0"),
@@ -244,6 +252,8 @@ def credits(flat: list[dict], report: dict) -> dict:
         ],
         "speakers": sorted({c["speaker"] for c in clips}),
         "clips": clips,
+        "tts": {"count": len(tts), "service": TTS_SERVICE,
+                "voices": sorted({report[k]["voice"] for k in tts})},
     }
 
 
@@ -261,7 +271,7 @@ def cmd_assemble(args: argparse.Namespace) -> int:
         report = json.loads(AUDIO_REPORT.read_text(encoding="utf-8"))
         absent = [k for k in seen if k not in report]
         if absent:
-            log.warning("%d clips not fetched yet (e.g. %s); index/credits not written",
+            log.warning("%d clips not fetched yet (e.g. %s); index/mots_credits not written",
                         len(absent), absent[:5])
             return 1
         index = [{"key": k, "text": s,
@@ -269,9 +279,9 @@ def cmd_assemble(args: argparse.Namespace) -> int:
                             if report[k]["source"] == "lingualibre" else report[k]["voice"])}
                  for k, s in sorted(seen.items())]
         write_json(AUDIO_INDEX, index)
-        write_json(OUT_DIR / "credits.json", credits(flat, report))
+        write_json(CREDITS, credits(flat, report))
         ll = sum(1 for i in index if i["voice"].startswith("lingualibre"))
-        log.info("audio_index.json + credits.json: %d clips, %d Lingua Libre, %d TTS",
+        log.info("audio_index.json + mots_credits.json: %d clips, %d Lingua Libre, %d TTS",
                  len(index), ll, len(index) - ll)
     return 0
 

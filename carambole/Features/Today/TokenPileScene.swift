@@ -14,6 +14,12 @@
 //  learner's palette (`AppPalette.current`): new / review fills, a dashed
 //  fragile outline, and in Surimpression the fills multiply where they overlap.
 //
+//  Labels are never cut (no « … »): a label wider than one line wraps onto a
+//  second line in a taller pill (`PillLayout`). Every label of every book fits
+//  in 2 lines (`_selfTest`). A 2-line pill joins and leaves exactly like a
+//  1-line one; only its spawn point is sized to it, so it starts fully above
+//  the top edge and inside the side walls.
+//
 //  Smooth drop: tokens are spawned one per ~30 ms (not all in one frame), pill
 //  textures are cached, the walls are only rebuilt when the size really
 //  changes, and a long frame never turns into one big physics step.
@@ -41,11 +47,20 @@ struct TokenSpec: Identifiable, Equatable {
 final class TokenPileScene: SKScene {
     // MARK: Constants (motion.html 03 script, Matter units → SpriteKit)
 
-    /// Pill height (Matter `h = 34`).
+    /// Pill height (Matter `h = 34`). A 2-line pill adds one line height (52).
     private static let tokenHeight: CGFloat = 34
-    /// Pill width = max(64, text + 30), capped so long element labels stay pills.
+    /// 1-line pill width = max(64, text + 30); text up to 146 pt stays on one
+    /// line (176 pt pill, as before).
     private static let minWidth: CGFloat = 64
-    private static let maxWidth: CGFloat = 176
+    private static let oneLineText: CGFloat = 146
+    /// Widest text box of a 2-line pill. The widest real need is Book 1's
+    /// « Terminaisons masculines : / -age, -ment, -eau » at ~159 pt (+3% kerning
+    /// margin 164), so the widest pill is ~189–196 pt: under half of a 390 pt
+    /// screen. Most 2-line pills are narrower: they take the narrowest width
+    /// that still breaks the label into 2 lines (balanced lines).
+    private static let twoLineText: CGFloat = 166
+    /// Text inset from the pill's ends (both 1- and 2-line pills).
+    private static let textPad: CGFloat = 15
     /// Matter gravity 1.1 (×0.001 px/ms²) = 1100 pt/s²; SpriteKit is 150 pt/m.
     /// Doubled from the prototype: the user found the drop too slow.
     private static let gravity: CGFloat = 2200 / 150
@@ -195,8 +210,16 @@ final class TokenPileScene: SKScene {
         // Arriving: drop in from above, staggered (prototype: `-40 - i*30`; a bit
         // wider here so the longer real labels never spawn interpenetrating).
         let arriving = capped.filter { nodes[$0.id] == nil }
-        for (i, spec) in arriving.enumerated() {
+        let made = arriving.map { spec -> (TokenSpec, SKSpriteNode) in
             let node = makeToken(spec)
+            if !reduceMotion { node.zRotation = CGFloat.random(in: -0.6...0.6) }
+            return (spec, node)
+        }
+        // All of a batch enter from one height (as before), now high enough that
+        // the tallest tilted pill of the batch starts wholly above the top edge:
+        // a 2-line pill never pops in already half on screen.
+        let lift = made.map { Self.extent(of: $0.1).height }.max() ?? 0
+        for (i, (spec, node)) in made.enumerated() {
             nodes[spec.id] = node
             specs[spec.id] = spec
             if reduceMotion {
@@ -205,13 +228,16 @@ final class TokenPileScene: SKScene {
             } else {
                 // One token per `spawnGap`, each entering just above the top edge
                 // already moving at `dropSpeed`: the work (and the contacts) are
-                // spread over frames instead of one tall column at once.
-                node.position = CGPoint(x: 40 + CGFloat.random(in: 0...max(1, size.width - 80)),
-                                        y: size.height + 40)
-                node.zRotation = CGFloat.random(in: -0.6...0.6)
+                // spread over frames instead of one tall column at once. Its x
+                // keeps the whole tilted pill inside the side walls, so a wide
+                // 2-line pill never spawns into a wall and gets kicked out.
+                let half = Self.extent(of: node).width
+                let lo = half + 2, hi = size.width - half - 2
+                node.position = CGPoint(x: hi > lo ? CGFloat.random(in: lo...hi) : size.width / 2,
+                                        y: size.height + lift + 2)
                 run(.sequence([.wait(forDuration: Self.spawnGap * Double(i)), .run { [weak self, weak node] in
                     guard let self, let node, self.nodes[spec.id] === node else { return }
-                    node.position.y = self.size.height + 40
+                    node.position.y = self.size.height + lift + 2
                     node.physicsBody?.velocity = CGVector(dx: 0, dy: -Self.dropSpeed)
                     self.addChild(node)
                 }]))
@@ -233,6 +259,15 @@ final class TokenPileScene: SKScene {
         physicsWorld.speed = dt > Self.maxStep ? CGFloat(Self.maxStep / dt) : 1
     }
 
+    /// Half-width and half-height of a node's tilted bounding box.
+    private static func extent(of node: SKSpriteNode) -> CGSize {
+        let c = abs(cos(node.zRotation)), s = abs(sin(node.zRotation))
+        let w = node.size.width / 2, h = node.size.height / 2
+        return CGSize(width: w * c + h * s, height: w * s + h * c)
+    }
+
+    /// Leaving (any height): collisions off, it falls through the pile and the
+    /// floor, behind the start buttons, fading out in 0.7 s.
     private func leave(_ node: SKSpriteNode) {
         node.name = nil
         // Not yet dropped in: just forget it.
@@ -253,22 +288,30 @@ final class TokenPileScene: SKScene {
     /// any falling. Rows alternate their start a little so it reads as stacked.
     private func layoutSettled() {
         guard size.width > 1 else { return }
-        let h = Self.tokenHeight
         let inset: CGFloat = 12
+        // Rows first, then each row as tall as its tallest pill (1- or 2-line),
+        // pills centred on the row's mid-line.
+        var rows: [[SKSpriteNode]] = [[]]
         var x = inset
-        var row = 0
         for id in order {
             guard let node = nodes[id] else { continue }
             if node.parent == nil { addChild(node) }
             let w = node.size.width
             if x + w > size.width - inset, x > inset + 1 {
-                row += 1
-                x = inset + (row.isMultiple(of: 2) ? 0 : 18)
+                rows.append([])
+                x = inset + (rows.count.isMultiple(of: 2) ? 18 : 0)
             }
             node.zRotation = 0
-            node.position = CGPoint(x: x + w / 2, y: floorInset + h / 2 + CGFloat(row) * (h + 2))
+            node.position.x = x + w / 2
             node.physicsBody?.isDynamic = false
+            rows[rows.count - 1].append(node)
             x += w + 4
+        }
+        var y = floorInset
+        for row in rows where !row.isEmpty {
+            let h = row.map(\.size.height).max() ?? Self.tokenHeight
+            for node in row { node.position.y = y + h / 2 }
+            y += h + 2
         }
     }
 
@@ -314,13 +357,9 @@ final class TokenPileScene: SKScene {
     /// Manrope 400 13pt, centered 1pt low as in the prototype. Fills come from the
     /// palette; text is always ink.
     static func pillImage(_ spec: TokenSpec, theme: AppTheme) -> UIImage {
-        let font = AppFonts.uiFont(AppFonts.manrope, size: 13, wght: 400)
         let ink = UIColor(AppColor.ink)
-        let text = shortLabel(spec.label)
-        let textW = (text as NSString).size(withAttributes: [.font: font]).width
-        let w = min(maxWidth, max(minWidth, ceil(textW) + 30))
-        let h = tokenHeight
-        let size = CGSize(width: w, height: h)
+        let layout = PillLayout(shortLabel(spec.label))
+        let size = layout.size
         let format = UIGraphicsImageRendererFormat.default()
         format.opaque = false
         return UIGraphicsImageRenderer(size: size, format: format).image { _ in
@@ -344,22 +383,82 @@ final class TokenPileScene: SKScene {
                 pill.setLineDash([3, 3], count: 2, phase: 0)
                 UIColor(hex: theme.fragile).setStroke(); pill.stroke()
             }
+            var attrs = PillLayout.attributes
+            attrs[.foregroundColor] = ink
+            (layout.text as NSString).draw(with: layout.textRect, options: [.usesLineFragmentOrigin],
+                                           attributes: attrs, context: nil)
+        }
+    }
+
+    /// Size and text box of one pill. Never truncates: text up to `oneLineText`
+    /// is one line; wider text word-wraps in the narrowest box (≤ `twoLineText`)
+    /// that holds it in 2 lines; and should a label ever need 3, the pill grows
+    /// a line rather than cutting it (`_selfTest` fails first).
+    struct PillLayout {
+        let text: String
+        let lines: Int
+        let size: CGSize
+        let textRect: CGRect
+
+        static let font = AppFonts.uiFont(AppFonts.manrope, size: 13, wght: 400)
+        static let attributes: [NSAttributedString.Key: Any] = {
             let style = NSMutableParagraphStyle()
             style.alignment = .center
-            style.lineBreakMode = .byTruncatingTail
-            let attrs: [NSAttributedString.Key: Any] = [
-                .font: font,
-                .foregroundColor: ink,
-                .paragraphStyle: style,
-            ]
-            let lineH = font.lineHeight
-            let textRect = CGRect(x: 15, y: (h - lineH) / 2 + 1, width: w - 30, height: lineH)
-            (text as NSString).draw(in: textRect, withAttributes: attrs)
+            style.lineBreakMode = .byWordWrapping
+            return [.font: font, .paragraphStyle: style]
+        }()
+
+        init(_ label: String) {
+            let text = Self.frenchSpacing(label)
+            self.text = text
+            let lineH = Self.font.lineHeight
+            let oneW = ceil((text as NSString).size(withAttributes: Self.attributes).width)
+            var box = CGSize(width: oneW, height: lineH)
+            var lines = 1
+            if oneW > TokenPileScene.oneLineText {
+                // Narrowest whole-point width that still gives 2 lines (line
+                // count only falls as the box widens), else the widest box.
+                var lo = Int(ceil(oneW / 2)), hi = Int(TokenPileScene.twoLineText)
+                if Self.measure(text, width: CGFloat(hi)).lines <= 2 {
+                    while lo < hi {
+                        let mid = (lo + hi) / 2
+                        if Self.measure(text, width: CGFloat(mid)).lines <= 2 { hi = mid } else { lo = mid + 1 }
+                    }
+                }
+                let m = Self.measure(text, width: CGFloat(hi))
+                box = CGSize(width: CGFloat(hi), height: m.height)
+                lines = m.lines
+            }
+            self.lines = lines
+            let pad = TokenPileScene.textPad
+            let usedW = lines == 1 ? oneW : Self.measure(text, width: box.width).width
+            let w = max(TokenPileScene.minWidth, usedW + 2 * pad)
+            let h = TokenPileScene.tokenHeight + CGFloat(lines - 1) * ceil(lineH)
+            size = CGSize(width: w, height: h)
+            // Centred in the pill, 1 pt low as in the prototype.
+            textRect = CGRect(x: (w - box.width) / 2, y: (h - CGFloat(lines) * lineH) / 2 + 1,
+                              width: box.width, height: max(box.height, CGFloat(lines) * lineH) + 1)
+        }
+
+        /// Wrapped size and line count of `text` in a box `width` wide.
+        static func measure(_ text: String, width: CGFloat) -> (width: CGFloat, height: CGFloat, lines: Int) {
+            let r = (text as NSString).boundingRect(
+                with: CGSize(width: width, height: .greatestFiniteMagnitude),
+                options: [.usesLineFragmentOrigin], attributes: attributes, context: nil)
+            return (ceil(r.width), ceil(r.height), max(1, Int((r.height / font.lineHeight).rounded())))
+        }
+
+        /// French spacing: the space before « : ; ? ! » » and after « « » is a
+        /// no-break space, so a line never starts with « : » or ends on « « ».
+        /// Same glyphs and widths; the label's text is unchanged.
+        static func frenchSpacing(_ s: String) -> String {
+            s.replacingOccurrences(of: #" ([:;?!»])"#, with: "\u{00A0}$1", options: .regularExpression)
+                .replacingOccurrences(of: "« ", with: "«\u{00A0}")
         }
     }
 
     /// Element labels can be long ("ne ... jamais (never)"): drop the English gloss
-    /// in parentheses; the pill truncates whatever is still too wide.
+    /// in parentheses; whatever is still wider than one line wraps to a second.
     static func shortLabel(_ label: String) -> String {
         let stripped = label.replacingOccurrences(of: #"\s*\([^)]*\)"#, with: "", options: .regularExpression)
         let trimmed = stripped.trimmingCharacters(in: .whitespaces)
@@ -448,3 +547,29 @@ final class TokenPileScene: SKScene {
         lastRelease = CACurrentMediaTime()
     }
 }
+
+#if DEBUG
+extension TokenPileScene {
+    /// Every element label of every book fits a pill in at most 2 lines, with
+    /// the real font and UIKit wrapping. Off the main thread (it lays out ~1,900
+    /// labels); a failure asserts.
+    static func _selfTest() {
+        DispatchQueue.global(qos: .utility).async {
+            let short = PillLayout("il y a")
+            assert(short.lines == 1 && short.size.height == tokenHeight, "short label: one line")
+            let long = PillLayout(shortLabel("Terminaisons masculines : -age, -ment, -eau"))
+            assert(long.lines == 2 && long.size.width <= twoLineText + 2 * textPad, "longest label: 2 lines")
+            var twoLine = 0, widest: CGFloat = 0
+            for descriptor in BookCatalog.all {
+                for element in ContentLoader.loadBook(descriptor).allElements {
+                    let layout = PillLayout(shortLabel(element.label))
+                    assert(layout.lines <= 2, "pill needs \(layout.lines) lines: \(element.label)")
+                    if layout.lines == 2 { twoLine += 1 }
+                    widest = max(widest, layout.size.width)
+                }
+            }
+            print("TokenPileScene._selfTest: ok, \(twoLine) two-line pills, widest \(widest) pt")
+        }
+    }
+}
+#endif

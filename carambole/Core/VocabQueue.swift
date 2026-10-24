@@ -26,8 +26,8 @@ struct VocabQueue: Equatable {
     struct Card: Identifiable, Equatable {
         let id: Int
         let entry: VocabEntry
-        /// Marked trop facile on the Leçon page and not yet resolved; tag it
-        /// « Trop facile ? ».
+        /// Marked trop facile on the Leçon page and not yet resolved (the card
+        /// itself shows no tag, user 2026-10-24).
         var armed: Bool
         /// Swiped left at least once this session (dashed outline).
         var again: Bool

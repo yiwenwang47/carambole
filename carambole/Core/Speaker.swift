@@ -13,6 +13,9 @@ final class Speaker: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
     static let shared = Speaker()
     private let synth = AVSpeechSynthesizer()
     private var player: AVAudioPlayer?
+    /// Called once when the current `playBundled` clip stops: it ended, was
+    /// replaced by another clip, or `stop()` ran. Nil for Books 1–2.
+    private var onClipEnd: (() -> Void)?
     private override init() {
         super.init()
         synth.delegate = self
@@ -67,22 +70,33 @@ final class Speaker: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
         player?.stop()
         player = nil
         synth.stopSpeaking(at: .immediate)
+        endClip()
+    }
+
+    private func endClip() {
+        let done = onClipEnd
+        onClipEnd = nil
+        done?()
     }
 
     /// Plays a bundled clip only; does nothing when the file is missing (no
     /// synthesized fallback). Used for *En situation* word audio, where a wrong
-    /// fallback voice would teach a wrong sound.
-    func playBundled(key: String) {
-        guard let url = Speaker.bundledAudioURL(key: key) else { return }
+    /// fallback voice would teach a wrong sound. `onEnd` (main thread) runs once
+    /// when this clip stops for any reason (ended, replaced, `stop()`), or at
+    /// once when it can't play. Only *Monnaie courante*'s play disc passes it.
+    func playBundled(key: String, onEnd: (() -> Void)? = nil) {
+        guard let url = Speaker.bundledAudioURL(key: key) else { onEnd?(); return }
         activateSession()
         halt()
         if let p = try? AVAudioPlayer(contentsOf: url) {
             p.delegate = self
             player = p
+            onClipEnd = onEnd
             p.play()
             AudioDiag.log("clip play (bundled)")
         } else {
             deactivateSession()
+            onEnd?()
         }
     }
 
@@ -142,6 +156,7 @@ final class Speaker: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
         guard finished === player else { return }
         AudioDiag.log("clip finished")
         player = nil
+        endClip()
         if !synth.isSpeaking { deactivateSession() }
     }
 

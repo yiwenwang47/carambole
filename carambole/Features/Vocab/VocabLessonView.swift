@@ -6,7 +6,7 @@
 //  classical dictionary rows (headword + article in parentheses, small part of
 //  speech, the English on its own line, a play disc). Tapping a row arms trop
 //  facile for that word (pale lime row); armed words come first in the swipe
-//  stack, tagged « Trop facile ? ». The list scrolls; Commencer stays at the
+//  stack (their cards carry no tag). The list scrolls; Commencer stays at the
 //  bottom. No swiping here, no audio-source labels.
 //  Port of design/vocab/vocab-swipe.src.html v7 (`#lesson`).
 //
@@ -151,18 +151,37 @@ struct VocabLessonView: View {
     }
 }
 
-/// The session ✕ (Book 2's close button, nudged 6 pt left as the mock's `.x`).
+/// The mock's `.x` (32 pt button, nudged 6 pt left). The mock sets « ✕ » at
+/// 20 px, line-height 1, in ink; Chrome draws it as two straight bars with
+/// square (butt) ends. Measured from the rendered mock: bar centre lines run
+/// corner to corner of a 12.7 pt square centred at (16.0, 16.6) in the button
+/// (14 × 14 pt ink box). The outline is 1.55 pt at 10×, but at the phone's 3×
+/// Chrome's glyph rasterising darkens it to the coverage of a 1.8 pt path, so
+/// the stroke is 1.8 to look the same on screen. A path, not a font glyph.
 struct VocabCloseButton: View {
     let action: () -> Void
 
     var body: some View {
         Button(action: action) {
-            Image(systemName: "xmark").font(.system(size: 17, weight: .medium)).foregroundColor(AppColor.ink)
+            VocabCloseGlyph()
+                .stroke(AppColor.ink, style: StrokeStyle(lineWidth: 1.8, lineCap: .butt))
                 .frame(width: 32, height: 32)
                 .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
         .padding(.leading, -6)
         .accessibilityLabel("Quitter")
+    }
+}
+
+/// The two bars of the mock's ✕ in its 32 × 32 button (see `VocabCloseButton`).
+struct VocabCloseGlyph: Shape {
+    func path(in rect: CGRect) -> Path {
+        let s = min(rect.width, rect.height) / 32
+        let cx = rect.midX, cy = rect.midY + 0.6 * s, h = 6.36 * s
+        var p = Path()
+        p.move(to: CGPoint(x: cx - h, y: cy - h)); p.addLine(to: CGPoint(x: cx + h, y: cy + h))
+        p.move(to: CGPoint(x: cx + h, y: cy - h)); p.addLine(to: CGPoint(x: cx - h, y: cy + h))
+        return p
     }
 }

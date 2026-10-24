@@ -48,6 +48,12 @@ Older history is in `docs/archive/` and git log.
 
 ## Hard rules
 
+- **Never cut text with « … » dots (user, 2026-10-24).** Applies to the app
+  and the mocks: no `.truncationMode` / `.byTruncatingTail` /
+  `text-overflow: ellipsis`, and no `lineLimit` + `minimumScaleFactor` that
+  can run out. When text could be too long, ask the user exactly what to do;
+  never pick a fallback silently. Audit:
+  `docs/reports/2026-10-24-truncation-audit.txt`.
 - **"Clean up" means finish integration:** merge the finished work, push the
   resulting branch, delete finished branches and worktrees, and remove unneeded
   cache files. Verify the merged tree before removing its source branch.

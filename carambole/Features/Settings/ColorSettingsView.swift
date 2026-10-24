@@ -9,7 +9,7 @@
 //  takes the chosen palette's material and ring at once; each row shows the
 //  palette's name, one line, and its three token states (new / review /
 //  fragile) as real pills. The choice persists (`AppPalette.storageKey`) and
-//  every screen follows it.
+//  every screen follows it. `Credits →` at the bottom pushes `CreditsView`.
 //
 
 import SwiftUI
@@ -20,54 +20,105 @@ struct ColorSettingsView: View {
     @AppStorage(DrillStyle.storageKey) private var drillStyleID = DrillStyle.fallback.rawValue
     @AppStorage(LanguageMarkStyle.storageKey) private var markID = LanguageMarkStyle.fallback.rawValue
 
+    @State private var openCredits = false
+    #if DEBUG
+    @State private var appliedDebugFlags = false
+    #endif
+
     private var selected: AppPalette { AppPalette(stored: paletteID) }
 
     var body: some View {
         ZStack(alignment: .top) {
             AppColor.paper.ignoresSafeArea()
-            ScrollView {
-                VStack(alignment: .leading, spacing: 0) {
-                    header
-                    Text("Colors")
-                        .font(.display(size: 40, wght: 250))
-                        .tracking(-1.2)
-                        .foregroundColor(AppColor.ink)
-                        .padding(.top, 30)
-                        .accessibilityAddTraits(.isHeader)
+            ScrollViewReader { scroller in
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 0) {
+                        header
+                        Text("Colors")
+                            .font(.display(size: 40, wght: 250))
+                            .tracking(-1.2)
+                            .foregroundColor(AppColor.ink)
+                            .padding(.top, 30)
+                            .accessibilityAddTraits(.isHeader)
 
-                    // Preview: a sample ring (41 % mastered, 12 % in progress).
-                    StarLoopView(mastered: 0.41, inProgress: 0.12, palette: selected)
-                        .frame(height: 300)
-                        .padding(.horizontal, -Spacing.screenH)
-                        .accessibilityHidden(true)
+                        // Preview: a sample ring (41 % mastered, 12 % in progress).
+                        StarLoopView(mastered: 0.41, inProgress: 0.12, palette: selected)
+                            .frame(height: 300)
+                            .padding(.horizontal, -Spacing.screenH)
+                            .accessibilityHidden(true)
 
-                    SectionLabel("Palette").padding(.bottom, 10)
-                    Rectangle().fill(AppColor.ink).frame(height: 1)
-                    ForEach(AppPalette.allCases) { palette in
-                        row(palette)
+                        SectionLabel("Palette").padding(.bottom, 10)
+                        Rectangle().fill(AppColor.ink).frame(height: 1)
+                        ForEach(AppPalette.allCases) { palette in
+                            row(palette)
+                        }
+
+                        SectionLabel("Language marks").padding(.top, 34).padding(.bottom, 10)
+                        Rectangle().fill(AppColor.ink).frame(height: 1)
+                        ForEach(LanguageMarkStyle.allCases) { style in
+                            markRow(style)
+                        }
+
+                        SectionLabel("Drills").padding(.top, 34).padding(.bottom, 10)
+                        Rectangle().fill(AppColor.ink).frame(height: 1)
+                        ForEach(DrillStyle.allCases) { style in
+                            styleRow(style)
+                        }
+
+                        SectionLabel("About").padding(.top, 34).padding(.bottom, 10)
+                        Rectangle().fill(AppColor.ink).frame(height: 1)
+                        creditsRow.id("credits")
                     }
-
-                    SectionLabel("Language marks").padding(.top, 34).padding(.bottom, 10)
-                    Rectangle().fill(AppColor.ink).frame(height: 1)
-                    ForEach(LanguageMarkStyle.allCases) { style in
-                        markRow(style)
-                    }
-
-                    SectionLabel("Drills").padding(.top, 34).padding(.bottom, 10)
-                    Rectangle().fill(AppColor.ink).frame(height: 1)
-                    ForEach(DrillStyle.allCases) { style in
-                        styleRow(style)
-                    }
+                    .padding(.horizontal, Spacing.screenH)
+                    .padding(.top, 16)
+                    .padding(.bottom, 40)
                 }
-                .padding(.horizontal, Spacing.screenH)
-                .padding(.top, 16)
-                .padding(.bottom, 40)
+                .scrollIndicators(.hidden)
+                #if DEBUG
+                .onAppear {
+                    guard !appliedDebugFlags else { return }
+                    appliedDebugFlags = true
+                    let env = ProcessInfo.processInfo.environment
+                    if env["CB_SETTINGS_SCROLL"] == "credits" { scroller.scrollTo("credits", anchor: .bottom) }
+                    if let open = env["CB_OPEN_CREDITS"], !open.isEmpty { openCredits = true }
+                }
+                #endif
             }
-            .scrollIndicators(.hidden)
         }
         .toolbar(.hidden, for: .navigationBar)
         .navigationBarBackButtonHidden(true)
         .swipeToGoBack { dismiss() }
+        .navigationDestination(isPresented: $openCredits) { CreditsView() }
+    }
+
+    /// `Credits →`: third-party sources, recordings and fonts.
+    private var creditsRow: some View {
+        Button { openCredits = true } label: {
+            VStack(alignment: .leading, spacing: 10) {
+                HStack(alignment: .firstTextBaseline) {
+                    Text("Credits")
+                        .font(.display(size: 26, wght: 250))
+                        .tracking(-0.6)
+                        .foregroundColor(AppColor.ink)
+                    Spacer()
+                    Text("→")
+                        .font(.display(size: 20, wght: 300))
+                        .foregroundColor(AppColor.ink)
+                        .accessibilityHidden(true)
+                }
+                Text("Word lists, recordings, voices and fonts.")
+                    .font(.label(size: 13, wght: 400))
+                    .foregroundColor(AppColor.graphite)
+            }
+            .padding(.vertical, 16)
+            .contentShape(Rectangle())
+            .overlay(alignment: .bottom) {
+                Rectangle().fill(AppColor.hairline).frame(height: 1)
+            }
+        }
+        .buttonStyle(.plain)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("Credits. Word lists, recordings, voices and fonts.")
     }
 
     private var header: some View {

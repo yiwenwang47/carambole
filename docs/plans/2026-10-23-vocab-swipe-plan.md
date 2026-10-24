@@ -47,7 +47,8 @@ choices: swipe only. FSRS scheduling, same as the other books.
 ## Audio
 
 - Every entry has audio. Source: **Lingua Libre** recordings on Wikimedia
-  Commons (CC BY-SA → credits screen in Settings with speaker + file title).
+  Commons (CC BY-SA → credits screen in Settings with speaker + file title;
+  data in `Resources/Vocab/mots_credits.json`, screen `Features/Settings/CreditsView.swift`).
   Missing entries: **Google TTS** (`fr-FR-Neural2-F`, Book 1/2 pipeline).
 - Lingua Libre recordings are bare words; keep them (user). The article is not
   voiced; adjectives voice the masculine only (Claude default).
@@ -92,6 +93,10 @@ Mock: `design/vocab/vocab-swipe.src.html` (approved layout).
 Grading is binary otherwise: `.good` or `.again`.
 
 - **No Trop facile button** in the drill: swipe up is trop facile (user).
+- **No « Trop facile ? » tag on the cards** (user 2026-10-24): swipe up is the
+  only action on a card that marks it. A word armed on the Leçon page (tap a
+  row, which stays) looks exactly like any other card; only its logic differs
+  (see Trop facile). Every headword fits the card at full size at 390 / 402 pt.
 - **Swipe lesson = leçon 0, « Comment glisser »** (user 2026-10-23): the top
   card moves by itself through peek / far left / right / up, with captions in
   the count area; touching a card ends it, then the learner practises on
@@ -103,7 +108,8 @@ Grading is binary otherwise: `.good` or `.again`.
 
 - Swipe up = trop facile resolved on the spot (clean by definition).
 - Marking a row on the Leçon page **arms** that word; armed words come first
-  in the session, tagged « Trop facile ? ». A clean right swipe or swipe up →
+  in the session (no tag on the card, user 2026-10-24). Its first card
+  resolves it: a clean right swipe or swipe up →
   suspend + undo pill; a peek / left swipe → clean records, then it is a
   normal word.
 - Implemented through `TooEasyGate.resolve` and `.tooEasyUndo`; never forked.
@@ -130,7 +136,7 @@ Grading is binary otherwise: `.good` or `.again`.
   (+ swipe lesson).
 - `tools/vocab/`: frequency import + filters, band shuffle, lint (duplicate
   lemma, gloss present, noun article, no English in FR), `fetch_audio.py`
-  (exists), audio index + credits.
+  (exists), audio index + credits (`mots_credits.json`).
 
 ## Phases
 
@@ -161,7 +167,7 @@ Built 2026-10-23. Pure parts self-test at DEBUG launch (`VocabBook._selfTest`,
 - **`Core/VocabQueue.swift`** (pure value type): build with
   `VocabQueue.learn(entries:armed:)` or `VocabQueue.review(due:cap:)`.
   Read `visible` (top card first, ≤ 4 `Card`s: `id` per presentation, `entry`,
-  `armed` → « Trop facile ? » tag, `again` → dashed outline), `current`,
+  `armed` (logic only, no tag), `again` → dashed outline), `current`,
   `remaining` (big count), `stats` (`known`, `again`, `tooEasy`), `peeked`,
   `canSwipeRight` / `canSwipeUp` (false after a peek: rubber-band),
   `isFinished`, `mode`. Drive with `apply(.peek / .left / .right / .up)` →
@@ -203,7 +209,8 @@ Built 2026-10-23, port of mock v7 (`design/vocab/vocab-swipe.src.html`).
   N mots (N = pending entries) fixed at the bottom; locked module →
   « Verrouillé ».
 - **`Features/Vocab/VocabSwipeCard.swift`**: the card (72 pt, 1.5 pt ink
-  outline, dashed `fragile` [3, 2.5] when requeued, « Trop facile ? » tag),
+  outline, dashed `fragile` [3, 2.5] when requeued; no tag, an armed card
+  looks like any other, user 2026-10-24),
   `VocabHeadword`, `VocabPlayDisc` (34 pt `quietFill` disc, mock triangle,
   `Speaker.playBundled`; dimmed when the clip is missing).
 - **`Features/Vocab/VocabSessionView.swift`**: `VocabSessionModel`
@@ -293,3 +300,9 @@ Built 2026-10-23, port of mock v7 (`design/vocab/vocab-swipe.src.html`).
   coin); user picked **bitten coin**, Pale face (`BookMark.swift`). Two-line
   shelf title hard-broken (`shelfLines`), spacing −6.7 → 37 pt pitch, works on
   every supported iOS.
+- 2026-10-24: « Trop facile ? » card tag removed (app `VocabSwipeCard`, mock
+  `.row .tag`); Leçon tap-to-arm stays. Every headword fits the card at full
+  size (widest 259 pt vs 266 pt line at 390 pt). iOS 27.0 simulator (iPhone
+  16e, test bundle): build clean, launch self-tests pass; leçons 64 / 77 / 97
+  show armed cards untagged and the long words unshrunk; swipe up still
+  suspends with the undo pill.
