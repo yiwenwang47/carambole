@@ -159,7 +159,7 @@ struct VocabLessonView: View {
         }
         .padding(.horizontal, -10)
         .contentShape(Rectangle())
-        .simultaneousGesture(swipe(entry), including: .gesture)
+        .gesture(swipe(entry))
         .accessibilityElement(children: .combine)
         .accessibilityAddTraits(on ? .isSelected : [])
         .accessibilityAction(named: on ? "Remettre" : "Trop facile") { toggle(entry) }
@@ -187,20 +187,17 @@ struct VocabLessonView: View {
     }
 
     /// Left swipe past half the row toggles trop facile, then the row springs
-    /// home. Vertical drags are left to the list's scroll.
-    private func swipe(_ entry: VocabEntry) -> some Gesture {
-        DragGesture(minimumDistance: 12)
-            .onChanged { value in
-                if dragging == nil {
-                    guard abs(value.translation.width) > abs(value.translation.height) else { return }
-                    dragging = entry.id
-                }
-                guard dragging == entry.id else { return }
-                dragOffset = min(0, value.translation.width)
-            }
-            .onEnded { value in
-                guard dragging == entry.id else { dragging = nil; return }
-                if value.translation.width < -rowWidth / 2 {
+    /// home. A UIKit pan that only begins on a leftward horizontal drag, so
+    /// vertical drags stay with the list's scroll (a SwiftUI DragGesture on
+    /// the rows took every touch and the list stopped scrolling).
+    private func swipe(_ entry: VocabEntry) -> LeftSwipeGesture {
+        LeftSwipeGesture(
+            onChange: { dx in
+                dragging = entry.id
+                dragOffset = min(0, dx)
+            },
+            onEnd: { dx in
+                if dx < -rowWidth / 2 {
                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                     toggle(entry)
                 }
@@ -208,7 +205,7 @@ struct VocabLessonView: View {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
                     if dragOffset == 0 { dragging = nil }
                 }
-            }
+            })
     }
 
     private var rowWidth: CGFloat { UIScreen.main.bounds.width - 20 }
@@ -252,5 +249,38 @@ struct VocabCloseGlyph: Shape {
         p.move(to: CGPoint(x: cx - h, y: cy - h)); p.addLine(to: CGPoint(x: cx + h, y: cy + h))
         p.move(to: CGPoint(x: cx + h, y: cy - h)); p.addLine(to: CGPoint(x: cx - h, y: cy + h))
         return p
+    }
+}
+
+/// Pan that begins only when the finger first moves left more than it moves
+/// up or down; reports the horizontal translation.
+struct LeftSwipeGesture: UIGestureRecognizerRepresentable {
+    let onChange: (CGFloat) -> Void
+    let onEnd: (CGFloat) -> Void
+
+    func makeUIGestureRecognizer(context: Context) -> UIPanGestureRecognizer {
+        let pan = UIPanGestureRecognizer()
+        pan.delegate = context.coordinator
+        return pan
+    }
+
+    func handleUIGestureRecognizerAction(_ recognizer: UIPanGestureRecognizer, context: Context) {
+        let dx = recognizer.translation(in: recognizer.view).x
+        switch recognizer.state {
+        case .began, .changed: onChange(dx)
+        case .ended: onEnd(dx)
+        case .cancelled, .failed: onEnd(0)
+        default: break
+        }
+    }
+
+    func makeCoordinator(converter: CoordinateSpaceConverter) -> Coordinator { Coordinator() }
+
+    final class Coordinator: NSObject, UIGestureRecognizerDelegate {
+        func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+            guard let pan = gestureRecognizer as? UIPanGestureRecognizer else { return false }
+            let v = pan.velocity(in: pan.view)
+            return v.x < 0 && abs(v.x) > abs(v.y)
+        }
     }
 }
