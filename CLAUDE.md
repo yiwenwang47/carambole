@@ -72,7 +72,8 @@ Older history is in `docs/archive/` and git log.
   (resolved at once, clean by definition), and a word armed by tapping its
   Leçon-page row resolves on its first swipe (clean right → removed; peek or
   left → cleaned, then a normal word). `VocabQueue` → `VocabStudy.commit` →
-  `TooEasyGate.resolve`; pill via `.tooEasyUndo(edge: .bottom, onUndo:)`.
+  `TooEasyGate.resolve`; pill via `.tooEasyUndo(onUndo:)` (top, like Books 1–2).
+  Leçon 0 « Comment glisser » (swipe lesson) is ungraded and never resolves.
   A new book or session view reuses these; never fork the logic.
 - **The drill card never scrolls as a whole.** Book 1 can scroll its word-bank
   tray (`MagnetBoard.bankTray`); text uses `minimumScaleFactor`. In Book 2, only

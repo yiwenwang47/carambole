@@ -8,6 +8,15 @@ import Foundation
 /// live in `VocabQueue`. Reads hit the database's serial queue; call off-main
 /// for a large review stack, like `BookViewModel.reviewSessionElements`.
 enum VocabStudy {
+    /// Leçon 0 (« Comment glisser », the ungraded swipe lesson) finished once.
+    /// Until then Apprendre on leçon 1 opens leçon 0 first. A setting, not
+    /// progress: nothing is graded or logged.
+    static let swipeLessonDoneKey = "settings.book_fr_mots.swipeLessonDone"
+    static var swipeLessonDone: Bool {
+        get { UserDefaults.standard.bool(forKey: swipeLessonDoneKey) }
+        set { UserDefaults.standard.set(newValue, forKey: swipeLessonDoneKey) }
+    }
+
     /// Persist one swipe's grade. A word has no example sentences, so the entry
     /// id doubles as the `exampleID` (its one distinct "item").
     static func commit(_ grade: VocabQueue.Grade, now: Date = Date()) {

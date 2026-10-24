@@ -17,9 +17,9 @@ writing code or content.
   content, `6b58579e` engine + views). Engine API and view notes are in the
   plan doc. Review set v2: `tools/vocab/drafts/sample_v2.json`, published at
   https://claude.ai/artifact/KqmX6XvU5KydcVenntN4iy, awaiting the user.
-- Pending user calls: pacing (`Core/VocabPacing.swift`, provisional),
-  `pron.` / `interj.` tags, swipe lesson every time vs once, « Sens vu » lock
-  label, bottom undo pill, shelf mark (placeholder), placement start.
+- Decided 2026-10-23: pacing as built, review set v2 OK, `pron.` / `interj.`
+  OK, swipe lesson = ungraded leçon 0, undo pill at the top, no lock label.
+- Pending user calls: shelf mark (placeholder), placement start.
 
 ## 2. Next: phase 3 (engine) → 4 (views) → 5 (bulk content)
 

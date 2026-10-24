@@ -6,6 +6,8 @@
 //  motion.html edge-type language. Tapping a row opens that module's Leçon
 //  page (`DrillSessionView`). Reached from the book home's bottom
 //  line (`25 modules →`). (Replaces the dropped 06 Tranches stack.)
+//  *Mots* adds row 00, leçon 0 « Comment glisser » (the ungraded swipe
+//  lesson), before its bands; it can be replayed any time.
 //
 
 import SwiftUI
@@ -13,6 +15,7 @@ import SwiftUI
 struct ModuleListView: View {
     @ObservedObject var viewModel: BookViewModel
     @State private var selectedModule: CourseModule?
+    @State private var showingSwipeLesson = false
     @State private var swipeGuard = SwipeBackGuard()
 
     @Environment(\.dismiss) private var dismiss
@@ -34,6 +37,15 @@ struct ModuleListView: View {
                         .foregroundColor(AppColor.ink)
                         .padding(.top, 30)
                     Rectangle().fill(AppColor.ink).frame(height: 1).padding(.top, 22)
+                    if viewModel.descriptor.kind == .vocab {
+                        Button {
+                            guard !swipeGuard.dragging else { return }
+                            showingSwipeLesson = true
+                        } label: {
+                            swipeLessonRow
+                        }
+                        .buttonStyle(.plain)
+                    }
                     ForEach(Array(modules.enumerated()), id: \.element.id) { index, module in
                         Button {
                             guard !swipeGuard.dragging else { return }
@@ -55,6 +67,12 @@ struct ModuleListView: View {
                              moduleNumber: module.sortOrder, module: module,
                              canStart: viewModel.isUnlocked(module)) {
                 selectedModule = nil
+            }
+        }
+        .fullScreenCover(isPresented: $showingSwipeLesson, onDismiss: { viewModel.refresh() }) {
+            VocabSessionView(elements: [], mode: .learn, canStart: true,
+                             settings: viewModel.settingsStore.settings, swipeLesson: true) {
+                showingSwipeLesson = false
             }
         }
         .toolbar(.hidden, for: .navigationBar)
@@ -99,6 +117,29 @@ struct ModuleListView: View {
             Text(statusText(module, state: state))
                 .uppercaseLabel(state == .current ? AppColor.ink : (locked ? AppColor.g3 : AppColor.g2))
                 .monospacedDigit()
+        }
+        .padding(.vertical, 14)
+        .overlay(alignment: .bottom) {
+            Rectangle().fill(AppColor.hairline).frame(height: 1)
+        }
+        .contentShape(Rectangle())
+        .accessibilityElement(children: .combine)
+    }
+
+    /// *Mots* leçon 0, styled like a module row.
+    private var swipeLessonRow: some View {
+        HStack(alignment: .firstTextBaseline, spacing: 14) {
+            Text("00")
+                .uppercaseLabel(AppColor.g2)
+                .monospacedDigit()
+                .frame(width: 22, alignment: .leading)
+            Text("Comment glisser")
+                .font(.display(size: 18, wght: 300))
+                .tracking(-0.3)
+                .foregroundColor(AppColor.ink)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            Text(VocabStudy.swipeLessonDone ? "Fait" : "À faire")
+                .uppercaseLabel(VocabStudy.swipeLessonDone ? AppColor.g2 : AppColor.ink)
         }
         .padding(.vertical, 14)
         .overlay(alignment: .bottom) {

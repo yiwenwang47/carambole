@@ -87,14 +87,17 @@ Mock: `design/vocab/vocab-swipe.src.html` (approved layout).
 | Swipe left past threshold | `.again` ("I still need the meaning"). Learn: back 5 cards later (dashed outline) until swiped right. Review: back once at the end (Claude default). |
 | Swipe right (no peek only) | `.good` ("I know it"). |
 | Swipe up (no peek only) | **Trop facile** → grade `.easy` + suspend + undo pill. |
-| After a peek | Right and up are **locked** (rubber-band back); only left. |
+| After a peek | Right and up are **locked** (rubber-band back, no label; user 2026-10-23); only left. |
 
 Grading is binary otherwise: `.good` or `.again`.
 
 - **No Trop facile button** in the drill: swipe up is trop facile (user).
-- **Swipe lesson** on the first leçon only: the top card moves by itself
-  through peek / far left / right / up, with captions in the count area;
-  touching a card ends it.
+- **Swipe lesson = leçon 0, « Comment glisser »** (user 2026-10-23): the top
+  card moves by itself through peek / far left / right / up, with captions in
+  the count area; touching a card ends it, then the learner practises on
+  leçon 1's first 4 words. Ungraded (nothing graded, logged or counted). A new
+  learner gets it before leçon 1 until it is finished once; it replays from
+  the Sommaire (row 00). Leçon 1 itself has no animation.
 
 ## Trop facile (hard rule, shared logic)
 
@@ -207,8 +210,13 @@ Built 2026-10-23, port of mock v7 (`design/vocab/vocab-swipe.src.html`).
   (`@StateObject`: leçon, armed set, live `queue` + drawn `display` that lags
   by the 0.26 s fly-out) and the view (✕, hero count / swipe-lesson captions,
   tray with ≤ 4 cards, underlay, done panel, gestures with the mock's
-  thresholds and curves). Swipe lesson on the book's first leçon only
-  (`teachesSwipes`), every time that leçon opens.
+  thresholds and curves). Leçon 0 (`isSwipeLesson`): no Leçon page, the
+  swipe lesson then 4 practice cards, nothing reaches `VocabStudy.commit`;
+  done panel « Leçon 0 · Comment glisser » + « Leçon 1 ». Opens instead of
+  leçon 1 while `VocabStudy.swipeLessonDone` (UserDefaults
+  `settings.book_fr_mots.swipeLessonDone`) is false; `ModuleListView` row 00
+  replays it (`VocabSessionView(swipeLesson: true)`). The mock's 0.5 s lead-in
+  is gone (no Leçon page to fade from). No lock label after a peek.
 - **Routing**: `BookCatalog.all` now has *Mots* (shelf slot 03, percent from
   its own `BookViewModel`); `StudySessionView` `.vocab` → `VocabSessionView`.
   `BookViewModel.moduleLearnElements` / `newAvailableToday` serve ONE leçon of
@@ -220,8 +228,9 @@ Built 2026-10-23, port of mock v7 (`design/vocab/vocab-swipe.src.html`).
   (`VocabStudy.wordsLearnedToday`). Done panel: under the cap « Leçon
   suivante »; at the cap « Terminer » + « Encore une leçon ». Apprendre on the
   book home is never blocked by the cap.
-- **Shared trop facile**: `.tooEasyUndo` gained `edge:` (`.bottom` = mock
-  position, full width, 40 pt up) and `onUndo:` (stats); Books 1–2 unchanged.
+- **Shared trop facile**: `.tooEasyUndo` gained `onUndo:` (stats); the pill
+  sits at the top like Books 1–2 (user 2026-10-23; the short-lived `edge:`
+  parameter is gone).
 - **Shelf mark**: `BookMarkShape.placeholder`, a plain torn disc with the
   number (no overprint), until the studio mark process picks one.
 - **Simulator flags (DEBUG)**: `CB_OPEN_BOOK=book_fr_mots CB_START=learn|review`,
@@ -247,3 +256,8 @@ Built 2026-10-23, port of mock v7 (`design/vocab/vocab-swipe.src.html`).
   + swipe lesson), *Mots* on the shelf, provisional `VocabPacing`, placeholder
   shelf mark, `.tooEasyUndo(edge:onUndo:)`. iOS 27.0 simulator build clean;
   launch self-tests pass; frames checked against the mock in headless Chrome.
+- 2026-10-23: user calls: swipe lesson → ungraded leçon 0 « Comment glisser »
+  (Sommaire row 00, before leçon 1 until done once); undo pill back at the top
+  (shared default); « Sens vu · glisse à gauche » lock label dropped (app and
+  mock src); pacing, review set v2 and `pron.` / `interj.` accepted. Caption
+  box now two natural Manrope lines, so the progress dashes clear « pour ».

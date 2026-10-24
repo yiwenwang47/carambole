@@ -83,7 +83,6 @@ header.top p{margin:4px 0 0;color:var(--graphite);font-size:14px;max-width:46ch;
 .slot > div{position:absolute;inset:0;display:flex;align-items:center;border-radius:16px;opacity:0}
 .slot .en{right:auto;padding:0 16px;font-size:15px;line-height:1.3;width:62%;background:var(--quiet)}
 .slot .ok{padding-left:18px;background:var(--tileOn)}
-.slot .lock{padding-left:18px;color:var(--fragile)}
 .slot .up{justify-content:center;align-items:flex-end;padding-bottom:10px;background:var(--buttonFill)}
 .hero{flex:none;min-height:132px;display:flex;flex-direction:column;gap:6px;padding:14px 2px 0}
 /* The four cards sit at (or just below) the middle of the screen. */
@@ -288,7 +287,7 @@ function render(){
   let slot = tray.querySelector(".slot");
   if (!slot) {
     slot = document.createElement("div"); slot.className = "slot";
-    slot.innerHTML = '<div class="ok lab">Connu</div><div class="lock lab">Sens vu · glisse à gauche</div><div class="up lab">↑ Trop facile</div><div class="en"></div>';
+    slot.innerHTML = '<div class="ok lab">Connu</div><div class="up lab">↑ Trop facile</div><div class="en"></div>';
     tray.appendChild(slot);
   }
   if (queue[0]) slot.querySelector(".en").textContent = queue[0].en;
@@ -306,12 +305,11 @@ function renderDone(){
 /* Paint the underlay for a top-card offset (dx, dy). Shared by the finger and the lesson. */
 function paint(el, dx, dy){
   const W = el.offsetWidth, slot = tray.querySelector(".slot");
-  const [en, ok, lock, up] = ["en", "ok", "lock", "up"].map(k => slot.querySelector("." + k));
+  const [en, ok, up] = ["en", "ok", "up"].map(k => slot.querySelector("." + k));
   slot.classList.add("show");
   en.style.left = (W + dx + 10) + "px";
   en.style.opacity = dx < 0 ? 1 : 0;
   ok.style.opacity = dx > 0 && !peeked ? Math.min(1, dx / 60) : 0;
-  lock.style.opacity = dx > 0 && peeked ? 1 : 0;
   up.style.opacity = dy < 0 && !peeked ? Math.min(1, -dy / 40) : 0;
   el.style.transform = dy ? `translateY(${dy}px)` : `translateX(${dx}px)`;
 }

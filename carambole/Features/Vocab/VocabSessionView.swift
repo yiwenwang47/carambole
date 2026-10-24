@@ -16,14 +16,17 @@
 //      dashed outline);
 //    - right → `.good` (« Connu » underlay);
 //    - up → trop facile (`TooEasyGate` via `VocabStudy.commit`, undo pill);
-//    - after a peek, right and up rubber-band back (« Sens vu · glisse à
-//      gauche »).
+//    - after a peek, right and up rubber-band back (no label; user
+//      2026-10-23).
 //  Playing a clip never counts as a peek. The card stack is vertically locked.
 //
-//  Learn mode opens on the Leçon page (`VocabLessonView`). The first leçon of
-//  the book adds the swipe lesson: the top card moves by itself through
-//  peek / far left / right / up with captions in the count area; touching the
-//  tray ends it.
+//  Learn mode opens on the Leçon page (`VocabLessonView`). Leçon 0
+//  (« Comment glisser », user 2026-10-23) is the swipe lesson: no Leçon page;
+//  the top card moves by itself through peek / far left / right / up with
+//  captions in the count area; touching the tray ends it, then the learner
+//  practises on leçon 1's first four words. It is UNGRADED (nothing reaches
+//  `VocabStudy.commit`), opens before leçon 1 until finished once
+//  (`VocabStudy.swipeLessonDone`), and replays from the Sommaire.
 //
 //  Grading goes through `VocabQueue` (pure) → `VocabStudy.commit` (shared
 //  `ElementGrader` / `TooEasyGate`, HARD RULE: never forked).
@@ -45,6 +48,9 @@ final class VocabSessionModel: ObservableObject {
 
     @Published var phase: Phase
     @Published var lecon: VocabLecon?
+    /// Leçon 0, the ungraded swipe lesson (`lecon` is then leçon 1, whose
+    /// first four words are the practice cards).
+    @Published private(set) var isSwipeLesson = false
     /// Rows tapped on the Leçon page.
     @Published var armed: Set<String> = []
     /// The live queue: every swipe is applied here at once and graded.
@@ -58,7 +64,8 @@ final class VocabSessionModel: ObservableObject {
     @Published var undoElementID: String?
     @Published private(set) var undoToken = 0
 
-    init(vocab: VocabBook, mode: SessionMode, elements: [GrammarElement], newPerDay: Int, reviewCap: Int) {
+    init(vocab: VocabBook, mode: SessionMode, elements: [GrammarElement], newPerDay: Int, reviewCap: Int,
+         swipeLesson: Bool = false) {
         self.vocab = vocab
         self.mode = mode
         self.newPerDay = newPerDay
@@ -74,6 +81,11 @@ final class VocabSessionModel: ObservableObject {
             queue = q
             display = q
             phase = lecon == nil ? .empty : .lesson
+            // Leçon 0 when asked for, or before leçon 1 until done once.
+            if let first = vocab.lecons.first,
+               swipeLesson || (!VocabStudy.swipeLessonDone && lecon?.index == first.index) {
+                startSwipeLesson(practice: first)
+            }
         case .review:
             var q = VocabStudy.reviewQueue(book: vocab, cap: reviewCap)
             #if DEBUG
@@ -89,9 +101,14 @@ final class VocabSessionModel: ObservableObject {
         }
     }
 
-    /// The swipe lesson runs on the book's first leçon only.
-    var teachesSwipes: Bool {
-        mode == .learn && lecon != nil && lecon?.index == vocab.lecons.first?.index
+    /// Leçon 0: straight to the stack, four practice cards, nothing graded.
+    private func startSwipeLesson(practice first: VocabLecon) {
+        isSwipeLesson = true
+        lecon = first
+        let q = VocabQueue.learn(entries: Array(first.entries.prefix(4)), armed: [])
+        queue = q
+        display = q
+        phase = .stack
     }
 
     /// Cards Commencer will serve.
@@ -113,6 +130,11 @@ final class VocabSessionModel: ObservableObject {
     @discardableResult
     func swipe(_ s: VocabQueue.Swipe) -> VocabQueue.Outcome {
         let outcome = queue.apply(s)
+        if isSwipeLesson {
+            // Ungraded: no commit, no undo pill, no pacing.
+            if queue.isFinished { VocabStudy.swipeLessonDone = true }
+            return outcome
+        }
         if case .swiped(let grade) = outcome {
             VocabStudy.commit(grade)
             if case .tooEasy(let id, true) = grade {
@@ -137,6 +159,19 @@ final class VocabSessionModel: ObservableObject {
         display.undoTooEasy()
     }
 
+    /// Leçon 0's « Leçon 1 »: leçon 1's page, now a normal graded leçon.
+    func openFirstLecon() {
+        guard let first = vocab.lecons.first else { return }
+        isSwipeLesson = false
+        lecon = first
+        armed = []
+        let q = VocabQueue.learn(entries: [], armed: [])
+        queue = q
+        display = q
+        next = .none
+        phase = .lesson
+    }
+
     /// « Leçon suivante » / « Encore une leçon »: the next unfinished leçon's page.
     func openNextLecon() {
         guard let current = lecon, let nextLecon = VocabStudy.lecon(after: current.index, in: vocab) else { return }
@@ -158,12 +193,13 @@ struct VocabSessionView: View {
     @StateObject private var model: VocabSessionModel
 
     init(elements: [GrammarElement], mode: SessionMode, canStart: Bool,
-         settings: StudySettings, onFinish: @escaping () -> Void) {
+         settings: StudySettings, swipeLesson: Bool = false, onFinish: @escaping () -> Void) {
         self.canStart = canStart
         self.onFinish = onFinish
         _model = StateObject(wrappedValue: VocabSessionModel(
             vocab: .bundled, mode: mode, elements: elements,
-            newPerDay: settings.newPerDay, reviewCap: settings.reviewRoundSize))
+            newPerDay: settings.newPerDay, reviewCap: settings.reviewRoundSize,
+            swipeLesson: swipeLesson))
     }
 
     @AppStorage(AppPalette.storageKey) private var paletteID = AppPalette.fallback.rawValue
@@ -192,6 +228,9 @@ struct VocabSessionView: View {
     private static let pad: CGFloat = 12
     private static let trayH: CGFloat = pad * 2 + 4 * rowH + 3 * gap
     private static func rowTop(_ i: Int) -> CGFloat { pad + CGFloat(i) * (rowH + gap) }
+    /// Swipe-lesson caption box and the hero holding it.
+    private static let captionH = ceil(AppFonts.uiFont(AppFonts.manrope, size: 24, wght: 300).lineHeight * 2)
+    private static let coachHeroH: CGFloat = max(132, 14 + 14 + 10 + captionH + 10 + 3 + 10 + 14)
 
     // Mock curves.
     private static let slideUp = Animation.timingCurve(0.2, 0.9, 0.25, 1.12, duration: 0.42)
@@ -225,7 +264,7 @@ struct VocabSessionView: View {
             }
         }
         .background(AppColor.paper.ignoresSafeArea())
-        .tooEasyUndo(elementID: $model.undoElementID, token: model.undoToken, edge: .bottom,
+        .tooEasyUndo(elementID: $model.undoElementID, token: model.undoToken,
                      onUndo: model.undoTooEasy)
         .onDisappear {
             coachTask?.cancel()
@@ -244,7 +283,6 @@ struct VocabSessionView: View {
 
     private func start() {
         withAnimation(.spring(response: 0.5, dampingFraction: 0.85)) { model.start() }
-        if model.teachesSwipes { startCoach() }
     }
 
     // MARK: Stack screen
@@ -266,7 +304,10 @@ struct VocabSessionView: View {
             }
             .padding(.horizontal, 20)
             .padding(.bottom, 22)
-            .onAppear { cardWidth = trayW - 24 }
+            .onAppear {
+                cardWidth = trayW - 24
+                if model.isSwipeLesson, model.display.stats == .init(), coachTask == nil { startCoach() }
+            }
             .onChange(of: geo.size.width) { _, w in cardWidth = w - 40 + 16 - 24 }
         }
     }
@@ -279,7 +320,9 @@ struct VocabSessionView: View {
         }
         .padding(.top, 14)
         .padding(.horizontal, 2)
-        .frame(maxWidth: .infinity, minHeight: 132, alignment: .topLeading)
+        // Leçon 0 keeps the captions' height after the demo, so the tray never
+        // moves when the count replaces them.
+        .frame(maxWidth: .infinity, minHeight: model.isSwipeLesson ? Self.coachHeroH : 132, alignment: .topLeading)
     }
 
     private var count: some View {
@@ -313,9 +356,10 @@ struct VocabSessionView: View {
                 .tracking(-0.5)
                 .foregroundColor(AppColor.ink)
                 .fixedSize(horizontal: false, vertical: true)
-                // `min-height: 2.4em` at line-height 1.2: a fixed box so one-
-                // and two-line captions never move the tray.
-                .frame(height: 24 * 2.4, alignment: .topLeading)
+                // The mock's `min-height: 2.4em` (two lines): a fixed box so one-
+                // and two-line captions never move the tray. Two of Manrope's
+                // natural lines, which are taller than the mock's 1.2.
+                .frame(height: Self.captionH, alignment: .topLeading)
             HStack(spacing: 6) {
                 ForEach(0..<Self.coachSteps.count, id: \.self) { k in
                     RoundedRectangle(cornerRadius: 2)
@@ -368,15 +412,13 @@ struct VocabSessionView: View {
     }
 
     /// `.slot`: under the top card. The English panel rides 10 pt right of the
-    /// card's right edge (so it slides in as the card goes left); « Connu »,
-    /// « Sens vu · glisse à gauche » and « ↑ Trop facile » show for right,
-    /// locked right and up. Their opacities follow the card without easing,
-    /// as in the mock.
+    /// card's right edge (so it slides in as the card goes left); « Connu » and
+    /// « ↑ Trop facile » show for right and up (nothing for a locked one).
+    /// Their opacities follow the card without easing, as in the mock.
     private func underlay(width w: CGFloat) -> some View {
         let peeked = model.queue.peeked
         let on = leaving == nil
         let okO: Double = on && dx > 0 && !peeked ? Double(min(1, dx / 60)) : 0
-        let lockO: Double = on && dx > 0 && peeked ? 1 : 0
         let upO: Double = on && dy < 0 && !peeked ? Double(min(1, -dy / 40)) : 0
         let enO: Double = on && dx < 0 ? 1 : 0
         return ZStack(alignment: .leading) {
@@ -385,10 +427,6 @@ struct VocabSessionView: View {
                 .frame(width: w, height: Self.rowH, alignment: .leading)
                 .background(Color(hex: theme.tileOn))
                 .opacity(okO)
-            Text("Sens vu · glisse à gauche").uppercaseLabel(Color(hex: theme.fragile))
-                .padding(.leading, 18)
-                .frame(width: w, height: Self.rowH, alignment: .leading)
-                .opacity(lockO)
             Text("↑ Trop facile").uppercaseLabel(AppColor.ink)
                 .padding(.bottom, 10)
                 .frame(width: w, height: Self.rowH, alignment: .bottom)
@@ -407,7 +445,6 @@ struct VocabSessionView: View {
                 .offset(x: w + (dy == 0 ? dx : 0) + 10)
         }
         .animation(nil, value: okO)
-        .animation(nil, value: lockO)
         .animation(nil, value: upO)
         .frame(width: w, height: Self.rowH, alignment: .leading)
         .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
@@ -419,7 +456,8 @@ struct VocabSessionView: View {
         let s = model.display.stats
         return VStack(alignment: .leading, spacing: 10) {
             Spacer(minLength: 0)
-            Text(model.mode == .learn ? "Leçon" : "Réviser").uppercaseLabel(AppColor.ink)
+            Text(model.isSwipeLesson ? "Leçon 0 · Comment glisser" : model.mode == .learn ? "Leçon" : "Réviser")
+                .uppercaseLabel(AppColor.ink)
             Text("Terminé")
                 .font(.display(size: 40, wght: 250))
                 .tracking(-1.2)
@@ -441,6 +479,16 @@ struct VocabSessionView: View {
     /// at the cap « Terminer » + « Encore une leçon ».
     @ViewBuilder
     private var doneButtons: some View {
+        if model.isSwipeLesson {
+            Button("Leçon 1") { withAnimation(.smooth(duration: 0.4)) { model.openFirstLecon() } }
+                .buttonStyle(DrillButtonStyle())
+        } else {
+            pacingButtons
+        }
+    }
+
+    @ViewBuilder
+    private var pacingButtons: some View {
         switch model.mode == .learn ? model.next : .none {
         case .nextLecon:
             Button("Leçon suivante") { withAnimation(.smooth(duration: 0.4)) { model.openNextLecon() } }
@@ -568,15 +616,15 @@ struct VocabSessionView: View {
 
     // MARK: Swipe lesson
 
-    /// The mock's `startCoach`: a 0.5 s lead-in (the stack is still fading in
-    /// from the Leçon page), then each step glides out in 0.7 s, holds until
-    /// 1.9 s, glides back in 0.45 s and rests 0.8 s; the four steps loop.
+    /// The mock's `startCoach`, without its 0.5 s lead-in (leçon 0 has no
+    /// Leçon page to fade from; motion starts at once): each step glides out
+    /// in 0.7 s, holds until 1.9 s, glides back in 0.45 s and rests 0.8 s; the
+    /// four steps loop.
     private func startCoach() {
         coachTask?.cancel()
         coachOn = true
         coachStep = -1
         coachTask = Task { @MainActor in
-            try? await Task.sleep(nanoseconds: 500_000_000)
             var step = 0
             while !Task.isCancelled && coachOn {
                 let s = Self.coachSteps[step]
