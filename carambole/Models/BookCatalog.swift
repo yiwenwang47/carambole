@@ -39,6 +39,9 @@ struct BookDescriptor: Identifiable, Hashable {
     /// UserDefaults key scope. `nil` keeps the original `settings.*` keys
     /// (Book 1, unchanged); otherwise keys read `settings.<scope>.*`.
     let settingsScope: String?
+    /// Shelf title broken into lines by hand when it doesn't fit on one
+    /// (`nil` = `shelfTitle` on one line). See `LibraryView.blockLabel`.
+    var shelfLines: [String]? = nil
 
     static func == (lhs: BookDescriptor, rhs: BookDescriptor) -> Bool { lhs.id == rhs.id }
     func hash(into hasher: inout Hasher) { hasher.combine(id) }
@@ -60,7 +63,8 @@ enum BookCatalog {
     /// Vocab swipe book *Monnaie courante* (plan 2026-10-23).
     static let mots = BookDescriptor(
         id: motsID, title: "Français — Monnaie courante", shelfTitle: "Monnaie courante",
-        kicker: "Vocabulaire", kind: .vocab, settingsScope: "book_fr_mots")
+        kicker: "Vocabulaire", kind: .vocab, settingsScope: "book_fr_mots",
+        shelfLines: ["Monnaie", "courante"])
 
     /// Shelf order.
     static let all: [BookDescriptor] = [fondations, enSituation, mots]

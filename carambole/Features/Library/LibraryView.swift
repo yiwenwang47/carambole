@@ -21,6 +21,8 @@ import SwiftUI
 private struct ShelfBook: Identifiable {
     let id: String
     let title: String
+    /// Title lines (one unless the book breaks its shelf title by hand).
+    let lines: [String]
     /// `.lab` kicker after the number, e.g. `Grammaire A1 → B1`.
     let kicker: String
     let available: Bool
@@ -40,9 +42,9 @@ struct LibraryView: View {
     /// Authored order: the language's books, then its placeholders.
     private var catalog: [ShelfBook] {
         language.books.map {
-            ShelfBook(id: $0.id, title: $0.shelfTitle, kicker: $0.kicker, available: true, descriptor: $0)
+            ShelfBook(id: $0.id, title: $0.shelfTitle, lines: $0.shelfLines ?? [$0.shelfTitle], kicker: $0.kicker, available: true, descriptor: $0)
         } + language.placeholders.map {
-            ShelfBook(id: $0.id, title: $0.title, kicker: $0.kicker, available: false, descriptor: nil)
+            ShelfBook(id: $0.id, title: $0.title, lines: [$0.title], kicker: $0.kicker, available: false, descriptor: nil)
         }
     }
 
@@ -242,17 +244,30 @@ struct LibraryView: View {
         }
     }
 
+    private func titleText(_ text: String, _ book: ShelfBook) -> some View {
+        Text(text)
+            .font(.display(size: 32, wght: 250))
+            .tracking(-0.96)
+            .foregroundColor(book.available ? AppColor.ink : AppColor.g3)
+            .fixedSize(horizontal: false, vertical: true)
+    }
+
     /// Kicker `.lab`, title 32 / 250, then `Ouvrir →` (underlined) + % or `Bientôt`.
     private func blockLabel(_ book: ShelfBook, number: Int) -> some View {
         VStack(alignment: .leading, spacing: 0) {
             Text(String(format: "%02d · ", number) + book.kicker)
                 .uppercaseLabel()
-            Text(book.title)
-                .font(.display(size: 32, wght: 250))
-                .tracking(-0.96)
-                .foregroundColor(book.available ? AppColor.ink : AppColor.g3)
-                .fixedSize(horizontal: false, vertical: true)
+            if book.lines.count > 1 {
+                // Hand-broken title: 37 pt line pitch (Manrope's natural line
+                // at 32 pt is 43.7 pt, (2132 + 600) / 2000 × 32).
+                VStack(alignment: .leading, spacing: -6.7) {
+                    ForEach(book.lines, id: \.self) { titleText($0, book) }
+                }
                 .padding(.top, 2)
+            } else {
+                titleText(book.title, book)
+                    .padding(.top, 2)
+            }
             if book.available {
                 HStack(spacing: 10) {
                     Text(language.shelf.open)
