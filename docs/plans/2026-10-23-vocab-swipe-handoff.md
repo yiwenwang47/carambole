@@ -14,8 +14,9 @@ or content.
 new or changed view could be too long, **ask the user exactly what to do**
 (shrink, wrap, widen, rewrite). Don't choose a fallback yourself. Put this
 rule in every subagent brief. Long vocab headwords shrink to fit
-(`.minimumScaleFactor(0.7)`); measure with the bundled font to confirm that
-0.7 is always enough.
+(`.minimumScaleFactor(0.7)`); `VocabSwipeCard._selfTest` measures every
+headword with the bundled font at 375 pt at launch (widest « faire la
+connaissance de », 254 of 251 pt, so 0.99 is needed).
 
 ## 1. State (2026-10-24)
 
@@ -54,20 +55,32 @@ rule in every subagent brief. Long vocab headwords shrink to fit
       (`Core/VocabPlacement.swift`).
   - **Leçon page:** dictionary rows.
     - **Swiping a row left arms trop facile**, swiping again disarms (user
-      2026-10-24). No row label, no tap; armed = lime row.
+      2026-10-24). No row label, no tap; armed = lime row. It toggles mid-drag
+      the moment the uncovered label + 6 pt shows (≈100 pt « Trop facile »,
+      ≈87 pt « Remettre »; `VocabLessonView.toggleDistance`), once per drag.
     - Part of speech in a 52 pt left margin, register under it; a long
       headword wraps at full size (mock `design/vocab/lecon-pos-options.html`,
       option B; details in `2026-10-24-truncation-fixes-handoff.md`).
-  - **Session:**
-    - The stack holds 4 cards. A small left drag peeks, far left = `.again`,
-      right = `.good`, up = trop facile.
-    - After a peek, right and up rubber-band back, with no label.
-    - **Cards carry no « Trop facile ? » tag** (removed 2026-10-24). Swipe up is
-      the only marking action on a card. An armed card looks like any other
-      card and resolves on its first swipe (clean right → removed with undo;
-      anything else → reset).
-    - Every headword fits the card at full size at 390 and 402 pt (widest:
-      « donner un coup de main », 259 of 266 pt).
+  - **Session (reworked 2026-10-24, commit `aae58d66`, on the phone):**
+    - **4 fixed slots; ANY card can be swiped** (user). The swiped card flies
+      off sideways (`FlyingCard`, spring with the finger's speed) and the next
+      waiting word fades into the SAME slot. **Nothing ever slides up** (user
+      rejected the cascade / slide-up as stutter); an empty slot stays empty.
+      The leçon ends only when every card on screen is cleared.
+    - A small left drag peeks, far left = `.again`, right = « connu ». After a
+      peek that card only goes left (rubber band, no label).
+    - **Learn: a word leaves after 3 « connu » in a row**; the first two send
+      it back with 5 waiting cards ahead and grade nothing; the third grades
+      `.good`; a left swipe resets the count and returns it after 2 waiting
+      cards. Review / placement / leçon 0 practice: one right leaves.
+    - **No swipe up** (removed 2026-10-24): trop facile is marked ONLY on the
+      Leçon page. An armed card looks like any other and resolves on its
+      first swipe (clean right → removed with undo; left / peek → reset).
+    - Cards are one fixed size (72 pt); long headwords shrink (see §0).
+    - Leçon 0's demo has 3 steps (peek, far left, right).
+    - DEBUG: `CB_VOCAB_SESSION=learn|review` opens a session directly
+      (`Debug/DrillDemo.swift`); `CB_VOC_SCRIPT` steps take a slot digit
+      (`right2`).
   - **Mock-match fixes (2026-10-24):**
     - The ✕ is drawn as two bars (`VocabCloseGlyph`).
     - The play disc shrinks to 0.92 while its clip plays.

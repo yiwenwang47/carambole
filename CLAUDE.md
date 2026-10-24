@@ -174,8 +174,9 @@ xcodebuild build -project carambole.xcodeproj -scheme carambole \
 - **Phone** (iPhone 18 Pro `00008160-001A09920AA0000A`, team `QMV4SPL476`,
   bundle `wen.carambole`). Install only when the user asks. The user tests on the
   phone; Claude never tests, records or profiles there. The 2026-10-24 Release
-  build (`30ac3321`: Books 1, 2 and Monnaie courante, no-dots fixes, Leçon
-  swipe) is on the phone; the user confirmed the Leçon page scrolls and swipes.
+  build (`aae58d66`: Monnaie courante slots refilled in place, 3 connus, no
+  swipe up, quicker Leçon arming) is on the phone. If `release_build.sh`
+  needs `CARAMBOLE_AUDIO_PYTHON`, `~/miniconda3/bin/python3` has the deps.
   ```bash
   CARAMBOLE_AUDIO_PYTHON=/path/to/python-with-numpy-scipy-lameenc \
     tools/release_build.sh \
