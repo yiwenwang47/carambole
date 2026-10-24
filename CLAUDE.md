@@ -14,7 +14,8 @@ Older history is in `docs/archive/` and git log.
 - **Vocab swipe book (*Mots*, branch `vocab-swipe`, 2026-10-23):** start at
   `docs/plans/2026-10-23-vocab-swipe-handoff.md`; spec in
   `docs/plans/2026-10-23-vocab-swipe-plan.md`. Mock + review set v1 approved;
-  next is the engine (phase 3).
+  engine (phase 3) and views (phase 4, `Features/Vocab/`, on the shelf) built;
+  next is bulk content (phase 5).
 - **Status + phone checks:** `docs/plans/2026-10-13-book-2-release-handoff.md`.
   Next, only when asked: the Écrire typing drill, in its own session.
 - **Book 2 rulebook** (cast, voices, JSON shape, authoring steps):
@@ -66,8 +67,13 @@ Older history is in `docs/archive/` and git log.
   drill and resolves on that drill alone; the card's other drills still play and
   grade the element normally (`SituationTooEasy.gradedOutcome`). Shared code: `Features/Drill/TooEasy.swift` (`TooEasyGate`,
   `TooEasyControl`, `.tooEasyUndo`). Book 1: `DrillView`/`DrillSessionView`.
-  Book 2: `SituationCardView`/`SituationSessionView` + `SituationTooEasy`. A new
-  book or session view reuses these; never fork the logic.
+  Book 2: `SituationCardView`/`SituationSessionView` + `SituationTooEasy`.
+  **Mots (2026-10-23):** no `TooEasyControl`; swipe up on a card IS trop facile
+  (resolved at once, clean by definition), and a word armed by tapping its
+  Leçon-page row resolves on its first swipe (clean right → removed; peek or
+  left → cleaned, then a normal word). `VocabQueue` → `VocabStudy.commit` →
+  `TooEasyGate.resolve`; pill via `.tooEasyUndo(edge: .bottom, onUndo:)`.
+  A new book or session view reuses these; never fork the logic.
 - **The drill card never scrolls as a whole.** Book 1 can scroll its word-bank
   tray (`MagnetBoard.bankTray`); text uses `minimumScaleFactor`. In Book 2, only
   the chat scrolls. The purple reply bank shows all tiles and stays fixed.
@@ -127,7 +133,7 @@ Older history is in `docs/archive/` and git log.
   `.default` / `[.mixWithOthers, .duckOthers]` → activate; afterwards
   `setActive(false, .notifyOthersOnDeactivation)` → `.ambient`. Clips must be
   equal loudness (`tools/situations/normalize_audio.py`).
-- **Folders:** `Features/{Library,Book,Today,Drill,Situation,History,Settings}`,
+- **Folders:** `Features/{Library,Book,Today,Drill,Situation,Vocab,History,Settings}`,
   `Core/`, `Models/`, `DesignSystem/`, `Debug/` (DEBUG-only harness + Test book).
 
 ## Build and check

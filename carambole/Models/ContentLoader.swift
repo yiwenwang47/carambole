@@ -59,6 +59,7 @@ enum ContentLoader {
         switch descriptor.kind {
         case .grammar: return loadBook()
         case .situation: return loadSituationBook(descriptor)
+        case .vocab: return loadVocabBook(descriptor)
         }
     }
 
@@ -153,6 +154,26 @@ enum ContentLoader {
         }
         book.modules.sort { $0.sortOrder < $1.sortOrder }
         return book
+    }
+
+    // MARK: - Mots
+
+    /// *Mots* as Book → Module (one frequency band) → Element (one entry), so the
+    /// shared book machinery (due / seen counts, progress, history) works on
+    /// `voc_` ids. The swipe session itself reads `VocabBook` (leçons, display
+    /// helpers) via `VocabBook.loadBundled()`. A missing `mots.json` gives an
+    /// empty book.
+    static func loadVocabBook(_ descriptor: BookDescriptor, vocab: VocabBook = .bundled) -> Book {
+        let modules = vocab.bands.map { band in
+            CourseModule(
+                id: "voc_band_\(band.band)", bookID: descriptor.id, sortOrder: band.band,
+                title: "Mots \(band.rankRange.lowerBound)–\(band.rankRange.upperBound)", ruleNote: "",
+                elements: band.entries.enumerated().map { index, entry in
+                    GrammarElement(id: entry.id, moduleID: "voc_band_\(band.band)", sortOrder: index + 1,
+                                   label: entry.displayFR, ruleNote: entry.en, examples: [])
+                })
+        }
+        return Book(id: descriptor.id, title: descriptor.title, sortOrder: 3, modules: modules, kind: .vocab)
     }
 
     private static func situationURL(_ resource: String, _ ext: String) -> URL? {

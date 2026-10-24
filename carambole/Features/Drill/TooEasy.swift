@@ -10,6 +10,8 @@
 //  moves on to the next element. Book 1: `DrillView` / `DrillSessionView`.
 //  Book 2: `SituationCardView` / `SituationSessionView` — armed on one drill,
 //  resolved by that drill; the card's other drills grade normally.
+//  *Mots*: `VocabSessionView` — no `TooEasyControl`; swipe up (or a clean right
+//  swipe on a word armed on the Leçon page) resolves the gate.
 //
 
 import SwiftUI
@@ -96,14 +98,21 @@ extension View {
     /// "Annuler" (demotes `elementID` back to en-cours). Floats at the top, just
     /// under the session's ✕ row, so it never covers the card's footer. Swipe up
     /// or wait ~4.5 s to dismiss. Bump `token` on each removal to restart the timer.
-    func tooEasyUndo(elementID: Binding<String?>, token: Int) -> some View {
-        modifier(TooEasyUndoModifier(elementID: elementID, token: token))
+    /// `onUndo` runs after « Annuler » demotes the element (*Mots* moves the
+    /// word from its trop facile count to known); Books 1 and 2 pass nothing.
+    /// `edge: .bottom` floats it 40 pt above the bottom instead (*Mots*: its
+    /// top holds the big count and its bottom is empty; mock `.pill`).
+    func tooEasyUndo(elementID: Binding<String?>, token: Int, edge: VerticalEdge = .top,
+                     onUndo: (() -> Void)? = nil) -> some View {
+        modifier(TooEasyUndoModifier(elementID: elementID, token: token, edge: edge, onUndo: onUndo))
     }
 }
 
 private struct TooEasyUndoModifier: ViewModifier {
     @Binding var elementID: String?
     let token: Int
+    var edge: VerticalEdge = .top
+    var onUndo: (() -> Void)?
     /// Upward drag on the pill; it follows the finger until it dismisses.
     @State private var drag: CGFloat = 0
 
@@ -112,7 +121,7 @@ private struct TooEasyUndoModifier: ViewModifier {
             content
             // The surrounding VStack/Spacer is hit-transparent (only the pill
             // takes touches) so the live card underneath stays interactive.
-            if elementID != nil {
+            if elementID != nil, edge == .top {
                 VStack {
                     pill
                         .padding(.horizontal, Spacing.screenH)
@@ -120,6 +129,14 @@ private struct TooEasyUndoModifier: ViewModifier {
                     Spacer().allowsHitTesting(false)
                 }
                 .transition(.move(edge: .top).combined(with: .opacity))
+            } else if elementID != nil {
+                VStack {
+                    Spacer().allowsHitTesting(false)
+                    pill
+                        .padding(.horizontal, 20)
+                        .padding(.bottom, 40)
+                }
+                .transition(.offset(y: 20).combined(with: .opacity))
             }
         }
         .animation(.spring(response: 0.4, dampingFraction: 0.85), value: elementID)
@@ -154,6 +171,7 @@ private struct TooEasyUndoModifier: ViewModifier {
             .accessibilityLabel("Annuler · remettre en cours")
         }
         .padding(.horizontal, 22)
+        .frame(maxWidth: edge == .bottom ? .infinity : nil)
         .frame(height: 48)
         .background(Capsule().fill(AppColor.buttonDark))
         .offset(y: drag)
@@ -178,7 +196,10 @@ private struct TooEasyUndoModifier: ViewModifier {
     /// Demote the just-removed element back to en-cours, then hide the pill.
     /// The session has already moved past it; the demote is a pure data op.
     private func undo() {
-        if let id = elementID { DataManager.shared.demote(elementID: id) }
+        if let id = elementID {
+            DataManager.shared.demote(elementID: id)
+            onUndo?()
+        }
         elementID = nil
     }
 }

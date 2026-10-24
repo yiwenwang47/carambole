@@ -104,9 +104,14 @@ final class BookViewModel: ObservableObject {
             let frontier = book.modules
                 .filter { unlocked.contains($0.id) }
                 .max(by: { $0.sortOrder < $1.sortOrder })
-            let newCount = frontier?.elements.filter {
+            var newCount = frontier?.elements.filter {
                 !(self.descriptor.kind == .situation ? introduced : seen).contains($0.id)
             }.count ?? 0
+            // *Mots*: one tap teaches one leçon of the frontier band.
+            if self.descriptor.kind == .vocab {
+                newCount = frontier.flatMap { Self.vocabLecon(for: $0) }
+                    .map { VocabStudy.pendingIDs(lecon: $0).count } ?? 0
+            }
 
             // Today's done-work, scoped to this book. "reviewed" excludes elements
             // first-seen today (a first sighting is not a re-grade) — matches the
@@ -222,6 +227,13 @@ final class BookViewModel: ObservableObject {
     /// creates review state but does not complete that element's introduction.
     /// Once all elements have a correct answer, a new tap practises the full module.
     func moduleLearnElements(_ module: CourseModule) -> [GrammarElement] {
+        if descriptor.kind == .vocab {
+            // *Mots*: a module is a band of 10 leçons; Apprendre serves ONE
+            // leçon (the band's next unfinished one), its pending entries.
+            guard let lecon = Self.vocabLecon(for: module) else { return [] }
+            let pending = VocabStudy.pendingIDs(lecon: lecon)
+            return module.elements.filter { pending.contains($0.id) }
+        }
         let completed = Set(module.elements.compactMap { element -> String? in
             guard let status = DataManager.shared.fetchReviewStatus(elementID: element.id),
                   status.distinctCorrect > 0 || status.graduatedDate != nil || status.suspended
@@ -230,6 +242,13 @@ final class BookViewModel: ObservableObject {
         })
         let pending = Set(LearnLoop.pendingElementIDs(module.elements.map(\.id), completedIDs: completed))
         return module.elements.filter { pending.contains($0.id) }
+    }
+
+    /// *Mots*: the leçon Apprendre opens for band module `module`
+    /// (`voc_band_<n>`), from the bundled book.
+    static func vocabLecon(for module: CourseModule) -> VocabLecon? {
+        guard let band = VocabBook.bundled.bands.first(where: { "voc_band_\($0.band)" == module.id }) else { return nil }
+        return VocabStudy.nextLecon(in: band.lecons)
     }
 
     // MARK: - Module row state

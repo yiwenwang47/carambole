@@ -4,7 +4,7 @@
 //
 //  Picks the drill loop for the selected book: *Fondations* drills example
 //  sentences (`DrillSessionView`), *En situation* drills dialogues
-//  (`SituationSessionView`). Every session entry point (book home, module list,
+//  (`SituationSessionView`), *Mots* swipes words (`VocabSessionView`). Every session entry point (book home, module list,
 //  module page) goes through here, so the book's own settings store and
 //  content always reach the session.
 //
@@ -33,6 +33,9 @@ struct StudySessionView: View {
             SituationSessionView(book: viewModel.book, title: title, ruleNote: ruleNote,
                                  elements: elements, mode: mode, module: module, canStart: canStart,
                                  autoSpeak: viewModel.settingsStore.autoSpeak, onFinish: onFinish)
+        case .vocab:
+            VocabSessionView(elements: elements, mode: mode, canStart: canStart,
+                             settings: viewModel.settingsStore.settings, onFinish: onFinish)
         }
     }
 }

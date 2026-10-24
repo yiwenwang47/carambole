@@ -106,7 +106,7 @@ struct SettingsView: View {
             title: "Éléments / jour",
             note: newPerDayNote,
             value: $store.settings.newPerDay,
-            range: StudySettings.newPerDayRange
+            range: store.limits.newPerDayRange
         )
     }
 
@@ -117,7 +117,7 @@ struct SettingsView: View {
             Text("Révisions par tour").uppercaseLabel(AppColor.ink)
 
             HStack(spacing: 20) {
-                ForEach(StudySettings.reviewRoundSizeOptions, id: \.self) { size in
+                ForEach(store.limits.reviewRoundSizeOptions, id: \.self) { size in
                     Button {
                         store.settings.reviewRoundSize = size
                         UISelectionFeedbackGenerator().selectionChanged()
@@ -167,6 +167,7 @@ struct SettingsView: View {
         switch kind {
         case .grammar: "New grammar elements per day — a hard cap."
         case .situation: "New conversation moves per day — a hard cap."
+        case .vocab: "New words per day — a hard cap."
         }
     }
 
@@ -174,6 +175,7 @@ struct SettingsView: View {
         switch kind {
         case .grammar: "Maximum exercises per round; only due reviews appear."
         case .situation: "Maximum dialogues per round; only due reviews appear."
+        case .vocab: "Maximum words in one review stack; only due words appear."
         }
     }
 

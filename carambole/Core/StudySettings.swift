@@ -12,21 +12,58 @@ struct StudySettings: Equatable {
     /// allowed option on init.
     var reviewRoundSize: Int
 
-    static let newPerDayRange = 3...20
-    static let reviewTargetRange = 40...600
+    /// The allowed values and defaults for one book's settings. *Fondations* and
+    /// *En situation* share `.standard` (unchanged); *Mots* uses `.vocab`.
+    struct Limits: Equatable {
+        let newPerDayRange: ClosedRange<Int>
+        let reviewTargetRange: ClosedRange<Int>
+        /// `reviewRoundSize` snaps to one of these.
+        let reviewRoundSizeOptions: [Int]
+        let defaultNewPerDay: Int
+        let defaultReviewTarget: Int
+        let defaultReviewRoundSize: Int
+
+        /// Books 1 and 2: 3–20 new a day, rounds of 10 / 20 / 50.
+        static let standard = Limits(newPerDayRange: 3...20, reviewTargetRange: 40...600,
+                                     reviewRoundSizeOptions: [10, 20, 50], defaultNewPerDay: 10,
+                                     defaultReviewTarget: 200, defaultReviewRoundSize: 20)
+        /// *Mots* (plan 2026-10-23): 10–20 new words a day (default 10); one
+        /// review stack capped at 200 / 250 / 300 (default 250). `reviewTarget`
+        /// is unused there and keeps the standard values.
+        static let vocab = Limits(newPerDayRange: 10...20, reviewTargetRange: 40...600,
+                                  reviewRoundSizeOptions: [200, 250, 300], defaultNewPerDay: 10,
+                                  defaultReviewTarget: 200, defaultReviewRoundSize: 250)
+
+        static func `for`(_ kind: BookKind) -> Limits {
+            switch kind {
+            case .grammar, .situation: return .standard
+            case .vocab: return .vocab
+            }
+        }
+
+        /// The defaults as settings.
+        var defaults: StudySettings {
+            StudySettings(newPerDay: defaultNewPerDay, reviewTarget: defaultReviewTarget,
+                          reviewRoundSize: defaultReviewRoundSize, limits: self)
+        }
+    }
+
+    // Books 1 and 2 (`Limits.standard`), kept for existing call sites.
+    static let newPerDayRange = Limits.standard.newPerDayRange
+    static let reviewTargetRange = Limits.standard.reviewTargetRange
     static let reviewTargetStep = 20
-    static let reviewRoundSizeOptions = [10, 20, 50]
+    static let reviewRoundSizeOptions = Limits.standard.reviewRoundSizeOptions
 
     /// Distinct example sentences a learner must answer correctly for an element to
     /// count as mastered (the module-unlock gate). Not user-tunable in v1.
     static let masteryThreshold = 3
 
-    static let `default` = StudySettings(newPerDay: 10, reviewTarget: 200, reviewRoundSize: 20)
+    static let `default` = Limits.standard.defaults
 
-    init(newPerDay: Int, reviewTarget: Int, reviewRoundSize: Int) {
-        self.newPerDay = newPerDay.clamped(to: StudySettings.newPerDayRange)
-        self.reviewTarget = reviewTarget.clamped(to: StudySettings.reviewTargetRange)
-        self.reviewRoundSize = reviewRoundSize.snapped(to: StudySettings.reviewRoundSizeOptions)
+    init(newPerDay: Int, reviewTarget: Int, reviewRoundSize: Int, limits: Limits = .standard) {
+        self.newPerDay = newPerDay.clamped(to: limits.newPerDayRange)
+        self.reviewTarget = reviewTarget.clamped(to: limits.reviewTargetRange)
+        self.reviewRoundSize = reviewRoundSize.snapped(to: limits.reviewRoundSizeOptions)
     }
 }
 
@@ -64,6 +101,9 @@ final class StudySettingsStore: ObservableObject {
     private let defaults: UserDefaults
     /// nil → `settings.<name>` (Book 1); else `settings.<scope>.<name>`.
     let scope: String?
+    /// This book's ranges, options and defaults. Settings views read their
+    /// stepper range and round-size options from here.
+    let limits: StudySettings.Limits
 
     /// The full UserDefaults key for a setting in this book's scope.
     func key(_ name: String) -> String {
@@ -92,22 +132,26 @@ final class StudySettingsStore: ObservableObject {
     }
 
     convenience init(book: BookDescriptor, defaults: UserDefaults = .standard) {
-        self.init(defaults: defaults, scope: book.settingsScope)
+        self.init(defaults: defaults, scope: book.settingsScope, limits: .for(book.kind))
     }
 
-    init(defaults: UserDefaults = .standard, scope: String? = nil) {
+    init(defaults: UserDefaults = .standard, scope: String? = nil,
+         limits: StudySettings.Limits = .standard) {
         self.defaults = defaults
         self.scope = scope
+        self.limits = limits
+        let fallback = limits.defaults
         let newPerDay = defaults.object(forKey: Self.key(Name.newPerDay, scope: scope)) as? Int
-            ?? StudySettings.default.newPerDay
+            ?? fallback.newPerDay
         let reviewTarget = defaults.object(forKey: Self.key(Name.reviewTarget, scope: scope)) as? Int
-            ?? StudySettings.default.reviewTarget
+            ?? fallback.reviewTarget
         let reviewRoundSize = defaults.object(forKey: Self.key(Name.reviewRoundSize, scope: scope)) as? Int
-            ?? StudySettings.default.reviewRoundSize
+            ?? fallback.reviewRoundSize
         // Absent key → OFF by default; opt-in only.
         self.autoSpeak = defaults.object(forKey: Self.key(Name.autoSpeak, scope: scope)) as? Bool ?? false
         // Clamps via init; persists clamped values back through didSet.
-        self.settings = StudySettings(newPerDay: newPerDay, reviewTarget: reviewTarget, reviewRoundSize: reviewRoundSize)
+        self.settings = StudySettings(newPerDay: newPerDay, reviewTarget: reviewTarget,
+                                      reviewRoundSize: reviewRoundSize, limits: limits)
     }
 }
 
@@ -175,6 +219,34 @@ extension StudySettingsStore {
         assert(suite.object(forKey: "settings.book_fr_en_situation.reviewRoundSize") as? Int == 10,
                "Book 2 uses the documented key")
         assert(suite.object(forKey: "settings.autoSpeak") == nil, "Book 2 never writes Book 1's key")
+
+        // *Mots*: its own ranges and defaults (10–20 new, cap 200 / 250 / 300),
+        // its own keys; Book 1's ranges are untouched.
+        suite.removePersistentDomain(forName: suiteName)
+        let vocab = StudySettings.Limits.vocab
+        assert(StudySettings.Limits.for(.vocab) == vocab && StudySettings.Limits.for(.situation) == .standard,
+               "limits per book kind")
+        assert(StudySettings.newPerDayRange == 3...20 && StudySettings.reviewRoundSizeOptions == [10, 20, 50],
+               "Book 1 ranges unchanged")
+        assert(StudySettings(newPerDay: 3, reviewTarget: 200, reviewRoundSize: 20, limits: vocab).newPerDay == 10,
+               "vocab newPerDay clamps up to 10")
+        assert(StudySettings(newPerDay: 50, reviewTarget: 200, reviewRoundSize: 20, limits: vocab).newPerDay == 20,
+               "vocab newPerDay clamps down to 20")
+        assert(StudySettings(newPerDay: 10, reviewTarget: 200, reviewRoundSize: 20, limits: vocab).reviewRoundSize == 200,
+               "vocab cap snaps up to 200")
+        assert(StudySettings(newPerDay: 10, reviewTarget: 200, reviewRoundSize: 280, limits: vocab).reviewRoundSize == 300,
+               "vocab cap snaps to 300")
+        let mots = StudySettingsStore(book: BookCatalog.mots, defaults: suite)
+        assert(mots.limits == vocab, "Mots store uses the vocab limits")
+        assert(mots.settings.newPerDay == 10 && mots.settings.reviewRoundSize == 250, "vocab defaults 10 / 250")
+        assert(mots.key("reviewRoundSize") == "settings.book_fr_mots.reviewRoundSize", "Mots scoped key")
+        mots.settings = StudySettings(newPerDay: 15, reviewTarget: 200, reviewRoundSize: 300, limits: vocab)
+        assert(StudySettingsStore(book: BookCatalog.mots, defaults: suite).settings.reviewRoundSize == 300,
+               "vocab settings round-trip")
+        assert(StudySettingsStore(book: BookCatalog.fondations, defaults: suite).settings == .default,
+               "Mots writes leave Book 1 alone")
+        assert(StudySettingsStore(book: BookCatalog.enSituation, defaults: suite).settings == .default,
+               "Mots writes leave Book 2 alone")
 
         suite.removePersistentDomain(forName: suiteName)
     }

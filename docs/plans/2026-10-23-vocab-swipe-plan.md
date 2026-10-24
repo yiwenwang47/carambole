@@ -139,6 +139,100 @@ Grading is binary otherwise: `.good` or `.again`.
 4. Views, simulator check (frames).
 5. Bulk lists + audio, release gate.
 
+## Engine API (phase 3)
+
+Built 2026-10-23. Pure parts self-test at DEBUG launch (`VocabBook._selfTest`,
+`VocabQueue._selfTest` in `caramboleApp.swift`).
+
+- **`Models/Vocab.swift`**: `VocabEntry` (`id`, `fr`, `pos`, `en`, `rank?`,
+  `fem?`, `register?`, `audio`) with display helpers: `displayWord`
+  (« confiance », « doux, douce »), `displayArticle` (« (la) », « (l') »,
+  « (se) », nil when none; set it smaller after the word, as in the mock),
+  `displayFR` (one line, « confiance (la) »), `posLabel` (`n.m. · fam.`),
+  `isExpression`. The article split is the mock's `head()` rule (le / la / les /
+  se + space, l' / s'). `VocabBook` → `bands: [VocabBand]` → `lecons:
+  [VocabLecon]` (`index` global, `band`) → `entries`; `lecon(index:)`,
+  `entry(id:)`, `nextLecon(done:)`, `VocabBook.loadBundled()` (reads
+  `Resources/Vocab/mots.json`; missing / broken file → `.empty`, logged). Bad
+  entries (non-`voc_` id, empty field, duplicate id) are dropped on decode.
+- **`Core/VocabQueue.swift`** (pure value type): build with
+  `VocabQueue.learn(entries:armed:)` or `VocabQueue.review(due:cap:)`.
+  Read `visible` (top card first, ≤ 4 `Card`s: `id` per presentation, `entry`,
+  `armed` → « Trop facile ? » tag, `again` → dashed outline), `current`,
+  `remaining` (big count), `stats` (`known`, `again`, `tooEasy`), `peeked`,
+  `canSwipeRight` / `canSwipeUp` (false after a peek: rubber-band),
+  `isFinished`, `mode`. Drive with `apply(.peek / .left / .right / .up)` →
+  `.rejected` (snap back), `.peeked`, or `.swiped(Grade)`. Send `.peek` when a
+  left drag passes the peek point (mock: 56 pt). After the undo pill's Annuler,
+  call `undoTooEasy()` (stats only).
+- **`Core/VocabStudy.swift`** (I/O): `VocabStudy.commit(grade)` after every
+  `.swiped` (`.rate` → `ElementGrader.grade`; `.tooEasy` →
+  `TooEasyGate.resolve`); on `.tooEasy(_, removed: true)` set the
+  `.tooEasyUndo` pill's element id and bump its token, as Books 1 and 2 do.
+  `VocabStudy.learnQueue(lecon:armed:)` (entries not yet answered right; all of
+  them once the leçon is complete), `VocabStudy.reviewQueue(book:cap:)` (pass
+  `settingsStore.settings.reviewRoundSize`), `VocabStudy.dueCount(book:)`.
+- **Book plumbing**: `BookKind.vocab`, `BookCatalog.mots` (`book_fr_mots`,
+  scope `book_fr_mots`), **not yet in `BookCatalog.all`** (add it in phase 4).
+  `ContentLoader.loadBook(.mots)` maps bands → modules (`voc_band_<n>`, title
+  « Mots 601–700 ») and entries → elements, so `BookViewModel` / History work
+  on `voc_` ids. `StudySessionView` has a `.vocab` placeholder (a Fermer
+  button) for phase 4 to replace with `VocabSessionView`.
+- **Settings**: `StudySettings.Limits` (`.standard` for Books 1–2, unchanged;
+  `.vocab`: new/day 10–20, default 10; review cap options 200 / 250 / 300,
+  default 250). `StudySettingsStore(book:)` picks them; `store.limits` feeds
+  `SettingsView`'s stepper range and round-size options.
+
+Claude defaults in phase 3 (flagged to the user): review order = lowest FSRS
+recall first (Book 1's order) for "most overdue"; the trop facile gate resolves
+on the swipe (a peek only locks); an armed left swipe cleans records with no
+extra `.again`; every left swipe grades `.again`, a later right grades `.good`
+(as Book 1's learn loop); the entry id is the `exampleID`; review cap options
+200 / 250 / 300.
+
+## Views (phase 4)
+
+Built 2026-10-23, port of mock v7 (`design/vocab/vocab-swipe.src.html`).
+
+- **`Features/Vocab/VocabLessonView.swift`**: slab (« Leçon 1 · mots 1–100 »
+  + big number), hint, dictionary rows (`VocabHeadword` + pos label + gloss +
+  play disc), tap = arm (pale lime row, « Trop facile » label), Commencer ·
+  N mots (N = pending entries) fixed at the bottom; locked module →
+  « Verrouillé ».
+- **`Features/Vocab/VocabSwipeCard.swift`**: the card (72 pt, 1.5 pt ink
+  outline, dashed `fragile` [3, 2.5] when requeued, « Trop facile ? » tag),
+  `VocabHeadword`, `VocabPlayDisc` (34 pt `quietFill` disc, mock triangle,
+  `Speaker.playBundled`; dimmed when the clip is missing).
+- **`Features/Vocab/VocabSessionView.swift`**: `VocabSessionModel`
+  (`@StateObject`: leçon, armed set, live `queue` + drawn `display` that lags
+  by the 0.26 s fly-out) and the view (✕, hero count / swipe-lesson captions,
+  tray with ≤ 4 cards, underlay, done panel, gestures with the mock's
+  thresholds and curves). Swipe lesson on the book's first leçon only
+  (`teachesSwipes`), every time that leçon opens.
+- **Routing**: `BookCatalog.all` now has *Mots* (shelf slot 03, percent from
+  its own `BookViewModel`); `StudySessionView` `.vocab` → `VocabSessionView`.
+  `BookViewModel.moduleLearnElements` / `newAvailableToday` serve ONE leçon of
+  the band (`vocabLecon(for:)` → `VocabStudy.nextLecon(in:)`), so Book home,
+  module list and Aujourd'hui all open / count the same leçon.
+- **Pacing (PROVISIONAL, Claude default pending the user)**: all in
+  `Core/VocabPacing.swift`. One leçon per new-word session, never cut; only
+  words (not `loc.`) count against `newPerDay`
+  (`VocabStudy.wordsLearnedToday`). Done panel: under the cap « Leçon
+  suivante »; at the cap « Terminer » + « Encore une leçon ». Apprendre on the
+  book home is never blocked by the cap.
+- **Shared trop facile**: `.tooEasyUndo` gained `edge:` (`.bottom` = mock
+  position, full width, 40 pt up) and `onUndo:` (stats); Books 1–2 unchanged.
+- **Shelf mark**: `BookMarkShape.placeholder`, a plain torn disc with the
+  number (no overprint), until the studio mark process picks one.
+- **Simulator flags (DEBUG)**: `CB_OPEN_BOOK=book_fr_mots CB_START=learn|review`,
+  `CB_VOC_ARM=n`, `CB_VOC_START=<s>` (press Commencer), `CB_VOC_SCRIPT=
+  touch,peek,left,right,up,lock,wait,…` (+ `CB_VOC_SCRIPT_DELAY`),
+  `CB_VOC_REVIEW_ALL=1` (band 1 as if due). Test install under
+  `CB_BUNDLE=wen.carambole.enginetest`.
+- Known mock-vs-app differences: see the 2026-10-23 phase 4 report (✕ glyph,
+  balanced captions hard-broken, headword shrinks before it truncates, pill
+  shape from the shared modifier).
+
 ## Log
 
 - 2026-10-23: plan saved; mock v1–v7 iterated with the user (layout above).
@@ -146,3 +240,10 @@ Grading is binary otherwise: `.good` or `.again`.
   ok, manière, sauf, moi-même, épouser, vacance(s).
 - 2026-10-23: review set v1 (9 entries, one per entry type), audio 9/9
   Lingua Libre; user: "works".
+- 2026-10-23: phase 3 engine: `Models/Vocab.swift`, `Core/VocabQueue.swift`,
+  `Core/VocabStudy.swift`, `BookKind.vocab` / `BookCatalog.mots`, per-book
+  `StudySettings.Limits`. Simulator build clean; launch self-tests pass.
+- 2026-10-23: phase 4 views: `Features/Vocab/` (Leçon page, swipe card, session
+  + swipe lesson), *Mots* on the shelf, provisional `VocabPacing`, placeholder
+  shelf mark, `.tooEasyUndo(edge:onUndo:)`. iOS 27.0 simulator build clean;
+  launch self-tests pass; frames checked against the mock in headless Chrome.

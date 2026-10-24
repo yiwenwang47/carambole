@@ -18,11 +18,18 @@
 import SwiftUI
 
 enum BookMarkShape {
-    case seed, guillemet
+    /// `placeholder`: a plain torn disc for a book whose mark is not designed
+    /// yet (*Mots*, 2026-10-23: the mark process is open; generic pictograms
+    /// were rejected). Replace it once the studio picks a mark.
+    case seed, guillemet, placeholder
 
     /// The shape for a book on the shelf (placeholders reuse their twin's).
     init(bookID: String) {
-        self = bookID == BookCatalog.enSituation.id ? .guillemet : .seed
+        switch bookID {
+        case BookCatalog.enSituation.id: self = .guillemet
+        case BookCatalog.mots.id: self = .placeholder
+        default: self = .seed
+        }
     }
 }
 
@@ -89,10 +96,12 @@ enum BookMarkArt {
     private static let guilL = svg("M48,18 C52,22 52,27 48,31 L33,50 L48,69 C52,73 52,78 48,82 C44,86 38,85 35,81 L16,57 C13,53 13,47 16,43 L35,19 C38,15 44,14 48,18 Z")
     private static let guilR = svg("M80,18 C84,22 84,27 80,31 L65,50 L80,69 C84,73 84,78 80,82 C76,86 70,85 67,81 L48,57 C45,53 45,47 48,43 L67,19 C70,15 76,14 80,18 Z")
     private static let guilLines = [svg("M42,24 L24,50 L42,76"), svg("M74,24 L56,50 L74,76")]
+    private static let disc = svg("M50,12 C71,12 88,29 88,50 C88,71 71,88 50,88 C29,88 12,71 12,50 C12,29 29,12 50,12 Z")
 
     // Cut paper: torn copies, seeded as in books.js (part i → seed 3 + 2i, overprint → 9).
     private static let cutSeed = [wobbly(seed, 0.8, 6, 3)]
     private static let cutGuil = [wobbly(guilL, 0.8, 6, 3), wobbly(guilR, 0.8, 6, 5)]
+    private static let cutDisc = [wobbly(disc, 0.8, 6, 3)]
     /// `translate(12 -3) rotate(6 60 50)`.
     private static let overSeed: Path = {
         let about = CGAffineTransform(translationX: -60, y: -50)
@@ -113,20 +122,22 @@ enum BookMarkArt {
 
     static func drawCut(_ shape: BookMarkShape, number: String, colors: Colors, in ctx: inout GraphicsContext, size: CGSize) {
         let (t, s) = fit(CGRect(x: -22, y: -18, width: 140, height: 136), size)
-        let parts = (shape == .seed ? cutSeed : cutGuil).map { $0.applying(t) }
+        let parts = (shape == .seed ? cutSeed : shape == .guillemet ? cutGuil : cutDisc).map { $0.applying(t) }
         let round = StrokeStyle(lineWidth: 10 * s, lineCap: .round, lineJoin: .round)
         for p in parts { ctx.fill(p, with: .color(.white)); ctx.stroke(p, with: .color(.white), style: round) }
         for p in parts { ctx.fill(p, with: .color(colors.face)) }
 
-        var over = ctx
-        over.blendMode = .multiply
-        over.opacity = 0.9
-        over.fill((shape == .seed ? overSeed : overGuil).applying(t), with: .color(colors.over))
+        if shape != .placeholder {
+            var over = ctx
+            over.blendMode = .multiply
+            over.opacity = 0.9
+            over.fill((shape == .seed ? overSeed : overGuil).applying(t), with: .color(colors.over))
+        }
 
         // Book number, Manrope 300 / 34, tracking −1.8, baseline at (70, 86) or (72, 98).
         let fontSize = 34 * s
         let ui = AppFonts.uiFont(AppFonts.manrope, size: fontSize, wght: 300)
-        let base = (shape == .seed ? CGPoint(x: 70, y: 86) : CGPoint(x: 72, y: 98)).applying(t)
+        let base = (shape == .guillemet ? CGPoint(x: 72, y: 98) : CGPoint(x: 70, y: 86)).applying(t)
         ctx.draw(Text(number).font(.display(size: fontSize, wght: 300)).tracking(-1.8 * s)
                     .foregroundColor(colors.number),
                  at: CGPoint(x: base.x, y: base.y - ui.ascender), anchor: .topLeading)
@@ -135,11 +146,11 @@ enum BookMarkArt {
     static func drawScript(_ shape: BookMarkShape, colors: Colors, in ctx: inout GraphicsContext, size: CGSize) {
         let (t, s) = fit(CGRect(x: -20, y: -20, width: 140, height: 140), size)
         let star = LanguageMarkArt.sparkle(90, 14, 6).applying(t)
-        let fills = (shape == .seed ? [seed] : [guilL, guilR]).map { $0.applying(t) } + [star]
+        let fills = (shape == .seed ? [seed] : shape == .guillemet ? [guilL, guilR] : [disc]).map { $0.applying(t) } + [star]
         let thick = StrokeStyle(lineWidth: 18 * s, lineCap: .round, lineJoin: .round)
         for p in fills { ctx.fill(p, with: .color(colors.face)); ctx.stroke(p, with: .color(colors.face), style: thick) }
         let line = StrokeStyle(lineWidth: 1.7 * s, lineCap: .round, lineJoin: .round)
-        for p in (shape == .seed ? seedLine : guilLines).map({ $0.applying(t) }) {
+        for p in (shape == .seed ? seedLine : shape == .guillemet ? guilLines : []).map({ $0.applying(t) }) {
             ctx.stroke(p, with: .color(Color(hex: "141414")), style: line)
         }
         ctx.fill(star, with: .color(colors.over))

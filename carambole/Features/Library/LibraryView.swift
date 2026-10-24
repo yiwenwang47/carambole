@@ -49,6 +49,7 @@ struct LibraryView: View {
     /// Each book's progress (%), from its own element IDs.
     @StateObject private var fondationsModel = BookViewModel(book: BookCatalog.fondations)
     @StateObject private var situationModel = BookViewModel(book: BookCatalog.enSituation)
+    @StateObject private var motsModel = BookViewModel(book: BookCatalog.mots)
     @State private var loaded = false
     /// The book pushed from the shelf (`BookView`).
     @State private var openedBook: BookDescriptor?
@@ -85,9 +86,11 @@ struct LibraryView: View {
                 if loaded {
                     fondationsModel.refresh()
                     situationModel.refresh()
+                    motsModel.refresh()
                 } else {
                     fondationsModel.load()
                     situationModel.load()
+                    motsModel.load()
                     loaded = true
                     if let initialBook { openedBook = initialBook }
                     #if DEBUG
@@ -173,6 +176,7 @@ struct LibraryView: View {
         let model: BookViewModel
         switch book.id {
         case BookCatalog.enSituation.id: model = situationModel
+        case BookCatalog.mots.id: model = motsModel
         default: model = fondationsModel
         }
         return model.estimate.percentComplete
