@@ -53,9 +53,11 @@ rule in every subagent brief. Long vocab headwords shrink to fit
     - It is ungraded and can be retaken from the Sommaire
       (`Core/VocabPlacement.swift`).
   - **Leçon page:** dictionary rows.
-    - **Tapping a row arms trop facile** (the « Trop facile » row label stays;
-      user 2026-10-24).
-    - A long headword shrinks to fit (0.7).
+    - **Swiping a row left arms trop facile**, swiping again disarms (user
+      2026-10-24). No row label, no tap; armed = lime row.
+    - Part of speech in a 52 pt left margin, register under it; a long
+      headword wraps at full size (mock `design/vocab/lecon-pos-options.html`,
+      option B; details in `2026-10-24-truncation-fixes-handoff.md`).
   - **Session:**
     - The stack holds 4 cards. A small left drag peeks, far left = `.again`,
       right = `.good`, up = trop facile.
@@ -151,7 +153,8 @@ python3 design/studio/server.py               # studio on http://127.0.0.1:8765
 ```
 
 DEBUG launch flags for simulator checks are in the plan doc's Views note
-(`CB_VOC_ARM`, `CB_VOC_START`, `CB_VOC_SCRIPT`, `CB_VOC_REVIEW_ALL`). Install
+(`CB_VOC_ARM`, `CB_VOC_START`, `CB_VOC_SCRIPT`, `CB_VOC_REVIEW_ALL`); the Leçon page
+alone opens with `CB_VOCAB_LECON` (see `Debug/DrillDemo.swift`). Install
 the test build under the `wen.carambole.enginetest` bundle id so the user's app
 data stays untouched. Simulators only, never the phone.
 

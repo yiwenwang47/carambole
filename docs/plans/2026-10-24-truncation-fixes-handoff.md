@@ -1,7 +1,7 @@
 # Truncation fixes handoff (2026-10-24)
 
-Branch `truncation-fixes` (off `main`, **not merged, not pushed**; merge or
-push only when the user says). Hard rule: never truncate with « … » anywhere;
+**Merged into `main` and pushed 2026-10-24** (`3bc74731`, scroll fix
+`30ac3321`); branch deleted; Release build installed on the phone. Hard rule: never truncate with « … » anywhere;
 when text can overflow, ask the user what to do (memory
 `no-ellipsis-ask-when-too-long`). Source audit:
 `docs/reports/2026-10-24-truncation-audit.txt`.
@@ -25,7 +25,7 @@ Choices mock: https://claude.ai/artifact/C7fYdLDX49LBE7kkkbW3eG
   `TickerLine` and `LearnSession` deleted.
 - Authored « … » in content (« ne ... pas » etc.) stays (user).
 
-## 2. Built 2026-10-24 (uncommitted on the branch until the user says)
+## 2. Built 2026-10-24
 
 - **`MagnetTile` → B′** (user, 2026-10-24): a tile that can't fit the tray on
   one line wraps; the capsule shape is kept; one 1 pt ink border (no second
@@ -61,6 +61,10 @@ Choices mock: https://claude.ai/artifact/C7fYdLDX49LBE7kkkbW3eG
   removed: swipe a row left past half to arm (only marks; resolves on the
   first card as before), swipe again to disarm. Hint « Glisse à gauche un mot
   trop facile ». Sim harness: `CB_VOCAB_LECON` / `_ARMED` / `_DRAG` / `_SKIP`.
+  The swipe is a UIKit pan (`LeftSwipeGesture`) that begins only on a leftward
+  horizontal drag: a SwiftUI `DragGesture` on the rows blocked the list's
+  scroll (phone bug, fixed and confirmed by the user 2026-10-24). The simulator
+  can't drive scrolls or swipes; the user checks those on the phone.
 - Checks passed 2026-10-24: vocab lint, lint_topics, bank_lint, situations
   lint, audio release gate, Debug + Release sim builds.
 

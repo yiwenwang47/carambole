@@ -15,8 +15,9 @@ Older history is in `docs/archive/` and git log.
   `docs/plans/2026-10-23-vocab-swipe-handoff.md`; spec in
   `docs/plans/2026-10-23-vocab-swipe-plan.md`. Built and user-approved for
   bands 1–10 (1,000 words + 200 expressions, leçon 0, placement start, bitten
-  coin mark); merged to `main` and pushed 2026-10-24. No-dots follow-ups:
-  branch `truncation-fixes`, `docs/plans/2026-10-24-truncation-fixes-handoff.md`.
+  coin mark); merged to `main` and pushed 2026-10-24. No-dots follow-ups
+  (wrapping tiles and weld text, Leçon rows with margin type + swipe-left arming)
+  merged and pushed 2026-10-24: `docs/plans/2026-10-24-truncation-fixes-handoff.md`.
 - **Status + phone checks:** `docs/plans/2026-10-13-book-2-release-handoff.md`.
   Next, only when asked: the Écrire typing drill, in its own session.
 - **Book 2 rulebook** (cast, voices, JSON shape, authoring steps):
@@ -172,9 +173,9 @@ xcodebuild build -project carambole.xcodeproj -scheme carambole \
 - **Content pipeline tests:** `cd tools && python3 -m pytest content_pipeline -q`.
 - **Phone** (iPhone 18 Pro `00008160-001A09920AA0000A`, team `QMV4SPL476`,
   bundle `wen.carambole`). Install only when the user asks. The user tests on the
-  phone; Claude never tests, records or profiles there. The 2026-10-22 Release
-  build (`6e454f78`, per-drill Trop facile) is Books 1 and 2 only (Book 3 archived). Phone behavior is
-  still for the user to check.
+  phone; Claude never tests, records or profiles there. The 2026-10-24 Release
+  build (`30ac3321`: Books 1, 2 and Monnaie courante, no-dots fixes, Leçon
+  swipe) is on the phone; the user confirmed the Leçon page scrolls and swipes.
   ```bash
   CARAMBOLE_AUDIO_PYTHON=/path/to/python-with-numpy-scipy-lameenc \
     tools/release_build.sh \
