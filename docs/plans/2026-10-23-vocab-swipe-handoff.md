@@ -13,7 +13,13 @@ writing code or content.
     https://claude.ai/artifact/HgtXFFSV5CKDbbCS2ayhgi (v7 = approved layout).
   - Review set v1: `tools/vocab/drafts/sample_v1.json` → `design/vocab/review-v1.html`,
     published at https://claude.ai/artifact/2ApAfTxrGYrtPW9FDqU5ko. User: "works".
-- No Swift code yet. Nothing in `Resources/` yet.
+- 2026-10-23 later: phases 3–5 (bands 1–2) built and committed (`b1bfd13e`
+  content, `6b58579e` engine + views). Engine API and view notes are in the
+  plan doc. Review set v2: `tools/vocab/drafts/sample_v2.json`, published at
+  https://claude.ai/artifact/KqmX6XvU5KydcVenntN4iy, awaiting the user.
+- Pending user calls: pacing (`Core/VocabPacing.swift`, provisional),
+  `pron.` / `interj.` tags, swipe lesson every time vs once, « Sens vu » lock
+  label, bottom undo pill, shelf mark (placeholder), placement start.
 
 ## 2. Next: phase 3 (engine) → 4 (views) → 5 (bulk content)
 
