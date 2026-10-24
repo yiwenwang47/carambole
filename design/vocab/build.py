@@ -38,7 +38,7 @@ if args.draft:
     start, end = src.index("/*LESSON*/"), src.index("/*END*/") + len("/*END*/")
     src = src[:start] + json.dumps(lesson, ensure_ascii=False) + src[end:]
     extra = {e["fr"]: {k: e[k] for k in ("fem", "register") if e.get(k)} for e in entries}
-    fill.update({"__LECON_LABEL__": "Échantillon · " + args.draft.stem, "__LECON_NUM__": "v1",
+    fill.update({"__LECON_LABEL__": "Échantillon · " + args.draft.stem, "__LECON_NUM__": args.draft.stem.rsplit("_", 1)[-1],
                  "__INTRO__": f"Review set {args.draft.stem}: {len(entries)} entries, one of each type.",
                  "__EXTRA__": json.dumps(extra, ensure_ascii=False)})
     src = src.replace("<title>Mots swipe mock</title>", f"<title>Mots review {args.draft.stem}</title>")
