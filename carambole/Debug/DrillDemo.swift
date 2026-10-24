@@ -24,6 +24,11 @@
 //  - CB_VOCAB_ARMED=<ids>    with it: entry ids armed (comma-separated).
 //  - CB_VOCAB_DRAG=<id>      with it: hold that row mid-swipe (150 pt left).
 //  - CB_VOCAB_SKIP=<n>       with it: leave out the first n rows (see the end).
+//  - CB_VOCAB_SESSION=learn|review  open a Monnaie courante session (drive it
+//                            with VocabSessionView's CB_VOC_* flags; skip leçon 0
+//                            and the placement start with the launch arguments
+//                            -settings.book_fr_mots.swipeLessonDone YES
+//                            -settings.book_fr_mots.placementStartLecon 1).
 //
 
 #if DEBUG
@@ -69,6 +74,10 @@ enum DrillDemo {
             let lecon = VocabLecon(index: full.index, band: full.band, entries: Array(full.entries.dropFirst(skip)))
             return AnyView(VocabLessonDemo(lecon: lecon,
                                            armed: Set((env["CB_VOCAB_ARMED"] ?? "").split(separator: ",").map(String.init))))
+        }
+        if let mode = env["CB_VOCAB_SESSION"] {
+            return AnyView(VocabSessionView(elements: [], mode: mode == "review" ? .review : .learn, canStart: true,
+                                            settings: StudySettings.default) {})
         }
         guard env["CB_DRILL_DEMO"] != nil, let session = makeSession(testBook: false) else { return nil }
         return AnyView(session)

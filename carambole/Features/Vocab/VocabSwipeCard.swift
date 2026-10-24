@@ -6,8 +6,11 @@
 //  page. Port of design/vocab/vocab-swipe.src.html v7 (`.row`, `.play`): every
 //  card looks the same (white face, 1.5 pt ink outline, 72 pt high), the word
 //  with its article smaller after it, a dashed outline once the word was swiped
-//  left. An armed word's card looks like any other (no tag, user 2026-10-24). The stack, gestures and
-//  underlay live in `VocabSessionView`.
+//  left. An armed word's card looks like any other (no tag, user 2026-10-24).
+//  Every card is the same fixed size (user 2026-10-24: a new word fades into
+//  the swiped card's slot); a long headword shrinks to fit one line, and
+//  `_selfTest` checks every entry fits before the shrink runs out. The slots,
+//  gestures and underlay live in `VocabSessionView`.
 //
 
 import SwiftUI
@@ -15,15 +18,18 @@ import SwiftUI
 struct VocabSwipeCard: View {
     let card: VocabQueue.Card
     let theme: AppTheme
-    /// The fill the card takes as it flies out (right: `tileOn`, up:
-    /// `buttonFill`); nil = white face with its outline.
+    /// The fill the card takes as it flies out (right: `tileOn`); nil = white
+    /// face with its outline.
     var leavingFill: Color? = nil
 
     static let height: CGFloat = 72
+    /// Headword size, and how far a long one may shrink.
+    static let headSize: CGFloat = 23
+    static let minScale: CGFloat = 0.7
 
     var body: some View {
         HStack(spacing: 10) {
-            VocabHeadword(entry: card.entry, size: 23)
+            VocabHeadword(entry: card.entry, size: Self.headSize, minScale: Self.minScale)
                 .frame(maxWidth: .infinity, alignment: .leading)
             VocabPlayDisc(entry: card.entry, theme: theme)
         }
@@ -53,6 +59,8 @@ struct VocabHeadword: View {
     var articleSize: CGFloat? = nil
     /// Wrap at spaces at full size (Leçon rows) instead of one shrinking line.
     var wraps: Bool = false
+    /// One line: how far it may shrink.
+    var minScale: CGFloat = 0.7
 
     var body: some View {
         if wraps { wrapped } else { oneLine }
@@ -83,9 +91,32 @@ struct VocabHeadword: View {
             }
         }
         .lineLimit(1)
-        .minimumScaleFactor(0.7)
+        .minimumScaleFactor(minScale)
     }
 }
+
+#if DEBUG
+extension VocabSwipeCard {
+    /// Every headword of the book fits a card on a 375 pt wide phone (the
+    /// narrowest) within `minScale`, so the one-line shrink never runs out
+    /// into « … » (HARD RULE). Text room: card = 375 − 40 + 16 − 24; minus
+    /// 18 + 14 padding, 10 spacing, 34 play disc.
+    static func _selfTest() {
+        let room: CGFloat = 375 - 40 + 16 - 24 - 18 - 14 - 10 - 34
+        let word = AppFonts.uiFont(AppFonts.manrope, size: headSize, wght: 400)
+        let article = AppFonts.uiFont(AppFonts.manrope, size: (headSize * 0.66).rounded(), wght: 400)
+        func width(_ s: String, _ f: UIFont) -> CGFloat { (s as NSString).size(withAttributes: [.font: f]).width }
+        var widest: (CGFloat, String) = (0, "")
+        for entry in VocabBook.bundled.entries {
+            var w = width(entry.displayWord, word)
+            if let a = entry.displayArticle { w += 5 + width(a, article) }
+            if w > widest.0 { widest = (w, entry.displayFR) }
+            assert(w * minScale <= room, "« \(entry.displayFR) » does not fit a card even shrunk (\(Int(w)) pt)")
+        }
+        print("VocabSwipeCard._selfTest: ok, widest « \(widest.1) » \(Int(widest.0)) pt of \(Int(room)) pt")
+    }
+}
+#endif
 
 /// Book 2's replay disc (`.play`): a 34 pt pale `quietFill` disc, ink triangle,
 /// no outline. Plays the bundled clip only (no synthesized fallback, as Book 2

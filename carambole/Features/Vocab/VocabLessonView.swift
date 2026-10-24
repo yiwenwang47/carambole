@@ -28,6 +28,10 @@ struct VocabLessonView: View {
     /// Row being swiped and how far (≤ 0).
     @State private var dragging: String?
     @State private var dragOffset: CGFloat = 0
+    /// The dragged row's armed state when the drag began (the uncovered label
+    /// keeps showing it), and whether this drag already toggled it.
+    @State private var dragStartOn = false
+    @State private var toggledThisDrag = false
 
     /// « Leçon 63 · mots 601–700 ».
     private var slabLabel: String {
@@ -115,6 +119,9 @@ struct VocabLessonView: View {
         let prevOn = index > 0 && armed.contains(lecon.entries[index - 1].id)
         let last = index == lecon.entries.count - 1
         let dragX = dragging == entry.id ? dragOffset : 0
+        // What the swipe uncovers: the state at the drag's start, so the label
+        // holds still when the row toggles mid-drag.
+        let revealOn = dragging == entry.id ? dragStartOn : on
         return HStack(spacing: 14) {
             VStack(alignment: .leading, spacing: 6) {
                 HStack(alignment: .firstTextBaseline, spacing: 0) {
@@ -141,13 +148,13 @@ struct VocabLessonView: View {
             // What the swipe uncovers: the state the row will switch to.
             if dragX != 0 {
                 RoundedRectangle(cornerRadius: 14, style: .continuous)
-                    .fill(on ? AppColor.paper : Color(hex: theme.tileOn))
+                    .fill(revealOn ? AppColor.paper : Color(hex: theme.tileOn))
                     .overlay(RoundedRectangle(cornerRadius: 14, style: .continuous)
-                        .strokeBorder(on ? AppColor.hairline : .clear, lineWidth: 1))
+                        .strokeBorder(revealOn ? AppColor.hairline : .clear, lineWidth: 1))
                     .overlay(alignment: .trailing) {
-                        Text(on ? "Remettre" : "Trop facile")
+                        Text(Self.revealLabel(on: revealOn))
                             .uppercaseLabel(AppColor.ink)
-                            .padding(.trailing, 18)
+                            .padding(.trailing, Self.revealPad)
                     }
             }
         }
@@ -186,29 +193,46 @@ struct VocabLessonView: View {
             .frame(width: Self.marginWidth, alignment: .leading)
     }
 
-    /// Left swipe past half the row toggles trop facile, then the row springs
-    /// home. A UIKit pan that only begins on a leftward horizontal drag, so
+    /// The label a left swipe uncovers, and its right inset.
+    private static func revealLabel(on: Bool) -> String { on ? "Remettre" : "Trop facile" }
+    private static let revealPad: CGFloat = 18
+
+    /// How far left the row must go to toggle (user 2026-10-24: « the moment
+    /// the words are shown, plus ~6 px »): the inset, the label's width and 6 pt.
+    private static func toggleDistance(on: Bool) -> CGFloat {
+        let font = AppFonts.uiFont(AppFonts.familjen, size: 11, wght: 400)
+        let text = revealLabel(on: on).uppercased() as NSString
+        let width = text.size(withAttributes: [.font: font]).width + labelTracking * CGFloat(text.length)
+        return revealPad + ceil(width) + 6
+    }
+
+    /// The row toggles trop facile the moment the uncovered label (+ 6 pt) is
+    /// fully shown, while the finger is still down (a light tap of haptics);
+    /// once per drag. On release the row springs home. A UIKit pan that only begins on a leftward horizontal drag, so
     /// vertical drags stay with the list's scroll (a SwiftUI DragGesture on
     /// the rows took every touch and the list stopped scrolling).
     private func swipe(_ entry: VocabEntry) -> LeftSwipeGesture {
         LeftSwipeGesture(
+            onBegin: {
+                dragStartOn = armed.contains(entry.id)
+                toggledThisDrag = false
+            },
             onChange: { dx in
                 dragging = entry.id
                 dragOffset = min(0, dx)
-            },
-            onEnd: { dx in
-                if dx < -rowWidth / 2 {
+                if !toggledThisDrag, -dragOffset >= Self.toggleDistance(on: dragStartOn) {
+                    toggledThisDrag = true
                     UIImpactFeedbackGenerator(style: .light).impactOccurred()
                     toggle(entry)
                 }
+            },
+            onEnd: { _ in
                 withAnimation(.spring(duration: 0.4, bounce: 0.15)) { dragOffset = 0 }
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
                     if dragOffset == 0 { dragging = nil }
                 }
             })
     }
-
-    private var rowWidth: CGFloat { UIScreen.main.bounds.width - 20 }
 
     private func toggle(_ entry: VocabEntry) {
         withAnimation(.easeOut(duration: 0.2)) {
@@ -255,6 +279,7 @@ struct VocabCloseGlyph: Shape {
 /// Pan that begins only when the finger first moves left more than it moves
 /// up or down; reports the horizontal translation.
 struct LeftSwipeGesture: UIGestureRecognizerRepresentable {
+    var onBegin: () -> Void = {}
     let onChange: (CGFloat) -> Void
     let onEnd: (CGFloat) -> Void
 
@@ -267,7 +292,8 @@ struct LeftSwipeGesture: UIGestureRecognizerRepresentable {
     func handleUIGestureRecognizerAction(_ recognizer: UIPanGestureRecognizer, context: Context) {
         let dx = recognizer.translation(in: recognizer.view).x
         switch recognizer.state {
-        case .began, .changed: onChange(dx)
+        case .began: onBegin(); onChange(dx)
+        case .changed: onChange(dx)
         case .ended: onEnd(dx)
         case .cancelled, .failed: onEnd(0)
         default: break

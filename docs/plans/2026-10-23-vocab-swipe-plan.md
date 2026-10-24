@@ -85,9 +85,10 @@ Mock: `design/vocab/vocab-swipe.src.html` (approved layout).
 | Gesture | Result |
 |---|---|
 | Drag left partway | English slides in on the pale underlay. Release → snaps back. This is a **peek**. |
-| Swipe left past threshold | `.again` ("I still need the meaning"). Learn: back 5 cards later (dashed outline) until swiped right. Review: back once at the end (Claude default). |
-| Swipe right (no peek only) | `.good` ("I know it"). |
-| Swipe up (no peek only) | **Trop facile** → grade `.easy` + suspend + undo pill. |
+| Swipe left past threshold | `.again` ("I still need the meaning"). Learn: back to the waiting pile, 2 waiting cards before it (dashed outline), until swiped right. Review: back once at the end (Claude default). |
+| Swipe right (no peek only) | "I know it". Learn (user 2026-10-24): the word leaves only on its 3rd « connu » in a row, which grades `.good`; the first two send it back with 5 waiting cards before it and grade nothing; a left swipe zeroes the count. Review / placement / leçon 0: one right leaves, `.good`. |
+| Swipe up | Removed (user 2026-10-24): trop facile is marked on the Leçon page only. |
+| Which card | Any of the 4 on screen (user 2026-10-24). Its slot is refilled in place by the next waiting word (fade, no movement); the others never move; an empty slot stays empty. Cards are one fixed size; long headwords shrink to fit (`VocabSwipeCard._selfTest`). |
 | After a peek | Right and up are **locked** (rubber-band back, no label; user 2026-10-23); only left. |
 
 Grading is binary otherwise: `.good` or `.again`.
@@ -306,3 +307,5 @@ Built 2026-10-23, port of mock v7 (`design/vocab/vocab-swipe.src.html`).
   16e, test bundle): build clean, launch self-tests pass; leçons 64 / 77 / 97
   show armed cards untagged and the long words unshrunk; swipe up still
   suspends with the undo pill.
+
+**Leçon row arming distance (user 2026-10-24):** a row toggles trop facile the moment its uncovered label is fully shown plus 6 pt (≈100 pt for « Trop facile », ≈87 pt for « Remettre »), while the finger is still down; once per drag (`VocabLessonView.toggleDistance`).

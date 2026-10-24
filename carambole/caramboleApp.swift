@@ -32,6 +32,7 @@ struct caramboleApp: App {
         DataManager._selfTest()
         VocabBook._selfTest()
         VocabQueue._selfTest()
+        VocabSwipeCard._selfTest()
         VocabPacing._selfTest()
         VocabPlacement._selfTest()
         BookCredits._selfTest()

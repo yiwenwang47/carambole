@@ -4,25 +4,29 @@
 //
 //  *Mots* swipe session. Port of design/vocab/vocab-swipe.src.html v7
 //  (`#drill`): ✕ only at the top, the big remaining count with « à apprendre »
-//  / « à réviser » and the session stats, then at most four equal cards on the
-//  pale tint tray, 18 pt apart, centred in the space below the count. The top
-//  card is the one swiped; after a swipe it flies out, then the others slide up
-//  and a new card enters at the bottom.
+//  / « à réviser » and the session stats, then four fixed slots on the pale
+//  tint tray, 18 pt apart, centred in the space below the count. ANY card can
+//  be swiped (user 2026-10-24); it flies off sideways on its own layer
+//  (`FlyingCard`) and the next word fades into the same slot. Nothing ever
+//  slides up: the other cards stay where they are, and a slot with no word
+//  left stays empty. Every card is the same fixed size; a long headword
+//  shrinks to fit (`VocabSwipeCard`).
 //
-//  Gestures on the top card (spec: docs/plans/2026-10-23-vocab-swipe-plan.md):
+//  Gestures on a card (spec: docs/plans/2026-10-23-vocab-swipe-plan.md):
 //    - a partial left drag is a PEEK: the English slides in on the pale
 //      underlay; release snaps back;
 //    - left past 72 % of the card (or a fast flick) → `.again` (requeued,
 //      dashed outline);
-//    - right → `.good` (« Connu » underlay);
-//    - up → trop facile (`TooEasyGate` via `VocabStudy.commit`, undo pill);
-//    - after a peek, right and up rubber-band back (no label; user
-//      2026-10-23).
-//  Playing a clip never counts as a peek. The card stack is vertically locked.
+//    - right → « Connu » underlay; a learn word goes back to the waiting pile
+//      until its third « connu » in a row, which grades `.good` (`VocabQueue`);
+//    - after a peek, right rubber-bands back (no label; user 2026-10-23).
+//  No swipe up: trop facile is marked on the Leçon page only (user
+//  2026-10-24). Playing a clip never counts as a peek. Vertical drags do
+//  nothing.
 //
 //  Learn mode opens on the Leçon page (`VocabLessonView`). Leçon 0
 //  (« Comment glisser », user 2026-10-23) is the swipe lesson: no Leçon page;
-//  the top card moves by itself through peek / far left / right / up with
+//  the top card moves by itself through peek / far left / right with
 //  captions in the count area; touching the tray ends it, then the learner
 //  practises on leçon 1's first four words. It is UNGRADED (nothing reaches
 //  `VocabStudy.commit`), opens before leçon 1 until finished once
@@ -30,7 +34,7 @@
 //
 //  The placement start (« Où commencer ? », user 2026-10-23) follows leçon 0
 //  the first time, before leçon 1: the same stack with 5 words per band
-//  (`VocabPlacement`), right / up = known, left or a peek = not known, no
+//  (`VocabPlacement`), right = known, left or a peek = not known, no
 //  requeue. It stops at the first band with 2 misses; the done panel offers
 //  that band's first leçon (`VocabStudy.placementStartLecon`). UNGRADED, like
 //  leçon 0; it can be retaken from the Sommaire.
@@ -67,8 +71,8 @@ final class VocabSessionModel: ObservableObject {
     @Published var armed: Set<String> = []
     /// The live queue: every swipe is applied here at once and graded.
     @Published private(set) var queue: VocabQueue
-    /// What the stack draws. It lags `queue` by the fly-out (0.26 s) so the
-    /// other cards slide up after the swiped one has left, as in the mock.
+    /// What the tray draws: `queue` caught up at each swipe, inside the fade
+    /// that brings the new card into its slot (`syncDisplay`).
     @Published private(set) var display: VocabQueue
     /// Learn: the done panel's offer (set when the stack empties).
     @Published private(set) var next: VocabPacing.Next = .none
@@ -120,7 +124,7 @@ final class VocabSessionModel: ObservableObject {
     private func startSwipeLesson(practice first: VocabLecon) {
         isSwipeLesson = true
         lecon = first
-        let q = VocabQueue.learn(entries: Array(first.entries.prefix(4)), armed: [])
+        let q = VocabQueue.learn(entries: Array(first.entries.prefix(4)), armed: [], knownTarget: 1)
         queue = q
         display = q
         phase = .stack
@@ -157,13 +161,13 @@ final class VocabSessionModel: ObservableObject {
 
     /// Apply one gesture; persist the grade it hands back.
     @discardableResult
-    func swipe(_ s: VocabQueue.Swipe) -> VocabQueue.Outcome {
-        let outcome = queue.apply(s)
+    func swipe(_ s: VocabQueue.Swipe, slot: Int) -> VocabQueue.Outcome {
+        let outcome = queue.apply(s, slot: slot)
         if isPlacement {
-            // Ungraded: right / up = known, left = not known (a peek locks the
+            // Ungraded: right = known, left = not known (a peek locks the
             // card to left, so a peek always ends as not known).
             guard case .swiped(let grade) = outcome, var test = placement else { return outcome }
-            test.record(entryID: grade.entryID, known: s != .left)
+            test.record(entryID: grade.entryID, known: s == .right)
             if test.isDecided || queue.isFinished {
                 queue.clear()
                 placementResult = test.startLecon(in: vocab)
@@ -192,7 +196,7 @@ final class VocabSessionModel: ObservableObject {
         return outcome
     }
 
-    /// Catch the drawn stack up with the queue (after the fly-out).
+    /// Catch the drawn tray up with the queue (as the swiped card flies out).
     func syncDisplay() { display = queue }
 
     /// « Annuler » on the undo pill (the pill itself demoted the word).
@@ -234,6 +238,7 @@ final class VocabSessionModel: ObservableObject {
     }
 }
 
+
 // MARK: - View
 
 struct VocabSessionView: View {
@@ -255,17 +260,18 @@ struct VocabSessionView: View {
     @AppStorage(AppPalette.storageKey) private var paletteID = AppPalette.fallback.rawValue
     private var theme: AppTheme { AppPalette(stored: paletteID).theme }
 
-    // Top-card motion (finger, swipe lesson, fly-out), in points.
+    // The dragged card (finger or swipe lesson): its slot and x offset, in points.
+    @State private var dragSlot = 0
     @State private var dx: CGFloat = 0
-    @State private var dy: CGFloat = 0
-    private enum DragAxis { case x, y }
+    private enum DragAxis { case x, ignored }
     @State private var axis: DragAxis?
     @State private var dragging = false
-    /// The touch began off the top card or ended the swipe lesson: ignore it.
+    /// The touch began off every card or ended the swipe lesson: ignore it.
     @State private var swallowed = false
-    /// The swiped card while it flies out (fill + no underlay).
-    @State private var leaving: VocabQueue.Swipe?
-    @State private var flown = false
+    /// Swiped cards flying off sideways above the tray, each on its own spring,
+    /// so the next card can be dragged meanwhile.
+    @State private var flights: [FlyingCard.Flight] = []
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     // Swipe lesson.
     @State private var coachOn = false
     @State private var coachStep = -1
@@ -273,7 +279,7 @@ struct VocabSessionView: View {
     @State private var cardWidth: CGFloat = 330
 
     // Mock geometry (`ROW_H`, `GAP`, `PAD`; tray 366 pt).
-    private static let rowH: CGFloat = 72
+    private static let rowH: CGFloat = VocabSwipeCard.height
     private static let gap: CGFloat = 18
     private static let pad: CGFloat = 12
     private static let trayH: CGFloat = pad * 2 + 4 * rowH + 3 * gap
@@ -282,19 +288,18 @@ struct VocabSessionView: View {
     private static let captionH = ceil(AppFonts.uiFont(AppFonts.manrope, size: 24, wght: 300).lineHeight * 2)
     private static let coachHeroH: CGFloat = max(132, 14 + 14 + 10 + captionH + 10 + 3 + 10 + 14)
 
-    // Mock curves.
-    private static let slideUp = Animation.timingCurve(0.2, 0.9, 0.25, 1.12, duration: 0.42)
-    private static let snapBack = Animation.timingCurve(0.2, 0.9, 0.25, 1.15, duration: 0.35)
+    /// The new card fades into the swiped card's slot, in place.
+    private static let fadeIn = Animation.easeOut(duration: 0.18)
+    private static let snapBack = Animation.spring(response: 0.36, dampingFraction: 0.68)
     private static let coachOut = Animation.timingCurve(0.3, 0.7, 0.2, 1, duration: 0.7)
     private static let coachBack = Animation.timingCurve(0.2, 0.9, 0.25, 1.1, duration: 0.45)
 
     /// Captions break where the mock's `text-wrap: balance` breaks them
     /// (SwiftUI has no balanced wrapping).
-    private static let coachSteps: [(dx: CGFloat, dy: CGFloat, say: String)] = [
-        (-0.45, 0, "Glisse un peu à gauche\npour voir le sens."),
-        (-0.8, 0, "Encore plus loin à\ngauche : tu dois le revoir."),
-        (0.4, 0, "À droite : tu le connais déjà."),
-        (0, -64, "Vers le haut : trop facile,\nil ne reviendra plus."),
+    private static let coachSteps: [(dx: CGFloat, say: String)] = [
+        (-0.45, "Glisse un peu à gauche\npour voir le sens."),
+        (-0.8, "Encore plus loin à\ngauche : tu dois le revoir."),
+        (0.4, "À droite : tu le connais déjà."),
     ]
 
     var body: some View {
@@ -432,25 +437,39 @@ struct VocabSessionView: View {
     // MARK: Tray
 
     private func tray(width: CGFloat) -> some View {
-        let cards = model.display.visible
+        let slots = model.display.slots
         let w = width - 24
         return ZStack(alignment: .topLeading) {
             if model.display.isFinished {
                 donePanel
+                    .transition(.opacity)
             } else {
                 underlay(width: w)
-                    .offset(x: Self.pad, y: Self.rowTop(0))
-                ForEach(Array(cards.enumerated()), id: \.element.id) { i, card in
-                    let top = i == 0
-                    VocabSwipeCard(card: card, theme: theme, leavingFill: top ? leavingFill : nil)
-                        .frame(width: w)
-                        .offset(x: Self.pad + (top && dy == 0 ? dx : 0), y: Self.rowTop(i) + (top ? dy : 0))
-                        .opacity(top && leaving == .up && flown ? 0 : 1)
-                        .zIndex(top ? 4 : 3)
-                        .transition(.asymmetric(insertion: .modifier(active: EnterModifier(on: true),
-                                                                     identity: EnterModifier(on: false)),
-                                                removal: .identity))
+                    .offset(x: Self.pad, y: Self.rowTop(dragSlot))
+                ForEach(slots.indices, id: \.self) { i in
+                    if let card = slots[i] {
+                        VocabSwipeCard(card: card, theme: theme)
+                            .frame(width: w)
+                            .offset(x: Self.pad + (i == dragSlot ? dx : 0), y: Self.rowTop(i))
+                            .zIndex(i == dragSlot ? 4 : 3)
+                            .id(card.id)
+                            .transition(.asymmetric(insertion: .opacity, removal: .identity))
+                    }
                 }
+            }
+            // A left swipe's English stays under the cards (as the underlay),
+            // so the word fading into the slot covers it.
+            ForEach(flights.filter { $0.swipe == .left }) { flight in
+                FlyingCard(flight: flight, theme: theme, width: w, still: reduceMotion, meaning: true) {}
+                    .offset(x: Self.pad, y: Self.rowTop(flight.slot))
+                    .zIndex(2)
+            }
+            ForEach(flights) { flight in
+                FlyingCard(flight: flight, theme: theme, width: w, still: reduceMotion) {
+                    flights.removeAll { $0.id == flight.id }
+                }
+                .offset(x: Self.pad, y: Self.rowTop(flight.slot))
+                .zIndex(5)
             }
         }
         .frame(width: width, height: Self.trayH, alignment: .topLeading)
@@ -459,49 +478,26 @@ struct VocabSessionView: View {
         .simultaneousGesture(dragGesture(cardWidth: w))
     }
 
-    private var leavingFill: Color? {
-        switch leaving {
-        case .right: return Color(hex: theme.tileOn)
-        case .up: return Color(hex: theme.buttonFill)
-        default: return nil
-        }
-    }
-
-    /// `.slot`: under the top card. The English panel rides 10 pt right of the
-    /// card's right edge (so it slides in as the card goes left); « Connu » and
-    /// « ↑ Trop facile » show for right and up (nothing for a locked one).
-    /// Their opacities follow the card without easing, as in the mock.
+    /// `.slot`: under the dragged card. The English panel rides 10 pt right of
+    /// the card's right edge (so it slides in as the card goes left); « Connu »
+    /// shows for right (nothing for a locked one). Their opacities follow the
+    /// card without easing, as in the mock.
     private func underlay(width w: CGFloat) -> some View {
-        let peeked = model.queue.peeked
-        let on = leaving == nil
-        let okO: Double = on && dx > 0 && !peeked ? Double(min(1, dx / 60)) : 0
-        let upO: Double = on && dy < 0 && !peeked ? Double(min(1, -dy / 40)) : 0
-        let enO: Double = on && dx < 0 ? 1 : 0
+        let peeked = model.queue.isPeeked(slot: dragSlot)
+        let okO: Double = dx > 0 && !peeked ? Double(min(1, dx / 60)) : 0
+        let enO: Double = dx < 0 ? 1 : 0
         return ZStack(alignment: .leading) {
             Text("Connu").uppercaseLabel(AppColor.ink)
                 .padding(.leading, 18)
                 .frame(width: w, height: Self.rowH, alignment: .leading)
                 .background(Color(hex: theme.tileOn))
                 .opacity(okO)
-            Text("↑ Trop facile").uppercaseLabel(AppColor.ink)
-                .padding(.bottom, 10)
-                .frame(width: w, height: Self.rowH, alignment: .bottom)
-                .background(Color(hex: theme.buttonFill))
-                .opacity(upO)
-            Text(model.display.current?.entry.en ?? "")
-                .font(.display(size: 15, wght: 400))
-                .foregroundColor(AppColor.ink)
-                .lineSpacing(0)
-                .minimumScaleFactor(0.8)
-                .padding(.horizontal, 16)
-                .frame(width: w * 0.62, height: Self.rowH, alignment: .leading)
-                .background(RoundedRectangle(cornerRadius: 16, style: .continuous).fill(Color(hex: theme.quietFill)))
+            VocabMeaningPanel(text: model.display.card(at: dragSlot)?.entry.en ?? "", theme: theme, cardWidth: w)
                 .opacity(enO)
                 .animation(nil, value: enO)
-                .offset(x: w + (dy == 0 ? dx : 0) + 10)
+                .offset(x: w + dx + 10)
         }
         .animation(nil, value: okO)
-        .animation(nil, value: upO)
         .frame(width: w, height: Self.rowH, alignment: .leading)
         .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
         .accessibilityHidden(true)
@@ -635,15 +631,26 @@ struct VocabSessionView: View {
         (d < 0 ? -1 : 1) * 16 * (1 - exp(-abs(d) / 50))
     }
 
+    /// The slot whose card is under `p`, if any.
+    private func slot(at p: CGPoint, cardWidth w: CGFloat) -> Int? {
+        model.display.slots.indices.first { i in
+            model.display.slots[i] != nil
+                && CGRect(x: Self.pad, y: Self.rowTop(i), width: w, height: Self.rowH).contains(p)
+        }
+    }
+
     private func dragGesture(cardWidth w: CGFloat) -> some Gesture {
         DragGesture(minimumDistance: 0)
             .onChanged { v in
                 if !dragging && !swallowed {
                     if coachOn { stopCoach(); swallowed = true; return }
-                    let topCard = CGRect(x: Self.pad, y: Self.rowTop(0), width: w, height: Self.rowH)
-                    guard leaving == nil, model.display.current != nil, topCard.contains(v.startLocation) else {
+                    guard let i = slot(at: v.startLocation, cardWidth: w) else {
                         swallowed = true; return
                     }
+                    // A new touch takes over: any card still easing back sits down.
+                    var off = Transaction(animation: nil)
+                    off.disablesAnimations = true
+                    withTransaction(off) { dx = 0; dragSlot = i }
                     dragging = true
                     axis = nil
                 }
@@ -653,63 +660,58 @@ struct VocabSessionView: View {
             .onEnded { v in
                 defer { dragging = false; swallowed = false; axis = nil }
                 guard dragging else { return }
-                release(velocity: CGSize(width: v.velocity.width / 1000, height: v.velocity.height / 1000),
-                        cardWidth: w)
+                release(velocity: v.velocity.width / 1000, cardWidth: w)
             }
     }
 
-    /// Follow the finger (`pointermove`): the first 8 pt pick the axis; left
-    /// past 56 pt is a peek; after a peek right and up only give a rubber band.
+    /// Follow the finger (`pointermove`): the first 8 pt pick the axis
+    /// (a vertical drag is ignored); left past 56 pt is a peek; after a peek
+    /// right only gives a rubber band.
     private func drag(to t: CGSize) {
-        var tx = t.width, ty = t.height
-        if axis == nil, hypot(tx, ty) > 8 {
-            axis = abs(tx) >= abs(ty) ? .x : (ty < 0 ? .y : nil)
+        var tx = t.width
+        if axis == nil, hypot(t.width, t.height) > 8 {
+            axis = abs(t.width) >= abs(t.height) ? .x : .ignored
         }
-        guard let axis else { return }
-        switch axis {
-        case .x:
-            if tx < -56, !model.queue.peeked { model.swipe(.peek) }
-            if tx > 0, model.queue.peeked { tx = Self.rubber(tx) }
-            dy = 0; dx = tx
-        case .y:
-            ty = min(0, ty)
-            if model.queue.peeked { ty = Self.rubber(ty) }
-            dx = 0; dy = ty
-        }
+        guard axis == .x else { return }
+        let peeked = model.queue.isPeeked(slot: dragSlot)
+        if tx < -56, !peeked { model.swipe(.peek, slot: dragSlot) }
+        if tx > 0, model.queue.isPeeked(slot: dragSlot) { tx = Self.rubber(tx) }
+        dx = tx
     }
 
-    /// `endDrag`: commit or snap back. Velocities in pt / ms.
-    private func release(velocity v: CGSize, cardWidth w: CGFloat) {
-        let peeked = model.queue.peeked
-        if axis == .x, dx < 0, -dx > w * 0.72 || (v.width < -0.9 && -dx > 80) { return commit(.left, cardWidth: w) }
-        if axis == .x, dx > 0, !peeked, dx > w * 0.38 || v.width > 0.8 { return commit(.right, cardWidth: w) }
-        if axis == .y, !peeked, dy < -70 || (v.height < -0.8 && dy < -30) { return commit(.up, cardWidth: w) }
-        withAnimation(Self.snapBack) { dx = 0; dy = 0 }
+    /// `endDrag`: commit or snap back. Velocity in pt / ms.
+    private func release(velocity v: CGFloat, cardWidth w: CGFloat) {
+        let peeked = model.queue.isPeeked(slot: dragSlot)
+        if axis == .x, dx < 0, -dx > w * 0.72 || (v < -0.9 && -dx > 80) {
+            return commit(.left, cardWidth: w, velocity: v)
+        }
+        if axis == .x, dx > 0, !peeked, dx > w * 0.38 || v > 0.8 {
+            return commit(.right, cardWidth: w, velocity: v)
+        }
+        withAnimation(Self.snapBack) { dx = 0 }
     }
 
-    /// The card flies out (0.28 s ease-in), then the stack slides up and a new
-    /// card enters at the bottom (`commit` + `render` after 260 ms).
-    private func commit(_ s: VocabQueue.Swipe, cardWidth w: CGFloat) {
-        guard case .swiped = model.swipe(s) else {
-            withAnimation(Self.snapBack) { dx = 0; dy = 0 }
+    /// The card flies off sideways on its own layer (`FlyingCard`), carrying
+    /// the finger's speed; in the same frame the next word fades into its
+    /// slot. Velocity in pt / ms.
+    private func commit(_ s: VocabQueue.Swipe, cardWidth w: CGFloat, velocity v: CGFloat) {
+        let slot = dragSlot
+        guard let card = model.display.card(at: slot) else { return }
+        switch model.swipe(s, slot: slot) {
+        case .swiped, .passed: break
+        case .peeked, .rejected:
+            withAnimation(Self.snapBack) { dx = 0 }
             return
         }
-        leaving = s
-        flown = false
-        withAnimation(.easeIn(duration: 0.28)) {
-            flown = true
-            switch s {
-            case .left: dy = 0; dx = -1.3 * w
-            case .right: dy = 0; dx = 1.3 * w
-            default: dx = 0; dy = -120
-            }
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.26) {
-            var off = Transaction(animation: nil)
-            off.disablesAnimations = true
-            withTransaction(off) { leaving = nil; flown = false; dx = 0; dy = 0 }
-            withAnimation(Self.slideUp) { model.syncDisplay() }
-        }
+        let end: CGFloat = s == .left ? -1.2 * w : 1.2 * w
+        let speed = (s == .left ? -v : v) * 1000   // pt / s along the way out
+        let distance = max(1, abs(end - dx))
+        flights.append(.init(card: card, swipe: s, slot: slot, startX: dx, endX: end,
+                             velocity: min(12, max(FlyingCard.minLaunch, speed / distance))))
+        var off = Transaction(animation: nil)
+        off.disablesAnimations = true
+        withTransaction(off) { dx = 0 }
+        withAnimation(Self.fadeIn) { model.syncDisplay() }
     }
 
     // MARK: Swipe lesson
@@ -717,20 +719,21 @@ struct VocabSessionView: View {
     /// The mock's `startCoach`, without its 0.5 s lead-in (leçon 0 has no
     /// Leçon page to fade from; motion starts at once): each step glides out
     /// in 0.7 s, holds until 1.9 s, glides back in 0.45 s and rests 0.8 s; the
-    /// four steps loop.
+    /// three steps loop. The top card moves.
     private func startCoach() {
         coachTask?.cancel()
         coachOn = true
         coachStep = -1
+        dragSlot = 0
         coachTask = Task { @MainActor in
             var step = 0
             while !Task.isCancelled && coachOn {
                 let s = Self.coachSteps[step]
                 coachStep = step
-                withAnimation(Self.coachOut) { dx = s.dx * cardWidth; dy = s.dy }
+                withAnimation(Self.coachOut) { dx = s.dx * cardWidth }
                 try? await Task.sleep(nanoseconds: 1_900_000_000)
                 guard !Task.isCancelled, coachOn else { return }
-                withAnimation(Self.coachBack) { dx = 0; dy = 0 }
+                withAnimation(Self.coachBack) { dx = 0 }
                 try? await Task.sleep(nanoseconds: 800_000_000)
                 step = (step + 1) % Self.coachSteps.count
             }
@@ -742,16 +745,17 @@ struct VocabSessionView: View {
         coachTask = nil
         var off = Transaction(animation: nil)
         off.disablesAnimations = true
-        withTransaction(off) { coachOn = false; coachStep = -1; dx = 0; dy = 0 }
+        withTransaction(off) { coachOn = false; coachStep = -1; dx = 0 }
     }
 
     // MARK: Simulator flags (DEBUG)
 
     #if DEBUG
     /// CB_VOC_ARM=n arms the first n rows; CB_VOC_START=<s> presses Commencer
-    /// after s seconds; CB_VOC_SCRIPT=a,b,… then plays gestures on the top card
-    /// (touch, peek, left, right, up, lock, wait, play) one after another, through
-    /// the same drag / release code as the finger.
+    /// after s seconds; CB_VOC_SCRIPT=a,b,… then plays gestures one after
+    /// another (touch, peek, left, right, lock, wait, play), through the same
+    /// drag / release code as the finger. A step ending in a digit 0–3 acts on
+    /// that slot (`right2`); else on the top slot.
     private func runLaunchFlags() async {
         let env = ProcessInfo.processInfo.environment
         if let n = env["CB_VOC_ARM"].flatMap(Int.init), let lecon = model.lecon {
@@ -773,41 +777,46 @@ struct VocabSessionView: View {
         try? await Task.sleep(nanoseconds: UInt64(s * 1_000_000_000))
     }
 
-    /// A scripted finger: moves in 12 steps over ~0.4 s, holds, releases.
-    private func fingerDrag(to target: CGSize, hold: Double = 0.6, flick: CGSize = .zero) async {
-        guard model.display.current != nil else { return }
+    /// A scripted finger on `slot`: moves in 12 steps over ~0.4 s, holds, releases.
+    private func fingerDrag(slot: Int, to target: CGFloat, hold: Double = 0.6) async {
+        guard model.display.card(at: slot) != nil else { return }
+        var off = Transaction(animation: nil)
+        off.disablesAnimations = true
+        withTransaction(off) { dx = 0; dragSlot = slot }
         dragging = true
         axis = nil
         for k in 1...12 {
-            let f = CGFloat(k) / 12
-            drag(to: CGSize(width: target.width * f, height: target.height * f))
+            drag(to: CGSize(width: target * CGFloat(k) / 12, height: 0))
             await pause(0.033)
         }
         await pause(hold)
-        release(velocity: flick, cardWidth: cardWidth)
+        release(velocity: 0, cardWidth: cardWidth)
         dragging = false
         axis = nil
     }
 
-    private func play(_ step: String) async {
+    private func play(_ raw: String) async {
         let w = cardWidth
+        var step = raw
+        var slot = 0
+        if let last = step.last, let n = Int(String(last)), (0..<VocabQueue.visibleCount).contains(n) {
+            slot = n
+            step.removeLast()
+        }
         switch step {
         case "touch": if coachOn { stopCoach() }
-        case "peek": await fingerDrag(to: CGSize(width: -0.45 * w, height: 0), hold: 1.4)
-        case "left": await fingerDrag(to: CGSize(width: -0.8 * w, height: 0), hold: 0.5)
-        case "right": await fingerDrag(to: CGSize(width: 0.45 * w, height: 0), hold: 0.5)
-        case "up": await fingerDrag(to: CGSize(width: 0, height: -90), hold: 0.5)
+        case "peek": await fingerDrag(slot: slot, to: -0.45 * w, hold: 1.4)
+        case "left": await fingerDrag(slot: slot, to: -0.8 * w, hold: 0.5)
+        case "right": await fingerDrag(slot: slot, to: 0.45 * w, hold: 0.5)
         case "lock":
-            // Peek, then try right and up: both rubber-band back.
-            await fingerDrag(to: CGSize(width: -0.4 * w, height: 0), hold: 0.9)
+            // Peek, then try right: it rubber-bands back.
+            await fingerDrag(slot: slot, to: -0.4 * w, hold: 0.9)
             await pause(0.6)
-            await fingerDrag(to: CGSize(width: 0.5 * w, height: 0), hold: 1.2)
-            await pause(0.6)
-            await fingerDrag(to: CGSize(width: 0, height: -120), hold: 1.2)
+            await fingerDrag(slot: slot, to: 0.5 * w, hold: 1.2)
         case "wait": await pause(1.5)
         case "play":
-            // Press the top card's play disc (`VocabPlayDisc.debugPlay`).
-            if let id = model.display.current?.entry.id {
+            // Press that card's play disc (`VocabPlayDisc.debugPlay`).
+            if let id = model.display.card(at: slot)?.entry.id {
                 NotificationCenter.default.post(name: VocabPlayDisc.debugPlay, object: id)
             }
         default: break
@@ -816,10 +825,79 @@ struct VocabSessionView: View {
     #endif
 }
 
-/// A new card enters one slot lower, transparent (`.row.enter`).
-private struct EnterModifier: ViewModifier {
-    let on: Bool
-    func body(content: Content) -> some View {
-        content.offset(y: on ? 72 + 18 : 0).opacity(on ? 0 : 1)
+/// A swiped card flying off sideways above the tray. It takes its fill at
+/// once (right: `tileOn`), and a critically damped spring carries it from
+/// where the finger let go to off the card's edge, starting at the finger's
+/// speed (at least `minLaunch`), so a flick flies faster than a slow drag.
+/// A left swipe's English rides away with it, clipped to the slot, on its own
+/// layer under the cards (`meaning`). Removes itself when done. `still` (Reduce Motion): a short ease.
+struct FlyingCard: View {
+    struct Flight: Identifiable {
+        let card: VocabQueue.Card
+        let swipe: VocabQueue.Swipe
+        let slot: Int
+        let startX: CGFloat
+        let endX: CGFloat
+        /// Initial speed in units of the whole trip per second.
+        let velocity: CGFloat
+        var id: Int { card.id }
+    }
+
+    /// Fly-out speed floor (trips / s): a slow release still leaves briskly
+    /// instead of starting from rest.
+    static let minLaunch: CGFloat = 3
+
+    let flight: Flight
+    let theme: AppTheme
+    let width: CGFloat
+    var still = false
+    /// Draw the left swipe's English panel instead of the card (same spring,
+    /// so the two move together).
+    var meaning = false
+    let onDone: () -> Void
+    @State private var t: CGFloat = 0
+
+    var body: some View {
+        let x = flight.startX + (flight.endX - flight.startX) * t
+        Group {
+            if meaning {
+                VocabMeaningPanel(text: flight.card.entry.en, theme: theme, cardWidth: width)
+                    .offset(x: width + x + 10)
+                    .frame(width: width, height: VocabSwipeCard.height, alignment: .leading)
+                    .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                    .opacity(Double(max(0, 1 - 1.5 * t)))
+            } else {
+                VocabSwipeCard(card: flight.card, theme: theme,
+                               leavingFill: flight.swipe == .right ? Color(hex: theme.tileOn) : nil)
+                    .frame(width: width)
+                    .offset(x: x)
+            }
+        }
+        .allowsHitTesting(false)
+        .accessibilityHidden(true)
+        .onAppear {
+            let spring = Animation.interpolatingSpring(mass: 1, stiffness: 190, damping: 27.6,
+                                                       initialVelocity: flight.velocity)
+            withAnimation(still ? .easeIn(duration: 0.2) : spring) { t = 1 } completion: { onDone() }
+        }
+    }
+}
+
+/// The English shown on a peek (`.slot .en`): pale `quietFill` block, 62 % of
+/// the card wide.
+private struct VocabMeaningPanel: View {
+    let text: String
+    let theme: AppTheme
+    let cardWidth: CGFloat
+
+    var body: some View {
+        Text(text)
+            .font(.display(size: 15, wght: 400))
+            .foregroundColor(AppColor.ink)
+            .lineSpacing(0)
+            .minimumScaleFactor(0.8)
+            .padding(.horizontal, 16)
+            .frame(width: cardWidth * 0.62, height: VocabSwipeCard.height, alignment: .leading)
+            .background(RoundedRectangle(cornerRadius: 16, style: .continuous).fill(Color(hex: theme.quietFill)))
     }
 }
