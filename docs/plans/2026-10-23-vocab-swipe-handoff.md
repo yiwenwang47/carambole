@@ -109,23 +109,8 @@ rule in every subagent brief. Long vocab headwords shrink to fit
 
 ## 2. Open, ask the user when relevant
 
-- **Branch `truncation-fixes`** (off `main`, not merged). User decisions
-  2026-10-24 on the truncation audit (`docs/reports/2026-10-24-truncation-audit.txt`):
-  - Done (`b5628109`):
-    - peek gloss → lint guard (`lint.py` + `textfit.py`; fails below 0.8);
-    - History `DayRow` → counts drop under the date (`ViewThatFits`);
-    - `TypeAnswerView` → wrapping `UITextView`. Return dismisses; the
-      `UITextField` clear button is gone. Keyboard and caret behaviour are not
-      sim-checked, because taps can't be automated;
-    - `ModuleDetailView` deleted. The element rows moved to
-      `ModuleElementRows.swift`.
-  - Waiting on the user, mock https://claude.ai/artifact/C7fYdLDX49LBE7kkkbW3eG
-    (`design/vocab/overflow-choices.html`):
-    - the armed Leçon row (today / A label under gloss / B headword wraps);
-    - the Book 1/2 Trop facile footer: the user said DROP the sentence. Still
-      to choose: what the armed label does (A toggle / B armed until answered);
-    - `MagnetTile` (A lint guard / B wrap / C shrink).
-  - Authored « … » in content (« ne ... pas » etc.) is fine (user).
+- **Branch `truncation-fixes`** (not merged): no-dots fixes and pending
+  choices. Start at `docs/plans/2026-10-24-truncation-fixes-handoff.md`.
 - **Rebuild review sets v1–v3:** `design/vocab/review-v1..v3.html` still use
   `text-overflow: ellipsis` on headwords (built before the rule). Rebuild
   with `design/vocab/build.py --draft`. The original mock audio dir lived in

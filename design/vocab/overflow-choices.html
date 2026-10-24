@@ -75,9 +75,9 @@ section .q{color:var(--graphite);font-size:14.5px;line-height:1.55;margin:0}
 .tray{background:var(--tint);border-radius:22px;margin:0 -8px;padding:16px;display:flex;flex-direction:column;align-items:flex-start;gap:12px}
 .tile{font-family:var(--display);font-size:19px;letter-spacing:-.2px;background:var(--paper);border:1px solid var(--ink);
   border-radius:999px;padding:0 15px;height:40px;display:flex;align-items:center;white-space:nowrap;max-width:100%}
-.tile.hypo{border-style:solid;box-shadow:0 0 0 3px var(--paper),0 0 0 4.5px var(--fragile)}
 .tile.over{overflow:hidden}
 .tile.wrap2{white-space:normal;height:auto;min-height:40px;padding:7px 15px;line-height:1.3;border-radius:20px}
+.tile.wrap2.cap{border-radius:999px;padding:7px 20px}
 .foot{display:flex;flex-direction:column;gap:12px;margin-top:26px}
 .tfbtn{align-self:flex-start;border:0;background:none;padding:8px 0;cursor:pointer;color:var(--g2);
   font-family:var(--label);font-size:11px;letter-spacing:1.3px;text-transform:uppercase;border-radius:999px;
@@ -128,7 +128,7 @@ section .q{color:var(--graphite);font-size:14.5px;line-height:1.55;margin:0}
     <div class="opt">
       <div class="tag"><b>B</b><span class="lab">headword wraps</span></div>
       <div class="phone lB"><ul class="dict" data-variant="B"></ul></div>
-      <p>The label stays beside the headword. A long armed headword breaks onto two lines at full size.</p>
+      <p>The label stays beside the headword. A long armed headword breaks onto two lines at full size; the part of speech and « Trop facile » sit on the first line's baseline.</p>
     </div>
   </div>
 </section>
@@ -136,7 +136,7 @@ section .q{color:var(--graphite);font-size:14.5px;line-height:1.55;margin:0}
 <!-- 2 · Trop facile without the footer sentence -->
 <section>
   <div class="head">
-    <h2>2 · Book 1 and 2: Trop facile without the footer sentence</h2>
+    <h2>2 · Book 1 and 2: Trop facile footer (decided: keep today's layout)</h2>
     <p class="q">You dropped « Réponds correctement pour le retirer ». That line also held « Annuler » (disarm before answering) and, after a miss, « Raté — remis à zéro ». What should the label do once it's armed? Book 1 card shown. Book 2 uses the same control.</p>
   </div>
   <div class="row">
@@ -165,7 +165,7 @@ section .q{color:var(--graphite);font-size:14.5px;line-height:1.55;margin:0}
 <section>
   <div class="head">
     <h2>3 · Word tiles (Book 1 and 2)</h2>
-    <p class="q">Tiles are one line. The widest real tile, « Est-ce que vous parlez anglais? », is 270 of 300 pt. To show the risk, the option phones swap it for a <em>made-up</em> longer tile, outlined in blue: « Est-ce que vous parlez anglais avec eux? ».</p>
+    <p class="q">Tiles are one line. The widest real tile, « Est-ce que vous parlez anglais? », is 270 of 300 pt. To show the risk, the option phones swap it for a <em>made-up</em> longer tile as the first one: « Est-ce que vous parlez anglais avec eux? ».</p>
   </div>
   <div class="row">
     <div class="opt now">
@@ -181,7 +181,12 @@ section .q{color:var(--graphite);font-size:14.5px;line-height:1.55;margin:0}
     <div class="opt">
       <div class="tag"><b>B</b><span class="lab">wrap to two lines</span></div>
       <div class="phone" data-tiles="wrap"></div>
-      <p>A long tile becomes a two-line rounded block at full size. Rows of tiles no longer share one height.</p>
+      <p>A long tile becomes a two-line block at full size. Its corners drop to 20 pt (from a full capsule) and it gets 7 pt padding top and bottom. Rows of tiles no longer share one height.</p>
+    </div>
+    <div class="opt">
+      <div class="tag"><b>B′</b><span class="lab">wrap, capsule kept</span></div>
+      <div class="phone" data-tiles="wrapcap"></div>
+      <p>Same 1 pt ink border and fully round ends as the other tiles, with 20 pt side padding so the text clears the curve. A tile wraps only when it can't fit on one line; every other tile stays one line.</p>
     </div>
     <div class="opt">
       <div class="tag"><b>C</b><span class="lab">shrink to fit</span></div>
@@ -205,9 +210,17 @@ const ROWS = [
 ];
 function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;")}
 function fitHead(el){
-  el.style.fontSize = "";
+  el.style.fontSize = ""; el.style.width = ""; el.style.flex = "";
   const hw = el.parentElement, li = el.closest(".entry");
-  if (li.closest(".lB") && li.classList.contains("on")) return; // B wraps instead
+  if (li.closest(".lB") && li.classList.contains("on")) {
+    // B wraps instead; the box hugs its widest line (as SwiftUI Text does) so the
+    // labels sit right after it on the first line's baseline.
+    const r = document.createRange(); r.selectNodeContents(el);
+    const right = Math.max(...[...r.getClientRects()].map(x => x.right));
+    el.style.width = Math.ceil(right - el.getBoundingClientRect().left) + "px";
+    el.style.flex = "0 0 auto";
+    return;
+  }
   let s = 1;
   const avail = () => hw.clientWidth - [...hw.children].filter(c => c !== el && getComputedStyle(c).display !== "none")
       .reduce((t, c) => t + c.offsetWidth + 10, 0);
@@ -274,6 +287,7 @@ document.querySelectorAll("[data-tiles]").forEach(el => {
   const html = list.map(t => {
     if (t !== LONG) return `<span class="tile">${t}</span>`;
     if (v === "wrap") return `<span class="tile hypo wrap2">${t}</span>`;
+    if (v === "wrapcap") return `<span class="tile hypo wrap2 cap">${t}</span>`;
     if (v === "shrink") {
       const s = Math.max(0.8, Math.min(1, 300 / textW(t)));
       return `<span class="tile hypo" style="font-size:${(19 * s).toFixed(2)}px">${t}</span>`;
@@ -286,7 +300,18 @@ document.querySelectorAll("[data-tiles]").forEach(el => {
     : "");
 });
 
-const fitAll = () => document.querySelectorAll(".entry .w").forEach(fitHead);
+// A wrapped tile hugs its longest line, as a SwiftUI Text would.
+function hugTiles(){
+  document.querySelectorAll(".tile.wrap2").forEach(t => {
+    t.style.width = "";
+    const r = document.createRange(); r.selectNodeContents(t);
+    const rects = [...r.getClientRects()];
+    const w = Math.max(...rects.map(x => x.right)) - Math.min(...rects.map(x => x.left));
+    const pad = parseFloat(getComputedStyle(t).paddingLeft) + parseFloat(getComputedStyle(t).paddingRight);
+    t.style.width = Math.ceil(w + pad + 2) + "px";
+  });
+}
+const fitAll = () => { document.querySelectorAll(".entry .w").forEach(fitHead); hugTiles(); };
 (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => {
   fitAll();
   // shrink factor in C depends on the loaded font; recompute
