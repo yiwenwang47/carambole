@@ -13,9 +13,9 @@ Older history is in `docs/archive/` and git log.
 
 - **Vocab swipe book (*Monnaie courante*, was *Mots*; branch `vocab-swipe`, 2026-10-23):** start at
   `docs/plans/2026-10-23-vocab-swipe-handoff.md`; spec in
-  `docs/plans/2026-10-23-vocab-swipe-plan.md`. Mock + review set v1 approved;
-  engine (phase 3) and views (phase 4, `Features/Vocab/`, on the shelf) built;
-  next is bulk content (phase 5).
+  `docs/plans/2026-10-23-vocab-swipe-plan.md`. Built and user-approved for
+  bands 1–10 (1,000 words + 200 expressions, leçon 0, placement start, bitten
+  coin mark); not merged or pushed (only when the user says).
 - **Status + phone checks:** `docs/plans/2026-10-13-book-2-release-handoff.md`.
   Next, only when asked: the Écrire typing drill, in its own session.
 - **Book 2 rulebook** (cast, voices, JSON shape, authoring steps):
@@ -28,7 +28,7 @@ Older history is in `docs/archive/` and git log.
   `design/studio/PREFERENCES.md`; mocks + drag editor: `design/studio/`
   (`python3 design/studio/server.py`).
 - **Book marks (2026-10-14):** `DesignSystem/BookMark.swift` (Fondations = seed,
-  En situation = guillemet «), same recipe as the language marks, "Pale" face;
+  En situation = guillemet «, Monnaie courante = bitten coin), same recipe as the language marks, "Pale" face;
   mock `design/studio/books.html`, votes in `design/studio/PREFERENCES.md`.
 - **Design:** `design/UI_REDESIGN_HANDOFF.md` (white ground, ink text, colour on
   objects, pale capped fills). Code in `carambole/DesignSystem/Theme.swift`.
@@ -68,7 +68,7 @@ Older history is in `docs/archive/` and git log.
   grade the element normally (`SituationTooEasy.gradedOutcome`). Shared code: `Features/Drill/TooEasy.swift` (`TooEasyGate`,
   `TooEasyControl`, `.tooEasyUndo`). Book 1: `DrillView`/`DrillSessionView`.
   Book 2: `SituationCardView`/`SituationSessionView` + `SituationTooEasy`.
-  **Mots (2026-10-23):** no `TooEasyControl`; swipe up on a card IS trop facile
+  **Monnaie courante (was Mots, 2026-10-23):** no `TooEasyControl`; swipe up on a card IS trop facile
   (resolved at once, clean by definition), and a word armed by tapping its
   Leçon-page row resolves on its first swipe (clean right → removed; peek or
   left → cleaned, then a normal word). `VocabQueue` → `VocabStudy.commit` →
