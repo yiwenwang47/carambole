@@ -27,7 +27,7 @@
 textarea { width: 100%; min-height: 56px; resize: vertical; font: 400 13px var(--display); color: var(--fg); background: var(--chip); border: 0; border-radius: 12px; padding: 9px 11px; }
 /* phone: the French shelf (LibraryView geometry: slots from 236, step 200, block +34, edge 24) */
 .phone { position: sticky; top: 20px; width: 402px; max-width: 100%; height: 874px; background: #fff; border-radius: 46px; box-shadow: 0 0 0 1px #0000000f, 0 18px 50px #00000014; overflow: hidden; }
-.screen { position: relative; width: 402px; height: 874px; }
+.screen { position: relative; width: 402px; height: 874px; overflow-y: auto; }
 .abs { position: absolute; }
 .big { font: 250 40px/42px var(--display); letter-spacing: -1.2px; }
 .ttl { font: 250 32px/1.15 var(--display); letter-spacing: -.96px; margin-top: 2px; }
@@ -39,9 +39,9 @@ textarea { width: 100%; min-height: 56px; resize: vertical; font: 400 13px var(-
 <div class="wrap">
   <nav class="nav"><a href="index.html">Studio</a><a href="marks.html">Marks</a><a href="books.html" aria-current="page">Book marks</a><a href="layout.html">Layout</a><span class="status" id="status">Not saved yet</span></nav>
   <header class="top">
-    <span class="eyebrow">Book marks · round 2</span>
+    <span class="eyebrow">Book marks · round 3</span>
     <h1>A mark for each book</h1>
-    <p class="intro"><b>Round 2:</b> your picks (Seed, Guillemet «) in toned-down colours; shapes you voted No are hidden. Same recipe as the language marks: a die-cut shape with a soft edge, the quiet colour printed off register, the number in the deep colour. Three shapes per book. Each card shows the book mark next to the two language marks so you can check they belong together. <b>Like / No</b> and notes save here; <b>Use</b> puts that shape on the phone.</p>
+    <p class="intro"><b>Round 3:</b> three coin shapes for the new book, <i>Monnaie courante</i> (book 03, vocabulary). <b>Round 2:</b> your picks (Seed, Guillemet «) in toned-down colours; shapes you voted No are hidden. Same recipe as the language marks: a die-cut shape with a soft edge, the quiet colour printed off register, the number in the deep colour. Three shapes per book. Each card shows the book mark next to the two language marks so you can check they belong together. <b>Like / No</b> and notes save here; <b>Use</b> puts that shape on the phone.</p>
   </header>
   <div class="controls">
     <div class="bar" id="palBar"></div>
@@ -58,8 +58,9 @@ import { PALETTES, markSVG } from "./marks.js";
 import { SHAPES, BOOKS, FACES, bookSVG } from "./books.js";
 import { loadPrefs, savePrefs } from "./marks.js";
 
-const prefs = Object.assign({ votes: {}, notes: {}, palette: "acide", face: "pale", style: "cut", use: { fondations: "pebbles", situation: "bubbles" } },
+const prefs = Object.assign({ votes: {}, notes: {}, palette: "acide", face: "pale", style: "cut", use: { fondations: "pebbles", situation: "bubbles", monnaie: "coin" } },
   await loadPrefs("books"));
+prefs.use.monnaie ??= "coin";
 if (!FACES[prefs.face]) prefs.face = "pale";
 const status = document.getElementById("status");
 let t;
@@ -106,14 +107,14 @@ function draw() {
 
   let h = `<div class="abs lab" style="left:24px;top:59px;color:#141414">‹ Langues</div>
     <div class="abs lab" style="right:24px;top:59px;color:#141414">Français</div>
-    <div class="abs big" style="left:24px;top:96px"><div>2 livres</div><div style="color:#8D8D8A">2 ouverts</div></div>`;
-  ["fondations", "situation"].forEach((book, i) => {
+    <div class="abs big" style="left:24px;top:96px"><div>3 livres</div><div style="color:#8D8D8A">3 ouverts</div></div>`;
+  ["fondations", "situation", "monnaie"].forEach((book, i) => {
     const top = 236 + i * 200 + 34, b = BOOKS[book];
     h += `<div class="abs" style="left:24px;top:${top}px;width:220px"><div class="lab">${b.kicker}</div><div class="ttl">${b.title}</div>
       <div style="display:flex;gap:10px;margin-top:6px"><span class="lab u">Ouvrir →</span><span class="lab" style="color:#141414">${b.pct} %</span></div></div>
       <div class="abs" style="left:248px;top:${top - 30}px">${bookSVG({ style: prefs.style, book, shape: prefs.use[book], size: 124, pal, face: prefs.face })}</div>`;
   });
-  h += `<div class="abs lab" style="left:0;right:0;text-align:center;top:${236 + 400 + 50}px">Fin de la bibliothèque</div>`;
+  h += `<div class="abs lab" style="left:0;right:0;text-align:center;top:${236 + 600 + 50}px">Fin de la bibliothèque</div>`;
   document.getElementById("screen").innerHTML = h;
 }
 draw();

@@ -109,3 +109,18 @@ deep colour with 20 % grey. Dusty eased to 35 % grey.
 **Decided and shipped 2026-10-14** (`d351ec87`): Fondations = Seed, En situation =
 Guillemet «, Pale face, in `carambole/DesignSystem/BookMark.swift` (port of
 `books.js`). They follow the mark style picked under Colors; a book to come is grey.
+
+## Book marks, round 3 (2026-10-23, Monnaie courante)
+
+Book 03, vocabulary by frequency: the name means "commonplace", the words you spend every day.
+Three coins, same recipe (truer edge `wob: [.35, 3]`, a crescent sheen on one rim instead of a
+concentric disc, sparkle moved clear of the round edge in Script sticker):
+
+| Shape | Idea | Vote |
+|---|---|---|
+| Worn coin | rubbed smooth by many hands | not picked |
+| Coin mid-flip | pile ou face, decided in a second | not picked |
+| **Bitten coin** | biting a coin to test it, like the placement test | **picked (Use)** |
+
+Face: **Pale** (the shipped default). Shipped in `carambole/DesignSystem/BookMark.swift`
+(`BookMarkShape.bitten`, a port of `books.js` `radial` / `bitten` / `crescent`).

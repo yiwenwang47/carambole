@@ -19,6 +19,48 @@ function slice(cx, cy, R, r, rot = -90) {
   return d + "Z";
 }
 
+/* a closed outline from a polar radius r(θ) around (cx, cy), smoothed with quadratic curves like `slice` */
+function radial(cx, cy, r, n = 48) {
+  const pts = [];
+  for (let i = 0; i < n; i++) {
+    const a = i / n * 2 * Math.PI, rad = r(a);
+    pts.push([cx + rad * Math.cos(a), cy + rad * Math.sin(a)]);
+  }
+  const f = p => p.map(v => v.toFixed(1)).join(","), mid = (p, q) => [(p[0] + q[0]) / 2, (p[1] + q[1]) / 2];
+  let d = `M${f(mid(pts[n - 1], pts[0]))} `;
+  for (let i = 0; i < n; i++) d += `Q${f(pts[i])} ${f(mid(pts[i], pts[(i + 1) % n]))} `;
+  return d + "Z";
+}
+/* an ellipse (half axes a, b) turned by φ, as a polar radius */
+const ellipse = (a, b, phi) => t => a * b / Math.hypot(b * Math.cos(t - phi), a * Math.sin(t - phi));
+/* a worn coin: round, rubbed a little flat along the top right */
+const worn = R => t => R * (1 - .035 * Math.max(0, Math.cos(t + Math.PI / 4)) ** 4);
+/* a bitten coin: one soft bite out of the top right rim, two shallow tooth marks in it */
+const bitten = R => t => {
+  const c = -Math.PI / 4, w = .5, u = (((t - c) % (2 * Math.PI)) + 3 * Math.PI) % (2 * Math.PI) - Math.PI;
+  if (Math.abs(u) > w) return R;
+  const s = (u + w) / (2 * w);
+  return R - 12 * Math.sin(Math.PI * s) ** 1.4 * (1 - .22 * Math.sin(2 * Math.PI * s) ** 2);
+};
+/* the part of disc A that lies outside disc B (each {cx, cy, r: polar radius}): a crescent along one rim,
+   used as the coin's off-register sheen instead of a concentric disc */
+function crescent(A, B, n = 240) {
+  const at = (S, t) => { const r = S.r(t); return [S.cx + r * Math.cos(t), S.cy + r * Math.sin(t)]; };
+  const inside = (S, [x, y]) => Math.hypot(x - S.cx, y - S.cy) < S.r(Math.atan2(y - S.cy, x - S.cx));
+  const run = (S, T, keep) => {
+    const pts = Array.from({ length: n }, (_, i) => at(S, i / n * 2 * Math.PI)), ok = pts.map(p => inside(T, p) === keep);
+    const k = ok.findIndex((v, i) => v && !ok[(i + n - 1) % n]), out = [];
+    for (let i = 0; i < n && ok[(k + i) % n]; i++) out.push(pts[(k + i) % n]);
+    return out;
+  };
+  const outer = run(A, B, false);
+  let inner = run(B, A, true);
+  const end = outer[outer.length - 1], d2 = p => (p[0] - end[0]) ** 2 + (p[1] - end[1]) ** 2;
+  if (d2(inner[0]) > d2(inner[inner.length - 1])) inner = inner.reverse();
+  return "M" + [...outer, ...inner].map(p => p.map(v => v.toFixed(1)).join(",")).join(" L") + " Z";
+}
+const disc = (cx, cy, r) => ({ cx, cy, r });
+
 /* Shapes in a 100 × 100 box, like marks.js `G`. `parts` = face pieces; `over` = which part gets the off-register
    print and how it is shifted; `num` = where the number sits (the marks put it right of the shape); `line` = the
    script sticker's inner line. */
@@ -66,11 +108,32 @@ export const SHAPES = {
       line: ["M42,24 L24,50 L42,76", "M74,24 L56,50 L74,76"],
     },
   ],
+  monnaie: [
+    {
+      id: "coin", name: "Worn coin", idea: "One coin rubbed smooth by many hands: the words everyone spends every day. A true round, the sheen worn onto one rim.",
+      parts: [radial(48, 52, worn(42), 96)], wob: [.35, 3],
+      over: { part: 0, d: crescent(disc(48, 52, worn(42)), disc(37, 62, () => 40)), t: "translate(4 -3)" }, num: [72, 98], spark: [97, 5],
+      line: ["M20,38 C27,24 40,16 56,15"],
+    },
+    {
+      id: "flip", name: "Coin mid-flip", idea: "Pile ou face, tossed: you decide in a second, like a swipe. The coin turned almost edge-on, its thickness showing.",
+      parts: [radial(54, 50, ellipse(22, 43, .32), 96), radial(44, 52, ellipse(22, 43, .32), 96)], wob: [.35, 3],
+      over: { part: 0, d: crescent(disc(54, 50, ellipse(22, 43, .32)), disc(44, 52, ellipse(22, 43, .32))), t: "translate(2 -1)" }, num: [74, 98], spark: [8, 8],
+      line: ["M44,14 C60,22 66,68 56,90"],
+    },
+    {
+      id: "bitten", name: "Bitten coin", idea: "Biting a coin to see if it is real: the test that tells you where to start. One soft bite out of the rim.",
+      parts: [radial(48, 52, bitten(42), 96)], wob: [.35, 3],
+      over: { part: 0, d: crescent(disc(48, 52, bitten(42)), disc(58, 42, () => 40)), t: "translate(-4 3)" }, num: [72, 98], spark: [0, 100],
+      line: ["M16,50 C17,70 30,86 48,90"],
+    },
+  ],
 };
 
 export const BOOKS = {
   fondations: { title: "Fondations", kicker: "01 · Grammaire A1 → B1", num: "01", pct: 76 },
   situation: { title: "En situation", kicker: "02 · Dialogues", num: "02", pct: 0 },
+  monnaie: { title: "Monnaie courante", kicker: "03 · Vocabulaire", num: "03", pct: 0 },
 };
 
 /* face colour choices. Round 1: the full star colour read "too bright"; round 2: the button-fill pale read "a little
@@ -87,17 +150,19 @@ const P = d => `<path d="${d}"/>`;
 const pick = pal => PALETTES[pal] || PALETTES.acide;
 
 function cutArt(shape, book, c, face) {
-  const blk = shape.parts.map((d, i) => wobbly(d, .8, 6, 3 + i * 2));
+  const [amp, waves] = shape.wob || [.8, 6];   // coins ask for a truer edge
+  const blk = shape.parts.map((d, i) => wobbly(d, amp, waves, 3 + i * 2));
   const sheet = `<g fill="#FFFFFF" stroke="#FFFFFF" stroke-width="10" stroke-linejoin="round">${blk.map(P).join("")}</g>`;
   const body = `<g fill="${FACES[face].get(c)}">${blk.map(P).join("")}</g>`;
-  const o = shape.over, od = wobbly(o.d || shape.parts[o.part], .8, 6, 9);
+  const o = shape.over, od = wobbly(o.d || shape.parts[o.part], amp, waves, 9);
   const over = `<path d="${od}" transform="${o.t}" fill="${FACES[face].over(c)}" style="mix-blend-mode:multiply" opacity=".9"/>`;
   const num = `<text x="${shape.num[0]}" y="${shape.num[1]}" font-family="Manrope, sans-serif" font-weight="300" font-size="34" letter-spacing="-1.8" fill="${FACES[face].num(c)}">${BOOKS[book].num}</text>`;
   return sheet + body + over + num;
 }
 
 function scriptArt(shape, book, c, face) {
-  const star = sparkle(90, 14, 6);
+  const [sx, sy] = shape.spark || [90, 14];   // coins move the sparkle clear of the round edge
+  const star = sparkle(sx, sy, 6);
   const base = `<g fill="${FACES[face].get(c)}" stroke="${FACES[face].get(c)}" stroke-width="18" stroke-linejoin="round" stroke-linecap="round">${shape.parts.map(P).join("")}${P(star)}</g>`;
   const line = shape.line.map(d => `<path d="${d}" fill="none" stroke="${FACES[face].on(c)}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>`).join("");
   const sp = `<path d="${star}" fill="${FACES[face].over(c)}"/>`;
