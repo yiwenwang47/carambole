@@ -284,3 +284,12 @@ Built 2026-10-23, port of mock v7 (`design/vocab/vocab-swipe.src.html`).
   ✕ row for this book. Simulator (iOS 27.0, test bundle): placement after
   leçon 0 → band 1 passed, band 2 two misses → « Leçon 11 »; book home then
   opens leçon 11; pill clear of the count; launch self-tests pass.
+- 2026-10-23: bands 3–10 (ranks 201–1000, leçons 21–100): 1,200 entries,
+  1,189 clips (1,124 Lingua Libre, 65 TTS); lint 0 errors; gate passes.
+  Review set v3 approved ("works") with its rules (celui / lequel merges,
+  two « neuf » cards, madame / mademoiselle without article, reflexive
+  headwords, fam. / vulg. labels).
+- 2026-10-23: shelf mark: studio round 3 (worn coin, coin mid-flip, bitten
+  coin); user picked **bitten coin**, Pale face (`BookMark.swift`). Two-line
+  shelf title hard-broken (`shelfLines`), spacing −6.7 → 37 pt pitch, works on
+  every supported iOS.
