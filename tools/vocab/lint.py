@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Lint the *Mots* book (carambole/Resources/Vocab/mots.json).
+"""Lint « Monnaie courante » (book_fr_mots, carambole/Resources/Vocab/mots.json).
 
 Errors (exit 1): duplicate id / lemma, missing gloss, noun without a
 matching article, English in the French headword, part of speech outside the
@@ -33,7 +33,9 @@ ARTICLE = re.compile(r"^(le|la|les|l')\b ?", re.IGNORECASE)
 ENGLISH = {"the", "of", "and", "to", "is", "it", "you", "with", "for", "that", "this", "be",
            "have", "not", "are", "was", "what", "who", "my", "your", "his", "her", "they",
            "we", "from", "by", "at", "in", "or", "but", "if", "so", "do", "make", "get"}
-FRENCH_TOO = {"on", "a", "an", "as", "but", "plus", "son", "ton", "mais", "est"}
+FRENCH_TOO = {"on", "a", "an", "as", "but", "plus", "son", "ton", "mais", "est", "or"}
+# Forms of address: nouns used bare (« la madame » is not French). Flagged to the user.
+ADDRESS = {"madame", "mademoiselle"}
 
 log = logging.getLogger("lint")
 
@@ -90,6 +92,10 @@ def lint(book: dict, audio_dir: Path | None) -> list[str]:
         if not re.fullmatch(r"voc_[a-z0-9_]+", eid):
             err(f"{eid}: id not voc_<ascii>")
         lemma = ARTICLE.sub("", fr).lower()
+        # A split homograph card (ranked key « lemma#CGRAM ») shares its lemma on purpose.
+        split = ranked.get(e["rank"], {}).get("key", "") if e["rank"] is not None else ""
+        if "#" in split:
+            lemma = f"{lemma}#{split.split('#', 1)[1]}"
         if lemma in lemmas:
             err(f"{eid}: duplicate lemma « {lemma} » (also {lemmas[lemma]})")
         lemmas[lemma] = eid
@@ -103,7 +109,8 @@ def lint(book: dict, audio_dir: Path | None) -> list[str]:
             m = ARTICLE.match(fr)
             art = m.group(1).lower() if m else None
             if art is None:
-                err(f"{eid}: noun without article: {fr!r}")
+                if fr.lower() not in ADDRESS:
+                    err(f"{eid}: noun without article: {fr!r}")
             elif (art == "le" and pos != "n.m.") or (art == "la" and pos != "n.f."):
                 err(f"{eid}: article {art} vs {pos}")
             elif art == "l'" and not re.match(r"l'[aeiouyhâàéèêëîïôœûù]", fr, re.IGNORECASE):

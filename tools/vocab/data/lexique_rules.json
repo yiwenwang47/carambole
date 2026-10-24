@@ -1,6 +1,10 @@
 {
-  "note": "Rules applied by build_lists.py before ranking. 'merge' maps a Lexique lemma to the card it belongs to (odd lemma forms, oe ligatures, gender/number forms of one determiner). 'split' lists Lexique rows (lemma + cgram) that get their own card because the meaning really differs. 'drop' removes lemmas outright, with the reason. Rows whose card is led by an article or personal pronoun (ART:def, ART:ind, PRO:per) are dropped by rule.",
-  "drop_cgram": ["ART:def", "ART:ind", "PRO:per"],
+  "note": "Rules applied by build_lists.py before ranking. 'merge' maps a Lexique lemma to the card it belongs to (odd lemma forms, oe ligatures, gender/number forms of one determiner). 'split' lists Lexique rows (lemma + cgram) that get their own card because the meaning really differs. 'drop' removes lemmas outright, with the reason. Rows whose card is led by an article or personal pronoun (ART:def, ART:ind, PRO:per) are dropped by rule. Ranks 201-1000 (2026-10-23): feminine/plural forms of one pronoun or determiner merge into the masculine singular card (celui, lequel, aucun, chacun, tel, certain, autre); désoler → désolé (the participle is the word).",
+  "drop_cgram": [
+    "ART:def",
+    "ART:ind",
+    "PRO:per"
+  ],
   "merge": {
     "vacance": "vacances",
     "oeil": "œil",
@@ -29,25 +33,127 @@
     "autres": "autre",
     "tous": "tout",
     "toute": "tout",
-    "toutes": "tout"
+    "toutes": "tout",
+    "d'autres": "autre",
+    "aucune": "aucun",
+    "chacune": "chacun",
+    "certains": "certain",
+    "telle": "tel",
+    "tels": "tel",
+    "nouvelle": "nouveau",
+    "désoler": "désolé",
+    "celle": "celui",
+    "ceux": "celui",
+    "celles": "celui",
+    "celui-ci": "celui",
+    "celle-ci": "celui",
+    "celui-là": "celui",
+    "celle-là": "celui",
+    "ceux-ci": "celui",
+    "ceux-là": "celui",
+    "celles-ci": "celui",
+    "celles-là": "celui",
+    "laquelle": "lequel",
+    "lesquels": "lequel",
+    "lesquelles": "lequel",
+    "l'une": "l'un"
   },
   "split": [
-    {"lemma": "être", "cgram": "NOM", "why": "l'être = being"},
-    {"lemma": "pas", "cgram": "NOM", "why": "le pas = step"},
-    {"lemma": "pouvoir", "cgram": "NOM", "why": "le pouvoir = power (spec example)"},
-    {"lemma": "bien", "cgram": "NOM", "why": "le bien = good; property"},
-    {"lemma": "son", "cgram": "NOM", "why": "le son = sound"},
-    {"lemma": "ton", "cgram": "NOM", "why": "le ton = tone"},
-    {"lemma": "tout", "cgram": "NOM", "why": "le tout = the whole"},
-    {"lemma": "devoir", "cgram": "NOM", "why": "le devoir = duty; homework"},
-    {"lemma": "savoir", "cgram": "NOM", "why": "le savoir = knowledge"},
-    {"lemma": "souvenir", "cgram": "NOM", "why": "le souvenir = memory"},
-    {"lemma": "personne", "cgram": "NOM", "why": "la personne = person (vs personne = nobody)"},
-    {"lemma": "mort", "cgram": "ADJ", "why": "mort, morte = dead (vs la mort = death)"},
-    {"lemma": "mal", "cgram": "NOM", "why": "le mal = harm; pain; evil (vs mal = badly)"},
-    {"lemma": "fin", "cgram": "ADJ", "why": "fin, fine = thin; fine (vs la fin = end)"},
-    {"lemma": "vers", "cgram": "NOM", "why": "le vers = line of verse"},
-    {"lemma": "sur", "cgram": "ADJ", "why": "sur = sour (vs sur = on)"}
+    {
+      "lemma": "être",
+      "cgram": "NOM",
+      "why": "l'être = being"
+    },
+    {
+      "lemma": "pas",
+      "cgram": "NOM",
+      "why": "le pas = step"
+    },
+    {
+      "lemma": "pouvoir",
+      "cgram": "NOM",
+      "why": "le pouvoir = power (spec example)"
+    },
+    {
+      "lemma": "bien",
+      "cgram": "NOM",
+      "why": "le bien = good; property"
+    },
+    {
+      "lemma": "son",
+      "cgram": "NOM",
+      "why": "le son = sound"
+    },
+    {
+      "lemma": "ton",
+      "cgram": "NOM",
+      "why": "le ton = tone"
+    },
+    {
+      "lemma": "tout",
+      "cgram": "NOM",
+      "why": "le tout = the whole"
+    },
+    {
+      "lemma": "devoir",
+      "cgram": "NOM",
+      "why": "le devoir = duty; homework"
+    },
+    {
+      "lemma": "savoir",
+      "cgram": "NOM",
+      "why": "le savoir = knowledge"
+    },
+    {
+      "lemma": "souvenir",
+      "cgram": "NOM",
+      "why": "le souvenir = memory"
+    },
+    {
+      "lemma": "personne",
+      "cgram": "NOM",
+      "why": "la personne = person (vs personne = nobody)"
+    },
+    {
+      "lemma": "mort",
+      "cgram": "ADJ",
+      "why": "mort, morte = dead (vs la mort = death)"
+    },
+    {
+      "lemma": "mal",
+      "cgram": "NOM",
+      "why": "le mal = harm; pain; evil (vs mal = badly)"
+    },
+    {
+      "lemma": "fin",
+      "cgram": "ADJ",
+      "why": "fin, fine = thin; fine (vs la fin = end)"
+    },
+    {
+      "lemma": "vers",
+      "cgram": "NOM",
+      "why": "le vers = line of verse"
+    },
+    {
+      "lemma": "sur",
+      "cgram": "ADJ",
+      "why": "sur = sour (vs sur = on)"
+    },
+    {
+      "lemma": "neuf",
+      "cgram": "ADJ:num",
+      "why": "neuf = nine (vs neuf, neuve = new)"
+    },
+    {
+      "lemma": "baiser",
+      "cgram": "NOM",
+      "why": "le baiser = kiss (vs baiser = vulg. to screw)"
+    },
+    {
+      "lemma": "tendre",
+      "cgram": "ADJ",
+      "why": "tendre = tender, soft (vs tendre = to hold out)"
+    }
   ],
   "drop": {
     "oh": "pure interjection (sound only)",
@@ -57,6 +163,8 @@
     "ha": "pure interjection (sound only)",
     "hum": "pure interjection (sound only)",
     "euh": "pure interjection (sound only)",
-    "sous-titrage": "subtitle credit noise, not vocabulary"
+    "sous-titrage": "subtitle credit noise, not vocabulary",
+    "l'un": "pronoun led by the article l' (un/une are article cards); taught by the expression l'un l'autre",
+    "a": "Lexique noise: the letter a / mis-tagged forms of avoir"
   }
 }

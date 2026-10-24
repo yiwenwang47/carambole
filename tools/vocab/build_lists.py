@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the *Mots* word lists from Lexique 3 and the authored glosses.
+"""Build the word lists of « Monnaie courante » (book_fr_mots, formerly *Mots*) from Lexique 3 and the authored glosses.
 
 Two steps:
 
@@ -9,7 +9,7 @@ Two steps:
       tools/vocab/data/lexique_rules.json (merges, splits, drops) and write
       tools/vocab/data/ranked.tsv: one row per card, rank 1..N.
 
-  python3 tools/vocab/build_lists.py assemble [--bands 2]
+  python3 tools/vocab/build_lists.py assemble [--bands 10]
       Join ranked.tsv with tools/vocab/data/glosses.json and
       expressions.json, cut bands of 100, shuffle each band with SEED, split
       into leçons of 10 words + 2 expressions and write
@@ -75,7 +75,9 @@ def fold(text: str) -> str:
 
 
 def spoken_form(fr: str, pos: str) -> str:
-    """What the clip says: no article; a reflexive verb without « se »."""
+    """What the clip says: no article; a reflexive verb without « se »; an expression in full."""
+    if pos == "loc.":
+        return fr.strip()  # « le long de » keeps its article
     s = ARTICLE.sub("", fr.strip(), count=1)
     if pos == "v.":
         s = REFLEXIVE.sub("", s, count=1)
@@ -280,7 +282,7 @@ def main() -> int:
     sub = ap.add_subparsers(dest="cmd", required=True)
     sub.add_parser("rank").set_defaults(func=cmd_rank)
     a = sub.add_parser("assemble")
-    a.add_argument("--bands", type=int, default=2, help="bands to emit (all must be glossed)")
+    a.add_argument("--bands", type=int, default=10, help="bands to emit (all must be glossed)")
     a.set_defaults(func=cmd_assemble)
     args = ap.parse_args()
     return args.func(args)
