@@ -7,7 +7,8 @@ allowed set, missing audio file, clip key collision (one key, two spoken
 forms), contract shape (leçon size, indexes, ranks, keys), credits
 (mots_credits.json: every clip key is a credited Lingua Libre clip or counted
 as TTS; each clip has a speaker, a known licence and a Commons URL; no generic
-`credits.json` left in the bundle, since Xcode flattens resources).
+`credits.json` left in the bundle, since Xcode flattens resources), a gloss
+that needs more shrink than the drill's peek underlay allows (textfit.py).
 
   python3 tools/vocab/lint.py [--book PATH] [--credits PATH] [--audio-dir DIR] [--no-audio]
 """
@@ -22,6 +23,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
+import textfit
 from build_lists import BAND_SIZE, LECON_EXPRESSIONS, LECON_WORDS, ROOT, fold, read_ranked, spoken_form
 
 BOOK = ROOT / "carambole/Resources/Vocab/mots.json"
@@ -40,6 +42,10 @@ ENGLISH = {"the", "of", "and", "to", "is", "it", "you", "with", "for", "that", "
            "have", "not", "are", "was", "what", "who", "my", "your", "his", "her", "they",
            "we", "from", "by", "at", "in", "or", "but", "if", "so", "do", "make", "get"}
 FRENCH_TOO = {"on", "a", "an", "as", "but", "plus", "son", "ton", "mais", "est", "or"}
+# Peek underlay in VocabSessionView at 390 pt: text 180 x 72 pt, Manrope 15/400,
+# `.minimumScaleFactor(0.8)`. A gloss needing more shrink fails (no « … », user 2026-10-24).
+PEEK_GLOSS = (15, 180, 72)
+PEEK_MIN_SCALE = 0.8
 # Forms of address: nouns used bare (« la madame » is not French). Flagged to the user.
 ADDRESS = {"madame", "mademoiselle"}
 
@@ -109,6 +115,9 @@ def lint(book: dict, audio_dir: Path | None) -> list[str]:
             err(f"{eid}: no gloss")
         elif en.endswith(".") or en != e["en"]:
             err(f"{eid}: gloss has trailing period/space")
+        elif (scale := textfit.fit_scale(en, *PEEK_GLOSS)) < PEEK_MIN_SCALE:
+            err(f"{eid}: gloss needs scale {scale:.2f} in the peek underlay "
+                f"(min {PEEK_MIN_SCALE}); shorten it")
         if pos not in POS:
             err(f"{eid}: pos {pos!r} not allowed")
         if pos in ("n.m.", "n.f."):

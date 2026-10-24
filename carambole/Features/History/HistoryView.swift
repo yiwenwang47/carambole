@@ -497,20 +497,37 @@ struct DayRow: View {
     private var rest: Bool { activity.learned + activity.reviewed == 0 }
 
     var body: some View {
-        HStack(alignment: .firstTextBaseline) {
-            Text(Self.longDate(activity.day) + (isToday ? " · aujourd’hui" : ""))
-                .font(.display(size: 15, wght: 400))
-                .foregroundColor(rest ? AppColor.g3 : AppColor.ink)
-            Spacer(minLength: 12)
-            Text(rest ? "Pause" : "\(activity.learned) appris · \(activity.reviewed) révisés")
-                .uppercaseLabel(rest ? AppColor.g3 : AppColor.ink)
+        // One line when it fits; otherwise the counts drop under the date (never
+        // cut with « … », user 2026-10-24).
+        ViewThatFits(in: .horizontal) {
+            HStack(alignment: .firstTextBaseline) {
+                dateText
+                Spacer(minLength: 12)
+                countsText
+            }
+            .lineLimit(1)
+            VStack(alignment: .leading, spacing: 4) {
+                dateText
+                countsText
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .lineLimit(1)
         .padding(.vertical, 11)
         .overlay(alignment: .bottom) {
             Rectangle().fill(AppColor.hairline).frame(height: 1)
         }
         .accessibilityElement(children: .combine)
+    }
+
+    private var dateText: some View {
+        Text(Self.longDate(activity.day) + (isToday ? " · aujourd’hui" : ""))
+            .font(.display(size: 15, wght: 400))
+            .foregroundColor(rest ? AppColor.g3 : AppColor.ink)
+    }
+
+    private var countsText: some View {
+        Text(rest ? "Pause" : "\(activity.learned) appris · \(activity.reviewed) révisés")
+            .uppercaseLabel(rest ? AppColor.g3 : AppColor.ink)
     }
 
     private static let formatter: DateFormatter = {

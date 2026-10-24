@@ -19,6 +19,7 @@
 //  - CB_DRILL_HINT_OPEN=1    start with the hint revealed.
 //  - CB_DRILL_HINT_CYCLE=1   toggle the hint every 1.6 s (animation recording).
 //  - CB_DRILL_CHECK=1        check the pre-placed answer after 0.8 s.
+//  - CB_DRILL_TYPE=<text>    typing drill: pre-fill the field (wrap check).
 //
 
 #if DEBUG
@@ -47,6 +48,8 @@ enum DrillDemo {
     static var autoRetry: Bool { env["CB_DRILL_RETRY"] == "1" }
     /// Build drill: check the pre-placed answer (CB_DRILL_PLACE = full length → weld).
     static var autoCheck: Bool { env["CB_DRILL_CHECK"] == "1" }
+    /// Typing drill: text to pre-fill (checks how a long answer wraps).
+    static var typedText: String? { env["CB_DRILL_TYPE"] }
     /// Spot drill states: "miss" (one wrong tap), "found", or an option index to pick.
     static var spotState: String? { env["CB_SPOT_STATE"] }
 

@@ -122,7 +122,7 @@ struct DrillSessionView: View {
     private var frontier: Int { history.count - 1 }
     /// True once the live card has been answered, so a forward swipe may advance.
     private var liveCardFinished: Bool { resultByIndex[frontier] != nil }
-    /// While typing a free-text answer the embedded UITextField owns horizontal
+    /// While typing a free-text answer the embedded text view owns horizontal
     /// drags (caret/selection); pause the carousel swipe so it can't hijack them.
     /// Gated on the keyboard being UP — the field only owns drags while it's the
     /// first responder. With the keyboard down (now the default: it defers to a tap)
