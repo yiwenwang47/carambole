@@ -19,8 +19,8 @@ rule in every subagent brief. Long vocab headwords shrink to fit
 
 ## 1. State (2026-10-24)
 
-- Branch `vocab-swipe` (off `main` at the 2026-10-22 state). **Not merged,
-  not pushed.** All work is committed; the tree is clean.
+- **Merged to `main` and pushed 2026-10-24** (fast-forward, `efd49692`).
+  Follow-up no-dots work is on branch `truncation-fixes` (see §2).
 - Content:
   - Bands 1–10: 1,000 ranked words + 200 expressions, in 100 leçons.
   - Clips: 1,189 (1,124 Lingua Libre, 65 TTS).
@@ -29,8 +29,9 @@ rule in every subagent brief. Long vocab headwords shrink to fit
   - The book is **complete at band 10.** Words past rank 1,000 will be a
     DIFFERENT book (user); never extend this one.
 - The user approved:
-  - mock v7: https://claude.ai/artifact/HgtXFFSV5CKDbbCS2ayhgi
-    (the published copy is stale; see §2)
+  - mock v7, republished 2026-10-24 as v8 from the rebuilt file (no lock
+    label, no card tag, headwords shrink to fit):
+    https://claude.ai/artifact/HgtXFFSV5CKDbbCS2ayhgi
   - review sets:
     - v1: https://claude.ai/artifact/2ApAfTxrGYrtPW9FDqU5ko
     - v2: https://claude.ai/artifact/KqmX6XvU5KydcVenntN4iy
@@ -108,30 +109,28 @@ rule in every subagent brief. Long vocab headwords shrink to fit
 
 ## 2. Open, ask the user when relevant
 
-- **Merge `vocab-swipe` → `main` and push:** only when the user says so.
-- **Republish mock v7** (link above) from the rebuilt `vocab-swipe.html`. The
-  published copy still shows the lock label and the card tag. Ask first.
+- **Branch `truncation-fixes`** (off `main`, not merged). User decisions
+  2026-10-24 on the truncation audit (`docs/reports/2026-10-24-truncation-audit.txt`):
+  - Done (`b5628109`):
+    - peek gloss → lint guard (`lint.py` + `textfit.py`; fails below 0.8);
+    - History `DayRow` → counts drop under the date (`ViewThatFits`);
+    - `TypeAnswerView` → wrapping `UITextView`. Return dismisses; the
+      `UITextField` clear button is gone. Keyboard and caret behaviour are not
+      sim-checked, because taps can't be automated;
+    - `ModuleDetailView` deleted. The element rows moved to
+      `ModuleElementRows.swift`.
+  - Waiting on the user, mock https://claude.ai/artifact/C7fYdLDX49LBE7kkkbW3eG
+    (`design/vocab/overflow-choices.html`):
+    - the armed Leçon row (today / A label under gloss / B headword wraps);
+    - the Book 1/2 Trop facile footer: the user said DROP the sentence. Still
+      to choose: what the armed label does (A toggle / B armed until answered);
+    - `MagnetTile` (A lint guard / B wrap / C shrink).
+  - Authored « … » in content (« ne ... pas » etc.) is fine (user).
 - **Rebuild review sets v1–v3:** `design/vocab/review-v1..v3.html` still use
   `text-overflow: ellipsis` on headwords (built before the rule). Rebuild
   with `design/vocab/build.py --draft`. The original mock audio dir lived in
   an old session scratchpad, so it may be gone; `build.py` needs a dir with
   `report.json` + MP3s.
-- **Places that can't overflow today but have no safe fallback.** Ask the
-  user about each one. Details and options are in
-  `docs/reports/2026-10-24-truncation-audit.txt`:
-  - the vocab peek gloss (`VocabSessionView` ~491; scale 0.8, worst 0.88 now);
-  - the Leçon headword line when armed (worst 0.81);
-  - the TooEasy footer « Réponds correctement pour le retirer » (2% spare at
-    390 pt);
-  - the History `DayRow` (343 of 346 pt in the extreme case);
-  - `MagnetTile` (`lineLimit(1)`, 30 pt spare);
-  - the `TypeAnswerView` UITextField, which UIKit cuts with « … » when the
-    field isn't active.
-  - Also: `ModuleDetailView` is unreachable. Delete it, or fix it if it comes
-    back.
-- **Authored « … » / "..." in content** (« ne ... pas », trailing speech in
-  Book 2, « Écris ta réponse… »). These are not truncation, so they are not
-  covered by the rule unless the user says otherwise. The audit lists them.
 - **Bands beyond 10:** these will be a new book. Don't add them here.
   `ranked.tsv` holds the top 5,000 for that book.
 

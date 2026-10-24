@@ -1,0 +1,301 @@
+<title>Carambole overflow choices</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Familjen+Grotesk:wght@400..700&display=swap">
+<style>
+/* Three open no-dots decisions, each as a row of 390 pt phone crops in the
+   app's own look (Acide palette, Theme.swift). Single light look, like the app. */
+:root{
+  --page:#F2F2EF; --paper:#FFFFFF; --ink:#141414; --graphite:#4A4A4A;
+  --g2:#8D8D8A; --g3:#C8C7C3; --hairline:#E6E5E1;
+  --tint:#E9F2FD; --tileOn:#E5F2BC; --quiet:#BCCFE6; --buttonFill:#DDE6BC; --buttonOff:#F3F5EA;
+  --fragile:#4F8DD6; --warn:#B4472F;
+  --display:"Manrope",ui-sans-serif,system-ui,sans-serif;
+  --label:"Familjen Grotesk","Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{background:var(--page);color:var(--ink)}
+body{font-family:var(--display);padding-block:28px 56px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--fragile);outline-offset:2px}
+.lab{font-family:var(--label);font-size:11px;letter-spacing:1.3px;text-transform:uppercase}
+
+.wrap{max-width:1260px;margin:0 auto;display:flex;flex-direction:column;gap:56px}
+header h1{font-weight:250;font-size:34px;letter-spacing:-.8px;margin:0;text-wrap:balance}
+header p{margin:8px 0 0;color:var(--graphite);font-size:15px;line-height:1.55;max-width:62ch}
+
+section{display:flex;flex-direction:column;gap:18px}
+section > .head{display:flex;flex-direction:column;gap:6px;max-width:70ch}
+section h2{font-weight:300;font-size:24px;letter-spacing:-.4px;margin:0;text-wrap:balance}
+section .q{color:var(--graphite);font-size:14.5px;line-height:1.55;margin:0}
+.row{display:flex;flex-wrap:wrap;gap:24px}
+.opt{display:flex;flex-direction:column;gap:10px;width:390px;max-width:100%;min-width:0}
+.opt .tag{display:flex;align-items:baseline;gap:10px}
+.opt .tag b{font-family:var(--label);font-weight:600;font-size:12px;letter-spacing:1.3px;text-transform:uppercase}
+.opt .tag span{color:var(--g2)}
+.opt > p{margin:0;font-size:13.5px;line-height:1.5;color:var(--graphite)}
+.opt.now .tag b{color:var(--g2)}
+
+.phone{width:390px;max-width:100%;background:var(--paper);border-radius:30px;
+  box-shadow:0 0 0 1px var(--hairline),0 18px 44px -30px rgba(20,20,20,.3);
+  padding:22px 20px;overflow:hidden;position:relative}
+
+/* ---------- Leçon rows (VocabLessonView) ---------- */
+.dict{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.entry{display:flex;align-items:center;gap:14px;border-top:1px solid var(--hairline);padding:18px 8px 18px 10px;margin:0 -10px;
+  cursor:pointer;transition:background-color .2s}
+.entry:last-child{border-bottom:1px solid var(--hairline)}
+.entry .txt{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
+.entry .hw{display:flex;align-items:baseline;gap:10px;min-width:0}
+.entry .w{font-size:21px;font-weight:400;white-space:nowrap;min-width:0}
+.entry .w small{font-size:.714em;color:var(--g2);margin-left:5px}
+.entry .pos{color:var(--g2);font-size:10px;white-space:nowrap}
+.entry .gl{font-size:15px;line-height:1.4;color:var(--graphite)}
+.entry .tf{display:none;color:var(--ink);font-size:10px;white-space:nowrap}
+.entry.on{background:var(--tileOn);border-radius:14px;border-top-color:transparent}
+.entry.on + .entry{border-top-color:transparent}
+.entry.on:last-child{border-bottom-color:transparent}
+.entry.on .tf{display:inline}
+/* A: label leaves the headword line and sits under the gloss */
+.entry .tf.below{display:none!important}
+.lA .entry .hw .tf{display:none!important}
+.lA .entry.on .tf.below{display:block!important}
+/* B: an armed headword wraps instead of shrinking */
+.lB .entry.on .w{white-space:normal;line-height:1.2;flex:0 1 auto}
+.play{flex:none;width:34px;height:34px;border-radius:50%;border:0;background:var(--quiet);
+  display:grid;place-items:center;padding:0}
+.play svg{width:11px;height:11px;margin-left:2px}
+
+/* ---------- Book 1 drill (DrillView) ---------- */
+.prompt{font-weight:300;font-size:32px;letter-spacing:-.8px;line-height:1.2;margin:0}
+.trans{color:var(--g2);font-size:17px;margin:8px 0 0}
+.base{height:1px;background:var(--ink);margin:30px 0 16px}
+.tray{background:var(--tint);border-radius:22px;margin:0 -8px;padding:16px;display:flex;flex-direction:column;align-items:flex-start;gap:12px}
+.tile{font-family:var(--display);font-size:19px;letter-spacing:-.2px;background:var(--paper);border:1px solid var(--ink);
+  border-radius:999px;padding:0 15px;height:40px;display:flex;align-items:center;white-space:nowrap;max-width:100%}
+.tile.hypo{border-style:solid;box-shadow:0 0 0 3px var(--paper),0 0 0 4.5px var(--fragile)}
+.tile.over{overflow:hidden}
+.tile.wrap2{white-space:normal;height:auto;min-height:40px;padding:7px 15px;line-height:1.3;border-radius:20px}
+.foot{display:flex;flex-direction:column;gap:12px;margin-top:26px}
+.tfbtn{align-self:flex-start;border:0;background:none;padding:8px 0;cursor:pointer;color:var(--g2);
+  font-family:var(--label);font-size:11px;letter-spacing:1.3px;text-transform:uppercase;border-radius:999px;
+  transition:background-color .2s,padding .2s,color .2s}
+.tfbtn.inert{cursor:default}
+.tfbtn.on{color:var(--ink)}
+.tfA.on{background:var(--tileOn);padding:8px 14px;margin-left:-14px}
+.tfA.on u{text-underline-offset:2px}
+.sentence{display:flex;justify-content:space-between;align-items:center;padding:8px 0}
+.sentence .lab{color:var(--ink)}
+.sentence u{font-family:var(--label);font-size:11px;letter-spacing:1.3px;text-transform:uppercase}
+.go{height:54px;border:0;border-radius:999px;background:var(--buttonFill);font-size:17px;width:100%}
+.go.off{background:var(--buttonOff);color:var(--g3)}
+.states{display:flex;gap:8px;flex-wrap:wrap}
+.states button{border:1.5px solid var(--ink);background:var(--paper);border-radius:999px;padding:6px 12px;cursor:pointer;font-size:13px}
+.states button[aria-pressed="true"]{background:var(--buttonFill);border-color:transparent}
+
+.lint{font-family:var(--mono);font-size:12px;line-height:1.5;background:#FBEDEA;color:var(--warn);border-radius:12px;padding:10px 12px;
+  overflow-wrap:anywhere}
+.note{font-size:12.5px;color:var(--g2);line-height:1.5;margin:0}
+.measure{position:absolute;visibility:hidden;white-space:nowrap;font-family:var(--display);font-size:19px;letter-spacing:-.2px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+<header>
+  <h1>Overflow choices</h1>
+  <p>Three places where text could outgrow its space. Each row shows how it looks today, then the options. Real app data at 390 pt, the narrowest phone width. Tap the Leçon rows to arm or disarm them. Tap the « Trop facile » label to try each armed state.</p>
+</header>
+
+<!-- 1 · Leçon row -->
+<section>
+  <div class="head">
+    <h2>1 · Leçon row when armed</h2>
+    <p class="q">When a row is armed, the « Trop facile » label shares the headword's line. A long expression then shrinks: « faire la connaissance de » drops to 81 %, and the floor is 70 %. Leçon 64, last five rows. Two rows are armed here.</p>
+  </div>
+  <div class="row">
+    <div class="opt now">
+      <div class="tag"><b>Today</b><span class="lab">label beside, headword shrinks</span></div>
+      <div class="phone"><ul class="dict" data-variant="now"></ul></div>
+      <p>Safe for the current 1,200 words (worst case 0.81). If a new expression needed less than 0.7, nothing else would catch it.</p>
+    </div>
+    <div class="opt">
+      <div class="tag"><b>A</b><span class="lab">label under the gloss</span></div>
+      <div class="phone lA"><ul class="dict" data-variant="A"></ul></div>
+      <p>The headword line stays the same as on an unarmed row, so it never shrinks. The armed row gains one short line.</p>
+    </div>
+    <div class="opt">
+      <div class="tag"><b>B</b><span class="lab">headword wraps</span></div>
+      <div class="phone lB"><ul class="dict" data-variant="B"></ul></div>
+      <p>The label stays beside the headword. A long armed headword breaks onto two lines at full size.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 2 · Trop facile without the footer sentence -->
+<section>
+  <div class="head">
+    <h2>2 · Book 1 and 2: Trop facile without the footer sentence</h2>
+    <p class="q">You dropped « Réponds correctement pour le retirer ». That line also held « Annuler » (disarm before answering) and, after a miss, « Raté — remis à zéro ». What should the label do once it's armed? Book 1 card shown. Book 2 uses the same control.</p>
+  </div>
+  <div class="row">
+    <div class="opt now">
+      <div class="tag"><b>Today</b><span class="lab">armed sentence + Annuler</span></div>
+      <div class="phone" data-drill="now"></div>
+      <div class="states" data-for="now"></div>
+      <p>Shown for reference. This sentence is the one being dropped.</p>
+    </div>
+    <div class="opt">
+      <div class="tag"><b>A</b><span class="lab">label toggles</span></div>
+      <div class="phone" data-drill="A"></div>
+      <div class="states" data-for="A"></div>
+      <p>Tap to arm: the label turns ink on a pale pill and reads « Trop facile — annuler ». Tap again to disarm. After a miss the label goes away, because the card is already set to be reset.</p>
+    </div>
+    <div class="opt">
+      <div class="tag"><b>B</b><span class="lab">armed until answered</span></div>
+      <div class="phone" data-drill="B"></div>
+      <div class="states" data-for="B"></div>
+      <p>Tap to arm: the label turns ink and reads « Trop facile — armé ». It can't be undone before answering. The undo pill after a clean answer stays. After a miss the label goes away.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 3 · MagnetTile -->
+<section>
+  <div class="head">
+    <h2>3 · Word tiles (Book 1 and 2)</h2>
+    <p class="q">Tiles are one line. The widest real tile, « Est-ce que vous parlez anglais? », is 270 of 300 pt. To show the risk, the option phones swap it for a <em>made-up</em> longer tile, outlined in blue: « Est-ce que vous parlez anglais avec eux? ».</p>
+  </div>
+  <div class="row">
+    <div class="opt now">
+      <div class="tag"><b>Today</b><span class="lab">real tiles</span></div>
+      <div class="phone" data-tiles="real"></div>
+      <p>The real drill (el_questions_inversion_05). Everything fits with 30 pt to spare.</p>
+    </div>
+    <div class="opt">
+      <div class="tag"><b>A</b><span class="lab">lint guard</span></div>
+      <div class="phone" data-tiles="lint"></div>
+      <p>The app doesn't change. The Book 1 and Book 2 lints measure every tile and fail on one wider than its tray, so it gets rewritten or split before it ships.</p>
+    </div>
+    <div class="opt">
+      <div class="tag"><b>B</b><span class="lab">wrap to two lines</span></div>
+      <div class="phone" data-tiles="wrap"></div>
+      <p>A long tile becomes a two-line rounded block at full size. Rows of tiles no longer share one height.</p>
+    </div>
+    <div class="opt">
+      <div class="tag"><b>C</b><span class="lab">shrink to fit</span></div>
+      <div class="phone" data-tiles="shrink"></div>
+      <p>The long tile's text scales down (here 0.87), with a floor of 0.8 that the lint checks. That tile reads smaller than its neighbours.</p>
+    </div>
+  </div>
+</section>
+</div>
+<span class="measure" id="measure"></span>
+
+<script>
+const PLAY = '<svg viewBox="0 0 10 12" aria-hidden="true"><path d="M0 0L10 6L0 12Z" fill="#141414"/></svg>';
+// Leçon 64 (band 7), last five rows in authored order: mots.json.
+const ROWS = [
+  {w:"secret", a:"(le)", pos:"n.m.", gl:"secret; (adj.) secret"},
+  {w:"vide", pos:"adj.", gl:"empty; le vide = emptiness, void"},
+  {w:"scène", a:"(la)", pos:"n.f.", gl:"scene; stage", on:true},
+  {w:"faire de son mieux", pos:"loc.", gl:"to do one's best"},
+  {w:"faire la connaissance de", pos:"loc.", gl:"to meet (for the first time)", on:true},
+];
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;")}
+function fitHead(el){
+  el.style.fontSize = "";
+  const hw = el.parentElement, li = el.closest(".entry");
+  if (li.closest(".lB") && li.classList.contains("on")) return; // B wraps instead
+  let s = 1;
+  const avail = () => hw.clientWidth - [...hw.children].filter(c => c !== el && getComputedStyle(c).display !== "none")
+      .reduce((t, c) => t + c.offsetWidth + 10, 0);
+  while (el.scrollWidth > avail() && s > 0.7) { s -= 0.01; el.style.fontSize = (21 * s) + "px"; }
+}
+document.querySelectorAll(".dict").forEach(ul => {
+  ul.innerHTML = ROWS.map(r => `<li class="entry${r.on ? " on" : ""}" tabindex="0" role="button" aria-pressed="${!!r.on}">
+    <div class="txt"><div class="hw"><span class="w">${esc(r.w)}${r.a ? `<small>${r.a}</small>` : ""}</span>
+      <span class="lab pos">${r.pos}</span><span class="lab tf">Trop facile</span></div>
+      <div class="gl">${esc(r.gl)}</div><span class="lab tf below">Trop facile</span></div>
+    <span class="play" aria-hidden="true">${PLAY}</span></li>`).join("");
+  ul.querySelectorAll(".entry").forEach(li => {
+    const flip = () => { li.classList.toggle("on"); li.setAttribute("aria-pressed", li.classList.contains("on"));
+      fitHead(li.querySelector(".w")); };
+    li.addEventListener("click", flip);
+    li.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); flip(); } });
+  });
+});
+
+// Book 1 drill: el_questions_inversion_05 (06_questions.json).
+const TILES = ["Est-ce que vous parlez anglais?", "Parlez-vous anglais?", "Vous parlez anglais?"];
+const LONG = "Est-ce que vous parlez anglais avec eux?";
+function card(tilesHTML){
+  return `<p class="prompt">Quelle question est en inversion?</p><p class="trans">“Do you speak English?”</p>
+    <div class="base"></div><div class="tray">${tilesHTML}</div>`;
+}
+const STATES = {now:["Avant","Armé","Après un raté"], A:["Avant","Armé","Après un raté"], B:["Avant","Armé","Après un raté"]};
+function footer(v, st){
+  if (v === "now") {
+    if (st === 0) return `<button class="tfbtn" data-act="arm">Trop facile — retirer</button>`;
+    if (st === 1) return `<div class="sentence"><span class="lab">Réponds correctement pour le retirer</span><u data-act="cancel" role="button" tabindex="0">Annuler</u></div>`;
+    return `<div class="sentence"><span class="lab">Raté — remis à zéro</span></div>`;
+  }
+  if (st === 2) return ``;
+  if (v === "A") return st === 1
+    ? `<button class="tfbtn tfA on" data-act="cancel">Trop facile — <u>annuler</u></button>`
+    : `<button class="tfbtn tfA" data-act="arm">Trop facile — retirer</button>`;
+  return st === 1
+    ? `<button class="tfbtn on inert" aria-disabled="true">Trop facile — armé</button>`
+    : `<button class="tfbtn" data-act="arm">Trop facile — retirer</button>`;
+}
+const drillState = {now:1, A:1, B:1};
+function renderDrill(v){
+  const el = document.querySelector(`[data-drill="${v}"]`), st = drillState[v];
+  const tiles = TILES.map(t => `<span class="tile">${t}</span>`).join("");
+  el.innerHTML = card(tiles) + `<div class="foot">${footer(v, st)}<button class="go${st === 2 ? "" : " off"}" tabindex="-1">${st === 2 ? "Continuer" : "Vérifier"}</button></div>`;
+  el.querySelectorAll("[data-act]").forEach(b => {
+    const go = () => { drillState[v] = b.dataset.act === "arm" ? 1 : 0; renderDrill(v); };
+    b.addEventListener("click", go);
+    b.addEventListener("keydown", e => { if (e.key === "Enter") go(); });
+  });
+  const bar = document.querySelector(`.states[data-for="${v}"]`);
+  bar.innerHTML = STATES[v].map((s, i) => `<button type="button" aria-pressed="${i === st}" data-i="${i}">${s}</button>`).join("");
+  bar.querySelectorAll("button").forEach(b => b.addEventListener("click", () => { drillState[v] = +b.dataset.i; renderDrill(v); }));
+}
+["now", "A", "B"].forEach(renderDrill);
+
+// Tiles: text box ≤ 300 pt inside the tray at 390 pt.
+const M = document.getElementById("measure");
+function textW(t){ M.textContent = t; return M.getBoundingClientRect().width; }
+document.querySelectorAll("[data-tiles]").forEach(el => {
+  const v = el.dataset.tiles;
+  const list = v === "real" ? TILES : [LONG, ...TILES.slice(1)];
+  const html = list.map(t => {
+    if (t !== LONG) return `<span class="tile">${t}</span>`;
+    if (v === "wrap") return `<span class="tile hypo wrap2">${t}</span>`;
+    if (v === "shrink") {
+      const s = Math.max(0.8, Math.min(1, 300 / textW(t)));
+      return `<span class="tile hypo" style="font-size:${(19 * s).toFixed(2)}px">${t}</span>`;
+    }
+    return `<span class="tile hypo">${t}</span>`;
+  }).join("");
+  el.innerHTML = card(html) + (v === "lint"
+    ? `<div class="foot"><div class="lint">ERROR el_questions_inversion_05: tile « ${LONG} » is ${Math.round(textW(LONG))} pt, tray allows 300; rewrite or split it</div>
+       <p class="note">The made-up tile is shown full width only to make the point; with this option it never reaches the app.</p></div>`
+    : "");
+});
+
+const fitAll = () => document.querySelectorAll(".entry .w").forEach(fitHead);
+(document.fonts ? document.fonts.ready : Promise.resolve()).then(() => {
+  fitAll();
+  // shrink factor in C depends on the loaded font; recompute
+  document.querySelectorAll('[data-tiles="shrink"] .hypo').forEach(t => {
+    const s = Math.max(0.8, Math.min(1, 300 / textW(LONG)));
+    t.style.fontSize = (19 * s).toFixed(2) + "px";
+    t.closest(".opt").querySelector(":scope > p").innerHTML = `The long tile's text scales down (here ${s.toFixed(2)}), with a floor of 0.8 that the lint checks. That tile reads smaller than its neighbours.`;
+  });
+  document.querySelectorAll(".lint").forEach(l => l.textContent = l.textContent.replace(/is \d+ pt/, `is ${Math.round(textW(LONG))} pt`));
+});
+window.addEventListener("resize", fitAll);
+</script>
