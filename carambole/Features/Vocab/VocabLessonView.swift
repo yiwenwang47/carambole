@@ -4,10 +4,11 @@
 //
 //  The *Mots* Leçon page: a pale slab with the leçon number, then the leçon as
 //  classical dictionary rows (headword + article in parentheses, small part of
-//  speech, the English on its own line, a play disc). Tapping a row arms trop
-//  facile for that word (pale lime row); armed words come first in the swipe
-//  stack (their cards carry no tag). The list scrolls; Commencer stays at the
-//  bottom. No swiping here, no audio-source labels.
+//  speech in a left margin, the English on its own line, a play disc). Swiping
+//  a row left arms trop facile for that word (pale lime row, no label); a
+//  second swipe disarms it. Armed words come first in the swipe stack (their
+//  cards carry no tag). The list scrolls; Commencer stays at the bottom. No
+//  audio-source labels.
 //  Port of design/vocab/vocab-swipe.src.html v7 (`#lesson`).
 //
 
@@ -24,6 +25,9 @@ struct VocabLessonView: View {
 
     @AppStorage(AppPalette.storageKey) private var paletteID = AppPalette.fallback.rawValue
     private var theme: AppTheme { AppPalette(stored: paletteID).theme }
+    /// Row being swiped and how far (≤ 0).
+    @State private var dragging: String?
+    @State private var dragOffset: CGFloat = 0
 
     /// « Leçon 63 · mots 601–700 ».
     private var slabLabel: String {
@@ -37,7 +41,7 @@ struct VocabLessonView: View {
             slab.padding(.top, 4)
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
-                    Text("Touche un mot trop facile pour le retirer")
+                    Text("Glisse à gauche un mot trop facile")
                         .uppercaseLabel()
                         .padding(.top, 22)
                         .padding(.bottom, 10)
@@ -60,6 +64,14 @@ struct VocabLessonView: View {
         .padding(.bottom, Spacing.sm)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(AppColor.paper.ignoresSafeArea())
+        #if DEBUG
+        .onAppear {
+            // Simulator harness (DrillDemo): hold one row mid-swipe.
+            if let id = ProcessInfo.processInfo.environment["CB_VOCAB_DRAG"] {
+                dragging = id; dragOffset = -150
+            }
+        }
+        #endif
     }
 
     private var buttonTitle: String {
@@ -95,34 +107,26 @@ struct VocabLessonView: View {
     }
 
     /// `.entry`: hairline above (none next to an armed row), 18 pt above and
-    /// below; the row's fill reaches 10 pt past the text on both sides.
+    /// below; the row's fill reaches 10 pt past the text on both sides. The
+    /// part of speech sits in a 52 pt margin on the headword's first baseline,
+    /// a register under it; the headword wraps (design/vocab/lecon-pos-options.html, B).
     private func row(_ entry: VocabEntry, index: Int) -> some View {
         let on = armed.contains(entry.id)
         let prevOn = index > 0 && armed.contains(lecon.entries[index - 1].id)
         let last = index == lecon.entries.count - 1
+        let dragX = dragging == entry.id ? dragOffset : 0
         return HStack(spacing: 14) {
             VStack(alignment: .leading, spacing: 6) {
-                HStack(alignment: .firstTextBaseline, spacing: 10) {
-                    VocabHeadword(entry: entry, size: 21, articleSize: 15)
-                        .layoutPriority(1)
-                    Text(entry.posLabel)
-                        .font(.label(size: 10))
-                        .uppercaseLabel()
-                        .lineLimit(1)
-                        .fixedSize()
-                    if on {
-                        Text("Trop facile")
-                            .font(.label(size: 10))
-                            .uppercaseLabel(AppColor.ink)
-                            .lineLimit(1)
-                            .fixedSize()
-                    }
+                HStack(alignment: .firstTextBaseline, spacing: 0) {
+                    marginLabel(entry)
+                    VocabHeadword(entry: entry, size: 21, articleSize: 15, wraps: true)
                 }
                 Text(entry.en)
                     .font(.display(size: 15, wght: 400))
                     .lineSpacing(15 * 0.4 - 4)
                     .foregroundColor(AppColor.graphite)
                     .fixedSize(horizontal: false, vertical: true)
+                    .padding(.leading, Self.marginWidth)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             VocabPlayDisc(entry: entry, theme: theme)
@@ -130,8 +134,23 @@ struct VocabLessonView: View {
         .padding(.vertical, 18)
         .padding(.leading, 10)
         .padding(.trailing, 8)
-        .background(RoundedRectangle(cornerRadius: on ? 14 : 0, style: .continuous)
-            .fill(on ? Color(hex: theme.tileOn) : Color.clear))
+        .background(RoundedRectangle(cornerRadius: on || dragX != 0 ? 14 : 0, style: .continuous)
+            .fill(on ? Color(hex: theme.tileOn) : AppColor.paper))
+        .offset(x: dragX)
+        .background(alignment: .trailing) {
+            // What the swipe uncovers: the state the row will switch to.
+            if dragX != 0 {
+                RoundedRectangle(cornerRadius: 14, style: .continuous)
+                    .fill(on ? AppColor.paper : Color(hex: theme.tileOn))
+                    .overlay(RoundedRectangle(cornerRadius: 14, style: .continuous)
+                        .strokeBorder(on ? AppColor.hairline : .clear, lineWidth: 1))
+                    .overlay(alignment: .trailing) {
+                        Text(on ? "Remettre" : "Trop facile")
+                            .uppercaseLabel(AppColor.ink)
+                            .padding(.trailing, 18)
+                    }
+            }
+        }
         .overlay(alignment: .top) {
             Rectangle().fill(AppColor.hairline).frame(height: 1).opacity(on || prevOn ? 0 : 1)
         }
@@ -140,14 +159,64 @@ struct VocabLessonView: View {
         }
         .padding(.horizontal, -10)
         .contentShape(Rectangle())
-        .onTapGesture {
-            withAnimation(.easeOut(duration: 0.2)) {
-                if on { armed.remove(entry.id) } else { armed.insert(entry.id) }
-            }
-        }
+        .simultaneousGesture(swipe(entry), including: .gesture)
         .accessibilityElement(children: .combine)
-        .accessibilityAddTraits(on ? [.isButton, .isSelected] : .isButton)
-        .accessibilityHint("Marquer trop facile")
+        .accessibilityAddTraits(on ? .isSelected : [])
+        .accessibilityAction(named: on ? "Remettre" : "Trop facile") { toggle(entry) }
+    }
+
+    private static let marginWidth: CGFloat = 52
+
+    /// Part of speech in the margin; a register hangs under it without taking
+    /// height from the row (the English stays right under the headword).
+    private func marginLabel(_ entry: VocabEntry) -> some View {
+        Text(entry.pos)
+            .font(.label(size: 10))
+            .uppercaseLabel()
+            .fixedSize()
+            .overlay(alignment: .topLeading) {
+                if let register = entry.register, !register.isEmpty {
+                    Text(register)
+                        .font(.label(size: 10))
+                        .uppercaseLabel()
+                        .fixedSize()
+                        .offset(y: AppFonts.uiFont(AppFonts.familjen, size: 10, wght: 400).lineHeight + 5)
+                }
+            }
+            .frame(width: Self.marginWidth, alignment: .leading)
+    }
+
+    /// Left swipe past half the row toggles trop facile, then the row springs
+    /// home. Vertical drags are left to the list's scroll.
+    private func swipe(_ entry: VocabEntry) -> some Gesture {
+        DragGesture(minimumDistance: 12)
+            .onChanged { value in
+                if dragging == nil {
+                    guard abs(value.translation.width) > abs(value.translation.height) else { return }
+                    dragging = entry.id
+                }
+                guard dragging == entry.id else { return }
+                dragOffset = min(0, value.translation.width)
+            }
+            .onEnded { value in
+                guard dragging == entry.id else { dragging = nil; return }
+                if value.translation.width < -rowWidth / 2 {
+                    UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                    toggle(entry)
+                }
+                withAnimation(.spring(duration: 0.4, bounce: 0.15)) { dragOffset = 0 }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                    if dragOffset == 0 { dragging = nil }
+                }
+            }
+    }
+
+    private var rowWidth: CGFloat { UIScreen.main.bounds.width - 20 }
+
+    private func toggle(_ entry: VocabEntry) {
+        withAnimation(.easeOut(duration: 0.2)) {
+            if armed.contains(entry.id) { armed.remove(entry.id) } else { armed.insert(entry.id) }
+        }
     }
 }
 

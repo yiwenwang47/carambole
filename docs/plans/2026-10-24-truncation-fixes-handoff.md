@@ -25,7 +25,7 @@ Choices mock: https://claude.ai/artifact/C7fYdLDX49LBE7kkkbW3eG
   `TickerLine` and `LearnSession` deleted.
 - Authored « … » in content (« ne ... pas » etc.) stays (user).
 
-## 2. Decided, not built yet
+## 2. Built 2026-10-24 (uncommitted on the branch until the user says)
 
 - **`MagnetTile` → B′** (user, 2026-10-24): a tile that can't fit the tray on
   one line wraps; the capsule shape is kept; one 1 pt ink border (no second
@@ -44,13 +44,28 @@ Choices mock: https://claude.ai/artifact/C7fYdLDX49LBE7kkkbW3eG
 - **Book 1/2 Trop facile footer** → keep today's layout (user reversed the
   earlier "drop it"). No code change.
 
+- **MagnetTile B′ built:** `MagnetTile` = ViewThatFits (one-line capsule, or
+  wrapped capsule 20 pt sides / 7 pt top-bottom); `MagnetBoard.reservedLineHeight`
+  reserves the taller row (`MagnetTile.estimatedHeight`). Sim-checked bank,
+  placed, wrong, weld with made-up 40- and 55-char tiles.
+- **Weld text wraps:** `WaveText` lays words out in `FlowLayout`, each word sized
+  at the resting weight (no re-wrap mid-wave) and never broken inside; the weld
+  uses `matchedGeometryEffect(properties: .position)` so the morph doesn't
+  squeeze the text into the tile frame. Known: at the wave crest bold letters
+  briefly crowd the spaces (~0.2 s).
+- **Leçon row → option B** (user, mock `design/vocab/lecon-pos-options.html`,
+  https://claude.ai/artifact/4eMZuwWyE64hFXc4QaT8SK): part of speech in a 52 pt
+  left margin on the headword baseline, register under it; headword wraps at
+  full size (`VocabHeadword(wraps:)`, article glued by a no-break space; no
+  real headword wraps even at 375 pt). « Trop facile » label and tap-to-arm
+  removed: swipe a row left past half to arm (only marks; resolves on the
+  first card as before), swipe again to disarm. Hint « Glisse à gauche un mot
+  trop facile ». Sim harness: `CB_VOCAB_LECON` / `_ARMED` / `_DRAG` / `_SKIP`.
+- Checks passed 2026-10-24: vocab lint, lint_topics, bank_lint, situations
+  lint, audio release gate, Debug + Release sim builds.
+
 ## 3. Still open, ask the user
 
-- **Armed Leçon row** (`carambole/Features/Vocab/VocabLessonView.swift`,
-  `row(_:index:)`): user leaned B (headword wraps, « N.F. TROP FACILE » on the
-  first line's baseline) but **still doesn't like it** and will revisit in a
-  new session. Mock section 1 shows Today / A / B. Don't build until they
-  choose. Ask what bothers them in B before making new variants.
 - **Review sets v1–v3** (`design/vocab/review-v1..v3.html`) still use
   `text-overflow: ellipsis`. Rebuild with `design/vocab/build.py --draft`
   (needs a dir with `report.json` + MP3s; the old one may be gone).

@@ -50,19 +50,58 @@ struct WaveText: View {
         }
     }
 
+    /// Words wrap at spaces when the proposed width is too narrow (a long weld
+    /// sentence goes onto more lines instead of squeezing its letters). Each
+    /// word takes its size at the resting weight, so the bolder crest never
+    /// moves a line break mid-wave, and a word never breaks inside itself.
     private func row(t: Double) -> some View {
         let total = totalLetters ?? letters.count
-        return HStack(spacing: 0) {
-            ForEach(Array(letters.enumerated()), id: \.offset) { i, ch in
-                Text(String(ch))
-                    .font(.display(size: size, wght: Self.weight(
-                        t: t, index: letterOffset + i, total: total,
-                        duration: duration, base: base, peak: peak)))
-                    .tracking(tracking)
+        return FlowLayout(spacing: spaceWidth, lineSpacing: 0) {
+            ForEach(words, id: \.start) { word in
+                letterRow(word, weight: { _ in base })
+                    .hidden()
+                    .overlay(alignment: .leading) {
+                        letterRow(word, weight: { i in
+                            Self.weight(t: t, index: letterOffset + i, total: total,
+                                        duration: duration, base: base, peak: peak)
+                        })
+                    }
             }
         }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(text)
+    }
+
+    private func letterRow(_ word: (start: Int, end: Int), weight: @escaping (Int) -> CGFloat) -> some View {
+        HStack(spacing: 0) {
+            ForEach(word.start..<word.end, id: \.self) { i in
+                Text(String(letters[i]))
+                    .font(.display(size: size, wght: weight(i)))
+                    .tracking(tracking)
+            }
+        }
+        .fixedSize()
+    }
+
+    /// Letter ranges of the words; spaces keep their index so the wave timing
+    /// matches the unsplit text.
+    private var words: [(start: Int, end: Int)] {
+        var result: [(start: Int, end: Int)] = []
+        var start: Int?
+        for (i, ch) in letters.enumerated() {
+            if ch == " " {
+                if let s = start { result.append((s, i)); start = nil }
+            } else if start == nil {
+                start = i
+            }
+        }
+        if let s = start { result.append((s, letters.count)) }
+        return result
+    }
+
+    private var spaceWidth: CGFloat {
+        let font = AppFonts.uiFont(AppFonts.manrope, size: size, wght: base)
+        return (" " as NSString).size(withAttributes: [.font: font]).width + tracking
     }
 
     /// Weight of letter `index` at time `t` (seconds since start). Each letter

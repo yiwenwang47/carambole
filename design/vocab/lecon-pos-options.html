@@ -1,0 +1,286 @@
+<title>Leçon row options</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Familjen+Grotesk:wght@400..700&display=swap">
+<style>
+/* Leçon page (Monnaie courante), real leçon 77. Each option is a 390 pt phone in
+   the app's own look (Acide palette, Theme.swift), single light look like the app.
+   Rows drag left: past the line the word is marked trop facile (lime fill), no label. */
+:root{
+  --page:#F2F2EF; --paper:#FFFFFF; --ink:#141414; --graphite:#4A4A4A;
+  --g2:#8D8D8A; --g3:#C8C7C3; --hairline:#E6E5E1;
+  --tileOn:#E5F2BC; --quiet:#BCCFE6; --quietFill:#DCE7F4; --buttonFill:#DDE6BC;
+  --fragile:#4F8DD6;
+  --display:"Manrope",ui-sans-serif,system-ui,sans-serif;
+  --label:"Familjen Grotesk","Helvetica Neue",Arial,sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{background:var(--page);color:var(--ink)}
+body{font-family:var(--display);padding-block:28px 56px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--fragile);outline-offset:2px}
+.lab{font-family:var(--label);font-size:11px;letter-spacing:1.3px;text-transform:uppercase}
+
+.wrap{max-width:1260px;margin:0 auto;display:flex;flex-direction:column;gap:40px}
+header{display:flex;flex-direction:column;gap:10px;max-width:70ch}
+header h1{font-weight:250;font-size:34px;letter-spacing:-.8px;margin:0;text-wrap:balance}
+header p{margin:0;color:var(--graphite);font-size:15px;line-height:1.55}
+.pick{display:flex;flex-direction:column;gap:14px}
+.pick h2,.all{font-weight:300;font-size:24px;letter-spacing:-.4px;margin:0}
+.pick .q{margin:0;color:var(--graphite);font-size:14.5px;line-height:1.55;max-width:70ch}
+.demo{align-self:flex-start;border:1px solid var(--ink);background:var(--paper);border-radius:999px;
+  padding:9px 18px;cursor:pointer;transition:transform .15s cubic-bezier(.32,.72,0,1)}
+.demo:active{transform:scale(.97)}
+
+.row{display:flex;flex-wrap:wrap;gap:28px}
+.opt{display:flex;flex-direction:column;gap:10px;width:390px;max-width:100%;min-width:0}
+.opt .tag{display:flex;align-items:baseline;gap:10px}
+.opt .tag b{font-family:var(--label);font-weight:600;font-size:12px;letter-spacing:1.3px;text-transform:uppercase}
+.opt .tag span{color:var(--g2)}
+.opt.now .tag b{color:var(--g2)}
+.opt > p{margin:0;font-size:13.5px;line-height:1.5;color:var(--graphite)}
+
+.phone{width:390px;max-width:100%;background:var(--paper);border-radius:30px;
+  box-shadow:0 0 0 1px var(--hairline),0 18px 44px -30px rgba(20,20,20,.3);
+  padding:14px 20px 22px;overflow:hidden;position:relative}
+.x{width:32px;height:32px;margin-left:-6px;display:grid;place-items:center}
+.x svg{width:14px;height:14px}
+.slab{height:92px;border-radius:24px;background:var(--quietFill);position:relative;overflow:hidden;margin-top:4px}
+.slab .lab{position:absolute;left:16px;top:14px;color:var(--ink)}
+.slab .n{position:absolute;right:-2px;bottom:-34px;font-weight:200;font-size:120px;letter-spacing:-7px;line-height:120px;color:rgba(20,20,20,.9)}
+.hint{color:var(--g2);padding:22px 0 10px}
+
+/* ---------- rows ---------- */
+.dict{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.cell{position:relative;margin:0 -10px;border-top:1px solid var(--hairline)}
+.cell:last-child{border-bottom:1px solid var(--hairline)}
+.cell.on,.cell.on + .cell{border-top-color:transparent}
+.cell.on:last-child{border-bottom-color:transparent}
+/* What the drag uncovers: lime band, the word it will do on the right. */
+.under{position:absolute;inset:0;border-radius:14px;background:var(--tileOn);display:flex;align-items:center;
+  justify-content:flex-end;padding-right:18px;opacity:0;transition:opacity .15s}
+.under .lab{color:var(--ink)}
+.cell.on .under{background:var(--paper);box-shadow:inset 0 0 0 1px var(--hairline)}
+.cell.drag .under{opacity:1}
+.entry{position:relative;display:flex;align-items:center;gap:14px;padding:18px 8px 18px 10px;background:var(--paper);
+  border-radius:0;touch-action:pan-y;cursor:grab;user-select:none;-webkit-user-select:none;
+  transition:transform .42s cubic-bezier(.32,.72,0,1),background-color .25s,border-radius .25s}
+.cell.drag .entry{transition:none;border-radius:14px}
+.cell.on .entry{background:var(--tileOn);border-radius:14px}
+.txt{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
+.hw{display:flex;align-items:baseline;gap:10px;min-width:0;flex-wrap:wrap}
+.w{font-size:21px;font-weight:400;line-height:1.22;min-width:0}
+.w small{font-size:15px;color:var(--g2);margin-left:5px;white-space:nowrap}
+.pos{font-family:var(--label);font-size:10px;letter-spacing:1.3px;text-transform:uppercase;color:var(--g2);white-space:nowrap}
+.gl{font-size:15px;line-height:1.4;color:var(--graphite)}
+.disc{flex:none;width:34px;height:34px;border-radius:50%;background:var(--quiet);display:grid;place-items:center}
+.disc svg{width:11px;height:11px;margin-left:2px}
+.right{flex:none;display:flex;flex-direction:column;align-items:center;gap:6px;width:40px}
+
+/* Today: pos on the headword line, armed adds TROP FACILE there too; headword one line. */
+.today .w{white-space:nowrap}
+.today .tf{display:none;color:var(--ink)}
+.today .cell.on .tf{display:inline}
+
+/* A: pos opens the English line, in a fixed column so glosses line up. */
+.optA .gl{display:grid;grid-template-columns:52px 1fr;column-gap:0;align-items:baseline}
+.optA .gl .pos{line-height:1.4}
+
+/* B: margin column for pos, on the headword's baseline. */
+.optB .entry{align-items:center}
+.optB .hw{flex-wrap:nowrap;gap:0}
+.optB .margin{flex:none;width:52px;position:relative}
+.optB .margin .pos + .pos{position:absolute;left:0;top:calc(100% + 5px)}
+.optB .gl{padding-left:52px}
+
+/* C: pos under the play disc. */
+.optC .right .pos{font-size:9.5px;letter-spacing:1.1px}
+
+/* D: grouped under part-of-speech headings; register stays on the row. */
+.grp{color:var(--g2);padding:20px 0 8px;display:flex;justify-content:space-between}
+.grp:first-of-type{padding-top:4px}
+.optD .gl .pos{margin-right:8px}
+
+@media (prefers-reduced-motion:reduce){.entry,.under{transition:none}}
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Leçon row: where the word type goes</h1>
+    <p>Real leçon 77. The « Trop facile » label is gone: drag a row to the left past the halfway line to mark the word trop facile (lime row, taken out of the swipe queue). Drag a lime row left again to put it back. Two rows start marked. Each option puts the part of speech somewhere new so the headword can wrap freely.</p>
+    <button class="demo" id="demo" type="button">Play the swipe</button>
+  </header>
+
+  <section class="pick">
+    <h2>B, with the longest headwords</h2>
+    <p class="q">The longest real headwords in bands 1 to 10, from several leçons. None of them wraps, even on a 375 pt phone (iPhone SE, mini): « faire la connaissance de » is the longest and fits. To show the wrap, the third phone uses <em>made-up</em> longer headwords on a 375 pt phone. A headword wraps at spaces and stays at 21 pt (no shrinking). The article stays on the line with the last word. A register like « fam. » goes under the type in the margin.</p>
+    <div class="row">
+      <div class="opt">
+        <div class="tag"><b>B</b><span class="lab">leçon 77</span></div>
+        <div class="phone optB" data-v="B"></div>
+      </div>
+      <div class="opt">
+        <div class="tag"><b>B</b><span class="lab">longest headwords</span></div>
+        <div class="phone optB" data-v="B" data-set="long"></div>
+      </div>
+      <div class="opt" style="width:375px">
+        <div class="tag"><b>B</b><span class="lab">made-up longer, 375 pt</span></div>
+        <div class="phone optB" data-v="B" data-set="fake" style="width:375px"></div>
+      </div>
+    </div>
+  </section>
+
+  <h2 class="all">All options</h2>
+  <div class="row">
+    <div class="opt now">
+      <div class="tag"><b>Today</b><span class="lab">pos on the headword line</span></div>
+      <div class="phone today" data-v="today"></div>
+      <p>For reference, label removed. « donner un coup de main » plus « loc. » already needs the whole line, so the headword cannot wrap.</p>
+    </div>
+    <div class="opt">
+      <div class="tag"><b>A</b><span class="lab">opens the English line</span></div>
+      <div class="phone optA" data-v="A"></div>
+      <p>The headword gets the full width and wraps when it must. The type starts the English line in a fixed 52 pt column, so every gloss starts at the same x and the types read as one quiet column.</p>
+    </div>
+    <div class="opt">
+      <div class="tag"><b>B</b><span class="lab">left margin</span></div>
+      <div class="phone optB" data-v="B"></div>
+      <p>Like a dictionary margin: the type sits left of the headword on its baseline. Clear to scan by type, but headword and gloss lose 52 pt of width (52 fits « interj. »).</p>
+    </div>
+    <div class="opt">
+      <div class="tag"><b>C</b><span class="lab">under the play disc</span></div>
+      <div class="phone optC" data-v="C"></div>
+      <p>The type moves to the right edge, under the disc. Text column keeps its width; the right column grows 6 pt to fit « interj. ».</p>
+    </div>
+    <div class="opt">
+      <div class="tag"><b>D</b><span class="lab">grouped by type</span></div>
+      <div class="phone optD" data-v="D"></div>
+      <p>No type on any row: the leçon is shown in groups (verbs, adjectives, nouns, expressions). Only a register like « fam. » stays, at the start of the English. The list order no longer matches the card order.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+const ENTRIES = [
+  {w:"filer", pos:"v.", en:"(fam.) to dash off; (fam.) to give; to spin"},
+  {w:"parvenir", pos:"v.", en:"to reach; parvenir à = to manage to"},
+  {w:"traîner", pos:"v.", en:"to drag; to hang around; to lie around"},
+  {w:"mille", pos:"adj.", en:"thousand"},
+  {w:"bizarre", pos:"adj.", en:"strange, weird", on:true},
+  {w:"été", art:"(l')", pos:"n.m.", en:"summer"},
+  {w:"pardonner", pos:"v.", en:"to forgive"},
+  {w:"retard", art:"(le)", pos:"n.m.", en:"delay, lateness"},
+  {w:"soirée", art:"(la)", pos:"n.f.", en:"evening; party"},
+  {w:"respirer", pos:"v.", en:"to breathe"},
+  {w:"donner un coup de main", pos:"loc.", en:"to give a hand", on:true},
+  {w:"ça vaut le coup", pos:"loc.", reg:"fam.", en:"it's worth it"},
+];
+// Longest displayed headwords in mots.json (leçon in the comment).
+const LONG = [
+  {w:"faire la connaissance de", pos:"loc.", en:"to meet (for the first time)"},       // 64
+  {w:"dangereux, dangereuse", pos:"adj.", en:"dangerous"},                               // 97
+  {w:"il n'y a pas de quoi", pos:"loc.", en:"you're welcome, don't mention it"},         // 39
+  {w:"amoureux, amoureuse", pos:"adj.", en:"in love; amoureux de = in love with", on:true}, // 82
+  {w:"gouvernement", art:"(le)", pos:"n.m.", en:"government"},
+  {w:"conversation", art:"(la)", pos:"n.f.", en:"conversation"},
+  {w:"rendez-vous", art:"(le)", pos:"n.m.", en:"appointment; date; meeting place"},
+  {w:"laisser tomber", pos:"loc.", reg:"fam.", en:"to drop; laisse tomber ! = forget it!"},
+];
+// Made up, longer than anything in the book, to show the wrap.
+const FAKE = [
+  {w:"faire la connaissance de quelqu'un", pos:"loc.", en:"to meet someone (for the first time)"},
+  {w:"appartement meublé", art:"(l')", pos:"n.m.", en:"furnished flat"},
+  {w:"chaleureux, chaleureuse", pos:"adj.", en:"warm, friendly", on:true},
+  {w:"ne pas être dans son assiette", pos:"loc.", reg:"fam.", en:"to feel under the weather"},
+  {w:"retard", art:"(le)", pos:"n.m.", en:"delay, lateness"},
+];
+const GROUPS = [["v.","Verbes"],["adj.","Adjectifs"],["n.m.","Noms"],["n.f.","Noms"],["loc.","Expressions"]];
+const X = `<svg viewBox="0 0 14 14"><path d="M.6 .6 13.4 13.4M13.4 .6 .6 13.4" stroke="#141414" stroke-width="1.8" fill="none"/></svg>`;
+const PLAY = `<svg viewBox="0 0 11 11"><path d="M1 0 11 5.5 1 11Z" fill="#141414"/></svg>`;
+
+const posLabel = e => e.reg ? `${e.pos} · ${e.reg}` : e.pos;
+const head = e => {
+  if (!e.art) return `<span class="w">${e.w}</span>`;
+  const i = e.w.lastIndexOf(" ");
+  return `<span class="w">${e.w.slice(0, i + 1)}<span style="white-space:nowrap">${e.w.slice(i + 1)}<small>${e.art}</small></span></span>`;
+};
+const disc = `<span class="disc">${PLAY}</span>`;
+
+function rowHTML(e, v){
+  let inner;
+  if (v === "today") inner = `<div class="txt"><div class="hw">${head(e)}<span class="pos">${posLabel(e)}</span><span class="pos tf">Trop facile</span></div><div class="gl">${e.en}</div></div>${disc}`;
+  if (v === "A") inner = `<div class="txt"><div class="hw">${head(e)}</div><div class="gl"><span class="pos">${posLabel(e)}</span><span>${e.en}</span></div></div>${disc}`;
+  if (v === "B") inner = `<div class="txt"><div class="hw"><span class="margin"><span class="pos" style="display:block">${e.pos}</span>${e.reg ? `<span class="pos">${e.reg}</span>` : ""}</span>${head(e)}</div><div class="gl">${e.en}</div></div>${disc}`;
+  if (v === "C") inner = `<div class="txt"><div class="hw">${head(e)}</div><div class="gl">${e.reg ? `<span class="pos" style="margin-right:8px">${e.reg}</span>` : ""}${e.en}</div></div><div class="right">${disc}<span class="pos">${e.pos}</span></div>`;
+  if (v === "D") inner = `<div class="txt"><div class="hw">${head(e)}</div><div class="gl">${e.reg ? `<span class="pos">${e.reg}</span>` : ""}${e.en}</div></div>${disc}`;
+  return `<li class="cell${e.on ? " on" : ""}"><div class="under"><span class="lab">${e.on ? "Remettre" : "Trop facile"}</span></div><div class="entry" tabindex="0" role="button" aria-pressed="${!!e.on}" aria-label="${e.w}">${inner}</div></li>`;
+}
+
+function listHTML(v, list){
+  if (v !== "D") return `<ul class="dict">${list.map(e => rowHTML(e, v)).join("")}</ul>`;
+  const seen = new Map();
+  for (const [pos, name] of GROUPS) {
+    const items = ENTRIES.filter(e => e.pos === pos);
+    if (!items.length) continue;
+    if (!seen.has(name)) seen.set(name, []);
+    seen.get(name).push(...items);
+  }
+  return [...seen].map(([name, items]) =>
+    `<div class="grp lab"><span>${name}</span><span>${items.length}</span></div><ul class="dict">${items.map(e => rowHTML(e, v)).join("")}</ul>`).join("");
+}
+
+document.querySelectorAll(".phone").forEach(p => {
+  p.innerHTML = `<div class="x">${X}</div>
+    <div class="slab"><span class="lab">${{long: "Longest headwords", fake: "Made-up headwords"}[p.dataset.set] || "Leçon 77 · mots 701–800"}</span><span class="n">${p.dataset.set ? "" : "77"}</span></div>
+    <div class="hint lab">Glisse à gauche un mot trop facile</div>${listHTML(p.dataset.v, {long: LONG, fake: FAKE}[p.dataset.set] || ENTRIES)}`;
+});
+
+// Drag left: past half the row width the mark toggles, then the row springs home.
+function toggle(cell){
+  const on = cell.classList.toggle("on");
+  cell.querySelector(".entry").setAttribute("aria-pressed", on);
+  setTimeout(() => { cell.querySelector(".under .lab").textContent = on ? "Remettre" : "Trop facile"; }, 300);
+}
+document.querySelectorAll(".cell").forEach(cell => {
+  const row = cell.querySelector(".entry");
+  let x0 = null, dx = 0;
+  row.addEventListener("pointerdown", ev => { x0 = ev.clientX; dx = 0; row.setPointerCapture(ev.pointerId); });
+  row.addEventListener("pointermove", ev => {
+    if (x0 === null) return;
+    dx = Math.min(0, ev.clientX - x0);
+    if (dx < -4) cell.classList.add("drag");
+    row.style.transform = `translateX(${dx}px)`;
+  });
+  const end = () => {
+    if (x0 === null) return;
+    x0 = null;
+    cell.classList.remove("drag");
+    if (dx < -row.offsetWidth * 0.5) toggle(cell);
+    row.style.transform = "";
+  };
+  row.addEventListener("pointerup", end);
+  row.addEventListener("pointercancel", end);
+  row.addEventListener("keydown", ev => { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); toggle(cell); } });
+});
+
+// Demo: the first unmarked row in each phone slides left and gets marked.
+document.getElementById("demo").addEventListener("click", () => {
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  document.querySelectorAll(".phone").forEach(p => {
+    const cell = [...p.querySelectorAll(".cell")].find(c => !c.classList.contains("on"));
+    if (!cell) return;
+    const row = cell.querySelector(".entry");
+    if (reduce) { toggle(cell); return; }
+    cell.classList.add("drag");
+    row.style.transition = "transform .55s cubic-bezier(.32,.72,0,1)";
+    requestAnimationFrame(() => { row.style.transform = `translateX(${-row.offsetWidth * 0.6}px)`; });
+    setTimeout(() => {
+      cell.classList.remove("drag");
+      toggle(cell);
+      row.style.transition = "";
+      row.style.transform = "";
+    }, 650);
+  });
+});
+</script>

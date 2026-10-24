@@ -76,8 +76,8 @@ Older history is in `docs/archive/` and git log.
   `TooEasyControl`, `.tooEasyUndo`). Book 1: `DrillView`/`DrillSessionView`.
   Book 2: `SituationCardView`/`SituationSessionView` + `SituationTooEasy`.
   **Monnaie courante (was Mots, 2026-10-23):** no `TooEasyControl`; swipe up on a card IS trop facile
-  (resolved at once, clean by definition), and a word armed by tapping its
-  Leçon-page row resolves on its first swipe (clean right → removed; peek or
+  (resolved at once, clean by definition), and a word armed by swiping its
+  Leçon-page row left (user, 2026-10-24; swipe again disarms) resolves on its first swipe (clean right → removed; peek or
   left → cleaned, then a normal word). `VocabQueue` → `VocabStudy.commit` →
   `TooEasyGate.resolve`; pill via `.tooEasyUndo(insets:onUndo:)` on the ✕ row, right of the ✕.
   Leçon 0 « Comment glisser » (swipe lesson) is ungraded and never resolves.

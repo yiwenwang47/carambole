@@ -20,6 +20,10 @@
 //  - CB_DRILL_HINT_CYCLE=1   toggle the hint every 1.6 s (animation recording).
 //  - CB_DRILL_CHECK=1        check the pre-placed answer after 0.8 s.
 //  - CB_DRILL_TYPE=<text>    typing drill: pre-fill the field (wrap check).
+//  - CB_VOCAB_LECON=<n>      open Monnaie courante's Leçon page for leçon n.
+//  - CB_VOCAB_ARMED=<ids>    with it: entry ids armed (comma-separated).
+//  - CB_VOCAB_DRAG=<id>      with it: hold that row mid-swipe (150 pt left).
+//  - CB_VOCAB_SKIP=<n>       with it: leave out the first n rows (see the end).
 //
 
 #if DEBUG
@@ -59,6 +63,12 @@ enum DrillDemo {
     static func rootView() -> AnyView? {
         if isTestBook {
             return AnyView(TestBookView())
+        }
+        if let n = Int(env["CB_VOCAB_LECON"] ?? ""), let full = VocabBook.bundled.lecon(index: n) {
+            let skip = Int(env["CB_VOCAB_SKIP"] ?? "") ?? 0
+            let lecon = VocabLecon(index: full.index, band: full.band, entries: Array(full.entries.dropFirst(skip)))
+            return AnyView(VocabLessonDemo(lecon: lecon,
+                                           armed: Set((env["CB_VOCAB_ARMED"] ?? "").split(separator: ",").map(String.init))))
         }
         guard env["CB_DRILL_DEMO"] != nil, let session = makeSession(testBook: false) else { return nil }
         return AnyView(session)
@@ -210,6 +220,16 @@ private struct TestBookView: View {
             Text(note).font(.appBody).foregroundColor(AppColor.g2)
                 .fixedSize(horizontal: false, vertical: true)
         }
+    }
+}
+/// Leçon page alone (CB_VOCAB_LECON), with its own armed set.
+private struct VocabLessonDemo: View {
+    let lecon: VocabLecon
+    @State var armed: Set<String>
+
+    var body: some View {
+        VocabLessonView(lecon: lecon, startCount: lecon.entries.count, canStart: true,
+                        armed: $armed, onStart: {}, onClose: {})
     }
 }
 #endif

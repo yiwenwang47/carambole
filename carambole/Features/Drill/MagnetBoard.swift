@@ -144,8 +144,11 @@ struct MagnetBoard: View {
                      start: (reduceMotion || waveDone) ? nil : weldStart,
                      letterOffset: letterOffset(before: position), totalLetters: totalPlacedLetters,
                      duration: Self.waveDuration)
-                .frame(height: Self.tileHeight)
-                .matchedGeometryEffect(id: index, in: ns)
+                .fixedSize(horizontal: false, vertical: true)
+                .frame(minHeight: Self.tileHeight)
+                // Position only: borrowing the tile's size mid-morph would
+                // re-wrap the text into the tile's narrower frame.
+                .matchedGeometryEffect(id: index, in: ns, properties: .position)
         } else {
             let wrong = (result == false && !matchesAnswer(position: position, index: index))
                 || (flashFrom.map { position >= $0 } ?? false)
@@ -285,22 +288,31 @@ struct MagnetBoard: View {
     }
 
     /// Reserve enough rows for the full answer up front so the baseline and the
-    /// bank below don't jump as the line wraps.
+    /// bank below don't jump as the line wraps. A tile too wide for the line
+    /// wraps inside itself (B′), so its row reserves the taller tile.
     private var reservedLineHeight: CGFloat {
         let available = UIScreen.main.bounds.width - 2 * Spacing.screenH
-        var rows = 1
+        var rowHeights: [CGFloat] = []
         var x: CGFloat = 0
         for token in answerTokens {
-            let w = MagnetTile.estimatedWidth(token)
-            if x > 0 && x + 8 + w > available { rows += 1; x = w } else { x += (x > 0 ? 8 : 0) + w }
+            let w = min(MagnetTile.estimatedWidth(token), available)
+            let h = MagnetTile.estimatedHeight(token, maxWidth: available)
+            if rowHeights.isEmpty || x + 8 + w > available {
+                rowHeights.append(h); x = w
+            } else {
+                rowHeights[rowHeights.count - 1] = max(rowHeights[rowHeights.count - 1], h)
+                x += 8 + w
+            }
         }
-        return CGFloat(rows) * Self.tileHeight + CGFloat(rows - 1) * 10
+        if rowHeights.isEmpty { return Self.tileHeight }
+        return rowHeights.reduce(0, +) + CGFloat(rowHeights.count - 1) * 10
     }
 }
 
 // MARK: - Tile
 
-/// One level word tile (07 `.tile`): 40pt capsule, 1pt ink border.
+/// One level word tile (07 `.tile`): 40pt capsule, 1pt ink border. A tile
+/// wider than its row wraps and grows taller, still a capsule (B′).
 struct MagnetTile: View {
     enum Style { case bank, placed, wrong }
     let text: String
@@ -320,26 +332,57 @@ struct MagnetTile: View {
     }
 
     var body: some View {
+        // One line when it fits; otherwise (B′) the text wraps inside the same
+        // capsule, hugging its widest line, with room for the round ends.
+        ViewThatFits(in: .horizontal) {
+            label
+                .lineLimit(1)
+                .padding(.horizontal, 15)
+                .frame(height: MagnetBoard.tileHeight)
+                .fixedSize()
+            label
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.horizontal, Self.wrapPadH)
+                .padding(.vertical, Self.wrapPadV)
+                .frame(minHeight: MagnetBoard.tileHeight)
+        }
+        .background(Capsule().fill(style == .placed ? Color(hex: theme.tileOn) : AppColor.white))
+        .overlay(
+            Capsule().strokeBorder(
+                stroke,
+                style: StrokeStyle(lineWidth: style == .wrong ? 1.5 : 1, dash: style == .wrong ? [4, 3] : [])
+            )
+        )
+        .contentShape(Capsule())
+    }
+
+    private var label: some View {
         Text(text)
             .font(.appToken)
             .tracking(-0.2)
-            .lineLimit(1)
             .foregroundColor(AppColor.ink)
-            .padding(.horizontal, 15)
-            .frame(height: MagnetBoard.tileHeight)
-            .background(Capsule().fill(style == .placed ? Color(hex: theme.tileOn) : AppColor.white))
-            .overlay(
-                Capsule().strokeBorder(
-                    stroke,
-                    style: StrokeStyle(lineWidth: style == .wrong ? 1.5 : 1, dash: style == .wrong ? [4, 3] : [])
-                )
-            )
-            .contentShape(Capsule())
     }
+
+    private static let wrapPadH: CGFloat = 20
+    private static let wrapPadV: CGFloat = 7
 
     /// Rough width for layout reservation (19pt Manrope ≈ 10.5pt/char + padding).
     static func estimatedWidth(_ text: String) -> CGFloat {
         30 + CGFloat(text.count) * 10.5
+    }
+
+    /// Height for layout reservation: one tile height, or the wrapped tile's
+    /// height when the text can't fit `maxWidth` on one line.
+    static func estimatedHeight(_ text: String, maxWidth: CGFloat) -> CGFloat {
+        guard estimatedWidth(text) > maxWidth else { return MagnetBoard.tileHeight }
+        let font = AppFonts.uiFont(AppFonts.manrope, size: 19, wght: 400)
+        let box = (text as NSString).boundingRect(
+            with: CGSize(width: maxWidth - 2 * wrapPadH, height: .greatestFiniteMagnitude),
+            options: [.usesLineFragmentOrigin, .usesFontLeading],
+            attributes: [.font: font, .kern: -0.2],
+            context: nil
+        )
+        return max(MagnetBoard.tileHeight, ceil(box.height) + 2 * wrapPadV)
     }
 }
 

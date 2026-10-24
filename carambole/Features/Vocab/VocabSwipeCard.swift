@@ -44,14 +44,34 @@ struct VocabSwipeCard: View {
 }
 
 /// « confiance » + a smaller grey « (la) », dictionary style (`.w small`: 0.66 em
-/// at 23 pt, 15 pt at 21 pt, 5 pt apart). One line; a word too long for the
-/// line shrinks to fit (never « … »: dots are forbidden, user 2026-10-24).
+/// at 23 pt, 15 pt at 21 pt, 5 pt apart). Cards: one line; a word too long for
+/// the line shrinks to fit. Leçon rows (`wraps`): full size, wraps at spaces
+/// (never « … »: dots are forbidden, user 2026-10-24).
 struct VocabHeadword: View {
     let entry: VocabEntry
     let size: CGFloat
     var articleSize: CGFloat? = nil
+    /// Wrap at spaces at full size (Leçon rows) instead of one shrinking line.
+    var wraps: Bool = false
 
     var body: some View {
+        if wraps { wrapped } else { oneLine }
+    }
+
+    /// The article is joined to the last word by a no-break space.
+    private var wrapped: some View {
+        var text = Text(entry.displayWord)
+            .font(.display(size: size, wght: 400))
+            .foregroundColor(AppColor.ink)
+        if let article = entry.displayArticle {
+            text = text + Text("\u{00A0}" + article)
+                .font(.display(size: articleSize ?? (size * 0.66).rounded(), wght: 400))
+                .foregroundColor(AppColor.g2)
+        }
+        return text.fixedSize(horizontal: false, vertical: true)
+    }
+
+    private var oneLine: some View {
         HStack(alignment: .firstTextBaseline, spacing: 5) {
             Text(entry.displayWord)
                 .font(.display(size: size, wght: 400))
