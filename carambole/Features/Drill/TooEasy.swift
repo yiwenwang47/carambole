@@ -100,15 +100,19 @@ extension View {
     /// or wait ~4.5 s to dismiss. Bump `token` on each removal to restart the timer.
     /// `onUndo` runs after « Annuler » demotes the element (*Mots* moves the
     /// word from its trop facile count to known); Books 1 and 2 pass nothing.
-    func tooEasyUndo(elementID: Binding<String?>, token: Int,
+    /// `insets` places the pill leading-aligned at those insets instead
+    /// (*Monnaie courante*: on the ✕ row, right of the ✕, clear of the big
+    /// count); Books 1 and 2 pass nothing and keep the centred default.
+    func tooEasyUndo(elementID: Binding<String?>, token: Int, insets: EdgeInsets? = nil,
                      onUndo: (() -> Void)? = nil) -> some View {
-        modifier(TooEasyUndoModifier(elementID: elementID, token: token, onUndo: onUndo))
+        modifier(TooEasyUndoModifier(elementID: elementID, token: token, insets: insets, onUndo: onUndo))
     }
 }
 
 private struct TooEasyUndoModifier: ViewModifier {
     @Binding var elementID: String?
     let token: Int
+    var insets: EdgeInsets?
     var onUndo: (() -> Void)?
     /// Upward drag on the pill; it follows the finger until it dismisses.
     @State private var drag: CGFloat = 0
@@ -120,9 +124,15 @@ private struct TooEasyUndoModifier: ViewModifier {
             // takes touches) so the live card underneath stays interactive.
             if elementID != nil {
                 VStack {
-                    pill
-                        .padding(.horizontal, Spacing.screenH)
-                        .padding(.top, 48)   // clear the exit-bar (✕) row above
+                    if let insets {
+                        pill
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(insets)
+                    } else {
+                        pill
+                            .padding(.horizontal, Spacing.screenH)
+                            .padding(.top, 48)   // clear the exit-bar (✕) row above
+                    }
                     Spacer().allowsHitTesting(false)
                 }
                 .transition(.move(edge: .top).combined(with: .opacity))

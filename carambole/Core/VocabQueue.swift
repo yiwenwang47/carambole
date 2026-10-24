@@ -90,6 +90,8 @@ struct VocabQueue: Equatable {
     private(set) var stats = Stats()
     /// Review: entry ids already sent to the end once.
     private var requeuedIDs: Set<String> = []
+    /// False for the placement test: every card is seen once.
+    private var requeues = true
     private var nextCardID: Int
 
     private init(mode: SessionMode, entries: [(VocabEntry, armed: Bool)]) {
@@ -123,6 +125,14 @@ struct VocabQueue: Equatable {
             .prefix(max(0, cap))
             .map { ($0.element.entry, armed: false) }
         return VocabQueue(mode: .review, entries: Array(ordered))
+    }
+
+    /// Placement stack (`VocabPlacement`): the probes in order; a left swipe
+    /// does not requeue. Its grades are ignored (the test is ungraded).
+    static func placement(entries: [VocabEntry]) -> VocabQueue {
+        var q = VocabQueue(mode: .learn, entries: entries.map { ($0, armed: false) })
+        q.requeues = false
+        return q
     }
 
     // MARK: Reading
@@ -167,6 +177,7 @@ struct VocabQueue: Equatable {
                 : .rate(entryID: card.entry.id, rating: .again)
             card.armed = false
             card.again = true
+            guard requeues else { return .swiped(grade) }
             switch mode {
             case .learn:
                 cards.insert(fresh(card), at: min(Self.learnRequeueGap, cards.count))
@@ -183,6 +194,12 @@ struct VocabQueue: Equatable {
         guard stats.tooEasy > 0 else { return }
         stats.tooEasy -= 1
         stats.known += 1
+    }
+
+    /// Empty the stack (the placement test stopped early).
+    mutating func clear() {
+        cards.removeAll()
+        peeked = false
     }
 
     /// The same card under a new presentation id.
@@ -285,6 +302,15 @@ extension VocabQueue {
         assert(r.isFinished, "second left drops it")
         assert(r.stats == Stats(known: 2, again: 2, tooEasy: 1), "review stats")
         assert(r.mode == .review, "mode")
+
+        // Placement: each card once, no requeue; clear() ends it.
+        var pl = placement(entries: Array(entries.prefix(3)))
+        _ = pl.apply(.peek)
+        assert(pl.apply(.right) == .rejected, "placement keeps the peek lock")
+        _ = pl.apply(.left)
+        assert(order(pl) == ["voc_2", "voc_3"], "placement left: no requeue")
+        pl.clear()
+        assert(pl.isFinished && !pl.peeked, "cleared")
     }
 }
 #endif

@@ -19,7 +19,9 @@ writing code or content.
   https://claude.ai/artifact/KqmX6XvU5KydcVenntN4iy, awaiting the user.
 - Decided 2026-10-23: pacing as built, review set v2 OK, `pron.` / `interj.`
   OK, swipe lesson = ungraded leçon 0, undo pill at the top, no lock label.
-- Pending user calls: shelf mark (placeholder), placement start.
+- Book renamed *Monnaie courante* (user 2026-10-23; id stays `book_fr_mots`).
+  Placement start built (`Core/VocabPlacement.swift`). Pending user call:
+  shelf mark (placeholder; coin candidates in `design/studio/books.html`).
 
 ## 2. Next: phase 3 (engine) → 4 (views) → 5 (bulk content)
 
@@ -103,7 +105,5 @@ Lexique 3: `http://www.lexique.org/databases/Lexique383/Lexique383.tsv`
 ## 6. Open, ask when relevant
 
 - Credits screen design (Lingua Libre speakers + Lexique 3).
-- Book title / mark on the shelf ("Mots" is a working title; book marks follow
-  the studio process, see memory "Book icons = mark process").
-- Which leçon a new learner starts at (band 1 is mostly words they know; trop
-  facile helps, a placement start may be better).
+- Shelf mark for *Monnaie courante* (book marks follow the studio process,
+  see memory "Book icons = mark process").

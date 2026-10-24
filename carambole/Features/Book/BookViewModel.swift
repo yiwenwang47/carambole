@@ -91,8 +91,16 @@ final class BookViewModel: ObservableObject {
             // counts as seen but must keep that unit open.
             let seen = DataManager.shared.fetchSeenElementIDs()
             let introduced = DataManager.shared.fetchIntroducedElementIDs()
-            let unlocked = StudyScheduler.unlockedModuleIDs(
+            var unlocked = StudyScheduler.unlockedModuleIDs(
                 book, satisfied: descriptor.kind == .situation ? introduced : seen)
+            // Monnaie courante: the placement start opens every band up to its
+            // result, so Apprendre (the frontier) starts there.
+            if descriptor.kind == .vocab, let start = VocabStudy.placementStartLecon,
+               let startBand = VocabBook.bundled.lecon(index: start)?.band {
+                for band in VocabBook.bundled.bands where band.band <= startBand {
+                    unlocked.insert("voc_band_\(band.band)")
+                }
+            }
 
             // The bar/module-"done" maîtrisé set is the live STICKY GRADUATION flag
             // (`graduated_date IS NOT NULL`) — exact + monotonic, never the old count.

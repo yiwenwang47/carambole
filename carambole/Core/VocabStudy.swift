@@ -17,6 +17,15 @@ enum VocabStudy {
         set { UserDefaults.standard.set(newValue, forKey: swipeLessonDoneKey) }
     }
 
+    /// The placement start's result (`VocabPlacement`): the leçon a new learner
+    /// starts at. Nil until the test is taken once; until then, after leçon 0,
+    /// Apprendre on leçon 1 opens the test. Bands up to its band are open.
+    static let placementStartKey = "settings.book_fr_mots.placementStartLecon"
+    static var placementStartLecon: Int? {
+        get { UserDefaults.standard.object(forKey: placementStartKey) as? Int }
+        set { UserDefaults.standard.set(newValue, forKey: placementStartKey) }
+    }
+
     /// Persist one swipe's grade. A word has no example sentences, so the entry
     /// id doubles as the `exampleID` (its one distinct "item").
     static func commit(_ grade: VocabQueue.Grade, now: Date = Date()) {

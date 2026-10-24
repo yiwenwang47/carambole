@@ -228,9 +228,27 @@ Built 2026-10-23, port of mock v7 (`design/vocab/vocab-swipe.src.html`).
   (`VocabStudy.wordsLearnedToday`). Done panel: under the cap « Leçon
   suivante »; at the cap « Terminer » + « Encore une leçon ». Apprendre on the
   book home is never blocked by the cap.
-- **Shared trop facile**: `.tooEasyUndo` gained `onUndo:` (stats); the pill
-  sits at the top like Books 1–2 (user 2026-10-23; the short-lived `edge:`
-  parameter is gone).
+- **Shared trop facile**: `.tooEasyUndo` gained `onUndo:` (stats) and
+  `insets:` (leading-aligned position). Monnaie courante puts the pill on the
+  ✕ row, right of the ✕ (`insets: top -6, leading 58, trailing 20`), so it no
+  longer covers the big count (user 2026-10-23). Books 1–2 pass nothing and
+  keep the centred default under the ✕ row.
+- **Placement start « Où commencer ? »** (user 2026-10-23): pure logic in
+  `Core/VocabPlacement.swift` (`_selfTest`): 5 words per band (no
+  expressions), fixed seed (`SplitMix64`), bands in order; right / up = known,
+  left (a peek locks the card to left) = not known; stops at the first band
+  with 2 misses, start = that band's first leçon; all pass → last band's
+  first leçon. `VocabQueue.placement(entries:)` = no requeue, `clear()` ends
+  early. UNGRADED (no `VocabStudy.commit`). Session: after leçon 0 the done
+  button is « Où commencer ? »; Apprendre on leçon 1 opens the test while
+  `VocabStudy.placementStartLecon` (UserDefaults
+  `settings.book_fr_mots.placementStartLecon`) is nil. Same stack, count
+  « à tester », stats « N connus · N inconnus »; done panel « Où commencer ? »
+  / « Leçon 11 » / « Mots 101–200 » + button « Leçon 11 » → that Leçon page.
+  `BookViewModel` unlocks every band up to the result's band, so the frontier
+  (Apprendre, Aujourd'hui) starts there; skipped bands stay open and are not
+  marked learned. Sommaire row « Où commencer ? » (after 00) retakes it and
+  shows the result.
 - **Shelf mark**: `BookMarkShape.placeholder`, a plain torn disc with the
   number (no overprint), until the studio mark process picks one.
 - **Simulator flags (DEBUG)**: `CB_OPEN_BOOK=book_fr_mots CB_START=learn|review`,
@@ -261,3 +279,8 @@ Built 2026-10-23, port of mock v7 (`design/vocab/vocab-swipe.src.html`).
   (shared default); « Sens vu · glisse à gauche » lock label dropped (app and
   mock src); pacing, review set v2 and `pron.` / `interj.` accepted. Caption
   box now two natural Manrope lines, so the progress dashes clear « pour ».
+- 2026-10-23: book renamed *Monnaie courante* (shelf + book home; id stays
+  `book_fr_mots`). Placement start built (see Views); undo pill moved onto the
+  ✕ row for this book. Simulator (iOS 27.0, test bundle): placement after
+  leçon 0 → band 1 passed, band 2 two misses → « Leçon 11 »; book home then
+  opens leçon 11; pill clear of the count; launch self-tests pass.

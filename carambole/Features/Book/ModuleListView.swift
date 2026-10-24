@@ -7,7 +7,8 @@
 //  page (`DrillSessionView`). Reached from the book home's bottom
 //  line (`25 modules →`). (Replaces the dropped 06 Tranches stack.)
 //  *Mots* adds row 00, leçon 0 « Comment glisser » (the ungraded swipe
-//  lesson), before its bands; it can be replayed any time.
+//  lesson), before its bands; it can be replayed any time. Below it, the
+//  placement start « Où commencer ? » (ungraded), which can be retaken.
 //
 
 import SwiftUI
@@ -16,6 +17,7 @@ struct ModuleListView: View {
     @ObservedObject var viewModel: BookViewModel
     @State private var selectedModule: CourseModule?
     @State private var showingSwipeLesson = false
+    @State private var showingPlacement = false
     @State private var swipeGuard = SwipeBackGuard()
 
     @Environment(\.dismiss) private var dismiss
@@ -43,6 +45,13 @@ struct ModuleListView: View {
                             showingSwipeLesson = true
                         } label: {
                             swipeLessonRow
+                        }
+                        .buttonStyle(.plain)
+                        Button {
+                            guard !swipeGuard.dragging else { return }
+                            showingPlacement = true
+                        } label: {
+                            placementRow
                         }
                         .buttonStyle(.plain)
                     }
@@ -73,6 +82,12 @@ struct ModuleListView: View {
             VocabSessionView(elements: [], mode: .learn, canStart: true,
                              settings: viewModel.settingsStore.settings, swipeLesson: true) {
                 showingSwipeLesson = false
+            }
+        }
+        .fullScreenCover(isPresented: $showingPlacement, onDismiss: { viewModel.refresh() }) {
+            VocabSessionView(elements: [], mode: .learn, canStart: true,
+                             settings: viewModel.settingsStore.settings, placement: true) {
+                showingPlacement = false
             }
         }
         .toolbar(.hidden, for: .navigationBar)
@@ -140,6 +155,28 @@ struct ModuleListView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
             Text(VocabStudy.swipeLessonDone ? "Fait" : "À faire")
                 .uppercaseLabel(VocabStudy.swipeLessonDone ? AppColor.g2 : AppColor.ink)
+        }
+        .padding(.vertical, 14)
+        .overlay(alignment: .bottom) {
+            Rectangle().fill(AppColor.hairline).frame(height: 1)
+        }
+        .contentShape(Rectangle())
+        .accessibilityElement(children: .combine)
+    }
+
+    /// The placement start, styled like a module row; shows its result.
+    private var placementRow: some View {
+        let start = VocabStudy.placementStartLecon
+        return HStack(alignment: .firstTextBaseline, spacing: 14) {
+            Color.clear.frame(width: 22, height: 1)
+            Text("Où commencer ?")
+                .font(.display(size: 18, wght: 300))
+                .tracking(-0.3)
+                .foregroundColor(AppColor.ink)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            Text(start.map { "Leçon \($0)" } ?? "À faire")
+                .uppercaseLabel(start == nil ? AppColor.ink : AppColor.g2)
+                .monospacedDigit()
         }
         .padding(.vertical, 14)
         .overlay(alignment: .bottom) {

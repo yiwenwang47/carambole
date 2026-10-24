@@ -28,6 +28,13 @@
 //  `VocabStudy.commit`), opens before leçon 1 until finished once
 //  (`VocabStudy.swipeLessonDone`), and replays from the Sommaire.
 //
+//  The placement start (« Où commencer ? », user 2026-10-23) follows leçon 0
+//  the first time, before leçon 1: the same stack with 5 words per band
+//  (`VocabPlacement`), right / up = known, left or a peek = not known, no
+//  requeue. It stops at the first band with 2 misses; the done panel offers
+//  that band's first leçon (`VocabStudy.placementStartLecon`). UNGRADED, like
+//  leçon 0; it can be retaken from the Sommaire.
+//
 //  Grading goes through `VocabQueue` (pure) → `VocabStudy.commit` (shared
 //  `ElementGrader` / `TooEasyGate`, HARD RULE: never forked).
 //
@@ -51,6 +58,11 @@ final class VocabSessionModel: ObservableObject {
     /// Leçon 0, the ungraded swipe lesson (`lecon` is then leçon 1, whose
     /// first four words are the practice cards).
     @Published private(set) var isSwipeLesson = false
+    /// The placement start (ungraded). `placement` holds its tally.
+    @Published private(set) var isPlacement = false
+    @Published private(set) var placement: VocabPlacement?
+    /// The leçon the placement start chose (its done panel).
+    @Published private(set) var placementResult: VocabLecon?
     /// Rows tapped on the Leçon page.
     @Published var armed: Set<String> = []
     /// The live queue: every swipe is applied here at once and graded.
@@ -65,7 +77,7 @@ final class VocabSessionModel: ObservableObject {
     @Published private(set) var undoToken = 0
 
     init(vocab: VocabBook, mode: SessionMode, elements: [GrammarElement], newPerDay: Int, reviewCap: Int,
-         swipeLesson: Bool = false) {
+         swipeLesson: Bool = false, placement: Bool = false) {
         self.vocab = vocab
         self.mode = mode
         self.newPerDay = newPerDay
@@ -85,6 +97,9 @@ final class VocabSessionModel: ObservableObject {
             if let first = vocab.lecons.first,
                swipeLesson || (!VocabStudy.swipeLessonDone && lecon?.index == first.index) {
                 startSwipeLesson(practice: first)
+            } else if placement || (VocabStudy.placementStartLecon == nil && lecon?.index == vocab.lecons.first?.index) {
+                // Then the placement start, once, before leçon 1.
+                startPlacement()
             }
         case .review:
             var q = VocabStudy.reviewQueue(book: vocab, cap: reviewCap)
@@ -111,6 +126,20 @@ final class VocabSessionModel: ObservableObject {
         phase = .stack
     }
 
+    /// The placement start: straight to the stack, nothing graded.
+    func startPlacement() {
+        let test = VocabPlacement(book: vocab)
+        isSwipeLesson = false
+        isPlacement = true
+        placement = test
+        placementResult = nil
+        let q = VocabQueue.placement(entries: test.probes)
+        queue = q
+        display = q
+        next = .none
+        phase = q.isFinished ? .empty : .stack
+    }
+
     /// Cards Commencer will serve.
     var pendingCount: Int {
         guard let lecon else { return 0 }
@@ -130,6 +159,19 @@ final class VocabSessionModel: ObservableObject {
     @discardableResult
     func swipe(_ s: VocabQueue.Swipe) -> VocabQueue.Outcome {
         let outcome = queue.apply(s)
+        if isPlacement {
+            // Ungraded: right / up = known, left = not known (a peek locks the
+            // card to left, so a peek always ends as not known).
+            guard case .swiped(let grade) = outcome, var test = placement else { return outcome }
+            test.record(entryID: grade.entryID, known: s != .left)
+            if test.isDecided || queue.isFinished {
+                queue.clear()
+                placementResult = test.startLecon(in: vocab)
+                if let result = placementResult { VocabStudy.placementStartLecon = result.index }
+            }
+            placement = test
+            return outcome
+        }
         if isSwipeLesson {
             // Ungraded: no commit, no undo pill, no pacing.
             if queue.isFinished { VocabStudy.swipeLessonDone = true }
@@ -162,8 +204,15 @@ final class VocabSessionModel: ObservableObject {
     /// Leçon 0's « Leçon 1 »: leçon 1's page, now a normal graded leçon.
     func openFirstLecon() {
         guard let first = vocab.lecons.first else { return }
+        openLecon(first)
+    }
+
+    /// The placement start's result: that leçon's page, a normal graded leçon.
+    func openLecon(_ target: VocabLecon) {
         isSwipeLesson = false
-        lecon = first
+        isPlacement = false
+        placement = nil
+        lecon = target
         armed = []
         let q = VocabQueue.learn(entries: [], armed: [])
         queue = q
@@ -193,13 +242,14 @@ struct VocabSessionView: View {
     @StateObject private var model: VocabSessionModel
 
     init(elements: [GrammarElement], mode: SessionMode, canStart: Bool,
-         settings: StudySettings, swipeLesson: Bool = false, onFinish: @escaping () -> Void) {
+         settings: StudySettings, swipeLesson: Bool = false, placement: Bool = false,
+         onFinish: @escaping () -> Void) {
         self.canStart = canStart
         self.onFinish = onFinish
         _model = StateObject(wrappedValue: VocabSessionModel(
             vocab: .bundled, mode: mode, elements: elements,
             newPerDay: settings.newPerDay, reviewCap: settings.reviewRoundSize,
-            swipeLesson: swipeLesson))
+            swipeLesson: swipeLesson, placement: placement))
     }
 
     @AppStorage(AppPalette.storageKey) private var paletteID = AppPalette.fallback.rawValue
@@ -264,7 +314,10 @@ struct VocabSessionView: View {
             }
         }
         .background(AppColor.paper.ignoresSafeArea())
+        // On the ✕ row, right of the ✕ (user 2026-10-23): the shared top
+        // position covered the big count. The row is 36 pt, the pill 48 pt.
         .tooEasyUndo(elementID: $model.undoElementID, token: model.undoToken,
+                     insets: EdgeInsets(top: -6, leading: 58, bottom: 0, trailing: 20),
                      onUndo: model.undoTooEasy)
         .onDisappear {
             coachTask?.cancel()
@@ -322,7 +375,9 @@ struct VocabSessionView: View {
         .padding(.horizontal, 2)
         // Leçon 0 keeps the captions' height after the demo, so the tray never
         // moves when the count replaces them.
-        .frame(maxWidth: .infinity, minHeight: model.isSwipeLesson ? Self.coachHeroH : 132, alignment: .topLeading)
+        // The placement start keeps it too: it follows leçon 0 on the same stack.
+        .frame(maxWidth: .infinity, minHeight: model.isSwipeLesson || model.isPlacement ? Self.coachHeroH : 132,
+               alignment: .topLeading)
     }
 
     private var count: some View {
@@ -336,7 +391,7 @@ struct VocabSessionView: View {
                 .lineLimit(1)
                 .fixedSize()
                 .frame(height: 96 * 0.9)
-            Text(model.mode == .learn ? "à apprendre" : "à réviser")
+            Text(model.isPlacement ? "à tester" : model.mode == .learn ? "à apprendre" : "à réviser")
                 .uppercaseLabel(AppColor.ink)
             Text(statsLine(d.stats))
                 .uppercaseLabel()
@@ -345,7 +400,8 @@ struct VocabSessionView: View {
     }
 
     private func statsLine(_ s: VocabQueue.Stats) -> String {
-        "\(s.known) connus · \(s.again) à revoir" + (s.tooEasy > 0 ? " · \(s.tooEasy) trop facile" : "")
+        if model.isPlacement { return "\(s.known + s.tooEasy) connus · \(s.again) inconnus" }
+        return "\(s.known) connus · \(s.again) à revoir" + (s.tooEasy > 0 ? " · \(s.tooEasy) trop facile" : "")
     }
 
     private var coach: some View {
@@ -452,7 +508,45 @@ struct VocabSessionView: View {
     }
 
     /// `.done`: inside the tray, bottom-aligned.
+    @ViewBuilder
     private var donePanel: some View {
+        if model.isPlacement { placementDone } else { lessonDone }
+    }
+
+    /// The placement start's result: « Leçon 31 », its ranks, the tally, and
+    /// a button to that leçon's page.
+    private var placementDone: some View {
+        let s = model.display.stats
+        let result = model.placementResult
+        return VStack(alignment: .leading, spacing: 10) {
+            Spacer(minLength: 0)
+            Text("Où commencer ?").uppercaseLabel(AppColor.ink)
+            Text(result.map { "Leçon \($0.index)" } ?? "Terminé")
+                .font(.display(size: 40, wght: 250))
+                .tracking(-1.2)
+                .foregroundColor(AppColor.ink)
+            if let result, let band = model.vocab.bands.first(where: { $0.band == result.band }) {
+                Text("Mots \(band.rankRange.lowerBound)–\(band.rankRange.upperBound)")
+                    .font(.display(size: 24, wght: 300))
+                    .tracking(-0.5)
+                    .foregroundColor(AppColor.ink)
+            }
+            Text("\(s.known + s.tooEasy) connus · \(s.again) inconnus").uppercaseLabel(AppColor.ink)
+            Group {
+                if let result {
+                    Button("Leçon \(result.index)") { withAnimation(.smooth(duration: 0.4)) { model.openLecon(result) } }
+                } else {
+                    Button("Terminer", action: exit)
+                }
+            }
+            .buttonStyle(DrillButtonStyle())
+            .padding(.top, 12)
+        }
+        .padding(22)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomLeading)
+    }
+
+    private var lessonDone: some View {
         let s = model.display.stats
         return VStack(alignment: .leading, spacing: 10) {
             Spacer(minLength: 0)
@@ -479,7 +573,11 @@ struct VocabSessionView: View {
     /// at the cap « Terminer » + « Encore une leçon ».
     @ViewBuilder
     private var doneButtons: some View {
-        if model.isSwipeLesson {
+        if model.isSwipeLesson, VocabStudy.placementStartLecon == nil {
+            // First time: the placement start comes next, before leçon 1.
+            Button("Où commencer ?") { withAnimation(.smooth(duration: 0.4)) { model.startPlacement() } }
+                .buttonStyle(DrillButtonStyle())
+        } else if model.isSwipeLesson {
             Button("Leçon 1") { withAnimation(.smooth(duration: 0.4)) { model.openFirstLecon() } }
                 .buttonStyle(DrillButtonStyle())
         } else {

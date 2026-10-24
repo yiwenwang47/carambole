@@ -53,12 +53,13 @@ enum BookCatalog {
         id: "book_fr_en_situation", title: "Français — En situation", shelfTitle: "En situation",
         kicker: "Dialogues", kind: .situation, settingsScope: "book_fr_en_situation")
 
-    /// *Mots* id (also the `mots.json` `book` field).
+    /// Monnaie courante id (also the `mots.json` `book` field; kept from the
+    /// working title *Mots*).
     static let motsID = "book_fr_mots"
 
-    /// Vocab swipe book (working title *Mots*, plan 2026-10-23).
+    /// Vocab swipe book *Monnaie courante* (plan 2026-10-23).
     static let mots = BookDescriptor(
-        id: motsID, title: "Français — Mots", shelfTitle: "Mots",
+        id: motsID, title: "Français — Monnaie courante", shelfTitle: "Monnaie courante",
         kicker: "Vocabulaire", kind: .vocab, settingsScope: "book_fr_mots")
 
     /// Shelf order.

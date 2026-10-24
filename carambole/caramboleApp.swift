@@ -34,6 +34,7 @@ struct caramboleApp: App {
         VocabBook._selfTest()
         VocabQueue._selfTest()
         VocabPacing._selfTest()
+        VocabPlacement._selfTest()
         StarVideoRenderer.runIfRequested()
         DemoSeed.runIfRequested()
         DemoRemote.start()

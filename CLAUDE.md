@@ -11,7 +11,7 @@ Older history is in `docs/archive/` and git log.
 
 ## Start here
 
-- **Vocab swipe book (*Mots*, branch `vocab-swipe`, 2026-10-23):** start at
+- **Vocab swipe book (*Monnaie courante*, was *Mots*; branch `vocab-swipe`, 2026-10-23):** start at
   `docs/plans/2026-10-23-vocab-swipe-handoff.md`; spec in
   `docs/plans/2026-10-23-vocab-swipe-plan.md`. Mock + review set v1 approved;
   engine (phase 3) and views (phase 4, `Features/Vocab/`, on the shelf) built;
@@ -72,7 +72,7 @@ Older history is in `docs/archive/` and git log.
   (resolved at once, clean by definition), and a word armed by tapping its
   Leçon-page row resolves on its first swipe (clean right → removed; peek or
   left → cleaned, then a normal word). `VocabQueue` → `VocabStudy.commit` →
-  `TooEasyGate.resolve`; pill via `.tooEasyUndo(onUndo:)` (top, like Books 1–2).
+  `TooEasyGate.resolve`; pill via `.tooEasyUndo(insets:onUndo:)` on the ✕ row, right of the ✕.
   Leçon 0 « Comment glisser » (swipe lesson) is ungraded and never resolves.
   A new book or session view reuses these; never fork the logic.
 - **The drill card never scrolls as a whole.** Book 1 can scroll its word-bank
