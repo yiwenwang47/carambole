@@ -76,9 +76,6 @@ final class VocabSessionModel: ObservableObject {
     @Published private(set) var display: VocabQueue
     /// Learn: the done panel's offer (set when the stack empties).
     @Published private(set) var next: VocabPacing.Next = .none
-    /// The undo pill (`.tooEasyUndo`).
-    @Published var undoElementID: String?
-    @Published private(set) var undoToken = 0
 
     init(vocab: VocabBook, mode: SessionMode, elements: [GrammarElement], newPerDay: Int, reviewCap: Int,
          swipeLesson: Bool = false, placement: Bool = false) {
@@ -183,10 +180,6 @@ final class VocabSessionModel: ObservableObject {
         }
         if case .swiped(let grade) = outcome {
             VocabStudy.commit(grade)
-            if case .tooEasy(let id, true) = grade {
-                undoElementID = id
-                undoToken += 1
-            }
             if queue.isFinished, mode == .learn, let lecon {
                 let hasNext = VocabStudy.lecon(after: lecon.index, in: vocab) != nil
                 next = VocabPacing.afterLecon(wordsLearnedToday: VocabStudy.wordsLearnedToday(book: vocab),
@@ -198,12 +191,6 @@ final class VocabSessionModel: ObservableObject {
 
     /// Catch the drawn tray up with the queue (as the swiped card flies out).
     func syncDisplay() { display = queue }
-
-    /// « Annuler » on the undo pill (the pill itself demoted the word).
-    func undoTooEasy() {
-        queue.undoTooEasy()
-        display.undoTooEasy()
-    }
 
     /// Leçon 0's « Leçon 1 »: leçon 1's page, now a normal graded leçon.
     func openFirstLecon() {
@@ -289,7 +276,7 @@ struct VocabSessionView: View {
     private static let coachHeroH: CGFloat = max(132, 14 + 14 + 10 + captionH + 10 + 3 + 10 + 14)
 
     /// The new card fades into the swiped card's slot, in place.
-    private static let fadeIn = Animation.easeOut(duration: 0.18)
+    private static let fadeIn = Animation.easeOut(duration: 0.45)
     private static let snapBack = Animation.spring(response: 0.36, dampingFraction: 0.68)
     private static let coachOut = Animation.timingCurve(0.3, 0.7, 0.2, 1, duration: 0.7)
     private static let coachBack = Animation.timingCurve(0.2, 0.9, 0.25, 1.1, duration: 0.45)
@@ -319,11 +306,6 @@ struct VocabSessionView: View {
             }
         }
         .background(AppColor.paper.ignoresSafeArea())
-        // On the ✕ row, right of the ✕ (user 2026-10-23): the shared top
-        // position covered the big count. The row is 36 pt, the pill 48 pt.
-        .tooEasyUndo(elementID: $model.undoElementID, token: model.undoToken,
-                     insets: EdgeInsets(top: -6, leading: 58, bottom: 0, trailing: 20),
-                     onUndo: model.undoTooEasy)
         .onDisappear {
             coachTask?.cancel()
             Speaker.shared.stop()
