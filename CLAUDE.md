@@ -173,9 +173,9 @@ xcodebuild build -project carambole.xcodeproj -scheme carambole \
 - **Content pipeline tests:** `cd tools && python3 -m pytest content_pipeline -q`.
 - **Phone** (iPhone 18 Pro `00008160-001A09920AA0000A`, team `QMV4SPL476`,
   bundle `wen.carambole`). Install only when the user asks. The user tests on the
-  phone; Claude never tests, records or profiles there. The 2026-10-24 Release
-  build (`aae58d66`: Monnaie courante slots refilled in place, 3 connus, no
-  swipe up, quicker Leçon arming) is on the phone. If `release_build.sh`
+  phone; Claude never tests, records or profiles there. The 2026-11-10 Release
+  build (Monnaie courante: swiped slot stays blank ~0.1 s, then the next card
+  fades in growing from 96 % on a soft spring) is on the phone. If `release_build.sh`
   needs `CARAMBOLE_AUDIO_PYTHON`, `~/miniconda3/bin/python3` has the deps.
   ```bash
   CARAMBOLE_AUDIO_PYTHON=/path/to/python-with-numpy-scipy-lameenc \

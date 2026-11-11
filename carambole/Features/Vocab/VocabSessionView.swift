@@ -258,6 +258,10 @@ struct VocabSessionView: View {
     /// Swiped cards flying off sideways above the tray, each on its own spring,
     /// so the next card can be dragged meanwhile.
     @State private var flights: [FlyingCard.Flight] = []
+    /// Slots left blank after a swipe, for `refillDelay`, before the next word
+    /// fades in (user 2026-11-10). Value: the swipe that emptied it, so a later
+    /// swipe of the same slot owns the refill.
+    @State private var blank: [Int: Int] = [:]
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     // Swipe lesson.
     @State private var coachOn = false
@@ -275,8 +279,15 @@ struct VocabSessionView: View {
     private static let captionH = ceil(AppFonts.uiFont(AppFonts.manrope, size: 24, wght: 300).lineHeight * 2)
     private static let coachHeroH: CGFloat = max(132, 14 + 14 + 10 + captionH + 10 + 3 + 10 + 14)
 
-    /// The new card fades into the swiped card's slot, in place.
-    private static let fadeIn = Animation.easeOut(duration: 0.45)
+    /// The new card settles into the swiped card's slot, in place: it fades
+    /// in while growing from 96 % on a soft spring (user 2026-11-10; was a
+    /// plain 0.45 s fade). Reduce Motion: fade only.
+    private static let fadeIn = Animation.spring(response: 0.35, dampingFraction: 0.9)
+    private static let settleScale: CGFloat = 0.96
+    /// From release to the next word's fade-in: the flying card clears the
+    /// slot in about 0.2 s (`FlyingCard` spring at its slowest launch), then
+    /// the slot stays blank about 0.1 s (user 2026-11-10).
+    private static let refillDelay: UInt64 = 300_000_000
     private static let snapBack = Animation.spring(response: 0.36, dampingFraction: 0.68)
     private static let coachOut = Animation.timingCurve(0.3, 0.7, 0.2, 1, duration: 0.7)
     private static let coachBack = Animation.timingCurve(0.2, 0.9, 0.25, 1.1, duration: 0.45)
@@ -429,13 +440,15 @@ struct VocabSessionView: View {
                 underlay(width: w)
                     .offset(x: Self.pad, y: Self.rowTop(dragSlot))
                 ForEach(slots.indices, id: \.self) { i in
-                    if let card = slots[i] {
+                    if let card = slots[i], blank[i] == nil {
                         VocabSwipeCard(card: card, theme: theme)
                             .frame(width: w)
                             .offset(x: Self.pad + (i == dragSlot ? dx : 0), y: Self.rowTop(i))
                             .zIndex(i == dragSlot ? 4 : 3)
                             .id(card.id)
-                            .transition(.asymmetric(insertion: .opacity, removal: .identity))
+                            .transition(.asymmetric(insertion: reduceMotion ? .opacity
+                                                    : .opacity.combined(with: .scale(scale: Self.settleScale)),
+                                                    removal: .identity))
                     }
                 }
             }
@@ -616,7 +629,7 @@ struct VocabSessionView: View {
     /// The slot whose card is under `p`, if any.
     private func slot(at p: CGPoint, cardWidth w: CGFloat) -> Int? {
         model.display.slots.indices.first { i in
-            model.display.slots[i] != nil
+            model.display.slots[i] != nil && blank[i] == nil
                 && CGRect(x: Self.pad, y: Self.rowTop(i), width: w, height: Self.rowH).contains(p)
         }
     }
@@ -692,8 +705,17 @@ struct VocabSessionView: View {
                              velocity: min(12, max(FlyingCard.minLaunch, speed / distance))))
         var off = Transaction(animation: nil)
         off.disablesAnimations = true
-        withTransaction(off) { dx = 0 }
-        withAnimation(Self.fadeIn) { model.syncDisplay() }
+        // The slot goes blank at once; the next word fades in after the pause.
+        let token = card.id
+        withTransaction(off) { dx = 0; blank[slot] = token }
+        Task { @MainActor in
+            try? await Task.sleep(nanoseconds: Self.refillDelay)
+            guard blank[slot] == token else { return }
+            withAnimation(Self.fadeIn) {
+                blank[slot] = nil
+                model.syncDisplay()
+            }
+        }
     }
 
     // MARK: Swipe lesson
